@@ -1,8 +1,5 @@
 package com.nuoquan.controller;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;

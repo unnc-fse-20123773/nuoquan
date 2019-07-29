@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "articlebrief": "/components/articlebrief",
+    "commentbox": "/components/comment"
+  }
+}

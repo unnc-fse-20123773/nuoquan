@@ -2,6 +2,9 @@
 /Users/xudeyan/eclipse-workspace/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/Administrator.java
 /Users/xudeyan/eclipse-workspace/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/Article.java
 /Users/xudeyan/eclipse-workspace/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/UserReport.java
+/Users/xudeyan/eclipse-workspace/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/vo/ArticleVO.java
+/Users/xudeyan/eclipse-workspace/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/SearchRecord.java
 /Users/xudeyan/eclipse-workspace/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/UserFans.java
 /Users/xudeyan/eclipse-workspace/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/UserLikeArticle.java
 /Users/xudeyan/eclipse-workspace/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/UserArticleComment.java
+/Users/xudeyan/eclipse-workspace/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/Tags.java

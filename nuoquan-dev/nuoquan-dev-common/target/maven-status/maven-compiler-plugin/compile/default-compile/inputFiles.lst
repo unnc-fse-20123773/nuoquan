@@ -11,6 +11,7 @@
 /Users/xudeyan/eclipse-workspace/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/utils/Serializes.java
 /Users/xudeyan/eclipse-workspace/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/IdWorker.java
 /Users/xudeyan/eclipse-workspace/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/DayCode.java
+/Users/xudeyan/eclipse-workspace/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/utils/PagedResult.java
 /Users/xudeyan/eclipse-workspace/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/strategy/DefaultWorkerIdStrategy.java
 /Users/xudeyan/eclipse-workspace/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/utils/Props.java
 /Users/xudeyan/eclipse-workspace/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/strategy/FileLock.java

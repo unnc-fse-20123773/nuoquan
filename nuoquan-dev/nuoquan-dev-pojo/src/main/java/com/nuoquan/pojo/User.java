@@ -32,8 +32,20 @@ public class User {
     @Column(name = "follow_num")
     @ApiModelProperty(hidden=true)
     private Integer followNum;
+    
+    @Column(name = "receive_like_counts")
+    @ApiModelProperty(hidden=true)
+    private Integer receiveLikeCounts;
 
-    /**
+    public Integer getReceiveLikeCounts() {
+		return receiveLikeCounts;
+	}
+
+	public void setReceiveLikeCounts(Integer receiveLikeCounts) {
+		this.receiveLikeCounts = receiveLikeCounts;
+	}
+
+	/**
      * 0 = female, 1 = male, 2 = others
      */
     @ApiModelProperty(hidden=true)

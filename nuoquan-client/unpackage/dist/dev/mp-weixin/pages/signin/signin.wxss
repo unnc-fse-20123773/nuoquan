@@ -1,0 +1,54 @@
+
+.signinpage {
+	width: 100%;
+	margin: auto;
+}
+.spacearea {
+	height: 150px;
+	display: block;
+	width: 750rpx;
+}
+.touxiang {
+	height: 100px;
+	width: 100px;
+	-webkit-border-radius: 50px;
+	        border-radius: 50px;
+	display: block;
+	margin: auto;
+}
+.fengexian {
+	margin-top: 50px;
+	height: 50px;
+}
+.mailbox {
+	display: block;
+	margin: auto;
+	width:210px;
+}
+.prefix {
+	width: 60px;
+	display: inline-block;
+}
+.suffix {
+	font-size: 12px;
+	color: #d6d6d6;
+	display: inline-block;
+	width:150px;
+}
+.verifycode {
+	display: block;
+	margin: auto;
+	width:120px;
+	font-size: 14px;
+}
+.code{
+	display: inline-block;
+	width:80px;
+}
+.verifycode button{
+	width:120px;
+	font-size: 14px;
+	
+	background: RGB(253, 217, 108);
+}
+

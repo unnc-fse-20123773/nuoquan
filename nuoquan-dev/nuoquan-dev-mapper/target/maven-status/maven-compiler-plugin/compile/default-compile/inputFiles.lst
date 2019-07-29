@@ -1,7 +1,10 @@
+/Users/xudeyan/eclipse-workspace/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/SearchRecordMapper.java
 /Users/xudeyan/eclipse-workspace/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/UserLikeArticleMapper.java
 /Users/xudeyan/eclipse-workspace/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/UserArticleCommentMapper.java
 /Users/xudeyan/eclipse-workspace/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/UserMapper.java
 /Users/xudeyan/eclipse-workspace/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/UserReportMapper.java
 /Users/xudeyan/eclipse-workspace/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/AdministratorMapper.java
+/Users/xudeyan/eclipse-workspace/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/ArticleMapperCustom.java
 /Users/xudeyan/eclipse-workspace/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/UserFansMapper.java
+/Users/xudeyan/eclipse-workspace/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/TagsMapper.java
 /Users/xudeyan/eclipse-workspace/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/ArticleMapper.java
