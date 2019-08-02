@@ -43,8 +43,8 @@ export default {
 	methods: {
 		controlShowLeft(a) {
 			this.showMainPageLeft = a;
-			console.log(a);
-			console.log(this.showMainPageLeft);
+			// console.log(a);
+			// console.log(this.showMainPageLeft);
 		}
 	}
 };

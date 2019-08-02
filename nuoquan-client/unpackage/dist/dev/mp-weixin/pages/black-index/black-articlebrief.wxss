@@ -5,8 +5,7 @@
 	width: 650rpx;
 	background-color: #313131;
 	margin: auto;
-	-webkit-border-radius: 8px 8px 0 0;
-	        border-radius: 8px 8px 0 0;
+	border-radius: 8px 8px 0 0;
 }
 .star {
 	display: inline-block;
@@ -22,8 +21,7 @@
 	position: absolute;
 	left: 0;
 	bottom: 0;
-	-webkit-border-radius: 50% 50% 0 0;
-	        border-radius: 50% 50% 0 0;
+	border-radius: 50% 50% 0 0;
 	background: #000000;
 }
 .user {
@@ -44,8 +42,7 @@
 .menubar {
 	position: relative;
 	vertical-align: middle;
-	-webkit-border-radius: 0 0 8px 8px;
-	        border-radius: 0 0 8px 8px;
+	border-radius: 0 0 8px 8px;
 	width: 630rpx;
 	height: 13px;
 	margin: auto;
@@ -60,8 +57,7 @@
 	position: absolute;
 	left: 0;
 	top: -10px;
-	-webkit-border-radius: 53.65% 50% 0 0;
-	        border-radius: 53.65% 50% 0 0;
+	border-radius: 53.65% 50% 0 0;
 	background: #585858;
 	margin-bottom: 20px;
 }
@@ -83,8 +79,7 @@
 	display: inline-block;
 	content-flex: right;
 	overflow: hidden;
-	-webkit-border-bottom-right-radius: 8px;
-	        border-bottom-right-radius: 8px;
+	border-bottom-right-radius: 8px;
 }
 .icons image {
 	width: 11px;

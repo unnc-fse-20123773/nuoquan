@@ -32,8 +32,7 @@ to {
 	top: 0;
 	-webkit-box-shadow: 1px 0px 5px #a6a6a6;
 	        box-shadow: 1px 0px 5px #a6a6a6;
-	-webkit-border-bottom-right-radius: 80px;
-	        border-bottom-right-radius: 80px;
+	border-bottom-right-radius: 80px;
 }
 .topInfoArea {
 	height: 60px;
@@ -48,8 +47,7 @@ to {
 .touxiang {
 	height: 60px;
 	width: 60px;
-	-webkit-border-radius: 60px;
-	        border-radius: 60px;
+	border-radius: 60px;
 	display: block;
 }
 .topRight {

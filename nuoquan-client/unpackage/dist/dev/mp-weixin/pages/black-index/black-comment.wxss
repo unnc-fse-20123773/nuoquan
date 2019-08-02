@@ -63,8 +63,7 @@
 	display: inline-block;
 	content-flex: right;
 	overflow: hidden;
-	-webkit-border-bottom-right-radius: 8px;
-	        border-bottom-right-radius: 8px;
+	border-bottom-right-radius: 8px;
 }
 .icons image {
 	width: 11px;
