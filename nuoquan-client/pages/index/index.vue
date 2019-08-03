@@ -8,6 +8,9 @@
 		<navigator url="../search/search">
 			<button type="primary" size="mini">search</button>
 		</navigator>
+		<navigator url="../black-index/black-index">
+			<button type="primary" size="mini">black</button>
+		</navigator>
 	</view>
 </template>
 

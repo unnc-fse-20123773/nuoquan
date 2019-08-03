@@ -287,6 +287,9 @@ var _default =
 
 
 
+
+
+
 var _articlebrief = _interopRequireDefault(__webpack_require__(/*! ../../components/articlebrief */ "../../../../../../../../../code/nuoquan/nuoquan-client/components/articlebrief.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -300,10 +303,10 @@ var _articlebrief = _interopRequireDefault(__webpack_require__(/*! ../../compone
 //
 //
 //
-var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! import() | components/mainpagetop */ "components/mainpagetop").then(__webpack_require__.bind(null, /*! ../../components/mainpagetop.vue */ "../../../../../../../../../code/nuoquan/nuoquan-client/components/mainpagetop.vue"));};var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ "../../../../../../../../../code/nuoquan/nuoquan-client/components/mainpageleft.vue"));};var _default = { data: function data() {return { title: 'Hello', hottitlelist: ['热门标题111', '热门标题222', '热门标题333'], showlist: "" };}, components: { articlebrief: _articlebrief.default,
-    mainpagetop: mainpagetop,
-    mainpageleft: mainpageleft },
-
+//
+//
+//
+var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! import() | components/mainpagetop */ "components/mainpagetop").then(__webpack_require__.bind(null, /*! ../../components/mainpagetop.vue */ "../../../../../../../../../code/nuoquan/nuoquan-client/components/mainpagetop.vue"));};var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ "../../../../../../../../../code/nuoquan/nuoquan-client/components/mainpageleft.vue"));};var _default = { data: function data() {return { title: 'Hello', hottitlelist: ['热门标题111', '热门标题222', '热门标题333'], showlist: "" };}, components: { articlebrief: _articlebrief.default, mainpagetop: mainpagetop, mainpageleft: mainpageleft },
 
   created: function created() {
     var _this = this;
