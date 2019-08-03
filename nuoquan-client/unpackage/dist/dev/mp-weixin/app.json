@@ -1,11 +1,18 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/search/search",
+    "pages/fanslist/fanslist",
+    "pages/profile/profile",
     "pages/black-index/black-index",
     "pages/detail/detail",
     "pages/signin/signin",
     "components/articlebrief",
-    "pages/submit/submit"
+    "pages/submit/submit",
+    "pages/personpublic/personpublic",
+    "pages/followlist/followlist",
+    "pages/messagelist/messagelist",
+    "pages/chatpage/chatpage"
   ],
   "subPackages": [],
   "window": {

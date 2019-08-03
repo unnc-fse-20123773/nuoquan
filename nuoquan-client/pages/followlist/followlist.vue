@@ -1,0 +1,27 @@
+<template>
+	<view>
+		这是他关注的人，点击下面头像可以进入到他关注的人的主页
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				
+			}
+		},
+		onLoad: function() {
+			uni.setNavigationBarTitle({
+				title: "关注列表"
+			});
+		},
+		methods: {
+			
+		}
+	}
+</script>
+
+<style>
+
+</style>
