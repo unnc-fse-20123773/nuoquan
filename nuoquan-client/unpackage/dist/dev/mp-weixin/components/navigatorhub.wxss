@@ -1,7 +1,0 @@
-
-.navigatorhub-position{
-	width: 300rpx;
-	background-color: yellow;
-	position: fixed;
-}
-

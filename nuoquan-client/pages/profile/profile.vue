@@ -17,12 +17,12 @@
 			return {}
 
 		},
-		
+
 		onLoad: function() {
 			uni.setNavigationBarTitle({
 				title: "个人主页"
 			});
-			},
+		},
 		methods: {
 
 		}

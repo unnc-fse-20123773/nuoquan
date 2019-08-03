@@ -2,7 +2,7 @@
 	<view>
 		<navigator url="../../pages/search/search" class="topBarSearch searchPosition">
 		</navigator>
-		
+
 		<view class="bottomLayerOfLeft" v-if="showMainPageLeft" @click="controlShowLeft(0)">
 			<mainpageleft></mainpageleft>
 		</view>
@@ -10,11 +10,24 @@
 		<view class="mainPageTop">
 			<view class="topBar">
 				<image class="topBarTouxiang" src="../static/touxiang.jpg" @click="controlShowLeft(1)"></image>
-				<input class="topBarSearch" placeholder="  搜索" />
+				<!-- 从这里开始为测试搜索下拉窗口 -->
+				<view id="menu">
+					<input class="topBarSearch" placeholder="  搜索" />
+					<view id="list">
+						<view>item</view>
+						<view>item</view>
+						<view>item</view>
+						<view>item</view>
+						<view>item</view>
+					</view>
+				</view>
+				<!-- 测试到这里结束 -->
+
 				<view class="topBarPlus">
+					<!-- Guetta-直接在 icon 上加了跳轉 -->
 					<navigator url="../../pages/submit/submit" style="font-size: 20px;color:#FDD041;border-radius: 3px;">+</navigator>
 				</view>
-				<view class="topBarwaiting"></view>
+				<!-- <view class="topBarwaiting"></view>  该语句未见明显效果，故注释掉 -->
 			</view>
 			<view class="topicTitle">话题榜</view>
 
@@ -58,6 +71,9 @@
 </script>
 
 <style>
+	page{
+		width: 100%;
+	}
 	.bottomLayerOfLeft {
 
 		position: fixed;
@@ -65,13 +81,16 @@
 		height: 1000px;
 		z-index: 3;
 	}
-
+	.topBar{
+	display: flex;	
+	}
 	.mainPageTop {
+		display: flex;
+		flex-direction: column;
 		padding-top: 4px;
-		/* 	height: 168px;
- */
+		height: 168px;
 		width: 100%;
-		background: #fdd041;
+		background: #FDD041;
 		box-shadow: 0 -2px 10px #000000;
 		border-bottom-right-radius: 25px;
 		border-bottom-left-radius: 25px;
@@ -100,7 +119,6 @@
 		font-family: MicrosoftYaHei;
 		line-height: 10px;
 		min-height: 28px;
-
 	}
 
 	.topBarPlus {
@@ -157,10 +175,28 @@
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
-	.searchPosition{
+
+	.searchPosition {
 		position: fixed;
 		background-color: red;
 		left: 42px;
 		top: 5px;
+	}
+
+	/* 以下为测试用 CSS 代码 */
+	#list {
+		width: 520upx;
+	}
+
+	#menu #list {
+		max-height: 0;
+		transition: max-height 0.25s ease-out;
+		overflow: hidden;
+		background: blue;
+	}
+
+	#menu:hover #list {
+		max-height: 1000px;
+		transition: max-height 0.25s ease-in;
 	}
 </style>

@@ -1,1 +1,0 @@
-<view class="navigatorhub-position"><text>不可移动的传送门</text><block wx:for="{{pagename}}" wx:for-item="item" wx:for-index="__i0__" wx:key="value"><view><button type="primary" size="mini">{{item.name}}</button></view></block></view>
