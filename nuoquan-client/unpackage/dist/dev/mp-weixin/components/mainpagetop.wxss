@@ -9,12 +9,6 @@ page{
 		height: 1000px;
 		z-index: 3;
 }
-.topBar{
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: -ms-flexbox;
-	display: flex;
-}
 .mainPageTop {
 		display: -webkit-box;
 		display: -webkit-flex;

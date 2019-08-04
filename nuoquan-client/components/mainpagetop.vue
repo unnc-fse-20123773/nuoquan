@@ -81,9 +81,7 @@
 		height: 1000px;
 		z-index: 3;
 	}
-	.topBar{
-	display: flex;	
-	}
+
 	.mainPageTop {
 		display: flex;
 		flex-direction: column;

@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/personpublic/personpublic",
     "pages/index/index",
     "pages/search/search",
     "pages/fanslist/fanslist",
@@ -9,7 +10,6 @@
     "pages/signin/signin",
     "components/articlebrief",
     "pages/submit/submit",
-    "pages/personpublic/personpublic",
     "pages/followlist/followlist",
     "pages/messagelist/messagelist",
     "pages/chatpage/chatpage"

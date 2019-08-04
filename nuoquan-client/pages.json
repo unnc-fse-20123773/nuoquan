@@ -1,6 +1,10 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+			"path": "pages/personpublic/personpublic",
+			"style": {}
+		},
+		{
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "uni-app"
@@ -37,10 +41,7 @@
 		}, {
 			"path": "pages/submit/submit",
 			"style": {}
-		}, {
-			"path": "pages/personpublic/personpublic",
-			"style": {}
-		}, {
+		},  {
 			"path": "pages/followlist/followlist",
 			"style": {}
 		}, {
