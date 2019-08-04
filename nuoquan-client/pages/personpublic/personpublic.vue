@@ -110,7 +110,6 @@
 
 			// 获取当前页面
 			var page = this.page;
-			this.getAllVideoList(page);
 
 		},
 

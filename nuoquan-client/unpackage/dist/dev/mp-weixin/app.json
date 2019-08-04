@@ -1,10 +1,10 @@
 {
   "pages": [
-    "pages/personpublic/personpublic",
+    "pages/profile/profile",
     "pages/index/index",
+    "pages/personpublic/personpublic",
     "pages/search/search",
     "pages/fanslist/fanslist",
-    "pages/profile/profile",
     "pages/black-index/black-index",
     "pages/detail/detail",
     "pages/signin/signin",
