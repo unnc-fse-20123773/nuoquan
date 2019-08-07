@@ -18,7 +18,18 @@ public interface UserService {
 	public void saveUser(User user);
 	
 	/**
-	 * 用户登录，根据用户名和密码查询用户
+	 * @Description: 用户登录，根据用户名和密码查询用户
 	 */
 	public User checkUserForLogin(String nickname, String password);
+	
+	/**
+	 * @Description: 修改用户记录
+	 */
+	public User updateUserInfo(User user);
+	
+	/**
+	 * @Description: 根据用户 Id 查询该用户信息
+	 */
+	public User queryUserById(String userId);
+
 }

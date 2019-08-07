@@ -50,7 +50,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User checkUserForLogin(String nickname, String password) {
 		
-
 		Example userExample = new Example(User.class);
 		Criteria criteria = userExample.createCriteria();
 		criteria.andEqualTo("nickname", nickname);
@@ -58,6 +57,19 @@ public class UserServiceImpl implements UserService {
 		User result = userMapper.selectOneByExample(userExample);
 		
 		return result;
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Override
+	public User updateUserInfo(User user) {
+		
+		userMapper.updateByPrimaryKeySelective(user);
+		return queryUserById(user.getId());
+	}
+	@Transactional(propagation = Propagation.SUPPORTS)	
+	@Override
+	public User queryUserById(String userId) {
+		return userMapper.selectByPrimaryKey(userId);
 	}
 
 }

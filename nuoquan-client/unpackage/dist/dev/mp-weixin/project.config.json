@@ -24,8 +24,27 @@
       "list": []
     },
     "miniprogram": {
-      "current": -1,
-      "list": []
+      "current": 2,
+      "list": [
+        {
+          "name": "signin",
+          "query": "",
+          "id": 0,
+          "pathName": "pages/signin/signin"
+        },
+        {
+          "name": "submit",
+          "query": "",
+          "id": 1,
+          "pathName": "pages/submit/submit"
+        },
+        {
+          "id": 2,
+          "name": "pages/black-index/black-index",
+          "pathName": "pages/black-index/black-index",
+          "query": ""
+        }
+      ]
     }
   }
 }

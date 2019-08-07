@@ -4,6 +4,7 @@ com/nuoquan/mapper/SearchRecordMapper.class
 com/nuoquan/mapper/ArticleMapperCustom.class
 com/nuoquan/mapper/UserArticleCommentMapper.class
 com/nuoquan/mapper/TagsMapper.class
+com/nuoquan/mapper/ChatMsgMapper.class
 com/nuoquan/mapper/UserLikeArticleMapper.class
 com/nuoquan/mapper/UserFansMapper.class
 com/nuoquan/mapper/AdministratorMapper.class

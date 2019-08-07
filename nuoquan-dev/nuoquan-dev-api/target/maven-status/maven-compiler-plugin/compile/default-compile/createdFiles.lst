@@ -1,6 +1,11 @@
 com/nuoquan/Swagger2.class
-com/nuoquan/Application.class
 com/nuoquan/controller/ArticleController.class
+com/nuoquan/netty/WSServerInitializer.class
 com/nuoquan/controller/HelloController.class
 com/nuoquan/controller/BasicController.class
 com/nuoquan/controller/RegistLoginController.class
+com/nuoquan/NettyBooter.class
+com/nuoquan/netty/WSServer.class
+com/nuoquan/Application.class
+com/nuoquan/netty/WSServer$SingletonWSSever.class
+com/nuoquan/netty/ChatHandler.class
