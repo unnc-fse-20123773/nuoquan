@@ -25,8 +25,17 @@ public class User {
     @Column(name = "face_img_thumb")
     private String faceImgThumb;
 
+    /**
+     * 关注数
+     */
     @Column(name = "follow_num")
     private Integer followNum;
+
+    /**
+     * 粉丝数
+     */
+    @Column(name = "fans_num")
+    private Integer fansNum;
 
     /**
      * 0 = female, 1 = male, 2 = others
@@ -35,8 +44,11 @@ public class User {
 
     private String major;
 
+    /**
+     * Example: 2022
+     */
     @Column(name = "graduation_year")
-    private Date graduationYear;
+    private Integer graduationYear;
 
     /**
      * 0 = high school, 1 = undergraduate, 2 = graduate
@@ -154,17 +166,39 @@ public class User {
     }
 
     /**
-     * @return follow_num
+     * 获取关注数
+     *
+     * @return follow_num - 关注数
      */
     public Integer getFollowNum() {
         return followNum;
     }
 
     /**
-     * @param followNum
+     * 设置关注数
+     *
+     * @param followNum 关注数
      */
     public void setFollowNum(Integer followNum) {
         this.followNum = followNum;
+    }
+
+    /**
+     * 获取粉丝数
+     *
+     * @return fans_num - 粉丝数
+     */
+    public Integer getFansNum() {
+        return fansNum;
+    }
+
+    /**
+     * 设置粉丝数
+     *
+     * @param fansNum 粉丝数
+     */
+    public void setFansNum(Integer fansNum) {
+        this.fansNum = fansNum;
     }
 
     /**
@@ -200,16 +234,20 @@ public class User {
     }
 
     /**
-     * @return graduation_year
+     * 获取Example: 2022
+     *
+     * @return graduation_year - Example: 2022
      */
-    public Date getGraduationYear() {
+    public Integer getGraduationYear() {
         return graduationYear;
     }
 
     /**
-     * @param graduationYear
+     * 设置Example: 2022
+     *
+     * @param graduationYear Example: 2022
      */
-    public void setGraduationYear(Date graduationYear) {
+    public void setGraduationYear(Integer graduationYear) {
         this.graduationYear = graduationYear;
     }
 

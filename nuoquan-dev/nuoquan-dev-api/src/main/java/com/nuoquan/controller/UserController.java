@@ -1,5 +1,6 @@
 package com.nuoquan.controller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -73,5 +74,36 @@ public class UserController extends BasicController {
 		fastDFSClient.deleteFile(fdfsGroupName, url);
 		fastDFSClient.deleteFile(fdfsGroupName, thumbUrl);
 	}
+	
+	@ApiOperation(value = "Be the fans")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "userId", required = true, dataType = "String", paramType = "form"),
+		@ApiImplicitParam(name = "fanId", required = true, dataType = "String", paramType = "form"), })
+	@PostMapping("/follow")
+	public JSONResult follow(String userId, String fanId) throws Exception {
 
+		if (StringUtils.isBlank(fanId) || StringUtils.isBlank(userId)) {
+			return JSONResult.errorMsg("");
+		}
+
+		userService.saveUserFanRelation(userId, fanId);
+
+		return JSONResult.ok("Follow success");
+	}
+
+	@ApiOperation(value = "Don't be the fans")
+	@ApiImplicitParams({ 
+		@ApiImplicitParam(name = "userId", required = true, dataType = "String", paramType = "form"),
+		@ApiImplicitParam(name = "fanId", required = true, dataType = "String", paramType = "form"), })
+	@PostMapping("/dontFollow")
+	public JSONResult dontFollow(String userId, String fanId) throws Exception {
+
+		if (StringUtils.isBlank(fanId) || StringUtils.isBlank(userId)) {
+			return JSONResult.errorMsg("");
+		}
+
+		userService.deleteUserFanRelation(userId, fanId);
+
+		return JSONResult.ok("Cancle follow success");
+	}
 }

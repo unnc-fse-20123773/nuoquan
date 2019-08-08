@@ -6,8 +6,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.nuoquan.mapper.UserFansMapper;
 import com.nuoquan.mapper.UserMapper;
 import com.nuoquan.pojo.User;
+import com.nuoquan.pojo.UserFans;
 
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.entity.Example.Criteria;
@@ -18,6 +20,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserMapper userMapper;
+	
+	@Autowired
+	private UserFansMapper userFansMapper;
 	
 	@Autowired Sid sid;
 	
@@ -70,6 +75,39 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User queryUserById(String userId) {
 		return userMapper.selectByPrimaryKey(userId);
+	}
+
+	@Transactional(propagation = Propagation.REQUIRED) 
+	@Override
+	public void saveUserFanRelation(String userId, String fanId) {
+		
+		// 保存到 users_fans关系表
+		String relId = sid.nextShort();
+		
+		UserFans userFan = new UserFans();
+		userFan.setId(relId);
+		userFan.setUserId(userId);
+		userFan.setFansId(fanId);
+		
+		userFansMapper.insert(userFan);
+		// 更新用户信息
+		userMapper.addFansCount(userId);
+		userMapper.addFollowCount(fanId);
+	}
+
+	@Transactional(propagation = Propagation.REQUIRED) 
+	@Override
+	public void deleteUserFanRelation(String userId, String fanId) {
+		Example example = new Example(UserFans.class);
+		Criteria criteria = example.createCriteria();
+		criteria.andEqualTo("userId", userId);
+		criteria.andEqualTo("fanId", fanId);
+		
+		userFansMapper.deleteByExample(example);
+		
+		userMapper.reduceFansCount(userId);
+		userMapper.reduceFollowCount(fanId);
+		
 	}
 
 }

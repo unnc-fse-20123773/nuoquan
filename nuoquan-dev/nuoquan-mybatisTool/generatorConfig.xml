@@ -33,7 +33,7 @@
 		<!-- <table tableName="comments"></table> -->
 		<!-- <table tableName="search_records"></table> -->
 		<table tableName="user"></table>
-		<table tableName="chat_msg"></table>
+		<!-- <table tableName="chat_msg"></table> -->
 		<!-- <table tableName="users_fans"></table>
 		<table tableName="users_like_videos"></table>
 		<table tableName="videos"></table>
