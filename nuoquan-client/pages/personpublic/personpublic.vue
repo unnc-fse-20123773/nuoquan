@@ -344,7 +344,7 @@
 		flex: 1;
 		height: 92%;
 		width: 100%;
-		background-color: red;
+		background-color: #CCCCCC;
 	}
 
 	.swiper-one-list {

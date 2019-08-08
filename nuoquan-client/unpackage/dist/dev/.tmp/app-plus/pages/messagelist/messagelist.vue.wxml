@@ -1,0 +1,1 @@
+<template name="5e3ff870"><view class="_view M5e3ff870">这是我的所有消息列表，点击消息进入聊天窗口<navigator url="../chatpage/chatpage" class="_navigator M5e3ff870"><button type="primary" size="mini" class="_button M5e3ff870">进入聊天窗口</button></navigator></view></template>

@@ -1,0 +1,1 @@
+<template name="37bb6204"><view class="_view M37bb6204">这是聊天窗口，点击对方头像进入对方主页<navigator url="../personpublic/personpublic" class="_navigator M37bb6204"><button type="primary" size="mini" class="_button M37bb6204">personpublic</button></navigator></view></template>

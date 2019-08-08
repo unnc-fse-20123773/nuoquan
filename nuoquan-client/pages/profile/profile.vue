@@ -146,7 +146,7 @@
 	}
 	
 	.profile-moreinfo-card{
-		height: 22%;
+		height: 30%;
 		margin-left: 7%;
 		margin-top: 61%;
 		width: 86%;
