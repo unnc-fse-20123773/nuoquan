@@ -1,3 +1,5 @@
+<!-- Created by Jerrio for testing -->
+
 <template>
 	<view>
 		<view class="input">
@@ -7,8 +9,6 @@
 			<button type="primary" @click="sendText">send</button>
 		</view>
 	</view>
-	
-	
 	
 </template>
 

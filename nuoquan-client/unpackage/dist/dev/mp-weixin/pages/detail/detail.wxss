@@ -155,8 +155,7 @@ image {
 	height: 180rpx;
 	margin: 6px;
 }
-.tags {
-}
+.tags {}
 .tag {
 	display: inline-block;
 	border-radius: 4px;

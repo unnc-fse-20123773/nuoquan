@@ -1,48 +1,71 @@
 {
-    "pages" : [
-        //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-        // {
-        //     "path" : "pages/search/search",
-        //     "style" : {}
-        // },
-        {
-            "path" : "pages/index/index",
-            "style" : {
-                "navigationBarTitleText" : "uni-app"
-            }
-        },
-        {
-            "path" : "pages/black-index/black-index",
-            "style" : {}
-        },
-        {
-            "path" : "pages/detail/detail",
-            "style" : {}
-        },
-        {
-            "path" : "pages/signin/signin",
-            "style" : {}
-        },
-        {
-            "path" : "components/articlebrief",
-            "style" : {}
-        },
-        {
-            "path" : "pages/submit/submit",
-            "style" : {}
-        },
-        {
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		
+		{
+			"path": "pages/chatpage/chatpage",
+			"style": {}
+		},{
+			"path": "pages/submit/submit",
+			"style": {}
+		},{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
+		}, {
+			"path": "pages/followlist/followlist",
+			"style": {}
+		},
+		{
+			"path": "pages/profile/profile",
+			"style": {}
+		},
+		
+		{
+			"path": "pages/personpublic/personpublic",
+			"style": {}
+		},
+		{
+			"path": "pages/search/search",
+			"style": {}
+		},
+		{
+			"path": "pages/fanslist/fanslist",
+			"style": {}
+		},
+		{
+			"path": "pages/black-index/black-index",
+			"style": {}
+		},
+		{
+			"path": "pages/detail/detail",
+			"style": {}
+		},
+
+		{
+			"path": "pages/signin/signin",
+			"style": {}
+		},
+		{
+			"path": "components/articlebrief",
+			"style": {}
+		}, 
+		{
+			"path": "pages/messagelist/messagelist",
+			"style": {}
+		},
+		{
             "path" : "pages/chat/chat",
             "style" : {}
         }
-    ],
-    "globalStyle" : {
-        "navigationBarTextStyle" : "black",
-        "navigationBarTitleText" : "uni-app",
-        "navigationBarBackgroundColor" : "#F8F8F8",
-        "backgroundColor" : "#F8F8F8"
-    },
-    "condition" : {
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"condition" : {
         //模式配置，仅开发期间生效
         "current" : 0, //当前激活的模式(list 的索引项)
         "list" : [

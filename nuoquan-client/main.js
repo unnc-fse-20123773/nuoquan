@@ -3,6 +3,7 @@ import App from './App'
 
 
 Vue.config.productionTip = false
+Vue.prototype.SeverUrl="http://127.0.0.1:8080"
 
 App.mpType = 'app'
 

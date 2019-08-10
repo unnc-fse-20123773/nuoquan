@@ -21,7 +21,11 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
 	
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) throws Exception {
-		// 获取客户端传过来的消息
+		// 1. 获取客户端传过来的消息
+		// 2. 判断消息类型
+		//	2.1	当 websocket 第一次连接时，初始化Channel，把用的Channel和useid关联起来。
+		
+		
 		String content = msg.text();
 		System.out.println("接收到的数据：" + content);
 		
@@ -48,9 +52,19 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
 	@Override
 	public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
 		// 当触发 handlerRemoved 时，ChannelGroup 会自动移除对应客户端的 Channel
-		// client.remove(ctx.channel());
-		System.out.println("客户端端口，channel 长id = " + ctx.channel().id().asLongText());
-		System.out.println("客户端端口，channel 短id = " + ctx.channel().id().asShortText());
+		clients.remove(ctx.channel());
+//		System.out.println("客户端端口，channel 长id = " + ctx.channel().id().asLongText());
+//		System.out.println("客户端端口，channel 短id = " + ctx.channel().id().asShortText());
 	}
+	
+
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+		cause.printStackTrace();
+		// 发生异常后关闭连接（Channel），随后从 ChannelGroup 中移除.
+		ctx.channel().close();
+		clients.remove(ctx.channel());
+	}
+
 
 }
