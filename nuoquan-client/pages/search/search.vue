@@ -37,6 +37,11 @@
 				searchvalue: "",
 			}
 		},
+		onLoad: function() {
+			uni.setNavigationBarTitle({
+				title: "搜索"
+			});
+		},
 		methods: {
 			searchfunction() {
 
