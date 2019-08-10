@@ -24,7 +24,7 @@
       "list": []
     },
     "miniprogram": {
-      "current": 2,
+      "current": 0,
       "list": [
         {
           "name": "signin",
@@ -39,10 +39,10 @@
           "pathName": "pages/submit/submit"
         },
         {
+          "name": "chat",
+          "query": "",
           "id": 2,
-          "name": "pages/black-index/black-index",
-          "pathName": "pages/black-index/black-index",
-          "query": ""
+          "pathName": "pages/chat/chat"
         }
       ]
     }

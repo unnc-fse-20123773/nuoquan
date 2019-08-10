@@ -1,0 +1,1 @@
+<view><view class="input"><textarea auto-height="true" data-event-opts="{{[['input',[['__set_model',['','textMsg','$event',[]]]]]]}}" value="{{textMsg}}" bindinput="__e"></textarea></view><view><button type="primary" data-event-opts="{{[['tap',[['sendText',['$event']]]]]}}" bindtap="__e">send</button></view></view>
