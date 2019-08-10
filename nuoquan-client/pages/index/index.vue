@@ -36,7 +36,7 @@
 		created: function() {
 			var _this = this;
 			uni.request({
-				url: 'http://127.0.0.1:8080/queryAllArticles',
+				url: this.SeverUrl+'/queryAllArticles',
 				method: "POST",
 				success: (res) => {
 					_this.showlist = res.data.data.rows;
@@ -65,7 +65,7 @@
 	};
 </script>
 
-<style>
+<style scoped>
 	.index {
 		background-color: #f3f3f3;
 	}

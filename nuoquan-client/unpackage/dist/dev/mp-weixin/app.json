@@ -1,9 +1,9 @@
 {
   "pages": [
     "pages/submit/submit",
+    "pages/index/index",
     "pages/followlist/followlist",
     "pages/profile/profile",
-    "pages/index/index",
     "pages/personpublic/personpublic",
     "pages/search/search",
     "pages/fanslist/fanslist",

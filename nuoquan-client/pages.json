@@ -3,6 +3,11 @@
 		{
 			"path": "pages/submit/submit",
 			"style": {}
+		},{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
 		}, {
 			"path": "pages/followlist/followlist",
 			"style": {}
@@ -11,12 +16,7 @@
 			"path": "pages/profile/profile",
 			"style": {}
 		},
-		{
-			"path": "pages/index/index",
-			"style": {
-				"navigationBarTitleText": "uni-app"
-			}
-		},
+		
 		{
 			"path": "pages/personpublic/personpublic",
 			"style": {}
