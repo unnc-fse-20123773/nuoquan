@@ -166,7 +166,7 @@
 		font-size: 13px;
 		line-height: 28px;
 		height: 28px;
-		padding-right: 27px;
+		padding-right: 12px;
 		padding-left: 12px;
 		border: solid 2px #FE5F55;
 		border-radius: 14px;

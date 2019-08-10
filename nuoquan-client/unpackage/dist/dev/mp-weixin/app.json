@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/chatpage/chatpage",
     "pages/submit/submit",
     "pages/index/index",
     "pages/followlist/followlist",
@@ -11,8 +12,7 @@
     "pages/detail/detail",
     "pages/signin/signin",
     "components/articlebrief",
-    "pages/messagelist/messagelist",
-    "pages/chatpage/chatpage"
+    "pages/messagelist/messagelist"
   ],
   "subPackages": [],
   "window": {
