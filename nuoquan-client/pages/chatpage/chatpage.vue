@@ -1,14 +1,14 @@
 <template>
-	<view>
+	<view style="height:100%;">
 		<view class="messageArea">
-			<onemessage v-for="(i,index) in chatContent" :key=index :thisMessage='i'></onemessage>
+			<onemessage v-for="(i,index) in chatContent" :key="index" :thisMessage="i"></onemessage>
 		</view>
 		<view class="bottomBar">
 			<textarea auto-height="true" v-model="textMsg" />
 			<view class="icons">
 				<image src="../../static/icon/viewLocalPic.png"></image>
 				<image src="../../static/icon/emoji.png"></image>
-				<image src="../../static/icon/littlePlane.png" @click="sendText()"></image>
+				<image src="../../static/icon/littlePlane.png" @click="sendText()()"></image>
 
 			</view>
 		</view>
@@ -23,6 +23,7 @@
 	var socketOpen = false;
 	
 	export default {
+		name:'chatpage',
 		components: {
 			onemessage,
 		},
@@ -31,34 +32,44 @@
 
 				chatContent: [{
 					messageId: '0001',
-					messageType: '1',
+					messageType: true,
 					messageTime: '11:29',
-					messageStatus: '0'
+					messageStatus:true,
+					messageContent:'TT里是1233聊天内容，巴123213拉巴拉一大堆,这里123是聊天内2，21巴拉21一大堆,1里是3聊天内容，巴拉巴拉一大堆,这里是聊天内容，巴拉巴拉一大'
 				}, {
 					messageId: '0002',
-					messageType: '1',
+					messageType: false,
 					messageTime: '11:29',
-					messageStatus: '0'
+					messageStatus: false,
+					messageContent:'这是第二条消息，FF'
 				}, {
 					messageId: '0003',
-					messageType: '1',
+					messageType: true,
 					messageTime: '11:29',
-					messageStatus: '0'
+					messageStatus:false,
+										messageContent:'这是第san条消息，TF'
+					
 				}, {
 					messageId: '0004',
-					messageType: '0',
+					messageType: false,
 					messageTime: '11:29',
-					messageStatus: '1'
+					messageStatus: true,
+															messageContent:'这是第444条消息FT'
+					
 				}, {
 					messageId: '0006',
-					messageType: '1',
+					messageType: false,
 					messageTime: '11:29',
-					messageStatus: '0'
+					messageStatus: true,
+															messageContent:'这是第5555条消息，ft'
+					
 				}, {
 					messageId: '0006',
-					messageType: '0',
+					messageType: true,
 					messageTime: '11:29',
-					messageStatus: '1'
+					messageStatus: false,
+															messageContent:'tf这是第san6666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666条消息，status 0,type1'
+					
 				}],
 
 				socketMsgQueue: [], // 未发送的消息队列
@@ -113,12 +124,38 @@
 				});
 				
 			},
-			
+
 			sendText() {
+				
+				//本地尝试模拟发送信息    发送为true,接受flase////////未读为true，已读false
+				
+				var newLocalMessage={
+					messageId: '0003',
+					messageType: true,                                   ///////发送为true,接受flase
+					messageTime: new Date().getTime(),
+					messageStatus:false,                                  //////////未读为false，已读true
+					messageContent:this.textMsg					
+				};
+                console.log(typeof(this.chatContent));										
+                this.chatContent.unshift(newLocalMessage);
+				//模拟发送结束
+
+				
+				
+				
+				
+				
+				
+				
 				if(!this.textMsg){
 					return;
 				}
 				var that = this;
+				
+				
+				
+				
+				
 				
 				if (socketOpen == true) {
 					console.log("1=:"+socketOpen)
@@ -137,14 +174,17 @@
 		}
 	}
 </script>
-
+<style>
+	page{height:100%;		background: #F5F5F5;
+}
+</style>
 <style scoped>
 	.messageArea {
 		display: flex;
+		height:100%;
 		flex-flow: column-reverse;
-		margin-bottom: 90upx;
 		overflow: hidden;
-		background: #F5F5F5;
+		padding-bottom: 120upx;
 	}
 
 	.bottomBar {
@@ -152,7 +192,7 @@
 		display: flex;
 		align-items: center;
 		bottom: 0;
-		height: 90upx;
+		min-height: 90upx;
 		width: 100%;
 		margin: 0;
 		padding: 0;
@@ -167,6 +207,8 @@
 		border-radius: 24upx;
 		border: solid 1px #C6C6C6;
 		margin-left: 14upx;
+				padding:3px 2px;
+		
 	}
 
 	.icons {

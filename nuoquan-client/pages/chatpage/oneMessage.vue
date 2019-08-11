@@ -1,21 +1,23 @@
 <template>
 	<view>
-		<view class="send">
+		
+<!-- 		发送为true,接受flase////////未读为true，已读false
+ -->		<view class="send" v-if="thisMessage.messageType">
 			<navigator url="../personpublic/personpublic">
 				<image class="touxiang" src="../../static/touxiang.jpg"></image>
 			</navigator>
 			<view class="content">
 				<view class="contentText">
-					这里是1233聊天内容，巴123213拉巴拉一大堆,这里123是聊天内2，21巴拉21一大堆,1里是3聊天内容，巴拉巴拉一大堆,这里是聊天内容，巴拉巴拉一大堆
+					{{thisMessage.messageContent}}
 				</view>
 				<view class="bottomBar">
 					<view class="time">
-						11:29
+						{{thisMessage.messageTime}}
 					</view>
-					<view class="status">
+					<view class="status" v-if="!thisMessage.messageStatus">
 						...
 					</view>
-					<view class="status" style="color:#3FC24A">
+					<view class="status" style="color:#3FC24A" v-if="thisMessage.messageStatus">
 						√ 
 					</view>
 					
@@ -25,17 +27,17 @@
 		</view>
 
 
-		<view class="receve">
+		<view class="receve" v-if="!thisMessage.messageType">
 			<navigator url="../personpublic/personpublic">
 				<image class="touxiang" src="../../static/touxiang.jpg"></image>
 			</navigator>
 			<view class="content">
 				<view class="contentText">
-					这里是1233聊天内容，巴123213拉巴拉一大堆,这里123是聊天内2，21巴拉21一大堆,1里是3聊天内容，巴拉巴拉一大堆,这里是聊天内容，巴拉巴拉一大堆
+					{{thisMessage.messageContent}}
 				</view>
 				<view class="bottomBar">
 					<view class="time">
-						11:29
+						{{thisMessage.messageTime}}
 					</view>
 					
 				</view>
@@ -48,14 +50,14 @@
 <script>
 	export default {
 		props: {
-			thisMEssage: {},
+			thisMessage: {},
 		},
 		data() {
 			return {};
 		},
-		onLoad: function() {
+		mounted: function() {
 			console.log(this.thisMessage);
-			debugger;
+			console.log("after message");
 		},
 	};
 </script>
@@ -98,7 +100,7 @@
 	.contentText {
 		width: 400upx;
 		font-size: 12px;
-		word-break: break-word;
+		word-break:break-all;
 	}
 </style>
 <style>

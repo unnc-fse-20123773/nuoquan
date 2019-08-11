@@ -4,11 +4,11 @@ page {
 }
 
 
-.tabs.data-v-533e9a7e {
+.tabs.data-v-1aac0d97 {
 	margin: 26rpx 0 0;
 }
-.focusER.data-v-533e9a7e,
-.itsFocus.data-v-533e9a7e {
+.focusER.data-v-1aac0d97,
+.itsFocus.data-v-1aac0d97 {
 	color: #353535;
 	font-size: 15px;
 	display: inline-block;
@@ -16,12 +16,12 @@ page {
 	margin: auto;
 	text-align: center;
 }
-.devidingLine.data-v-533e9a7e {
+.devidingLine.data-v-1aac0d97 {
 	border-top: solid 3px #FDD453;
 	width: 258rpx;
 	margin-left: 58.5rpx;
 }
-.listItem.data-v-533e9a7e {
+.listItem.data-v-1aac0d97 {
 	position: relative;
 	height: 45px;
 	display: -webkit-box;
@@ -33,7 +33,7 @@ page {
 	    -ms-flex-align: center;
 	        align-items: center;
 }
-.touxiang.data-v-533e9a7e {
+.touxiang.data-v-1aac0d97 {
 	display: -webkit-inline-box;
 	display: -webkit-inline-flex;
 	display: -ms-inline-flexbox;
@@ -46,7 +46,7 @@ page {
 	vertical-align: middle;
 	line-height: 45px;
 }
-.name.data-v-533e9a7e {
+.name.data-v-1aac0d97 {
 	display: -webkit-inline-box;
 	display: -webkit-inline-flex;
 	display: -ms-inline-flexbox;
@@ -56,7 +56,7 @@ page {
 	margin-left: 13px;
 	vertical-align: middle;
 }
-.goFocus.data-v-533e9a7e {
+.goFocus.data-v-1aac0d97 {
 	border: solid 1px #ECC138;
 	border-radius: 5px;
 	font-size: 13px;
@@ -70,7 +70,7 @@ page {
 	vertical-align: middle;
 	text-align: center;
 }
-.listItemBottomLine.data-v-533e9a7e {
+.listItemBottomLine.data-v-1aac0d97 {
 	border-top: solid 1px #DCDCDC;
 	width: 590rpx;
 	position: absolute;
