@@ -1,6 +1,9 @@
 package com.nuoquan.service;
 
+import java.util.List;
+
 import com.nuoquan.pojo.User;
+import com.nuoquan.pojo.netty.ChatMessage;
 
 public interface UserService {
 	
@@ -45,4 +48,14 @@ public interface UserService {
 	 * @param fanId
 	 */
 	public void deleteUserFanRelation(String userId, String fanId);
+	
+	/**
+	 * @Description 保存聊天消息到数据库
+	 */
+	public String saveMsg(ChatMessage chatMessage);
+	
+	/**
+	 * @Description 批量签收消息
+	 */
+	public void updateMsgSigned(List<String> msgIdList);
 }

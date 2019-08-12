@@ -1,81 +1,80 @@
 <template>
 	<view>
-			
-			<view class="tabs">
-				<view class="itsFocus ">
-					他关注的
-				</view>
-				<view class="focusER">
-					关注他的
-				</view>
-				<view class="devidingLine"></view>
-	
+		<view class="tabs">
+			<view class="itsFocus ">
+				他关注的
 			</view>
-			<view class="list">
-				<view class="listItem">
-					<image src="../../static/touxiang.jpg" class="touxiang"></image>
-					<view class="name">陈仅仅11号</view>
-					<view class="goFocus">关注</view>
-					<view class="listItemBottomLine"></view>
-				</view>
-				<view class="listItem">
-					<image src="../../static/touxiang.jpg" class="touxiang"></image>
-					<view class="name">陈仅仅11号</view>
-					<view class="goFocus">关注</view>
-					<view class="listItemBottomLine"></view>
-				</view>
-				<view class="listItem">
-					<image src="../../static/touxiang.jpg" class="touxiang"></image>
-					<view class="name">陈仅仅11号</view>
-					<view class="goFocus">关注</view>
-					<view class="listItemBottomLine"></view>
-				</view>
-				<view class="listItem">
-					<image src="../../static/touxiang.jpg" class="touxiang"></image>
-					<view class="name">陈仅仅11号</view>
-					<view class="goFocus">关注</view>
-					<view class="listItemBottomLine"></view>
-				</view>
-				<view class="listItem">
-					<image src="../../static/touxiang.jpg" class="touxiang"></image>
-					<view class="name">陈仅仅11号</view>
-					<view class="goFocus">关注</view>
-					<view class="listItemBottomLine"></view>
-				</view>
-				<view class="listItem">
-					<image src="../../static/touxiang.jpg" class="touxiang"></image>
-					<view class="name">陈仅仅11号</view>
-					<view class="goFocus">关注</view>
-					<view class="listItemBottomLine"></view>
-				</view>
-				<view class="listItem">
-					<image src="../../static/touxiang.jpg" class="touxiang"></image>
-					<view class="name">陈仅仅11号</view>
-					<view class="goFocus">关注</view>
-					<view class="listItemBottomLine"></view>
-				</view>
-				<view class="listItem">
-					<image src="../../static/touxiang.jpg" class="touxiang"></image>
-					<view class="name">陈仅仅11号</view>
-					<view class="goFocus">关注</view>
-					<view class="listItemBottomLine"></view>
-				</view>
-				<view class="listItem">
-					<image src="../../static/touxiang.jpg" class="touxiang"></image>
-					<view class="name">陈仅仅11号</view>
-					<view class="goFocus">关注</view>
-					<view class="listItemBottomLine"></view>
-				</view>
-				<view class="listItem">
-					<image src="../../static/touxiang.jpg" class="touxiang"></image>
-					<view class="name">陈仅仅11号</view>
-					<view class="goFocus">关注</view>
-					<view class="listItemBottomLine"></view>
-				</view>
+			<view class="focusER">
+				关注他的
+			</view>
+			<view class="devidingLine"></view>
+
+		</view>
+		<view class="list">
+			<view class="listItem">
+				<image src="../../static/touxiang.jpg" class="touxiang"></image>
+				<view class="name">陈仅仅11号</view>
+				<view class="goFocus">关注</view>
+				<view class="listItemBottomLine"></view>
+			</view>
+			<view class="listItem">
+				<image src="../../static/touxiang.jpg" class="touxiang"></image>
+				<view class="name">陈仅仅11号</view>
+				<view class="goFocus">关注</view>
+				<view class="listItemBottomLine"></view>
+			</view>
+			<view class="listItem">
+				<image src="../../static/touxiang.jpg" class="touxiang"></image>
+				<view class="name">陈仅仅11号</view>
+				<view class="goFocus">关注</view>
+				<view class="listItemBottomLine"></view>
+			</view>
+			<view class="listItem">
+				<image src="../../static/touxiang.jpg" class="touxiang"></image>
+				<view class="name">陈仅仅11号</view>
+				<view class="goFocus">关注</view>
+				<view class="listItemBottomLine"></view>
+			</view>
+			<view class="listItem">
+				<image src="../../static/touxiang.jpg" class="touxiang"></image>
+				<view class="name">陈仅仅11号</view>
+				<view class="goFocus">关注</view>
+				<view class="listItemBottomLine"></view>
+			</view>
+			<view class="listItem">
+				<image src="../../static/touxiang.jpg" class="touxiang"></image>
+				<view class="name">陈仅仅11号</view>
+				<view class="goFocus">关注</view>
+				<view class="listItemBottomLine"></view>
+			</view>
+			<view class="listItem">
+				<image src="../../static/touxiang.jpg" class="touxiang"></image>
+				<view class="name">陈仅仅11号</view>
+				<view class="goFocus">关注</view>
+				<view class="listItemBottomLine"></view>
+			</view>
+			<view class="listItem">
+				<image src="../../static/touxiang.jpg" class="touxiang"></image>
+				<view class="name">陈仅仅11号</view>
+				<view class="goFocus">关注</view>
+				<view class="listItemBottomLine"></view>
+			</view>
+			<view class="listItem">
+				<image src="../../static/touxiang.jpg" class="touxiang"></image>
+				<view class="name">陈仅仅11号</view>
+				<view class="goFocus">关注</view>
+				<view class="listItemBottomLine"></view>
+			</view>
+			<view class="listItem">
+				<image src="../../static/touxiang.jpg" class="touxiang"></image>
+				<view class="name">陈仅仅11号</view>
+				<view class="goFocus">关注</view>
+				<view class="listItemBottomLine"></view>
 			</view>
 		</view>
-	</template>
-	
+	</view>
+</template>
+
 
 
 <script>
@@ -102,7 +101,7 @@
 	}
 </style>
 <style scoped>
-		.tabs {
+	.tabs {
 		margin: 26upx 0 0;
 	}
 

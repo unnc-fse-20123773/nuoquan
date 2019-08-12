@@ -133,6 +133,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+var userInfo;
+
 var socketTask;
 var socketOpen = false;var _default =
 
@@ -184,6 +186,14 @@ var socketOpen = false;var _default =
       title: "XXXX（聊天人的昵称）" });
 
 
+    userInfo = this.getGlobalUserInfo();
+    if (userInfo == null || userInfo == undefined || userInfo == "") {
+      console.log("No userInfo!!");
+      return;
+    } else {
+      console.log(userInfo);
+    }
+
     this.socketInit();
   },
   onHide: function onHide() {
@@ -201,6 +211,10 @@ var socketOpen = false;var _default =
       socketTask.onOpen(function (res) {
         console.log('WebSocket连接已打开！');
         socketOpen = true;
+
+        var chatMessage = new vue.ChatMessage(userInfo.id, null, null, null);
+        var dataContent = new vue.DataContent(vue.CONNECT, chatMessage, null);
+        // 发送未发送的信息
         for (var i = 0; i < that.socketMsgQueue.length; i++) {
           console.log(that.socketMsgQueue[i]);
           socketTask.send({

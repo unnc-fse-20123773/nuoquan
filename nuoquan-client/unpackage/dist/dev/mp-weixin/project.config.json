@@ -43,6 +43,18 @@
           "query": "",
           "id": 2,
           "pathName": "pages/chat/chat"
+        },
+        {
+          "name": "fanslist",
+          "query": "",
+          "id": 3,
+          "pathName": "pages/fanslist/fanslist"
+        },
+        {
+          "name": "messagelist",
+          "query": "",
+          "id": 4,
+          "pathName": "pages/messagelist/messagelist"
         }
       ]
     }

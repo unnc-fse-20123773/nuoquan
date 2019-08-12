@@ -6,6 +6,7 @@ com/nuoquan/pojo/Administrator.class
 com/nuoquan/pojo/UserArticleComment.class
 com/nuoquan/pojo/ChatMsg.class
 com/nuoquan/pojo/UserFans.class
+com/nuoquan/pojo/vo/UserVO.class
 com/nuoquan/pojo/UserLikeArticle.class
 com/nuoquan/pojo/Article.class
 com/nuoquan/pojo/vo/ArticleVO.class

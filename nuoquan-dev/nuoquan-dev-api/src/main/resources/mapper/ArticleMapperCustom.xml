@@ -18,7 +18,7 @@
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="is_anonymous" jdbcType="TINYINT" property="isAnonymous" />
     
-     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
   </resultMap>
   
   

@@ -1,4 +1,4 @@
-package com.nuoquan.cofig;
+package com.nuoquan.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

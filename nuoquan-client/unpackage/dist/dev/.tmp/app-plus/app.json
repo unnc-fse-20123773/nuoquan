@@ -1,0 +1,32 @@
+{
+  "pages": [
+    "pages/chatpage/chatpage",
+    "pages/submit/submit",
+    "pages/index/index",
+    "pages/followlist/followlist",
+    "pages/profile/profile",
+    "pages/personpublic/personpublic",
+    "pages/search/search",
+    "pages/fanslist/fanslist",
+    "pages/black-index/black-index",
+    "pages/detail/detail",
+    "pages/signin/signin",
+    "components/articlebrief",
+    "pages/messagelist/messagelist",
+    "pages/chat/chat"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "usingComponents": {},
+  "nvueCompiler": "weex",
+  "splashscreen": {
+    "alwaysShowBeforeRender": true,
+    "autoclose": false
+  },
+  "appname": "nuoquan",
+  "compilerVersion": "2.1.3"
+}

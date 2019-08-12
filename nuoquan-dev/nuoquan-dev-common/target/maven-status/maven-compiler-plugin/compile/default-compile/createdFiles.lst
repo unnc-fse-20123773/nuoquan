@@ -1,12 +1,15 @@
 org/n3r/idworker/DayCode.class
+com/nuoquan/utils/JSONResult.class
 org/n3r/idworker/strategy/DefaultRandomCodeStrategy.class
 org/n3r/idworker/strategy/DefaultWorkerIdStrategy$2.class
 org/n3r/idworker/utils/Ip.class
 org/n3r/idworker/RandomCodeStrategy.class
 org/n3r/idworker/utils/Serializes.class
-com/nuoquan/utils/IMoocJSONResult.class
+com/nuoquan/utils/FileUtils.class
+com/nuoquan/utils/FastDFSClient.class
 org/n3r/idworker/WorkerIdStrategy.class
 org/n3r/idworker/InvalidSystemClock.class
+com/nuoquan/utils/JsonUtils.class
 com/nuoquan/utils/MyMapper.class
 com/nuoquan/utils/MD5Utils.class
 com/nuoquan/utils/PagedResult.class
