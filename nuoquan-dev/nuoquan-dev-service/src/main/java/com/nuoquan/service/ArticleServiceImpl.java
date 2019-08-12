@@ -54,7 +54,7 @@ public class ArticleServiceImpl implements ArticleService {
 		
 		List<ArticleVO> list = articleMapperCustom.queryAllArticles();
 		
-		PageInfo<ArticleVO> pageList = new PageInfo<ArticleVO>();
+		PageInfo<ArticleVO> pageList = new PageInfo<ArticleVO>(list);
 		
 		PagedResult pagedResult = new PagedResult();
 		pagedResult.setPage(page);

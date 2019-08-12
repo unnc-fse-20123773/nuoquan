@@ -11,7 +11,7 @@
 			<view class="topBar">
 				<image class="topBarTouxiang" src="../static/touxiang.jpg" @click="controlShowLeft(1)"></image>
 				<!-- 从这里开始为测试搜索下拉窗口 -->
-				<view id="menu">
+				<!-- <view id="menu">
 					<input class="topBarSearch" placeholder="  搜索" />
 					<view id="list">
 						<view>item</view>
@@ -20,7 +20,7 @@
 						<view>item</view>
 						<view>item</view>
 					</view>
-				</view>
+				</view> -->
 				<!-- 测试到这里结束 -->
 
 				<view class="topBarPlus">
@@ -71,9 +71,10 @@
 </script>
 
 <style>
-	page{
+	page {
 		width: 100%;
 	}
+
 	.bottomLayerOfLeft {
 
 		position: fixed;

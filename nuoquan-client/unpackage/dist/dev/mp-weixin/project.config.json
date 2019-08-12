@@ -24,8 +24,21 @@
       "list": []
     },
     "miniprogram": {
-      "current": -1,
-      "list": []
+      "current": 0,
+      "list": [
+        {
+          "name": "signin",
+          "query": "",
+          "id": 0,
+          "pathName": "pages/signin/signin"
+        },
+        {
+          "name": "submit",
+          "query": "",
+          "id": 1,
+          "pathName": "pages/submit/submit"
+        }
+      ]
     }
   }
 }
