@@ -130,6 +130,7 @@ public class UserServiceImpl implements UserService {
 	public String saveMsg(ChatMessage chatMessage) {
 		ChatMsg msgDB = new ChatMsg();
 		String msgId = sid.nextShort();
+		msgDB.setId(msgId);
 		msgDB.setAcceptUserId(chatMessage.getReceiverId());
 		msgDB.setSendUserId(chatMessage.getSenderId());
 		msgDB.setSignFlag(MsgSignFlagEnum.unsign.type);

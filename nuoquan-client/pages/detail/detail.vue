@@ -24,9 +24,6 @@
 			</view>
 			<commentbox v-for="comment in comments" :key="comment[0]" :comment="comment"></commentbox>
 		</view>
-		<navigator url="../personpublic/personpublic">
-			<button type="primary" size="mini">personpublic</button>
-		</navigator>
 	</view>
 </template>
 

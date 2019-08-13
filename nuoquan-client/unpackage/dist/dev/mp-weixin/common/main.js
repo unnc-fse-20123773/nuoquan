@@ -67,8 +67,6 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
 
-
-
 {
   onLaunch: function onLaunch() {
     console.log('App Launch');
@@ -78,40 +76,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   },
   onHide: function onHide() {
     console.log('App Hide');
-  },
-
-  /**
-      * 和后端的枚举对应
-      */
-  CONNECT: 1, // 第一次(或重连)初始化连接
-  CHAT: 2, // 聊天消息
-  SIGNED: 3, // 消息签收
-  KEEPALIVE: 4, // 客户端保持心跳
-
-  /**
-   * 和后端 ChatMessage 聊天模型的对象保持一致
-   * @param {Object} senderId
-   * @param {Object} receiverId
-   * @param {Object} msg
-   * @param {Object} msgId
-   */
-  ChatMessage: function ChatMessage(senderId, receiverId, msg, msgId) {
-    this.senderId = senderId;
-    this.receiverId = receiverId;
-    this.msg = msg;
-    this.msg = msg;
-  },
-
-  /**
-      * 构建消息 DataContent 模型对象
-      * @param {Object} action
-      * @param {Object} chatMsg
-      * @param {Object} extand
-      */
-  DataContent: function DataContent(action, chatMsg, extand) {
-    this.action = action;
-    this.chatMsg = chatMsg;
-    this.extand = extand;
   } };exports.default = _default;
 
 /***/ }),

@@ -1,2 +1,0 @@
-setCssToHead([".",[1],"input{ background-color: #CCCCCC; }\n",],undefined,{path:"./pages/chat/chat.wxss"})();
-document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/chat/chat.wxml') } }));

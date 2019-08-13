@@ -1,3 +1,4 @@
+<!-- 本页面的 websocket 应写在 messagelist 里-->
 <template>
 	<view>
 		<view class="messageArea">
@@ -8,7 +9,7 @@
 			<view class="icons">
 				<image src="../../static/icon/viewLocalPic.png"></image>
 				<image src="../../static/icon/emoji.png"></image>
-				<image src="../../static/icon/littlePlane.png" @click="sendText()"></image>
+				<image src="../../static/icon/littlePlane.png" @click="sendText(textMsg)"></image>
 
 			</view>
 		</view>
@@ -98,14 +99,11 @@
 					console.log('WebSocket连接已打开！');
 					socketOpen = true;
 					
-					var chatMessage = new vue.ChatMessage(userInfo.id, null, null, null);
-					var dataContent = new vue.DataContent(vue.CONNECT, chatMessage, null)
+					that.sendObj(that.netty.CONNECT, null);
 					// 发送未发送的信息
 					for (var i = 0; i < that.socketMsgQueue.length; i++) {
-						console.log(that.socketMsgQueue[i]);
-						socketTask.send({
-							data: that.socketMsgQueue[i]
-						});
+						// console.log(that.socketMsgQueue[i]);
+						that.sendObj(that.netty.CHAT, that.socketMsgQueue[i]);
 					}
 					that.socketMsgQueue = [];
 				});
@@ -114,16 +112,18 @@
 					console.log('WebSocket连接打开失败，请检查！');
 				});
 				socketTask.onMessage(function(res) {
-					console.log('收到服务器内容：' + res.data);
+					var data = JSON.parse(res.data);
+					console.log("收到服务器内容：");
+					console.log(data);
 				});
 				socketTask.onClose(function(res) {
 					console.log('WebSocket 已关闭！');
 					// 三秒一次重连
-					// console.log("重连中..");
-					// socketOpen = false;
-					// setTimeout(function(){
-					// 	that.socketInit();
-					// },3000);
+					console.log("重连中..");
+					socketOpen = false;
+					setTimeout(function(){
+						that.socketInit();
+					},3000);
 				});
 				
 			},
@@ -132,19 +132,25 @@
 				if(!this.textMsg){
 					return;
 				}
-				var that = this;
 				
+				this.sendObj(this.netty.CHAT, this.textMsg);
+				this.textMsg = '';//清空输入框
+			},
+			
+			sendObj(type, msg){
+				var chatMessage = new this.netty.ChatMessage(userInfo.id, userInfo.id, msg, null);
+				var dataContent = new this.netty.DataContent(type, chatMessage, null)
+				
+				var data = JSON.stringify(dataContent);
 				if (socketOpen == true) {
-					console.log("1=:"+socketOpen)
+					console.log("1="+socketOpen);
 					socketTask.send({
-						data: that.textMsg
+						data: data,
 					});
-					that.textMsg = '';//清空输入框
 				} else {
-					console.log("2=:"+socketOpen)
-					that.socketMsgQueue.push(this.textMsg);
-					that.textMsg = '';//清空输入框
-					console.log(that.socketMsgQueue);
+					console.log("2="+socketOpen);
+					this.socketMsgQueue.push(data);
+					console.log(this.socketMsgQueue);
 					
 				}
 			}

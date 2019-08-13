@@ -1,77 +1,38 @@
 <template>
-	<view>
-		
-		<view class="tabs">
-			<view class="itsFocus ">
-				他关注的
-			</view>
-			<view class="focusER">
-				关注他的
-			</view>
-			<view class="devidingLine"></view>
-
-		</view>
-		<view class="list">
-			<view class="listItem">
-				<image src="../../static/touxiang.jpg" class="touxiang"></image>
-				<view class="name">陈仅仅11号</view>
-				<view class="goFocus">关注</view>
-				<view class="listItemBottomLine"></view>
-			</view>
-			<view class="listItem">
-				<image src="../../static/touxiang.jpg" class="touxiang"></image>
-				<view class="name">陈仅仅11号</view>
-				<view class="goFocus">关注</view>
-				<view class="listItemBottomLine"></view>
-			</view>
-			<view class="listItem">
-				<image src="../../static/touxiang.jpg" class="touxiang"></image>
-				<view class="name">陈仅仅11号</view>
-				<view class="goFocus">关注</view>
-				<view class="listItemBottomLine"></view>
-			</view>
-			<view class="listItem">
-				<image src="../../static/touxiang.jpg" class="touxiang"></image>
-				<view class="name">陈仅仅11号</view>
-				<view class="goFocus">关注</view>
-				<view class="listItemBottomLine"></view>
-			</view>
-			<view class="listItem">
-				<image src="../../static/touxiang.jpg" class="touxiang"></image>
-				<view class="name">陈仅仅11号</view>
-				<view class="goFocus">关注</view>
-				<view class="listItemBottomLine"></view>
-			</view>
-			<view class="listItem">
-				<image src="../../static/touxiang.jpg" class="touxiang"></image>
-				<view class="name">陈仅仅11号</view>
-				<view class="goFocus">关注</view>
-				<view class="listItemBottomLine"></view>
-			</view>
-			<view class="listItem">
-				<image src="../../static/touxiang.jpg" class="touxiang"></image>
-				<view class="name">陈仅仅11号</view>
-				<view class="goFocus">关注</view>
-				<view class="listItemBottomLine"></view>
-			</view>
-			<view class="listItem">
-				<image src="../../static/touxiang.jpg" class="touxiang"></image>
-				<view class="name">陈仅仅11号</view>
-				<view class="goFocus">关注</view>
-				<view class="listItemBottomLine"></view>
-			</view>
-			<view class="listItem">
-				<image src="../../static/touxiang.jpg" class="touxiang"></image>
-				<view class="name">陈仅仅11号</view>
-				<view class="goFocus">关注</view>
-				<view class="listItemBottomLine"></view>
-			</view>
-			<view class="listItem">
-				<image src="../../static/touxiang.jpg" class="touxiang"></image>
-				<view class="name">陈仅仅11号</view>
-				<view class="goFocus">关注</view>
-				<view class="listItemBottomLine"></view>
-			</view>
+	<view id="public-container">
+		<view id="public-message-futherbox">
+			<scroll-view class="top-menu-view" scroll-x="true" scroll-left="scrollLeft">
+				<block v-for="(menuTabs,index) in menuTabs" :key="index">
+					<view class="menu-one-view" v-bind:id="'tabNum'+index" @click="swichMenu(index)">
+						<view :class="[currentTab==index ? 'menu-one-act' : 'menu-one']">
+							<view class="menu-one-txt" @tap="goTop">{{menuTabs.name}}</view>
+							<view class="menu-one-bottom">
+								<view class="menu-one-bottom-color"></view>
+							</view>
+						</view>
+					</view>
+				</block>
+			</scroll-view>
+			<swiper :current="currentTab" class="swiper-box-list" duration="300" @change="swiperChange">
+				<swiper-item class="swiper-box" v-for="(swiperDate,index1) in swiperDateList" :key="index1">
+					<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-test" @scrolltoupper="upper" @scrolltolower="lower"
+					 @scroll="scroll" enable-back-to-top="true">
+						<view class="user-operation-line" v-for="(userOperation,index2) in userOperationList" :key="index2">
+							<view class="user-one-line column_center">
+								<image class="publicTouxiang" mode="aspectFill" src="../../static/touxiang2.jpg"></image>
+								<view class="userid">
+									陈仅仅1号 111
+								</view>
+								<view class="attentionButton super_center">
+									<text class="attentionButton-text">关注</text>
+								</view>
+							</view>
+							<view class="border-bottom-line">
+							</view>
+						</view>
+					</scroll-view>
+				</swiper-item>
+			</swiper>
 		</view>
 	</view>
 </template>
@@ -80,94 +41,316 @@
 	export default {
 		data() {
 			return {
+				scrollLeft: 0,
+				isClickChange: false,
+				currentTab: 0,
+				menuTabs: [{
+					name: '他关注的'
+				}, {
+					name: '关注他的'
+				}],
+
+				swiperDateList: [
+					[],
+					[]
+				],
+				userOperationList: [
+					1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+				],
+				// 用于分页的属性
+				totalPage: 1,
+				page: 1,
+				videoList: [],
+
+				screenWidth: 350,
+				serverUrl: "",
+				scrollTop: 0,
+				old: {
+					scrollTop: 0
+				}
 
 			}
 		},
-		onLoad: function() {
-			uni.setNavigationBarTitle({
-				title: "关注列表"
-			});
-		},
-		methods: {
 
+		changeIndicatorDots(e) {
+			this.indicatorDots = !this.indicatorDots
+		},
+		changeAutoplay(e) {
+			this.autoplay = !this.autoplay
+		},
+		intervalChange(e) {
+			this.interval = e.target.value
+		},
+		durationChange(e) {
+			this.duration = e.target.value
+		},
+
+		onLoad() {
+			uni.setNavigationBarTitle({
+				title: 'XXX的主页'
+			});
+
+			var screenWidth = uni.getSystemInfoSync().screenWidth;
+			this.screenWidth = screenWidth;
+
+			// 获取当前页面
+			var page = this.page;
+
+		},
+
+		onPullDownRefresh() {
+			console.log('refresh');
+			setTimeout(function() {
+				uni.stopPullDownRefresh();
+			}, 1000);
+		},
+
+		methods: {
+			swichMenu: async function(current) { //点击其中一个 menu
+				if (this.currentTab == current) {
+					return false;
+				} else {
+					this.currentTab = current;
+					this.setScrollLeft(current);
+				}
+			},
+			swiperChange: async function(e) {
+				let index = e.target.current;
+				this.setScrollLeft(index);
+				this.currentTab = index;
+			},
+			setScrollLeft: async function(tabIndex) {
+				let leftWidthSum = 0;
+				for (var i = 0; i <= tabIndex; i++) {
+					let nowElement = await this.getWidth('tabNum' + i);
+					leftWidthSum = leftWidthSum + nowElement.width;
+				}
+				let winWidth = uni.getSystemInfoSync().windowWidth;
+				this.scrollLeft = leftWidthSum > winWidth ? (leftWidthSum - winWidth) : 0
+			},
+			getWidth: function(id) { //得到元素的宽高
+				return new Promise((res, rej) => {
+					uni.createSelectorQuery().select("#" + id).fields({
+						size: true,
+						scrollOffset: true
+					}, (data) => {
+						res(data);
+					}).exec();
+				})
+			},
+			loadMore: function(tabIndex) {
+				console.log('正在加载更多数据。。。')
+				this.getDateList(tabIndex);
+			},
+
+			upper: function(e) {
+				console.log(e)
+			},
+			lower: function(e) {
+				console.log(e)
+			},
+			scroll: function(e) {
+				console.log(e)
+				this.old.scrollTop = e.detail.scrollTop
+			},
+			goTop: function(e) {
+				this.scrollTop = this.old.scrollTop
+				this.$nextTick(function() {
+					this.scrollTop = 0
+				});
+				uni.showToast({
+					icon: "none",
+					title: "回到顶部喽~"
+				})
+			},
 		}
 	}
 </script>
+
 <style>
 	page {
-		background-color: #F3F3F3;
-	}
-</style>
-<style scoped>
-		.tabs {
-		margin: 26upx 0 0;
+		width: 100%;
+		height: 100%;
 	}
 
-	.focusER,
-	.itsFocus {
-		color: #353535;
-		font-size: 15px;
+	#public-container {
+		position: fixed;
+		height: 100%;
+		width: 100%;
+		background-color: #f3f3f3;
+	}
+
+	#public-infobox {
+		position: fixed;
+		height: 20%;
+		width: 100%;
+	}
+
+	#public-message-futherbox
+
+	/* 这里是帖子块最高级父组件*/
+		{
+		/* border: 1upx solid red; 如果想快速了解该组件样式,则取消这个注释*/
+		position: fixed;
+		width: 100%;
+		height: 100%;
+	}
+
+	/* 以下是帖子展示块的样式 */
+
+	.top-menu-view {
+		display: flex;
+		justify-content: space-around;
+		width: 100%;
+		background-color: #f3f3f3;
+		height: 6%;
+		/* 在这里设置导航条高度 */
+	}
+
+	.menu-one-view {
 		display: inline-block;
-		width: 50%;
-		margin: auto;
-		text-align: center;
+		white-space: nowrap;
+		height: 100%;
+		width: 48%;
 	}
 
-	.devidingLine {
-		border-top: solid 3px #FDD453;
-		width: 258upx;
-		margin-left: 58.5upx;
-	}
-
-
-	.listItem {
+	.top-menu-view .menu-one-view .menu-one {
+		/* 在这里写 单个按钮样式 */
+		margin-left: 8%;
 		position: relative;
-		height: 45px;
+		height: 100%;
 		display: flex;
 		align-items: center;
+		justify-content: center;
+		width: 100%;
 	}
 
-	.touxiang {
-		display: inline-flex;
-		margin-left: 13px;
-
-		width: 33px;
-		height: 33px;
-		border-radius: 33px;
-		vertical-align: middle;
-		line-height: 45px;
+	.top-menu-view .menu-one-view .menu-one .menu-one-txt {
+		height: 40upx;
+		font-size: 32upx;
+		font-weight: 550;
+		color: #888888;
+		line-height: 40upx;
 	}
 
-	.name {
-		display: inline-flex;
-		color: #353535;
-		font-size: 13px;
-		margin-left: 13px;
-		vertical-align: middle;
-
-	}
-
-	.goFocus {
-		border: solid 1px #ECC138;
-		border-radius: 5px;
-		font-size: 13px;
-		color: #ECC138;
-		position: absolute;
-		right: 26px;
-		height: 26px;
-		line-height: 26px;
-		width: 51px;
-		top: 9px;
-		vertical-align: middle;
-		text-align: center;
-	}
-
-	.listItemBottomLine {
-		border-top: solid 1px #DCDCDC;
-		width: 590upx;
+	.top-menu-view .menu-one-view .menu-one .menu-one-bottom {
 		position: absolute;
 		bottom: 0;
-		left: 108upx;
+		width: 100%;
+	}
+
+	.top-menu-view .menu-one-view .menu-one .menu-one-bottom .menu-one-bottom-color {
+		width: 60%;
+		height: 4upx;
+	}
+
+	.top-menu-view .menu-one-view .menu-one-act {
+		/* 在这里写 单个按钮样式 */
+		margin-left: 8%;
+		position: relative;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+	}
+
+	.top-menu-view .menu-one-view .menu-one-act .menu-one-txt {
+		height: 40upx;
+		font-size: 36upx;
+		font-weight: 550;
+		color: #353535;
+		line-height: 40upx;
+	}
+
+	.top-menu-view .menu-one-view .menu-one-act .menu-one-bottom {
+		/* 在这里设置底部横条宽度 */
+		position: absolute;
+		bottom: 0;
+		width: 80%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.top-menu-view .menu-one-view .menu-one-act .menu-one-bottom .menu-one-bottom-color {
+		/* 在这里设置底部横条高度和颜色 */
+		width: 60%;
+		height: 6upx;
+		background: #FFCF3C;
+	}
+
+	.swiper-box-list {
+		flex: 1;
+		min-height: 94%;
+		height: 94%;
+		width: 100%;
+		background-color: #f3f3f3;
+	}
+
+	/* swiper */
+
+	.swiper {
+		height: 360upx;
+	}
+
+	.slideimage {
+		width: 100%;
+	}
+
+	/* 一个粉丝 */
+	.user-one-line {
+		background-color: #f3f3f3;
+		width: 100%;
+		height: 80upx;
 
 	}
+
+	.publicTouxiang {
+		margin-left: 40upx;
+		width: 62upx;
+		height: 62upx;
+		border-radius: 999upx;
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	.border-bottom-line {
+		height: 1px;
+		background-color: #dcdcdc;
+		margin-left: 130upx;
+		width: 580upx;
+	}
+
+	.userid {
+		margin-left: 20upx;
+		font-size: x-small;
+		color: #353535;
+	}
+
+	.attentionButton {
+		display: flex;
+		width: 100upx;
+		height: 52upx;
+		border-radius: 10upx;
+		margin-left: 320upx;
+		border: 1upx solid #FFCF3C;
+	}
+
+	.attentionButton-text{
+		color: #FFCF3C;
+		font-size: small;
+		letter-spacing: 10upx;
+		margin-left: 10upx;
+	}
+
+	.scroll-test {
+		height: 100%
+	}
+
+	.swiper-box {
+		width: 100%;
+		height: 100%;
+	}
+
 </style>

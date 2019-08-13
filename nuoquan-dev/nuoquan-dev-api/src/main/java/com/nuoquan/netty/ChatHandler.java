@@ -12,7 +12,6 @@ import com.nuoquan.enums.MsgActionEnum;
 import com.nuoquan.pojo.netty.ChatMessage;
 import com.nuoquan.pojo.netty.DataContent;
 import com.nuoquan.service.UserService;
-import com.nuoquan.service.UserServiceImpl;
 import com.nuoquan.utils.JsonUtils;
 
 import io.netty.channel.Channel;
@@ -63,6 +62,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
 			
 			// handle 无法直接通过 Service 注入数据库，
 			// 所以用 SpringUtil 手动获取被 Spring 管理的 bean 对象。
+			// (使用普通的java类调用托管给spring的service)
 			UserService userService = (UserService)SpringUtil.getBean("userServiceImpl");
 			String msgId = userService.saveMsg(chatMessage);
 			chatMessage.setMsgId(msgId);
@@ -139,6 +139,8 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 		cause.printStackTrace();
+		
+		System.out.println("连接发生异常");
 		// 发生异常后关闭连接（Channel），随后从 ChannelGroup 中移除.
 		ctx.channel().close();
 		clients.remove(ctx.channel());

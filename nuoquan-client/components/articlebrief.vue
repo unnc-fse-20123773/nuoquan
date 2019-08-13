@@ -1,8 +1,8 @@
 <template>
-	<view class="articlecard" id="'+articleCard.id+'">
+	<view class="articlecard" id="'+articleCard.id+'" @click="jumpToDetail()">
 		
 		
-		<view class="title" @click="loadcss()">{{ articleCard.articleTitle }}</view>
+		<view class="title">{{ articleCard.articleTitle }}</view>
 		<view class="briefarticleCard">{{ articleCard.articleContent }}</view>
 		<view class="picturearea">
 			<image src="../static/0001/pic1.jpg" v-if="articleCard[3]"></image>

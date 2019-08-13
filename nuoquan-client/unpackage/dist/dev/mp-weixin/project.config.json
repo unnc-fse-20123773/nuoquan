@@ -39,10 +39,10 @@
           "pathName": "pages/submit/submit"
         },
         {
-          "name": "chat",
+          "name": "chatpage",
           "query": "",
           "id": 2,
-          "pathName": "pages/chat/chat"
+          "pathName": "pages/chatpage/chatpage"
         },
         {
           "name": "fanslist",
@@ -51,9 +51,15 @@
           "pathName": "pages/fanslist/fanslist"
         },
         {
-          "name": "messagelist",
+          "name": "followlist",
           "query": "",
           "id": 4,
+          "pathName": "pages/followlist/followlist"
+        },
+        {
+          "name": "messagelist",
+          "query": "",
+          "id": 5,
           "pathName": "pages/messagelist/messagelist"
         }
       ]

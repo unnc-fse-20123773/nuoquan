@@ -39,7 +39,6 @@ page {
 	display: -ms-inline-flexbox;
 	display: inline-flex;
 	margin-left: 13px;
-
 	width: 33px;
 	height: 33px;
 	border-radius: 33px;
