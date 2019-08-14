@@ -306,13 +306,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
-
-
-
 var _articlebrief = _interopRequireDefault(__webpack_require__(/*! ../../components/articlebrief */ "../../../../../../../../../code/nuoquan/nuoquan-client/components/articlebrief.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
-//
-//
-//
 //
 //
 //

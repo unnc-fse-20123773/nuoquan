@@ -1,7 +1,7 @@
 <template>
 	<view>
-		<navigator url="../../pages/search/search" class="topBarSearch searchPosition">
-		</navigator>
+		<!-- 		<navigator url="../../pages/search/search" class="topBarSearch searchPosition">
+		</navigator> -->
 
 		<view class="bottomLayerOfLeft" v-if="showMainPageLeft" @click="controlShowLeft(0)">
 			<mainpageleft></mainpageleft>
@@ -22,7 +22,7 @@
 					</view>
 				</view> -->
 				<!-- 测试到这里结束 -->
-
+				<input class="topBarSearch" placeholder="  搜索" />
 				<view class="topBarPlus">
 					<!-- Guetta-直接在 icon 上加了跳轉 -->
 					<navigator url="../../pages/submit/submit" style="font-size: 20px;color:#FDD041;border-radius: 3px;">+</navigator>
@@ -176,7 +176,7 @@
 	}
 
 	.searchPosition {
-		position: fixed;
+		/* position: fixed; */
 		background-color: red;
 		left: 42px;
 		top: 5px;

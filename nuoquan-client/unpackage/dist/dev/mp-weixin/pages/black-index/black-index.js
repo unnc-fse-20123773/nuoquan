@@ -136,7 +136,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
     uni.request({
-      url: 'http://127.0.0.1:8080/queryAllArticles',
+      url: this.SeverUrl + '/queryAllArticles',
       method: 'POST',
       success: function success(res) {
         _this.showlist = res.data.data.rows;

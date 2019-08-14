@@ -103,7 +103,7 @@ page {
 		white-space: nowrap;
 }
 .searchPosition {
-		position: fixed;
+		/* position: fixed; */
 		background-color: red;
 		left: 42px;
 		top: 5px;

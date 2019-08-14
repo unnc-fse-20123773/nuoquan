@@ -46,4 +46,8 @@
 		display: flex;
 		flex-direction: column;
 	}
+	
+	.font-family{
+		font-family: weiruanyahei;
+	}
 </style>

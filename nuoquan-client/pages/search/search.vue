@@ -51,7 +51,7 @@
 				// 
 				console.log(this.searchvalue);
 				uni.request({
-					url: 'http://127.0.0.1:8080/queryAllArticles',
+					url: this.SeverUrl+'/queryAllArticles',
 					method: 'POST',
 					success: res => {
 						console.log('success');

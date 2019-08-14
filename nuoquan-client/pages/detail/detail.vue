@@ -22,9 +22,6 @@
 			<view class="tags">
 				<view class="tag" v-for="(i,index) in articleCard.tags" v-bind:key="index">{{i}}</view>
 			</view>
-
-			<!-- 			<articlebrief :articlecontent="detailrole"></articlebrief>
- -->
 			<commentbox v-for="comment in comments" :key="comment[0]" :comment="comment"></commentbox>
 		</view>
 		<navigator url="../personpublic/personpublic">

@@ -31,5 +31,18 @@ public interface UserService {
 	 * @Description: 根据用户 Id 查询该用户信息
 	 */
 	public User queryUserById(String userId);
-
+	
+	/**
+	 * @Description 增加用户粉丝关系
+	 * @param userId
+	 * @param fanId
+	 */
+	public void saveUserFanRelation(String userId, String fanId);
+	
+	/**
+	 * @Description 删除用户粉丝关系
+	 * @param userId
+	 * @param fanId
+	 */
+	public void deleteUserFanRelation(String userId, String fanId);
 }

@@ -1,7 +1,7 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/followlist/followlist",
+			"path": "pages/messagelist/messagelist",
 			"style": {}
 		},
 		{
@@ -10,6 +10,15 @@
 				"navigationBarTitleText": "uni-app"
 			}
 		},
+		{
+			"path": "pages/fanslist/fanslist",
+			"style": {}
+		},
+		{
+			"path": "pages/followlist/followlist",
+			"style": {}
+		},
+		
 		{
 			"path": "pages/profile/profile",
 			"style": {}
@@ -20,10 +29,6 @@
 		},
 		{
 			"path": "pages/search/search",
-			"style": {}
-		},
-		{
-			"path": "pages/fanslist/fanslist",
 			"style": {}
 		},
 		{
@@ -44,9 +49,6 @@
 			"style": {}
 		}, {
 			"path": "pages/submit/submit",
-			"style": {}
-		},   {
-			"path": "pages/messagelist/messagelist",
 			"style": {}
 		}, {
 			"path": "pages/chatpage/chatpage",
