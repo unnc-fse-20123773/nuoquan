@@ -12,7 +12,7 @@ import com.alibaba.druid.util.StringUtils;
 import com.github.pagehelper.util.StringUtil;
 import com.nuoquan.pojo.User;
 import com.nuoquan.service.UserService;
-import com.nuoquan.utils.IMoocJSONResult;
+import com.nuoquan.utils.JSONResult;
 import com.nuoquan.utils.MD5Utils;
 
 import io.swagger.annotations.Api;
@@ -28,11 +28,11 @@ public class RegistLoginController{
 	@ApiOperation(value="用户注册", notes="用户注册的接口")
 	@PostMapping("/regist")
 	// 因为出传进来是一个json对象，需要RequestBody
-	public IMoocJSONResult regist(@RequestBody User user) throws Exception  {
+	public JSONResult regist(@RequestBody User user) throws Exception  {
 
 		//1. 判断用户名和密码不为空
 		if (StringUtils.isEmpty(user.getNickname()) || StringUtils.isEmpty(user.getPassword())) {
-			return IMoocJSONResult.errorMsg("用户名和密码不能为空");
+			return JSONResult.errorMsg("用户名和密码不能为空");
 		}
 		//2. 判断用户名是否存在
 		boolean nicknameIsExist = userService.checkNicknameIsExist(user.getNickname());
@@ -47,31 +47,31 @@ public class RegistLoginController{
 			user.setCreateDate(new Date());
 			userService.saveUser(user);
 		} else {
-			return IMoocJSONResult.errorMsg("用户名已存在，请换一个试试");
+			return JSONResult.errorMsg("用户名已存在，请换一个试试");
 		}
 		user.setPassword(null);
-		return IMoocJSONResult.ok(user);
+		return JSONResult.ok(user);
 	}
 	
 	@ApiOperation(value="用户登录", notes="用户登录的接口")
 	@PostMapping("/login")
-	public IMoocJSONResult login(@RequestBody User user) throws Exception {
+	public JSONResult login(@RequestBody User user) throws Exception {
 		
 		String nickname = user.getNickname();
 		String password = user.getPassword();
 		
 		//1. 判断用户名和密码不为空
 		if (StringUtils.isEmpty(nickname) || StringUtils.isEmpty(password)) {
-			return IMoocJSONResult.ok("用户名和密码不能为空");
+			return JSONResult.ok("用户名和密码不能为空");
 		}
 		//2. 判断用户是否存在
 		User userResult = userService.checkUserForLogin(nickname, MD5Utils.getMD5Str(user.getPassword()));
 		//3. 返回信息
 		if (userResult != null) {
-			user.setPassword("");
-			return IMoocJSONResult.ok(userResult);
+			userResult.setPassword("");
+			return JSONResult.ok(userResult);
 		} else {
-			return IMoocJSONResult.errorMsg("用户名或密码错误，请重试...");
+			return JSONResult.errorMsg("用户名或密码错误，请重试...");
 		}
 	}
 }
