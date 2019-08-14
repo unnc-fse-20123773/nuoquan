@@ -161,8 +161,7 @@ image {
 	height: 180rpx;
 	margin: 6px;
 }
-.tags {
-}
+.tags {}
 .tag {
 	display: inline-block;
 	-webkit-border-radius: 4px;

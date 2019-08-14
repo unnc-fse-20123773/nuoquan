@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nuoquan.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.nuoquan.pojo.User">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="face_img" jdbcType="VARCHAR" property="faceImg" />
+    <result column="face_img_thumb" jdbcType="VARCHAR" property="faceImgThumb" />
+    <result column="follow_num" jdbcType="INTEGER" property="followNum" />
+    <result column="fans_num" jdbcType="INTEGER" property="fansNum" />
+    <result column="gender" jdbcType="TINYINT" property="gender" />
+    <result column="major" jdbcType="VARCHAR" property="major" />
+    <result column="graduation_year" jdbcType="INTEGER" property="graduationYear" />
+    <result column="degree" jdbcType="TINYINT" property="degree" />
+    <result column="receive_like_counts" jdbcType="INTEGER" property="receiveLikeCounts" />
+    <result column="cid" jdbcType="VARCHAR" property="cid" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="com.nuoquan.pojo.User">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="face_img" jdbcType="VARCHAR" property="faceImg" />
+    <result column="face_img_thumb" jdbcType="VARCHAR" property="faceImgThumb" />
+    <result column="follow_num" jdbcType="INTEGER" property="followNum" />
+    <result column="fans_num" jdbcType="INTEGER" property="fansNum" />
+    <result column="gender" jdbcType="TINYINT" property="gender" />
+    <result column="major" jdbcType="VARCHAR" property="major" />
+    <result column="graduation_year" jdbcType="INTEGER" property="graduationYear" />
+    <result column="degree" jdbcType="TINYINT" property="degree" />
+    <result column="receive_like_counts" jdbcType="INTEGER" property="receiveLikeCounts" />
+    <result column="cid" jdbcType="VARCHAR" property="cid" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="com.nuoquan.pojo.User">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="face_img" jdbcType="VARCHAR" property="faceImg" />
+    <result column="face_img_thumb" jdbcType="VARCHAR" property="faceImgThumb" />
+    <result column="follow_num" jdbcType="INTEGER" property="followNum" />
+    <result column="fans_num" jdbcType="INTEGER" property="fansNum" />
+    <result column="gender" jdbcType="TINYINT" property="gender" />
+    <result column="major" jdbcType="VARCHAR" property="major" />
+    <result column="graduation_year" jdbcType="INTEGER" property="graduationYear" />
+    <result column="degree" jdbcType="TINYINT" property="degree" />
+    <result column="receive_like_counts" jdbcType="INTEGER" property="receiveLikeCounts" />
+    <result column="cid" jdbcType="VARCHAR" property="cid" />
+  </resultMap>
+</mapper>

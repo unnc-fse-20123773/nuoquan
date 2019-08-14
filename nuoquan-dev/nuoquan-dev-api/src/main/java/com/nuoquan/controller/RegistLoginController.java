@@ -5,12 +5,11 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.druid.util.StringUtils;
-import com.github.pagehelper.util.StringUtil;
 import com.nuoquan.pojo.User;
+import com.nuoquan.pojo.vo.UserVO;
 import com.nuoquan.service.UserService;
 import com.nuoquan.utils.JSONResult;
 import com.nuoquan.utils.MD5Utils;
@@ -20,7 +19,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @Api(value="用户注册登录的接口", tags= {"注册和登录的controller"})
-public class RegistLoginController{
+public class RegistLoginController extends BasicController{
 	
 	@Autowired
 	private UserService userService;
@@ -49,8 +48,10 @@ public class RegistLoginController{
 		} else {
 			return JSONResult.errorMsg("用户名已存在，请换一个试试");
 		}
-		user.setPassword(null);
-		return JSONResult.ok(user);
+		// user.setPassword(null);
+		// 将 user 对象转换为 userVO 输出，userVO 中不返回密码，且可加上其他属性。
+		UserVO userVO = ConvertUserToUserVO(user);
+		return JSONResult.ok(userVO);
 	}
 	
 	@ApiOperation(value="用户登录", notes="用户登录的接口")
@@ -68,8 +69,8 @@ public class RegistLoginController{
 		User userResult = userService.checkUserForLogin(nickname, MD5Utils.getMD5Str(user.getPassword()));
 		//3. 返回信息
 		if (userResult != null) {
-			userResult.setPassword("");
-			return JSONResult.ok(userResult);
+			UserVO userVO = ConvertUserToUserVO(userResult);
+			return JSONResult.ok(userVO);
 		} else {
 			return JSONResult.errorMsg("用户名或密码错误，请重试...");
 		}
