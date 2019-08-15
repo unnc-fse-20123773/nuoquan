@@ -2,7 +2,8 @@
 -- +  Database update  +
 -- +++++++++++++++++++++
 
--- v19.8.15
+-- v19.8.16
+-- 修改：email 可为空，昵称不唯一(匹配微信昵称逻辑，后期针对业务需要可进行调整)
 ALTER TABLE `nuoquan`.`user` 
 CHANGE COLUMN `email` `email` VARCHAR(45) NULL ;
 
