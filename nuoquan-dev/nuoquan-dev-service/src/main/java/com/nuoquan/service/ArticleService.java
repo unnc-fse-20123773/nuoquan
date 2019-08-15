@@ -38,4 +38,9 @@ public interface ArticleService {
 	 * @return
 	 */
 	public List<String> getHotWords();
+	
+	/**
+	 * 保存文章
+	 */
+	public void saveArticle(Article article);
 }

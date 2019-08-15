@@ -1,4 +1,8 @@
 # Update Log:
+**v19.8.11 更新**
+1. 整合 yaoyao分支代码
+2. 在 chatpage 添加 websocket 相关业务雏形
+
 **v19.8.9 更新**
 1. 新增 取消/关注用户接口
 2. 新增 sqlRecord.sql 记录数据库修改

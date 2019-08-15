@@ -125,7 +125,7 @@ public class ArticleServiceImpl implements ArticleService {
 		PageHelper.startPage(page, pageSize);
 		List<ArticleVO> list = articleMapperCustom.searchArticleContentYang(articleContent);
 		
-		PageInfo<ArticleVO> pageList = new PageInfo<ArticleVO>();
+		PageInfo<ArticleVO> pageList = new PageInfo<ArticleVO>(list);
 		
 		PagedResult pagedResult = new PagedResult();
 		pagedResult.setPage(page);
@@ -141,6 +141,16 @@ public class ArticleServiceImpl implements ArticleService {
 	public List<String> getHotWords() {
 		
 		return searchRecordMapper.getHotWords();
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void saveArticle(Article article) {
+		
+		String id = sid.nextShort();
+		article.setId(id);
+		articleMapper.insertSelective(article);
+		
 	}
 
 }

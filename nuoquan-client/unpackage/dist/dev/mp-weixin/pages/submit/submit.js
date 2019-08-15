@@ -137,63 +137,67 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 var _default =
 {
   data: function data() {
     return {
-      contentImage: "../../static/plus-circle.png",
-      imageCount: 3 };
+      userName: '许德琰测试账号',
+      articleTitle: '',
+      articleContent: '',
+      imgPath: '' };
 
   },
   onLoad: function onLoad() {
 
   },
   methods: {
-    formSubmit: function formSubmit(e) {
-      console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value));
+    saveAsArticleTitle: function saveAsArticleTitle(event) {
+      this.articleTitle = event.target.value;
+      // console.log(this.title);
     },
-    changeImage: function changeImage() {
+    saveAsArticleContent: function saveAsArticleContent(event) {
+      this.articleContent = event.target.value;
+      // console.log(this.content);
+    },
+    chooseImg: function chooseImg() {
       var that = this;
+      var path = '';
       uni.chooseImage({
-        count: 3,
+        count: 1,
         sizeType: ['compressed'],
-        sourceType: ['album'],
         success: function success(res) {
           var tempFilePaths = res.tempFilePaths;
-          console.log(JSON.stringify(res.tempFilePaths));
+          // console.log(tempFilePaths);
+          that.imgPath = tempFilePaths;
+          // console.log(that.imgPath);
+        } });
 
-          uni.showLoading({
-            title: '上传中...' });
+    },
+    upload: function upload(e) {
+      var me = this;
 
-          var serverUrl = that.$serverUrl;
-          uni.uploadFile({
-            url: serverUrl + '/user/uploadFace?userId=' + 'aasa',
-            filePath: tempFilePaths[0],
-            name: 'file',
-            header: {
-              'content-type': 'application/json' //默认值
-            },
-            success: function success(res) {
-              var data = JSON.parse(res.data);
-              console.log(data);
-              uni.hideLoading();
-              uni.showToast({
-                title: '上传成功！～～',
-                icon: "success" });
+      console.log(me.articleContent);
+      console.log(me.articleTitle);
+      console.log(me.imgPath);
 
+      var serverUrl = me.SeverUrl;
+      // console.log(serverUrl);
+      uni.uploadFile({
+        url: serverUrl + '/upload',
+        filePath: me.imgPath[0],
+        name: 'file',
+        formData: {
+          userId: me.userName,
+          articleTitle: me.articleTitle,
+          articleContent: me.articleContent },
 
-              var imageUrl = data.data;
-              // console.log(serverUrl);
-              // console.log(imageUrl);
-              that.contentImage = serverUrl + imageUrl;
-              console.log(serverUrl + imageUrl);
-            } });
-
-
+        success: function success(res) {
+          uni.redirectTo({
+            url: '../index/index'
+            // success: res => {},
+            // fail: () => {},
+            // complete: () => {}
+          });
         } });
 
     } } };exports.default = _default;

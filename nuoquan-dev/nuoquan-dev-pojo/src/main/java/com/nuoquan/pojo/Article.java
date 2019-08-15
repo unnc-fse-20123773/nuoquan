@@ -32,7 +32,7 @@ public class Article {
     /**
      * 0 = unreadable, 1 = readable, 2 = checking
      */
-    private Byte status;
+    private Integer status;
 
     @Column(name = "create_date")
     private Date createDate;
@@ -42,8 +42,22 @@ public class Article {
      */
     @Column(name = "is_anonymous")
     private Byte isAnonymous;
-
+    
     /**
+     * 文章存放的路径
+     */
+    @Column(name = "article_path")
+    private String articlePath;
+    
+    public String getArticlePath() {
+		return articlePath;
+	}
+
+	public void setArticlePath(String articlePath) {
+		this.articlePath = articlePath;
+	}
+
+	/**
      * @return id
      */
     public String getId() {
@@ -174,7 +188,7 @@ public class Article {
      *
      * @return status - 0 = unreadable, 1 = readable, 2 = checking
      */
-    public Byte getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
@@ -183,7 +197,7 @@ public class Article {
      *
      * @param status 0 = unreadable, 1 = readable, 2 = checking
      */
-    public void setStatus(Byte status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

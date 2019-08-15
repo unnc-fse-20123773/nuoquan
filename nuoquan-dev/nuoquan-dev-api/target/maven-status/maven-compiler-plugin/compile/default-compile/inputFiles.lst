@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/controller/RegistLoginController.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/FastdfsImporter.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/config/ResourceConfig.java
@@ -18,3 +19,19 @@
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/netty/DataContent.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/NettyBooter.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/controller/BasicController.java
+=======
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/cofig/ResourceConfig.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/netty/ChatHandler.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/NettyBooter.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/FastdfsImporter.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/controller/BasicController.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/Swagger2.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/netty/WSServer.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/controller/UserController.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/controller/ArticleController.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/netty/WSServerInitializer.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/GlobalExceptionHandler.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/controller/HelloController.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/controller/RegistLoginController.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/Application.java
+>>>>>>> ae6652b61935144f3e887c2dec99f94a348adbf6

@@ -5,8 +5,11 @@ org/n3r/idworker/strategy/DefaultWorkerIdStrategy$2.class
 org/n3r/idworker/utils/Ip.class
 org/n3r/idworker/RandomCodeStrategy.class
 org/n3r/idworker/utils/Serializes.class
+<<<<<<< HEAD
 com/nuoquan/utils/FileUtils.class
 com/nuoquan/utils/FastDFSClient.class
+=======
+>>>>>>> ae6652b61935144f3e887c2dec99f94a348adbf6
 org/n3r/idworker/WorkerIdStrategy.class
 org/n3r/idworker/InvalidSystemClock.class
 com/nuoquan/utils/JsonUtils.class
