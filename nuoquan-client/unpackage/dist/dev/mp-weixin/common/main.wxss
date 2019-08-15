@@ -84,4 +84,7 @@ display: flex;
 	    -ms-flex-direction: column;
 	        flex-direction: column;
 }
+.font-family{
+	font-family: weiruanyahei;
+}
 

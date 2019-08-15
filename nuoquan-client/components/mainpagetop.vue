@@ -62,6 +62,10 @@
 </script>
 
 <style>
+	page {
+		width: 100%;
+	}
+
 	.bottomLayerOfLeft {
 
 		position: fixed;
@@ -104,7 +108,6 @@
 		font-family: MicrosoftYaHei;
 		line-height: 10px;
 		min-height: 28px;
-
 	}
 
 	.topBarPlus {
@@ -161,4 +164,5 @@
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
+
 </style>

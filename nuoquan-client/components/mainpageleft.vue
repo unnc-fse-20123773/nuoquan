@@ -13,16 +13,16 @@
 			</view>
 		</view>
 		<view class="personPageList">
+			<!-- TODO: 最好把 view 都改成 button 并加上样式 
+											  by Jerrio -->
 			<view class="pageLine">
 				<image src="../static/touxiang.jpg"></image>
 				<view>我的发布</view>
 			</view>
-
-			<view class="pageLine">
+			<button class="pageLine" @tap="goToMessageListPage">
 				<image src="../static/touxiang.jpg"></image>
 				<view>我的消息</view>
-			</view>
-
+			</button>
 			<view class="pageLine">
 				<image src="../static/touxiang.jpg"></image>
 				<view>我的收藏</view>
@@ -54,6 +54,13 @@
 			return {
 				
 			};
+		},
+		methods: {
+			goToMessageListPage() {
+				uni.navigateTo({
+					url: '../messagelist/messagelist',
+				});
+			}
 		},
 
 	};
@@ -138,5 +145,9 @@
 		font-size: 13px;
 		font-weight: bold;
 		margin-left: 17px;
+	}
+	
+	.pageLine button {
+		
 	}
 </style>
