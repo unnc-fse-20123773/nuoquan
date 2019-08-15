@@ -105,7 +105,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var onemessage = function onemessage() {return __webpack_require__.e(/*! import() | pages/chatpage/oneMessage */ "pages/chatpage/oneMessage").then(__webpack_require__.bind(null, /*! ./oneMessage */ 135));};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var onemessage = function onemessage() {return __webpack_require__.e(/*! import() | pages/chatpage/oneMessage */ "pages/chatpage/oneMessage").then(__webpack_require__.bind(null, /*! ./oneMessage */ 139));};
 
 
 
@@ -128,6 +128,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var userInfo;
+var frindInfo;
 
 var socketTask;
 var socketOpen = false;var _default =
@@ -181,14 +182,17 @@ var socketOpen = false;var _default =
 
 
     userInfo = this.getGlobalUserInfo();
-    if (userInfo == null || userInfo == undefined || userInfo == "") {
+    if (this.isNull(userInfo)) {
       console.log("No userInfo!!");
       return;
-    } else {
-      console.log(userInfo);
     }
 
+    // 暂时把 frind 等同于 user
+    frindInfo = userInfo;
+
+    console.log(userInfo);
     this.socketInit();
+    this.iniChatHistory();
   },
   onHide: function onHide() {
     // socketTask.close();
@@ -206,11 +210,12 @@ var socketOpen = false;var _default =
         console.log('WebSocket连接已打开！');
         socketOpen = true;
 
-        that.sendObj(that.netty.CONNECT, null);
+        //发送连接消息，向服务器注册信息
+        that.sendObj(that.netty.CONNECT, null, null);
         // 发送未发送的信息
         for (var i = 0; i < that.socketMsgQueue.length; i++) {
           // console.log(that.socketMsgQueue[i]);
-          that.sendObj(that.netty.CHAT, that.socketMsgQueue[i]);
+          that.sendObj(that.netty.CHAT, that.socketMsgQueue[i], null);
         }
         that.socketMsgQueue = [];
       });
@@ -219,18 +224,29 @@ var socketOpen = false;var _default =
         console.log('WebSocket连接打开失败，请检查！');
       });
       socketTask.onMessage(function (res) {
-        var data = JSON.parse(res.data);
+        var dataContent = JSON.parse(res.data);
+        var chatMessage = dataContent.chatMessage;
         console.log("收到服务器内容：");
-        console.log(data);
+        console.log(dataContent);
+
+        // 发送签收消息
+        that.sendObj(that.netty.SIGNED, null, chatMessage.msgId);
+
+        // 保存聊天历史记录到本地缓存
+        var myId = chatMessage.receiverId;
+        var friendId = chatMessage.senderId;
+        var msg = chatMessage.msg;
+
+        that.chat.saveUserChatHistory(myId, friendId, msg, that.chat.FRIEND);
       });
       socketTask.onClose(function (res) {
         console.log('WebSocket 已关闭！');
-        // 三秒一次重连
-        console.log("重连中..");
         socketOpen = false;
-        setTimeout(function () {
-          that.socketInit();
-        }, 3000);
+        // 三秒一次重连
+        // console.log("重连中..");
+        // setTimeout(function(){
+        // 	that.socketInit();
+        // },3000);
       });
 
     },
@@ -240,13 +256,13 @@ var socketOpen = false;var _default =
         return;
       }
 
-      this.sendObj(this.netty.CHAT, this.textMsg);
+      this.sendObj(this.netty.CHAT, this.textMsg, null);
       this.textMsg = ''; //清空输入框
     },
 
-    sendObj: function sendObj(type, msg) {
-      var chatMessage = new this.netty.ChatMessage(userInfo.id, userInfo.id, msg, null);
-      var dataContent = new this.netty.DataContent(type, chatMessage, null);
+    sendObj: function sendObj(type, msg, extand) {
+      var chatMessage = new this.netty.ChatMessage(userInfo.id, frindInfo.id, msg, null);
+      var dataContent = new this.netty.DataContent(type, chatMessage, extand);
 
       var data = JSON.stringify(dataContent);
       if (socketOpen == true) {
@@ -254,12 +270,19 @@ var socketOpen = false;var _default =
         socketTask.send({
           data: data });
 
+
+        //保存聊天历史到 本地缓存	
+        this.chat.saveUserChatHistory(userInfo.id, frindInfo.id, msg, this.chat.ME);
       } else {
         console.log("2=" + socketOpen);
         this.socketMsgQueue.push(data);
         console.log(this.socketMsgQueue);
-
       }
+    },
+
+    iniChatHistory: function iniChatHistory() {
+      var localChatHistory = this.chat.getUserChatHistory(userInfo.id, frindInfo.id);
+      console.log(localChatHistory);
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

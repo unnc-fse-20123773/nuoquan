@@ -263,6 +263,12 @@ var _default =
     loadMore: function loadMore(tabIndex) {
       console.log('正在加载更多数据。。。');
       this.getDateList(tabIndex);
+    },
+    /**
+        * 调用添加关注的接口
+        */
+    addFollow: function addFollow() {
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

@@ -218,5 +218,5 @@ __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
 /***/ })
-],[[106,"common/runtime","common/vendor"]]]);
+],[[112,"common/runtime","common/vendor"]]]);
 //# sourceMappingURL=../../.sourcemap/mp-weixin/components/articlebrief.js.map

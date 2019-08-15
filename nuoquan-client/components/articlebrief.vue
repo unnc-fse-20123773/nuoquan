@@ -50,7 +50,7 @@ export default {
 	},
 	created(){
 		console.log(this.articleCard.tags);
-				console.log(typeof(this.articleCard.tags));
+		console.log(typeof(this.articleCard.tags));
 		
 	},
 	methods: {

@@ -43,6 +43,21 @@ public class UserServiceImpl implements UserService {
 	
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
+	public boolean checkIdIsExist(String id) {
+		
+		User user = new User();
+		
+		// 条件
+		user.setId(id);
+		
+		//判断result是否为空
+		User result = userMapper.selectOne(user);
+		
+		return result == null ? false : true;
+	}
+	
+	@Transactional(propagation = Propagation.SUPPORTS)
+	@Override
 	public boolean checkNicknameIsExist(String nickname) {
 		
 		User user = new User();
@@ -62,8 +77,15 @@ public class UserServiceImpl implements UserService {
 		
 		String userid = sid.nextShort();
 		user.setId(userid);
-		// 保存一个实体，null也会保存，不会使用数据库默认值
-		userMapper.insert(user);
+		// 保存一个实体，null值不会保存，使用数据库默认值
+		userMapper.insertSelective(user);
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Override
+	public User saveUserDirectly(User user) {
+		userMapper.insertSelective(user);
+		return queryUserById(user.getId());
 	}
 	
 	@Transactional(propagation = Propagation.SUPPORTS)

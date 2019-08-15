@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.crypto.Data;
+
 import org.apache.commons.lang3.StringUtils;
 
 import com.nuoquan.SpringUtil;
@@ -29,7 +31,7 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
 	
 	// 用于记录和管理所有客户端的 channel
-	private static ChannelGroup clients = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+	public static ChannelGroup clients = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 	
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) throws Exception {
@@ -40,8 +42,8 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
 		// 1. 获取客户端传过来的消息
 		DataContent dataContent = JsonUtils.jsonToPojo(wsContent, DataContent.class);
 		Integer action = dataContent.getAction();
-		// 2. 判断消息类型
 		
+		// 2. 判断消息类型
 		if (action == MsgActionEnum.CONNECT.type) {
 			// 2.1	当 websocket 第一次连接时，初始化Channel，把用的Channel和useid关联起来。
 			String senderId =dataContent.getChatMessage().getSenderId();
@@ -67,6 +69,9 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
 			String msgId = userService.saveMsg(chatMessage);
 			chatMessage.setMsgId(msgId);
 			
+//			DataContent dataContentBcak = new DataContent();
+//			dataContentBcak.setChatMessage(chatMessage);
+//			dataContentBcak.setAction(MsgActionEnum.CHAT.type);
 			// 发送消息
 			// 从全局用户 Channel 关系中获取接收方的 channel
 			Channel receiverChannel = UserChannelRel.get(receiverId);
@@ -79,7 +84,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
 					// 用户在线
 					receiverChannel.writeAndFlush(
 							new TextWebSocketFrame(
-									JsonUtils.objectToJson(chatMessage)));
+									JsonUtils.objectToJson(dataContent)));
 				} else {
 					// TODO 用户离线，推送
 				}
@@ -100,7 +105,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
 				}
 			}
 			
-			System.out.println(msgIdList.toString());
+			System.out.println("签收消息id：" + msgIdList.toString());
 			
 			if (msgIdList != null && !msgIdList.isEmpty() && msgIdList.size() > 0) {
 				// 批量签收

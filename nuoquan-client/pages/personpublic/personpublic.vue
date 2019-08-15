@@ -6,16 +6,16 @@
 				<view class="personName">
 					<text class="personName-text">陈仅仅六号</text>
 				</view>
-				<navigator url="../fanslist/fanslist" class="personFans super_center">
-					<text class="personFans-text">关注他的</text>
-					<text class="personFansNum-text">101</text>
-				</navigator>
-				<navigator url="../followlist/followlist" class="personFans super_center">
+				<navigator url="../followlist/followlist?currentTab=0" class="personFans super_center">
 					<text class="personFans-text">他关注的</text>
 					<text class="personFansNum-text">101</text>
 				</navigator>
+				<navigator url="../followlist/followlist?currentTab=1" class="personFans super_center">
+					<text class="personFans-text">关注他的</text>
+					<text class="personFansNum-text">101</text>
+				</navigator>
 			</view>
-			<button type="default" size="mini" class="guanzhuButton">
+			<button type="default" size="mini" class="guanzhuButton" @tap="addFollow">
 				<text class="guanzhuButton-text">关注</text>
 			</button>
 		</view>
@@ -157,6 +157,12 @@
 				console.log('正在加载更多数据。。。')
 				this.getDateList(tabIndex);
 			},
+			/**
+			 * 调用添加关注的接口
+			 */
+			addFollow: function(){
+				
+			}
 		}
 	}
 </script>

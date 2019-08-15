@@ -19,7 +19,7 @@ to {
 	position: fixed;
 	width: 750rpx;
 	height: 100%;
-		z-index: 5;
+	z-index: 5;
 }
 .mainPageLeft {
 	background: #fcfcfc;

@@ -127,8 +127,19 @@ var _articlebrief = _interopRequireDefault(__webpack_require__(/*! ../../compone
 //
 //
 //
-var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! import() | components/mainpagetop */ "components/mainpagetop").then(__webpack_require__.bind(null, /*! ../../components/mainpagetop.vue */ 121));};var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ 128));};var _default = { data: function data() {return { title: 'Hello', hottitlelist: ['热门标题111', '热门标题222', '热门标题333'],
-      showlist: "" };
+var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! import() | components/mainpagetop */ "components/mainpagetop").then(__webpack_require__.bind(null, /*! ../../components/mainpagetop.vue */ 125));};var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ 132));};var _default = { data: function data() {return { title: 'Hello',
+      hottitlelist: ['热门标题111', '热门标题222', '热门标题333'],
+      showlist: '',
+
+      userInfo: {
+        id: 'test-id123',
+        nickname: 'test-name',
+        faceImg: '../static/touxiang.jpg',
+        faceImgThumb: '../static/touxiang.jpg',
+        email: 'zy22089@nottingham.edu.cn',
+        emailPrefix: 'zy22089',
+        emailSuffix: '@nottingham.edu.cn' } };
+
 
 
   },
@@ -137,29 +148,43 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
     mainpagetop: mainpagetop,
     mainpageleft: mainpageleft },
 
-  created: function created() {
-    var _this = this;
-    uni.request({
-      url: 'http://127.0.0.1:8080/queryAllArticles',
-      method: "POST",
-      success: function success(res) {
-        _this.showlist = res.data.data.rows;
-        console.log(res);
-      },
-      fail: function fail(res) {
-        console.log("index unirequest fail");
-        console.log(res);
-      } });
+
+  onLoad: function onLoad() {
+    this.showArticles();
+
+    var userInfo = this.getGlobalUserInfo();
+    if (this.isNull(userInfo)) {
+      uni.navigateTo({
+        url: "../wechatLogin/wechatLogin" });
+
+      return;
+    }
+  },
+  onShow: function onShow() {
+
+    var userInfo = this.getGlobalUserInfo();
+    if (!this.isNull(userInfo)) {
+      // 设置 userInfo 传给 mainpagetop 组件
+      this.userInfo = this.getGlobalUserInfo();
+    }
 
   },
-  onLoad: function onLoad() {},
   methods: {
-    show: function show() {
-      if (this.showmenu == 0) {
-        this.showmenu = 1;
-      } else {
-        this.showmenu = 0;
-      }
+
+    showArticles: function showArticles() {
+      var _this = this;
+      uni.request({
+        url: 'http://127.0.0.1:8080/queryAllArticles',
+        method: "POST",
+        success: function success(res) {
+          _this.showlist = res.data.data.rows;
+          console.log(res);
+        },
+        fail: function fail(res) {
+          console.log("index unirequest fail");
+          console.log(res);
+        } });
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

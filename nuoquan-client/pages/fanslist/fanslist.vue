@@ -1,3 +1,5 @@
+<!-- Deprecated !
+	 fans&follw list now combine into the 'followlist' page -->
 <template>
 	<view>
 			

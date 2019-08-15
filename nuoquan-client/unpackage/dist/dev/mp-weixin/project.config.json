@@ -61,6 +61,24 @@
           "query": "",
           "id": 5,
           "pathName": "pages/messagelist/messagelist"
+        },
+        {
+          "name": "profile",
+          "query": "",
+          "id": 6,
+          "pathName": "pages/profile/profile"
+        },
+        {
+          "name": "personpublic",
+          "query": "",
+          "id": 7,
+          "pathName": "pages/personpublic/personpublic"
+        },
+        {
+          "name": "wechatLogin",
+          "query": "",
+          "id": 8,
+          "pathName": "pages/wechatLogin/wechatLogin"
         }
       ]
     }

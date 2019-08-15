@@ -6,6 +6,12 @@ import com.nuoquan.pojo.User;
 import com.nuoquan.pojo.netty.ChatMessage;
 
 public interface UserService {
+	/**
+	 * @Description: 判断id是否存在
+	 * @param id
+	 * @return
+	 */
+	public boolean checkIdIsExist(String id);
 	
 	/**
 	 * @Description: 判断昵称是否存在
@@ -19,6 +25,12 @@ public interface UserService {
 	 * @param user
 	 */
 	public void saveUser(User user);
+	
+	/**
+	 * 直接保存用户，不自动生成id
+	 * @param user
+	 */
+	public User saveUserDirectly(User user);
 	
 	/**
 	 * @Description: 用户登录，根据用户名和密码查询用户
@@ -58,4 +70,5 @@ public interface UserService {
 	 * @Description 批量签收消息
 	 */
 	public void updateMsgSigned(List<String> msgIdList);
+
 }

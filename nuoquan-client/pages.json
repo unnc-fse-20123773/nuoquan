@@ -43,7 +43,6 @@
 			"path": "pages/detail/detail",
 			"style": {}
 		},
-
 		{
 			"path": "pages/signin/signin",
 			"style": {}
@@ -56,11 +55,11 @@
 			"path": "pages/messagelist/messagelist",
 			"style": {}
 		},
-		{
-            "path" : "pages/chat/chat",
+	    {
+            "path" : "pages/wechatLogin/wechatLogin",
             "style" : {}
         }
-	],
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
@@ -100,6 +99,21 @@
 			    "name" : "messagelist", //模式名称
 			    "path" : "pages/messagelist/messagelist", //启动页面，必选
 			    "query" : "" //启动参数，在页面的onLoad函数里面得到
+			},
+			{
+			    "name" : "profile", //模式名称
+			    "path" : "pages/profile/profile", //启动页面，必选
+			    "query" : "" //启动参数，在页面的onLoad函数里面得到
+			},
+			{
+			    "name" : "personpublic", //模式名称
+			    "path" : "pages/personpublic/personpublic", //启动页面，必选
+			    "query" : "" //启动参数，在页面的onLoad函数里面得到
+			},{
+				"name" : "wechatLogin", //模式名称
+				"path" : "pages/wechatLogin/wechatLogin", //启动页面，必选
+				"query" : "" //启动参数，在页面的onLoad函数里面得到
+				
 			}
         ]
     }

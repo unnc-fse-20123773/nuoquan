@@ -13,7 +13,7 @@
     "pages/signin/signin",
     "components/articlebrief",
     "pages/messagelist/messagelist",
-    "pages/chat/chat"
+    "pages/wechatLogin/wechatLogin"
   ],
   "subPackages": [],
   "window": {

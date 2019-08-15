@@ -150,7 +150,7 @@ var _default =
     return {
       scrollLeft: 0,
       isClickChange: false,
-      currentTab: 0,
+      currentTab: 0, // 切换 list 0/1
       menuTabs: [{
         name: '他关注的' },
       {
@@ -192,16 +192,21 @@ var _default =
     this.duration = e.target.value;
   },
 
-  onLoad: function onLoad() {
+  onLoad: function onLoad(opt) {
     uni.setNavigationBarTitle({
       title: 'XXX的主页' });
 
+    // 设置列表 index
+    this.currentTab = opt.currentTab;
+    // console.log(opt);
 
     var screenWidth = uni.getSystemInfoSync().screenWidth;
     this.screenWidth = screenWidth;
 
     // 获取当前页面
-    var page = this.page;
+    // var page = this.page;
+
+
 
   },
 
@@ -265,10 +270,10 @@ var _default =
       this.$nextTick(function () {
         this.scrollTop = 0;
       });
-      uni.showToast({
-        icon: "none",
-        title: "回到顶部喽~" });
-
+      // uni.showToast({
+      // 	icon: "none",
+      // 	title: "回到顶部喽~"
+      // })
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
