@@ -110,7 +110,15 @@
 				socketTask.onError(function(res) {
 					console.log('WebSocket连接打开失败，请检查！');
 				});
-				socketTask.onMessage(function(res) {
+				socketTask.onMessage(function(res) {	
+					debugger;
+					var receveMessage = {
+						messageType: false,                                   ///////发送为true,接受flase
+						messageTime: new Date().getHours() +":"+new Date().getMinutes(),
+						messageStatus:true,                                  //////////未读为false，已读true
+						messageContent:res.data				
+					};
+					this.chatContent.unshift({messageContent:"123",messageType:false});
 					console.log('收到服务器内容：' + res.data);
 				});
 				socketTask.onClose(function(res) {
@@ -122,46 +130,27 @@
 					// 	that.socketInit();
 					// },3000);
 				});
-				
 			},
-
 			sendText() {
-				
-				//本地尝试模拟发送信息    发送为true,接受flase////////未读为true，已读false
-				
-				var newLocalMessage={
-					messageId: '0003',
-					messageType: true,                                   ///////发送为true,接受flase
-					messageTime: new Date().getTime(),
-					messageStatus:false,                                  //////////未读为false，已读true
-					messageContent:this.textMsg					
-				};
-                console.log(typeof(this.chatContent));										
-                this.chatContent.unshift(newLocalMessage);
-				//模拟发送结束
-
-				
-				
-				
-				
-				
-				
-				
+				debugger;
 				if(!this.textMsg){
 					return;
 				}
-				var that = this;
-				
-				
-				
-				
-				
-				
+				var that = this;	
 				if (socketOpen == true) {
 					console.log("1=:"+socketOpen)
 					socketTask.send({
 						data: that.textMsg
 					});
+					//本地尝试模拟发送信息    发送为true,接受flase////////未读为true，已读false
+					var newLocalMessage={
+						messageType: true,                                   ///////发送为true,接受flase
+						messageTime: new Date().getHours() +":"+ new Date().getMinutes(),
+						messageStatus:false,                                  //////////未读为false，已读true
+						messageContent:this.textMsg					
+					};
+					this.chatContent.unshift(newLocalMessage);
+					//模拟发送结束
 					that.textMsg = '';//清空输入框
 				} else {
 					console.log("2=:"+socketOpen)
@@ -204,10 +193,11 @@
 		display: inline-block;
 		width: 534upx;
 		height: 50upx;
+		max-height: 100px;
 		border-radius: 24upx;
 		border: solid 1px #C6C6C6;
 		margin-left: 14upx;
-				padding:3px 2px;
+		padding:3px 2px;
 		
 	}
 

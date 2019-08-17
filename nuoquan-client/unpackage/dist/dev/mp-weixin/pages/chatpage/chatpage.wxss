@@ -40,10 +40,11 @@ page{height:100%;		background: #F5F5F5;
 	display: inline-block;
 	width: 534rpx;
 	height: 50rpx;
+	max-height: 100px;
 	border-radius: 24rpx;
 	border: solid 1px #C6C6C6;
 	margin-left: 14rpx;
-			padding:3px 2px;
+	padding:3px 2px;
 }
 .icons.data-v-13bf3097 {
 	display: -webkit-inline-box;
