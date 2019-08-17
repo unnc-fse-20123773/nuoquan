@@ -48,12 +48,31 @@
 						</view>
 					</view>
 				</view>
+				<view class="msglist-card-read column_center" v-for="(readlist,index2) in readlist" :key="index2">
+					<image class="msglist-Touxiang" mode="aspectFill" src="../../static/touxiang2.jpg"></image>
+					<view class="msglist-content">
+						<view class="msglist-id-read font-family">
+							陈仅仅一号111
+						</view>
+						<view class="msglist-brief-read font-family">
+							用来模拟场景中天空的光线，也可以使用真...
+						</view>
+					</view>
+					<view class="time-numicon">
+						<view class="msglist-time">
+							11-26
+						</view>
+						<view class="msglist-icon-read super_center">
+							{{msgicon}}
+						</view>
+					</view>
+				</view>
 			</scroll-view>
 		</view>
 
-		<navigator url="../chatpage/chatpage">
+<!-- 		<navigator url="../chatpage/chatpage">
 			<button type="primary" size="mini">进入聊天窗口</button>
-		</navigator>
+		</navigator> -->
 	</view>
 
 </template>
@@ -62,7 +81,9 @@
 	export default {
 		data() {
 			return {
-			cardlist:[1,1,1,1,1,1,11,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+			cardlist:[1,1,1],
+			readlist:[1,1,1],
+			msgicon:[]
 			}
 		},
 		onLoad: function() {
@@ -207,7 +228,7 @@
 		background-color: #058ecc;
 		color: white;
 		border-radius: 7upx;
-		width: 56upx;
+		width: 36upx;
 		right: 40upx;
 	}
 
@@ -219,6 +240,15 @@
 		background-color: white;
 		border-radius: 12upx;
 		box-shadow: 0upx 0upx 14upx 0upx #B2B2B2;
+	}
+
+	.msglist-card-read {
+		width: 88%;
+		margin-left: 6%;
+		margin-top: 8upx;
+		height: 120upx;
+		background-color: white;
+		border-radius: 12upx;
 	}
 
 	.msglist-Touxiang {
@@ -246,11 +276,28 @@
 		color: #353535;
 	}
 
+	.msglist-id-read {
+		width: 100%;
+		height: 32upx;
+		font-size: x-small;
+		font-weight: 500;
+		color: #9b9b9b;
+	}
+	
 	.msglist-brief {
 		width: 100%;
+		font-weight: 500;
 		height: 32upx;
 		font-size: xx-small;
 		color: #6f6f6f;
+		margin-top: 6upx;
+	}
+
+.msglist-brief-read {
+		width: 100%;
+		height: 32upx;
+		font-size: xx-small;
+		color: #9b9b9b;
 		margin-top: 6upx;
 	}
 
@@ -279,5 +326,9 @@
 		background-color: #FDD453;
 		font-size: 20upx;
 		border-radius: 999upx;
+	}
+	
+	.msglist-icon-read {
+	
 	}
 </style>
