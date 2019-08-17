@@ -79,6 +79,107 @@ Vue.prototype.isNull = function(str) {
 	return false;
 }
 
+/**
+ * 自定义封装 socket 供全局调用
+ * @author: Jerrio
+ */
+Vue.prototype.mySocket = {
+
+	isOpen: false,
+	socketMsgQueue: [], // 未发送的消息队列	
+
+	init: function() {
+		var that = this;
+		// 创建websocket长连接
+		uni.connectSocket({
+			url: 'ws://localhost:8088/ws',
+			complete: () => {}
+		});
+
+		uni.onSocketOpen(function(res) {
+			that.isOpen = true;
+			console.log('WebSocket连接已打开！isSocketOpen=' + that.isOpen);
+			//发送连接消息，向服务器注册信息
+			that.sendObj(app.netty.CONNECT, null, null);
+			// 发送未发送的信息
+			for (var i = 0; i < that.socketMsgQueue.length; i++) {
+				// console.log(that.socketMsgQueue[i]);
+				that.sendObj(app.netty.CHAT, that.socketMsgQueue[i], null);
+			}
+			that.socketMsgQueue = [];
+		});
+
+		uni.onSocketError(function(res) {
+			console.log('WebSocket连接打开失败，请检查！');
+		});
+
+		uni.onSocketMessage(function(res) {
+			var dataContent = JSON.parse(res.data);
+			var chatMessage = dataContent.chatMessage;
+			console.log("收到服务器内容：");
+			console.log(dataContent);
+
+			// 发送签收消息
+			that.sendObj(app.netty.SIGNED, null, null, chatMessage.msgId);
+
+			// 保存聊天历史记录到本地缓存
+			if (dataContent.type == app.netty.CHAT) {
+				var myId = chatMessage.receiverId;
+				var friendId = chatMessage.senderId;
+				var msg = chatMessage.msg
+
+				app.chat.saveUserChatHistory(myId, friendId, msg, that.chat.FRIEND);
+			}
+		});
+		
+		uni.onSocketClose(function(res) {
+			that.isOpen = false;
+			console.log('WebSocket 已关闭！isSocketOpen=' + that.isOpen);
+			// 三秒一次重连
+			console.log("重连中..");
+			setTimeout(function() {
+				that.init();
+			}, 3000);
+		});
+
+	},
+	/**
+	 * 向服务器发送JSON数据对象
+	 * @param {Object} type
+	 * @param {Object} toUserId
+	 * @param {Object} msg
+	 * @param {Object} extand
+	 */
+	sendObj(type, toUserId, msg, extand) {
+		var myUserId = app.getGlobalUserInfo().id; // 调用全局用户缓存，需要先请求获取
+		if (app.isNull(myUserId)) {
+			console.log("请先获取用户数据");
+		}
+
+		var chatMessage = new app.netty.ChatMessage(myUserId, toUserId, msg, null);
+		var dataContent = new app.netty.DataContent(type, chatMessage, extand)
+
+		var data = JSON.stringify(dataContent);
+		var isSocketOpen = app.mySocket.isOpen;
+		if (isSocketOpen == true) {
+			console.log("isSocketOpen=" + isSocketOpen);
+			uni.sendSocketMessage({
+				data: data,
+			});
+
+			//保存聊天历史到 本地缓存
+			if (type == app.netty.CHAT) {
+				app.chat.saveUserChatHistory(myUserId, toUserId, msg, app.chat.ME);
+			}
+		} else {
+			console.log("isSocketOpen=" + isSocketOpen);
+			this.socketMsgQueue.push(data);
+			console.log(this.socketMsgQueue);
+
+		}
+	},
+
+}
 
 Vue.prototype.chat = {
 
@@ -108,6 +209,7 @@ Vue.prototype.chat = {
 
 		// 构建聊天记录对象
 		var singleMsg = new this.ChatHistory(myId, friendId, msg, flag);
+
 		// 添加到list尾部
 		chatHistoryList.push(singleMsg);
 

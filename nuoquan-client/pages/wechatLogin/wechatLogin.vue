@@ -4,6 +4,8 @@
 
 		<!-- 用于开发阶段清除用户信息的缓存，发布时需要注释掉 -->
 		<button type="primary" @tap="removeUserInfo">[dev]清除用户信息缓存</button>
+		<!-- 用于开发阶段清除所有缓存，发布时需要注释掉 -->
+		<button type="primary" @tap="clearStorage">[dev]清除缓存</button>
 	</view>
 </template>
 
@@ -74,7 +76,7 @@
 						if(res.data.status == 200){
 							// 3.获取返回的用户信息
 							finalUser = res.data.data;
-							// 4.分割邮箱地址, 重构user
+							// 4.分割邮箱地址, 重构 user
 							finalUser = this.myUser(finalUser);
 							// 5.写入缓存
 							this.setGlobalUserInfo(finalUser);
@@ -92,6 +94,11 @@
 			removeUserInfo() {
 				this.removeGlobalUserInfo();
 				console.log("用户信息缓存已清除")
+			},
+			
+			clearStorage(){
+				uni.clearStorage();
+				console.log("所有缓存已清除")
 			}
 		}
 	}

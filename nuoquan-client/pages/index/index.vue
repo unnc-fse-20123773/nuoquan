@@ -9,7 +9,7 @@
 	import articlebrief from '../../components/articlebrief';
 	import mainpagetop from '../../components/mainpagetop.vue';
 	import mainpageleft from '@/components/mainpageleft.vue'
-
+	
 	export default {
 		data() {
 			return {
@@ -45,6 +45,8 @@
 				})
 				return;
 			} 
+		
+			this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
 		},
 		onShow() {
 

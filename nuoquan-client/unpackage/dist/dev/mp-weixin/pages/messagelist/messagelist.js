@@ -161,7 +161,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-var _default =
+
+var userInfo;
+var frindInfo;
+
+var socketTask;
+var socketOpen = false;var _default =
+
 {
   data: function data() {
     return {
@@ -172,11 +178,28 @@ var _default =
     uni.setNavigationBarTitle({
       title: "私信列表" });
 
+
+    userInfo = this.getGlobalUserInfo();
+    if (this.isNull(userInfo)) {
+      console.log("No userInfo!!");
+      return;
+    }
+
+    // 暂时把 frind 等同于 user
+    frindInfo = userInfo;
+
+    this.mySocket.init();
+
   },
   methods: {
+
     goToChatpage: function goToChatpage() {
+      var data = {
+        userInfo: userInfo,
+        frindInfo: frindInfo };
+
       uni.navigateTo({
-        url: '../chatpage/chatpage' });
+        url: '../chatpage/chatpage?data=' + JSON.stringify(data) });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

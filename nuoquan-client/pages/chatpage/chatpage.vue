@@ -69,108 +69,32 @@
 				textMsg: '', // 输入框中的text
 			}
 		},
-		onLoad: function() {
+		
+		onLoad: function(opt) {
 			uni.setNavigationBarTitle({
 				title: "XXXX（聊天人的昵称）"
 			});
+			// 获取界面传参
+			var data = JSON.parse(opt.data);
+			userInfo = data.userInfo;
+			frindInfo = data.frindInfo;
 			
-			userInfo = this.getGlobalUserInfo();
-			if (this.isNull(userInfo)) {
-				console.log("No userInfo!!");
-				return;
-			} 
-			
-			// 暂时把 frind 等同于 user
-			frindInfo = userInfo;
-			
-			console.log(userInfo);
-			this.socketInit();
+			// 获取与该用户的聊天历史记录
 			this.iniChatHistory();
-		},
-		onHide() {
-			// socketTask.close();
+			
+			uni.onSocketMessage(function(){
+				console.log("this on messge");
+			})
 		},
 		
 		methods: {
-			socketInit(){
-				var that = this;
-				// 创建websocket长连接
-				socketTask = uni.connectSocket({
-					url: 'ws://localhost:8088/ws',
-					complete: () => {}
-				});
-				socketTask.onOpen(function(res) {
-					console.log('WebSocket连接已打开！');
-					socketOpen = true;
-					
-					//发送连接消息，向服务器注册信息
-					that.sendObj(that.netty.CONNECT, null, null);
-					// 发送未发送的信息
-					for (var i = 0; i < that.socketMsgQueue.length; i++) {
-						// console.log(that.socketMsgQueue[i]);
-						that.sendObj(that.netty.CHAT, that.socketMsgQueue[i], null);
-					}
-					that.socketMsgQueue = [];
-				});
-				
-				socketTask.onError(function(res) {
-					console.log('WebSocket连接打开失败，请检查！');
-				});
-				socketTask.onMessage(function(res) {
-					var dataContent = JSON.parse(res.data);
-					var chatMessage = dataContent.chatMessage;
-					console.log("收到服务器内容：");
-					console.log(dataContent);
-					
-					// 发送签收消息
-					that.sendObj(that.netty.SIGNED, null, chatMessage.msgId);
-				
-					// 保存聊天历史记录到本地缓存
-					var myId = chatMessage.receiverId;
-					var friendId = chatMessage.senderId;
-					var msg = chatMessage.msg
-				
-					that.chat.saveUserChatHistory(myId, friendId, msg, that.chat.FRIEND);
-				});
-				socketTask.onClose(function(res) {
-					console.log('WebSocket 已关闭！');
-					socketOpen = false;
-					// 三秒一次重连
-					// console.log("重连中..");
-					// setTimeout(function(){
-					// 	that.socketInit();
-					// },3000);
-				});
-				
-			},
 			
 			sendText() {
 				if(!this.textMsg){
 					return;
 				}
-				
-				this.sendObj(this.netty.CHAT, this.textMsg, null);
+				this.mySocket.sendObj(this.netty.CHAT, frindInfo.id, this.textMsg, null);
 				this.textMsg = '';//清空输入框
-			},
-			
-			sendObj(type, msg, extand){
-				var chatMessage = new this.netty.ChatMessage(userInfo.id, frindInfo.id, msg, null);
-				var dataContent = new this.netty.DataContent(type, chatMessage, extand)
-				
-				var data = JSON.stringify(dataContent);
-				if (socketOpen == true) {
-					console.log("1="+socketOpen);
-					socketTask.send({
-						data: data,
-					});
-					
-					//保存聊天历史到 本地缓存	
-					this.chat.saveUserChatHistory(userInfo.id, frindInfo.id, msg, this.chat.ME);
-				} else {
-					console.log("2="+socketOpen);
-					this.socketMsgQueue.push(data);
-					console.log(this.socketMsgQueue);
-				}
 			},
 			
 			iniChatHistory(){

@@ -159,6 +159,8 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
 
       return;
     }
+
+    this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
   },
   onShow: function onShow() {
 

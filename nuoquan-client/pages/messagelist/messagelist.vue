@@ -55,21 +55,44 @@
 </template>
 
 <script>
+	var userInfo;
+	var frindInfo;
+
+	var socketTask;
+	var socketOpen = false;
+
 	export default {
 		data() {
 			return {
-			cardlist:[1,1,1,1,1,1,11,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+				cardlist: [1, 1, 1, 1, 1, 1, 11, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 			}
 		},
 		onLoad: function() {
 			uni.setNavigationBarTitle({
 				title: "私信列表"
 			});
+
+			userInfo = this.getGlobalUserInfo();
+			if (this.isNull(userInfo)) {
+				console.log("No userInfo!!");
+				return;
+			}
+
+			// 暂时把 frind 等同于 user
+			frindInfo = userInfo;
+
+			this.mySocket.init();
+
 		},
 		methods: {
-			goToChatpage(){
+
+			goToChatpage() {
+				var data = {
+					userInfo: userInfo,
+					frindInfo: frindInfo,
+				}
 				uni.navigateTo({
-					url: '../chatpage/chatpage',
+					url: '../chatpage/chatpage?data=' + JSON.stringify(data),
 				});
 			}
 		}
@@ -151,6 +174,7 @@
 		background-color: #d1d1d1;
 		margin-left: 5%;
 	}
+
 	.msglist-comment-bg {
 		position: absolute;
 		height: 58upx;
@@ -166,7 +190,7 @@
 		margin-top: 5upx;
 		margin-left: 1upx;
 	}
-	
+
 	.msglist-comment {
 		width: 100%;
 		height: 49%;

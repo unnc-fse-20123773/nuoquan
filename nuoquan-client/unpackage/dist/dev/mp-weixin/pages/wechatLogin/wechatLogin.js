@@ -112,6 +112,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* User Example
  userInfo: {
@@ -179,7 +181,7 @@ __webpack_require__.r(__webpack_exports__);
           if (res.data.status == 200) {
             // 3.获取返回的用户信息
             finalUser = res.data.data;
-            // 4.分割邮箱地址, 重构user
+            // 4.分割邮箱地址, 重构 user
             finalUser = _this.myUser(finalUser);
             // 5.写入缓存
             _this.setGlobalUserInfo(finalUser);
@@ -197,6 +199,11 @@ __webpack_require__.r(__webpack_exports__);
     removeUserInfo: function removeUserInfo() {
       this.removeGlobalUserInfo();
       console.log("用户信息缓存已清除");
+    },
+
+    clearStorage: function clearStorage() {
+      uni.clearStorage();
+      console.log("所有缓存已清除");
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

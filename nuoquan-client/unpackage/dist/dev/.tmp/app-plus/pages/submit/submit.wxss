@@ -71,7 +71,7 @@ page {
 	min-height: 136px;
 	background: #F4F1E9;
 	margin-top: 13px;
-	width:100%;
+	width: 100%;
 }
 .picturearea {
 	display: -webkit-box;
@@ -104,11 +104,11 @@ page {
 	border: dashed 3px #BEBCB5;
 	text-align: center;
 	vertical-align: middle;
-	color:#BEBCB5;
+	color: #BEBCB5;
 	font-size: 70px;
 	font-weight: 200;
 }
-.placeHolderForPic{
+.placeHolderForPic {
 	width: 190rpx;
 	height: 190rpx;
 }
