@@ -1,15 +1,19 @@
 import Vue from 'vue'
 import App from './App'
+import store from './store' // 引入 vuex 的 store 对象
+import {mapMutations} from 'vuex';
 
 const app = new Vue({
+	store,
 	...App
 })
 app.$mount()
+App.mpType = 'app'
 
 Vue.config.productionTip = false
-Vue.prototype.SeverUrl = "http://127.0.0.1:8080"
 
-App.mpType = 'app'
+Vue.prototype.$store = store
+Vue.prototype.$serverUrl = "http://127.0.0.1:8080"
 
 Vue.prototype.setGlobalUserInfo = function(user) {
 	uni.setStorageSync('userInfo', user);
@@ -112,26 +116,31 @@ Vue.prototype.mySocket = {
 		uni.onSocketError(function(res) {
 			console.log('WebSocket连接打开失败，请检查！');
 		});
-
-		uni.onSocketMessage(function(res) {
-			var dataContent = JSON.parse(res.data);
-			var chatMessage = dataContent.chatMessage;
-			console.log("收到服务器内容：");
-			console.log(dataContent);
-
-			// 发送签收消息
-			that.sendObj(app.netty.SIGNED, null, null, chatMessage.msgId);
-
-			// 保存聊天历史记录到本地缓存
-			if (dataContent.type == app.netty.CHAT) {
-				var myId = chatMessage.receiverId;
-				var friendId = chatMessage.senderId;
-				var msg = chatMessage.msg
-
-				app.chat.saveUserChatHistory(myId, friendId, msg, that.chat.FRIEND);
-			}
-		});
 		
+		// 已在index页面重写
+// 		uni.onSocketMessage(function(res) {
+// 			var dataContent = JSON.parse(res.data);
+// 			var chatMessage = dataContent.chatMessage;
+// 			console.log("收到服务器内容：");
+// 			console.log(dataContent);
+// 
+// 			// 发送签收消息
+// 			that.sendObj(app.netty.SIGNED, null, null, chatMessage.msgId);
+// 
+// 
+// 			if (dataContent.action == app.netty.CHAT) {
+// 				// 修改 store
+// 				// that.setChatMessageCard(dataContent); 好像调用不了，决定在index页面重写
+// 
+// 				// 保存聊天历史记录到本地缓存
+// 				var myId = chatMessage.receiverId;
+// 				var friendId = chatMessage.senderId;
+// 				var msg = chatMessage.msg
+// 
+// 				app.chat.saveUserChatHistory(myId, friendId, msg, app.chat.FRIEND);
+// 			}
+// 		});
+
 		uni.onSocketClose(function(res) {
 			that.isOpen = false;
 			console.log('WebSocket 已关闭！isSocketOpen=' + that.isOpen);
@@ -178,7 +187,6 @@ Vue.prototype.mySocket = {
 
 		}
 	},
-
 }
 
 Vue.prototype.chat = {

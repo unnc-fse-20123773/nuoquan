@@ -1,9 +1,9 @@
 <!-- 本页面的 websocket 应写在 messagelist 里-->
 <template>
 	<view>
-		<view class="messageArea">
+		<scroll-view class="messageArea">
 			<onemessage v-for="(i,index) in chatContent" :key=index :thisMessage='i'></onemessage>
-		</view>
+		</scroll-view>
 		<view class="bottomBar">
 			<textarea auto-height="true" v-model="textMsg" />
 			<view class="icons">
@@ -18,7 +18,8 @@
 </template>
 
 <script>
-	import onemessage from './oneMessage'
+	import onemessage from './oneMessage';
+	import {mapState} from 'vuex';
 	
 	var userInfo;
 	var frindInfo;
@@ -32,41 +33,89 @@
 		},
 		data() {
 			return {
-
+				/**
+				 * ChatMessageCard example
+				ChatMessageCard = {
+					this.senderId = senderId;
+					this.receiverId = receiverId;
+					this.msg = msg;		// 显示
+					this.msgId = msgId; // 前端不需要用到
+					this.creatTime = creatTime; // 显示 flag
+				},
+				*/
+				
 				chatContent: [{
-					messageId: '0001',
-					messageType: '1',
+					msgId: '0001',
+					flag: '1',
+					msg: '第一条消息',
 					messageTime: '11:29',
 					messageStatus: '0'
 				}, {
-					messageId: '0002',
-					messageType: '1',
+					msgId: '0002',
+					flag: '1',
+					msg: 'abab',
 					messageTime: '11:29',
 					messageStatus: '0'
 				}, {
-					messageId: '0003',
-					messageType: '1',
+					msgId: '0003',
+					flag: '1',
+					msg: 'abab',
 					messageTime: '11:29',
 					messageStatus: '0'
 				}, {
-					messageId: '0004',
-					messageType: '0',
+					msgId: '0004',
+					flag: '2',
+					msg: 'abab',
 					messageTime: '11:29',
 					messageStatus: '1'
 				}, {
-					messageId: '0006',
-					messageType: '1',
+					msgId: '0006',
+					flag: '1',
+					msg: 'abab',
 					messageTime: '11:29',
 					messageStatus: '0'
 				}, {
-					messageId: '0006',
-					messageType: '0',
+					msgId: '0006',
+					flag: '2',
+					msg: 'abab',
 					messageTime: '11:29',
 					messageStatus: '1'
+				}, {
+					msgId: '0001',
+					flag: '1',
+					msg: 'abab',
+					messageTime: '11:29',
+					messageStatus: '0'
+				}, {
+					msgId: '0002',
+					flag: '1',
+					msg: 'abab',
+					messageTime: '11:29',
+					messageStatus: '0'
 				}],
 
 				socketMsgQueue: [], // 未发送的消息队列
 				textMsg: '', // 输入框中的text
+				windowHeight: '',
+			}
+		},
+		
+		computed: {
+			...mapState([
+				'ChatMessageCard',
+			])
+		},
+		
+		watch: {
+			ChatMessageCard(newVal, oldVal) { //监听数据变化，即可做相关操作
+				console.log("newVal:");
+				console.log(newVal);
+				// 渲染到窗口
+				newVal.flag = this.chat.FRIEND;
+				this.chatContent.push(newVal);
+				
+				this.scrollToBottom();
+				
 			}
 		},
 		
@@ -79,12 +128,16 @@
 			userInfo = data.userInfo;
 			frindInfo = data.frindInfo;
 			
+			var that = this;
+			uni.getSystemInfo({
+			  success: function(res) {
+				that.windowHeight = res.windowHeight;
+			  }
+			});
+			
 			// 获取与该用户的聊天历史记录
 			this.iniChatHistory();
-			
-			uni.onSocketMessage(function(){
-				console.log("this on messge");
-			})
+			this.scrollToBottom();
 		},
 		
 		methods: {
@@ -94,21 +147,46 @@
 					return;
 				}
 				this.mySocket.sendObj(this.netty.CHAT, frindInfo.id, this.textMsg, null);
+				// 渲染到窗口
+				var message = {
+					messageId: '0006',
+					flag: this.chat.ME,
+					msg: this.textMsg,
+					messageTime: '11:29',
+					messageStatus: '1',
+				}
+				this.chatContent.push(message);
+				
 				this.textMsg = '';//清空输入框
 			},
 			
 			iniChatHistory(){
 				var localChatHistory = this.chat.getUserChatHistory(userInfo.id, frindInfo.id);
-				console.log(localChatHistory);
+				this.chatContent = localChatHistory;
+			},
+			
+			scrollToBottom(){
+				// 将页面滚动到底部，延时滚动,等待渲染
+				// 页面高度乘以列表长度...绝对能滚到底
+				this.$nextTick( function(){
+					uni.pageScrollTo({
+						scrollTop: this.windowHeight * this.chatContent.length,
+						duration: 0
+					});
+				});
 			}
 		}
 	}
 </script>
 
 <style scoped>
+	/**
+	 * TODO： 滚动区域高度需固定
+	 * 					by Jerrio
+	 */
 	.messageArea {
 		display: flex;
-		flex-flow: column-reverse;
+		/* flex-flow: column-reverse; */
 		margin-bottom: 90upx;
 		overflow: hidden;
 		background: #F5F5F5;

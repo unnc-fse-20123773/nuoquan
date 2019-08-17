@@ -1196,6 +1196,12 @@ if( __WXML_GLOBAL__.ops_cached.$gwx_14)return __WXML_GLOBAL__.ops_cached.$gwx_14
 __WXML_GLOBAL__.ops_cached.$gwx_14=[];
 (function(z){var a=11;function Z(ops){z.push(ops)}
 Z([3,'2dac0d97'])
+Z([3,'_view data-v-d203d3ca'])
+Z([[6],[[7],[3,'thisMessage']],[3,'messageType']])
+Z([3,'_view data-v-d203d3ca bottomBar'])
+Z([[2,'!'],[[6],[[7],[3,'thisMessage']],[3,'messageStatus']]])
+Z([[6],[[7],[3,'thisMessage']],[3,'messageStatus']])
+Z([[2,'!'],[[6],[[7],[3,'thisMessage']],[3,'messageType']]])
 })(__WXML_GLOBAL__.ops_cached.$gwx_14);return __WXML_GLOBAL__.ops_cached.$gwx_14
 }
 function gz$gwx_15(){
@@ -1382,24 +1388,36 @@ __WXML_GLOBAL__.ops_set.$gwx=z;
 __WXML_GLOBAL__.ops_init.$gwx=true;
 var nv_require=function(){var nnm={};var nom={};return function(n){return function(){if(!nnm[n]) return undefined;try{if(!nom[n])nom[n]=nnm[n]();return nom[n];}catch(e){e.message=e.message.replace(/nv_/g,'');var tmp = e.stack.substring(0,e.stack.lastIndexOf(n));e.stack = tmp.substring(0,tmp.lastIndexOf('\n'));e.stack = e.stack.replace(/\snv_/g,' ');e.stack = $gstack(e.stack);e.stack += '\n    at ' + n.substring(2);console.error(e);}
 }}}()
-var x=['./common/slots.wxml','/components/mainpagetop.vue.wxml','/components/articlebrief.vue.wxml','./components/articlebrief.vue.wxml','./components/articlebrief.wxml','./articlebrief.vue.wxml','./components/comment.vue.wxml','./components/mainpageleft.vue.wxml','./components/mainpagetop.vue.wxml','/components/mainpageleft.vue.wxml','./pages/black-index/black-articlebrief.vue.wxml','./pages/black-index/black-comment.vue.wxml','./pages/black-index/black-index.vue.wxml','/pages/black-index/black-articlebrief.vue.wxml','/pages/black-index/black-popup.vue.wxml','./pages/black-index/black-index.wxml','./black-index.vue.wxml','./pages/black-index/black-popup.vue.wxml','/pages/black-index/black-comment.vue.wxml','./pages/chatpage/chatpage.vue.wxml','/pages/chatpage/oneMessage.vue.wxml','./pages/chatpage/chatpage.wxml','./chatpage.vue.wxml','./pages/chatpage/oneMessage.vue.wxml','./pages/detail/detail.vue.wxml','/components/comment.vue.wxml','./pages/detail/detail.wxml','./detail.vue.wxml','./pages/fanslist/fanslist.vue.wxml','./pages/fanslist/fanslist.wxml','./fanslist.vue.wxml','./pages/followlist/followlist.vue.wxml','./pages/followlist/followlist.wxml','./followlist.vue.wxml','./pages/index/index.vue.wxml','./pages/index/index.wxml','./index.vue.wxml','./pages/messagelist/messagelist.vue.wxml','./pages/messagelist/messagelist.wxml','./messagelist.vue.wxml','./pages/personpublic/personpublic.vue.wxml','./pages/personpublic/personpublic.wxml','./personpublic.vue.wxml','./pages/profile/profile.vue.wxml','./pages/profile/profile.wxml','./profile.vue.wxml','./pages/search/search.vue.wxml','./pages/search/search.wxml','./search.vue.wxml','./pages/signin/signin.vue.wxml','./pages/signin/signin.wxml','./signin.vue.wxml','./pages/submit/submit.vue.wxml','./pages/submit/submit.wxml','./submit.vue.wxml','./pages/wechatLogin/wechatLogin.vue.wxml','./pages/wechatLogin/wechatLogin.wxml','./wechatLogin.vue.wxml'];d_[x[0]]={}
+var x=['./common/slots.wxml','/pages/chatpage/oneMessage.vue.wxml','/components/mainpagetop.vue.wxml','/components/articlebrief.vue.wxml','/components/comment.vue.wxml','/pages/black-index/black-articlebrief.vue.wxml','/pages/black-index/black-popup.vue.wxml','/components/mainpageleft.vue.wxml','/pages/black-index/black-comment.vue.wxml','./components/articlebrief.vue.wxml','./components/articlebrief.wxml','./articlebrief.vue.wxml','./components/comment.vue.wxml','./components/mainpageleft.vue.wxml','./components/mainpagetop.vue.wxml','./pages/black-index/black-articlebrief.vue.wxml','./pages/black-index/black-comment.vue.wxml','./pages/black-index/black-index.vue.wxml','./pages/black-index/black-index.wxml','./black-index.vue.wxml','./pages/black-index/black-popup.vue.wxml','./pages/chatpage/chatpage.vue.wxml','./pages/chatpage/chatpage.wxml','./chatpage.vue.wxml','./pages/chatpage/oneMessage.vue.wxml','./pages/detail/detail.vue.wxml','./pages/detail/detail.wxml','./detail.vue.wxml','./pages/fanslist/fanslist.vue.wxml','./pages/fanslist/fanslist.wxml','./fanslist.vue.wxml','./pages/followlist/followlist.vue.wxml','./pages/followlist/followlist.wxml','./followlist.vue.wxml','./pages/index/index.vue.wxml','./pages/index/index.wxml','./index.vue.wxml','./pages/messagelist/messagelist.vue.wxml','./pages/messagelist/messagelist.wxml','./messagelist.vue.wxml','./pages/personpublic/personpublic.vue.wxml','./pages/personpublic/personpublic.wxml','./personpublic.vue.wxml','./pages/profile/profile.vue.wxml','./pages/profile/profile.wxml','./profile.vue.wxml','./pages/search/search.vue.wxml','./pages/search/search.wxml','./search.vue.wxml','./pages/signin/signin.vue.wxml','./pages/signin/signin.wxml','./signin.vue.wxml','./pages/submit/submit.vue.wxml','./pages/submit/submit.wxml','./submit.vue.wxml','./pages/wechatLogin/wechatLogin.vue.wxml','./pages/wechatLogin/wechatLogin.wxml','./wechatLogin.vue.wxml'];d_[x[0]]={}
 var m0=function(e,s,r,gg){
 var z=gz$gwx_1()
 var oB=e_[x[0]].i
 _ai(oB,x[1],e_,x[0],1,1)
 _ai(oB,x[2],e_,x[0],2,2)
+_ai(oB,x[3],e_,x[0],3,2)
+_ai(oB,x[4],e_,x[0],4,2)
+_ai(oB,x[5],e_,x[0],5,2)
+_ai(oB,x[6],e_,x[0],6,2)
+_ai(oB,x[7],e_,x[0],7,2)
+_ai(oB,x[8],e_,x[0],8,2)
+oB.pop()
+oB.pop()
+oB.pop()
+oB.pop()
+oB.pop()
+oB.pop()
 oB.pop()
 oB.pop()
 return r
 }
-e_[x[0]]={f:m0,j:[],i:[],ti:[x[1],x[2]],ic:[]}
-d_[x[3]]={}
-d_[x[3]]["7ae45256"]=function(e,s,r,gg){
+e_[x[0]]={f:m0,j:[],i:[],ti:[x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8]],ic:[]}
+d_[x[9]]={}
+d_[x[9]]["7ae45256"]=function(e,s,r,gg){
 var z=gz$gwx_2()
-var b=x[3]+':7ae45256'
+var b=x[9]+':7ae45256'
 r.wxVkey=b
 gg.f=$gdc(f_["./components/articlebrief.vue.wxml"],"",1)
-if(p_[b]){_wl(b,x[3]);return}
+if(p_[b]){_wl(b,x[9]);return}
 p_[b]=true
 try{
 var oB=_mz(z,'view',['bindtap',1,'class',1,'data-comkey',2,'data-eventid',3,'id',4],[],e,s,gg)
@@ -1433,16 +1451,16 @@ var m1=function(e,s,r,gg){
 var z=gz$gwx_2()
 return r
 }
-e_[x[3]]={f:m1,j:[],i:[],ti:[],ic:[]}
-d_[x[4]]={}
+e_[x[9]]={f:m1,j:[],i:[],ti:[],ic:[]}
+d_[x[10]]={}
 var m2=function(e,s,r,gg){
 var z=gz$gwx_3()
-var fE=e_[x[4]].i
-_ai(fE,x[5],e_,x[4],1,1)
+var fE=e_[x[10]].i
+_ai(fE,x[11],e_,x[10],1,1)
 var cF=_v()
 _(r,cF)
 var hG=_oz(z,1,e,s,gg)
-var oH=_gd(x[4],hG,e_,d_)
+var oH=_gd(x[10],hG,e_,d_)
 if(oH){
 var cI=_1z(z,0,e,s,gg) || {}
 var cur_globalf=gg.f
@@ -1450,18 +1468,18 @@ cF.wxXCkey=3
 oH(cI,cI,cF,gg)
 gg.f=cur_globalf
 }
-else _w(hG,x[4],2,18)
+else _w(hG,x[10],2,18)
 fE.pop()
 return r
 }
-e_[x[4]]={f:m2,j:[],i:[],ti:[x[5]],ic:[]}
-d_[x[6]]={}
-d_[x[6]]["1ef77e0d"]=function(e,s,r,gg){
+e_[x[10]]={f:m2,j:[],i:[],ti:[x[11]],ic:[]}
+d_[x[12]]={}
+d_[x[12]]["1ef77e0d"]=function(e,s,r,gg){
 var z=gz$gwx_4()
-var b=x[6]+':1ef77e0d'
+var b=x[12]+':1ef77e0d'
 r.wxVkey=b
 gg.f=$gdc(f_["./components/comment.vue.wxml"],"",1)
-if(p_[b]){_wl(b,x[6]);return}
+if(p_[b]){_wl(b,x[12]);return}
 p_[b]=true
 try{
 }catch(err){
@@ -1475,14 +1493,14 @@ var m3=function(e,s,r,gg){
 var z=gz$gwx_4()
 return r
 }
-e_[x[6]]={f:m3,j:[],i:[],ti:[],ic:[]}
-d_[x[7]]={}
-d_[x[7]]["5e526ce1"]=function(e,s,r,gg){
+e_[x[12]]={f:m3,j:[],i:[],ti:[],ic:[]}
+d_[x[13]]={}
+d_[x[13]]["5e526ce1"]=function(e,s,r,gg){
 var z=gz$gwx_5()
-var b=x[7]+':5e526ce1'
+var b=x[13]+':5e526ce1'
 r.wxVkey=b
 gg.f=$gdc(f_["./components/mainpageleft.vue.wxml"],"",1)
-if(p_[b]){_wl(b,x[7]);return}
+if(p_[b]){_wl(b,x[13]);return}
 p_[b]=true
 try{
 }catch(err){
@@ -1496,14 +1514,14 @@ var m4=function(e,s,r,gg){
 var z=gz$gwx_5()
 return r
 }
-e_[x[7]]={f:m4,j:[],i:[],ti:[],ic:[]}
-d_[x[8]]={}
-d_[x[8]]["76a7f13b"]=function(e,s,r,gg){
+e_[x[13]]={f:m4,j:[],i:[],ti:[],ic:[]}
+d_[x[14]]={}
+d_[x[14]]["76a7f13b"]=function(e,s,r,gg){
 var z=gz$gwx_6()
-var b=x[8]+':76a7f13b'
+var b=x[14]+':76a7f13b'
 r.wxVkey=b
 gg.f=$gdc(f_["./components/mainpagetop.vue.wxml"],"",1)
-if(p_[b]){_wl(b,x[8]);return}
+if(p_[b]){_wl(b,x[14]);return}
 p_[b]=true
 try{
 var oB=_v()
@@ -1513,7 +1531,7 @@ var xC=_mz(z,'view',['bindtap',2,'class',1,'data-comkey',2,'data-eventid',3],[],
 var oD=_v()
 _(xC,oD)
 var fE=_oz(z,7,e,s,gg)
-var cF=_gd(x[8],fE,e_,d_)
+var cF=_gd(x[14],fE,e_,d_)
 if(cF){
 var hG=_1z(z,6,e,s,gg) || {}
 var cur_globalf=gg.f
@@ -1521,7 +1539,7 @@ oD.wxXCkey=3
 cF(hG,hG,oD,gg)
 gg.f=cur_globalf
 }
-else _w(fE,x[8],1,330)
+else _w(fE,x[14],1,330)
 _(oB,xC)
 }
 oB.wxXCkey=1
@@ -1534,19 +1552,19 @@ return r
 }
 var m5=function(e,s,r,gg){
 var z=gz$gwx_6()
-var tM=e_[x[8]].i
-_ai(tM,x[9],e_,x[8],1,1)
+var tM=e_[x[14]].i
+_ai(tM,x[7],e_,x[14],1,1)
 tM.pop()
 return r
 }
-e_[x[8]]={f:m5,j:[],i:[],ti:[x[9]],ic:[]}
-d_[x[10]]={}
-d_[x[10]]["6e30004f"]=function(e,s,r,gg){
+e_[x[14]]={f:m5,j:[],i:[],ti:[x[7]],ic:[]}
+d_[x[15]]={}
+d_[x[15]]["6e30004f"]=function(e,s,r,gg){
 var z=gz$gwx_7()
-var b=x[10]+':6e30004f'
+var b=x[15]+':6e30004f'
 r.wxVkey=b
 gg.f=$gdc(f_["./pages/black-index/black-articlebrief.vue.wxml"],"",1)
-if(p_[b]){_wl(b,x[10]);return}
+if(p_[b]){_wl(b,x[15]);return}
 p_[b]=true
 try{
 }catch(err){
@@ -1560,14 +1578,14 @@ var m6=function(e,s,r,gg){
 var z=gz$gwx_7()
 return r
 }
-e_[x[10]]={f:m6,j:[],i:[],ti:[],ic:[]}
-d_[x[11]]={}
-d_[x[11]]["3db33874"]=function(e,s,r,gg){
+e_[x[15]]={f:m6,j:[],i:[],ti:[],ic:[]}
+d_[x[16]]={}
+d_[x[16]]["3db33874"]=function(e,s,r,gg){
 var z=gz$gwx_8()
-var b=x[11]+':3db33874'
+var b=x[16]+':3db33874'
 r.wxVkey=b
 gg.f=$gdc(f_["./pages/black-index/black-comment.vue.wxml"],"",1)
-if(p_[b]){_wl(b,x[11]);return}
+if(p_[b]){_wl(b,x[16]);return}
 p_[b]=true
 try{
 }catch(err){
@@ -1581,14 +1599,14 @@ var m7=function(e,s,r,gg){
 var z=gz$gwx_8()
 return r
 }
-e_[x[11]]={f:m7,j:[],i:[],ti:[],ic:[]}
-d_[x[12]]={}
-d_[x[12]]["648df427"]=function(e,s,r,gg){
+e_[x[16]]={f:m7,j:[],i:[],ti:[],ic:[]}
+d_[x[17]]={}
+d_[x[17]]["648df427"]=function(e,s,r,gg){
 var z=gz$gwx_9()
-var b=x[12]+':648df427'
+var b=x[17]+':648df427'
 r.wxVkey=b
 gg.f=$gdc(f_["./pages/black-index/black-index.vue.wxml"],"",1)
-if(p_[b]){_wl(b,x[12]);return}
+if(p_[b]){_wl(b,x[17]);return}
 p_[b]=true
 try{
 var oB=_n('view')
@@ -1599,7 +1617,7 @@ var oD=function(cF,fE,hG,gg){
 var cI=_v()
 _(hG,cI)
 var oJ=_oz(z,7,cF,fE,gg)
-var lK=_gd(x[12],oJ,e_,d_)
+var lK=_gd(x[17],oJ,e_,d_)
 if(lK){
 var aL=_1z(z,6,cF,fE,gg) || {}
 var cur_globalf=gg.f
@@ -1607,7 +1625,7 @@ cI.wxXCkey=3
 lK(aL,aL,cI,gg)
 gg.f=cur_globalf
 }
-else _w(oJ,x[12],1,900)
+else _w(oJ,x[17],1,900)
 return hG
 }
 xC.wxXCkey=2
@@ -1615,7 +1633,7 @@ _2z(z,4,oD,e,s,gg,xC,'i','index0','i.id')
 var tM=_v()
 _(oB,tM)
 var eN=_oz(z,9,e,s,gg)
-var bO=_gd(x[12],eN,e_,d_)
+var bO=_gd(x[17],eN,e_,d_)
 if(bO){
 var oP=_1z(z,8,e,s,gg) || {}
 var cur_globalf=gg.f
@@ -1623,7 +1641,7 @@ tM.wxXCkey=3
 bO(oP,oP,tM,gg)
 gg.f=cur_globalf
 }
-else _w(eN,x[12],1,1054)
+else _w(eN,x[17],1,1054)
 _(r,oB)
 }catch(err){
 p_[b]=false
@@ -1634,23 +1652,23 @@ return r
 }
 var m8=function(e,s,r,gg){
 var z=gz$gwx_9()
-var xQ=e_[x[12]].i
-_ai(xQ,x[13],e_,x[12],1,1)
-_ai(xQ,x[14],e_,x[12],1,64)
+var xQ=e_[x[17]].i
+_ai(xQ,x[5],e_,x[17],1,1)
+_ai(xQ,x[6],e_,x[17],1,64)
 xQ.pop()
 xQ.pop()
 return r
 }
-e_[x[12]]={f:m8,j:[],i:[],ti:[x[13],x[14]],ic:[]}
-d_[x[15]]={}
+e_[x[17]]={f:m8,j:[],i:[],ti:[x[5],x[6]],ic:[]}
+d_[x[18]]={}
 var m9=function(e,s,r,gg){
 var z=gz$gwx_10()
-var fS=e_[x[15]].i
-_ai(fS,x[16],e_,x[15],1,1)
+var fS=e_[x[18]].i
+_ai(fS,x[19],e_,x[18],1,1)
 var cT=_v()
 _(r,cT)
 var hU=_oz(z,1,e,s,gg)
-var oV=_gd(x[15],hU,e_,d_)
+var oV=_gd(x[18],hU,e_,d_)
 if(oV){
 var cW=_1z(z,0,e,s,gg) || {}
 var cur_globalf=gg.f
@@ -1658,18 +1676,18 @@ cT.wxXCkey=3
 oV(cW,cW,cT,gg)
 gg.f=cur_globalf
 }
-else _w(hU,x[15],2,18)
+else _w(hU,x[18],2,18)
 fS.pop()
 return r
 }
-e_[x[15]]={f:m9,j:[],i:[],ti:[x[16]],ic:[]}
-d_[x[17]]={}
-d_[x[17]]["64f13c01"]=function(e,s,r,gg){
+e_[x[18]]={f:m9,j:[],i:[],ti:[x[19]],ic:[]}
+d_[x[20]]={}
+d_[x[20]]["64f13c01"]=function(e,s,r,gg){
 var z=gz$gwx_11()
-var b=x[17]+':64f13c01'
+var b=x[20]+':64f13c01'
 r.wxVkey=b
 gg.f=$gdc(f_["./pages/black-index/black-popup.vue.wxml"],"",1)
-if(p_[b]){_wl(b,x[17]);return}
+if(p_[b]){_wl(b,x[20]);return}
 p_[b]=true
 try{
 var oB=_n('view')
@@ -1677,7 +1695,7 @@ _rz(z,oB,'class',1,e,s,gg)
 var xC=_v()
 _(oB,xC)
 var oD=_oz(z,3,e,s,gg)
-var fE=_gd(x[17],oD,e_,d_)
+var fE=_gd(x[20],oD,e_,d_)
 if(fE){
 var cF=_1z(z,2,e,s,gg) || {}
 var cur_globalf=gg.f
@@ -1685,11 +1703,11 @@ xC.wxXCkey=3
 fE(cF,cF,xC,gg)
 gg.f=cur_globalf
 }
-else _w(oD,x[17],1,899)
+else _w(oD,x[20],1,899)
 var hG=_v()
 _(oB,hG)
 var oH=_oz(z,5,e,s,gg)
-var cI=_gd(x[17],oH,e_,d_)
+var cI=_gd(x[20],oH,e_,d_)
 if(cI){
 var oJ=_1z(z,4,e,s,gg) || {}
 var cur_globalf=gg.f
@@ -1697,11 +1715,11 @@ hG.wxXCkey=3
 cI(oJ,oJ,hG,gg)
 gg.f=cur_globalf
 }
-else _w(oH,x[17],1,993)
+else _w(oH,x[20],1,993)
 var lK=_v()
 _(oB,lK)
 var aL=_oz(z,7,e,s,gg)
-var tM=_gd(x[17],aL,e_,d_)
+var tM=_gd(x[20],aL,e_,d_)
 if(tM){
 var eN=_1z(z,6,e,s,gg) || {}
 var cur_globalf=gg.f
@@ -1709,11 +1727,11 @@ lK.wxXCkey=3
 tM(eN,eN,lK,gg)
 gg.f=cur_globalf
 }
-else _w(aL,x[17],1,1087)
+else _w(aL,x[20],1,1087)
 var bO=_v()
 _(oB,bO)
 var oP=_oz(z,9,e,s,gg)
-var xQ=_gd(x[17],oP,e_,d_)
+var xQ=_gd(x[20],oP,e_,d_)
 if(xQ){
 var oR=_1z(z,8,e,s,gg) || {}
 var cur_globalf=gg.f
@@ -1721,11 +1739,11 @@ bO.wxXCkey=3
 xQ(oR,oR,bO,gg)
 gg.f=cur_globalf
 }
-else _w(oP,x[17],1,1181)
+else _w(oP,x[20],1,1181)
 var fS=_v()
 _(oB,fS)
 var cT=_oz(z,11,e,s,gg)
-var hU=_gd(x[17],cT,e_,d_)
+var hU=_gd(x[20],cT,e_,d_)
 if(hU){
 var oV=_1z(z,10,e,s,gg) || {}
 var cur_globalf=gg.f
@@ -1733,7 +1751,7 @@ fS.wxXCkey=3
 hU(oV,oV,fS,gg)
 gg.f=cur_globalf
 }
-else _w(cT,x[17],1,1275)
+else _w(cT,x[20],1,1275)
 _(r,oB)
 }catch(err){
 p_[b]=false
@@ -1744,19 +1762,19 @@ return r
 }
 var m10=function(e,s,r,gg){
 var z=gz$gwx_11()
-var lY=e_[x[17]].i
-_ai(lY,x[18],e_,x[17],1,1)
+var lY=e_[x[20]].i
+_ai(lY,x[8],e_,x[20],1,1)
 lY.pop()
 return r
 }
-e_[x[17]]={f:m10,j:[],i:[],ti:[x[18]],ic:[]}
-d_[x[19]]={}
-d_[x[19]]["2f5a4a3d"]=function(e,s,r,gg){
+e_[x[20]]={f:m10,j:[],i:[],ti:[x[8]],ic:[]}
+d_[x[21]]={}
+d_[x[21]]["2f5a4a3d"]=function(e,s,r,gg){
 var z=gz$gwx_12()
-var b=x[19]+':2f5a4a3d'
+var b=x[21]+':2f5a4a3d'
 r.wxVkey=b
 gg.f=$gdc(f_["./pages/chatpage/chatpage.vue.wxml"],"",1)
-if(p_[b]){_wl(b,x[19]);return}
+if(p_[b]){_wl(b,x[21]);return}
 p_[b]=true
 try{
 var oB=_v()
@@ -1765,7 +1783,7 @@ var xC=function(fE,oD,cF,gg){
 var oH=_v()
 _(cF,oH)
 var cI=_oz(z,6,fE,oD,gg)
-var oJ=_gd(x[19],cI,e_,d_)
+var oJ=_gd(x[21],cI,e_,d_)
 if(oJ){
 var lK=_1z(z,5,fE,oD,gg) || {}
 var cur_globalf=gg.f
@@ -1773,7 +1791,7 @@ oH.wxXCkey=3
 oJ(lK,lK,oH,gg)
 gg.f=cur_globalf
 }
-else _w(cI,x[19],1,256)
+else _w(cI,x[21],1,256)
 return cF
 }
 oB.wxXCkey=2
@@ -1787,21 +1805,21 @@ return r
 }
 var m11=function(e,s,r,gg){
 var z=gz$gwx_12()
-var t1=e_[x[19]].i
-_ai(t1,x[20],e_,x[19],1,1)
+var t1=e_[x[21]].i
+_ai(t1,x[1],e_,x[21],1,1)
 t1.pop()
 return r
 }
-e_[x[19]]={f:m11,j:[],i:[],ti:[x[20]],ic:[]}
-d_[x[21]]={}
+e_[x[21]]={f:m11,j:[],i:[],ti:[x[1]],ic:[]}
+d_[x[22]]={}
 var m12=function(e,s,r,gg){
 var z=gz$gwx_13()
-var b3=e_[x[21]].i
-_ai(b3,x[22],e_,x[21],1,1)
+var b3=e_[x[22]].i
+_ai(b3,x[23],e_,x[22],1,1)
 var o4=_v()
 _(r,o4)
 var x5=_oz(z,1,e,s,gg)
-var o6=_gd(x[21],x5,e_,d_)
+var o6=_gd(x[22],x5,e_,d_)
 if(o6){
 var f7=_1z(z,0,e,s,gg) || {}
 var cur_globalf=gg.f
@@ -1809,20 +1827,46 @@ o4.wxXCkey=3
 o6(f7,f7,o4,gg)
 gg.f=cur_globalf
 }
-else _w(x5,x[21],2,18)
+else _w(x5,x[22],2,18)
 b3.pop()
 return r
 }
-e_[x[21]]={f:m12,j:[],i:[],ti:[x[22]],ic:[]}
-d_[x[23]]={}
-d_[x[23]]["2dac0d97"]=function(e,s,r,gg){
+e_[x[22]]={f:m12,j:[],i:[],ti:[x[23]],ic:[]}
+d_[x[24]]={}
+d_[x[24]]["2dac0d97"]=function(e,s,r,gg){
 var z=gz$gwx_14()
-var b=x[23]+':2dac0d97'
+var b=x[24]+':2dac0d97'
 r.wxVkey=b
 gg.f=$gdc(f_["./pages/chatpage/oneMessage.vue.wxml"],"",1)
-if(p_[b]){_wl(b,x[23]);return}
+if(p_[b]){_wl(b,x[24]);return}
 p_[b]=true
 try{
+var oB=_n('view')
+_rz(z,oB,'class',1,e,s,gg)
+var xC=_v()
+_(oB,xC)
+if(_oz(z,2,e,s,gg)){xC.wxVkey=1
+var fE=_n('view')
+_rz(z,fE,'class',3,e,s,gg)
+var cF=_v()
+_(fE,cF)
+if(_oz(z,4,e,s,gg)){cF.wxVkey=1
+}
+var hG=_v()
+_(fE,hG)
+if(_oz(z,5,e,s,gg)){hG.wxVkey=1
+}
+cF.wxXCkey=1
+hG.wxXCkey=1
+_(xC,fE)
+}
+var oD=_v()
+_(oB,oD)
+if(_oz(z,6,e,s,gg)){oD.wxVkey=1
+}
+xC.wxXCkey=1
+oD.wxXCkey=1
+_(r,oB)
 }catch(err){
 p_[b]=false
 throw err
@@ -1834,14 +1878,14 @@ var m13=function(e,s,r,gg){
 var z=gz$gwx_14()
 return r
 }
-e_[x[23]]={f:m13,j:[],i:[],ti:[],ic:[]}
-d_[x[24]]={}
-d_[x[24]]["42698ffd"]=function(e,s,r,gg){
+e_[x[24]]={f:m13,j:[],i:[],ti:[],ic:[]}
+d_[x[25]]={}
+d_[x[25]]["42698ffd"]=function(e,s,r,gg){
 var z=gz$gwx_15()
-var b=x[24]+':42698ffd'
+var b=x[25]+':42698ffd'
 r.wxVkey=b
 gg.f=$gdc(f_["./pages/detail/detail.vue.wxml"],"",1)
-if(p_[b]){_wl(b,x[24]);return}
+if(p_[b]){_wl(b,x[25]);return}
 p_[b]=true
 try{
 var oB=_v()
@@ -1850,7 +1894,7 @@ var xC=function(fE,oD,cF,gg){
 var oH=_v()
 _(cF,oH)
 var cI=_oz(z,6,fE,oD,gg)
-var oJ=_gd(x[24],cI,e_,d_)
+var oJ=_gd(x[25],cI,e_,d_)
 if(oJ){
 var lK=_1z(z,5,fE,oD,gg) || {}
 var cur_globalf=gg.f
@@ -1858,7 +1902,7 @@ oH.wxXCkey=3
 oJ(lK,lK,oH,gg)
 gg.f=cur_globalf
 }
-else _w(cI,x[24],1,1613)
+else _w(cI,x[25],1,1613)
 return cF
 }
 oB.wxXCkey=2
@@ -1872,12 +1916,12 @@ return r
 }
 var m14=function(e,s,r,gg){
 var z=gz$gwx_15()
-var o0=e_[x[24]].i
-_ai(o0,x[25],e_,x[24],1,1)
+var o0=e_[x[25]].i
+_ai(o0,x[4],e_,x[25],1,1)
 o0.pop()
 return r
 }
-e_[x[24]]={f:m14,j:[],i:[],ti:[x[25]],ic:[]}
+e_[x[25]]={f:m14,j:[],i:[],ti:[x[4]],ic:[]}
 d_[x[26]]={}
 var m15=function(e,s,r,gg){
 var z=gz$gwx_16()
@@ -2036,13 +2080,13 @@ return r
 var m20=function(e,s,r,gg){
 var z=gz$gwx_21()
 var oVB=e_[x[34]].i
-_ai(oVB,x[1],e_,x[34],1,1)
-_ai(oVB,x[2],e_,x[34],1,50)
+_ai(oVB,x[2],e_,x[34],1,1)
+_ai(oVB,x[3],e_,x[34],1,50)
 oVB.pop()
 oVB.pop()
 return r
 }
-e_[x[34]]={f:m20,j:[],i:[],ti:[x[1],x[2]],ic:[]}
+e_[x[34]]={f:m20,j:[],i:[],ti:[x[2],x[3]],ic:[]}
 d_[x[35]]={}
 var m21=function(e,s,r,gg){
 var z=gz$gwx_22()
@@ -3189,7 +3233,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _App
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, \"__esModule\", { value: true });exports.default = void 0;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nvar _oneMessage = _interopRequireDefault(__webpack_require__(/*! ./oneMessage */ 47));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}\n\nvar userInfo;\nvar frindInfo;\n\nvar socketTask;\nvar socketOpen = false;var _default =\n\n{\n  components: {\n    onemessage: _oneMessage.default },\n\n  data: function data() {\n    return {\n\n      chatContent: [{\n        messageId: '0001',\n        messageType: '1',\n        messageTime: '11:29',\n        messageStatus: '0' },\n      {\n        messageId: '0002',\n        messageType: '1',\n        messageTime: '11:29',\n        messageStatus: '0' },\n      {\n        messageId: '0003',\n        messageType: '1',\n        messageTime: '11:29',\n        messageStatus: '0' },\n      {\n        messageId: '0004',\n        messageType: '0',\n        messageTime: '11:29',\n        messageStatus: '1' },\n      {\n        messageId: '0006',\n        messageType: '1',\n        messageTime: '11:29',\n        messageStatus: '0' },\n      {\n        messageId: '0006',\n        messageType: '0',\n        messageTime: '11:29',\n        messageStatus: '1' }],\n\n\n      socketMsgQueue: [], // 未发送的消息队列\n      textMsg: '' // 输入框中的text\n    };\n  },\n\n  onLoad: function onLoad(opt) {\n    uni.setNavigationBarTitle({\n      title: \"XXXX（聊天人的昵称）\" });\n\n    // 获取界面传参\n    var data = JSON.parse(opt.data);\n    userInfo = data.userInfo;\n    frindInfo = data.frindInfo;\n\n    // 获取与该用户的聊天历史记录\n    this.iniChatHistory();\n\n    uni.onSocketMessage(function () {\n      console.log(\"this on messge\");\n    });\n  },\n\n  methods: {\n\n    sendText: function sendText() {\n      if (!this.textMsg) {\n        return;\n      }\n      this.mySocket.sendObj(this.netty.CHAT, frindInfo.id, this.textMsg, null);\n      this.textMsg = ''; //清空输入框\n    },\n\n    iniChatHistory: function iniChatHistory() {\n      var localChatHistory = this.chat.getUserChatHistory(userInfo.id, frindInfo.id);\n      console.log(localChatHistory);\n    } } };exports.default = _default;\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-app-plus/dist/index.js */ 1)[\"default\"]))\n\n//# sourceURL=undefined");
+eval("/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, \"__esModule\", { value: true });exports.default = void 0;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nvar _oneMessage = _interopRequireDefault(__webpack_require__(/*! ./oneMessage */ 47));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}\n\nvar userInfo;\nvar frindInfo;\n\nvar socketTask;\nvar socketOpen = false;var _default =\n\n{\n  components: {\n    onemessage: _oneMessage.default },\n\n  data: function data() {\n    return {\n\n      chatContent: [{\n        messageId: '0001',\n        messageType: '1',\n        messageTime: '11:29',\n        messageStatus: '0' },\n      {\n        messageId: '0002',\n        messageType: '1',\n        messageTime: '11:29',\n        messageStatus: '0' },\n      {\n        messageId: '0003',\n        messageType: '1',\n        messageTime: '11:29',\n        messageStatus: '0' },\n      {\n        messageId: '0004',\n        messageType: '0',\n        messageTime: '11:29',\n        messageStatus: '1' },\n      {\n        messageId: '0006',\n        messageType: '1',\n        messageTime: '11:29',\n        messageStatus: '0' },\n      {\n        messageId: '0006',\n        messageType: '0',\n        messageTime: '11:29',\n        messageStatus: '1' }],\n\n\n      socketMsgQueue: [], // 未发送的消息队列\n      textMsg: '' // 输入框中的text\n    };\n  },\n\n  onLoad: function onLoad(opt) {\n    uni.setNavigationBarTitle({\n      title: \"XXXX（聊天人的昵称）\" });\n\n    // 获取界面传参\n    var data = JSON.parse(opt.data);\n    userInfo = data.userInfo;\n    frindInfo = data.frindInfo;\n\n    // 获取与该用户的聊天历史记录\n    this.iniChatHistory();\n\n    // uni.onSocketMessage(function(){\n    // \tconsole.log(\"this on messge\");\n    // })\n  },\n\n  methods: {\n\n    sendText: function sendText() {\n      if (!this.textMsg) {\n        return;\n      }\n      this.mySocket.sendObj(this.netty.CHAT, frindInfo.id, this.textMsg, null);\n      this.textMsg = ''; //清空输入框\n    },\n\n    iniChatHistory: function iniChatHistory() {\n      var localChatHistory = this.chat.getUserChatHistory(userInfo.id, frindInfo.id);\n      console.log(localChatHistory);\n    } } };exports.default = _default;\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-app-plus/dist/index.js */ 1)[\"default\"]))\n\n//# sourceURL=undefined");
 
 /***/ }),
 
@@ -3225,7 +3269,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _App
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"render\", function() { return render; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"staticRenderFns\", function() { return staticRenderFns; });\nvar render = function() {\n  var _vm = this\n  var _h = _vm.$createElement\n  var _c = _vm._self._c || _h\n  return _c(\"view\", [\n    _c(\n      \"view\",\n      { staticClass: \"send\" },\n      [\n        _c(\"navigator\", { attrs: { url: \"../personpublic/personpublic\" } }, [\n          _c(\"image\", {\n            staticClass: \"touxiang\",\n            attrs: { src: \"../../static/touxiang.jpg\" }\n          })\n        ]),\n        _vm._m(0)\n      ],\n      1\n    ),\n    _c(\n      \"view\",\n      { staticClass: \"receve\" },\n      [\n        _c(\"navigator\", { attrs: { url: \"../personpublic/personpublic\" } }, [\n          _c(\"image\", {\n            staticClass: \"touxiang\",\n            attrs: { src: \"../../static/touxiang.jpg\" }\n          })\n        ]),\n        _vm._m(1)\n      ],\n      1\n    )\n  ])\n}\nvar staticRenderFns = [\n  function() {\n    var _vm = this\n    var _h = _vm.$createElement\n    var _c = _vm._self._c || _h\n    return _c(\"view\", { staticClass: \"content\" }, [\n      _c(\"view\", { staticClass: \"contentText\" }, [\n        _vm._v(\n          \"这里是1233聊天内容，巴123213拉巴拉一大堆,这里123是聊天内2，21巴拉21一大堆,1里是3聊天内容，巴拉巴拉一大堆,这里是聊天内容，巴拉巴拉一大堆\"\n        )\n      ]),\n      _c(\"view\", { staticClass: \"bottomBar\" }, [\n        _c(\"view\", { staticClass: \"time\" }, [_vm._v(\"11:29\")]),\n        _c(\"view\", { staticClass: \"status\" }, [_vm._v(\"...\")]),\n        _c(\n          \"view\",\n          { staticClass: \"status\", staticStyle: { color: \"#3FC24A\" } },\n          [_vm._v(\"√\")]\n        )\n      ])\n    ])\n  },\n  function() {\n    var _vm = this\n    var _h = _vm.$createElement\n    var _c = _vm._self._c || _h\n    return _c(\"view\", { staticClass: \"content\" }, [\n      _c(\"view\", { staticClass: \"contentText\" }, [\n        _vm._v(\n          \"这里是1233聊天内容，巴123213拉巴拉一大堆,这里123是聊天内2，21巴拉21一大堆,1里是3聊天内容，巴拉巴拉一大堆,这里是聊天内容，巴拉巴拉一大堆\"\n        )\n      ]),\n      _c(\"view\", { staticClass: \"bottomBar\" }, [\n        _c(\"view\", { staticClass: \"time\" }, [_vm._v(\"11:29\")])\n      ])\n    ])\n  }\n]\nrender._withStripped = true\n\n\n\n//# sourceURL=undefined");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"render\", function() { return render; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"staticRenderFns\", function() { return staticRenderFns; });\nvar render = function() {\n  var _vm = this\n  var _h = _vm.$createElement\n  var _c = _vm._self._c || _h\n  return _c(\"view\", [\n    _vm.thisMessage.messageType\n      ? _c(\n          \"view\",\n          { staticClass: \"send\" },\n          [\n            _c(\n              \"navigator\",\n              { attrs: { url: \"../personpublic/personpublic\" } },\n              [\n                _c(\"image\", {\n                  staticClass: \"touxiang\",\n                  attrs: { src: \"../../static/touxiang.jpg\" }\n                })\n              ]\n            ),\n            _c(\"view\", { staticClass: \"content\" }, [\n              _c(\"view\", { staticClass: \"contentText\" }, [\n                _vm._v(_vm._s(_vm.thisMessage.messageContent))\n              ]),\n              _c(\"view\", { staticClass: \"bottomBar\" }, [\n                _c(\"view\", { staticClass: \"time\" }, [\n                  _vm._v(_vm._s(_vm.thisMessage.messageTime))\n                ]),\n                !_vm.thisMessage.messageStatus\n                  ? _c(\"view\", { staticClass: \"status\" }, [_vm._v(\"...\")])\n                  : _vm._e(),\n                _vm.thisMessage.messageStatus\n                  ? _c(\n                      \"view\",\n                      {\n                        staticClass: \"status\",\n                        staticStyle: { color: \"#3FC24A\" }\n                      },\n                      [_vm._v(\"√\")]\n                    )\n                  : _vm._e()\n              ])\n            ])\n          ],\n          1\n        )\n      : _vm._e(),\n    !_vm.thisMessage.messageType\n      ? _c(\n          \"view\",\n          { staticClass: \"receve\" },\n          [\n            _c(\n              \"navigator\",\n              { attrs: { url: \"../personpublic/personpublic\" } },\n              [\n                _c(\"image\", {\n                  staticClass: \"touxiang\",\n                  attrs: { src: \"../../static/touxiang.jpg\" }\n                })\n              ]\n            ),\n            _c(\"view\", { staticClass: \"content\" }, [\n              _c(\"view\", { staticClass: \"contentText\" }, [\n                _vm._v(_vm._s(_vm.thisMessage.messageContent))\n              ]),\n              _c(\"view\", { staticClass: \"bottomBar\" }, [\n                _c(\"view\", { staticClass: \"time\" }, [\n                  _vm._v(_vm._s(_vm.thisMessage.messageTime))\n                ])\n              ])\n            ])\n          ],\n          1\n        )\n      : _vm._e()\n  ])\n}\nvar staticRenderFns = []\nrender._withStripped = true\n\n\n\n//# sourceURL=undefined");
 
 /***/ }),
 
@@ -3249,7 +3293,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _App
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("Object.defineProperty(exports, \"__esModule\", { value: true });exports.default = void 0;var _default =\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n{\n  props: {\n    thisMEssage: {} },\n\n  data: function data() {\n    return {};\n  },\n  onLoad: function onLoad() {\n    console.log(this.thisMessage);\n    debugger;\n  } };exports.default = _default;\n\n//# sourceURL=undefined");
+eval("Object.defineProperty(exports, \"__esModule\", { value: true });exports.default = void 0;var _default =\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n{\n  props: {\n    thisMessage: {} },\n\n  data: function data() {\n    return {};\n  },\n  mounted: function mounted() {\n    console.log(this.thisMessage);\n    console.log(\"after message\");\n  } };exports.default = _default;\n\n//# sourceURL=undefined");
 
 /***/ }),
 

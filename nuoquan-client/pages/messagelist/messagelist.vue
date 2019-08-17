@@ -55,6 +55,8 @@
 </template>
 
 <script>
+	import {mapMutations} from 'vuex';
+
 	var userInfo;
 	var frindInfo;
 
@@ -67,6 +69,7 @@
 				cardlist: [1, 1, 1, 1, 1, 1, 11, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 			}
 		},
+
 		onLoad: function() {
 			uni.setNavigationBarTitle({
 				title: "私信列表"
@@ -81,10 +84,43 @@
 			// 暂时把 frind 等同于 user
 			frindInfo = userInfo;
 
-			this.mySocket.init();
-
+			this.initSocket();
 		},
+
 		methods: {
+			...mapMutations([
+				'setChatMessageCard',
+			]),
+			
+			initSocket(){
+				this.mySocket.init();
+				this.overWriteOnMessage();
+			},
+			
+			overWriteOnMessage() {
+				var that = this;
+				uni.onSocketMessage(function(res) {
+					var dataContent = JSON.parse(res.data);
+					var chatMessage = dataContent.chatMessage;
+					console.log("收到服务器内容：");
+					console.log(dataContent);
+
+					// 发送签收消息
+					that.mySocket.sendObj(that.netty.SIGNED, null, null, chatMessage.msgId);
+
+					if (dataContent.action == that.netty.CHAT) {
+						// 修改 store
+						that.setChatMessageCard(chatMessage);
+
+						// 保存聊天历史记录到本地缓存
+						var myId = chatMessage.receiverId;
+						var friendId = chatMessage.senderId;
+						var msg = chatMessage.msg
+
+						that.chat.saveUserChatHistory(myId, friendId, msg, that.chat.FRIEND);
+					}
+				});
+			},
 
 			goToChatpage() {
 				var data = {
@@ -94,7 +130,8 @@
 				uni.navigateTo({
 					url: '../chatpage/chatpage?data=' + JSON.stringify(data),
 				});
-			}
+			},
+			
 		}
 	}
 </script>

@@ -47,7 +47,7 @@
 .contentText.data-v-d203d3ca {
 	width: 400rpx;
 	font-size: 12px;
-	word-break: break-word;
+	word-break: break-all;
 }
 
 

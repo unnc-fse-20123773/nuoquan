@@ -1,45 +1,43 @@
 <template>
 	<view>
-		<view class="send">
+		<view class="send" v-if="thisMessage.flag == ME">
 			<navigator url="../personpublic/personpublic">
 				<image class="touxiang" src="../../static/touxiang.jpg"></image>
 			</navigator>
 			<view class="content">
 				<view class="contentText">
-					这里是1233聊天内容，巴123213拉巴拉一大堆,这里123是聊天内2，21巴拉21一大堆,1里是3聊天内容，巴拉巴拉一大堆,这里是聊天内容，巴拉巴拉一大堆
+					{{thisMessage.msg}}
 				</view>
 				<view class="bottomBar">
 					<view class="time">
-						11:29
+						{{thisMessage.messageTime}}
 					</view>
-					<view class="status">
+					<view class="status" v-if="!thisMessage.messageStatus">
 						...
 					</view>
-					<view class="status" style="color:#3FC24A">
-						√ 
+					<view class="status" style="color:#3FC24A" v-if="thisMessage.messageStatus">
+						√
 					</view>
-					
+
 				</view>
 
 			</view>
 		</view>
 
-
-		<view class="receve">
+		<view class="receve" v-if="thisMessage.flag == FRIEND">
 			<navigator url="../personpublic/personpublic">
 				<image class="touxiang" src="../../static/touxiang.jpg"></image>
 			</navigator>
 			<view class="content">
 				<view class="contentText">
-					这里是1233聊天内容，巴123213拉巴拉一大堆,这里123是聊天内2，21巴拉21一大堆,1里是3聊天内容，巴拉巴拉一大堆,这里是聊天内容，巴拉巴拉一大堆
+					{{thisMessage.msg}}
 				</view>
 				<view class="bottomBar">
 					<view class="time">
-						11:29
+						{{thisMessage.messageTime}}
 					</view>
-					
-				</view>
 
+				</view>
 			</view>
 		</view>
 	</view>
@@ -48,14 +46,16 @@
 <script>
 	export default {
 		props: {
-			thisMEssage: {},
+			thisMessage: {},
 		},
 		data() {
-			return {};
+			return {
+				ME: this.chat.ME,
+				FRIEND: this.chat.FRIEND,
+			};
 		},
-		onLoad: function() {
-			console.log(this.thisMessage);
-			debugger;
+		onReady: function() {
+			// console.log(this.thisMessage);
 		},
 	};
 </script>
@@ -98,7 +98,7 @@
 	.contentText {
 		width: 400upx;
 		font-size: 12px;
-		word-break: break-word;
+		word-break: break-all;
 	}
 </style>
 <style>
