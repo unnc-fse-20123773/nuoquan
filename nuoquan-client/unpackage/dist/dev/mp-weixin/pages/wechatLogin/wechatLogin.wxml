@@ -1,0 +1,1 @@
+<view><button type="primary" open-type="getUserInfo" withCredentials="true" data-event-opts="{{[['getuserinfo',[['getUserInfo',['$event']]]]]}}" bindgetuserinfo="__e">微信登陆授权</button><button type="primary" data-event-opts="{{[['tap',[['removeUserInfo',['$event']]]]]}}" bindtap="__e">[dev]清除用户信息缓存</button></view>

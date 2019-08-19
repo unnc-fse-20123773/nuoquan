@@ -4,10 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.Date;
-import java.util.UUID;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -16,16 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.xml.sax.InputSource;
 
-import com.github.pagehelper.util.StringUtil;
+
 import com.nuoquan.enums.ArticleStatusEnums;
 import com.nuoquan.pojo.Article;
 import com.nuoquan.pojo.UserArticleComment;
 import com.nuoquan.service.ArticleService;
-import com.nuoquan.service.UserService;
 import com.nuoquan.utils.JSONResult;
-import com.nuoquan.utils.MD5Utils;
 import com.nuoquan.utils.PagedResult;
 
 import io.swagger.annotations.Api;
@@ -33,7 +26,6 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import io.swagger.models.Path;
 
 @RestController
 @Api(value="文章相关接口", tags= {"操作文章的controller"})
@@ -104,6 +96,7 @@ public class ArticleController extends BasicController{
 		@ApiImplicitParam(name="articleTitle", value="文章题目", required=true, dataType="String", paramType="form"),
 		@ApiImplicitParam(name="articleContent", value="文章内容", required=true, dataType="String", paramType="form")
 	})
+	
 	@PostMapping(value="upload", headers="content-type=multipart/form-data")
 	public JSONResult upload(String userId, String articleTag, String articleTitle, 
 				String articleContent, @ApiParam(value="图片或视频", required=false) MultipartFile file) throws Exception {
@@ -166,6 +159,25 @@ public class ArticleController extends BasicController{
 		
 		articleService.saveComment(comment);
 		return JSONResult.ok();
+	}
+	
+	@PostMapping("/getArticleComment")
+	public JSONResult getArticleComment(String articleId, Integer page, Integer pageSize) throws Exception {
+		
+		if (StringUtils.isBlank(articleId)) {
+			return JSONResult.ok();
+		}
+		
+		if(page == null) {
+			page = 1;
+		}
+		if(pageSize == null) {
+			pageSize = PAGE_SIZE;
+		}
+		
+		PagedResult list = articleService.getAllComments(articleId, page,pageSize);
+		
+		return JSONResult.ok(list);
 	}
 	
 }

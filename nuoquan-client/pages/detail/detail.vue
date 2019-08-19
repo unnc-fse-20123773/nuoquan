@@ -22,11 +22,11 @@
 			<view class="tags">
 				<view class="tag" v-for="(i,index) in articleCard.tags" v-bind:key="index">{{i}}</view>
 			</view>
+			<view class="commentPart">
+				<input class="commentSth" placeholder="评论点什么..." confirm-type="send" @confirm="saveComment" />
+			</view>
 			<commentbox v-for="comment in comments" :key="comment[0]" :comment="comment"></commentbox>
 		</view>
-		<navigator url="../personpublic/personpublic">
-			<button type="primary" size="mini">personpublic</button>
-		</navigator>
 	</view>
 </template>
 
@@ -36,6 +36,7 @@
 	export default {
 		data() {
 			return {
+				userInfo: {},
 				comments: [
 					['00001', '评论者ID', '楼主好棒', '一小时前', '60', '7'],
 					['00003', '评论者ID', '楼主求微信', '一小时前', '90', '7'],
@@ -55,14 +56,45 @@
 			articlebrief,
 			commentbox: comment
 		},
-		methods: {},
+		methods: {
+			saveComment:function(e) {
+				var that = this;
+				var content = e.detail.value;
+				var userInfoTemp = this.getGlobalUserInfo();
+				if (this.isNull(userInfoTemp)) {
+				uni.navigateTo({
+					url: "../wechatLogin/wechatLogin"
+				})
+				} else {
+					uni.request({
+						url: this.SeverUrl + '/saveComment',
+						method: 'POST',
+						data: {
+							fromUserId: that.userInfo.id,
+							articleId: that.articleCard.id,
+							comment: content
+						},
+						success: function(res) {
+							console.log(res.data)
+						}
+					})
+				}
+			}
+		},
 		onLoad(options) {
-			console.log('detail receved');
-			console.log(options.data);
+			// console.log('detail receved');
+			// console.log(options.data);
 
 			this.articleCard = JSON.parse(options.data);
-			console.log(this.articleCard);
-			console.log(this.articleCard.artiticleTitle);
+			// console.log(this.articleCard);
+			// console.log(this.articleCard.artiticleTitle);
+			
+			var userInfo = this.getGlobalUserInfo();
+			if (!this.isNull(userInfo)) {
+				this.userInfo = this.getGlobalUserInfo();
+			}
+			console.log(this.articleCard.id);
+			console.log(this.userInfo.nickname);
 		}
 	};
 </script>

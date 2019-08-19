@@ -1,33 +1,17 @@
 <template>
 	<view>
-		<navigator url="../../pages/search/search" class="topBarSearch searchPosition">
-		</navigator>
-
 		<view class="bottomLayerOfLeft" v-if="showMainPageLeft" @click="controlShowLeft(0)">
-			<mainpageleft></mainpageleft>
+			<mainpageleft :userInfo="userInfo"></mainpageleft>
 		</view>
 
 		<view class="mainPageTop">
 			<view class="topBar">
-				<image class="topBarTouxiang" src="../static/touxiang.jpg" @click="controlShowLeft(1)"></image>
-				<!-- 从这里开始为测试搜索下拉窗口 -->
-				<view id="menu">
-					<input class="topBarSearch" placeholder="  搜索" />
-					<view id="list">
-						<view>item</view>
-						<view>item</view>
-						<view>item</view>
-						<view>item</view>
-						<view>item</view>
-					</view>
-				</view>
-				<!-- 测试到这里结束 -->
-
+				<image class="topBarTouxiang" :src='userInfo.faceImg' @click="controlShowLeft(1)"></image>
+				<input class="topBarSearch" placeholder="  搜索" />
 				<view class="topBarPlus">
-					<!-- Guetta-直接在 icon 上加了跳轉 -->
-					<navigator url="../../pages/submit/submit" style="font-size: 20px;color:#FDD041;border-radius: 3px;">+</navigator>
+					<view style="font-size: 20px;color:#FDD041;border-radius: 3px;">+</view>
 				</view>
-				<!-- <view class="topBarwaiting"></view>  该语句未见明显效果，故注释掉 -->
+				<view class="topBarwaiting"></view>
 			</view>
 			<view class="topicTitle">话题榜</view>
 
@@ -52,28 +36,36 @@
 <script>
 	import mainpageleft from '@/components/mainpageleft.vue';
 	export default {
-		data() {
-			return {
-				showMainPageLeft: 0
-			};
+		props: {
+			// 渲染时候替换默认值会被替换
+			userInfo: {
+				faceImg: '../static/touxiang.jpg',
+			}
 		},
 		components: {
 			mainpageleft
 		},
+		
+		data() {
+			return {
+				showMainPageLeft: 0,
+			};
+		},
+		
 		methods: {
 			controlShowLeft(a) {
 				this.showMainPageLeft = a;
-				console.log(a);
-				console.log(this.showMainPageLeft);
+				// console.log(this.showMainPageLeft);
 			}
 		}
 	};
 </script>
 
 <style>
-	page{
+	page {
 		width: 100%;
 	}
+
 	.bottomLayerOfLeft {
 
 		position: fixed;
@@ -83,12 +75,11 @@
 	}
 
 	.mainPageTop {
-		display: flex;
-		flex-direction: column;
 		padding-top: 4px;
-		height: 168px;
+		/* 	height: 168px;
+ */
 		width: 100%;
-		background: #FDD041;
+		background: #fdd041;
 		box-shadow: 0 -2px 10px #000000;
 		border-bottom-right-radius: 25px;
 		border-bottom-left-radius: 25px;
@@ -174,27 +165,4 @@
 		white-space: nowrap;
 	}
 
-	.searchPosition {
-		position: fixed;
-		background-color: red;
-		left: 42px;
-		top: 5px;
-	}
-
-	/* 以下为测试用 CSS 代码 */
-	#list {
-		width: 520upx;
-	}
-
-	#menu #list {
-		max-height: 0;
-		transition: max-height 0.25s ease-out;
-		overflow: hidden;
-		background: blue;
-	}
-
-	#menu:hover #list {
-		max-height: 1000px;
-		transition: max-height 0.25s ease-in;
-	}
 </style>

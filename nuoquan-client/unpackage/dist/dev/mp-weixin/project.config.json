@@ -41,10 +41,46 @@
 					"pathName": "pages/submit/submit"
 				},
 				{
-					"name": "chat",
+					"name": "chatpage",
 					"query": "",
 					"id": 2,
-					"pathName": "pages/chat/chat"
+					"pathName": "pages/chatpage/chatpage"
+				},
+				{
+					"name": "fanslist",
+					"query": "",
+					"id": 3,
+					"pathName": "pages/fanslist/fanslist"
+				},
+				{
+					"name": "followlist",
+					"query": "",
+					"id": 4,
+					"pathName": "pages/followlist/followlist"
+				},
+				{
+					"name": "messagelist",
+					"query": "",
+					"id": 5,
+					"pathName": "pages/messagelist/messagelist"
+				},
+				{
+					"name": "profile",
+					"query": "",
+					"id": 6,
+					"pathName": "pages/profile/profile"
+				},
+				{
+					"name": "personpublic",
+					"query": "",
+					"id": 7,
+					"pathName": "pages/personpublic/personpublic"
+				},
+				{
+					"name": "wechatLogin",
+					"query": "",
+					"id": 8,
+					"pathName": "pages/wechatLogin/wechatLogin"
 				}
 			]
 		}

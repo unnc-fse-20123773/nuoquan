@@ -1,16 +1,7 @@
 <template>
 	<view class="index">
-		<mainpagetop></mainpagetop>
+		<mainpagetop :userInfo='userInfo'></mainpagetop>
 		<articlebrief v-for="i in showlist" :key="i.id" v-bind:articleCard="i"></articlebrief>
-		<navigator url="../detail/detail">
-			<button type="primary" size="mini">detail</button>
-		</navigator>
-		<navigator url="../search/search">
-			<button type="primary" size="mini">search</button>
-		</navigator>
-		<navigator url="../black-index/black-index">
-			<button type="primary" size="mini">black</button>
-		</navigator>
 	</view>
 </template>
 
@@ -18,54 +9,71 @@
 	import articlebrief from '../../components/articlebrief';
 	import mainpagetop from '../../components/mainpagetop.vue';
 	import mainpageleft from '@/components/mainpageleft.vue'
+
 	export default {
 		data() {
 			return {
 				title: 'Hello',
 				hottitlelist: ['热门标题111', '热门标题222', '热门标题333'],
-				showlist: "",
+				showlist: '',
 
+				userInfo: {
+					id: 'test-id123',
+					nickname: 'test-name',
+					faceImg: '../static/touxiang.jpg',
+					faceImgThumb: '../static/touxiang.jpg',
+					email: 'zy22089@nottingham.edu.cn',
+					emailPrefix: 'zy22089',
+					emailSuffix: '@nottingham.edu.cn'
+				},
+				
 			};
 		},
 		components: {
-			articlebrief: articlebrief,
+			articlebrief,
 			mainpagetop,
 			mainpageleft,
 		},
 
-		created: function() {
-			var _this = this;
-			uni.request({
-				url: this.SeverUrl+'/queryAllArticles',
-				method: "POST",
-				success: (res) => {
-					_this.showlist = res.data.data.rows;
-					console.log(res)
-				},
-				fail: (res) => {
-					console.log("index unirequest fail");
-					console.log(res);
-				}
-			});
+		onLoad() {
+			this.showArticles();			
+			var userInfo = this.getGlobalUserInfo();
+			if (this.isNull(userInfo)) {
+				uni.navigateTo({
+					url: "../wechatLogin/wechatLogin"
+				})
+				return;
+			} 
 		},
-		onLoad: function() {
-			uni.setNavigationBarTitle({
-				title: "诺圈"
-			});
+		onShow() {
+			var userInfo = this.getGlobalUserInfo();
+			if (!this.isNull(userInfo)) {
+				// 设置 userInfo 传给 mainpagetop 组件
+				this.userInfo = this.getGlobalUserInfo();
+			}
+
 		},
 		methods: {
-			show() {
-				if (this.showmenu == 0) {
-					this.showmenu = 1;
-				} else {
-					this.showmenu = 0;
-				}
-			}
+			showArticles() {
+				var _this = this;
+				uni.request({
+					url: 'http://127.0.0.1:8080/queryAllArticles',
+					method: "POST",
+					success: (res) => {
+						_this.showlist = res.data.data.rows;
+						console.log(res)
+					},
+					fail: (res) => {
+						console.log("index unirequest fail");
+						console.log(res);
+					}
+				});
+			},
 		}
 	};
 </script>
 
-<style scoped>
+<style>
 	.index {
 		background-color: #f3f3f3;
 	}

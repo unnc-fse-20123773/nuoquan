@@ -126,8 +126,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 var _default =
 {
   name: 'aticlebrief',
@@ -154,17 +152,6 @@ var _default =
 
   },
   methods: {
-    // loadcss(){
-    // 	var a = Math.random()
-    // console.log('brif1');
-    // 	if(a==0.5){
-    // 		console.log('yes');
-    // 		require('./articleCardBrief.css');}else{
-    // 		console.log('not');
-    // 	}
-    // 	console.log('brif2');
-    // 	
-    // },
     jumpToDetail: function jumpToDetail() {
       var navData = JSON.stringify(this.articleCard); // 这里转换成 字符串
       uni.navigateTo({

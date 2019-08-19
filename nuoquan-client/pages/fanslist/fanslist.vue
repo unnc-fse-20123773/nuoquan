@@ -1,3 +1,5 @@
+<!-- Deprecated !
+	 fans&follw list now combine into the 'followlist' page -->
 <template>
 	<view>
 			
@@ -82,7 +84,6 @@
 	export default {
 		data() {
 			return {
-
 			}
 		},
 		onLoad: function() {
@@ -91,7 +92,6 @@
 			});
 		},
 		methods: {
-
 		}
 	}
 </script>
@@ -105,7 +105,6 @@
 		.tabs {
 		margin: 26upx 0 0;
 	}
-
 	.focusER,
 	.itsFocus {
 		color: #353535;
@@ -115,41 +114,33 @@
 		margin: auto;
 		text-align: center;
 	}
-
 	.devidingLine {
 		border-top: solid 3px #FDD453;
 		width: 258upx;
 		margin-left: 58.5upx;
 	}
-
-
 	.listItem {
 		position: relative;
 		height: 45px;
 		display: flex;
 		align-items: center;
 	}
-
 	.touxiang {
 		display: inline-flex;
 		margin-left: 13px;
-
 		width: 33px;
 		height: 33px;
 		border-radius: 33px;
 		vertical-align: middle;
 		line-height: 45px;
 	}
-
 	.name {
 		display: inline-flex;
 		color: #353535;
 		font-size: 13px;
 		margin-left: 13px;
 		vertical-align: middle;
-
 	}
-
 	.goFocus {
 		border: solid 1px #ECC138;
 		border-radius: 5px;
@@ -164,13 +155,11 @@
 		vertical-align: middle;
 		text-align: center;
 	}
-
 	.listItemBottomLine {
 		border-top: solid 1px #DCDCDC;
 		width: 590upx;
 		position: absolute;
 		bottom: 0;
 		left: 108upx;
-
 	}
 </style>

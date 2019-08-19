@@ -109,19 +109,19 @@ image {
 }
 
 
-.index.data-v-4d1c2b79 {
+.index {
 	background-color: #f3f3f3;
 }
-image.data-v-4d1c2b79 {
+image {
 	width: 60px;
 	height: 60px;
 	display: inline-block;
 }
-.touxiang.data-v-4d1c2b79 {
+.touxiang {
 	-webkit-border-radius: 30px;
 	        border-radius: 30px;
 }
-.search.data-v-4d1c2b79 {
+.search {
 	display: inline-block;
 	width: 70%;
 	-webkit-box-shadow: inset 0 0 20px #ccc;
@@ -130,11 +130,11 @@ image.data-v-4d1c2b79 {
 	        border-radius: 20rpx;
 	margin-left: 50rpx;
 }
-.hot.data-v-4d1c2b79 {
+.hot {
 	background-color: #e4e4e4;
 	width: 100%;
 }
-.hotitem.data-v-4d1c2b79 {
+.hotitem {
 	margin-bottom: 20px;
 	background: white;
 	height: 27px;
@@ -150,7 +150,7 @@ image.data-v-4d1c2b79 {
 	font-weight: normal;
 	font-style: normal;
 }
-.arrow.data-v-4d1c2b79 {
+.arrow {
 	width: 100rpx;
 	height: 60rpx;
 }

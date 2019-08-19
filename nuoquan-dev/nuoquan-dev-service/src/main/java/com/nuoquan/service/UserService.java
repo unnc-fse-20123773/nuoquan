@@ -1,8 +1,17 @@
 package com.nuoquan.service;
 
+import java.util.List;
+
 import com.nuoquan.pojo.User;
+import com.nuoquan.pojo.netty.ChatMessage;
 
 public interface UserService {
+	/**
+	 * @Description: 判断id是否存在
+	 * @param id
+	 * @return
+	 */
+	public boolean checkIdIsExist(String id);
 	
 	/**
 	 * @Description: 判断昵称是否存在
@@ -16,6 +25,12 @@ public interface UserService {
 	 * @param user
 	 */
 	public void saveUser(User user);
+	
+	/**
+	 * 直接保存用户，不自动生成id
+	 * @param user
+	 */
+	public User saveUserDirectly(User user);
 	
 	/**
 	 * @Description: 用户登录，根据用户名和密码查询用户
@@ -45,4 +60,15 @@ public interface UserService {
 	 * @param fanId
 	 */
 	public void deleteUserFanRelation(String userId, String fanId);
+	
+	/**
+	 * @Description 保存聊天消息到数据库
+	 */
+	public String saveMsg(ChatMessage chatMessage);
+	
+	/**
+	 * @Description 批量签收消息
+	 */
+	public void updateMsgSigned(List<String> msgIdList);
+
 }

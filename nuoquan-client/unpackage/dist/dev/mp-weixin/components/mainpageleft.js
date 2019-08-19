@@ -98,13 +98,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -147,12 +141,27 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 
 name: 'mainpageleft';var _default =
-
 {
+  props: {
+    // 渲染时候替换默认值会被替换
+    userInfo: {
+      faceImg: '../static/touxiang.jpg',
+      emailPrefix: 'test123',
+      emailSuffix: '@nottingham.edu.cn' } },
+
 
   data: function data() {
     return {};
-  } };exports.default = _default;
+
+
+  },
+  methods: {
+    goToMessageListPage: function goToMessageListPage() {
+      uni.navigateTo({
+        url: '../messagelist/messagelist' });
+
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 

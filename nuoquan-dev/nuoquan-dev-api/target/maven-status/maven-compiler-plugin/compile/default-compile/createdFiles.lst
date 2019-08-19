@@ -3,9 +3,15 @@ com/nuoquan/controller/ArticleController.class
 com/nuoquan/netty/WSServerInitializer.class
 com/nuoquan/controller/HelloController.class
 com/nuoquan/controller/BasicController.class
+com/nuoquan/SpringUtil.class
 com/nuoquan/controller/RegistLoginController.class
 com/nuoquan/NettyBooter.class
 com/nuoquan/netty/WSServer.class
 com/nuoquan/Application.class
+com/nuoquan/config/ResourceConfig.class
+com/nuoquan/netty/UserChannelRel.class
 com/nuoquan/netty/WSServer$SingletonWSSever.class
+com/nuoquan/FastdfsImporter.class
+com/nuoquan/controller/UserController.class
+com/nuoquan/GlobalExceptionHandler.class
 com/nuoquan/netty/ChatHandler.class

@@ -78,4 +78,6 @@ to {
 	font-weight: bold;
 	margin-left: 17px;
 }
+.pageLine button {
+}
 

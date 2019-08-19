@@ -11,10 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.nuoquan.utils.TimeAgoUtils;
 import com.nuoquan.mapper.ArticleMapper;
 import com.nuoquan.mapper.ArticleMapperCustom;
 import com.nuoquan.mapper.SearchRecordMapper;
 import com.nuoquan.mapper.UserArticleCommentMapper;
+import com.nuoquan.mapper.UserArticleCommentMapperCustom;
 import com.nuoquan.mapper.UserLikeArticleMapper;
 import com.nuoquan.mapper.UserMapper;
 import com.nuoquan.pojo.Article;
@@ -22,6 +24,7 @@ import com.nuoquan.pojo.SearchRecord;
 import com.nuoquan.pojo.UserArticleComment;
 import com.nuoquan.pojo.UserLikeArticle;
 import com.nuoquan.pojo.vo.ArticleVO;
+import com.nuoquan.pojo.vo.UserArticleCommentVO;
 import com.nuoquan.utils.PagedResult;
 
 import tk.mybatis.mapper.entity.Example;
@@ -52,6 +55,9 @@ public class ArticleServiceImpl implements ArticleService {
 	@Autowired
 	private UserArticleCommentMapper userArticleCommentMapper;
 	
+	@Autowired
+	private UserArticleCommentMapperCustom userArticleCommentMapperCustom;
+	
 	@Override
 	public PagedResult getAllArticles(Integer page, Integer pageSize) {
 		
@@ -60,7 +66,7 @@ public class ArticleServiceImpl implements ArticleService {
 		
 		List<ArticleVO> list = articleMapperCustom.queryAllArticles();
 		
-		PageInfo<ArticleVO> pageList = new PageInfo<ArticleVO>(list);
+		PageInfo<ArticleVO> pageList = new PageInfo<>(list);
 		
 		PagedResult pagedResult = new PagedResult();
 		pagedResult.setPage(page);
@@ -131,7 +137,7 @@ public class ArticleServiceImpl implements ArticleService {
 		PageHelper.startPage(page, pageSize);
 		List<ArticleVO> list = articleMapperCustom.searchArticleContentYang(articleContent);
 		
-		PageInfo<ArticleVO> pageList = new PageInfo<ArticleVO>(list);
+		PageInfo<ArticleVO> pageList = new PageInfo<>(list);
 		
 		PagedResult pagedResult = new PagedResult();
 		pagedResult.setPage(page);
@@ -160,15 +166,40 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void saveComment(UserArticleComment comment) {
 		
 		String id = sid.nextShort();
 		comment.setId(id);
-//		comment.setArticleId(articleId);
-//		comment.setFromUserId(userId);
+		comment.setDislikeNum(0);
+		comment.setLikeNum(0);
 		comment.setCreateTime(new Date());
 		userArticleCommentMapper.insert(comment);
 		
+	}
+
+	@Transactional(propagation = Propagation.SUPPORTS)
+	@Override
+	public PagedResult getAllComments(String articleId, Integer page, Integer pageSize) {
+		
+		PageHelper.startPage(page, pageSize);
+		
+		List<UserArticleCommentVO> list = userArticleCommentMapperCustom.queryComments(articleId);
+			// 对时间格式进行处理
+			for (UserArticleCommentVO c : list) {
+				String timeAgo = TimeAgoUtils.format(c.getCreateTime());
+				c.setTimeAgoStr(timeAgo);
+			}
+			
+		PageInfo<UserArticleCommentVO> pageList = new PageInfo<>(list);
+		
+		PagedResult grid = new PagedResult();
+		grid.setTotal(pageList.getPages());
+		grid.setRows(list);
+		grid.setPage(page);
+		grid.setRecords(pageList.getTotal());
+		
+		return grid;
 	}
 
 }

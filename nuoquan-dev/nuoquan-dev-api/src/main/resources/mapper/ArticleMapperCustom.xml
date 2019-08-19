@@ -19,7 +19,7 @@
     <result column="is_anonymous" jdbcType="TINYINT" property="isAnonymous" />
     <result column="article_path" jdbcType="VARCHAR" property="articlePath" />
     
-     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
   </resultMap>
   
   

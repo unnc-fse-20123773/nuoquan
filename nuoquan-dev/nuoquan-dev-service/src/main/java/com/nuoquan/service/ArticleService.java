@@ -44,6 +44,19 @@ public interface ArticleService {
 	 * 保存文章
 	 */
 	public void saveArticle(Article article);
-
+	
+	/**
+	 * 上传留言到数据库
+	 * @param comment
+	 */
 	public void saveComment(UserArticleComment comment);
+	
+	/**
+	 * 留言分页
+	 * @param articleId
+	 * @param page
+	 * @param pageSize
+	 * @return
+	 */
+	public PagedResult getAllComments(String articleId, Integer page, Integer pageSize);
 }
