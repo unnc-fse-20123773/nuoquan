@@ -3,6 +3,7 @@ package com.nuoquan.service;
 import java.util.List;
 
 import com.nuoquan.pojo.Article;
+import com.nuoquan.pojo.UserArticleComment;
 import com.nuoquan.utils.PagedResult;
 
 public interface ArticleService {
@@ -43,4 +44,6 @@ public interface ArticleService {
 	 * 保存文章
 	 */
 	public void saveArticle(Article article);
+
+	public void saveComment(UserArticleComment comment);
 }

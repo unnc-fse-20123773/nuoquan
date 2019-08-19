@@ -1,8 +1,8 @@
 {
   "pages": [
+    "pages/index/index",
     "pages/submit/submit",
     "pages/chatpage/chatpage",
-    "pages/index/index",
     "pages/followlist/followlist",
     "pages/profile/profile",
     "pages/personpublic/personpublic",

@@ -21,6 +21,7 @@ import org.xml.sax.InputSource;
 import com.github.pagehelper.util.StringUtil;
 import com.nuoquan.enums.ArticleStatusEnums;
 import com.nuoquan.pojo.Article;
+import com.nuoquan.pojo.UserArticleComment;
 import com.nuoquan.service.ArticleService;
 import com.nuoquan.service.UserService;
 import com.nuoquan.utils.JSONResult;
@@ -160,5 +161,11 @@ public class ArticleController extends BasicController{
 		return JSONResult.ok();
 	}	
 	
+	@PostMapping("/saveComment")
+	public JSONResult saveComment(@RequestBody UserArticleComment comment) throws Exception {
+		
+		articleService.saveComment(comment);
+		return JSONResult.ok();
+	}
 	
 }

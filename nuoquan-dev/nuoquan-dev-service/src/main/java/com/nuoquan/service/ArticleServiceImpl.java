@@ -1,5 +1,6 @@
 package com.nuoquan.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.n3r.idworker.Sid;
@@ -13,10 +14,12 @@ import com.github.pagehelper.PageInfo;
 import com.nuoquan.mapper.ArticleMapper;
 import com.nuoquan.mapper.ArticleMapperCustom;
 import com.nuoquan.mapper.SearchRecordMapper;
+import com.nuoquan.mapper.UserArticleCommentMapper;
 import com.nuoquan.mapper.UserLikeArticleMapper;
 import com.nuoquan.mapper.UserMapper;
 import com.nuoquan.pojo.Article;
 import com.nuoquan.pojo.SearchRecord;
+import com.nuoquan.pojo.UserArticleComment;
 import com.nuoquan.pojo.UserLikeArticle;
 import com.nuoquan.pojo.vo.ArticleVO;
 import com.nuoquan.utils.PagedResult;
@@ -45,6 +48,9 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	@Autowired
 	private SearchRecordMapper searchRecordMapper;
+	
+	@Autowired
+	private UserArticleCommentMapper userArticleCommentMapper;
 	
 	@Override
 	public PagedResult getAllArticles(Integer page, Integer pageSize) {
@@ -150,6 +156,18 @@ public class ArticleServiceImpl implements ArticleService {
 		String id = sid.nextShort();
 		article.setId(id);
 		articleMapper.insertSelective(article);
+		
+	}
+
+	@Override
+	public void saveComment(UserArticleComment comment) {
+		
+		String id = sid.nextShort();
+		comment.setId(id);
+//		comment.setArticleId(articleId);
+//		comment.setFromUserId(userId);
+		comment.setCreateTime(new Date());
+		userArticleCommentMapper.insert(comment);
 		
 	}
 
