@@ -12,6 +12,7 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="like_num" jdbcType="INTEGER" property="likeNum" />
     <result column="dislike_num" jdbcType="INTEGER" property="dislikeNum" />
+    <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
     
     <result column="face_image" jdbcType="VARCHAR" property="faceImage" />
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />

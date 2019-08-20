@@ -325,15 +325,16 @@ var _articlebrief = _interopRequireDefault(__webpack_require__(/*! ../../compone
 //
 //
 //
-var comment = function comment() {return __webpack_require__.e(/*! import() | components/comment */ "components/comment").then(__webpack_require__.bind(null, /*! ../../components/comment */ "../../../../../../Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/components/comment.vue"));};var _default = { data: function data() {return { userInfo: {}, comments: [['00001', '评论者ID', '楼主好棒', '一小时前', '60', '7'], ['00003', '评论者ID', '楼主求微信', '一小时前', '90', '7'], ['00005', '评论者ID', '楼主求微信', '一小时前', '60', '7'], ['00009', '评论者ID', '楼主求微信', '一小时前', '9', '70']], articleCard: "", taglist: [['123', 'background:red'], ['13', 'background:blue'], ['163', 'background:yellow']] };}, components: { articlebrief: _articlebrief.default, commentbox: comment }, methods: { saveComment: function saveComment(e) {var that = this;var content = e.detail.value;var userInfoTemp = this.getGlobalUserInfo();if (this.isNull(userInfoTemp)) {uni.navigateTo({ url: "../wechatLogin/wechatLogin" });
-
-      } else {
-        uni.request({
-          url: this.SeverUrl + '/saveComment',
-          method: 'POST',
-          data: {
-            fromUserId: that.userInfo.id,
-            articleId: that.articleCard.id,
+var comment = function comment() {return __webpack_require__.e(/*! import() | components/comment */ "components/comment").then(__webpack_require__.bind(null, /*! ../../components/comment */ "../../../../../../Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/components/comment.vue"));};var _default = { data: function data() {return { userInfo: {}, comments: [// ['00001', '评论者ID', '楼主好棒', '一小时前', '60', '7'],
+        // ['00003', '评论者ID', '楼主求微信', '一小时前', '90', '7'],
+        // ['00005', '评论者ID', '楼主求微信', '一小时前', '60', '7'],
+        // ['00009', '评论者ID', '楼主求微信', '一小时前', '9', '70']
+      ], articleCard: "", // taglist: [
+      // 	['123', 'background:red'],
+      // 	['13', 'background:blue'],
+      // 	['163', 'background:yellow']
+      // ],
+      commentList: '' };}, components: { articlebrief: _articlebrief.default, commentbox: comment }, methods: { saveComment: function saveComment(e) {var that = this;var content = e.detail.value;var userInfoTemp = this.getGlobalUserInfo();if (this.isNull(userInfoTemp)) {uni.navigateTo({ url: "../wechatLogin/wechatLogin" });} else {uni.request({ url: this.SeverUrl + '/saveComment', method: 'POST', data: { fromUserId: that.userInfo.id, articleId: that.articleCard.id,
             comment: content },
 
           success: function success(res) {
@@ -341,6 +342,26 @@ var comment = function comment() {return __webpack_require__.e(/*! import() | co
           } });
 
       }
+    },
+    getComments: function getComments() {
+      var that = this;
+      uni.request({
+        url: this.SeverUrl + '/getArticleComments',
+        method: "POST",
+        data: {
+          articleId: that.articleCard.id
+          // page: '',
+          // pageSize: ''
+        },
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          that.commentList = res.data.data.rows;
+          console.log(that.articleCard.id),
+          console.log(res);
+        } });
+
     } },
 
   onLoad: function onLoad(options) {
@@ -355,8 +376,9 @@ var comment = function comment() {return __webpack_require__.e(/*! import() | co
     if (!this.isNull(userInfo)) {
       this.userInfo = this.getGlobalUserInfo();
     }
-    console.log(this.articleCard.id);
-    console.log(this.userInfo.nickname);
+    // console.log(this.articleCard.id);
+    // console.log(this.userInfo.nickname);
+    this.getComments();
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

@@ -188,7 +188,7 @@ public class ArticleServiceImpl implements ArticleService {
 			// 对时间格式进行处理
 			for (UserArticleCommentVO c : list) {
 				String timeAgo = TimeAgoUtils.format(c.getCreateTime());
-				c.setTimeAgoStr(timeAgo);
+				c.setTimeAgo(timeAgo);
 			}
 			
 		PageInfo<UserArticleCommentVO> pageList = new PageInfo<>(list);

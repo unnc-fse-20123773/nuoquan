@@ -9,6 +9,7 @@
 			<view style="height:5px;background-color: white;width:60%;margin:auto;"></view>
 			<view class="detailcontent">{{ articleCard.articleContent }}</view>
 			<view class="detailpics">
+				<!-- <image class="detailpic" src="../../static/0001/pic3.jpg"></image>
 				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
 				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
 				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
@@ -16,8 +17,7 @@
 				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
 				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
 				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
-				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
-				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
+				<image class="detailpic" src="../../static/0001/pic3.jpg"></image> -->
 			</view>
 			<view class="tags">
 				<view class="tag" v-for="(i,index) in articleCard.tags" v-bind:key="index">{{i}}</view>
@@ -25,7 +25,7 @@
 			<view class="commentPart">
 				<input class="commentSth" placeholder="评论点什么..." confirm-type="send" @confirm="saveComment" />
 			</view>
-			<commentbox v-for="comment in comments" :key="comment[0]" :comment="comment"></commentbox>
+			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i"></commentbox>
 		</view>
 	</view>
 </template>
@@ -38,17 +38,18 @@
 			return {
 				userInfo: {},
 				comments: [
-					['00001', '评论者ID', '楼主好棒', '一小时前', '60', '7'],
-					['00003', '评论者ID', '楼主求微信', '一小时前', '90', '7'],
-					['00005', '评论者ID', '楼主求微信', '一小时前', '60', '7'],
-					['00009', '评论者ID', '楼主求微信', '一小时前', '9', '70']
+					// ['00001', '评论者ID', '楼主好棒', '一小时前', '60', '7'],
+					// ['00003', '评论者ID', '楼主求微信', '一小时前', '90', '7'],
+					// ['00005', '评论者ID', '楼主求微信', '一小时前', '60', '7'],
+					// ['00009', '评论者ID', '楼主求微信', '一小时前', '9', '70']
 				],
 				articleCard: "",
-				taglist: [
-					['123', 'background:red'],
-					['13', 'background:blue'],
-					['163', 'background:yellow']
-				]
+				// taglist: [
+				// 	['123', 'background:red'],
+				// 	['13', 'background:blue'],
+				// 	['163', 'background:yellow']
+				// ],
+				commentList: ''
 			};
 		},
 
@@ -57,14 +58,14 @@
 			commentbox: comment
 		},
 		methods: {
-			saveComment:function(e) {
+			saveComment: function(e) {
 				var that = this;
 				var content = e.detail.value;
 				var userInfoTemp = this.getGlobalUserInfo();
 				if (this.isNull(userInfoTemp)) {
-				uni.navigateTo({
-					url: "../wechatLogin/wechatLogin"
-				})
+					uni.navigateTo({
+						url: "../wechatLogin/wechatLogin"
+					})
 				} else {
 					uni.request({
 						url: this.SeverUrl + '/saveComment',
@@ -79,7 +80,27 @@
 						}
 					})
 				}
-			}
+			},
+			getComments() {
+				var that = this;
+				uni.request({
+					url: this.SeverUrl + '/getArticleComments',
+					method: "POST",
+					data: {
+						articleId: that.articleCard.id,
+						// page: '',
+						// pageSize: ''
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {
+						 that.commentList = res.data.data.rows;
+						console.log(that.articleCard.id),
+						console.log(res)
+					},
+				});
+			},
 		},
 		onLoad(options) {
 			// console.log('detail receved');
@@ -88,13 +109,14 @@
 			this.articleCard = JSON.parse(options.data);
 			// console.log(this.articleCard);
 			// console.log(this.articleCard.artiticleTitle);
-			
+
 			var userInfo = this.getGlobalUserInfo();
 			if (!this.isNull(userInfo)) {
 				this.userInfo = this.getGlobalUserInfo();
 			}
-			console.log(this.articleCard.id);
-			console.log(this.userInfo.nickname);
+			// console.log(this.articleCard.id);
+			// console.log(this.userInfo.nickname);
+			this.getComments();
 		}
 	};
 </script>

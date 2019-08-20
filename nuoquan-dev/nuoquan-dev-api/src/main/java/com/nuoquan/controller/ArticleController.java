@@ -28,7 +28,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 @RestController
-@Api(value="文章相关接口", tags= {"操作文章的controller"})
+@Api(value="文章相关接口", tags= {"Article-Controller"})
 public class ArticleController extends BasicController{
 	
 	@Autowired
@@ -161,8 +161,13 @@ public class ArticleController extends BasicController{
 		return JSONResult.ok();
 	}
 	
-	@PostMapping("/getArticleComment")
-	public JSONResult getArticleComment(String articleId, Integer page, Integer pageSize) throws Exception {
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "articleId", required = true, dataType = "String", paramType = "form"),
+		@ApiImplicitParam(name = "page", required = false, dataType = "Integer", paramType = "form"),
+		@ApiImplicitParam(name = "pageSize", required = false, dataType = "Integer", paramType = "form")
+		})
+	@PostMapping("/getArticleComments")
+	public JSONResult getArticleComments(String articleId, Integer page, Integer pageSize) throws Exception {
 		
 		if (StringUtils.isBlank(articleId)) {
 			return JSONResult.ok();

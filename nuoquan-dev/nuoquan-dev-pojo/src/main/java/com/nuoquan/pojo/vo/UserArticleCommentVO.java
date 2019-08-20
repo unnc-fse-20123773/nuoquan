@@ -1,7 +1,8 @@
 package com.nuoquan.pojo.vo;
 
 import java.util.Date;
-import javax.persistence.*;
+
+import javax.persistence.Column;
 
 public class UserArticleCommentVO {
 
@@ -12,6 +13,7 @@ public class UserArticleCommentVO {
     private Date createTime;
     private Integer likeNum;
     private Integer dislikeNum;
+    private Integer commentNum;
 
     private String faceImage;
     private String nickname;
@@ -136,7 +138,15 @@ public class UserArticleCommentVO {
 		return timeAgo;
 	}
 
-	public void setTimeAgoStr(String timeAgo) {
+	public void setTimeAgo(String timeAgo) {
 		this.timeAgo = timeAgo;
+	}
+
+	public Integer getCommentNum() {
+		return commentNum;
+	}
+
+	public void setCommentNum(Integer commentNum) {
+		this.commentNum = commentNum;
 	}
 }
