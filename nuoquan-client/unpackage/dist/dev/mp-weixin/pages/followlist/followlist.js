@@ -150,19 +150,20 @@ var _default =
     return {
       scrollLeft: 0,
       isClickChange: false,
-      currentTab: 0, // 切换 list 0/1
+      currentTab: '', // 切换 list 0/1
       menuTabs: [{
         name: '他关注的' },
       {
         name: '关注他的' }],
 
 
-      swiperDateList: [
-      [],
-      []],
-
-      userOperationList: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      // 关注粉丝列表属性
+      swiperDataList: [
+      [], // followList 把数据写进里面首次进入页面加载不出，所以写到外面
+      [] // fansList
+      ],
+      followList: '',
+      fansList: '',
 
       // 用于分页的属性
       totalPage: 1,
@@ -196,17 +197,20 @@ var _default =
     uni.setNavigationBarTitle({
       title: 'XXX的主页' });
 
+
+    this.swiperDataList[0] = [1, 1, 1];
+    // 获取userId
+    var userId = opt.userId;
+    this.queryFansFollow(userId);
+
     // 设置列表 index
     this.currentTab = opt.currentTab;
-    // console.log(opt);
 
     var screenWidth = uni.getSystemInfoSync().screenWidth;
     this.screenWidth = screenWidth;
 
     // 获取当前页面
     // var page = this.page;
-
-
 
   },
 
@@ -274,6 +278,34 @@ var _default =
       // 	icon: "none",
       // 	title: "回到顶部喽~"
       // })
+    },
+
+    /**
+        * 查询该用户的粉丝和关注用户信息列表
+        */
+    queryFansFollow: function queryFansFollow(userId) {
+      var that = this;
+      uni.request({
+        url: that.$serverUrl + '/user/queryFansAndFollow',
+        method: "POST",
+        data: {
+          userId: userId },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          console.log(res);
+          if (res.data.status == 200) {
+            var data = res.data.data;
+            that.followList = data.followList;
+            that.fansList = data.fansList;
+
+            // that.swiperDataList[0] = data.followList;
+            // that.swiperDataList[1] = data.fansList;
+          }
+        } });
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

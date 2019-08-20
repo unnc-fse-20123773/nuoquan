@@ -62,6 +62,18 @@ public interface UserService {
 	public void deleteUserFanRelation(String userId, String fanId);
 	
 	/**
+	 * @Description 查询用户粉丝列表
+	 * @param userId
+	 */
+	public List<User> queryUserFans(String userId);
+	
+	/**
+	 * @Description 查询用户关注列表
+	 * @param userId
+	 */
+	public List<User> queryUserFollow(String userId);
+	
+	/**
 	 * @Description 保存聊天消息到数据库
 	 */
 	public String saveMsg(ChatMessage chatMessage);

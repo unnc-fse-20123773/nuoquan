@@ -29,22 +29,46 @@
 			</view>
 			<!-- 消息内容滑块区 -->
 			<scroll-view scroll-y="true" style="position: fixed;left: 0upx;top: 314upx;width: 100%;height: 1132upx;">
-				<view class="msglist-card column_center" v-for="(cardlist,index1) in cardlist" :key="index1" @tap="goToChatpage">
-					<image class="msglist-Touxiang" mode="aspectFill" src="../../static/touxiang2.jpg"></image>
-					<view class="msglist-content">
-						<view class="msglist-id font-family">
-							陈仅仅一号111
+				<view v-for="(item, index) in chatSnapShotList" :key="index">
+					<view class="msglist-card column_center" v-if="item.isRead == UNREAD" @tap="goToChatpage(item)">
+						<image class="msglist-Touxiang" mode="aspectFill" :src="item.friendInfo.faceImg"></image>
+						<view class="msglist-content">
+							<view class="msglist-id font-family">
+								{{item.friendInfo.nickname}}
+							</view>
+							<view class="msglist-brief font-family">
+								{{item.msg}}
+							</view>
 						</view>
-						<view class="msglist-brief font-family">
-							用来模拟场景中天空的光线，也可以使用真...
+						<view class="time-numicon">
+							<view class="msglist-time">
+								11-26
+							</view>
+							<view class="msglist-icon super_center">
+								<!-- 12 -->
+							</view>
 						</view>
 					</view>
-					<view class="time-numicon">
-						<view class="msglist-time">
-							11-26
+
+					<view class="msglist-card-read column_center" v-if="item.isRead == READ" @tap="goToChatpage(item)">
+						<image class="msglist-Touxiang" mode="aspectFill" :src="item.friendInfo.faceImg"></image>
+						<view class="msglist-content">
+							<view class="msglist-id-read font-family">
+								{{item.friendInfo.nickname}}
+							</view>
+							<view class="msglist-brief-read font-family">
+								{{item.msg}}
+							</view>
 						</view>
-						<view class="msglist-icon super_center">
-							12
+						<view class="time-numicon">
+							<view class="msglist-time">
+								11-26
+							</view>
+							<!-- 预留的icon位置 
+											by Guetta -->
+							<!-- <view class="msglist-icon-read super_center">
+								{{msgicon}}
+							</view> -->
 						</view>
 					</view>
 				</view>
@@ -55,10 +79,11 @@
 </template>
 
 <script>
-	import {mapMutations} from 'vuex';
+	import {
+		mapState
+	} from 'vuex';
 
 	var userInfo;
-	var frindInfo;
 
 	var socketTask;
 	var socketOpen = false;
@@ -66,7 +91,26 @@
 	export default {
 		data() {
 			return {
-				cardlist: [1, 1, 1, 1, 1, 1, 11, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+				cardlist: [1, 1, 1],
+				readlist: [1, 1, 1],
+				msgicon: [],
+				chatSnapShotList: [],
+
+				READ: this.chat.READ,
+				UNREAD: this.chat.UNREAD,
+			}
+		},
+
+		computed: {
+			...mapState([
+				'ChatMessageCard',
+			])
+		},
+
+		watch: {
+			ChatMessageCard(newVal, oldVal) { //监听数据变化，即可做相关操作
+				this.loadingChatSnapshot();
+
 			}
 		},
 
@@ -81,57 +125,78 @@
 				return;
 			}
 
-			// 暂时把 frind 等同于 user
-			frindInfo = userInfo;
+			this.mySocket.init();
 
-			this.initSocket();
+			this.loadingChatSnapshot(); // 载入聊天快照
+
+		},
+
+		onShow() {
+			// var page = this.getCurrentPage();
+			// console.log(page.data.cardlist);
 		},
 
 		methods: {
-			...mapMutations([
-				'setChatMessageCard',
-			]),
-			
-			initSocket(){
-				this.mySocket.init();
-				this.overWriteOnMessage();
-			},
-			
-			overWriteOnMessage() {
-				var that = this;
-				uni.onSocketMessage(function(res) {
-					var dataContent = JSON.parse(res.data);
-					var chatMessage = dataContent.chatMessage;
-					console.log("收到服务器内容：");
-					console.log(dataContent);
-
-					// 发送签收消息
-					that.mySocket.sendObj(that.netty.SIGNED, null, null, chatMessage.msgId);
-
-					if (dataContent.action == that.netty.CHAT) {
-						// 修改 store
-						that.setChatMessageCard(chatMessage);
-
-						// 保存聊天历史记录到本地缓存
-						var myId = chatMessage.receiverId;
-						var friendId = chatMessage.senderId;
-						var msg = chatMessage.msg
-
-						that.chat.saveUserChatHistory(myId, friendId, msg, that.chat.FRIEND);
+			/**
+			 * 展示聊天快照，渲染列表.
+			 */ 
+			loadingChatSnapshot() {
+				var chatSnapShotList = this.chat.getUserChatSnapShot(userInfo.id);
+				// 提前渲染
+				this.chatSnapShotList = chatSnapShotList;
+				// 根据 friendId 获取用户信息
+				var sendCount = 0; // 网络请求为异步，计数返回结果判断是否全部完成
+				var receiveCount = 0;
+				console.log(chatSnapShotList)
+				for (var i = 0; i < chatSnapShotList.length; i++) {
+					var thisFrindId = chatSnapShotList[i].friendId;
+					// 查看缓存
+					var thisFriendInfo = this.getUserInfoFromUserList(thisFrindId);
+					if (this.isNull(thisFriendInfo)) {
+						// 不在缓存中, 向服务器请求
+						sendCount++;
+						var that = this;
+						uni.request({
+							url: that.$serverUrl + '/user/queryUser',
+							method: "POST",
+							data: {
+								userId: thisFrindId
+							},
+							header: {
+								'content-type': 'application/x-www-form-urlencoded'
+							},
+							success: (res) => {
+								// console.log(res)
+								if (res.data.status == 200) {
+									// 获取返回的用户信息 写到缓存里
+									thisFriendInfo = res.data.data;
+									that.setUserInfoToUserList(thisFriendInfo);
+									
+									// 查看 sent & receive 是否相等
+									receiveCount++;
+									console.log("sendCount=" + sendCount + " receiveCount=" + receiveCount);
+									if (sendCount == receiveCount){
+										// 再次加载渲染
+										that.loadingChatSnapshot();
+									}
+								}
+							},
+						});
+					} else {
+						// 添加到快照列表对象
+						chatSnapShotList[i].friendInfo = thisFriendInfo;
 					}
+				}
+			},
+
+			goToChatpage(e) {
+				// console.log(e)
+				var friendInfo = e.friendInfo;
+				uni.navigateTo({
+					url: '../chatpage/chatpage?friendInfo=' + JSON.stringify(friendInfo),
 				});
 			},
 
-			goToChatpage() {
-				var data = {
-					userInfo: userInfo,
-					frindInfo: frindInfo,
-				}
-				uni.navigateTo({
-					url: '../chatpage/chatpage?data=' + JSON.stringify(data),
-				});
-			},
-			
 		}
 	}
 </script>
@@ -268,7 +333,7 @@
 		background-color: #058ecc;
 		color: white;
 		border-radius: 7upx;
-		width: 56upx;
+		width: 36upx;
 		right: 40upx;
 	}
 
@@ -280,6 +345,15 @@
 		background-color: white;
 		border-radius: 12upx;
 		box-shadow: 0upx 0upx 14upx 0upx #B2B2B2;
+	}
+
+	.msglist-card-read {
+		width: 88%;
+		margin-left: 6%;
+		margin-top: 8upx;
+		height: 120upx;
+		background-color: white;
+		border-radius: 12upx;
 	}
 
 	.msglist-Touxiang {
@@ -307,11 +381,28 @@
 		color: #353535;
 	}
 
+	.msglist-id-read {
+		width: 100%;
+		height: 32upx;
+		font-size: x-small;
+		font-weight: 500;
+		color: #9b9b9b;
+	}
+
 	.msglist-brief {
 		width: 100%;
+		font-weight: 500;
 		height: 32upx;
 		font-size: xx-small;
 		color: #6f6f6f;
+		margin-top: 6upx;
+	}
+
+	.msglist-brief-read {
+		width: 100%;
+		height: 32upx;
+		font-size: xx-small;
+		color: #9b9b9b;
 		margin-top: 6upx;
 	}
 
@@ -341,4 +432,6 @@
 		font-size: 20upx;
 		border-radius: 999upx;
 	}
+
+	.msglist-icon-read {}
 </style>

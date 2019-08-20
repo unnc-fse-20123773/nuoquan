@@ -1,11 +1,13 @@
 # Update Log:
 **v19.8.16 更新**
-1. 大改 chatpage: 
+
+1. 整合 yaoyao 分支代码
+2. 大改 chatpage: 
 	- 使用 scroll-view 组件
 	- 添加滚动到页面底部方法
 	- TODO [yaoyao] 页面css待修改
-2. 新增 使用 vuex 状态管理模式, 响应式获取聊天信息
-3. 修正 main.js 全局变量 ServerUrl -> $serverUrl
+3. 新增 使用 vuex 状态管理模式, 响应式获取聊天信息
+4. 修正 main.js 全局变量 ServerUrl -> $serverUrl
 
 **v19.8.16 更新**
 1. 整合 deyan & guetta-new 分支代码

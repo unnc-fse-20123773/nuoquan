@@ -2,7 +2,7 @@
 	<view>
 		<view class="send" v-if="thisMessage.flag == ME">
 			<navigator url="../personpublic/personpublic">
-				<image class="touxiang" src="../../static/touxiang.jpg"></image>
+				<image class="touxiang" :src="userInfo.faceImg"></image>
 			</navigator>
 			<view class="content">
 				<view class="contentText">
@@ -26,7 +26,7 @@
 
 		<view class="receve" v-if="thisMessage.flag == FRIEND">
 			<navigator url="../personpublic/personpublic">
-				<image class="touxiang" src="../../static/touxiang.jpg"></image>
+				<image class="touxiang" :src="friendInfo.faceImg"></image>
 			</navigator>
 			<view class="content">
 				<view class="contentText">
@@ -46,6 +46,8 @@
 <script>
 	export default {
 		props: {
+			userInfo: '',
+			friendInfo: '',
 			thisMessage: {},
 		},
 		data() {

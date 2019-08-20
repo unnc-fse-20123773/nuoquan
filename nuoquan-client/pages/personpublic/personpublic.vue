@@ -1,22 +1,28 @@
 <template>
 	<view id="public-container">
 		<view id="public-infobox" class="column_center">
-			<image class="publicTouxiang" mode="aspectFill" src="../../static/touxiang2.jpg" ></image>
+			<image class="publicTouxiang" mode="aspectFill" :src="thisUserInfo.faceImg" ></image>
 			<view class="personInfo">
 				<view class="personName">
-					<text class="personName-text">陈仅仅六号</text>
+					<text class="personName-text">{{thisUserInfo.nickname}}</text>
 				</view>
-				<navigator url="../followlist/followlist?currentTab=0" class="personFans super_center">
+				<view class="personFans super_center" @tap="goToFansFollow(0)">
 					<text class="personFans-text">他关注的</text>
-					<text class="personFansNum-text">101</text>
-				</navigator>
-				<navigator url="../followlist/followlist?currentTab=1" class="personFans super_center">
+					<text class="personFansNum-text">{{thisUserInfo.followNum}}</text>
+				</view>
+				<view class="personFans super_center" @tap="goToFansFollow(1)">
 					<text class="personFans-text">关注他的</text>
-					<text class="personFansNum-text">101</text>
-				</navigator>
+					<text class="personFansNum-text">{{thisUserInfo.fansNum}}</text>
+				</view>
 			</view>
 			<button type="default" size="mini" class="guanzhuButton" @tap="addFollow">
 				<text class="guanzhuButton-text">关注</text>
+			</button>
+			
+			<!-- TODO: 加完发私信的按钮格式乱了...要改一下
+													by Jerrio-->
+			<button type="default" size="mini" class="guanzhuButton" @tap="goToChatPage">
+				<text class="guanzhuButton-text">发私信</text>
 			</button>
 		</view>
 
@@ -83,7 +89,8 @@
 
 				screenWidth: 350,
 				serverUrl: "",
-
+				
+				thisUserInfo: '',
 			}
 		},
 
@@ -101,16 +108,29 @@
 		},
 
 		onLoad() {
+			// 获取这个人的信息 [测试展示用自己的]
+			var userInfo = this.getGlobalUserInfo();
+			if (this.isNull(userInfo)) {
+				console.log("No userInfo!!");
+				return;
+			}
+			this.thisUserInfo = userInfo;
+			console.log(this.thisUserInfo);
+			
 			uni.setNavigationBarTitle({
-				title: 'XXX的主页'
+				title: this.thisUserInfo.nickname + "的主页"
 			});
 
 			var screenWidth = uni.getSystemInfoSync().screenWidth;
 			this.screenWidth = screenWidth;
 
-			// 获取当前页面
+			// 获取当前分页
 			var page = this.page;
-
+			
+			// TODO 更新本地用户信息缓存
+			
+			// [测试代码块]
+			this.mySocket.init()
 		},
 
 		onPullDownRefresh() {
@@ -162,6 +182,22 @@
 			 */
 			addFollow: function(){
 				
+			},
+			
+			goToChatPage: function(){
+				var friendInfo = this.thisUserInfo;
+				uni.navigateTo({
+					url: '../chatpage/chatpage?friendInfo=' + JSON.stringify(friendInfo),
+				});
+			},
+			
+			/**
+			 * @param {Object} currentTab 0: 关注 1: 粉丝
+			 */
+			goToFansFollow: function(currentTab) {
+				uni.navigateTo({
+					url: '../followlist/followlist?currentTab=' + currentTab + '&userId=' + this.thisUserInfo.id,
+				});
 			}
 		}
 	}

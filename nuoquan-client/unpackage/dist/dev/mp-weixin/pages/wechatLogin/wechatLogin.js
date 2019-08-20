@@ -114,6 +114,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* User Example
  userInfo: {
@@ -128,8 +131,8 @@ __webpack_require__.r(__webpack_exports__);
 
 {
   data: function data() {
-    return {};
-
+    return {
+      userId: '' };
 
   },
 
@@ -170,7 +173,7 @@ __webpack_require__.r(__webpack_exports__);
       // 2.把微信信息上传给服务器
       var that = this;
       uni.request({
-        url: 'http://127.0.0.1:8080/user/updateUser',
+        url: that.$serverUrl + '/user/updateUser',
         method: "POST",
         data: JSON.stringify(weUser),
         header: {
@@ -204,6 +207,32 @@ __webpack_require__.r(__webpack_exports__);
     clearStorage: function clearStorage() {
       uni.clearStorage();
       console.log("所有缓存已清除");
+    },
+
+    testLogIn: function testLogIn() {var _this2 = this;
+      console.log(this.userId);
+      var that = this;
+      uni.request({
+        url: that.$serverUrl + '/user/queryUser',
+        method: "POST",
+        data: {
+          userId: that.userId },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          console.log(res);
+          if (res.data.status == 200) {
+            var finalUser = res.data.data;
+            _this2.setGlobalUserInfo(finalUser);
+            // 6.返回
+            uni.navigateBack({
+              delta: 1 });
+
+          }
+        } });
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

@@ -157,6 +157,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -189,8 +195,9 @@ var _default =
       videoList: [],
 
       screenWidth: 350,
-      serverUrl: "" };
+      serverUrl: "",
 
+      thisUserInfo: '' };
 
   },
 
@@ -208,16 +215,29 @@ var _default =
   },
 
   onLoad: function onLoad() {
+    // 获取这个人的信息 [测试展示用自己的]
+    var userInfo = this.getGlobalUserInfo();
+    if (this.isNull(userInfo)) {
+      console.log("No userInfo!!");
+      return;
+    }
+    this.thisUserInfo = userInfo;
+    console.log(this.thisUserInfo);
+
     uni.setNavigationBarTitle({
-      title: 'XXX的主页' });
+      title: this.thisUserInfo.nickname + "的主页" });
 
 
     var screenWidth = uni.getSystemInfoSync().screenWidth;
     this.screenWidth = screenWidth;
 
-    // 获取当前页面
+    // 获取当前分页
     var page = this.page;
 
+    // TODO 更新本地用户信息缓存
+
+    // [测试代码块]
+    this.mySocket.init();
   },
 
   onPullDownRefresh: function onPullDownRefresh() {
@@ -268,6 +288,22 @@ var _default =
         * 调用添加关注的接口
         */
     addFollow: function addFollow() {
+
+    },
+
+    goToChatPage: function goToChatPage() {
+      var friendInfo = this.thisUserInfo;
+      uni.navigateTo({
+        url: '../chatpage/chatpage?friendInfo=' + JSON.stringify(friendInfo) });
+
+    },
+
+    /**
+        * @param {Object} currentTab 0: 关注 1: 粉丝
+        */
+    goToFansFollow: function goToFansFollow(currentTab) {
+      uni.navigateTo({
+        url: '../followlist/followlist?currentTab=' + currentTab + '&userId=' + this.thisUserInfo.id });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

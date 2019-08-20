@@ -162,10 +162,35 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _vuex = __webpack_require__(/*! vuex */ 12);function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
 
+
+
 var userInfo;
-var frindInfo;
 
 var socketTask;
 var socketOpen = false;var _default =
@@ -173,9 +198,28 @@ var socketOpen = false;var _default =
 {
   data: function data() {
     return {
-      cardlist: [1, 1, 1, 1, 1, 1, 11, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] };
+      cardlist: [1, 1, 1],
+      readlist: [1, 1, 1],
+      msgicon: [],
+      chatSnapShotList: [],
+
+      READ: this.chat.READ,
+      UNREAD: this.chat.UNREAD };
 
   },
+
+  computed: _objectSpread({},
+  (0, _vuex.mapState)([
+  'ChatMessageCard'])),
+
+
+
+  watch: {
+    ChatMessageCard: function ChatMessageCard(newVal, oldVal) {//监听数据变化，即可做相关操作
+      this.loadingChatSnapshot();
+
+    } },
+
 
   onLoad: function onLoad() {
     uni.setNavigationBarTitle({
@@ -188,56 +232,77 @@ var socketOpen = false;var _default =
       return;
     }
 
-    // 暂时把 frind 等同于 user
-    frindInfo = userInfo;
+    this.mySocket.init();
 
-    this.initSocket();
+    this.loadingChatSnapshot(); // 载入聊天快照
+
   },
 
-  methods: _objectSpread({},
-  (0, _vuex.mapMutations)([
-  'setChatMessageCard']), {
+  onShow: function onShow() {
+    // var page = this.getCurrentPage();
+    // console.log(page.data.cardlist);
+  },
 
+  methods: {
+    /**
+              * 展示聊天快照，渲染列表.
+              */
+    loadingChatSnapshot: function loadingChatSnapshot() {
+      var chatSnapShotList = this.chat.getUserChatSnapShot(userInfo.id);
+      // 提前渲染
+      this.chatSnapShotList = chatSnapShotList;
+      // 根据 friendId 获取用户信息
+      var sendCount = 0; // 网络请求为异步，计数返回结果判断是否全部完成
+      var receiveCount = 0;
+      console.log(chatSnapShotList);
+      for (var i = 0; i < chatSnapShotList.length; i++) {
+        var thisFrindId = chatSnapShotList[i].friendId;
+        // 查看缓存
+        var thisFriendInfo = this.getUserInfoFromUserList(thisFrindId);
+        if (this.isNull(thisFriendInfo)) {
+          // 不在缓存中, 向服务器请求
+          sendCount++;
+          var that = this;
+          uni.request({
+            url: that.$serverUrl + '/user/queryUser',
+            method: "POST",
+            data: {
+              userId: thisFrindId },
 
-    initSocket: function initSocket() {
-      this.mySocket.init();
-      this.overWriteOnMessage();
-    },
+            header: {
+              'content-type': 'application/x-www-form-urlencoded' },
 
-    overWriteOnMessage: function overWriteOnMessage() {
-      var that = this;
-      uni.onSocketMessage(function (res) {
-        var dataContent = JSON.parse(res.data);
-        var chatMessage = dataContent.chatMessage;
-        console.log("收到服务器内容：");
-        console.log(dataContent);
+            success: function success(res) {
+              // console.log(res)
+              if (res.data.status == 200) {
+                // 获取返回的用户信息 写到缓存里
+                thisFriendInfo = res.data.data;
+                that.setUserInfoToUserList(thisFriendInfo);
 
-        // 发送签收消息
-        that.mySocket.sendObj(that.netty.SIGNED, null, null, chatMessage.msgId);
+                // 查看 sent & receive 是否相等
+                receiveCount++;
+                console.log("sendCount=" + sendCount + " receiveCount=" + receiveCount);
+                if (sendCount == receiveCount) {
+                  // 再次加载渲染
+                  that.loadingChatSnapshot();
+                }
+              }
+            } });
 
-        if (dataContent.action == that.netty.CHAT) {
-          // 修改 store
-          that.setChatMessageCard(chatMessage);
-
-          // 保存聊天历史记录到本地缓存
-          var myId = chatMessage.receiverId;
-          var friendId = chatMessage.senderId;
-          var msg = chatMessage.msg;
-
-          that.chat.saveUserChatHistory(myId, friendId, msg, that.chat.FRIEND);
+        } else {
+          // 添加到快照列表对象
+          chatSnapShotList[i].friendInfo = thisFriendInfo;
         }
-      });
+      }
     },
 
-    goToChatpage: function goToChatpage() {
-      var data = {
-        userInfo: userInfo,
-        frindInfo: frindInfo };
-
+    goToChatpage: function goToChatpage(e) {
+      // console.log(e)
+      var friendInfo = e.friendInfo;
       uni.navigateTo({
-        url: '../chatpage/chatpage?data=' + JSON.stringify(data) });
+        url: '../chatpage/chatpage?friendInfo=' + JSON.stringify(friendInfo) });
 
-    } }) };exports.default = _default;
+    } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

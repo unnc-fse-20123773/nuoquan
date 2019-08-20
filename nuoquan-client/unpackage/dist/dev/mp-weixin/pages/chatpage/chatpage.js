@@ -126,10 +126,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _vuex = __webpack_require__(/*! vuex */ 12);function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var onemessage = function onemessage() {return __webpack_require__.e(/*! import() | pages/chatpage/oneMessage */ "pages/chatpage/oneMessage").then(__webpack_require__.bind(null, /*! ./oneMessage */ 143));};
 
-var userInfo;
-var frindInfo;
+var _vuex = __webpack_require__(/*! vuex */ 12);function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var onemessage = function onemessage() {return __webpack_require__.e(/*! import() | pages/chatpage/oneMessage */ "pages/chatpage/oneMessage").then(__webpack_require__.bind(null, /*! ./oneMessage */ 143));};
 
 var socketTask;
 var socketOpen = false;var _default =
@@ -203,7 +201,10 @@ var socketOpen = false;var _default =
 
       socketMsgQueue: [], // 未发送的消息队列
       textMsg: '', // 输入框中的text
-      windowHeight: '' };
+      windowHeight: '',
+
+      userInfo: '',
+      friendInfo: '' };
 
   },
 
@@ -217,7 +218,7 @@ var socketOpen = false;var _default =
     ChatMessageCard: function ChatMessageCard(newVal, oldVal) {//监听数据变化，即可做相关操作
       console.log("newVal:");
       console.log(newVal);
-      // 渲染到窗口
+      // 添加flag，渲染到窗口
       newVal.flag = this.chat.FRIEND;
       this.chatContent.push(newVal);
 
@@ -227,14 +228,22 @@ var socketOpen = false;var _default =
 
 
   onLoad: function onLoad(opt) {
-    uni.setNavigationBarTitle({
-      title: "XXXX（聊天人的昵称）" });
-
     // 获取界面传参
-    var data = JSON.parse(opt.data);
-    userInfo = data.userInfo;
-    frindInfo = data.frindInfo;
+    this.friendInfo = JSON.parse(opt.friendInfo);
 
+    uni.setNavigationBarTitle({
+      title: this.friendInfo.nickname });
+
+
+    // 获取我的信息
+    var userInfo = this.getGlobalUserInfo();
+    if (this.isNull(userInfo)) {
+      console.log("No userInfo!!");
+      return;
+    }
+    this.userInfo = userInfo;
+
+    // 获取屏幕高度
     var that = this;
     uni.getSystemInfo({
       success: function success(res) {
@@ -253,7 +262,7 @@ var socketOpen = false;var _default =
       if (!this.textMsg) {
         return;
       }
-      this.mySocket.sendObj(this.netty.CHAT, frindInfo.id, this.textMsg, null);
+      this.mySocket.sendObj(this.netty.CHAT, this.friendInfo.id, this.textMsg, null);
       // 渲染到窗口
       var message = {
         messageId: '0006',
@@ -268,7 +277,7 @@ var socketOpen = false;var _default =
     },
 
     iniChatHistory: function iniChatHistory() {
-      var localChatHistory = this.chat.getUserChatHistory(userInfo.id, frindInfo.id);
+      var localChatHistory = this.chat.getUserChatHistory(this.userInfo.id, this.friendInfo.id);
       this.chatContent = localChatHistory;
     },
 

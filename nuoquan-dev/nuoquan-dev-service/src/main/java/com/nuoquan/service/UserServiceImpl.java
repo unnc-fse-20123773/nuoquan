@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.nuoquan.enums.MsgSignFlagEnum;
 import com.nuoquan.mapper.ChatMsgMapper;
 import com.nuoquan.mapper.UserFansMapper;
+import com.nuoquan.mapper.UserFansMapperCustom;
 import com.nuoquan.mapper.UserMapper;
 import com.nuoquan.mapper.UserMapperCustom;
 import com.nuoquan.pojo.ChatMsg;
@@ -34,6 +35,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UserFansMapper userFansMapper;
+	
+	@Autowired
+	private UserFansMapperCustom UserFansMapperCustom;
 	
 	@Autowired 
 	private Sid sid;
@@ -132,6 +136,22 @@ public class UserServiceImpl implements UserService {
 		userMapper.addFollowCount(fanId);
 	}
 
+	@Transactional(propagation = Propagation.SUPPORTS) 
+	@Override
+	public List<User> queryUserFans(String userId) {
+		
+		List<User> list = UserFansMapperCustom.queryFansInfo(userId);
+		return list;
+	}
+
+	@Transactional(propagation = Propagation.SUPPORTS) 
+	@Override
+	public List<User> queryUserFollow(String userId) {
+		
+		List<User> list = UserFansMapperCustom.queryFollowInfo(userId);
+		return list;
+	}
+	
 	@Transactional(propagation = Propagation.REQUIRED) 
 	@Override
 	public void deleteUserFanRelation(String userId, String fanId) {

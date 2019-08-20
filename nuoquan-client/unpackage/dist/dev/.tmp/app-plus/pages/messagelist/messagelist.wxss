@@ -125,7 +125,7 @@ page {
 	background-color: #058ecc;
 	color: white;
 	border-radius: 7rpx;
-	width: 56rpx;
+	width: 36rpx;
 	right: 40rpx;
 }
 .msglist-card {
@@ -137,6 +137,14 @@ page {
 	border-radius: 12rpx;
 	-webkit-box-shadow: 0rpx 0rpx 14rpx 0rpx #B2B2B2;
 	        box-shadow: 0rpx 0rpx 14rpx 0rpx #B2B2B2;
+}
+.msglist-card-read {
+	width: 88%;
+	margin-left: 6%;
+	margin-top: 8rpx;
+	height: 120rpx;
+	background-color: white;
+	border-radius: 12rpx;
 }
 .msglist-Touxiang {
 	margin-left: 24rpx;
@@ -167,11 +175,26 @@ page {
 	font-weight: 550;
 	color: #353535;
 }
+.msglist-id-read {
+	width: 100%;
+	height: 32rpx;
+	font-size: x-small;
+	font-weight: 500;
+	color: #9b9b9b;
+}
 .msglist-brief {
 	width: 100%;
+	font-weight: 500;
 	height: 32rpx;
 	font-size: xx-small;
 	color: #6f6f6f;
+	margin-top: 6rpx;
+}
+.msglist-brief-read {
+	width: 100%;
+	height: 32rpx;
+	font-size: xx-small;
+	color: #9b9b9b;
 	margin-top: 6rpx;
 }
 .time-numicon {
@@ -198,4 +221,5 @@ page {
 	font-size: 20rpx;
 	border-radius: 999rpx;
 }
+.msglist-icon-read {}
 

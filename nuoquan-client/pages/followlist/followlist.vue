@@ -14,14 +14,14 @@
 				</block>
 			</scroll-view>
 			<swiper :current="currentTab" class="swiper-box-list" duration="300" @change="swiperChange">
-				<swiper-item class="swiper-box" v-for="(swiperDate,index1) in swiperDateList" :key="index1">
+				<swiper-item class="swiper-box" v-for="(swiperData,index1) in swiperDataList" :key="index1">
 					<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-test" @scrolltoupper="upper" @scrolltolower="lower"
 					 @scroll="scroll" enable-back-to-top="true">
-						<view class="user-operation-line" v-for="(userOperation,index2) in userOperationList" :key="index2">
+						<view class="user-operation-line" v-for="(item,index2) in (index1==0?followList:fansList)" :key="index2">
 							<view class="user-one-line column_center">
-								<image class="publicTouxiang" mode="aspectFill" src="../../static/touxiang2.jpg"></image>
+								<image class="publicTouxiang" mode="aspectFill" :src="item.faceImg"></image>
 								<view class="userid">
-									陈仅仅1号 111
+									{{item.nickname}}
 								</view>
 								<view class="attentionButton super_center">
 									<text class="attentionButton-text">关注</text>
@@ -43,20 +43,21 @@
 			return {
 				scrollLeft: 0,
 				isClickChange: false,
-				currentTab: 0,			// 切换 list 0/1
+				currentTab: '', // 切换 list 0/1
 				menuTabs: [{
 					name: '他关注的'
 				}, {
 					name: '关注他的'
 				}],
+				
+				// 关注粉丝列表属性
+				swiperDataList: [
+					[], // followList 把数据写进里面首次进入页面加载不出，所以写到外面
+					[] 	// fansList
+				],
+				followList: '',
+				fansList: '',
 
-				swiperDateList: [
-					[],
-					[]
-				],
-				userOperationList: [
-					1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-				],
 				// 用于分页的属性
 				totalPage: 1,
 				page: 1,
@@ -89,20 +90,23 @@
 			uni.setNavigationBarTitle({
 				title: 'XXX的主页'
 			});
+
+			this.swiperDataList[0] = [1, 1, 1]
+			// 获取userId
+			var userId = opt.userId;
+			this.queryFansFollow(userId);
+
 			// 设置列表 index
 			this.currentTab = opt.currentTab;
-			// console.log(opt);
-			
+
 			var screenWidth = uni.getSystemInfoSync().screenWidth;
 			this.screenWidth = screenWidth;
 
 			// 获取当前页面
 			// var page = this.page;
-			
-			
-			
+
 		},
-		
+
 		onPullDownRefresh() {
 			console.log('refresh');
 			setTimeout(function() {
@@ -168,6 +172,34 @@
 				// 	title: "回到顶部喽~"
 				// })
 			},
+
+			/**
+			 * 查询该用户的粉丝和关注用户信息列表
+			 */
+			queryFansFollow(userId) {
+				var that = this;
+				uni.request({
+					url: that.$serverUrl + '/user/queryFansAndFollow',
+					method: "POST",
+					data: {
+						userId: userId
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {
+						console.log(res)
+						if (res.data.status == 200) {
+							var data = res.data.data;
+							that.followList = data.followList;
+							that.fansList = data.fansList;
+
+							// that.swiperDataList[0] = data.followList;
+							// that.swiperDataList[1] = data.fansList;
+						}
+					}
+				});
+			}
 		}
 	}
 </script>
@@ -342,7 +374,7 @@
 		border: 1upx solid #FFCF3C;
 	}
 
-	.attentionButton-text{
+	.attentionButton-text {
 		color: #FFCF3C;
 		font-size: small;
 		letter-spacing: 10upx;

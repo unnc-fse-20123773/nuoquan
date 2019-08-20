@@ -2,7 +2,8 @@
 <template>
 	<view>
 		<scroll-view class="messageArea">
-			<onemessage v-for="(i,index) in chatContent" :key=index :thisMessage='i'></onemessage>
+			<onemessage v-for="(i,index) in chatContent" :key=index :thisMessage='i' 
+			:userInfo="userInfo" :friendInfo="friendInfo"></onemessage>
 		</scroll-view>
 		<view class="bottomBar">
 			<textarea auto-height="true" v-model="textMsg" />
@@ -20,10 +21,7 @@
 <script>
 	import onemessage from './oneMessage';
 	import {mapState} from 'vuex';
-	
-	var userInfo;
-	var frindInfo;
-	
+
 	var socketTask;
 	var socketOpen = false;
 	
@@ -97,6 +95,9 @@
 				socketMsgQueue: [], // 未发送的消息队列
 				textMsg: '', // 输入框中的text
 				windowHeight: '',
+				
+				userInfo: '',
+				friendInfo: '',
 			}
 		},
 		
@@ -110,7 +111,7 @@
 			ChatMessageCard(newVal, oldVal) { //监听数据变化，即可做相关操作
 				console.log("newVal:");
 				console.log(newVal);
-				// 渲染到窗口
+				// 添加flag，渲染到窗口
 				newVal.flag = this.chat.FRIEND;
 				this.chatContent.push(newVal);
 				
@@ -120,14 +121,22 @@
 		},
 		
 		onLoad: function(opt) {
-			uni.setNavigationBarTitle({
-				title: "XXXX（聊天人的昵称）"
-			});
 			// 获取界面传参
-			var data = JSON.parse(opt.data);
-			userInfo = data.userInfo;
-			frindInfo = data.frindInfo;
+			this.friendInfo = JSON.parse(opt.friendInfo);
 			
+			uni.setNavigationBarTitle({
+				title: this.friendInfo.nickname
+			});
+			
+			// 获取我的信息
+			var userInfo = this.getGlobalUserInfo();
+			if (this.isNull(userInfo)) {
+				console.log("No userInfo!!");
+				return;
+			}
+			this.userInfo = userInfo;
+			
+			// 获取屏幕高度
 			var that = this;
 			uni.getSystemInfo({
 			  success: function(res) {
@@ -146,7 +155,7 @@
 				if(!this.textMsg){
 					return;
 				}
-				this.mySocket.sendObj(this.netty.CHAT, frindInfo.id, this.textMsg, null);
+				this.mySocket.sendObj(this.netty.CHAT, this.friendInfo.id, this.textMsg, null);
 				// 渲染到窗口
 				var message = {
 					messageId: '0006',
@@ -161,7 +170,7 @@
 			},
 			
 			iniChatHistory(){
-				var localChatHistory = this.chat.getUserChatHistory(userInfo.id, frindInfo.id);
+				var localChatHistory = this.chat.getUserChatHistory(this.userInfo.id, this.friendInfo.id);
 				this.chatContent = localChatHistory;
 			},
 			

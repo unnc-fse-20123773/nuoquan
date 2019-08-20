@@ -157,6 +157,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 var _default =
 {
   props: {
+    userInfo: '',
+    friendInfo: '',
     thisMessage: {} },
 
   data: function data() {
