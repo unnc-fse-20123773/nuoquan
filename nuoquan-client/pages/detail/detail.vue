@@ -77,11 +77,14 @@
 						},
 						success: function(res) {
 							console.log(res.data)
+							// uni.redirectTo({
+							// 	url: '/pages/detail/detail'
+							// })
 						}
 					})
 				}
 			},
-			getComments() {
+			getComments: function() {
 				var that = this;
 				uni.request({
 					url: this.SeverUrl + '/getArticleComments',

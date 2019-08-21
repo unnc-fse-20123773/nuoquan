@@ -14,7 +14,7 @@
 			<view class="tag" v-for="(i, index) in articleCard.tags" v-bind:key="index" >{{ i}}</view>
 		</view>
 		<view class="menubar">
-			<image src="../static/touxiang.jpg" class="touxiang"></image>
+			<image :src="articleCard.faceImg" class="touxiang"></image>
 			<view class="name">{{ articleCard.nickName }}</view>
 			<view class="time">{{ articleCard[7] }}</view>
 

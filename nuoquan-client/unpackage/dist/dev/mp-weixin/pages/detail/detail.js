@@ -339,6 +339,9 @@ var comment = function comment() {return __webpack_require__.e(/*! import() | co
 
           success: function success(res) {
             console.log(res.data);
+            // uni.redirectTo({
+            // 	url: '/pages/detail/detail'
+            // })
           } });
 
       }

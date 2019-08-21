@@ -19,7 +19,12 @@ public class ArticleVO {
     private Byte isAnonymous;
     private String articlePath;
     
+    
     private String nickname;
+    private String faceImg;
+    private String faceImgThumb;
+    
+    
     
     public String getArticlePath() {
 		return articlePath;
@@ -211,5 +216,21 @@ public class ArticleVO {
 
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+
+	public String getFaceImg() {
+		return faceImg;
+	}
+
+	public void setFaceImg(String faceImg) {
+		this.faceImg = faceImg;
+	}
+
+	public String getFaceImgThumb() {
+		return faceImgThumb;
+	}
+
+	public void setFaceImgThumb(String faceImgThumb) {
+		this.faceImgThumb = faceImgThumb;
 	}
 }
