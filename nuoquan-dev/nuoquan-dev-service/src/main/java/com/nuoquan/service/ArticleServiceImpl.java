@@ -174,6 +174,7 @@ public class ArticleServiceImpl implements ArticleService {
 		comment.setDislikeNum(0);
 		comment.setLikeNum(0);
 		comment.setCreateTime(new Date());
+		comment.setCommentNum(0);
 		userArticleCommentMapper.insert(comment);
 		
 	}

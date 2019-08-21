@@ -530,28 +530,29 @@ Vue.prototype.chat = {
 				// console.log(res)
 				if (res.data.status == 200) {
 					var unsignedMsgList = res.data.data;
-					console.log(unsignedMsgList);
-					
-					for (var i = 0; i < unsignedMsgList.length; i++) {
-						var msgObj = unsignedMsgList[i];
-						// 1.逐条存入聊天记录
-						this.saveUserChatHistory(msgObj.acceptUserId,
-												 msgObj.sendUserId,
-												 msgObj.msg,
-												 this.FRIEND,
-												 msgObj.createDate);
-						// 2.保存聊天快照到本地
-						this.saveUserChatSnapshot(msgObj.acceptUserId,
-												 msgObj.sendUserId,
-												 msgObj.msg,
-												 this.UNREAD,
-												 msgObj.createDate);
-						// 3.拼接批量签收id的字符串
-						msgIds += msgObj.id + ",";
+					// console.log(unsignedMsgList);
+					if(!app.isNull(unsignedMsgList)){
+						for (var i = 0; i < unsignedMsgList.length; i++) {
+							var msgObj = unsignedMsgList[i];
+							// 1.逐条存入聊天记录
+							this.saveUserChatHistory(msgObj.acceptUserId,
+													 msgObj.sendUserId,
+													 msgObj.msg,
+													 this.FRIEND,
+													 msgObj.createDate);
+							// 2.保存聊天快照到本地
+							this.saveUserChatSnapshot(msgObj.acceptUserId,
+													 msgObj.sendUserId,
+													 msgObj.msg,
+													 this.UNREAD,
+													 msgObj.createDate);
+							// 3.拼接批量签收id的字符串
+							msgIds += msgObj.id + ",";
+						}
+						
+						// 调用批量签收方法
+						app.mySocket.signMsgList(msgIds);
 					}
-					
-					// 调用批量签收方法
-					app.mySocket.signMsgList(msgIds);
 				}
 			}
 		});

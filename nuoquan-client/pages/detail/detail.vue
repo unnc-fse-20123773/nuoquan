@@ -68,7 +68,7 @@
 					})
 				} else {
 					uni.request({
-						url: this.SeverUrl + '/saveComment',
+						url: that.$serverUrl + '/saveComment',
 						method: 'POST',
 						data: {
 							fromUserId: that.userInfo.id,
@@ -77,14 +77,17 @@
 						},
 						success: function(res) {
 							console.log(res.data)
+							// uni.redirectTo({
+							// 	url: '/pages/detail/detail'
+							// })
 						}
 					})
 				}
 			},
-			getComments() {
+			getComments: function() {
 				var that = this;
 				uni.request({
-					url: this.SeverUrl + '/getArticleComments',
+					url: that.$serverUrl + '/getArticleComments',
 					method: "POST",
 					data: {
 						articleId: that.articleCard.id,

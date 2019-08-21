@@ -20,12 +20,14 @@
     <result column="article_path" jdbcType="VARCHAR" property="articlePath" />
     
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="face_img" property="faceImg" jdbcType="VARCHAR" />
+    <result column="face_img_thumb" property="faceImgThumb" jdbcType="VARCHAR" />
   </resultMap>
   
   
   <select id="queryAllArticles" resultMap="BaseResultMap">
   	
- 	select a.*, u.nickname as nickname from nuoquan.article a
+ 	select a.*, u.nickname as nickname, u.face_img, u.face_img_thumb from nuoquan.article a
    	left join nuoquan.user u on u.id = a.user_id
   	where
   		1 = 1

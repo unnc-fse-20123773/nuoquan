@@ -10,15 +10,16 @@
 			<!-- 当失去焦点时，将输入内容存入articleTitle -->
 			<input class="title" @blur="saveAsArticleTitle" placeholder="  标题" />
 			<view class="tagsArea">
-				<view class="tag">
-					后街
-				</view>
-				<view class="tag">
-					二手交易
-				</view>
-
+				<!-- 展示标签区域 -->
+				<view class="tag" v-if="showTagArea" v-for="i in tagList" :key = "i">{{i}}</view>
+				<!-- 添加标签区域 -->
 				<view class="addTag">
-					+ 添加标签
+					<view  v-if="showAddTagButton" @click="addTag">
+						+ 添加标签
+					</view>
+					<view v-if="showInputTagArea">
+						<input focus="true" placeholder="请输入标签..." @confirm="checkInput" @blur="checkInput" />
+					</view>
 				</view>
 			</view>
 			<textarea placeholder="内容" class="content" @blur="saveAsArticleContent"></textarea>
@@ -37,20 +38,46 @@ export default {
 			userName: '许德琰测试账号',
 			articleTitle: '',
 			articleContent: '',
+			articleTag: '',
 			imgPath: '',
+			showInputTagArea: 0,
+			showAddTagButton: 1,
+			showTagArea: 0,
+			tagList: [],
+			tagIndex: 0
 		}
 	},
 	onLoad() {
 
 	},
 	methods: {
+		// 将标题存放在articleTitle中
 		saveAsArticleTitle: function(event) {
 			this.articleTitle = event.target.value;
 			// console.log(this.title);
 		},
+		// 将内容存放在articleContent中
 		saveAsArticleContent: function(event) {
 			this.articleContent = event.target.value;
 			// console.log(this.content);
+		},
+		addTag: function(res) {
+			this.showInputTagArea = 1;
+			this.showAddTagButton = 0;
+		},
+		checkInput: function(res) {
+			var that = this;
+			var tag = res.target.value;
+			if (this.isNull(tag)) {
+				that.showAddTagButton = 1;
+				that.showInputTagArea = 0;
+			} else {
+				that.showTagArea = 1;
+				that.tagList[that.tagIndex] = tag;
+				that.tagIndex = that.tagIndex + 1;
+				that.showAddTagButton = 1;
+				that.showInputTagArea = 0;
+			}
 		},
 		chooseImg: function() {
 			var that = this;
@@ -60,9 +87,7 @@ export default {
 				sizeType: ['compressed'],
 				success: function(res) {
 					var tempFilePaths = res.tempFilePaths;
-					// console.log(tempFilePaths);
 					that.imgPath = tempFilePaths;
-					// console.log(that.imgPath);
 				}
 			})
 		},
@@ -74,7 +99,6 @@ export default {
 			console.log(me.imgPath);
 
 			var serverUrl = me.SeverUrl;
-			// console.log(serverUrl);
 			uni.uploadFile({
 				url: serverUrl + '/upload',
 				filePath: me.imgPath[0],
@@ -87,9 +111,6 @@ export default {
 				success: res => {
 					uni.redirectTo({
 						url: '../index/index',
-						// success: res => {},
-						// fail: () => {},
-						// complete: () => {}
 					});
 				}
 			});

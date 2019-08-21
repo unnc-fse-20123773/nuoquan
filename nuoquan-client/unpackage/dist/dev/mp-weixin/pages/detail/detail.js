@@ -139,11 +139,14 @@ var comment = function comment() {return __webpack_require__.e(/*! import() | co
       // 	['13', 'background:blue'],
       // 	['163', 'background:yellow']
       // ],
-      commentList: '' };}, components: { articlebrief: _articlebrief.default, commentbox: comment }, methods: { saveComment: function saveComment(e) {var that = this;var content = e.detail.value;var userInfoTemp = this.getGlobalUserInfo();if (this.isNull(userInfoTemp)) {uni.navigateTo({ url: "../wechatLogin/wechatLogin" });} else {uni.request({ url: this.SeverUrl + '/saveComment', method: 'POST', data: { fromUserId: that.userInfo.id, articleId: that.articleCard.id,
+      commentList: '' };}, components: { articlebrief: _articlebrief.default, commentbox: comment }, methods: { saveComment: function saveComment(e) {var that = this;var content = e.detail.value;var userInfoTemp = this.getGlobalUserInfo();if (this.isNull(userInfoTemp)) {uni.navigateTo({ url: "../wechatLogin/wechatLogin" });} else {uni.request({ url: that.$serverUrl + '/saveComment', method: 'POST', data: { fromUserId: that.userInfo.id, articleId: that.articleCard.id,
             comment: content },
 
           success: function success(res) {
             console.log(res.data);
+            // uni.redirectTo({
+            // 	url: '/pages/detail/detail'
+            // })
           } });
 
       }
@@ -151,7 +154,7 @@ var comment = function comment() {return __webpack_require__.e(/*! import() | co
     getComments: function getComments() {
       var that = this;
       uni.request({
-        url: this.SeverUrl + '/getArticleComments',
+        url: that.$serverUrl + '/getArticleComments',
         method: "POST",
         data: {
           articleId: that.articleCard.id

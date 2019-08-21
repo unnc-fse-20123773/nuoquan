@@ -137,6 +137,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 var _default =
 {
   data: function data() {
@@ -144,20 +145,46 @@ var _default =
       userName: '许德琰测试账号',
       articleTitle: '',
       articleContent: '',
-      imgPath: '' };
+      articleTag: '',
+      imgPath: '',
+      showInputTagArea: 0,
+      showAddTagButton: 1,
+      showTagArea: 0,
+      tagList: [],
+      tagIndex: 0 };
 
   },
   onLoad: function onLoad() {
 
   },
   methods: {
+    // 将标题存放在articleTitle中
     saveAsArticleTitle: function saveAsArticleTitle(event) {
       this.articleTitle = event.target.value;
       // console.log(this.title);
     },
+    // 将内容存放在articleContent中
     saveAsArticleContent: function saveAsArticleContent(event) {
       this.articleContent = event.target.value;
       // console.log(this.content);
+    },
+    addTag: function addTag(res) {
+      this.showInputTagArea = 1;
+      this.showAddTagButton = 0;
+    },
+    checkInput: function checkInput(res) {
+      var that = this;
+      var tag = res.target.value;
+      if (this.isNull(tag)) {
+        that.showAddTagButton = 1;
+        that.showInputTagArea = 0;
+      } else {
+        that.showTagArea = 1;
+        that.tagList[that.tagIndex] = tag;
+        that.tagIndex = that.tagIndex + 1;
+        that.showAddTagButton = 1;
+        that.showInputTagArea = 0;
+      }
     },
     chooseImg: function chooseImg() {
       var that = this;
@@ -167,9 +194,7 @@ var _default =
         sizeType: ['compressed'],
         success: function success(res) {
           var tempFilePaths = res.tempFilePaths;
-          // console.log(tempFilePaths);
           that.imgPath = tempFilePaths;
-          // console.log(that.imgPath);
         } });
 
     },
@@ -181,7 +206,6 @@ var _default =
       console.log(me.imgPath);
 
       var serverUrl = me.SeverUrl;
-      // console.log(serverUrl);
       uni.uploadFile({
         url: serverUrl + '/upload',
         filePath: me.imgPath[0],
@@ -193,11 +217,8 @@ var _default =
 
         success: function success(res) {
           uni.redirectTo({
-            url: '../index/index'
-            // success: res => {},
-            // fail: () => {},
-            // complete: () => {}
-          });
+            url: '../index/index' });
+
         } });
 
     } } };exports.default = _default;
