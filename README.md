@@ -1,8 +1,13 @@
 # Update Log:
 **v19.8.22 更新**
-- 新增 获取未签收的聊天消息
-- 新增 聊天消息对象创建日期, 之前忘加了
-- 小改 数据库，详情见 sqlRecord.sql (两期)
+1. 整合 deyan 分支代码
+2. 新增 submit 页面添加标签
+3. 新增 获取未签收的聊天消息, PS: 聊天剩下右滑删除，和心跳
+4. 新增 聊天消息对象创建日期, 之前忘加了
+5. 小改 数据库，详情见 sqlRecord.sql (两期)
+6. TODO [yaoyao] 修改主页，submit，chatpage页面效果
+7. TODO [guetta] 修改messageList页面效果，并协助 yaoyao 修改页面
+
 
 **v19.8.16 更新**
 1. 整合 yaoyao 分支代码
