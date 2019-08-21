@@ -46,49 +46,49 @@
 					msgId: '0001',
 					flag: '1',
 					msg: '第一条消息',
-					messageTime: '11:29',
+					createDate: '11:29',
 					messageStatus: '0'
 				}, {
 					msgId: '0002',
 					flag: '1',
 					msg: 'abab',
-					messageTime: '11:29',
+					createDate: '11:29',
 					messageStatus: '0'
 				}, {
 					msgId: '0003',
 					flag: '1',
 					msg: 'abab',
-					messageTime: '11:29',
+					createDate: '11:29',
 					messageStatus: '0'
 				}, {
 					msgId: '0004',
 					flag: '2',
 					msg: 'abab',
-					messageTime: '11:29',
+					createDate: '11:29',
 					messageStatus: '1'
 				}, {
 					msgId: '0006',
 					flag: '1',
 					msg: 'abab',
-					messageTime: '11:29',
+					createDate: '11:29',
 					messageStatus: '0'
 				}, {
 					msgId: '0006',
 					flag: '2',
 					msg: 'abab',
-					messageTime: '11:29',
+					createDate: '11:29',
 					messageStatus: '1'
 				}, {
 					msgId: '0001',
 					flag: '1',
 					msg: 'abab',
-					messageTime: '11:29',
+					createDate: '11:29',
 					messageStatus: '0'
 				}, {
 					msgId: '0002',
 					flag: '1',
 					msg: 'abab',
-					messageTime: '11:29',
+					createDate: '11:29',
 					messageStatus: '0'
 				}],
 
@@ -111,10 +111,8 @@
 			ChatMessageCard(newVal, oldVal) { //监听数据变化，即可做相关操作
 				console.log("newVal:");
 				console.log(newVal);
-				// 添加flag，渲染到窗口
-				newVal.flag = this.chat.FRIEND;
+				// 渲染到窗口
 				this.chatContent.push(newVal);
-				
 				this.scrollToBottom();
 				
 			}
@@ -145,7 +143,7 @@
 			});
 			
 			// 获取与该用户的聊天历史记录
-			this.iniChatHistory();
+			this.getChatHistory();
 			this.scrollToBottom();
 		},
 		
@@ -156,22 +154,27 @@
 					return;
 				}
 				this.mySocket.sendObj(this.netty.CHAT, this.friendInfo.id, this.textMsg, null);
-				// 渲染到窗口
-				var message = {
-					messageId: '0006',
-					flag: this.chat.ME,
-					msg: this.textMsg,
-					messageTime: '11:29',
-					messageStatus: '1',
-				}
-				this.chatContent.push(message);
 				
+				// 渲染到窗口
+				// var message = {
+				// 	msgId: '',
+				// 	flag: this.chat.ME,
+				// 	msg: this.textMsg,
+				// 	createDate: '11:29',
+				// 	messageStatus: '1',
+				// }
+				// this.chatContent.push(message);
+				
+				// 直接重新加载聊天历史, 代替渲染到窗口
+				this.getChatHistory();
+				this.scrollToBottom();
 				this.textMsg = '';//清空输入框
 			},
 			
-			iniChatHistory(){
+			getChatHistory(){
 				var localChatHistory = this.chat.getUserChatHistory(this.userInfo.id, this.friendInfo.id);
 				this.chatContent = localChatHistory;
+				// console.log(this.chatContent);
 			},
 			
 			scrollToBottom(){

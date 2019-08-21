@@ -1,7 +1,5 @@
 <template>
 	<view class="articlecard" id="'+articleCard.id+'" @click="jumpToDetail()">
-		
-		
 		<view class="title">{{ articleCard.articleTitle }}</view>
 		<view class="briefarticleCard">{{ articleCard.articleContent }}</view>
 		<view class="picturearea">
@@ -23,8 +21,6 @@
 				<image class="like" src="../static/icon/like.svg">{{ articleCard.likeNum }}</image>
 			</view>
 		</view>
-		<!-- 		</navigator>
- -->
 	</view>
 </template>
 
@@ -54,17 +50,6 @@ export default {
 		
 	},
 	methods: {
-		// loadcss(){
-		// 	var a = Math.random()
-		// console.log('brif1');
-		// 	if(a==0.5){
-		// 		console.log('yes');
-		// 		require('./articleCardBrief.css');}else{
-		// 		console.log('not');
-		// 	}
-		// 	console.log('brif2');
-		// 	
-		// },
 		jumpToDetail() {
 			var navData = JSON.stringify(this.articleCard); // 这里转换成 字符串
 			uni.navigateTo({

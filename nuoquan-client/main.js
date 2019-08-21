@@ -39,7 +39,7 @@ Vue.prototype.removeGlobalUserInfo = function() {
 }
 
 /**
- * 把对象添加到列表里，并储存在缓存里
+ * 把对象添加到列表尾部，并储存在缓存里
  * @param {Object} obj
  * @param {Object} list
  */
@@ -183,6 +183,9 @@ Vue.prototype.mySocket = {
 				that.sendObj(app.netty.CHAT, that.socketMsgQueue[i], null);
 			}
 			that.socketMsgQueue = [];
+
+			// 签收未签收消息
+			app.chat.fetchUnsignedMsg();
 		});
 
 		uni.onSocketError(function(res) {
@@ -196,32 +199,44 @@ Vue.prototype.mySocket = {
 			console.log("收到服务器内容：");
 			console.log(dataContent);
 
-			// 发送签收消息
-			that.sendObj(app.netty.SIGNED, null, null, chatMessage.msgId);
-
-
+			// 如果消息类型为 CHAT
 			if (dataContent.action == app.netty.CHAT) {
-				// 修改 store，发送信号，把消息卡片渲染到对话窗口
-				app.$store.commit('setChatMessageCard', chatMessage);
+				// 发送签收消息
+				that.signMsgList(chatMessage.msgId);
 
 				// 保存聊天历史记录到本地缓存
 				var myId = chatMessage.receiverId;
 				var friendId = chatMessage.senderId;
-				var msg = chatMessage.msg
+				var msg = chatMessage.msg;
+				var createDate = app.formatTime(chatMessage.createDate); // 对时间戳进行格式化
 
-				app.chat.saveUserChatHistory(myId, friendId, msg, app.chat.FRIEND);
-
+				app.chat.saveUserChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);
+				
 				// 判断当前页面，保存聊天快照
 				var page = app.getCurrentPage();
-				if (page.route == 'pages/chatpage/chatpage' && page.data.friendInfo.id == friendId) {
-					// 与该用户在聊天，标记为已读
-					console.log("与该用户在聊天，标记为已读");
-					app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.READ);
+				if (page.route == 'pages/chatpage/chatpage') {
+					var pageFriendId = page.data.friendInfo.id; // 打开页面才有对象，越层判断会报对象为空的错
+					/* 
+					【BUG】ISO 虚拟机获取 friendInfo.id 报错信息：
+					 undefined is not an object (evaluating 'page.data.friendInfo.id')
+					 不知道真机会不会有这种情况
+					*/
+					// var pagestr = JSON.stringify(page.data);
+					// console.log(pagestr);
+					if (pageFriendId == friendId){
+						// 与该用户在聊天，标记为已读
+						console.log("与该用户在聊天，标记为已读");
+						app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.READ, createDate);
+					}
 				} else {
 					// 聊天页面未打开或不是与该用户聊天，标记为未读
 					console.log("聊天页面未打开或不是与该用户聊天，标记为未读");
-					app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.UNREAD);
+					app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.UNREAD, createDate);
 				}
+				
+				// 修改 store，发送信号，把消息卡片渲染到对话窗口 和 消息列表
+				var newMessage = new app.chat.ChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);
+				app.$store.commit('setChatMessageCard', newMessage);
 			}
 		});
 
@@ -248,8 +263,12 @@ Vue.prototype.mySocket = {
 		if (app.isNull(myUserId)) {
 			console.log("请先获取用户数据");
 		}
-
-		var chatMessage = new app.netty.ChatMessage(myUserId, toUserId, msg, null);
+		
+		// 获取当前时间戳，传输时间戳
+		var timeStamp = new Date().getTime();
+		
+		// 构建载体
+		var chatMessage = new app.netty.ChatMessage(myUserId, toUserId, msg, null, timeStamp);
 		var dataContent = new app.netty.DataContent(type, chatMessage, extand)
 
 		var data = JSON.stringify(dataContent);
@@ -259,11 +278,13 @@ Vue.prototype.mySocket = {
 			uni.sendSocketMessage({
 				data: data,
 			});
-
-			//保存聊天历史到 本地缓存
+			
+			//保存聊天历史到本地缓存，保存聊天快照到本地
 			if (type == app.netty.CHAT) {
-				app.chat.saveUserChatHistory(myUserId, toUserId, msg, app.chat.ME);
-				app.chat.saveUserChatSnapshot(myUserId, toUserId, msg, app.chat.READ)
+				var createDate = app.formatTime(timeStamp);
+				// console.log("发消息的时间戳：" + createDate);
+				app.chat.saveUserChatHistory(myUserId, toUserId, msg, app.chat.ME, createDate);
+				app.chat.saveUserChatSnapshot(myUserId, toUserId, msg, app.chat.READ, createDate)
 			}
 		} else {
 			console.log("isSocketOpen=" + isSocketOpen);
@@ -272,6 +293,14 @@ Vue.prototype.mySocket = {
 
 		}
 	},
+	
+	/**
+	 * 批量签收消息
+	 * @param {Object} msgIds
+	 */
+	signMsgList(msgIds){
+		this.sendObj(app.netty.SIGNED, null, null, msgIds);
+	}
 }
 
 Vue.prototype.chat = {
@@ -286,12 +315,14 @@ Vue.prototype.chat = {
 	 * @param {Object} friendId
 	 * @param {Object} msg
 	 * @param {Object} flag 是我的消息还是朋友的消息
+	 * @param {Object} createDate
 	 */
-	ChatHistory: function(myId, friendId, msg, flag) {
+	ChatHistory: function(myId, friendId, msg, flag, createDate) {
 		this.myId = myId;
 		this.friendId = friendId;
 		this.msg = msg;
 		this.flag = flag;
+		this.createDate = createDate;
 	},
 
 	/**
@@ -300,13 +331,14 @@ Vue.prototype.chat = {
 	 * @param {Object} friendId
 	 * @param {Object} msg
 	 * @param {Object} isRead 用于判断消息是已读还是未读
+	 * @param {Object} createDate
 	 */
-	ChatSnapshot: function(myId, friendId, msg, isRead) {
+	ChatSnapshot: function(myId, friendId, msg, isRead, createDate) {
 		this.myId = myId;
 		this.friendId = friendId;
 		this.msg = msg;
 		this.isRead = isRead;
-		// this.createdTime = createdTime;
+		this.createDate = createDate;
 	},
 	/**
 	 * 保存用户的聊天记录
@@ -314,8 +346,9 @@ Vue.prototype.chat = {
 	 * @param {Object} friendId
 	 * @param {Object} msg
 	 * @param {Object} flag 判断本条消息是谁发送的, 1：我 2：朋友
+	 * @param {Object} createDate
 	 */
-	saveUserChatHistory: function(myId, friendId, msg, flag) {
+	saveUserChatHistory: function(myId, friendId, msg, flag, createDate) {
 
 		var chatKey = "chat-" + myId + "-" + friendId;
 		// 从本地缓存获取聊天记录是否存在
@@ -330,7 +363,7 @@ Vue.prototype.chat = {
 		}
 
 		// 构建聊天记录对象
-		var singleMsg = new this.ChatHistory(myId, friendId, msg, flag);
+		var singleMsg = new this.ChatHistory(myId, friendId, msg, flag, createDate);
 
 		// 添加到list尾部
 		chatHistoryList.push(singleMsg);
@@ -353,6 +386,16 @@ Vue.prototype.chat = {
 
 		return chatHistoryList;
 	},
+	
+	/**
+	 * 删除我和朋友的聊天记录
+	 * @param {Object} myId
+	 * @param {Object} friendId
+	 */
+	deletUserChatHistory: function(myId, friendId){
+		var chatKey = "chat-" + myId + "-" + friendId;
+		uni.removeStorageSync(chatKey);
+	},
 
 	/**
 	 * 聊天记录快照，仅保存每次和朋友聊天的最后一条消息
@@ -360,8 +403,9 @@ Vue.prototype.chat = {
 	 * @param {Object} friendId
 	 * @param {Object} msg
 	 * @param {Object} isRead
+	 * @param {Object} createDate
 	 */
-	saveUserChatSnapshot: function(myId, friendId, msg, isRead) {
+	saveUserChatSnapshot: function(myId, friendId, msg, isRead, createDate) {
 
 		var chatKey = "chat-snapshot" + myId;
 
@@ -382,10 +426,8 @@ Vue.prototype.chat = {
 				}
 			}
 		}
-
 		// 构建聊天快照对象
-		var singleMsg = new this.ChatSnapshot(myId, friendId, msg, isRead);
-
+		var singleMsg = new this.ChatSnapshot(myId, friendId, msg, isRead, createDate);
 		// 添加到 list 第一项
 		chatSnapshotList.unshift(singleMsg);
 
@@ -411,6 +453,109 @@ Vue.prototype.chat = {
 
 		return chatSnapshotList;
 	},
+	
+	/**
+	 * 删除与该用户的聊天快照记录
+	 * @param {Object} myId
+	 * @param {Object} friendId
+	 */
+	deletUserChatSnapShot: function(myId, friendId){
+		var chatKey = "chat-snapshot" + myId;
+		// 从本地缓存获取聊天快照的 list
+		var chatSnapshotListStr = uni.getStorageSync(chatKey);
+		var chatSnapshotList;
+		if (app.isNull(chatSnapshotListStr)) {
+			// 为空，不作处理
+			return;
+		} else {
+			// 不为空
+			chatSnapshotList = JSON.parse(chatSnapshotListStr);
+			// 循环快照list，删除含 friendId 的项
+			for (var i = 0; i < chatSnapshotList.length; i++) {
+				if (chatSnapshotList[i].friendId == friendId) {
+					chatSnapshotList.splice(i, 1); // 从i项往后删，只删一个
+					break;
+				}
+			}
+		}
+		
+		uni.setStorageSync(chatKey, JSON.stringify(chatSnapshotList));
+	},
+	
+	/**
+	 * 把快照标记为已读，并且不改变在列表中的位置
+	 * @param {Object} myId
+	 * @param {Object} friendId
+	 */
+	readUserChatSnapShot: function(myId, friendId) {
+		var chatKey = "chat-snapshot" + myId;
+
+		// 从本地缓存获取聊天快照的 list
+		var chatSnapshotListStr = uni.getStorageSync(chatKey);
+		var chatSnapshotList;
+		if (app.isNull(chatSnapshotListStr)) {
+			// 为空，赋一个空的list；
+			return;
+		} else {
+			// 不为空
+			chatSnapshotList = JSON.parse(chatSnapshotListStr);
+			// 删除快照对象并放入新的在原有位置
+			for (var i = 0; i < chatSnapshotList.length; i++) {
+				var item = chatSnapshotList[i];
+				if (item.friendId == friendId) {
+					item.isRead = this.READ;
+					chatSnapshotList.splice(i, 1, item); // 替换
+					break;
+				}
+			}
+
+			uni.setStorageSync(chatKey, JSON.stringify(chatSnapshotList));
+		}
+	},
+
+	fetchUnsignedMsg: function() {
+		var user = app.getGlobalUserInfo();
+		var msgIds = "," // 格式: ,1001,1002,1003,
+		var that = this;
+		uni.request({
+			url: app.$serverUrl + '/user/getUnsignedMsg',
+			method: "POST",
+			data: {
+				userId: user.id
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				// console.log(res)
+				if (res.data.status == 200) {
+					var unsignedMsgList = res.data.data;
+					console.log(unsignedMsgList);
+					
+					for (var i = 0; i < unsignedMsgList.length; i++) {
+						var msgObj = unsignedMsgList[i];
+						// 1.逐条存入聊天记录
+						this.saveUserChatHistory(msgObj.acceptUserId,
+												 msgObj.sendUserId,
+												 msgObj.msg,
+												 this.FRIEND,
+												 msgObj.createDate);
+						// 2.保存聊天快照到本地
+						this.saveUserChatSnapshot(msgObj.acceptUserId,
+												 msgObj.sendUserId,
+												 msgObj.msg,
+												 this.UNREAD,
+												 msgObj.createDate);
+						// 3.拼接批量签收id的字符串
+						msgIds += msgObj.id + ",";
+					}
+					
+					// 调用批量签收方法
+					app.mySocket.signMsgList(msgIds);
+				}
+			}
+		});
+	}
 
 
 }
@@ -430,12 +575,14 @@ Vue.prototype.netty = {
 	 * @param {Object} receiverId
 	 * @param {Object} msg
 	 * @param {Object} msgId
+	 * @param {Object} createDate
 	 */
-	ChatMessage: function(senderId, receiverId, msg, msgId) {
+	ChatMessage: function(senderId, receiverId, msg, msgId, createDate) {
 		this.senderId = senderId;
 		this.receiverId = receiverId;
 		this.msg = msg;
-		this.msgId = msgId; // 前端不需要用到
+		this.msgId = msgId; // 前端发送设置null就好
+		this.createDate = createDate;
 	},
 
 	/**
@@ -450,4 +597,30 @@ Vue.prototype.netty = {
 		this.extand = extand;
 	},
 
+}
+
+Vue.prototype.formatTime = function(timeStamp) {
+	// 将/[0-9]/位的数字编成/0[0-9]/  
+
+	if (timeStamp.length < 13) {
+		timeStamp += "000";
+	}
+	var d = new Date(parseInt(timeStamp));
+
+	var year = d.getFullYear();
+	var month = this.getTwo(d.getMonth() + 1);
+	var date = this.getTwo(d.getDate());
+	var hour = this.getTwo(d.getHours());
+	var minute = this.getTwo(d.getMinutes());
+	var second = this.getTwo(d.getSeconds());
+
+	return year + "/" + month + "/" + date + " " + hour + ":" + minute + ":" + second;
+}
+
+Vue.prototype.getTwo = function(s) {
+	if (parseInt(s) < 10) {
+		return "0" + s;
+	} else {
+		return "" + s;
+	}
 }

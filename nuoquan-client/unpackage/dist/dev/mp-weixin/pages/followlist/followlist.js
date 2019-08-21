@@ -144,6 +144,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -194,17 +197,20 @@ var _default =
   },
 
   onLoad: function onLoad(opt) {
+    var data = JSON.parse(opt.data);
+    var thisUserInfo = data.thisUserInfo;
+    var currentTab = currentTab;
+
     uni.setNavigationBarTitle({
-      title: 'XXX的主页' });
+      title: thisUserInfo.nickname + '的主页' });
 
 
-    this.swiperDataList[0] = [1, 1, 1];
     // 获取userId
-    var userId = opt.userId;
+    var userId = thisUserInfo.id;
     this.queryFansFollow(userId);
 
     // 设置列表 index
-    this.currentTab = opt.currentTab;
+    this.currentTab = currentTab;
 
     var screenWidth = uni.getSystemInfoSync().screenWidth;
     this.screenWidth = screenWidth;
@@ -298,6 +304,7 @@ var _default =
           console.log(res);
           if (res.data.status == 200) {
             var data = res.data.data;
+            console.log(data);
             that.followList = data.followList;
             that.fansList = data.fansList;
 
@@ -305,6 +312,25 @@ var _default =
             // that.swiperDataList[1] = data.fansList;
           }
         } });
+
+    },
+
+    /**
+        * 直接传 item 有 bug, 所以用这个复杂一点的方式曲线救国
+        * @param {Object} index1 0=followList; 1=fansList
+        * @param {Object} index2 列表里的索引
+        */
+    goToPersonPublic: function goToPersonPublic(index1, index2) {
+      var list;
+      if (index1 == 0) {
+        list = this.followList;
+      } else if (index1 == 1) {
+        list = this.fansList;
+      }
+
+      var userId = list[index2].id;
+      uni.redirectTo({
+        url: '../personpublic/personpublic?userId=' + userId });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

@@ -1,42 +1,26 @@
-package com.nuoquan.pojo;
+package com.nuoquan.pojo.vo;
 
 import java.util.Date;
-import javax.persistence.*;
 
-@Table(name = "user_article_comment")
-public class UserArticleComment {
-    @Id
+import javax.persistence.Column;
+
+public class UserArticleCommentVO {
+
     private String id;
-
-    @Column(name = "from_user_id")
     private String fromUserId;
-
-    @Column(name = "article_id")
     private String articleId;
-
     private String comment;
-
-    @Column(name = "create_time")
     private Date createTime;
-
-    @Column(name = "like_num")
     private Integer likeNum;
-
-    @Column(name = "dislike_num")
     private Integer dislikeNum;
-    
-    @Column(name = "comment_num")
     private Integer commentNum;
 
-    public Integer getCommentNum() {
-		return commentNum;
-	}
-
-	public void setCommentNum(Integer commentNum) {
-		this.commentNum = commentNum;
-	}
-
-	/**
+    private String faceImage;
+    private String nickname;
+    private String timeAgo;
+    
+    
+    /**
      * @return id
      */
     public String getId() {
@@ -133,4 +117,36 @@ public class UserArticleComment {
     public void setDislikeNum(Integer dislikeNum) {
         this.dislikeNum = dislikeNum;
     }
+
+	public String getFaceImage() {
+		return faceImage;
+	}
+
+	public void setFaceImage(String faceImage) {
+		this.faceImage = faceImage;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public String getTimeAgo() {
+		return timeAgo;
+	}
+
+	public void setTimeAgo(String timeAgo) {
+		this.timeAgo = timeAgo;
+	}
+
+	public Integer getCommentNum() {
+		return commentNum;
+	}
+
+	public void setCommentNum(Integer commentNum) {
+		this.commentNum = commentNum;
+	}
 }

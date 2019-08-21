@@ -1199,7 +1199,7 @@ Z([3,'2dac0d97'])
 Z([3,'_view data-v-d203d3ca'])
 Z([[2,'=='],[[6],[[7],[3,'thisMessage']],[3,'flag']],[[7],[3,'ME']]])
 Z([3,'_view data-v-d203d3ca bottomBar'])
-Z([[2,'!'],[[6],[[7],[3,'thisMessage']],[3,'messageStatus']]])
+Z([[2,'!'],[[6],[[7],[3,'thisMessage']],[3,'isRead']]])
 Z([[6],[[7],[3,'thisMessage']],[3,'messageStatus']])
 Z([[2,'=='],[[6],[[7],[3,'thisMessage']],[3,'flag']],[[7],[3,'FRIEND']]])
 })(__WXML_GLOBAL__.ops_cached.$gwx_14);return __WXML_GLOBAL__.ops_cached.$gwx_14
@@ -1210,9 +1210,9 @@ __WXML_GLOBAL__.ops_cached.$gwx_15=[];
 (function(z){var a=11;function Z(ops){z.push(ops)}
 Z([3,'42698ffd'])
 Z([3,'index0'])
-Z([3,'comment'])
-Z([[7],[3,'comments']])
-Z([3,'comment[0]'])
+Z([3,'i'])
+Z([[7],[3,'commentList']])
+Z([3,'i.id'])
 Z([[9],[[9],[[10],[[6],[[7],[3,'$root']],[1,'0']]],[[10],[[6],[[7],[3,'$root']],[[2,'+'],[[2,'+'],[[7],[3,'$kk']],[1,'42698ffd-0-']],[[7],[3,'index0']]]]]],[[8],'$root',[[7],[3,'$root']]]])
 Z([3,'1ef77e0d'])
 })(__WXML_GLOBAL__.ops_cached.$gwx_15);return __WXML_GLOBAL__.ops_cached.$gwx_15
@@ -1396,36 +1396,19 @@ __WXML_GLOBAL__.ops_set.$gwx=z;
 __WXML_GLOBAL__.ops_init.$gwx=true;
 var nv_require=function(){var nnm={};var nom={};return function(n){return function(){if(!nnm[n]) return undefined;try{if(!nom[n])nom[n]=nnm[n]();return nom[n];}catch(e){e.message=e.message.replace(/nv_/g,'');var tmp = e.stack.substring(0,e.stack.lastIndexOf(n));e.stack = tmp.substring(0,tmp.lastIndexOf('\n'));e.stack = e.stack.replace(/\snv_/g,' ');e.stack = $gstack(e.stack);e.stack += '\n    at ' + n.substring(2);console.error(e);}
 }}}()
-var x=['./common/slots.wxml','/components/mainpagetop.vue.wxml','/components/articlebrief.vue.wxml','/pages/chatpage/oneMessage.vue.wxml','/pages/black-index/black-articlebrief.vue.wxml','/pages/black-index/black-popup.vue.wxml','/components/comment.vue.wxml','/components/mainpageleft.vue.wxml','/pages/black-index/black-comment.vue.wxml','./components/articlebrief.vue.wxml','./components/articlebrief.wxml','./articlebrief.vue.wxml','./components/comment.vue.wxml','./components/mainpageleft.vue.wxml','./components/mainpagetop.vue.wxml','./pages/black-index/black-articlebrief.vue.wxml','./pages/black-index/black-comment.vue.wxml','./pages/black-index/black-index.vue.wxml','./pages/black-index/black-index.wxml','./black-index.vue.wxml','./pages/black-index/black-popup.vue.wxml','./pages/chatpage/chatpage.vue.wxml','./pages/chatpage/chatpage.wxml','./chatpage.vue.wxml','./pages/chatpage/oneMessage.vue.wxml','./pages/detail/detail.vue.wxml','./pages/detail/detail.wxml','./detail.vue.wxml','./pages/fanslist/fanslist.vue.wxml','./pages/fanslist/fanslist.wxml','./fanslist.vue.wxml','./pages/followlist/followlist.vue.wxml','./pages/followlist/followlist.wxml','./followlist.vue.wxml','./pages/index/index.vue.wxml','./pages/index/index.wxml','./index.vue.wxml','./pages/messagelist/messagelist.vue.wxml','./pages/messagelist/messagelist.wxml','./messagelist.vue.wxml','./pages/personpublic/personpublic.vue.wxml','./pages/personpublic/personpublic.wxml','./personpublic.vue.wxml','./pages/profile/profile.vue.wxml','./pages/profile/profile.wxml','./profile.vue.wxml','./pages/search/search.vue.wxml','./pages/search/search.wxml','./search.vue.wxml','./pages/signin/signin.vue.wxml','./pages/signin/signin.wxml','./signin.vue.wxml','./pages/submit/submit.vue.wxml','./pages/submit/submit.wxml','./submit.vue.wxml','./pages/wechatLogin/wechatLogin.vue.wxml','./pages/wechatLogin/wechatLogin.wxml','./wechatLogin.vue.wxml'];d_[x[0]]={}
+var x=['./common/slots.wxml','./components/articlebrief.vue.wxml','./components/articlebrief.wxml','./articlebrief.vue.wxml','./components/comment.vue.wxml','./components/mainpageleft.vue.wxml','./components/mainpagetop.vue.wxml','/components/mainpageleft.vue.wxml','./pages/black-index/black-articlebrief.vue.wxml','./pages/black-index/black-comment.vue.wxml','./pages/black-index/black-index.vue.wxml','/pages/black-index/black-articlebrief.vue.wxml','/pages/black-index/black-popup.vue.wxml','./pages/black-index/black-index.wxml','./black-index.vue.wxml','./pages/black-index/black-popup.vue.wxml','/pages/black-index/black-comment.vue.wxml','./pages/chatpage/chatpage.vue.wxml','/pages/chatpage/oneMessage.vue.wxml','./pages/chatpage/chatpage.wxml','./chatpage.vue.wxml','./pages/chatpage/oneMessage.vue.wxml','./pages/detail/detail.vue.wxml','/components/comment.vue.wxml','./pages/detail/detail.wxml','./detail.vue.wxml','./pages/fanslist/fanslist.vue.wxml','./pages/fanslist/fanslist.wxml','./fanslist.vue.wxml','./pages/followlist/followlist.vue.wxml','./pages/followlist/followlist.wxml','./followlist.vue.wxml','./pages/index/index.vue.wxml','/components/mainpagetop.vue.wxml','/components/articlebrief.vue.wxml','./pages/index/index.wxml','./index.vue.wxml','./pages/messagelist/messagelist.vue.wxml','./pages/messagelist/messagelist.wxml','./messagelist.vue.wxml','./pages/personpublic/personpublic.vue.wxml','./pages/personpublic/personpublic.wxml','./personpublic.vue.wxml','./pages/profile/profile.vue.wxml','./pages/profile/profile.wxml','./profile.vue.wxml','./pages/search/search.vue.wxml','./pages/search/search.wxml','./search.vue.wxml','./pages/signin/signin.vue.wxml','./pages/signin/signin.wxml','./signin.vue.wxml','./pages/submit/submit.vue.wxml','./pages/submit/submit.wxml','./submit.vue.wxml','./pages/wechatLogin/wechatLogin.vue.wxml','./pages/wechatLogin/wechatLogin.wxml','./wechatLogin.vue.wxml'];d_[x[0]]={}
 var m0=function(e,s,r,gg){
 var z=gz$gwx_1()
-var oB=e_[x[0]].i
-_ai(oB,x[1],e_,x[0],1,1)
-_ai(oB,x[2],e_,x[0],2,2)
-_ai(oB,x[3],e_,x[0],3,2)
-_ai(oB,x[4],e_,x[0],4,2)
-_ai(oB,x[5],e_,x[0],5,2)
-_ai(oB,x[6],e_,x[0],6,2)
-_ai(oB,x[7],e_,x[0],7,2)
-_ai(oB,x[8],e_,x[0],8,2)
-oB.pop()
-oB.pop()
-oB.pop()
-oB.pop()
-oB.pop()
-oB.pop()
-oB.pop()
-oB.pop()
 return r
 }
-e_[x[0]]={f:m0,j:[],i:[],ti:[x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8]],ic:[]}
-d_[x[9]]={}
-d_[x[9]]["7ae45256"]=function(e,s,r,gg){
+e_[x[0]]={f:m0,j:[],i:[],ti:[],ic:[]}
+d_[x[1]]={}
+d_[x[1]]["7ae45256"]=function(e,s,r,gg){
 var z=gz$gwx_2()
-var b=x[9]+':7ae45256'
+var b=x[1]+':7ae45256'
 r.wxVkey=b
 gg.f=$gdc(f_["./components/articlebrief.vue.wxml"],"",1)
-if(p_[b]){_wl(b,x[9]);return}
+if(p_[b]){_wl(b,x[1]);return}
 p_[b]=true
 try{
 var oB=_mz(z,'view',['bindtap',1,'class',1,'data-comkey',2,'data-eventid',3,'id',4],[],e,s,gg)
@@ -1459,35 +1442,35 @@ var m1=function(e,s,r,gg){
 var z=gz$gwx_2()
 return r
 }
-e_[x[9]]={f:m1,j:[],i:[],ti:[],ic:[]}
-d_[x[10]]={}
+e_[x[1]]={f:m1,j:[],i:[],ti:[],ic:[]}
+d_[x[2]]={}
 var m2=function(e,s,r,gg){
 var z=gz$gwx_3()
-var fE=e_[x[10]].i
-_ai(fE,x[11],e_,x[10],1,1)
-var cF=_v()
-_(r,cF)
-var hG=_oz(z,1,e,s,gg)
-var oH=_gd(x[10],hG,e_,d_)
-if(oH){
-var cI=_1z(z,0,e,s,gg) || {}
+var oD=e_[x[2]].i
+_ai(oD,x[3],e_,x[2],1,1)
+var fE=_v()
+_(r,fE)
+var cF=_oz(z,1,e,s,gg)
+var hG=_gd(x[2],cF,e_,d_)
+if(hG){
+var oH=_1z(z,0,e,s,gg) || {}
 var cur_globalf=gg.f
-cF.wxXCkey=3
-oH(cI,cI,cF,gg)
+fE.wxXCkey=3
+hG(oH,oH,fE,gg)
 gg.f=cur_globalf
 }
-else _w(hG,x[10],2,18)
-fE.pop()
+else _w(cF,x[2],2,18)
+oD.pop()
 return r
 }
-e_[x[10]]={f:m2,j:[],i:[],ti:[x[11]],ic:[]}
-d_[x[12]]={}
-d_[x[12]]["1ef77e0d"]=function(e,s,r,gg){
+e_[x[2]]={f:m2,j:[],i:[],ti:[x[3]],ic:[]}
+d_[x[4]]={}
+d_[x[4]]["1ef77e0d"]=function(e,s,r,gg){
 var z=gz$gwx_4()
-var b=x[12]+':1ef77e0d'
+var b=x[4]+':1ef77e0d'
 r.wxVkey=b
 gg.f=$gdc(f_["./components/comment.vue.wxml"],"",1)
-if(p_[b]){_wl(b,x[12]);return}
+if(p_[b]){_wl(b,x[4]);return}
 p_[b]=true
 try{
 }catch(err){
@@ -1501,14 +1484,14 @@ var m3=function(e,s,r,gg){
 var z=gz$gwx_4()
 return r
 }
-e_[x[12]]={f:m3,j:[],i:[],ti:[],ic:[]}
-d_[x[13]]={}
-d_[x[13]]["5e526ce1"]=function(e,s,r,gg){
+e_[x[4]]={f:m3,j:[],i:[],ti:[],ic:[]}
+d_[x[5]]={}
+d_[x[5]]["5e526ce1"]=function(e,s,r,gg){
 var z=gz$gwx_5()
-var b=x[13]+':5e526ce1'
+var b=x[5]+':5e526ce1'
 r.wxVkey=b
 gg.f=$gdc(f_["./components/mainpageleft.vue.wxml"],"",1)
-if(p_[b]){_wl(b,x[13]);return}
+if(p_[b]){_wl(b,x[5]);return}
 p_[b]=true
 try{
 }catch(err){
@@ -1522,14 +1505,14 @@ var m4=function(e,s,r,gg){
 var z=gz$gwx_5()
 return r
 }
-e_[x[13]]={f:m4,j:[],i:[],ti:[],ic:[]}
-d_[x[14]]={}
-d_[x[14]]["76a7f13b"]=function(e,s,r,gg){
+e_[x[5]]={f:m4,j:[],i:[],ti:[],ic:[]}
+d_[x[6]]={}
+d_[x[6]]["76a7f13b"]=function(e,s,r,gg){
 var z=gz$gwx_6()
-var b=x[14]+':76a7f13b'
+var b=x[6]+':76a7f13b'
 r.wxVkey=b
 gg.f=$gdc(f_["./components/mainpagetop.vue.wxml"],"",1)
-if(p_[b]){_wl(b,x[14]);return}
+if(p_[b]){_wl(b,x[6]);return}
 p_[b]=true
 try{
 var oB=_v()
@@ -1539,7 +1522,7 @@ var xC=_mz(z,'view',['bindtap',2,'class',1,'data-comkey',2,'data-eventid',3],[],
 var oD=_v()
 _(xC,oD)
 var fE=_oz(z,7,e,s,gg)
-var cF=_gd(x[14],fE,e_,d_)
+var cF=_gd(x[6],fE,e_,d_)
 if(cF){
 var hG=_1z(z,6,e,s,gg) || {}
 var cur_globalf=gg.f
@@ -1547,7 +1530,7 @@ oD.wxXCkey=3
 cF(hG,hG,oD,gg)
 gg.f=cur_globalf
 }
-else _w(fE,x[14],1,330)
+else _w(fE,x[6],1,330)
 _(oB,xC)
 }
 oB.wxXCkey=1
@@ -1560,19 +1543,19 @@ return r
 }
 var m5=function(e,s,r,gg){
 var z=gz$gwx_6()
-var tM=e_[x[14]].i
-_ai(tM,x[7],e_,x[14],1,1)
-tM.pop()
+var aL=e_[x[6]].i
+_ai(aL,x[7],e_,x[6],1,1)
+aL.pop()
 return r
 }
-e_[x[14]]={f:m5,j:[],i:[],ti:[x[7]],ic:[]}
-d_[x[15]]={}
-d_[x[15]]["6e30004f"]=function(e,s,r,gg){
+e_[x[6]]={f:m5,j:[],i:[],ti:[x[7]],ic:[]}
+d_[x[8]]={}
+d_[x[8]]["6e30004f"]=function(e,s,r,gg){
 var z=gz$gwx_7()
-var b=x[15]+':6e30004f'
+var b=x[8]+':6e30004f'
 r.wxVkey=b
 gg.f=$gdc(f_["./pages/black-index/black-articlebrief.vue.wxml"],"",1)
-if(p_[b]){_wl(b,x[15]);return}
+if(p_[b]){_wl(b,x[8]);return}
 p_[b]=true
 try{
 }catch(err){
@@ -1586,14 +1569,14 @@ var m6=function(e,s,r,gg){
 var z=gz$gwx_7()
 return r
 }
-e_[x[15]]={f:m6,j:[],i:[],ti:[],ic:[]}
-d_[x[16]]={}
-d_[x[16]]["3db33874"]=function(e,s,r,gg){
+e_[x[8]]={f:m6,j:[],i:[],ti:[],ic:[]}
+d_[x[9]]={}
+d_[x[9]]["3db33874"]=function(e,s,r,gg){
 var z=gz$gwx_8()
-var b=x[16]+':3db33874'
+var b=x[9]+':3db33874'
 r.wxVkey=b
 gg.f=$gdc(f_["./pages/black-index/black-comment.vue.wxml"],"",1)
-if(p_[b]){_wl(b,x[16]);return}
+if(p_[b]){_wl(b,x[9]);return}
 p_[b]=true
 try{
 }catch(err){
@@ -1607,14 +1590,14 @@ var m7=function(e,s,r,gg){
 var z=gz$gwx_8()
 return r
 }
-e_[x[16]]={f:m7,j:[],i:[],ti:[],ic:[]}
-d_[x[17]]={}
-d_[x[17]]["648df427"]=function(e,s,r,gg){
+e_[x[9]]={f:m7,j:[],i:[],ti:[],ic:[]}
+d_[x[10]]={}
+d_[x[10]]["648df427"]=function(e,s,r,gg){
 var z=gz$gwx_9()
-var b=x[17]+':648df427'
+var b=x[10]+':648df427'
 r.wxVkey=b
 gg.f=$gdc(f_["./pages/black-index/black-index.vue.wxml"],"",1)
-if(p_[b]){_wl(b,x[17]);return}
+if(p_[b]){_wl(b,x[10]);return}
 p_[b]=true
 try{
 var oB=_n('view')
@@ -1625,7 +1608,7 @@ var oD=function(cF,fE,hG,gg){
 var cI=_v()
 _(hG,cI)
 var oJ=_oz(z,7,cF,fE,gg)
-var lK=_gd(x[17],oJ,e_,d_)
+var lK=_gd(x[10],oJ,e_,d_)
 if(lK){
 var aL=_1z(z,6,cF,fE,gg) || {}
 var cur_globalf=gg.f
@@ -1633,7 +1616,7 @@ cI.wxXCkey=3
 lK(aL,aL,cI,gg)
 gg.f=cur_globalf
 }
-else _w(oJ,x[17],1,900)
+else _w(oJ,x[10],1,900)
 return hG
 }
 xC.wxXCkey=2
@@ -1641,7 +1624,7 @@ _2z(z,4,oD,e,s,gg,xC,'i','index0','i.id')
 var tM=_v()
 _(oB,tM)
 var eN=_oz(z,9,e,s,gg)
-var bO=_gd(x[17],eN,e_,d_)
+var bO=_gd(x[10],eN,e_,d_)
 if(bO){
 var oP=_1z(z,8,e,s,gg) || {}
 var cur_globalf=gg.f
@@ -1649,7 +1632,7 @@ tM.wxXCkey=3
 bO(oP,oP,tM,gg)
 gg.f=cur_globalf
 }
-else _w(eN,x[17],1,1054)
+else _w(eN,x[10],1,1054)
 _(r,oB)
 }catch(err){
 p_[b]=false
@@ -1660,42 +1643,42 @@ return r
 }
 var m8=function(e,s,r,gg){
 var z=gz$gwx_9()
-var xQ=e_[x[17]].i
-_ai(xQ,x[4],e_,x[17],1,1)
-_ai(xQ,x[5],e_,x[17],1,64)
-xQ.pop()
-xQ.pop()
+var oP=e_[x[10]].i
+_ai(oP,x[11],e_,x[10],1,1)
+_ai(oP,x[12],e_,x[10],1,64)
+oP.pop()
+oP.pop()
 return r
 }
-e_[x[17]]={f:m8,j:[],i:[],ti:[x[4],x[5]],ic:[]}
-d_[x[18]]={}
+e_[x[10]]={f:m8,j:[],i:[],ti:[x[11],x[12]],ic:[]}
+d_[x[13]]={}
 var m9=function(e,s,r,gg){
 var z=gz$gwx_10()
-var fS=e_[x[18]].i
-_ai(fS,x[19],e_,x[18],1,1)
-var cT=_v()
-_(r,cT)
-var hU=_oz(z,1,e,s,gg)
-var oV=_gd(x[18],hU,e_,d_)
-if(oV){
-var cW=_1z(z,0,e,s,gg) || {}
+var oR=e_[x[13]].i
+_ai(oR,x[14],e_,x[13],1,1)
+var fS=_v()
+_(r,fS)
+var cT=_oz(z,1,e,s,gg)
+var hU=_gd(x[13],cT,e_,d_)
+if(hU){
+var oV=_1z(z,0,e,s,gg) || {}
 var cur_globalf=gg.f
-cT.wxXCkey=3
-oV(cW,cW,cT,gg)
+fS.wxXCkey=3
+hU(oV,oV,fS,gg)
 gg.f=cur_globalf
 }
-else _w(hU,x[18],2,18)
-fS.pop()
+else _w(cT,x[13],2,18)
+oR.pop()
 return r
 }
-e_[x[18]]={f:m9,j:[],i:[],ti:[x[19]],ic:[]}
-d_[x[20]]={}
-d_[x[20]]["64f13c01"]=function(e,s,r,gg){
+e_[x[13]]={f:m9,j:[],i:[],ti:[x[14]],ic:[]}
+d_[x[15]]={}
+d_[x[15]]["64f13c01"]=function(e,s,r,gg){
 var z=gz$gwx_11()
-var b=x[20]+':64f13c01'
+var b=x[15]+':64f13c01'
 r.wxVkey=b
 gg.f=$gdc(f_["./pages/black-index/black-popup.vue.wxml"],"",1)
-if(p_[b]){_wl(b,x[20]);return}
+if(p_[b]){_wl(b,x[15]);return}
 p_[b]=true
 try{
 var oB=_n('view')
@@ -1703,7 +1686,7 @@ _rz(z,oB,'class',1,e,s,gg)
 var xC=_v()
 _(oB,xC)
 var oD=_oz(z,3,e,s,gg)
-var fE=_gd(x[20],oD,e_,d_)
+var fE=_gd(x[15],oD,e_,d_)
 if(fE){
 var cF=_1z(z,2,e,s,gg) || {}
 var cur_globalf=gg.f
@@ -1711,11 +1694,11 @@ xC.wxXCkey=3
 fE(cF,cF,xC,gg)
 gg.f=cur_globalf
 }
-else _w(oD,x[20],1,899)
+else _w(oD,x[15],1,899)
 var hG=_v()
 _(oB,hG)
 var oH=_oz(z,5,e,s,gg)
-var cI=_gd(x[20],oH,e_,d_)
+var cI=_gd(x[15],oH,e_,d_)
 if(cI){
 var oJ=_1z(z,4,e,s,gg) || {}
 var cur_globalf=gg.f
@@ -1723,11 +1706,11 @@ hG.wxXCkey=3
 cI(oJ,oJ,hG,gg)
 gg.f=cur_globalf
 }
-else _w(oH,x[20],1,993)
+else _w(oH,x[15],1,993)
 var lK=_v()
 _(oB,lK)
 var aL=_oz(z,7,e,s,gg)
-var tM=_gd(x[20],aL,e_,d_)
+var tM=_gd(x[15],aL,e_,d_)
 if(tM){
 var eN=_1z(z,6,e,s,gg) || {}
 var cur_globalf=gg.f
@@ -1735,11 +1718,11 @@ lK.wxXCkey=3
 tM(eN,eN,lK,gg)
 gg.f=cur_globalf
 }
-else _w(aL,x[20],1,1087)
+else _w(aL,x[15],1,1087)
 var bO=_v()
 _(oB,bO)
 var oP=_oz(z,9,e,s,gg)
-var xQ=_gd(x[20],oP,e_,d_)
+var xQ=_gd(x[15],oP,e_,d_)
 if(xQ){
 var oR=_1z(z,8,e,s,gg) || {}
 var cur_globalf=gg.f
@@ -1747,11 +1730,11 @@ bO.wxXCkey=3
 xQ(oR,oR,bO,gg)
 gg.f=cur_globalf
 }
-else _w(oP,x[20],1,1181)
+else _w(oP,x[15],1,1181)
 var fS=_v()
 _(oB,fS)
 var cT=_oz(z,11,e,s,gg)
-var hU=_gd(x[20],cT,e_,d_)
+var hU=_gd(x[15],cT,e_,d_)
 if(hU){
 var oV=_1z(z,10,e,s,gg) || {}
 var cur_globalf=gg.f
@@ -1759,7 +1742,7 @@ fS.wxXCkey=3
 hU(oV,oV,fS,gg)
 gg.f=cur_globalf
 }
-else _w(cT,x[20],1,1275)
+else _w(cT,x[15],1,1275)
 _(r,oB)
 }catch(err){
 p_[b]=false
@@ -1770,19 +1753,19 @@ return r
 }
 var m10=function(e,s,r,gg){
 var z=gz$gwx_11()
-var lY=e_[x[20]].i
-_ai(lY,x[8],e_,x[20],1,1)
-lY.pop()
+var oX=e_[x[15]].i
+_ai(oX,x[16],e_,x[15],1,1)
+oX.pop()
 return r
 }
-e_[x[20]]={f:m10,j:[],i:[],ti:[x[8]],ic:[]}
-d_[x[21]]={}
-d_[x[21]]["2f5a4a3d"]=function(e,s,r,gg){
+e_[x[15]]={f:m10,j:[],i:[],ti:[x[16]],ic:[]}
+d_[x[17]]={}
+d_[x[17]]["2f5a4a3d"]=function(e,s,r,gg){
 var z=gz$gwx_12()
-var b=x[21]+':2f5a4a3d'
+var b=x[17]+':2f5a4a3d'
 r.wxVkey=b
 gg.f=$gdc(f_["./pages/chatpage/chatpage.vue.wxml"],"",1)
-if(p_[b]){_wl(b,x[21]);return}
+if(p_[b]){_wl(b,x[17]);return}
 p_[b]=true
 try{
 var oB=_v()
@@ -1791,7 +1774,7 @@ var xC=function(fE,oD,cF,gg){
 var oH=_v()
 _(cF,oH)
 var cI=_oz(z,6,fE,oD,gg)
-var oJ=_gd(x[21],cI,e_,d_)
+var oJ=_gd(x[17],cI,e_,d_)
 if(oJ){
 var lK=_1z(z,5,fE,oD,gg) || {}
 var cur_globalf=gg.f
@@ -1799,7 +1782,7 @@ oH.wxXCkey=3
 oJ(lK,lK,oH,gg)
 gg.f=cur_globalf
 }
-else _w(cI,x[21],1,270)
+else _w(cI,x[17],1,270)
 return cF
 }
 oB.wxXCkey=2
@@ -1813,40 +1796,40 @@ return r
 }
 var m11=function(e,s,r,gg){
 var z=gz$gwx_12()
-var t1=e_[x[21]].i
-_ai(t1,x[3],e_,x[21],1,1)
-t1.pop()
+var aZ=e_[x[17]].i
+_ai(aZ,x[18],e_,x[17],1,1)
+aZ.pop()
 return r
 }
-e_[x[21]]={f:m11,j:[],i:[],ti:[x[3]],ic:[]}
-d_[x[22]]={}
+e_[x[17]]={f:m11,j:[],i:[],ti:[x[18]],ic:[]}
+d_[x[19]]={}
 var m12=function(e,s,r,gg){
 var z=gz$gwx_13()
-var b3=e_[x[22]].i
-_ai(b3,x[23],e_,x[22],1,1)
-var o4=_v()
-_(r,o4)
-var x5=_oz(z,1,e,s,gg)
-var o6=_gd(x[22],x5,e_,d_)
-if(o6){
-var f7=_1z(z,0,e,s,gg) || {}
+var e2=e_[x[19]].i
+_ai(e2,x[20],e_,x[19],1,1)
+var b3=_v()
+_(r,b3)
+var o4=_oz(z,1,e,s,gg)
+var x5=_gd(x[19],o4,e_,d_)
+if(x5){
+var o6=_1z(z,0,e,s,gg) || {}
 var cur_globalf=gg.f
-o4.wxXCkey=3
-o6(f7,f7,o4,gg)
+b3.wxXCkey=3
+x5(o6,o6,b3,gg)
 gg.f=cur_globalf
 }
-else _w(x5,x[22],2,18)
-b3.pop()
+else _w(o4,x[19],2,18)
+e2.pop()
 return r
 }
-e_[x[22]]={f:m12,j:[],i:[],ti:[x[23]],ic:[]}
-d_[x[24]]={}
-d_[x[24]]["2dac0d97"]=function(e,s,r,gg){
+e_[x[19]]={f:m12,j:[],i:[],ti:[x[20]],ic:[]}
+d_[x[21]]={}
+d_[x[21]]["2dac0d97"]=function(e,s,r,gg){
 var z=gz$gwx_14()
-var b=x[24]+':2dac0d97'
+var b=x[21]+':2dac0d97'
 r.wxVkey=b
 gg.f=$gdc(f_["./pages/chatpage/oneMessage.vue.wxml"],"",1)
-if(p_[b]){_wl(b,x[24]);return}
+if(p_[b]){_wl(b,x[21]);return}
 p_[b]=true
 try{
 var oB=_n('view')
@@ -1886,14 +1869,14 @@ var m13=function(e,s,r,gg){
 var z=gz$gwx_14()
 return r
 }
-e_[x[24]]={f:m13,j:[],i:[],ti:[],ic:[]}
-d_[x[25]]={}
-d_[x[25]]["42698ffd"]=function(e,s,r,gg){
+e_[x[21]]={f:m13,j:[],i:[],ti:[],ic:[]}
+d_[x[22]]={}
+d_[x[22]]["42698ffd"]=function(e,s,r,gg){
 var z=gz$gwx_15()
-var b=x[25]+':42698ffd'
+var b=x[22]+':42698ffd'
 r.wxVkey=b
 gg.f=$gdc(f_["./pages/detail/detail.vue.wxml"],"",1)
-if(p_[b]){_wl(b,x[25]);return}
+if(p_[b]){_wl(b,x[22]);return}
 p_[b]=true
 try{
 var oB=_v()
@@ -1902,7 +1885,7 @@ var xC=function(fE,oD,cF,gg){
 var oH=_v()
 _(cF,oH)
 var cI=_oz(z,6,fE,oD,gg)
-var oJ=_gd(x[25],cI,e_,d_)
+var oJ=_gd(x[22],cI,e_,d_)
 if(oJ){
 var lK=_1z(z,5,fE,oD,gg) || {}
 var cur_globalf=gg.f
@@ -1910,11 +1893,11 @@ oH.wxXCkey=3
 oJ(lK,lK,oH,gg)
 gg.f=cur_globalf
 }
-else _w(cI,x[25],1,1613)
+else _w(cI,x[22],1,1086)
 return cF
 }
 oB.wxXCkey=2
-_2z(z,3,xC,e,s,gg,oB,'comment','index0','comment[0]')
+_2z(z,3,xC,e,s,gg,oB,'i','index0','i.id')
 }catch(err){
 p_[b]=false
 throw err
@@ -1924,40 +1907,40 @@ return r
 }
 var m14=function(e,s,r,gg){
 var z=gz$gwx_15()
-var o0=e_[x[25]].i
-_ai(o0,x[6],e_,x[25],1,1)
-o0.pop()
+var h9=e_[x[22]].i
+_ai(h9,x[23],e_,x[22],1,1)
+h9.pop()
 return r
 }
-e_[x[25]]={f:m14,j:[],i:[],ti:[x[6]],ic:[]}
-d_[x[26]]={}
+e_[x[22]]={f:m14,j:[],i:[],ti:[x[23]],ic:[]}
+d_[x[24]]={}
 var m15=function(e,s,r,gg){
 var z=gz$gwx_16()
-var oBB=e_[x[26]].i
-_ai(oBB,x[27],e_,x[26],1,1)
-var lCB=_v()
-_(r,lCB)
-var aDB=_oz(z,1,e,s,gg)
-var tEB=_gd(x[26],aDB,e_,d_)
-if(tEB){
-var eFB=_1z(z,0,e,s,gg) || {}
+var cAB=e_[x[24]].i
+_ai(cAB,x[25],e_,x[24],1,1)
+var oBB=_v()
+_(r,oBB)
+var lCB=_oz(z,1,e,s,gg)
+var aDB=_gd(x[24],lCB,e_,d_)
+if(aDB){
+var tEB=_1z(z,0,e,s,gg) || {}
 var cur_globalf=gg.f
-lCB.wxXCkey=3
-tEB(eFB,eFB,lCB,gg)
+oBB.wxXCkey=3
+aDB(tEB,tEB,oBB,gg)
 gg.f=cur_globalf
 }
-else _w(aDB,x[26],2,18)
-oBB.pop()
+else _w(lCB,x[24],2,18)
+cAB.pop()
 return r
 }
-e_[x[26]]={f:m15,j:[],i:[],ti:[x[27]],ic:[]}
-d_[x[28]]={}
-d_[x[28]]["4e9fa01d"]=function(e,s,r,gg){
+e_[x[24]]={f:m15,j:[],i:[],ti:[x[25]],ic:[]}
+d_[x[26]]={}
+d_[x[26]]["4e9fa01d"]=function(e,s,r,gg){
 var z=gz$gwx_17()
-var b=x[28]+':4e9fa01d'
+var b=x[26]+':4e9fa01d'
 r.wxVkey=b
 gg.f=$gdc(f_["./pages/fanslist/fanslist.vue.wxml"],"",1)
-if(p_[b]){_wl(b,x[28]);return}
+if(p_[b]){_wl(b,x[26]);return}
 p_[b]=true
 try{
 }catch(err){
@@ -1971,35 +1954,35 @@ var m16=function(e,s,r,gg){
 var z=gz$gwx_17()
 return r
 }
-e_[x[28]]={f:m16,j:[],i:[],ti:[],ic:[]}
-d_[x[29]]={}
+e_[x[26]]={f:m16,j:[],i:[],ti:[],ic:[]}
+d_[x[27]]={}
 var m17=function(e,s,r,gg){
 var z=gz$gwx_18()
-var xIB=e_[x[29]].i
-_ai(xIB,x[30],e_,x[29],1,1)
-var oJB=_v()
-_(r,oJB)
-var fKB=_oz(z,1,e,s,gg)
-var cLB=_gd(x[29],fKB,e_,d_)
-if(cLB){
-var hMB=_1z(z,0,e,s,gg) || {}
+var oHB=e_[x[27]].i
+_ai(oHB,x[28],e_,x[27],1,1)
+var xIB=_v()
+_(r,xIB)
+var oJB=_oz(z,1,e,s,gg)
+var fKB=_gd(x[27],oJB,e_,d_)
+if(fKB){
+var cLB=_1z(z,0,e,s,gg) || {}
 var cur_globalf=gg.f
-oJB.wxXCkey=3
-cLB(hMB,hMB,oJB,gg)
+xIB.wxXCkey=3
+fKB(cLB,cLB,xIB,gg)
 gg.f=cur_globalf
 }
-else _w(fKB,x[29],2,18)
-xIB.pop()
+else _w(oJB,x[27],2,18)
+oHB.pop()
 return r
 }
-e_[x[29]]={f:m17,j:[],i:[],ti:[x[30]],ic:[]}
-d_[x[31]]={}
-d_[x[31]]["47cdcf86"]=function(e,s,r,gg){
+e_[x[27]]={f:m17,j:[],i:[],ti:[x[28]],ic:[]}
+d_[x[29]]={}
+d_[x[29]]["47cdcf86"]=function(e,s,r,gg){
 var z=gz$gwx_19()
-var b=x[31]+':47cdcf86'
+var b=x[29]+':47cdcf86'
 r.wxVkey=b
 gg.f=$gdc(f_["./pages/followlist/followlist.vue.wxml"],"",1)
-if(p_[b]){_wl(b,x[31]);return}
+if(p_[b]){_wl(b,x[29]);return}
 p_[b]=true
 try{
 }catch(err){
@@ -2013,35 +1996,35 @@ var m18=function(e,s,r,gg){
 var z=gz$gwx_19()
 return r
 }
-e_[x[31]]={f:m18,j:[],i:[],ti:[],ic:[]}
-d_[x[32]]={}
+e_[x[29]]={f:m18,j:[],i:[],ti:[],ic:[]}
+d_[x[30]]={}
 var m19=function(e,s,r,gg){
 var z=gz$gwx_20()
-var oPB=e_[x[32]].i
-_ai(oPB,x[33],e_,x[32],1,1)
-var lQB=_v()
-_(r,lQB)
-var aRB=_oz(z,1,e,s,gg)
-var tSB=_gd(x[32],aRB,e_,d_)
-if(tSB){
-var eTB=_1z(z,0,e,s,gg) || {}
+var cOB=e_[x[30]].i
+_ai(cOB,x[31],e_,x[30],1,1)
+var oPB=_v()
+_(r,oPB)
+var lQB=_oz(z,1,e,s,gg)
+var aRB=_gd(x[30],lQB,e_,d_)
+if(aRB){
+var tSB=_1z(z,0,e,s,gg) || {}
 var cur_globalf=gg.f
-lQB.wxXCkey=3
-tSB(eTB,eTB,lQB,gg)
+oPB.wxXCkey=3
+aRB(tSB,tSB,oPB,gg)
 gg.f=cur_globalf
 }
-else _w(aRB,x[32],2,18)
-oPB.pop()
+else _w(lQB,x[30],2,18)
+cOB.pop()
 return r
 }
-e_[x[32]]={f:m19,j:[],i:[],ti:[x[33]],ic:[]}
-d_[x[34]]={}
-d_[x[34]]["00b33dfa"]=function(e,s,r,gg){
+e_[x[30]]={f:m19,j:[],i:[],ti:[x[31]],ic:[]}
+d_[x[32]]={}
+d_[x[32]]["00b33dfa"]=function(e,s,r,gg){
 var z=gz$gwx_21()
-var b=x[34]+':00b33dfa'
+var b=x[32]+':00b33dfa'
 r.wxVkey=b
 gg.f=$gdc(f_["./pages/index/index.vue.wxml"],"",1)
-if(p_[b]){_wl(b,x[34]);return}
+if(p_[b]){_wl(b,x[32]);return}
 p_[b]=true
 try{
 var oB=_n('view')
@@ -2049,7 +2032,7 @@ _rz(z,oB,'class',1,e,s,gg)
 var xC=_v()
 _(oB,xC)
 var oD=_oz(z,3,e,s,gg)
-var fE=_gd(x[34],oD,e_,d_)
+var fE=_gd(x[32],oD,e_,d_)
 if(fE){
 var cF=_1z(z,2,e,s,gg) || {}
 var cur_globalf=gg.f
@@ -2057,14 +2040,14 @@ xC.wxXCkey=3
 fE(cF,cF,xC,gg)
 gg.f=cur_globalf
 }
-else _w(oD,x[34],1,233)
+else _w(oD,x[32],1,233)
 var hG=_v()
 _(oB,hG)
 var oH=function(oJ,cI,lK,gg){
 var tM=_v()
 _(lK,tM)
 var eN=_oz(z,9,oJ,cI,gg)
-var bO=_gd(x[34],eN,e_,d_)
+var bO=_gd(x[32],eN,e_,d_)
 if(bO){
 var oP=_1z(z,8,oJ,cI,gg) || {}
 var cur_globalf=gg.f
@@ -2072,7 +2055,7 @@ tM.wxXCkey=3
 bO(oP,oP,tM,gg)
 gg.f=cur_globalf
 }
-else _w(eN,x[34],1,349)
+else _w(eN,x[32],1,349)
 return lK
 }
 hG.wxXCkey=2
@@ -2087,32 +2070,32 @@ return r
 }
 var m20=function(e,s,r,gg){
 var z=gz$gwx_21()
-var oVB=e_[x[34]].i
-_ai(oVB,x[1],e_,x[34],1,1)
-_ai(oVB,x[2],e_,x[34],1,50)
-oVB.pop()
-oVB.pop()
+var bUB=e_[x[32]].i
+_ai(bUB,x[33],e_,x[32],1,1)
+_ai(bUB,x[34],e_,x[32],1,50)
+bUB.pop()
+bUB.pop()
 return r
 }
-e_[x[34]]={f:m20,j:[],i:[],ti:[x[1],x[2]],ic:[]}
+e_[x[32]]={f:m20,j:[],i:[],ti:[x[33],x[34]],ic:[]}
 d_[x[35]]={}
 var m21=function(e,s,r,gg){
 var z=gz$gwx_22()
-var oXB=e_[x[35]].i
-_ai(oXB,x[36],e_,x[35],1,1)
-var fYB=_v()
-_(r,fYB)
-var cZB=_oz(z,1,e,s,gg)
-var h1B=_gd(x[35],cZB,e_,d_)
-if(h1B){
-var o2B=_1z(z,0,e,s,gg) || {}
+var xWB=e_[x[35]].i
+_ai(xWB,x[36],e_,x[35],1,1)
+var oXB=_v()
+_(r,oXB)
+var fYB=_oz(z,1,e,s,gg)
+var cZB=_gd(x[35],fYB,e_,d_)
+if(cZB){
+var h1B=_1z(z,0,e,s,gg) || {}
 var cur_globalf=gg.f
-fYB.wxXCkey=3
-h1B(o2B,o2B,fYB,gg)
+oXB.wxXCkey=3
+cZB(h1B,h1B,oXB,gg)
 gg.f=cur_globalf
 }
-else _w(cZB,x[35],2,18)
-oXB.pop()
+else _w(fYB,x[35],2,18)
+xWB.pop()
 return r
 }
 e_[x[35]]={f:m21,j:[],i:[],ti:[x[36]],ic:[]}
@@ -2159,21 +2142,21 @@ e_[x[37]]={f:m22,j:[],i:[],ti:[],ic:[]}
 d_[x[38]]={}
 var m23=function(e,s,r,gg){
 var z=gz$gwx_24()
-var l5B=e_[x[38]].i
-_ai(l5B,x[39],e_,x[38],1,1)
-var a6B=_v()
-_(r,a6B)
-var t7B=_oz(z,1,e,s,gg)
-var e8B=_gd(x[38],t7B,e_,d_)
-if(e8B){
-var b9B=_1z(z,0,e,s,gg) || {}
+var o4B=e_[x[38]].i
+_ai(o4B,x[39],e_,x[38],1,1)
+var l5B=_v()
+_(r,l5B)
+var a6B=_oz(z,1,e,s,gg)
+var t7B=_gd(x[38],a6B,e_,d_)
+if(t7B){
+var e8B=_1z(z,0,e,s,gg) || {}
 var cur_globalf=gg.f
-a6B.wxXCkey=3
-e8B(b9B,b9B,a6B,gg)
+l5B.wxXCkey=3
+t7B(e8B,e8B,l5B,gg)
 gg.f=cur_globalf
 }
-else _w(t7B,x[38],2,18)
-l5B.pop()
+else _w(a6B,x[38],2,18)
+o4B.pop()
 return r
 }
 e_[x[38]]={f:m23,j:[],i:[],ti:[x[39]],ic:[]}
@@ -2201,21 +2184,21 @@ e_[x[40]]={f:m24,j:[],i:[],ti:[],ic:[]}
 d_[x[41]]={}
 var m25=function(e,s,r,gg){
 var z=gz$gwx_26()
-var oBC=e_[x[41]].i
-_ai(oBC,x[42],e_,x[41],1,1)
-var fCC=_v()
-_(r,fCC)
-var cDC=_oz(z,1,e,s,gg)
-var hEC=_gd(x[41],cDC,e_,d_)
-if(hEC){
-var oFC=_1z(z,0,e,s,gg) || {}
+var xAC=e_[x[41]].i
+_ai(xAC,x[42],e_,x[41],1,1)
+var oBC=_v()
+_(r,oBC)
+var fCC=_oz(z,1,e,s,gg)
+var cDC=_gd(x[41],fCC,e_,d_)
+if(cDC){
+var hEC=_1z(z,0,e,s,gg) || {}
 var cur_globalf=gg.f
-fCC.wxXCkey=3
-hEC(oFC,oFC,fCC,gg)
+oBC.wxXCkey=3
+cDC(hEC,hEC,oBC,gg)
 gg.f=cur_globalf
 }
-else _w(cDC,x[41],2,18)
-oBC.pop()
+else _w(fCC,x[41],2,18)
+xAC.pop()
 return r
 }
 e_[x[41]]={f:m25,j:[],i:[],ti:[x[42]],ic:[]}
@@ -2243,21 +2226,21 @@ e_[x[43]]={f:m26,j:[],i:[],ti:[],ic:[]}
 d_[x[44]]={}
 var m27=function(e,s,r,gg){
 var z=gz$gwx_28()
-var lIC=e_[x[44]].i
-_ai(lIC,x[45],e_,x[44],1,1)
-var aJC=_v()
-_(r,aJC)
-var tKC=_oz(z,1,e,s,gg)
-var eLC=_gd(x[44],tKC,e_,d_)
-if(eLC){
-var bMC=_1z(z,0,e,s,gg) || {}
+var oHC=e_[x[44]].i
+_ai(oHC,x[45],e_,x[44],1,1)
+var lIC=_v()
+_(r,lIC)
+var aJC=_oz(z,1,e,s,gg)
+var tKC=_gd(x[44],aJC,e_,d_)
+if(tKC){
+var eLC=_1z(z,0,e,s,gg) || {}
 var cur_globalf=gg.f
-aJC.wxXCkey=3
-eLC(bMC,bMC,aJC,gg)
+lIC.wxXCkey=3
+tKC(eLC,eLC,lIC,gg)
 gg.f=cur_globalf
 }
-else _w(tKC,x[44],2,18)
-lIC.pop()
+else _w(aJC,x[44],2,18)
+oHC.pop()
 return r
 }
 e_[x[44]]={f:m27,j:[],i:[],ti:[x[45]],ic:[]}
@@ -2285,21 +2268,21 @@ e_[x[46]]={f:m28,j:[],i:[],ti:[],ic:[]}
 d_[x[47]]={}
 var m29=function(e,s,r,gg){
 var z=gz$gwx_30()
-var oPC=e_[x[47]].i
-_ai(oPC,x[48],e_,x[47],1,1)
-var fQC=_v()
-_(r,fQC)
-var cRC=_oz(z,1,e,s,gg)
-var hSC=_gd(x[47],cRC,e_,d_)
-if(hSC){
-var oTC=_1z(z,0,e,s,gg) || {}
+var xOC=e_[x[47]].i
+_ai(xOC,x[48],e_,x[47],1,1)
+var oPC=_v()
+_(r,oPC)
+var fQC=_oz(z,1,e,s,gg)
+var cRC=_gd(x[47],fQC,e_,d_)
+if(cRC){
+var hSC=_1z(z,0,e,s,gg) || {}
 var cur_globalf=gg.f
-fQC.wxXCkey=3
-hSC(oTC,oTC,fQC,gg)
+oPC.wxXCkey=3
+cRC(hSC,hSC,oPC,gg)
 gg.f=cur_globalf
 }
-else _w(cRC,x[47],2,18)
-oPC.pop()
+else _w(fQC,x[47],2,18)
+xOC.pop()
 return r
 }
 e_[x[47]]={f:m29,j:[],i:[],ti:[x[48]],ic:[]}
@@ -2327,21 +2310,21 @@ e_[x[49]]={f:m30,j:[],i:[],ti:[],ic:[]}
 d_[x[50]]={}
 var m31=function(e,s,r,gg){
 var z=gz$gwx_32()
-var lWC=e_[x[50]].i
-_ai(lWC,x[51],e_,x[50],1,1)
-var aXC=_v()
-_(r,aXC)
-var tYC=_oz(z,1,e,s,gg)
-var eZC=_gd(x[50],tYC,e_,d_)
-if(eZC){
-var b1C=_1z(z,0,e,s,gg) || {}
+var oVC=e_[x[50]].i
+_ai(oVC,x[51],e_,x[50],1,1)
+var lWC=_v()
+_(r,lWC)
+var aXC=_oz(z,1,e,s,gg)
+var tYC=_gd(x[50],aXC,e_,d_)
+if(tYC){
+var eZC=_1z(z,0,e,s,gg) || {}
 var cur_globalf=gg.f
-aXC.wxXCkey=3
-eZC(b1C,b1C,aXC,gg)
+lWC.wxXCkey=3
+tYC(eZC,eZC,lWC,gg)
 gg.f=cur_globalf
 }
-else _w(tYC,x[50],2,18)
-lWC.pop()
+else _w(aXC,x[50],2,18)
+oVC.pop()
 return r
 }
 e_[x[50]]={f:m31,j:[],i:[],ti:[x[51]],ic:[]}
@@ -2369,21 +2352,21 @@ e_[x[52]]={f:m32,j:[],i:[],ti:[],ic:[]}
 d_[x[53]]={}
 var m33=function(e,s,r,gg){
 var z=gz$gwx_34()
-var o4C=e_[x[53]].i
-_ai(o4C,x[54],e_,x[53],1,1)
-var f5C=_v()
-_(r,f5C)
-var c6C=_oz(z,1,e,s,gg)
-var h7C=_gd(x[53],c6C,e_,d_)
-if(h7C){
-var o8C=_1z(z,0,e,s,gg) || {}
+var x3C=e_[x[53]].i
+_ai(x3C,x[54],e_,x[53],1,1)
+var o4C=_v()
+_(r,o4C)
+var f5C=_oz(z,1,e,s,gg)
+var c6C=_gd(x[53],f5C,e_,d_)
+if(c6C){
+var h7C=_1z(z,0,e,s,gg) || {}
 var cur_globalf=gg.f
-f5C.wxXCkey=3
-h7C(o8C,o8C,f5C,gg)
+o4C.wxXCkey=3
+c6C(h7C,h7C,o4C,gg)
 gg.f=cur_globalf
 }
-else _w(c6C,x[53],2,18)
-o4C.pop()
+else _w(f5C,x[53],2,18)
+x3C.pop()
 return r
 }
 e_[x[53]]={f:m33,j:[],i:[],ti:[x[54]],ic:[]}
@@ -2411,21 +2394,21 @@ e_[x[55]]={f:m34,j:[],i:[],ti:[],ic:[]}
 d_[x[56]]={}
 var m35=function(e,s,r,gg){
 var z=gz$gwx_36()
-var lAD=e_[x[56]].i
-_ai(lAD,x[57],e_,x[56],1,1)
-var aBD=_v()
-_(r,aBD)
-var tCD=_oz(z,1,e,s,gg)
-var eDD=_gd(x[56],tCD,e_,d_)
-if(eDD){
-var bED=_1z(z,0,e,s,gg) || {}
+var o0C=e_[x[56]].i
+_ai(o0C,x[57],e_,x[56],1,1)
+var lAD=_v()
+_(r,lAD)
+var aBD=_oz(z,1,e,s,gg)
+var tCD=_gd(x[56],aBD,e_,d_)
+if(tCD){
+var eDD=_1z(z,0,e,s,gg) || {}
 var cur_globalf=gg.f
-aBD.wxXCkey=3
-eDD(bED,bED,aBD,gg)
+lAD.wxXCkey=3
+tCD(eDD,eDD,lAD,gg)
 gg.f=cur_globalf
 }
-else _w(tCD,x[56],2,18)
-lAD.pop()
+else _w(aBD,x[56],2,18)
+o0C.pop()
 return r
 }
 e_[x[56]]={f:m35,j:[],i:[],ti:[x[57]],ic:[]}
@@ -2503,7 +2486,7 @@ define('common/main.js',function(require, module, exports, window, document, fra
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("/* WEBPACK VAR INJECTION */(function(uni) {__webpack_require__(/*! uni-pages */ 4);\nvar _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 3));\nvar _App = _interopRequireDefault(__webpack_require__(/*! ./App */ 5));\nvar _store = _interopRequireDefault(__webpack_require__(/*! ./store */ 11));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;} // 引入 vuex 的 store 对象\n// import {mapMutations} from 'vuex';\n\nvar app = new _vue.default(_objectSpread({\n  store: _store.default },\n_App.default));\n\napp.$mount();\n_App.default.mpType = 'app';\n\n_vue.default.config.productionTip = false;\n\n_vue.default.prototype.$store = _store.default;\n_vue.default.prototype.$serverUrl = \"http://127.0.0.1:8080\";\n\n/**\n                                                              * 获取当前用户信息（我）\n                                                              * @param {Object} user\n                                                              */\n_vue.default.prototype.setGlobalUserInfo = function (user) {\n  uni.setStorageSync('userInfo', user);\n};\n\n/**\n    * 设置当前用户信息\n    */\n_vue.default.prototype.getGlobalUserInfo = function () {\n  var value = uni.getStorageSync('userInfo');\n  return value;\n};\n\n/**\n    * 清空当前用户信息\n    */\n_vue.default.prototype.removeGlobalUserInfo = function () {\n  uni.removeStorageSync('userInfo');\n};\n\n/**\n    * 把对象添加到列表里，并储存在缓存里\n    * @param {Object} obj\n    * @param {Object} list\n    */\n_vue.default.prototype.setIntoList = function (obj, listName) {\n  var listStr = uni.getStorageSync(listName);\n  // 从本地缓存获取列表名是否存在\n  var list;\n  if (app.isNull(listStr)) {\n    // 为空，赋一个空的list；\n    list = [];\n  } else {\n    // 不为空\n    list = JSON.parse(listStr);\n  }\n  // 插入对象d到尾部\n  list.push(obj);\n  uni.setStorageSync(listName, JSON.stringify(list));\n};\n\n/**\n    * 把该用户信息添加到本地缓存的 userlist 中\n    * @param {Object} userInfo\n    */\n_vue.default.prototype.setUserInfoToUserList = function (userInfo) {\n  app.setIntoList(userInfo, \"userList\");\n};\n\n/**\n    * 根据 userId，在本地缓存中获取该用户信息\n    * @param {Object} userId\n    */\n_vue.default.prototype.getUserInfoFromUserList = function (userId) {\n  var userListStr = uni.getStorageSync(\"userList\");\n\n  if (app.isNull(userListStr)) {\n    // 为空，直接返回 null\n    return null;\n  } else {\n    // 不为空\n    var userList = JSON.parse(userListStr);\n    for (var i = 0; i < userList.length; i++) {\n      var user = userList[i];\n      if (user.id == userId) {\n        return user;\n        break;\n      }\n    }\n  }\n};\n\n/**\n    * 返回页面栈最后一页(当前页面)\n    */\n_vue.default.prototype.getCurrentPage = function () {\n  var pages = getCurrentPages();\n  var currentPage = pages[pages.length - 1];\n  return currentPage;\n};\n/**\n    * 从服务器查询用户信息, 并拼接额外信息。\n    * [需要设置同步否则得不到值，还未测试，暂时弃用，请手动调用myUser拼接]\n    */\n// Vue.prototype.myQueryUserInfo = async function(userId) {\n// \tvar that = this;\n// \tvar finalUser;\n// \tuni.request({\n// \t\turl: that.$serverUrl + '/user/queryUser',\n// \t\tmethod: \"POST\",\n// \t\tdata: {\n// \t\t\tuserId: userId\n// \t\t},\n// \t\theader: {\n// \t\t\t'content-type': 'application/x-www-form-urlencoded'\n// \t\t},\n// \t\tsuccess: (res) => {\n// \t\t\t// console.log(res)\n// \t\t\tif (res.data.status == 200) {\n// \t\t\t\t// 3.获取返回的用户信息\n// \t\t\t\tfinalUser = res.data.data;\n// \t\t\t\t// 4.分割邮箱地址, 重构user\n// \t\t\t\tfinalUser = that.myUser(finalUser);\n// \t\t\t}\n// \t\t}\n// \t});\n// \t\n// \tapp.$nextTick(function(){\n// \t\tconsole.log(finalUser);\n// \t})\n// \treturn finalUser;\n// }\n\n/**\n * 分割邮箱地址, 重构user\n * @param {Object} user\n */\n_vue.default.prototype.myUser = function (user) {\n  // 分割邮箱地址\n  var email = user.email;\n  if (this.isNull(email)) {\n    email = \"[Email]@nottingham.edu.cn\";\n  }\n  var list = email.split('@');\n  user.emailPrefix = list[0];\n  user.emailSuffix = \"@\" + list[1];\n\n  return user;\n};\n\n_vue.default.prototype.isNull = function (str) {\n  if (str == null || str == \"\" || str == undefined) {\n    return true;\n  }\n  return false;\n};\n\n/**\n    * 自定义封装 socket 供全局调用\n    * @author: Jerrio\n    */\n_vue.default.prototype.mySocket = {\n\n  isOpen: false,\n  socketMsgQueue: [], // 未发送的消息队列\t\n\n  init: function init() {\n    var that = this;\n    // 创建websocket长连接\n    uni.connectSocket({\n      url: 'ws://localhost:8088/ws',\n      complete: function complete() {} });\n\n\n    uni.onSocketOpen(function (res) {\n      that.isOpen = true;\n      console.log('WebSocket连接已打开！isSocketOpen=' + that.isOpen);\n      //发送连接消息，向服务器注册信息\n      that.sendObj(app.netty.CONNECT, null, null);\n      // 发送未发送的信息\n      for (var i = 0; i < that.socketMsgQueue.length; i++) {\n        // console.log(that.socketMsgQueue[i]);\n        that.sendObj(app.netty.CHAT, that.socketMsgQueue[i], null);\n      }\n      that.socketMsgQueue = [];\n    });\n\n    uni.onSocketError(function (res) {\n      console.log('WebSocket连接打开失败，请检查！');\n    });\n\n    // 已在index页面重写\n    uni.onSocketMessage(function (res) {\n      var dataContent = JSON.parse(res.data);\n      var chatMessage = dataContent.chatMessage;\n      console.log(\"收到服务器内容：\");\n      console.log(dataContent);\n\n      // 发送签收消息\n      that.sendObj(app.netty.SIGNED, null, null, chatMessage.msgId);\n\n\n      if (dataContent.action == app.netty.CHAT) {\n        // 修改 store，发送信号，把消息卡片渲染到对话窗口\n        app.$store.commit('setChatMessageCard', chatMessage);\n\n        // 保存聊天历史记录到本地缓存\n        var myId = chatMessage.receiverId;\n        var friendId = chatMessage.senderId;\n        var msg = chatMessage.msg;\n\n        app.chat.saveUserChatHistory(myId, friendId, msg, app.chat.FRIEND);\n\n        // 判断当前页面，保存聊天快照\n        var page = app.getCurrentPage();\n        if (page.route == 'pages/chatpage/chatpage' && page.data.friendInfo.id == friendId) {\n          // 与该用户在聊天，标记为已读\n          console.log(\"与该用户在聊天，标记为已读\");\n          app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.READ);\n        } else {\n          // 聊天页面未打开或不是与该用户聊天，标记为未读\n          console.log(\"聊天页面未打开或不是与该用户聊天，标记为未读\");\n          app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.UNREAD);\n        }\n      }\n    });\n\n    uni.onSocketClose(function (res) {\n      that.isOpen = false;\n      console.log('WebSocket 已关闭！isSocketOpen=' + that.isOpen);\n      // 三秒一次重连\n      console.log(\"重连中..\");\n      setTimeout(function () {\n        that.init();\n      }, 3000);\n    });\n\n  },\n  /**\n      * 向服务器发送JSON数据对象\n      * @param {Object} type\n      * @param {Object} toUserId\n      * @param {Object} msg\n      * @param {Object} extand\n      */\n  sendObj: function sendObj(type, toUserId, msg, extand) {\n    var myUserId = app.getGlobalUserInfo().id; // 调用全局用户缓存，需要先请求获取\n    if (app.isNull(myUserId)) {\n      console.log(\"请先获取用户数据\");\n    }\n\n    var chatMessage = new app.netty.ChatMessage(myUserId, toUserId, msg, null);\n    var dataContent = new app.netty.DataContent(type, chatMessage, extand);\n\n    var data = JSON.stringify(dataContent);\n    var isSocketOpen = app.mySocket.isOpen;\n    if (isSocketOpen == true) {\n      // console.log(\"sendObj... isSocketOpen=\" + isSocketOpen);\n      uni.sendSocketMessage({\n        data: data });\n\n\n      //保存聊天历史到 本地缓存\n      if (type == app.netty.CHAT) {\n        app.chat.saveUserChatHistory(myUserId, toUserId, msg, app.chat.ME);\n        app.chat.saveUserChatSnapshot(myUserId, toUserId, msg, app.chat.READ);\n      }\n    } else {\n      console.log(\"isSocketOpen=\" + isSocketOpen);\n      this.socketMsgQueue.push(data);\n      console.log(this.socketMsgQueue);\n\n    }\n  } };\n\n\n_vue.default.prototype.chat = {\n\n  ME: 1, // 我的消息-右边\n  FRIEND: 2, // 对方消息-左边\n  READ: 3,\n  UNREAD: 4,\n  /**\n              * 历史记录对象\n              * @param {Object} myId\n              * @param {Object} friendId\n              * @param {Object} msg\n              * @param {Object} flag 是我的消息还是朋友的消息\n              */\n  ChatHistory: function ChatHistory(myId, friendId, msg, flag) {\n    this.myId = myId;\n    this.friendId = friendId;\n    this.msg = msg;\n    this.flag = flag;\n  },\n\n  /**\n      * 快照对象\n      * @param {Object} myId\n      * @param {Object} friendId\n      * @param {Object} msg\n      * @param {Object} isRead 用于判断消息是已读还是未读\n      */\n  ChatSnapshot: function ChatSnapshot(myId, friendId, msg, isRead) {\n    this.myId = myId;\n    this.friendId = friendId;\n    this.msg = msg;\n    this.isRead = isRead;\n    // this.createdTime = createdTime;\n  },\n  /**\n      * 保存用户的聊天记录\n      * @param {Object} myId\n      * @param {Object} friendId\n      * @param {Object} msg\n      * @param {Object} flag 判断本条消息是谁发送的, 1：我 2：朋友\n      */\n  saveUserChatHistory: function saveUserChatHistory(myId, friendId, msg, flag) {\n\n    var chatKey = \"chat-\" + myId + \"-\" + friendId;\n    // 从本地缓存获取聊天记录是否存在\n    var chatHistoryListStr = uni.getStorageSync(chatKey);\n    var chatHistoryList;\n    if (app.isNull(chatHistoryListStr)) {\n      // 为空，赋一个空的list；\n      chatHistoryList = [];\n    } else {\n      // 不为空\n      chatHistoryList = JSON.parse(chatHistoryListStr);\n    }\n\n    // 构建聊天记录对象\n    var singleMsg = new this.ChatHistory(myId, friendId, msg, flag);\n\n    // 添加到list尾部\n    chatHistoryList.push(singleMsg);\n\n    uni.setStorageSync(chatKey, JSON.stringify(chatHistoryList));\n\n  },\n\n  getUserChatHistory: function getUserChatHistory(myId, friendId) {\n    var chatKey = \"chat-\" + myId + \"-\" + friendId;\n    var chatHistoryListStr = uni.getStorageSync(chatKey);\n    var chatHistoryList;\n    if (app.isNull(chatHistoryListStr)) {\n      // 为空，赋一个空的list；\n      chatHistoryList = [];\n    } else {\n      // 不为空\n      chatHistoryList = JSON.parse(chatHistoryListStr);\n    }\n\n    return chatHistoryList;\n  },\n\n  /**\n      * 聊天记录快照，仅保存每次和朋友聊天的最后一条消息\n      * @param {Object} myId\n      * @param {Object} friendId\n      * @param {Object} msg\n      * @param {Object} isRead\n      */\n  saveUserChatSnapshot: function saveUserChatSnapshot(myId, friendId, msg, isRead) {\n\n    var chatKey = \"chat-snapshot\" + myId;\n\n    // 从本地缓存获取聊天快照的 list\n    var chatSnapshotListStr = uni.getStorageSync(chatKey);\n    var chatSnapshotList;\n    if (app.isNull(chatSnapshotListStr)) {\n      // 为空，赋一个空的list；\n      chatSnapshotList = [];\n    } else {\n      // 不为空\n      chatSnapshotList = JSON.parse(chatSnapshotListStr);\n      // 循环快照list，删除含 friendId 的项\n      for (var i = 0; i < chatSnapshotList.length; i++) {\n        if (chatSnapshotList[i].friendId == friendId) {\n          chatSnapshotList.splice(i, 1); // 从i项往后删，只删一个\n          break;\n        }\n      }\n    }\n\n    // 构建聊天快照对象\n    var singleMsg = new this.ChatSnapshot(myId, friendId, msg, isRead);\n\n    // 添加到 list 第一项\n    chatSnapshotList.unshift(singleMsg);\n\n    uni.setStorageSync(chatKey, JSON.stringify(chatSnapshotList));\n  },\n\n  /**\n      * 获取用户快照记录列表\n      */\n  getUserChatSnapShot: function getUserChatSnapShot(myId) {\n    var chatKey = \"chat-snapshot\" + myId;\n\n    // 从本地缓存获取聊天快照的 list\n    var chatSnapshotListStr = uni.getStorageSync(chatKey);\n    var chatSnapshotList;\n    if (app.isNull(chatSnapshotListStr)) {\n      // 为空，赋一个空的list；\n      chatSnapshotList = [];\n    } else {\n      // 不为空\n      chatSnapshotList = JSON.parse(chatSnapshotListStr);\n    }\n\n    return chatSnapshotList;\n  } };\n\n\n\n\n_vue.default.prototype.netty = {\n  /**\n                                  * 和后端的枚举对应\n                                  */\n  CONNECT: 1, // 第一次(或重连)初始化连接\n  CHAT: 2, // 聊天消息\n  SIGNED: 3, // 消息签收\n  KEEPALIVE: 4, // 客户端保持心跳\n\n  /**\n   * 和后端 ChatMessage 聊天模型的对象保持一致\n   * @param {Object} senderId\n   * @param {Object} receiverId\n   * @param {Object} msg\n   * @param {Object} msgId\n   */\n  ChatMessage: function ChatMessage(senderId, receiverId, msg, msgId) {\n    this.senderId = senderId;\n    this.receiverId = receiverId;\n    this.msg = msg;\n    this.msgId = msgId; // 前端不需要用到\n  },\n\n  /**\n      * 构建消息 DataContent 模型对象\n      * @param {Object} action\n      * @param {Object} chatMsg\n      * @param {Object} extand\n      */\n  DataContent: function DataContent(action, chatMessage, extand) {\n    this.action = action;\n    this.chatMessage = chatMessage;\n    this.extand = extand;\n  } };\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-app-plus/dist/index.js */ 1)[\"default\"]))\n\n//# sourceURL=undefined");
+eval("/* WEBPACK VAR INJECTION */(function(uni) {__webpack_require__(/*! uni-pages */ 4);\nvar _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 3));\nvar _App = _interopRequireDefault(__webpack_require__(/*! ./App */ 5));\nvar _store = _interopRequireDefault(__webpack_require__(/*! ./store */ 11));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;} // 引入 vuex 的 store 对象\n// import {mapMutations} from 'vuex';\n\nvar app = new _vue.default(_objectSpread({\n  store: _store.default },\n_App.default));\n\napp.$mount();\n_App.default.mpType = 'app';\n\n_vue.default.config.productionTip = false;\n\n_vue.default.prototype.$store = _store.default;\n_vue.default.prototype.$serverUrl = \"http://127.0.0.1:8080\";\n\n/**\n                                                              * 获取当前用户信息（我）\n                                                              * @param {Object} user\n                                                              */\n_vue.default.prototype.setGlobalUserInfo = function (user) {\n  uni.setStorageSync('userInfo', user);\n};\n\n/**\n    * 设置当前用户信息\n    */\n_vue.default.prototype.getGlobalUserInfo = function () {\n  var value = uni.getStorageSync('userInfo');\n  return value;\n};\n\n/**\n    * 清空当前用户信息\n    */\n_vue.default.prototype.removeGlobalUserInfo = function () {\n  uni.removeStorageSync('userInfo');\n};\n\n/**\n    * 把对象添加到列表里，并储存在缓存里\n    * @param {Object} obj\n    * @param {Object} list\n    */\n_vue.default.prototype.setIntoList = function (obj, listName) {\n  var listStr = uni.getStorageSync(listName);\n  // 从本地缓存获取列表名是否存在\n  var list;\n  if (app.isNull(listStr)) {\n    // 为空，赋一个空的list；\n    list = [];\n  } else {\n    // 不为空\n    list = JSON.parse(listStr);\n  }\n  // 插入对象d到尾部\n  list.push(obj);\n  uni.setStorageSync(listName, JSON.stringify(list));\n};\n\n/**\n    * 把该用户信息添加到本地缓存的 userlist 中\n    * @param {Object} userInfo\n    */\n_vue.default.prototype.setUserInfoToUserList = function (userInfo) {\n  app.setIntoList(userInfo, \"userList\");\n};\n\n/**\n    * 根据 userId，在本地缓存中获取该用户信息\n    * @param {Object} userId\n    */\n_vue.default.prototype.getUserInfoFromUserList = function (userId) {\n  var userListStr = uni.getStorageSync(\"userList\");\n\n  if (app.isNull(userListStr)) {\n    // 为空，直接返回 null\n    return null;\n  } else {\n    // 不为空\n    var userList = JSON.parse(userListStr);\n    for (var i = 0; i < userList.length; i++) {\n      var user = userList[i];\n      if (user.id == userId) {\n        return user;\n        break;\n      }\n    }\n  }\n};\n\n/**\n    * 返回页面栈最后一页(当前页面)\n    */\n_vue.default.prototype.getCurrentPage = function () {\n  var pages = getCurrentPages();\n  var currentPage = pages[pages.length - 1];\n  return currentPage;\n};\n/**\n    * 从服务器查询用户信息, 并拼接额外信息。\n    * [需要设置同步否则得不到值，还未测试，暂时弃用，请手动调用myUser拼接]\n    */\n// Vue.prototype.myQueryUserInfo = async function(userId) {\n// \tvar that = this;\n// \tvar finalUser;\n// \tuni.request({\n// \t\turl: that.$serverUrl + '/user/queryUser',\n// \t\tmethod: \"POST\",\n// \t\tdata: {\n// \t\t\tuserId: userId\n// \t\t},\n// \t\theader: {\n// \t\t\t'content-type': 'application/x-www-form-urlencoded'\n// \t\t},\n// \t\tsuccess: (res) => {\n// \t\t\t// console.log(res)\n// \t\t\tif (res.data.status == 200) {\n// \t\t\t\t// 3.获取返回的用户信息\n// \t\t\t\tfinalUser = res.data.data;\n// \t\t\t\t// 4.分割邮箱地址, 重构user\n// \t\t\t\tfinalUser = that.myUser(finalUser);\n// \t\t\t}\n// \t\t}\n// \t});\n// \t\n// \tapp.$nextTick(function(){\n// \t\tconsole.log(finalUser);\n// \t})\n// \treturn finalUser;\n// }\n\n/**\n * 分割邮箱地址, 重构user\n * @param {Object} user\n */\n_vue.default.prototype.myUser = function (user) {\n  // 分割邮箱地址\n  var email = user.email;\n  if (this.isNull(email)) {\n    email = \"[Email]@nottingham.edu.cn\";\n  }\n  var list = email.split('@');\n  user.emailPrefix = list[0];\n  user.emailSuffix = \"@\" + list[1];\n\n  return user;\n};\n\n_vue.default.prototype.isNull = function (str) {\n  if (str == null || str == \"\" || str == undefined) {\n    return true;\n  }\n  return false;\n};\n\n/**\n    * 自定义封装 socket 供全局调用\n    * @author: Jerrio\n    */\n_vue.default.prototype.mySocket = {\n\n  isOpen: false,\n  socketMsgQueue: [], // 未发送的消息队列\t\n\n  init: function init() {\n    var that = this;\n    // 创建websocket长连接\n    uni.connectSocket({\n      url: 'ws://localhost:8088/ws',\n      complete: function complete() {} });\n\n\n    uni.onSocketOpen(function (res) {\n      that.isOpen = true;\n      console.log('WebSocket连接已打开！isSocketOpen=' + that.isOpen);\n      //发送连接消息，向服务器注册信息\n      that.sendObj(app.netty.CONNECT, null, null);\n      // 发送未发送的信息\n      for (var i = 0; i < that.socketMsgQueue.length; i++) {\n        // console.log(that.socketMsgQueue[i]);\n        that.sendObj(app.netty.CHAT, that.socketMsgQueue[i], null);\n      }\n      that.socketMsgQueue = [];\n\n      // 签收未签收消息\n      app.chat.fetchUnsignedMsg();\n    });\n\n    uni.onSocketError(function (res) {\n      console.log('WebSocket连接打开失败，请检查！');\n    });\n\n    // 已在index页面重写\n    uni.onSocketMessage(function (res) {\n      var dataContent = JSON.parse(res.data);\n      var chatMessage = dataContent.chatMessage;\n      console.log(\"收到服务器内容：\");\n      console.log(dataContent);\n\n      // 如果消息类型为 CHAT\n      if (dataContent.action == app.netty.CHAT) {\n        // 发送签收消息\n        that.signMsgList(chatMessage.msgId);\n\n        // 保存聊天历史记录到本地缓存\n        var myId = chatMessage.receiverId;\n        var friendId = chatMessage.senderId;\n        var msg = chatMessage.msg;\n        var createDate = app.formatTime(chatMessage.createDate); // 对时间戳进行格式化\n\n        app.chat.saveUserChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);\n\n        // 判断当前页面，保存聊天快照\n        var page = app.getCurrentPage();\n        if (page.route == 'pages/chatpage/chatpage') {\n          var pageFriendId = page.data.friendInfo.id; // 打开页面才有对象，越层判断会报对象为空的错\n          /* \n          【BUG】ISO 虚拟机获取 friendInfo.id 报错信息：\n           undefined is not an object (evaluating 'page.data.friendInfo.id')\n           不知道真机会不会有这种情况\n          */\n          // var pagestr = JSON.stringify(page.data);\n          // console.log(pagestr);\n          if (pageFriendId == friendId) {\n            // 与该用户在聊天，标记为已读\n            console.log(\"与该用户在聊天，标记为已读\");\n            app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.READ, createDate);\n          }\n        } else {\n          // 聊天页面未打开或不是与该用户聊天，标记为未读\n          console.log(\"聊天页面未打开或不是与该用户聊天，标记为未读\");\n          app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.UNREAD, createDate);\n        }\n\n        // 修改 store，发送信号，把消息卡片渲染到对话窗口 和 消息列表\n        var newMessage = new app.chat.ChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);\n        app.$store.commit('setChatMessageCard', newMessage);\n      }\n    });\n\n    uni.onSocketClose(function (res) {\n      that.isOpen = false;\n      console.log('WebSocket 已关闭！isSocketOpen=' + that.isOpen);\n      // 三秒一次重连\n      console.log(\"重连中..\");\n      setTimeout(function () {\n        that.init();\n      }, 3000);\n    });\n\n  },\n  /**\n      * 向服务器发送JSON数据对象\n      * @param {Object} type\n      * @param {Object} toUserId\n      * @param {Object} msg\n      * @param {Object} extand\n      */\n  sendObj: function sendObj(type, toUserId, msg, extand) {\n    var myUserId = app.getGlobalUserInfo().id; // 调用全局用户缓存，需要先请求获取\n    if (app.isNull(myUserId)) {\n      console.log(\"请先获取用户数据\");\n    }\n\n    // 获取当前时间戳，传输时间戳\n    var timeStamp = new Date().getTime();\n\n    // 构建载体\n    var chatMessage = new app.netty.ChatMessage(myUserId, toUserId, msg, null, timeStamp);\n    var dataContent = new app.netty.DataContent(type, chatMessage, extand);\n\n    var data = JSON.stringify(dataContent);\n    var isSocketOpen = app.mySocket.isOpen;\n    if (isSocketOpen == true) {\n      // console.log(\"sendObj... isSocketOpen=\" + isSocketOpen);\n      uni.sendSocketMessage({\n        data: data });\n\n\n      //保存聊天历史到本地缓存，保存聊天快照到本地\n      if (type == app.netty.CHAT) {\n        var createDate = app.formatTime(timeStamp);\n        // console.log(\"发消息的时间戳：\" + createDate);\n        app.chat.saveUserChatHistory(myUserId, toUserId, msg, app.chat.ME, createDate);\n        app.chat.saveUserChatSnapshot(myUserId, toUserId, msg, app.chat.READ, createDate);\n      }\n    } else {\n      console.log(\"isSocketOpen=\" + isSocketOpen);\n      this.socketMsgQueue.push(data);\n      console.log(this.socketMsgQueue);\n\n    }\n  },\n\n  /**\n      * 批量签收消息\n      * @param {Object} msgIds\n      */\n  signMsgList: function signMsgList(msgIds) {\n    this.sendObj(app.netty.SIGNED, null, null, msgIds);\n  } };\n\n\n_vue.default.prototype.chat = {\n\n  ME: 1, // 我的消息-右边\n  FRIEND: 2, // 对方消息-左边\n  READ: 3,\n  UNREAD: 4,\n  /**\n              * 历史记录对象\n              * @param {Object} myId\n              * @param {Object} friendId\n              * @param {Object} msg\n              * @param {Object} flag 是我的消息还是朋友的消息\n              * @param {Object} createDate\n              */\n  ChatHistory: function ChatHistory(myId, friendId, msg, flag, createDate) {\n    this.myId = myId;\n    this.friendId = friendId;\n    this.msg = msg;\n    this.flag = flag;\n    this.createDate = createDate;\n  },\n\n  /**\n      * 快照对象\n      * @param {Object} myId\n      * @param {Object} friendId\n      * @param {Object} msg\n      * @param {Object} isRead 用于判断消息是已读还是未读\n      * @param {Object} createDate\n      */\n  ChatSnapshot: function ChatSnapshot(myId, friendId, msg, isRead, createDate) {\n    this.myId = myId;\n    this.friendId = friendId;\n    this.msg = msg;\n    this.isRead = isRead;\n    this.createDate = createDate;\n  },\n  /**\n      * 保存用户的聊天记录\n      * @param {Object} myId\n      * @param {Object} friendId\n      * @param {Object} msg\n      * @param {Object} flag 判断本条消息是谁发送的, 1：我 2：朋友\n      * @param {Object} createDate\n      */\n  saveUserChatHistory: function saveUserChatHistory(myId, friendId, msg, flag, createDate) {\n\n    var chatKey = \"chat-\" + myId + \"-\" + friendId;\n    // 从本地缓存获取聊天记录是否存在\n    var chatHistoryListStr = uni.getStorageSync(chatKey);\n    var chatHistoryList;\n    if (app.isNull(chatHistoryListStr)) {\n      // 为空，赋一个空的list；\n      chatHistoryList = [];\n    } else {\n      // 不为空\n      chatHistoryList = JSON.parse(chatHistoryListStr);\n    }\n\n    // 构建聊天记录对象\n    var singleMsg = new this.ChatHistory(myId, friendId, msg, flag, createDate);\n\n    // 添加到list尾部\n    chatHistoryList.push(singleMsg);\n\n    uni.setStorageSync(chatKey, JSON.stringify(chatHistoryList));\n\n  },\n\n  getUserChatHistory: function getUserChatHistory(myId, friendId) {\n    var chatKey = \"chat-\" + myId + \"-\" + friendId;\n    var chatHistoryListStr = uni.getStorageSync(chatKey);\n    var chatHistoryList;\n    if (app.isNull(chatHistoryListStr)) {\n      // 为空，赋一个空的list；\n      chatHistoryList = [];\n    } else {\n      // 不为空\n      chatHistoryList = JSON.parse(chatHistoryListStr);\n    }\n\n    return chatHistoryList;\n  },\n\n  /**\n      * 聊天记录快照，仅保存每次和朋友聊天的最后一条消息\n      * @param {Object} myId\n      * @param {Object} friendId\n      * @param {Object} msg\n      * @param {Object} isRead\n      * @param {Object} createDate\n      */\n  saveUserChatSnapshot: function saveUserChatSnapshot(myId, friendId, msg, isRead, createDate) {\n\n    var chatKey = \"chat-snapshot\" + myId;\n\n    // 从本地缓存获取聊天快照的 list\n    var chatSnapshotListStr = uni.getStorageSync(chatKey);\n    var chatSnapshotList;\n    if (app.isNull(chatSnapshotListStr)) {\n      // 为空，赋一个空的list；\n      chatSnapshotList = [];\n    } else {\n      // 不为空\n      chatSnapshotList = JSON.parse(chatSnapshotListStr);\n      // 循环快照list，删除含 friendId 的项\n      for (var i = 0; i < chatSnapshotList.length; i++) {\n        if (chatSnapshotList[i].friendId == friendId) {\n          chatSnapshotList.splice(i, 1); // 从i项往后删，只删一个\n          break;\n        }\n      }\n    }\n\n    // 构建聊天快照对象\n    var singleMsg = new this.ChatSnapshot(myId, friendId, msg, isRead, createDate);\n\n    // 添加到 list 第一项\n    chatSnapshotList.unshift(singleMsg);\n\n    uni.setStorageSync(chatKey, JSON.stringify(chatSnapshotList));\n  },\n\n  /**\n      * 获取用户快照记录列表\n      */\n  getUserChatSnapShot: function getUserChatSnapShot(myId) {\n    var chatKey = \"chat-snapshot\" + myId;\n\n    // 从本地缓存获取聊天快照的 list\n    var chatSnapshotListStr = uni.getStorageSync(chatKey);\n    var chatSnapshotList;\n    if (app.isNull(chatSnapshotListStr)) {\n      // 为空，赋一个空的list；\n      chatSnapshotList = [];\n    } else {\n      // 不为空\n      chatSnapshotList = JSON.parse(chatSnapshotListStr);\n    }\n\n    return chatSnapshotList;\n  },\n\n  /**\n      * 把快照标记为已读，并且不改变在列表中的位置\n      * @param {Object} myId\n      * @param {Object} friendId\n      */\n  readUserChatSnapShot: function readUserChatSnapShot(myId, friendId) {\n    var chatKey = \"chat-snapshot\" + myId;\n\n    // 从本地缓存获取聊天快照的 list\n    var chatSnapshotListStr = uni.getStorageSync(chatKey);\n    var chatSnapshotList;\n    if (app.isNull(chatSnapshotListStr)) {\n      // 为空，赋一个空的list；\n      return;\n    } else {\n      // 不为空\n      chatSnapshotList = JSON.parse(chatSnapshotListStr);\n      // 删除快照对象并放入新的在原有位置\n      for (var i = 0; i < chatSnapshotList.length; i++) {\n        var item = chatSnapshotList[i];\n        if (item.friendId == friendId) {\n          item.isRead = this.READ;\n          chatSnapshotList.splice(i, 1, item); // 替换\n          break;\n        }\n      }\n\n      uni.setStorageSync(chatKey, JSON.stringify(chatSnapshotList));\n    }\n  },\n\n  fetchUnsignedMsg: function fetchUnsignedMsg() {var _this = this;\n    var user = app.getGlobalUserInfo();\n    var msgIds = \",\"; // 格式: ,1001,1002,1003,\n    var that = this;\n    uni.request({\n      url: app.$serverUrl + '/user/getUnsignedMsg',\n      method: \"POST\",\n      data: {\n        userId: user.id },\n\n      header: {\n        'content-type': 'application/x-www-form-urlencoded' },\n\n      success: function success(res) {\n        // console.log(res)\n        if (res.data.status == 200) {\n          var unsignedMsgList = res.data.data;\n          console.log(unsignedMsgList);\n\n          for (var i = 0; i < unsignedMsgList.length; i++) {\n            var msgObj = unsignedMsgList[i];\n            // 1.逐条存入聊天记录\n            _this.saveUserChatHistory(msgObj.acceptUserId,\n            msgObj.sendUserId,\n            msgObj.msg,\n            _this.FRIEND,\n            msgObj.createDate);\n            // 2.保存聊天快照到本地\n            _this.saveUserChatSnapshot(msgObj.acceptUserId,\n            msgObj.sendUserId,\n            msgObj.msg,\n            _this.UNREAD,\n            msgObj.createDate);\n            // 3.拼接批量签收id的字符串\n            msgIds += msgObj.id + \",\";\n          }\n\n          // 调用批量签收方法\n          app.mySocket.signMsgList(msgIds);\n        }\n      } });\n\n  } };\n\n\n\n\n_vue.default.prototype.netty = {\n  /**\n                                  * 和后端的枚举对应\n                                  */\n  CONNECT: 1, // 第一次(或重连)初始化连接\n  CHAT: 2, // 聊天消息\n  SIGNED: 3, // 消息签收\n  KEEPALIVE: 4, // 客户端保持心跳\n\n  /**\n   * 和后端 ChatMessage 聊天模型的对象保持一致\n   * @param {Object} senderId\n   * @param {Object} receiverId\n   * @param {Object} msg\n   * @param {Object} msgId\n   * @param {Object} createDate\n   */\n  ChatMessage: function ChatMessage(senderId, receiverId, msg, msgId, createDate) {\n    this.senderId = senderId;\n    this.receiverId = receiverId;\n    this.msg = msg;\n    this.msgId = msgId; // 前端发送设置null就好\n    this.createDate = createDate;\n  },\n\n  /**\n      * 构建消息 DataContent 模型对象\n      * @param {Object} action\n      * @param {Object} chatMsg\n      * @param {Object} extand\n      */\n  DataContent: function DataContent(action, chatMessage, extand) {\n    this.action = action;\n    this.chatMessage = chatMessage;\n    this.extand = extand;\n  } };\n\n\n\n_vue.default.prototype.formatTime = function (timeStamp) {\n  // 将/[0-9]/位的数字编成/0[0-9]/  \n\n  if (timeStamp.length < 13) {\n    timeStamp += \"000\";\n  }\n  var d = new Date(parseInt(timeStamp));\n\n  var year = d.getFullYear();\n  var month = this.getTwo(d.getMonth() + 1);\n  var date = this.getTwo(d.getDate());\n  var hour = this.getTwo(d.getHours());\n  var minute = this.getTwo(d.getMinutes());\n  var second = this.getTwo(d.getSeconds());\n\n  return year + \"/\" + month + \"/\" + date + \" \" + hour + \":\" + minute + \":\" + second;\n};\n\n_vue.default.prototype.getTwo = function (s) {\n  if (parseInt(s) < 10) {\n    return \"0\" + s;\n  } else {\n    return \"\" + s;\n  }\n};\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-app-plus/dist/index.js */ 1)[\"default\"]))\n\n//# sourceURL=undefined");
 
 /***/ }),
 /* 1 */,
@@ -2851,7 +2834,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _App
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, \"__esModule\", { value: true });exports.default = void 0;var _default =\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n{\n  name: 'aticlebrief',\n  props: {\n    articleCard: {} },\n\n  data: function data() {\n    return {\n      taglist: [\n      ['123', 'background:#40A792'],\n      ['13', 'background:#621E81'],\n      ['163', 'background:#738598'],\n      ['标签', 'background:#F3AE4B'],\n      ['13', 'background:#621E81'],\n      ['163', 'background:#738598'],\n      ['123', 'background:#40A792'],\n      ['13', 'background:#621E81']] };\n\n\n  },\n  created: function created() {\n    console.log(this.articleCard.tags);\n    console.log(typeof this.articleCard.tags);\n\n  },\n  methods: {\n    // loadcss(){\n    // \tvar a = Math.random()\n    // console.log('brif1');\n    // \tif(a==0.5){\n    // \t\tconsole.log('yes');\n    // \t\trequire('./articleCardBrief.css');}else{\n    // \t\tconsole.log('not');\n    // \t}\n    // \tconsole.log('brif2');\n    // \t\n    // },\n    jumpToDetail: function jumpToDetail() {\n      var navData = JSON.stringify(this.articleCard); // 这里转换成 字符串\n      uni.navigateTo({\n        url: '/pages/detail/detail?data=' + navData });\n\n    } } };exports.default = _default;\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-app-plus/dist/index.js */ 1)[\"default\"]))\n\n//# sourceURL=undefined");
+eval("/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, \"__esModule\", { value: true });exports.default = void 0;var _default =\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n{\n  name: 'aticlebrief',\n  props: {\n    articleCard: {} },\n\n  data: function data() {\n    return {\n      taglist: [\n      ['123', 'background:#40A792'],\n      ['13', 'background:#621E81'],\n      ['163', 'background:#738598'],\n      ['标签', 'background:#F3AE4B'],\n      ['13', 'background:#621E81'],\n      ['163', 'background:#738598'],\n      ['123', 'background:#40A792'],\n      ['13', 'background:#621E81']] };\n\n\n  },\n  created: function created() {\n    console.log(this.articleCard.tags);\n    console.log(typeof this.articleCard.tags);\n\n  },\n  methods: {\n    jumpToDetail: function jumpToDetail() {\n      var navData = JSON.stringify(this.articleCard); // 这里转换成 字符串\n      uni.navigateTo({\n        url: '/pages/detail/detail?data=' + navData });\n\n    } } };exports.default = _default;\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-app-plus/dist/index.js */ 1)[\"default\"]))\n\n//# sourceURL=undefined");
 
 /***/ }),
 
@@ -3027,7 +3010,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _App
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, \"__esModule\", { value: true });exports.default = void 0;\n\n\n\n\n\n\n\nvar _articlebrief = _interopRequireDefault(__webpack_require__(/*! ../../components/articlebrief */ 20));\nvar _mainpagetop = _interopRequireDefault(__webpack_require__(/*! ../../components/mainpagetop.vue */ 27));\nvar _mainpageleft = _interopRequireDefault(__webpack_require__(/*! @/components/mainpageleft.vue */ 32));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =\n\n{\n  data: function data() {\n    return {\n      title: 'Hello',\n      hottitlelist: ['热门标题111', '热门标题222', '热门标题333'],\n      showlist: '',\n\n      userInfo: {\n        id: 'test-id123',\n        nickname: 'test-name',\n        faceImg: '../static/touxiang.jpg',\n        faceImgThumb: '../static/touxiang.jpg',\n        email: 'zy22089@nottingham.edu.cn',\n        emailPrefix: 'zy22089',\n        emailSuffix: '@nottingham.edu.cn' } };\n\n\n\n  },\n  components: {\n    articlebrief: _articlebrief.default,\n    mainpagetop: _mainpagetop.default,\n    mainpageleft: _mainpageleft.default },\n\n\n  onLoad: function onLoad() {\n    this.showArticles();\n\n    var userInfo = this.getGlobalUserInfo();\n    if (this.isNull(userInfo)) {\n      uni.navigateTo({\n        url: \"../wechatLogin/wechatLogin\" });\n\n      return;\n    }\n\n    this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉\n\n    // [测试代码块]\n    // this.setUserInfoToUserList(userInfo);\n    // var testRes = this.getUserInfoFromUserList(\"123\");\n    // if (this.isNull(testRes)){\n    // \tconsole.log(\"找不到该用户\");\n    // } else {\n    // \tconsole.log(testRes);\n    // }\n\n    // var that = this;\n    // var testRes;\n    // uni.request({\n    // \turl: that.$serverUrl + '/user/queryUser',\n    // \tmethod: \"POST\",\n    // \tdata: {\n    // \t\tuserId: userInfo.id\n    // \t},\n    // \theader: {\n    // \t\t'content-type': 'application/x-www-form-urlencoded'\n    // \t},\n    // \tsuccess: (res) => {\n    // \t\t// console.log(res)\n    // \t\tif (res.data.status == 200) {\n    // \t\t\t// 获取返回的用户信息 写到缓存里\n    // \t\t\ttestRes = res.data.data;\n    // \t\t\tconsole.log(\"里面：\" + testRes.id)\n    // \t\t}\n    // \t}\n    // });\n    // console.log(\"外面：\" + testRes.id);\n\n  },\n  onShow: function onShow() {\n    var userInfo = this.getGlobalUserInfo();\n    if (!this.isNull(userInfo)) {\n      // 设置 userInfo 传给 mainpagetop 组件\n      this.userInfo = this.getGlobalUserInfo();\n    }\n  },\n  methods: {\n\n    showArticles: function showArticles() {\n      var _this = this;\n      uni.request({\n        url: 'http://127.0.0.1:8080/queryAllArticles',\n        method: \"POST\",\n        success: function success(res) {\n          _this.showlist = res.data.data.rows;\n          console.log(res);\n        },\n        fail: function fail(res) {\n          console.log(\"index unirequest fail\");\n          console.log(res);\n        } });\n\n    } } };exports.default = _default;\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-app-plus/dist/index.js */ 1)[\"default\"]))\n\n//# sourceURL=undefined");
+eval("/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, \"__esModule\", { value: true });exports.default = void 0;\n\n\n\n\n\n\n\nvar _articlebrief = _interopRequireDefault(__webpack_require__(/*! ../../components/articlebrief */ 20));\nvar _mainpagetop = _interopRequireDefault(__webpack_require__(/*! ../../components/mainpagetop.vue */ 27));\nvar _mainpageleft = _interopRequireDefault(__webpack_require__(/*! @/components/mainpageleft.vue */ 32));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =\n\n{\n  data: function data() {\n    return {\n      title: 'Hello',\n      hottitlelist: ['热门标题111', '热门标题222', '热门标题333'],\n      showlist: '',\n\n      userInfo: {\n        id: 'test-id123',\n        nickname: 'test-name',\n        faceImg: '../static/touxiang.jpg',\n        faceImgThumb: '../static/touxiang.jpg',\n        email: 'zy22089@nottingham.edu.cn',\n        emailPrefix: 'zy22089',\n        emailSuffix: '@nottingham.edu.cn' } };\n\n\n\n  },\n  components: {\n    articlebrief: _articlebrief.default,\n    mainpagetop: _mainpagetop.default,\n    mainpageleft: _mainpageleft.default },\n\n\n  onLoad: function onLoad() {\n    this.showArticles();\n    var userInfo = this.getGlobalUserInfo();\n    if (this.isNull(userInfo)) {\n      uni.navigateTo({\n        url: \"../wechatLogin/wechatLogin\" });\n\n      return;\n    }\n\n    this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉\n\n    // [测试代码块]\n\n  },\n  onShow: function onShow() {\n    var userInfo = this.getGlobalUserInfo();\n    if (!this.isNull(userInfo)) {\n      // 设置 userInfo 传给 mainpagetop 组件\n      this.userInfo = this.getGlobalUserInfo();\n    }\n  },\n  methods: {\n    showArticles: function showArticles() {\n      var _this = this;\n      uni.request({\n        url: 'http://127.0.0.1:8080/queryAllArticles',\n        method: \"POST\",\n        success: function success(res) {\n          _this.showlist = res.data.data.rows;\n          console.log(res);\n        },\n        fail: function fail(res) {\n          console.log(\"index unirequest fail\");\n          console.log(res);\n        } });\n\n    } } };exports.default = _default;\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-app-plus/dist/index.js */ 1)[\"default\"]))\n\n//# sourceURL=undefined");
 
 /***/ }),
 /* 20 */,
@@ -3286,7 +3269,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _App
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, \"__esModule\", { value: true });exports.default = void 0;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nvar _oneMessage = _interopRequireDefault(__webpack_require__(/*! ./oneMessage */ 49));\nvar _vuex = __webpack_require__(/*! vuex */ 12);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}\n\nvar socketTask;\nvar socketOpen = false;var _default =\n\n{\n  components: {\n    onemessage: _oneMessage.default },\n\n  data: function data() {\n    return {\n      /**\n              * ChatMessageCard example\n             ChatMessageCard = {\n             \tthis.senderId = senderId;\n             \tthis.receiverId = receiverId;\n             \tthis.msg = msg;\t\t// 显示\n             \tthis.msgId = msgId; // 前端不需要用到\n             \tthis.creatTime = creatTime; // 显示 flag\n             },\n             */\n\n      chatContent: [{\n        msgId: '0001',\n        flag: '1',\n        msg: '第一条消息',\n        messageTime: '11:29',\n        messageStatus: '0' },\n      {\n        msgId: '0002',\n        flag: '1',\n        msg: 'abab',\n        messageTime: '11:29',\n        messageStatus: '0' },\n      {\n        msgId: '0003',\n        flag: '1',\n        msg: 'abab',\n        messageTime: '11:29',\n        messageStatus: '0' },\n      {\n        msgId: '0004',\n        flag: '2',\n        msg: 'abab',\n        messageTime: '11:29',\n        messageStatus: '1' },\n      {\n        msgId: '0006',\n        flag: '1',\n        msg: 'abab',\n        messageTime: '11:29',\n        messageStatus: '0' },\n      {\n        msgId: '0006',\n        flag: '2',\n        msg: 'abab',\n        messageTime: '11:29',\n        messageStatus: '1' },\n      {\n        msgId: '0001',\n        flag: '1',\n        msg: 'abab',\n        messageTime: '11:29',\n        messageStatus: '0' },\n      {\n        msgId: '0002',\n        flag: '1',\n        msg: 'abab',\n        messageTime: '11:29',\n        messageStatus: '0' }],\n\n\n      socketMsgQueue: [], // 未发送的消息队列\n      textMsg: '', // 输入框中的text\n      windowHeight: '',\n\n      userInfo: '',\n      friendInfo: '' };\n\n  },\n\n  computed: _objectSpread({},\n  (0, _vuex.mapState)([\n  'ChatMessageCard'])),\n\n\n\n  watch: {\n    ChatMessageCard: function ChatMessageCard(newVal, oldVal) {//监听数据变化，即可做相关操作\n      console.log(\"newVal:\");\n      console.log(newVal);\n      // 添加flag，渲染到窗口\n      newVal.flag = this.chat.FRIEND;\n      this.chatContent.push(newVal);\n\n      this.scrollToBottom();\n\n    } },\n\n\n  onLoad: function onLoad(opt) {\n    // 获取界面传参\n    this.friendInfo = JSON.parse(opt.friendInfo);\n\n    uni.setNavigationBarTitle({\n      title: this.friendInfo.nickname });\n\n\n    // 获取我的信息\n    var userInfo = this.getGlobalUserInfo();\n    if (this.isNull(userInfo)) {\n      console.log(\"No userInfo!!\");\n      return;\n    }\n    this.userInfo = userInfo;\n\n    // 获取屏幕高度\n    var that = this;\n    uni.getSystemInfo({\n      success: function success(res) {\n        that.windowHeight = res.windowHeight;\n      } });\n\n\n    // 获取与该用户的聊天历史记录\n    this.iniChatHistory();\n    this.scrollToBottom();\n  },\n\n  methods: {\n\n    sendText: function sendText() {\n      if (!this.textMsg) {\n        return;\n      }\n      this.mySocket.sendObj(this.netty.CHAT, this.friendInfo.id, this.textMsg, null);\n      // 渲染到窗口\n      var message = {\n        messageId: '0006',\n        flag: this.chat.ME,\n        msg: this.textMsg,\n        messageTime: '11:29',\n        messageStatus: '1' };\n\n      this.chatContent.push(message);\n\n      this.textMsg = ''; //清空输入框\n    },\n\n    iniChatHistory: function iniChatHistory() {\n      var localChatHistory = this.chat.getUserChatHistory(this.userInfo.id, this.friendInfo.id);\n      this.chatContent = localChatHistory;\n    },\n\n    scrollToBottom: function scrollToBottom() {\n      // 将页面滚动到底部，延时滚动,等待渲染\n      // 页面高度乘以列表长度...绝对能滚到底\n      this.$nextTick(function () {\n        uni.pageScrollTo({\n          scrollTop: this.windowHeight * this.chatContent.length,\n          duration: 0 });\n\n      });\n    } } };exports.default = _default;\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-app-plus/dist/index.js */ 1)[\"default\"]))\n\n//# sourceURL=undefined");
+eval("/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, \"__esModule\", { value: true });exports.default = void 0;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nvar _oneMessage = _interopRequireDefault(__webpack_require__(/*! ./oneMessage */ 49));\nvar _vuex = __webpack_require__(/*! vuex */ 12);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}\n\nvar socketTask;\nvar socketOpen = false;var _default =\n\n{\n  components: {\n    onemessage: _oneMessage.default },\n\n  data: function data() {\n    return {\n      /**\n              * ChatMessageCard example\n             ChatMessageCard = {\n             \tthis.senderId = senderId;\n             \tthis.receiverId = receiverId;\n             \tthis.msg = msg;\t\t// 显示\n             \tthis.msgId = msgId; // 前端不需要用到\n             \tthis.creatTime = creatTime; // 显示 flag\n             },\n             */\n\n      chatContent: [{\n        msgId: '0001',\n        flag: '1',\n        msg: '第一条消息',\n        createDate: '11:29',\n        messageStatus: '0' },\n      {\n        msgId: '0002',\n        flag: '1',\n        msg: 'abab',\n        createDate: '11:29',\n        messageStatus: '0' },\n      {\n        msgId: '0003',\n        flag: '1',\n        msg: 'abab',\n        createDate: '11:29',\n        messageStatus: '0' },\n      {\n        msgId: '0004',\n        flag: '2',\n        msg: 'abab',\n        createDate: '11:29',\n        messageStatus: '1' },\n      {\n        msgId: '0006',\n        flag: '1',\n        msg: 'abab',\n        createDate: '11:29',\n        messageStatus: '0' },\n      {\n        msgId: '0006',\n        flag: '2',\n        msg: 'abab',\n        createDate: '11:29',\n        messageStatus: '1' },\n      {\n        msgId: '0001',\n        flag: '1',\n        msg: 'abab',\n        createDate: '11:29',\n        messageStatus: '0' },\n      {\n        msgId: '0002',\n        flag: '1',\n        msg: 'abab',\n        createDate: '11:29',\n        messageStatus: '0' }],\n\n\n      socketMsgQueue: [], // 未发送的消息队列\n      textMsg: '', // 输入框中的text\n      windowHeight: '',\n\n      userInfo: '',\n      friendInfo: '' };\n\n  },\n\n  computed: _objectSpread({},\n  (0, _vuex.mapState)([\n  'ChatMessageCard'])),\n\n\n\n  watch: {\n    ChatMessageCard: function ChatMessageCard(newVal, oldVal) {//监听数据变化，即可做相关操作\n      console.log(\"newVal:\");\n      console.log(newVal);\n      // 渲染到窗口\n      this.chatContent.push(newVal);\n      this.scrollToBottom();\n\n    } },\n\n\n  onLoad: function onLoad(opt) {\n    // 获取界面传参\n    this.friendInfo = JSON.parse(opt.friendInfo);\n\n    uni.setNavigationBarTitle({\n      title: this.friendInfo.nickname });\n\n\n    // 获取我的信息\n    var userInfo = this.getGlobalUserInfo();\n    if (this.isNull(userInfo)) {\n      console.log(\"No userInfo!!\");\n      return;\n    }\n    this.userInfo = userInfo;\n\n    // 获取屏幕高度\n    var that = this;\n    uni.getSystemInfo({\n      success: function success(res) {\n        that.windowHeight = res.windowHeight;\n      } });\n\n\n    // 获取与该用户的聊天历史记录\n    this.getChatHistory();\n    this.scrollToBottom();\n  },\n\n  methods: {\n\n    sendText: function sendText() {\n      if (!this.textMsg) {\n        return;\n      }\n      this.mySocket.sendObj(this.netty.CHAT, this.friendInfo.id, this.textMsg, null);\n\n      // 渲染到窗口\n      // var message = {\n      // \tmsgId: '',\n      // \tflag: this.chat.ME,\n      // \tmsg: this.textMsg,\n      // \tcreateDate: '11:29',\n      // \tmessageStatus: '1',\n      // }\n      // this.chatContent.push(message);\n\n      // 直接重新加载聊天历史, 代替渲染到窗口\n      this.getChatHistory();\n      this.scrollToBottom();\n      this.textMsg = ''; //清空输入框\n    },\n\n    getChatHistory: function getChatHistory() {\n      var localChatHistory = this.chat.getUserChatHistory(this.userInfo.id, this.friendInfo.id);\n      this.chatContent = localChatHistory;\n      // console.log(this.chatContent);\n    },\n\n    scrollToBottom: function scrollToBottom() {\n      // 将页面滚动到底部，延时滚动,等待渲染\n      // 页面高度乘以列表长度...绝对能滚到底\n      this.$nextTick(function () {\n        uni.pageScrollTo({\n          scrollTop: this.windowHeight * this.chatContent.length,\n          duration: 0 });\n\n      });\n    } } };exports.default = _default;\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-app-plus/dist/index.js */ 1)[\"default\"]))\n\n//# sourceURL=undefined");
 
 /***/ }),
 
@@ -3322,7 +3305,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _App
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"render\", function() { return render; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"staticRenderFns\", function() { return staticRenderFns; });\nvar render = function() {\n  var _vm = this\n  var _h = _vm.$createElement\n  var _c = _vm._self._c || _h\n  return _c(\"view\", [\n    _vm.thisMessage.flag == _vm.ME\n      ? _c(\n          \"view\",\n          { staticClass: \"send\" },\n          [\n            _c(\n              \"navigator\",\n              { attrs: { url: \"../personpublic/personpublic\" } },\n              [\n                _c(\"image\", {\n                  staticClass: \"touxiang\",\n                  attrs: { src: _vm.userInfo.faceImg }\n                })\n              ]\n            ),\n            _c(\"view\", { staticClass: \"content\" }, [\n              _c(\"view\", { staticClass: \"contentText\" }, [\n                _vm._v(_vm._s(_vm.thisMessage.msg))\n              ]),\n              _c(\"view\", { staticClass: \"bottomBar\" }, [\n                _c(\"view\", { staticClass: \"time\" }, [\n                  _vm._v(_vm._s(_vm.thisMessage.messageTime))\n                ]),\n                !_vm.thisMessage.messageStatus\n                  ? _c(\"view\", { staticClass: \"status\" }, [_vm._v(\"...\")])\n                  : _vm._e(),\n                _vm.thisMessage.messageStatus\n                  ? _c(\n                      \"view\",\n                      {\n                        staticClass: \"status\",\n                        staticStyle: { color: \"#3FC24A\" }\n                      },\n                      [_vm._v(\"√\")]\n                    )\n                  : _vm._e()\n              ])\n            ])\n          ],\n          1\n        )\n      : _vm._e(),\n    _vm.thisMessage.flag == _vm.FRIEND\n      ? _c(\n          \"view\",\n          { staticClass: \"receve\" },\n          [\n            _c(\n              \"navigator\",\n              { attrs: { url: \"../personpublic/personpublic\" } },\n              [\n                _c(\"image\", {\n                  staticClass: \"touxiang\",\n                  attrs: { src: _vm.friendInfo.faceImg }\n                })\n              ]\n            ),\n            _c(\"view\", { staticClass: \"content\" }, [\n              _c(\"view\", { staticClass: \"contentText\" }, [\n                _vm._v(_vm._s(_vm.thisMessage.msg))\n              ]),\n              _c(\"view\", { staticClass: \"bottomBar\" }, [\n                _c(\"view\", { staticClass: \"time\" }, [\n                  _vm._v(_vm._s(_vm.thisMessage.messageTime))\n                ])\n              ])\n            ])\n          ],\n          1\n        )\n      : _vm._e()\n  ])\n}\nvar staticRenderFns = []\nrender._withStripped = true\n\n\n\n//# sourceURL=undefined");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"render\", function() { return render; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"staticRenderFns\", function() { return staticRenderFns; });\nvar render = function() {\n  var _vm = this\n  var _h = _vm.$createElement\n  var _c = _vm._self._c || _h\n  return _c(\"view\", [\n    _vm.thisMessage.flag == _vm.ME\n      ? _c(\"view\", { staticClass: \"send\" }, [\n          _c(\n            \"view\",\n            {\n              attrs: { eventid: \"2dac0d97-0\" },\n              on: {\n                tap: function($event) {\n                  _vm.goToPersonPublic(_vm.userInfo.id)\n                }\n              }\n            },\n            [\n              _c(\"image\", {\n                staticClass: \"touxiang\",\n                attrs: { src: _vm.userInfo.faceImg }\n              })\n            ]\n          ),\n          _c(\"view\", { staticClass: \"content\" }, [\n            _c(\"view\", { staticClass: \"contentText\" }, [\n              _vm._v(_vm._s(_vm.thisMessage.msg))\n            ]),\n            _c(\"view\", { staticClass: \"bottomBar\" }, [\n              _c(\"view\", { staticClass: \"time\" }, [\n                _vm._v(_vm._s(_vm.thisMessage.createDate))\n              ]),\n              !_vm.thisMessage.isRead\n                ? _c(\"view\", { staticClass: \"status\" }, [_vm._v(\"...\")])\n                : _vm._e(),\n              _vm.thisMessage.messageStatus\n                ? _c(\n                    \"view\",\n                    {\n                      staticClass: \"status\",\n                      staticStyle: { color: \"#3FC24A\" }\n                    },\n                    [_vm._v(\"√\")]\n                  )\n                : _vm._e()\n            ])\n          ])\n        ])\n      : _vm._e(),\n    _vm.thisMessage.flag == _vm.FRIEND\n      ? _c(\"view\", { staticClass: \"receve\" }, [\n          _c(\n            \"view\",\n            {\n              attrs: { eventid: \"2dac0d97-1\" },\n              on: {\n                tap: function($event) {\n                  _vm.goToPersonPublic(_vm.friendInfo.id)\n                }\n              }\n            },\n            [\n              _c(\"image\", {\n                staticClass: \"touxiang\",\n                attrs: { src: _vm.friendInfo.faceImg }\n              })\n            ]\n          ),\n          _c(\"view\", { staticClass: \"content\" }, [\n            _c(\"view\", { staticClass: \"contentText\" }, [\n              _vm._v(_vm._s(_vm.thisMessage.msg))\n            ]),\n            _c(\"view\", { staticClass: \"bottomBar\" }, [\n              _c(\"view\", { staticClass: \"time\" }, [\n                _vm._v(_vm._s(_vm.thisMessage.createDate))\n              ])\n            ])\n          ])\n        ])\n      : _vm._e()\n  ])\n}\nvar staticRenderFns = []\nrender._withStripped = true\n\n\n\n//# sourceURL=undefined");
 
 /***/ }),
 
@@ -3346,7 +3329,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _App
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("Object.defineProperty(exports, \"__esModule\", { value: true });exports.default = void 0;var _default =\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n{\n  props: {\n    userInfo: '',\n    friendInfo: '',\n    thisMessage: {} },\n\n  data: function data() {\n    return {\n      ME: this.chat.ME,\n      FRIEND: this.chat.FRIEND };\n\n  },\n  onReady: function onReady() {\n    // console.log(this.thisMessage);\n  } };exports.default = _default;\n\n//# sourceURL=undefined");
+eval("/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, \"__esModule\", { value: true });exports.default = void 0;var _default =\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n{\n  props: {\n    userInfo: '',\n    friendInfo: '',\n    thisMessage: {} },\n\n  data: function data() {\n    return {\n      ME: this.chat.ME,\n      FRIEND: this.chat.FRIEND };\n\n  },\n  onReady: function onReady() {\n    // console.log(this.thisMessage);\n  },\n  methods: {\n    goToPersonPublic: function goToPersonPublic(userId) {\n      uni.redirectTo({ // 关闭页面再跳转，防止页面栈满, 无法返回\n        url: '../personpublic/personpublic?userId=' + userId });\n\n    } } };exports.default = _default;\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-app-plus/dist/index.js */ 1)[\"default\"]))\n\n//# sourceURL=undefined");
 
 /***/ }),
 
@@ -3597,7 +3580,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _App
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"render\", function() { return render; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"staticRenderFns\", function() { return staticRenderFns; });\nvar render = function() {\n  var _vm = this\n  var _h = _vm.$createElement\n  var _c = _vm._self._c || _h\n  return _c(\"view\", { attrs: { id: \"public-container\" } }, [\n    _c(\n      \"view\",\n      { attrs: { id: \"public-message-futherbox\" } },\n      [\n        _c(\n          \"scroll-view\",\n          {\n            staticClass: \"top-menu-view\",\n            attrs: { \"scroll-x\": \"true\", \"scroll-left\": \"scrollLeft\" }\n          },\n          _vm._l(_vm.menuTabs, function(menuTabs, index) {\n            return _c(\"block\", { key: index }, [\n              _c(\n                \"view\",\n                {\n                  staticClass: \"menu-one-view\",\n                  attrs: {\n                    id: \"tabNum\" + index,\n                    eventid: \"47cdcf86-1-\" + index\n                  },\n                  on: {\n                    click: function($event) {\n                      _vm.swichMenu(index)\n                    }\n                  }\n                },\n                [\n                  _c(\n                    \"view\",\n                    {\n                      class: [\n                        _vm.currentTab == index ? \"menu-one-act\" : \"menu-one\"\n                      ]\n                    },\n                    [\n                      _c(\n                        \"view\",\n                        {\n                          staticClass: \"menu-one-txt\",\n                          attrs: { eventid: \"47cdcf86-0-\" + index },\n                          on: { tap: _vm.goTop }\n                        },\n                        [_vm._v(_vm._s(menuTabs.name))]\n                      ),\n                      _c(\"view\", { staticClass: \"menu-one-bottom\" }, [\n                        _c(\"view\", { staticClass: \"menu-one-bottom-color\" })\n                      ])\n                    ]\n                  )\n                ]\n              )\n            ])\n          })\n        ),\n        _c(\n          \"swiper\",\n          {\n            staticClass: \"swiper-box-list\",\n            attrs: {\n              current: _vm.currentTab,\n              duration: \"300\",\n              eventid: \"47cdcf86-3\"\n            },\n            on: { change: _vm.swiperChange }\n          },\n          _vm._l(_vm.swiperDataList, function(swiperData, index1) {\n            return _c(\n              \"swiper-item\",\n              {\n                key: index1,\n                staticClass: \"swiper-box\",\n                attrs: { mpcomid: \"47cdcf86-0-\" + index1 }\n              },\n              [\n                _c(\n                  \"scroll-view\",\n                  {\n                    staticClass: \"scroll-test\",\n                    attrs: {\n                      \"scroll-top\": _vm.scrollTop,\n                      \"scroll-y\": \"true\",\n                      \"enable-back-to-top\": \"true\",\n                      eventid: \"47cdcf86-2-\" + index1\n                    },\n                    on: {\n                      scrolltoupper: _vm.upper,\n                      scrolltolower: _vm.lower,\n                      scroll: _vm.scroll\n                    }\n                  },\n                  _vm._l(index1 == 0 ? _vm.followList : _vm.fansList, function(\n                    item,\n                    index2\n                  ) {\n                    return _c(\n                      \"view\",\n                      { key: index2, staticClass: \"user-operation-line\" },\n                      [\n                        _c(\n                          \"view\",\n                          { staticClass: \"user-one-line column_center\" },\n                          [\n                            _c(\"image\", {\n                              staticClass: \"publicTouxiang\",\n                              attrs: { mode: \"aspectFill\", src: item.faceImg }\n                            }),\n                            _c(\"view\", { staticClass: \"userid\" }, [\n                              _vm._v(_vm._s(item.nickname))\n                            ]),\n                            _c(\n                              \"view\",\n                              { staticClass: \"attentionButton super_center\" },\n                              [\n                                _c(\n                                  \"text\",\n                                  { staticClass: \"attentionButton-text\" },\n                                  [_vm._v(\"关注\")]\n                                )\n                              ]\n                            )\n                          ]\n                        ),\n                        _c(\"view\", { staticClass: \"border-bottom-line\" })\n                      ]\n                    )\n                  })\n                )\n              ],\n              1\n            )\n          })\n        )\n      ],\n      1\n    )\n  ])\n}\nvar staticRenderFns = []\nrender._withStripped = true\n\n\n\n//# sourceURL=undefined");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"render\", function() { return render; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"staticRenderFns\", function() { return staticRenderFns; });\nvar render = function() {\n  var _vm = this\n  var _h = _vm.$createElement\n  var _c = _vm._self._c || _h\n  return _c(\"view\", { attrs: { id: \"public-container\" } }, [\n    _c(\n      \"view\",\n      { attrs: { id: \"public-message-futherbox\" } },\n      [\n        _c(\n          \"scroll-view\",\n          {\n            staticClass: \"top-menu-view\",\n            attrs: { \"scroll-x\": \"true\", \"scroll-left\": \"scrollLeft\" }\n          },\n          _vm._l(_vm.menuTabs, function(menuTabs, index) {\n            return _c(\"block\", { key: index }, [\n              _c(\n                \"view\",\n                {\n                  staticClass: \"menu-one-view\",\n                  attrs: {\n                    id: \"tabNum\" + index,\n                    eventid: \"47cdcf86-1-\" + index\n                  },\n                  on: {\n                    click: function($event) {\n                      _vm.swichMenu(index)\n                    }\n                  }\n                },\n                [\n                  _c(\n                    \"view\",\n                    {\n                      class: [\n                        _vm.currentTab == index ? \"menu-one-act\" : \"menu-one\"\n                      ]\n                    },\n                    [\n                      _c(\n                        \"view\",\n                        {\n                          staticClass: \"menu-one-txt\",\n                          attrs: { eventid: \"47cdcf86-0-\" + index },\n                          on: { tap: _vm.goTop }\n                        },\n                        [_vm._v(_vm._s(menuTabs.name))]\n                      ),\n                      _c(\"view\", { staticClass: \"menu-one-bottom\" }, [\n                        _c(\"view\", { staticClass: \"menu-one-bottom-color\" })\n                      ])\n                    ]\n                  )\n                ]\n              )\n            ])\n          })\n        ),\n        _c(\n          \"swiper\",\n          {\n            staticClass: \"swiper-box-list\",\n            attrs: {\n              current: _vm.currentTab,\n              duration: \"300\",\n              eventid: \"47cdcf86-4\"\n            },\n            on: { change: _vm.swiperChange }\n          },\n          _vm._l(_vm.swiperDataList, function(swiperData, index1) {\n            return _c(\n              \"swiper-item\",\n              {\n                key: index1,\n                staticClass: \"swiper-box\",\n                attrs: { mpcomid: \"47cdcf86-0-\" + index1 }\n              },\n              [\n                _c(\n                  \"scroll-view\",\n                  {\n                    staticClass: \"scroll-test\",\n                    attrs: {\n                      \"scroll-top\": _vm.scrollTop,\n                      \"scroll-y\": \"true\",\n                      \"enable-back-to-top\": \"true\",\n                      eventid: \"47cdcf86-3-\" + index1\n                    },\n                    on: {\n                      scrolltoupper: _vm.upper,\n                      scrolltolower: _vm.lower,\n                      scroll: _vm.scroll\n                    }\n                  },\n                  _vm._l(index1 == 0 ? _vm.followList : _vm.fansList, function(\n                    item,\n                    index2\n                  ) {\n                    return _c(\n                      \"view\",\n                      { key: index2, staticClass: \"user-operation-line\" },\n                      [\n                        _c(\n                          \"view\",\n                          { staticClass: \"user-one-line column_center\" },\n                          [\n                            _c(\"image\", {\n                              staticClass: \"publicTouxiang\",\n                              attrs: {\n                                mode: \"aspectFill\",\n                                src: item.faceImg,\n                                eventid: \"47cdcf86-2-\" + index1 + \"-\" + index2\n                              },\n                              on: {\n                                tap: function($event) {\n                                  _vm.goToPersonPublic(index1, index2)\n                                }\n                              }\n                            }),\n                            _c(\"view\", { staticClass: \"userid\" }, [\n                              _vm._v(_vm._s(item.nickname))\n                            ])\n                          ]\n                        ),\n                        _c(\"view\", { staticClass: \"border-bottom-line\" })\n                      ]\n                    )\n                  })\n                )\n              ],\n              1\n            )\n          })\n        )\n      ],\n      1\n    )\n  ])\n}\nvar staticRenderFns = []\nrender._withStripped = true\n\n\n\n//# sourceURL=undefined");
 
 /***/ }),
 
@@ -3621,7 +3604,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _App
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, \"__esModule\", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 76));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, \"next\", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, \"throw\", err);}_next(undefined);});};}var _default =\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n{\n  data: function data() {\n    return {\n      scrollLeft: 0,\n      isClickChange: false,\n      currentTab: '', // 切换 list 0/1\n      menuTabs: [{\n        name: '他关注的' },\n      {\n        name: '关注他的' }],\n\n\n      // 关注粉丝列表属性\n      swiperDataList: [\n      [], // followList 把数据写进里面首次进入页面加载不出，所以写到外面\n      [] // fansList\n      ],\n      followList: '',\n      fansList: '',\n\n      // 用于分页的属性\n      totalPage: 1,\n      page: 1,\n      videoList: [],\n\n      screenWidth: 350,\n      serverUrl: \"\",\n      scrollTop: 0,\n      old: {\n        scrollTop: 0 } };\n\n\n\n  },\n\n  changeIndicatorDots: function changeIndicatorDots(e) {\n    this.indicatorDots = !this.indicatorDots;\n  },\n  changeAutoplay: function changeAutoplay(e) {\n    this.autoplay = !this.autoplay;\n  },\n  intervalChange: function intervalChange(e) {\n    this.interval = e.target.value;\n  },\n  durationChange: function durationChange(e) {\n    this.duration = e.target.value;\n  },\n\n  onLoad: function onLoad(opt) {\n    uni.setNavigationBarTitle({\n      title: 'XXX的主页' });\n\n\n    this.swiperDataList[0] = [1, 1, 1];\n    // 获取userId\n    var userId = opt.userId;\n    this.queryFansFollow(userId);\n\n    // 设置列表 index\n    this.currentTab = opt.currentTab;\n\n    var screenWidth = uni.getSystemInfoSync().screenWidth;\n    this.screenWidth = screenWidth;\n\n    // 获取当前页面\n    // var page = this.page;\n\n  },\n\n  onPullDownRefresh: function onPullDownRefresh() {\n    console.log('refresh');\n    setTimeout(function () {\n      uni.stopPullDownRefresh();\n    }, 1000);\n  },\n\n  methods: {\n    swichMenu: function () {var _swichMenu = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(current) {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:if (!(\n                this.currentTab == current)) {_context.next = 4;break;}return _context.abrupt(\"return\",\n                false);case 4:\n\n                this.currentTab = current;\n                this.setScrollLeft(current);case 6:case \"end\":return _context.stop();}}}, _callee, this);}));function swichMenu(_x) {return _swichMenu.apply(this, arguments);}return swichMenu;}(),\n\n\n    swiperChange: function () {var _swiperChange = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(e) {var index;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:\n                index = e.target.current;\n                this.setScrollLeft(index);\n                this.currentTab = index;case 3:case \"end\":return _context2.stop();}}}, _callee2, this);}));function swiperChange(_x2) {return _swiperChange.apply(this, arguments);}return swiperChange;}(),\n\n    setScrollLeft: function () {var _setScrollLeft = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3(tabIndex) {var leftWidthSum, i, nowElement, winWidth;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:\n                leftWidthSum = 0;\n                i = 0;case 2:if (!(i <= tabIndex)) {_context3.next = 10;break;}_context3.next = 5;return (\n                  this.getWidth('tabNum' + i));case 5:nowElement = _context3.sent;\n                leftWidthSum = leftWidthSum + nowElement.width;case 7:i++;_context3.next = 2;break;case 10:\n\n                winWidth = uni.getSystemInfoSync().windowWidth;\n                this.scrollLeft = leftWidthSum > winWidth ? leftWidthSum - winWidth : 0;case 12:case \"end\":return _context3.stop();}}}, _callee3, this);}));function setScrollLeft(_x3) {return _setScrollLeft.apply(this, arguments);}return setScrollLeft;}(),\n\n    getWidth: function getWidth(id) {//得到元素的宽高\n      return new Promise(function (res, rej) {\n        uni.createSelectorQuery().select(\"#\" + id).fields({\n          size: true,\n          scrollOffset: true },\n        function (data) {\n          res(data);\n        }).exec();\n      });\n    },\n    loadMore: function loadMore(tabIndex) {\n      console.log('正在加载更多数据。。。');\n      this.getDateList(tabIndex);\n    },\n\n    upper: function upper(e) {\n      console.log(e);\n    },\n    lower: function lower(e) {\n      console.log(e);\n    },\n    scroll: function scroll(e) {\n      console.log(e);\n      this.old.scrollTop = e.detail.scrollTop;\n    },\n    goTop: function goTop(e) {\n      this.scrollTop = this.old.scrollTop;\n      this.$nextTick(function () {\n        this.scrollTop = 0;\n      });\n      // uni.showToast({\n      // \ticon: \"none\",\n      // \ttitle: \"回到顶部喽~\"\n      // })\n    },\n\n    /**\n        * 查询该用户的粉丝和关注用户信息列表\n        */\n    queryFansFollow: function queryFansFollow(userId) {\n      var that = this;\n      uni.request({\n        url: that.$serverUrl + '/user/queryFansAndFollow',\n        method: \"POST\",\n        data: {\n          userId: userId },\n\n        header: {\n          'content-type': 'application/x-www-form-urlencoded' },\n\n        success: function success(res) {\n          console.log(res);\n          if (res.data.status == 200) {\n            var data = res.data.data;\n            that.followList = data.followList;\n            that.fansList = data.fansList;\n\n            // that.swiperDataList[0] = data.followList;\n            // that.swiperDataList[1] = data.fansList;\n          }\n        } });\n\n    } } };exports.default = _default;\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-app-plus/dist/index.js */ 1)[\"default\"]))\n\n//# sourceURL=undefined");
+eval("/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, \"__esModule\", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 76));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, \"next\", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, \"throw\", err);}_next(undefined);});};}var _default =\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n{\n  data: function data() {\n    return {\n      scrollLeft: 0,\n      isClickChange: false,\n      currentTab: '', // 切换 list 0/1\n      menuTabs: [{\n        name: '他关注的' },\n      {\n        name: '关注他的' }],\n\n\n      // 关注粉丝列表属性\n      swiperDataList: [\n      [], // followList 把数据写进里面首次进入页面加载不出，所以写到外面\n      [] // fansList\n      ],\n      followList: '',\n      fansList: '',\n\n      // 用于分页的属性\n      totalPage: 1,\n      page: 1,\n      videoList: [],\n\n      screenWidth: 350,\n      serverUrl: \"\",\n      scrollTop: 0,\n      old: {\n        scrollTop: 0 } };\n\n\n\n  },\n\n  changeIndicatorDots: function changeIndicatorDots(e) {\n    this.indicatorDots = !this.indicatorDots;\n  },\n  changeAutoplay: function changeAutoplay(e) {\n    this.autoplay = !this.autoplay;\n  },\n  intervalChange: function intervalChange(e) {\n    this.interval = e.target.value;\n  },\n  durationChange: function durationChange(e) {\n    this.duration = e.target.value;\n  },\n\n  onLoad: function onLoad(opt) {\n    var data = JSON.parse(opt.data);\n    var thisUserInfo = data.thisUserInfo;\n    var currentTab = currentTab;\n\n    uni.setNavigationBarTitle({\n      title: thisUserInfo.nickname + '的主页' });\n\n\n    // 获取userId\n    var userId = thisUserInfo.id;\n    this.queryFansFollow(userId);\n\n    // 设置列表 index\n    this.currentTab = currentTab;\n\n    var screenWidth = uni.getSystemInfoSync().screenWidth;\n    this.screenWidth = screenWidth;\n\n    // 获取当前页面\n    // var page = this.page;\n\n  },\n\n  onPullDownRefresh: function onPullDownRefresh() {\n    console.log('refresh');\n    setTimeout(function () {\n      uni.stopPullDownRefresh();\n    }, 1000);\n  },\n\n  methods: {\n    swichMenu: function () {var _swichMenu = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(current) {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:if (!(\n                this.currentTab == current)) {_context.next = 4;break;}return _context.abrupt(\"return\",\n                false);case 4:\n\n                this.currentTab = current;\n                this.setScrollLeft(current);case 6:case \"end\":return _context.stop();}}}, _callee, this);}));function swichMenu(_x) {return _swichMenu.apply(this, arguments);}return swichMenu;}(),\n\n\n    swiperChange: function () {var _swiperChange = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(e) {var index;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:\n                index = e.target.current;\n                this.setScrollLeft(index);\n                this.currentTab = index;case 3:case \"end\":return _context2.stop();}}}, _callee2, this);}));function swiperChange(_x2) {return _swiperChange.apply(this, arguments);}return swiperChange;}(),\n\n    setScrollLeft: function () {var _setScrollLeft = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3(tabIndex) {var leftWidthSum, i, nowElement, winWidth;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:\n                leftWidthSum = 0;\n                i = 0;case 2:if (!(i <= tabIndex)) {_context3.next = 10;break;}_context3.next = 5;return (\n                  this.getWidth('tabNum' + i));case 5:nowElement = _context3.sent;\n                leftWidthSum = leftWidthSum + nowElement.width;case 7:i++;_context3.next = 2;break;case 10:\n\n                winWidth = uni.getSystemInfoSync().windowWidth;\n                this.scrollLeft = leftWidthSum > winWidth ? leftWidthSum - winWidth : 0;case 12:case \"end\":return _context3.stop();}}}, _callee3, this);}));function setScrollLeft(_x3) {return _setScrollLeft.apply(this, arguments);}return setScrollLeft;}(),\n\n    getWidth: function getWidth(id) {//得到元素的宽高\n      return new Promise(function (res, rej) {\n        uni.createSelectorQuery().select(\"#\" + id).fields({\n          size: true,\n          scrollOffset: true },\n        function (data) {\n          res(data);\n        }).exec();\n      });\n    },\n    loadMore: function loadMore(tabIndex) {\n      console.log('正在加载更多数据。。。');\n      this.getDateList(tabIndex);\n    },\n\n    upper: function upper(e) {\n      console.log(e);\n    },\n    lower: function lower(e) {\n      console.log(e);\n    },\n    scroll: function scroll(e) {\n      console.log(e);\n      this.old.scrollTop = e.detail.scrollTop;\n    },\n    goTop: function goTop(e) {\n      this.scrollTop = this.old.scrollTop;\n      this.$nextTick(function () {\n        this.scrollTop = 0;\n      });\n      // uni.showToast({\n      // \ticon: \"none\",\n      // \ttitle: \"回到顶部喽~\"\n      // })\n    },\n\n    /**\n        * 查询该用户的粉丝和关注用户信息列表\n        */\n    queryFansFollow: function queryFansFollow(userId) {\n      var that = this;\n      uni.request({\n        url: that.$serverUrl + '/user/queryFansAndFollow',\n        method: \"POST\",\n        data: {\n          userId: userId },\n\n        header: {\n          'content-type': 'application/x-www-form-urlencoded' },\n\n        success: function success(res) {\n          console.log(res);\n          if (res.data.status == 200) {\n            var data = res.data.data;\n            console.log(data);\n            that.followList = data.followList;\n            that.fansList = data.fansList;\n\n            // that.swiperDataList[0] = data.followList;\n            // that.swiperDataList[1] = data.fansList;\n          }\n        } });\n\n    },\n\n    /**\n        * 直接传 item 有 bug, 所以用这个复杂一点的方式曲线救国\n        * @param {Object} index1 0=followList; 1=fansList\n        * @param {Object} index2 列表里的索引\n        */\n    goToPersonPublic: function goToPersonPublic(index1, index2) {\n      var list;\n      if (index1 == 0) {\n        list = this.followList;\n      } else if (index1 == 1) {\n        list = this.fansList;\n      }\n\n      var userId = list[index2].id;\n      uni.redirectTo({\n        url: '../personpublic/personpublic?userId=' + userId });\n\n    } } };exports.default = _default;\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-app-plus/dist/index.js */ 1)[\"default\"]))\n\n//# sourceURL=undefined");
 
 /***/ }),
 
@@ -3827,7 +3810,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _App
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, \"__esModule\", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 76));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, \"next\", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, \"throw\", err);}_next(undefined);});};}var _default =\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n{\n  data: function data() {\n    return {\n      scrollLeft: 0,\n      isClickChange: false,\n      currentTab: 0,\n      menuTabs: [{\n        name: '动态' },\n      {\n        name: '帖子' },\n      {\n        name: '点赞' },\n      {\n        name: '评论' }],\n\n\n      swiperDateList: [\n      [],\n      [],\n      [],\n      [],\n      [],\n      []],\n\n\n      // 用于分页的属性\n      totalPage: 1,\n      page: 1,\n      videoList: [],\n\n      screenWidth: 350,\n      serverUrl: \"\",\n\n      thisUserInfo: '' };\n\n  },\n\n  changeIndicatorDots: function changeIndicatorDots(e) {\n    this.indicatorDots = !this.indicatorDots;\n  },\n  changeAutoplay: function changeAutoplay(e) {\n    this.autoplay = !this.autoplay;\n  },\n  intervalChange: function intervalChange(e) {\n    this.interval = e.target.value;\n  },\n  durationChange: function durationChange(e) {\n    this.duration = e.target.value;\n  },\n\n  onLoad: function onLoad() {\n    // 获取这个人的信息 [测试展示用自己的]\n    var userInfo = this.getGlobalUserInfo();\n    if (this.isNull(userInfo)) {\n      console.log(\"No userInfo!!\");\n      return;\n    }\n    this.thisUserInfo = userInfo;\n    console.log(this.thisUserInfo);\n\n    uni.setNavigationBarTitle({\n      title: this.thisUserInfo.nickname + \"的主页\" });\n\n\n    var screenWidth = uni.getSystemInfoSync().screenWidth;\n    this.screenWidth = screenWidth;\n\n    // 获取当前分页\n    var page = this.page;\n\n    // TODO 更新本地用户信息缓存\n\n    // [测试代码块]\n    this.mySocket.init();\n  },\n\n  onPullDownRefresh: function onPullDownRefresh() {\n    console.log('refresh');\n    setTimeout(function () {\n      uni.stopPullDownRefresh();\n    }, 1000);\n  },\n\n  methods: {\n    swichMenu: function () {var _swichMenu = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(current) {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:if (!(\n                this.currentTab == current)) {_context.next = 4;break;}return _context.abrupt(\"return\",\n                false);case 4:\n\n                this.currentTab = current;\n                this.setScrollLeft(current);case 6:case \"end\":return _context.stop();}}}, _callee, this);}));function swichMenu(_x) {return _swichMenu.apply(this, arguments);}return swichMenu;}(),\n\n\n    swiperChange: function () {var _swiperChange = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(e) {var index;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:\n                index = e.target.current;\n                this.setScrollLeft(index);\n                this.currentTab = index;case 3:case \"end\":return _context2.stop();}}}, _callee2, this);}));function swiperChange(_x2) {return _swiperChange.apply(this, arguments);}return swiperChange;}(),\n\n    setScrollLeft: function () {var _setScrollLeft = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3(tabIndex) {var leftWidthSum, i, nowElement, winWidth;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:\n                leftWidthSum = 0;\n                i = 0;case 2:if (!(i <= tabIndex)) {_context3.next = 10;break;}_context3.next = 5;return (\n                  this.getWidth('tabNum' + i));case 5:nowElement = _context3.sent;\n                leftWidthSum = leftWidthSum + nowElement.width;case 7:i++;_context3.next = 2;break;case 10:\n\n                winWidth = uni.getSystemInfoSync().windowWidth;\n                this.scrollLeft = leftWidthSum > winWidth ? leftWidthSum - winWidth : 0;case 12:case \"end\":return _context3.stop();}}}, _callee3, this);}));function setScrollLeft(_x3) {return _setScrollLeft.apply(this, arguments);}return setScrollLeft;}(),\n\n    getWidth: function getWidth(id) {//得到元素的宽高\n      return new Promise(function (res, rej) {\n        uni.createSelectorQuery().select(\"#\" + id).fields({\n          size: true,\n          scrollOffset: true },\n        function (data) {\n          res(data);\n        }).exec();\n      });\n    },\n    loadMore: function loadMore(tabIndex) {\n      console.log('正在加载更多数据。。。');\n      this.getDateList(tabIndex);\n    },\n    /**\n        * 调用添加关注的接口\n        */\n    addFollow: function addFollow() {\n\n    },\n\n    goToChatPage: function goToChatPage() {\n      var friendInfo = this.thisUserInfo;\n      uni.navigateTo({\n        url: '../chatpage/chatpage?friendInfo=' + JSON.stringify(friendInfo) });\n\n    },\n\n    /**\n        * @param {Object} currentTab 0: 关注 1: 粉丝\n        */\n    goToFansFollow: function goToFansFollow(currentTab) {\n      uni.navigateTo({\n        url: '../followlist/followlist?currentTab=' + currentTab + '&userId=' + this.thisUserInfo.id });\n\n    } } };exports.default = _default;\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-app-plus/dist/index.js */ 1)[\"default\"]))\n\n//# sourceURL=undefined");
+eval("/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, \"__esModule\", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 76));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, \"next\", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, \"throw\", err);}_next(undefined);});};}var _default =\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n{\n  data: function data() {\n    return {\n      scrollLeft: 0,\n      isClickChange: false,\n      currentTab: 0,\n      menuTabs: [{\n        name: '动态' },\n      {\n        name: '帖子' },\n      {\n        name: '点赞' },\n      {\n        name: '评论' }],\n\n\n      swiperDateList: [\n      [],\n      [],\n      [],\n      [],\n      [],\n      []],\n\n\n      // 用于分页的属性\n      totalPage: 1,\n      page: 1,\n      videoList: [],\n\n      screenWidth: 350,\n      serverUrl: \"\",\n\n      thisUserInfo: '' };\n\n  },\n\n  changeIndicatorDots: function changeIndicatorDots(e) {\n    this.indicatorDots = !this.indicatorDots;\n  },\n  changeAutoplay: function changeAutoplay(e) {\n    this.autoplay = !this.autoplay;\n  },\n  intervalChange: function intervalChange(e) {\n    this.interval = e.target.value;\n  },\n  durationChange: function durationChange(e) {\n    this.duration = e.target.value;\n  },\n\n  onLoad: function onLoad(opt) {\n    var screenWidth = uni.getSystemInfoSync().screenWidth;\n    this.screenWidth = screenWidth;\n\n    // 获取当前分页\n    var page = this.page;\n\n    // 获取这个人的信息, TODO: 更新本地用户信息缓存\n    var userId = opt.userId;\n    this.queryUserInfo(userId);\n\n    // [测试代码块]\n    this.$nextTick(function () {\n      console.log(this.thisUserInfo);\n      uni.setNavigationBarTitle({\n        title: this.thisUserInfo.nickname + \"的主页\" });\n\n    });\n\n    // this.mySocket.init()\n  },\n\n  onPullDownRefresh: function onPullDownRefresh() {\n    console.log('refresh');\n    setTimeout(function () {\n      uni.stopPullDownRefresh();\n    }, 1000);\n  },\n\n  methods: {\n    swichMenu: function () {var _swichMenu = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(current) {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:if (!(\n                this.currentTab == current)) {_context.next = 4;break;}return _context.abrupt(\"return\",\n                false);case 4:\n\n                this.currentTab = current;\n                this.setScrollLeft(current);case 6:case \"end\":return _context.stop();}}}, _callee, this);}));function swichMenu(_x) {return _swichMenu.apply(this, arguments);}return swichMenu;}(),\n\n\n    swiperChange: function () {var _swiperChange = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(e) {var index;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:\n                index = e.target.current;\n                this.setScrollLeft(index);\n                this.currentTab = index;case 3:case \"end\":return _context2.stop();}}}, _callee2, this);}));function swiperChange(_x2) {return _swiperChange.apply(this, arguments);}return swiperChange;}(),\n\n    setScrollLeft: function () {var _setScrollLeft = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3(tabIndex) {var leftWidthSum, i, nowElement, winWidth;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:\n                leftWidthSum = 0;\n                i = 0;case 2:if (!(i <= tabIndex)) {_context3.next = 10;break;}_context3.next = 5;return (\n                  this.getWidth('tabNum' + i));case 5:nowElement = _context3.sent;\n                leftWidthSum = leftWidthSum + nowElement.width;case 7:i++;_context3.next = 2;break;case 10:\n\n                winWidth = uni.getSystemInfoSync().windowWidth;\n                this.scrollLeft = leftWidthSum > winWidth ? leftWidthSum - winWidth : 0;case 12:case \"end\":return _context3.stop();}}}, _callee3, this);}));function setScrollLeft(_x3) {return _setScrollLeft.apply(this, arguments);}return setScrollLeft;}(),\n\n    getWidth: function getWidth(id) {//得到元素的宽高\n      return new Promise(function (res, rej) {\n        uni.createSelectorQuery().select(\"#\" + id).fields({\n          size: true,\n          scrollOffset: true },\n        function (data) {\n          res(data);\n        }).exec();\n      });\n    },\n    loadMore: function loadMore(tabIndex) {\n      console.log('正在加载更多数据。。。');\n      this.getDateList(tabIndex);\n    },\n    /**\n        * 调用添加关注的接口\n        */\n    addFollow: function addFollow() {\n\n    },\n\n    goToChatPage: function goToChatPage() {\n      var friendInfo = this.thisUserInfo;\n      uni.redirectTo({\n        url: '../chatpage/chatpage?friendInfo=' + JSON.stringify(friendInfo) });\n\n    },\n\n    /**\n        * @param {Object} currentTab 0: 关注 1: 粉丝\n        */\n    goToFansFollow: function goToFansFollow(currentTab) {\n      console.log(\"goToFansFollow...\");\n      var data = {\n        currentTab: currentTab,\n        thisUserInfo: this.thisUserInfo };\n\n      uni.redirectTo({\n        url: '../followlist/followlist?data=' + JSON.stringify(data) });\n\n    },\n\n    queryUserInfo: function queryUserInfo(userId) {\n      var that = this;\n      uni.request({\n        url: that.$serverUrl + '/user/queryUser',\n        method: \"POST\",\n        data: {\n          userId: userId },\n\n        header: {\n          'content-type': 'application/x-www-form-urlencoded' },\n\n        success: function success(res) {\n          // console.log(res)\n          if (res.data.status == 200) {\n            that.thisUserInfo = res.data.data;\n\n          }\n        } });\n\n    } } };exports.default = _default;\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-app-plus/dist/index.js */ 1)[\"default\"]))\n\n//# sourceURL=undefined");
 
 /***/ }),
 
@@ -4498,7 +4481,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _App
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"render\", function() { return render; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"staticRenderFns\", function() { return staticRenderFns; });\nvar render = function() {\n  var _vm = this\n  var _h = _vm.$createElement\n  var _c = _vm._self._c || _h\n  return _c(\"view\", [\n    _c(\"view\", { staticClass: \"topbar\" }, [\n      _c(\"image\", {\n        staticClass: \"backk\",\n        attrs: { src: \"../../static/icon/返回.svg\" }\n      }),\n      _c(\"view\", { staticClass: \"detailtitle\" }, [\n        _vm._v(_vm._s(_vm.articleCard.articleTitle))\n      ])\n    ]),\n    _c(\n      \"view\",\n      { staticClass: \"drtailmain\" },\n      [\n        _c(\"view\", {\n          staticStyle: {\n            height: \"5px\",\n            \"background-color\": \"white\",\n            width: \"60%\",\n            margin: \"auto\"\n          }\n        }),\n        _c(\"view\", { staticClass: \"detailcontent\" }, [\n          _vm._v(_vm._s(_vm.articleCard.articleContent))\n        ]),\n        _vm._m(0),\n        _c(\n          \"view\",\n          { staticClass: \"tags\" },\n          _vm._l(_vm.articleCard.tags, function(i, index) {\n            return _c(\"view\", { key: index, staticClass: \"tag\" }, [\n              _vm._v(_vm._s(i))\n            ])\n          })\n        ),\n        _vm._l(_vm.comments, function(comment, index0) {\n          return _c(\"commentbox\", {\n            key: comment[0],\n            attrs: { comment: comment, mpcomid: \"42698ffd-0-\" + index0 }\n          })\n        })\n      ],\n      2\n    )\n  ])\n}\nvar staticRenderFns = [\n  function() {\n    var _vm = this\n    var _h = _vm.$createElement\n    var _c = _vm._self._c || _h\n    return _c(\"view\", { staticClass: \"detailpics\" }, [\n      _c(\"image\", {\n        staticClass: \"detailpic\",\n        attrs: { src: \"../../static/0001/pic3.jpg\" }\n      }),\n      _c(\"image\", {\n        staticClass: \"detailpic\",\n        attrs: { src: \"../../static/0001/pic3.jpg\" }\n      }),\n      _c(\"image\", {\n        staticClass: \"detailpic\",\n        attrs: { src: \"../../static/0001/pic3.jpg\" }\n      }),\n      _c(\"image\", {\n        staticClass: \"detailpic\",\n        attrs: { src: \"../../static/0001/pic3.jpg\" }\n      }),\n      _c(\"image\", {\n        staticClass: \"detailpic\",\n        attrs: { src: \"../../static/0001/pic3.jpg\" }\n      }),\n      _c(\"image\", {\n        staticClass: \"detailpic\",\n        attrs: { src: \"../../static/0001/pic3.jpg\" }\n      }),\n      _c(\"image\", {\n        staticClass: \"detailpic\",\n        attrs: { src: \"../../static/0001/pic3.jpg\" }\n      }),\n      _c(\"image\", {\n        staticClass: \"detailpic\",\n        attrs: { src: \"../../static/0001/pic3.jpg\" }\n      }),\n      _c(\"image\", {\n        staticClass: \"detailpic\",\n        attrs: { src: \"../../static/0001/pic3.jpg\" }\n      })\n    ])\n  }\n]\nrender._withStripped = true\n\n\n\n//# sourceURL=undefined");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"render\", function() { return render; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"staticRenderFns\", function() { return staticRenderFns; });\nvar render = function() {\n  var _vm = this\n  var _h = _vm.$createElement\n  var _c = _vm._self._c || _h\n  return _c(\"view\", [\n    _c(\"view\", { staticClass: \"topbar\" }, [\n      _c(\"image\", {\n        staticClass: \"backk\",\n        attrs: { src: \"../../static/icon/返回.svg\" }\n      }),\n      _c(\"view\", { staticClass: \"detailtitle\" }, [\n        _vm._v(_vm._s(_vm.articleCard.articleTitle))\n      ])\n    ]),\n    _c(\n      \"view\",\n      { staticClass: \"drtailmain\" },\n      [\n        _c(\"view\", {\n          staticStyle: {\n            height: \"5px\",\n            \"background-color\": \"white\",\n            width: \"60%\",\n            margin: \"auto\"\n          }\n        }),\n        _c(\"view\", { staticClass: \"detailcontent\" }, [\n          _vm._v(_vm._s(_vm.articleCard.articleContent))\n        ]),\n        _c(\"view\", { staticClass: \"detailpics\" }),\n        _c(\n          \"view\",\n          { staticClass: \"tags\" },\n          _vm._l(_vm.articleCard.tags, function(i, index) {\n            return _c(\"view\", { key: index, staticClass: \"tag\" }, [\n              _vm._v(_vm._s(i))\n            ])\n          })\n        ),\n        _c(\"view\", { staticClass: \"commentPart\" }, [\n          _c(\"input\", {\n            staticClass: \"commentSth\",\n            attrs: {\n              placeholder: \"评论点什么...\",\n              \"confirm-type\": \"send\",\n              eventid: \"42698ffd-0\"\n            },\n            on: { confirm: _vm.saveComment }\n          })\n        ]),\n        _vm._l(_vm.commentList, function(i, index0) {\n          return _c(\"commentbox\", {\n            key: i.id,\n            attrs: { commentDetail: i, mpcomid: \"42698ffd-0-\" + index0 }\n          })\n        })\n      ],\n      2\n    )\n  ])\n}\nvar staticRenderFns = []\nrender._withStripped = true\n\n\n\n//# sourceURL=undefined");
 
 /***/ }),
 
@@ -4522,7 +4505,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _App
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("Object.defineProperty(exports, \"__esModule\", { value: true });exports.default = void 0;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nvar _articlebrief = _interopRequireDefault(__webpack_require__(/*! ../../components/articlebrief */ 20));\nvar _comment = _interopRequireDefault(__webpack_require__(/*! ../../components/comment */ 151));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =\n{\n  data: function data() {\n    return {\n      comments: [\n      ['00001', '评论者ID', '楼主好棒', '一小时前', '60', '7'],\n      ['00003', '评论者ID', '楼主求微信', '一小时前', '90', '7'],\n      ['00005', '评论者ID', '楼主求微信', '一小时前', '60', '7'],\n      ['00009', '评论者ID', '楼主求微信', '一小时前', '9', '70']],\n\n      articleCard: \"\",\n      taglist: [\n      ['123', 'background:red'],\n      ['13', 'background:blue'],\n      ['163', 'background:yellow']] };\n\n\n  },\n\n  components: {\n    articlebrief: _articlebrief.default,\n    commentbox: _comment.default },\n\n  methods: {},\n  onLoad: function onLoad(options) {\n    console.log('detail receved');\n    console.log(options.data);\n\n    this.articleCard = JSON.parse(options.data);\n    console.log(this.articleCard);\n    console.log(this.articleCard.artiticleTitle);\n  } };exports.default = _default;\n\n//# sourceURL=undefined");
+eval("/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, \"__esModule\", { value: true });exports.default = void 0;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nvar _articlebrief = _interopRequireDefault(__webpack_require__(/*! ../../components/articlebrief */ 20));\nvar _comment = _interopRequireDefault(__webpack_require__(/*! ../../components/comment */ 151));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =\n{\n  data: function data() {\n    return {\n      userInfo: {},\n      comments: [\n        // ['00001', '评论者ID', '楼主好棒', '一小时前', '60', '7'],\n        // ['00003', '评论者ID', '楼主求微信', '一小时前', '90', '7'],\n        // ['00005', '评论者ID', '楼主求微信', '一小时前', '60', '7'],\n        // ['00009', '评论者ID', '楼主求微信', '一小时前', '9', '70']\n      ],\n      articleCard: \"\",\n      // taglist: [\n      // \t['123', 'background:red'],\n      // \t['13', 'background:blue'],\n      // \t['163', 'background:yellow']\n      // ],\n      commentList: '' };\n\n  },\n\n  components: {\n    articlebrief: _articlebrief.default,\n    commentbox: _comment.default },\n\n  methods: {\n    saveComment: function saveComment(e) {\n      var that = this;\n      var content = e.detail.value;\n      var userInfoTemp = this.getGlobalUserInfo();\n      if (this.isNull(userInfoTemp)) {\n        uni.navigateTo({\n          url: \"../wechatLogin/wechatLogin\" });\n\n      } else {\n        uni.request({\n          url: this.SeverUrl + '/saveComment',\n          method: 'POST',\n          data: {\n            fromUserId: that.userInfo.id,\n            articleId: that.articleCard.id,\n            comment: content },\n\n          success: function success(res) {\n            console.log(res.data);\n          } });\n\n      }\n    },\n    getComments: function getComments() {\n      var that = this;\n      uni.request({\n        url: this.SeverUrl + '/getArticleComments',\n        method: \"POST\",\n        data: {\n          articleId: that.articleCard.id\n          // page: '',\n          // pageSize: ''\n        },\n        header: {\n          'content-type': 'application/x-www-form-urlencoded' },\n\n        success: function success(res) {\n          that.commentList = res.data.data.rows;\n          console.log(that.articleCard.id),\n          console.log(res);\n        } });\n\n    } },\n\n  onLoad: function onLoad(options) {\n    // console.log('detail receved');\n    // console.log(options.data);\n\n    this.articleCard = JSON.parse(options.data);\n    // console.log(this.articleCard);\n    // console.log(this.articleCard.artiticleTitle);\n\n    var userInfo = this.getGlobalUserInfo();\n    if (!this.isNull(userInfo)) {\n      this.userInfo = this.getGlobalUserInfo();\n    }\n    // console.log(this.articleCard.id);\n    // console.log(this.userInfo.nickname);\n    this.getComments();\n  } };exports.default = _default;\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-app-plus/dist/index.js */ 1)[\"default\"]))\n\n//# sourceURL=undefined");
 
 /***/ }),
 
@@ -4558,7 +4541,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _App
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"render\", function() { return render; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"staticRenderFns\", function() { return staticRenderFns; });\nvar render = function() {\n  var _vm = this\n  var _h = _vm.$createElement\n  var _c = _vm._self._c || _h\n  return _c(\"view\", { staticClass: \"comment\" }, [\n    _c(\"view\", { staticClass: \"fengexian\" }),\n    _c(\"text\", { staticClass: \"contentarea\" }, [\n      _vm._v(_vm._s(_vm.comment[2]))\n    ]),\n    _c(\"view\", { staticClass: \"bottombar\" }, [\n      _c(\"view\", { staticStyle: { width: \"70%\", display: \"inline-block\" } }, [\n        _c(\"image\", {\n          staticClass: \"touxiang\",\n          attrs: { src: \"../../../static/touxiang.jpg\" }\n        }),\n        _c(\"text\", { staticClass: \"name\" }, [_vm._v(_vm._s(_vm.comment[1]))]),\n        _c(\"text\", { staticClass: \"time\" }, [_vm._v(_vm._s(_vm.comment[3]))])\n      ]),\n      _c(\"view\", { staticClass: \"icons\" }, [\n        _c(\"image\", {\n          staticClass: \"icon\",\n          attrs: { src: \"../../../../static/icon/comment.svg\" }\n        }),\n        _c(\"text\", { staticClass: \"icom\" }, [_vm._v(_vm._s(_vm.comment[4]))]),\n        _c(\"image\", {\n          staticClass: \"icon\",\n          attrs: { src: \"../../../static/icon/like.svg\" }\n        }),\n        _c(\"text\", { staticClass: \"icom\" }, [_vm._v(_vm._s(_vm.comment[5]))])\n      ])\n    ])\n  ])\n}\nvar staticRenderFns = []\nrender._withStripped = true\n\n\n\n//# sourceURL=undefined");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"render\", function() { return render; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"staticRenderFns\", function() { return staticRenderFns; });\nvar render = function() {\n  var _vm = this\n  var _h = _vm.$createElement\n  var _c = _vm._self._c || _h\n  return _c(\n    \"view\",\n    { staticClass: \"comment\", attrs: { id: \"'+commentDetail.id'\" } },\n    [\n      _c(\"view\", { staticClass: \"fengexian\" }),\n      _c(\"text\", { staticClass: \"contentarea\" }, [\n        _vm._v(_vm._s(_vm.commentDetail.comment))\n      ]),\n      _c(\"view\", { staticClass: \"bottombar\" }, [\n        _c(\"view\", { staticStyle: { width: \"70%\", display: \"inline-block\" } }, [\n          _c(\"image\", {\n            staticClass: \"touxiang\",\n            attrs: { src: _vm.commentDetail.faceImage }\n          }),\n          _c(\"text\", { staticClass: \"name\" }, [\n            _vm._v(_vm._s(_vm.commentDetail.nickname))\n          ]),\n          _c(\"text\", { staticClass: \"time\" }, [\n            _vm._v(_vm._s(_vm.commentDetail.timeAgo))\n          ])\n        ]),\n        _c(\"view\", { staticClass: \"icons\" }, [\n          _c(\"image\", {\n            staticClass: \"icon\",\n            attrs: { src: \"../../../../static/icon/comment.svg\" }\n          }),\n          _c(\"text\", { staticClass: \"icom\" }, [\n            _vm._v(_vm._s(_vm.commentDetail.commentNum))\n          ]),\n          _c(\"image\", {\n            staticClass: \"icon\",\n            attrs: { src: \"../../../static/icon/like.svg\" }\n          }),\n          _c(\"text\", { staticClass: \"icom\" }, [\n            _vm._v(_vm._s(_vm.commentDetail.likeNum))\n          ])\n        ])\n      ])\n    ]\n  )\n}\nvar staticRenderFns = []\nrender._withStripped = true\n\n\n\n//# sourceURL=undefined");
 
 /***/ }),
 
@@ -4582,7 +4565,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _App
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("Object.defineProperty(exports, \"__esModule\", { value: true });exports.default = void 0;var _default =\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n{\n  props: {\n    comment: {\n      type: Array } },\n\n\n  data: function data() {\n    return {};\n  } };exports.default = _default;\n\n//# sourceURL=undefined");
+eval("Object.defineProperty(exports, \"__esModule\", { value: true });exports.default = void 0;var _default =\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n{\n  name: 'comment',\n  props: {\n    commentDetail: {} },\n\n  data: function data() {\n    return {};\n  },\n  methods: {} };exports.default = _default;\n\n//# sourceURL=undefined");
 
 /***/ }),
 
@@ -4807,7 +4790,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _App
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"render\", function() { return render; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"staticRenderFns\", function() { return staticRenderFns; });\nvar render = function() {\n  var _vm = this\n  var _h = _vm.$createElement\n  var _c = _vm._self._c || _h\n  return _c(\"view\", { attrs: { id: \"container\" } }, [\n    _c(\"view\", { attrs: { id: \"msglist-yellowshadowbg\" } }),\n    _c(\"view\", { attrs: { id: \"msglist-yellowbg\" } }),\n    _c(\n      \"view\",\n      { attrs: { id: \"msglist-likecommentnum\" } },\n      [\n        _vm._m(0),\n        _c(\"view\", { staticClass: \"msglist-likecommentnum-border\" }),\n        _vm._m(1),\n        _c(\n          \"scroll-view\",\n          {\n            staticStyle: {\n              position: \"fixed\",\n              left: \"0rpx\",\n              top: \"314rpx\",\n              width: \"100%\",\n              height: \"1132rpx\"\n            },\n            attrs: { \"scroll-y\": \"true\" }\n          },\n          _vm._l(_vm.chatSnapShotList, function(item, index) {\n            return _c(\"view\", { key: index }, [\n              item.isRead == _vm.UNREAD\n                ? _c(\n                    \"view\",\n                    {\n                      staticClass: \"msglist-card column_center\",\n                      attrs: { eventid: \"145411e9-0-\" + index },\n                      on: {\n                        tap: function($event) {\n                          _vm.goToChatpage(item)\n                        }\n                      }\n                    },\n                    [\n                      _c(\"image\", {\n                        staticClass: \"msglist-Touxiang\",\n                        attrs: {\n                          mode: \"aspectFill\",\n                          src: item.friendInfo.faceImg\n                        }\n                      }),\n                      _c(\"view\", { staticClass: \"msglist-content\" }, [\n                        _c(\"view\", { staticClass: \"msglist-id font-family\" }, [\n                          _vm._v(_vm._s(item.friendInfo.nickname))\n                        ]),\n                        _c(\n                          \"view\",\n                          { staticClass: \"msglist-brief font-family\" },\n                          [_vm._v(_vm._s(item.msg))]\n                        )\n                      ]),\n                      _c(\"view\", { staticClass: \"time-numicon\" }, [\n                        _c(\"view\", { staticClass: \"msglist-time\" }, [\n                          _vm._v(\"11-26\")\n                        ]),\n                        _c(\"view\", { staticClass: \"msglist-icon super_center\" })\n                      ])\n                    ]\n                  )\n                : _vm._e(),\n              item.isRead == _vm.READ\n                ? _c(\n                    \"view\",\n                    {\n                      staticClass: \"msglist-card-read column_center\",\n                      attrs: { eventid: \"145411e9-1-\" + index },\n                      on: {\n                        tap: function($event) {\n                          _vm.goToChatpage(item)\n                        }\n                      }\n                    },\n                    [\n                      _c(\"image\", {\n                        staticClass: \"msglist-Touxiang\",\n                        attrs: {\n                          mode: \"aspectFill\",\n                          src: item.friendInfo.faceImg\n                        }\n                      }),\n                      _c(\"view\", { staticClass: \"msglist-content\" }, [\n                        _c(\n                          \"view\",\n                          { staticClass: \"msglist-id-read font-family\" },\n                          [_vm._v(_vm._s(item.friendInfo.nickname))]\n                        ),\n                        _c(\n                          \"view\",\n                          { staticClass: \"msglist-brief-read font-family\" },\n                          [_vm._v(_vm._s(item.msg))]\n                        )\n                      ]),\n                      _c(\"view\", { staticClass: \"time-numicon\" }, [\n                        _c(\"view\", { staticClass: \"msglist-time\" }, [\n                          _vm._v(\"11-26\")\n                        ])\n                      ])\n                    ]\n                  )\n                : _vm._e()\n            ])\n          })\n        )\n      ],\n      1\n    )\n  ])\n}\nvar staticRenderFns = [\n  function() {\n    var _vm = this\n    var _h = _vm.$createElement\n    var _c = _vm._self._c || _h\n    return _c(\"view\", { staticClass: \"msglist-like column_center\" }, [\n      _c(\"view\", { staticClass: \"msglist-like-bg super_center\" }, [\n        _c(\"image\", {\n          staticClass: \"msglist-like-icon\",\n          attrs: { src: \"../../static/icon/like.png\", mode: \"\" }\n        })\n      ]),\n      _c(\"text\", { staticClass: \"msglist-like-text font-family\" }, [\n        _vm._v(\"点赞\")\n      ]),\n      _c(\"view\", { staticClass: \"msglist-like-num super_center\" }, [\n        _vm._v(\"121\")\n      ])\n    ])\n  },\n  function() {\n    var _vm = this\n    var _h = _vm.$createElement\n    var _c = _vm._self._c || _h\n    return _c(\"view\", { staticClass: \"msglist-comment column_center\" }, [\n      _c(\"view\", { staticClass: \"msglist-comment-bg super_center\" }, [\n        _c(\"image\", {\n          staticClass: \"msglist-comment-icon\",\n          attrs: { src: \"../../static/icon/comment.png\", mode: \"\" }\n        })\n      ]),\n      _c(\"text\", { staticClass: \"msglist-comment-text font-family\" }, [\n        _vm._v(\"评论\")\n      ]),\n      _c(\"view\", { staticClass: \"msglist-comment-num super_center\" }, [\n        _vm._v(\"12\")\n      ])\n    ])\n  }\n]\nrender._withStripped = true\n\n\n\n//# sourceURL=undefined");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"render\", function() { return render; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"staticRenderFns\", function() { return staticRenderFns; });\nvar render = function() {\n  var _vm = this\n  var _h = _vm.$createElement\n  var _c = _vm._self._c || _h\n  return _c(\"view\", { attrs: { id: \"container\" } }, [\n    _c(\"view\", { attrs: { id: \"msglist-yellowshadowbg\" } }),\n    _c(\"view\", { attrs: { id: \"msglist-yellowbg\" } }),\n    _c(\n      \"view\",\n      { attrs: { id: \"msglist-likecommentnum\" } },\n      [\n        _vm._m(0),\n        _c(\"view\", { staticClass: \"msglist-likecommentnum-border\" }),\n        _vm._m(1),\n        _c(\n          \"scroll-view\",\n          {\n            staticStyle: {\n              position: \"fixed\",\n              left: \"0rpx\",\n              top: \"314rpx\",\n              width: \"100%\",\n              height: \"1132rpx\"\n            },\n            attrs: { \"scroll-y\": \"true\" }\n          },\n          _vm._l(_vm.chatSnapShotList, function(item, index) {\n            return _c(\"view\", { key: index }, [\n              item.isRead == _vm.UNREAD\n                ? _c(\n                    \"view\",\n                    {\n                      staticClass: \"msglist-card column_center\",\n                      attrs: { eventid: \"145411e9-0-\" + index },\n                      on: {\n                        tap: function($event) {\n                          _vm.goToChatpage(item)\n                        }\n                      }\n                    },\n                    [\n                      _c(\"image\", {\n                        staticClass: \"msglist-Touxiang\",\n                        attrs: {\n                          mode: \"aspectFill\",\n                          src: item.friendInfo.faceImg\n                        }\n                      }),\n                      _c(\"view\", { staticClass: \"msglist-content\" }, [\n                        _c(\"view\", { staticClass: \"msglist-id font-family\" }, [\n                          _vm._v(_vm._s(item.friendInfo.nickname))\n                        ]),\n                        _c(\n                          \"view\",\n                          { staticClass: \"msglist-brief font-family\" },\n                          [_vm._v(_vm._s(item.msg))]\n                        )\n                      ]),\n                      _c(\"view\", { staticClass: \"time-numicon\" }, [\n                        _c(\"view\", { staticClass: \"msglist-time\" }, [\n                          _vm._v(_vm._s(item.createDate))\n                        ]),\n                        _c(\"view\", { staticClass: \"msglist-icon super_center\" })\n                      ])\n                    ]\n                  )\n                : _vm._e(),\n              item.isRead == _vm.READ\n                ? _c(\n                    \"view\",\n                    {\n                      staticClass: \"msglist-card-read column_center\",\n                      attrs: { eventid: \"145411e9-1-\" + index },\n                      on: {\n                        tap: function($event) {\n                          _vm.goToChatpage(item)\n                        }\n                      }\n                    },\n                    [\n                      _c(\"image\", {\n                        staticClass: \"msglist-Touxiang\",\n                        attrs: {\n                          mode: \"aspectFill\",\n                          src: item.friendInfo.faceImg\n                        }\n                      }),\n                      _c(\"view\", { staticClass: \"msglist-content\" }, [\n                        _c(\n                          \"view\",\n                          { staticClass: \"msglist-id-read font-family\" },\n                          [_vm._v(_vm._s(item.friendInfo.nickname))]\n                        ),\n                        _c(\n                          \"view\",\n                          { staticClass: \"msglist-brief-read font-family\" },\n                          [_vm._v(_vm._s(item.msg))]\n                        )\n                      ]),\n                      _c(\"view\", { staticClass: \"time-numicon\" }, [\n                        _c(\"view\", { staticClass: \"msglist-time\" }, [\n                          _vm._v(_vm._s(item.createDate))\n                        ])\n                      ])\n                    ]\n                  )\n                : _vm._e()\n            ])\n          })\n        )\n      ],\n      1\n    )\n  ])\n}\nvar staticRenderFns = [\n  function() {\n    var _vm = this\n    var _h = _vm.$createElement\n    var _c = _vm._self._c || _h\n    return _c(\"view\", { staticClass: \"msglist-like column_center\" }, [\n      _c(\"view\", { staticClass: \"msglist-like-bg super_center\" }, [\n        _c(\"image\", {\n          staticClass: \"msglist-like-icon\",\n          attrs: { src: \"../../static/icon/like.png\", mode: \"\" }\n        })\n      ]),\n      _c(\"text\", { staticClass: \"msglist-like-text font-family\" }, [\n        _vm._v(\"点赞\")\n      ]),\n      _c(\"view\", { staticClass: \"msglist-like-num super_center\" }, [\n        _vm._v(\"121\")\n      ])\n    ])\n  },\n  function() {\n    var _vm = this\n    var _h = _vm.$createElement\n    var _c = _vm._self._c || _h\n    return _c(\"view\", { staticClass: \"msglist-comment column_center\" }, [\n      _c(\"view\", { staticClass: \"msglist-comment-bg super_center\" }, [\n        _c(\"image\", {\n          staticClass: \"msglist-comment-icon\",\n          attrs: { src: \"../../static/icon/comment.png\", mode: \"\" }\n        })\n      ]),\n      _c(\"text\", { staticClass: \"msglist-comment-text font-family\" }, [\n        _vm._v(\"评论\")\n      ]),\n      _c(\"view\", { staticClass: \"msglist-comment-num super_center\" }, [\n        _vm._v(\"12\")\n      ])\n    ])\n  }\n]\nrender._withStripped = true\n\n\n\n//# sourceURL=undefined");
 
 /***/ }),
 
@@ -4831,7 +4814,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _App
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, \"__esModule\", { value: true });exports.default = void 0;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nvar _vuex = __webpack_require__(/*! vuex */ 12);function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}\n\n\n\nvar userInfo;\n\nvar socketTask;\nvar socketOpen = false;var _default =\n\n{\n  data: function data() {\n    return {\n      cardlist: [1, 1, 1],\n      readlist: [1, 1, 1],\n      msgicon: [],\n      chatSnapShotList: [],\n\n      READ: this.chat.READ,\n      UNREAD: this.chat.UNREAD };\n\n  },\n\n  computed: _objectSpread({},\n  (0, _vuex.mapState)([\n  'ChatMessageCard'])),\n\n\n\n  watch: {\n    ChatMessageCard: function ChatMessageCard(newVal, oldVal) {//监听数据变化，即可做相关操作\n      this.loadingChatSnapshot();\n\n    } },\n\n\n  onLoad: function onLoad() {\n    uni.setNavigationBarTitle({\n      title: \"私信列表\" });\n\n\n    userInfo = this.getGlobalUserInfo();\n    if (this.isNull(userInfo)) {\n      console.log(\"No userInfo!!\");\n      return;\n    }\n\n    this.mySocket.init();\n\n    this.loadingChatSnapshot(); // 载入聊天快照\n\n  },\n\n  onShow: function onShow() {\n    // var page = this.getCurrentPage();\n    // console.log(page.data.cardlist);\n  },\n\n  methods: {\n    /**\n              * 展示聊天快照，渲染列表.\n              */\n    loadingChatSnapshot: function loadingChatSnapshot() {\n      var chatSnapShotList = this.chat.getUserChatSnapShot(userInfo.id);\n      // 提前渲染\n      this.chatSnapShotList = chatSnapShotList;\n      // 根据 friendId 获取用户信息\n      var sendCount = 0; // 网络请求为异步，计数返回结果判断是否全部完成\n      var receiveCount = 0;\n      console.log(chatSnapShotList);\n      for (var i = 0; i < chatSnapShotList.length; i++) {\n        var thisFrindId = chatSnapShotList[i].friendId;\n        // 查看缓存\n        var thisFriendInfo = this.getUserInfoFromUserList(thisFrindId);\n        if (this.isNull(thisFriendInfo)) {\n          // 不在缓存中, 向服务器请求\n          sendCount++;\n          var that = this;\n          uni.request({\n            url: that.$serverUrl + '/user/queryUser',\n            method: \"POST\",\n            data: {\n              userId: thisFrindId },\n\n            header: {\n              'content-type': 'application/x-www-form-urlencoded' },\n\n            success: function success(res) {\n              // console.log(res)\n              if (res.data.status == 200) {\n                // 获取返回的用户信息 写到缓存里\n                thisFriendInfo = res.data.data;\n                that.setUserInfoToUserList(thisFriendInfo);\n\n                // 查看 sent & receive 是否相等\n                receiveCount++;\n                console.log(\"sendCount=\" + sendCount + \" receiveCount=\" + receiveCount);\n                if (sendCount == receiveCount) {\n                  // 再次加载渲染\n                  that.loadingChatSnapshot();\n                }\n              }\n            } });\n\n        } else {\n          // 添加到快照列表对象\n          chatSnapShotList[i].friendInfo = thisFriendInfo;\n        }\n      }\n    },\n\n    goToChatpage: function goToChatpage(e) {\n      // console.log(e)\n      var friendInfo = e.friendInfo;\n      uni.navigateTo({\n        url: '../chatpage/chatpage?friendInfo=' + JSON.stringify(friendInfo) });\n\n    } } };exports.default = _default;\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-app-plus/dist/index.js */ 1)[\"default\"]))\n\n//# sourceURL=undefined");
+eval("/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, \"__esModule\", { value: true });exports.default = void 0;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nvar _vuex = __webpack_require__(/*! vuex */ 12);function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}\n\n\n\nvar userInfo;\n\nvar socketTask;\nvar socketOpen = false;var _default =\n\n{\n  data: function data() {\n    return {\n      cardlist: [1, 1, 1],\n      readlist: [1, 1, 1],\n      msgicon: [],\n      chatSnapShotList: [],\n\n      READ: this.chat.READ,\n      UNREAD: this.chat.UNREAD };\n\n  },\n\n  computed: _objectSpread({},\n  (0, _vuex.mapState)([\n  'ChatMessageCard'])),\n\n\n\n  watch: {\n    ChatMessageCard: function ChatMessageCard(newVal, oldVal) {//监听数据变化，即可做相关操作\n      this.loadingChatSnapshot();\n      console.log(\"newVal:\");\n      console.log(newVal);\n    } },\n\n\n  onLoad: function onLoad() {\n    uni.setNavigationBarTitle({\n      title: \"私信列表\" });\n\n\n    userInfo = this.getGlobalUserInfo();\n    if (this.isNull(userInfo)) {\n      console.log(\"No userInfo!!\");\n      return;\n    }\n\n    // [测试代码块]\n    this.mySocket.init();\n  },\n\n  onShow: function onShow() {\n    this.loadingChatSnapshot(); // 载入聊天快照\n  },\n\n  methods: {\n    /**\n              * 展示聊天快照，渲染列表.\n              */\n    loadingChatSnapshot: function loadingChatSnapshot() {\n      var chatSnapShotList = this.chat.getUserChatSnapShot(userInfo.id);\n      // 提前渲染\n      this.chatSnapShotList = chatSnapShotList;\n      // 拼接信息: 根据 friendId 获取用户信息\n      var sendCount = 0; // 网络请求为异步，计数返回结果判断是否全部完成\n      var receiveCount = 0;\n      console.log(chatSnapShotList);\n      for (var i = 0; i < chatSnapShotList.length; i++) {\n        var thisFrindId = chatSnapShotList[i].friendId;\n        // 查看缓存\n        var thisFriendInfo = this.getUserInfoFromUserList(thisFrindId);\n        if (this.isNull(thisFriendInfo)) {\n          // 不在缓存中, 向服务器请求\n          sendCount++;\n          var that = this;\n          uni.request({\n            url: that.$serverUrl + '/user/queryUser',\n            method: \"POST\",\n            data: {\n              userId: thisFrindId },\n\n            header: {\n              'content-type': 'application/x-www-form-urlencoded' },\n\n            success: function success(res) {\n              // console.log(res)\n              if (res.data.status == 200) {\n                // 获取返回的用户信息 写到缓存里\n                thisFriendInfo = res.data.data;\n                that.setUserInfoToUserList(thisFriendInfo);\n\n                // 查看 sent & receive 是否相等\n                receiveCount++;\n                console.log(\"sendCount=\" + sendCount + \" receiveCount=\" + receiveCount);\n                if (sendCount == receiveCount) {\n                  // 再次加载渲染\n                  that.loadingChatSnapshot();\n                }\n              }\n            } });\n\n        } else {\n          // 添加朋友信息到快照列表对象\n          chatSnapShotList[i].friendInfo = thisFriendInfo;\n          // 修改时间显示格式\n          // var date = chatSnapShotList[i].createDate;\n          // var formatDate = this.formatTime(date);\n          // chatSnapShotList[i].createDate = formatDate;\n        }\n      }\n    },\n\n    goToChatpage: function goToChatpage(e) {\n      // console.log(e)\n      var myId = e.myId;\n      var friendId = e.friendId;\n      var msg = e.msg;\n      var friendInfo = e.friendInfo;\n      // 覆盖快照，设为已读 (myId, friendId, msg, isRead)\n      this.chat.readUserChatSnapShot(myId, friendId);\n      // this.chat.saveUserChatSnapshot(e.myId, e.friendId, e.msg, this.chat.READ);\n\n      uni.navigateTo({\n        url: '../chatpage/chatpage?friendInfo=' + JSON.stringify(friendInfo) });\n\n    } } };exports.default = _default;\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-app-plus/dist/index.js */ 1)[\"default\"]))\n\n//# sourceURL=undefined");
 
 /***/ }),
 

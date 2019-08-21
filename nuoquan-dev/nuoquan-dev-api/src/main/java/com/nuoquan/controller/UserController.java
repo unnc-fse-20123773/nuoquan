@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.nuoquan.utils.FastDFSClient;
 import com.nuoquan.mapper.UserMapper;
+import com.nuoquan.pojo.ChatMsg;
 import com.nuoquan.pojo.User;
 import com.nuoquan.pojo.UserFans;
 import com.nuoquan.pojo.vo.FansFollow;
@@ -181,5 +182,21 @@ public class UserController extends BasicController {
 		UserVO userVO = ConvertUserToUserVO(user);
 
 		return JSONResult.ok(userVO);
+	}
+	
+	@ApiOperation(value = "Get the user's unread msg")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "userId", required = true, dataType = "String", paramType = "form"), })
+	@PostMapping("/getUnsignedMsg")
+	public JSONResult getUnsignedMsg(String userId) throws Exception {
+
+		if (StringUtils.isBlank(userId)) {
+			return JSONResult.errorMsg("User id can not be null.");
+		}
+		
+		// 查询列表
+		List<ChatMsg> unreadMsgList = userService.getUnsignedMsgList(userId);
+
+		return JSONResult.ok(unreadMsgList);
 	}
 }

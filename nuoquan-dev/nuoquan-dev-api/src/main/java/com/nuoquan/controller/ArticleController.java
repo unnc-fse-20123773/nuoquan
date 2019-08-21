@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.nuoquan.enums.ArticleStatusEnums;
 import com.nuoquan.pojo.Article;
+import com.nuoquan.pojo.UserArticleComment;
 import com.nuoquan.service.ArticleService;
 import com.nuoquan.utils.JSONResult;
 import com.nuoquan.utils.PagedResult;
@@ -27,7 +28,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 @RestController
-@Api(value="文章相关接口", tags= {"操作文章的controller"})
+@Api(value="文章相关接口", tags= {"Article-Controller"})
 public class ArticleController extends BasicController{
 	
 	@Autowired
@@ -153,5 +154,35 @@ public class ArticleController extends BasicController{
 		return JSONResult.ok();
 	}	
 	
+	@PostMapping("/saveComment")
+	public JSONResult saveComment(@RequestBody UserArticleComment comment) throws Exception {
+		
+		articleService.saveComment(comment);
+		return JSONResult.ok();
+	}
+	
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "articleId", required = true, dataType = "String", paramType = "form"),
+		@ApiImplicitParam(name = "page", required = false, dataType = "Integer", paramType = "form"),
+		@ApiImplicitParam(name = "pageSize", required = false, dataType = "Integer", paramType = "form")
+		})
+	@PostMapping("/getArticleComments")
+	public JSONResult getArticleComments(String articleId, Integer page, Integer pageSize) throws Exception {
+		
+		if (StringUtils.isBlank(articleId)) {
+			return JSONResult.ok();
+		}
+		
+		if(page == null) {
+			page = 1;
+		}
+		if(pageSize == null) {
+			pageSize = PAGE_SIZE;
+		}
+		
+		PagedResult list = articleService.getAllComments(articleId, page,pageSize);
+		
+		return JSONResult.ok(list);
+	}
 	
 }

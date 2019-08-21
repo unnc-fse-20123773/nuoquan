@@ -109,7 +109,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -169,7 +169,14 @@ var _default =
   },
   onReady: function onReady() {
     // console.log(this.thisMessage);
-  } };exports.default = _default;
+  },
+  methods: {
+    goToPersonPublic: function goToPersonPublic(userId) {
+      uni.redirectTo({ // 关闭页面再跳转，防止页面栈满, 无法返回
+        url: '../personpublic/personpublic?userId=' + userId });
+
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

@@ -19,13 +19,16 @@
 					 @scroll="scroll" enable-back-to-top="true">
 						<view class="user-operation-line" v-for="(item,index2) in (index1==0?followList:fansList)" :key="index2">
 							<view class="user-one-line column_center">
-								<image class="publicTouxiang" mode="aspectFill" :src="item.faceImg"></image>
+								<!-- for 里方法直接传 item 获取不到，官方的一个Bug -->
+								<image class="publicTouxiang" mode="aspectFill" :src="item.faceImg" @tap='goToPersonPublic(index1, index2)'></image>
 								<view class="userid">
 									{{item.nickname}}
 								</view>
-								<view class="attentionButton super_center">
+								<!-- 暂时先拿掉，TODO: 获取列表同时查询我是否已关注该用户 
+																				by Jerrio-->
+								<!-- <view class="attentionButton super_center" @tap="followHim">
 									<text class="attentionButton-text">关注</text>
-								</view>
+								</view> -->
 							</view>
 							<view class="border-bottom-line">
 							</view>
@@ -49,11 +52,11 @@
 				}, {
 					name: '关注他的'
 				}],
-				
+
 				// 关注粉丝列表属性
 				swiperDataList: [
 					[], // followList 把数据写进里面首次进入页面加载不出，所以写到外面
-					[] 	// fansList
+					[] // fansList
 				],
 				followList: '',
 				fansList: '',
@@ -87,18 +90,21 @@
 		},
 
 		onLoad(opt) {
+			var data = JSON.parse(opt.data)
+			var thisUserInfo = data.thisUserInfo;
+			var currentTab = currentTab;
+			
 			uni.setNavigationBarTitle({
-				title: 'XXX的主页'
+				title: thisUserInfo.nickname+'的主页'
 			});
-
-			this.swiperDataList[0] = [1, 1, 1]
+			
 			// 获取userId
-			var userId = opt.userId;
+			var userId = thisUserInfo.id;
 			this.queryFansFollow(userId);
-
+			
 			// 设置列表 index
-			this.currentTab = opt.currentTab;
-
+			this.currentTab = currentTab;
+			
 			var screenWidth = uni.getSystemInfoSync().screenWidth;
 			this.screenWidth = screenWidth;
 
@@ -191,6 +197,7 @@
 						console.log(res)
 						if (res.data.status == 200) {
 							var data = res.data.data;
+							console.log(data);
 							that.followList = data.followList;
 							that.fansList = data.fansList;
 
@@ -198,6 +205,25 @@
 							// that.swiperDataList[1] = data.fansList;
 						}
 					}
+				});
+			},
+
+			/**
+			 * 直接传 item 有 bug, 所以用这个复杂一点的方式曲线救国
+			 * @param {Object} index1 0=followList; 1=fansList
+			 * @param {Object} index2 列表里的索引
+			 */
+			goToPersonPublic(index1, index2) {
+				var list;
+				if (index1 == 0) {
+					list = this.followList;
+				} else if (index1 == 1) {
+					list = this.fansList;
+				}
+
+				var userId = list[index2].id
+				uni.redirectTo({
+					url: '../personpublic/personpublic?userId=' + userId,
 				});
 			}
 		}

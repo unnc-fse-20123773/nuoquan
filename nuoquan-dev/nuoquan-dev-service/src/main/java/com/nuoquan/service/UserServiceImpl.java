@@ -175,8 +175,8 @@ public class UserServiceImpl implements UserService {
 		msgDB.setId(msgId);
 		msgDB.setAcceptUserId(chatMessage.getReceiverId());
 		msgDB.setSendUserId(chatMessage.getSenderId());
-		msgDB.setSignFlag(MsgSignFlagEnum.unsign.type);
-		msgDB.setCreateDate(new Date());
+		msgDB.setSignFlag(MsgSignFlagEnum.UNSIGN.type);
+		msgDB.setCreateDate(chatMessage.getCreateDate());
 		msgDB.setMsg(chatMessage.getMsg());
 		
 		chatMsgMapper.insert(msgDB);
@@ -188,6 +188,19 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void updateMsgSigned(List<String> msgIdList) {
 		userMapperCustom.batchUpdateMsgSigned(msgIdList);
+	}
+
+	@Transactional(propagation = Propagation.SUPPORTS) 
+	@Override
+	public List<ChatMsg> getUnsignedMsgList(String acceptUserId) {
+		
+		Example chatExample = new Example(ChatMsg.class);
+		Criteria chatCriteria = chatExample.createCriteria();
+		chatCriteria.andEqualTo("signFlag", MsgSignFlagEnum.UNSIGN.type);
+		chatCriteria.andEqualTo("acceptUserId", acceptUserId);
+		
+		 List<ChatMsg> result = chatMsgMapper.selectByExample(chatExample);
+		return result;
 	}
 
 }

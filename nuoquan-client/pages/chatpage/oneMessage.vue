@@ -1,18 +1,18 @@
 <template>
 	<view>
 		<view class="send" v-if="thisMessage.flag == ME">
-			<navigator url="../personpublic/personpublic">
+			<view @tap="goToPersonPublic(userInfo.id)">
 				<image class="touxiang" :src="userInfo.faceImg"></image>
-			</navigator>
+			</view>
 			<view class="content">
 				<view class="contentText">
 					{{thisMessage.msg}}
 				</view>
 				<view class="bottomBar">
 					<view class="time">
-						{{thisMessage.messageTime}}
+						{{thisMessage.createDate}}
 					</view>
-					<view class="status" v-if="!thisMessage.messageStatus">
+					<view class="status" v-if="!thisMessage.isRead">
 						...
 					</view>
 					<view class="status" style="color:#3FC24A" v-if="thisMessage.messageStatus">
@@ -25,16 +25,16 @@
 		</view>
 
 		<view class="receve" v-if="thisMessage.flag == FRIEND">
-			<navigator url="../personpublic/personpublic">
+			<view @tap="goToPersonPublic(friendInfo.id)">
 				<image class="touxiang" :src="friendInfo.faceImg"></image>
-			</navigator>
+			</view>
 			<view class="content">
 				<view class="contentText">
 					{{thisMessage.msg}}
 				</view>
 				<view class="bottomBar">
 					<view class="time">
-						{{thisMessage.messageTime}}
+						{{thisMessage.createDate}}
 					</view>
 
 				</view>
@@ -58,6 +58,13 @@
 		},
 		onReady: function() {
 			// console.log(this.thisMessage);
+		},
+		methods: {
+			goToPersonPublic(userId) {
+				uni.redirectTo({ // 关闭页面再跳转，防止页面栈满, 无法返回
+					url: '../personpublic/personpublic?userId='+ userId,
+				});
+			}
 		},
 	};
 </script>

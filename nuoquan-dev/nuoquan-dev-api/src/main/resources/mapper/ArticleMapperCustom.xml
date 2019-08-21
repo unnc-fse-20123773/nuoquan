@@ -50,7 +50,7 @@
   			and a.article_content like '%${articleContent}%'
   		</if>
   		and a.status = 1
-  		and a.is_anonymous = 0
+  		<!-- and a.is_anonymous = 0 -->
   	order by a.create_date desc
   </select>
   

@@ -42,7 +42,7 @@
 						</view>
 						<view class="time-numicon">
 							<view class="msglist-time">
-								11-26
+								{{item.createDate}}
 							</view>
 							<view class="msglist-icon super_center">
 								<!-- 12 -->
@@ -62,7 +62,7 @@
 						</view>
 						<view class="time-numicon">
 							<view class="msglist-time">
-								11-26
+								{{item.createDate}}
 							</view>
 							<!-- 预留的icon位置 
 											by Guetta -->
@@ -91,10 +91,38 @@
 	export default {
 		data() {
 			return {
-				cardlist: [1, 1, 1],
-				readlist: [1, 1, 1],
 				msgicon: [],
-				chatSnapShotList: [],
+				chatSnapShotList: [ //测试用数据
+					{
+						createDate: "2019/08/22 03:35:02",
+						friendId: "1",
+						friendInfo: {
+							id: "1",
+							email: "x@nottingham.edu.cn",
+							nickname: "test1",
+							createDate: "2019-07-05T17:17:23.000+0000",
+							faceImg: "http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTI3ic84wG7jlib3gCOlemyy53Ribg1IJM2px221hCDNync15P0MdJcPibY4QFIOibjqrVQnrI8xZ7Vg5hg/132",
+						},
+						isRead: 3,
+						msg: "1",
+						myId: "test-id123",
+					},
+					
+					{
+						createDate: "2019/08/22 03:35:02",
+						friendId: "1",
+						friendInfo: {
+							id: "1",
+							email: "x@nottingham.edu.cn",
+							nickname: "test1",
+							createDate: "2019-07-05T17:17:23.000+0000",
+							faceImg:"http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTI3ic84wG7jlib3gCOlemyy53Ribg1IJM2px221hCDNync15P0MdJcPibY4QFIOibjqrVQnrI8xZ7Vg5hg/132",
+						},
+						isRead: 3,
+						msg: "1",
+						myId: "test-id123",
+					},
+				],
 
 				READ: this.chat.READ,
 				UNREAD: this.chat.UNREAD,
@@ -110,7 +138,8 @@
 		watch: {
 			ChatMessageCard(newVal, oldVal) { //监听数据变化，即可做相关操作
 				this.loadingChatSnapshot();
-
+				console.log("newVal:");
+				console.log(newVal);
 			}
 		},
 
@@ -125,26 +154,23 @@
 				return;
 			}
 
+			// [测试代码块]
 			this.mySocket.init();
-
-			this.loadingChatSnapshot(); // 载入聊天快照
-
 		},
 
 		onShow() {
-			// var page = this.getCurrentPage();
-			// console.log(page.data.cardlist);
+			this.loadingChatSnapshot(); // 载入聊天快照
 		},
 
 		methods: {
 			/**
 			 * 展示聊天快照，渲染列表.
-			 */ 
+			 */
 			loadingChatSnapshot() {
 				var chatSnapShotList = this.chat.getUserChatSnapShot(userInfo.id);
 				// 提前渲染
 				this.chatSnapShotList = chatSnapShotList;
-				// 根据 friendId 获取用户信息
+				// 拼接信息: 根据 friendId 获取用户信息
 				var sendCount = 0; // 网络请求为异步，计数返回结果判断是否全部完成
 				var receiveCount = 0;
 				console.log(chatSnapShotList)
@@ -171,11 +197,11 @@
 									// 获取返回的用户信息 写到缓存里
 									thisFriendInfo = res.data.data;
 									that.setUserInfoToUserList(thisFriendInfo);
-									
+
 									// 查看 sent & receive 是否相等
 									receiveCount++;
 									console.log("sendCount=" + sendCount + " receiveCount=" + receiveCount);
-									if (sendCount == receiveCount){
+									if (sendCount == receiveCount) {
 										// 再次加载渲染
 										that.loadingChatSnapshot();
 									}
@@ -183,15 +209,35 @@
 							},
 						});
 					} else {
-						// 添加到快照列表对象
+						// 添加朋友信息到快照列表对象
 						chatSnapShotList[i].friendInfo = thisFriendInfo;
 					}
 				}
 			},
-
+			
+			/**
+			 * 右滑删除, TODO: 施工中...未测试
+			 */
+			deleteChat(e){
+				// 获取朋友 id
+				var frindId = e.id
+				// 1. 删除我和朋友的聊天记录
+				this.chat.deletUserChatHistory(userInfo.id, frindId);
+				// 2. 删除快照
+				this.chat.deletUserChatSnapShot(userInfo.id, frindId);
+				// 重载快照
+			},
+			
 			goToChatpage(e) {
 				// console.log(e)
+				var myId = e.myId;
+				var friendId = e.friendId;
+				var msg = e.msg;
 				var friendInfo = e.friendInfo;
+				// 覆盖快照，设为已读 (myId, friendId, msg, isRead)
+				this.chat.readUserChatSnapShot(myId, friendId);
+				// this.chat.saveUserChatSnapshot(e.myId, e.friendId, e.msg, this.chat.READ);
+
 				uni.navigateTo({
 					url: '../chatpage/chatpage?friendInfo=' + JSON.stringify(friendInfo),
 				});

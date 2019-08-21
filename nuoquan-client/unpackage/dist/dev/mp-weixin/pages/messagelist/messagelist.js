@@ -198,10 +198,38 @@ var socketOpen = false;var _default =
 {
   data: function data() {
     return {
-      cardlist: [1, 1, 1],
-      readlist: [1, 1, 1],
       msgicon: [],
-      chatSnapShotList: [],
+      chatSnapShotList: [//测试用数据
+      {
+        createDate: "2019/08/22 03:35:02",
+        friendId: "1",
+        friendInfo: {
+          id: "1",
+          email: "x@nottingham.edu.cn",
+          nickname: "test1",
+          createDate: "2019-07-05T17:17:23.000+0000",
+          faceImg: "http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTI3ic84wG7jlib3gCOlemyy53Ribg1IJM2px221hCDNync15P0MdJcPibY4QFIOibjqrVQnrI8xZ7Vg5hg/132" },
+
+        isRead: 3,
+        msg: "1",
+        myId: "test-id123" },
+
+
+      {
+        createDate: "2019/08/22 03:35:02",
+        friendId: "1",
+        friendInfo: {
+          id: "1",
+          email: "x@nottingham.edu.cn",
+          nickname: "test1",
+          createDate: "2019-07-05T17:17:23.000+0000",
+          faceImg: "http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTI3ic84wG7jlib3gCOlemyy53Ribg1IJM2px221hCDNync15P0MdJcPibY4QFIOibjqrVQnrI8xZ7Vg5hg/132" },
+
+        isRead: 3,
+        msg: "1",
+        myId: "test-id123" }],
+
+
 
       READ: this.chat.READ,
       UNREAD: this.chat.UNREAD };
@@ -217,7 +245,8 @@ var socketOpen = false;var _default =
   watch: {
     ChatMessageCard: function ChatMessageCard(newVal, oldVal) {//监听数据变化，即可做相关操作
       this.loadingChatSnapshot();
-
+      console.log("newVal:");
+      console.log(newVal);
     } },
 
 
@@ -232,15 +261,12 @@ var socketOpen = false;var _default =
       return;
     }
 
+    // [测试代码块]
     this.mySocket.init();
-
-    this.loadingChatSnapshot(); // 载入聊天快照
-
   },
 
   onShow: function onShow() {
-    // var page = this.getCurrentPage();
-    // console.log(page.data.cardlist);
+    this.loadingChatSnapshot(); // 载入聊天快照
   },
 
   methods: {
@@ -251,7 +277,7 @@ var socketOpen = false;var _default =
       var chatSnapShotList = this.chat.getUserChatSnapShot(userInfo.id);
       // 提前渲染
       this.chatSnapShotList = chatSnapShotList;
-      // 根据 friendId 获取用户信息
+      // 拼接信息: 根据 friendId 获取用户信息
       var sendCount = 0; // 网络请求为异步，计数返回结果判断是否全部完成
       var receiveCount = 0;
       console.log(chatSnapShotList);
@@ -290,15 +316,35 @@ var socketOpen = false;var _default =
             } });
 
         } else {
-          // 添加到快照列表对象
+          // 添加朋友信息到快照列表对象
           chatSnapShotList[i].friendInfo = thisFriendInfo;
         }
       }
     },
 
+    /**
+        * 右滑删除, TODO: 施工中...未测试
+        */
+    deleteChat: function deleteChat(e) {
+      // 获取朋友 id
+      var frindId = e.id;
+      // 1. 删除我和朋友的聊天记录
+      this.chat.deletUserChatHistory(userInfo.id, frindId);
+      // 2. 删除快照
+      this.chat.deletUserChatSnapShot(userInfo.id, frindId);
+      // 重载快照
+    },
+
     goToChatpage: function goToChatpage(e) {
       // console.log(e)
+      var myId = e.myId;
+      var friendId = e.friendId;
+      var msg = e.msg;
       var friendInfo = e.friendInfo;
+      // 覆盖快照，设为已读 (myId, friendId, msg, isRead)
+      this.chat.readUserChatSnapShot(myId, friendId);
+      // this.chat.saveUserChatSnapshot(e.myId, e.friendId, e.msg, this.chat.READ);
+
       uni.navigateTo({
         url: '../chatpage/chatpage?friendInfo=' + JSON.stringify(friendInfo) });
 

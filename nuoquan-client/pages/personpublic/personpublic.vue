@@ -107,30 +107,26 @@
 			this.duration = e.target.value
 		},
 
-		onLoad() {
-			// 获取这个人的信息 [测试展示用自己的]
-			var userInfo = this.getGlobalUserInfo();
-			if (this.isNull(userInfo)) {
-				console.log("No userInfo!!");
-				return;
-			}
-			this.thisUserInfo = userInfo;
-			console.log(this.thisUserInfo);
-			
-			uni.setNavigationBarTitle({
-				title: this.thisUserInfo.nickname + "的主页"
-			});
-
+		onLoad(opt) {
 			var screenWidth = uni.getSystemInfoSync().screenWidth;
 			this.screenWidth = screenWidth;
-
+			
 			// 获取当前分页
 			var page = this.page;
 			
-			// TODO 更新本地用户信息缓存
+			// 获取这个人的信息, TODO: 更新本地用户信息缓存
+			var userId = opt.userId
+			this.queryUserInfo(userId)
 			
 			// [测试代码块]
-			this.mySocket.init()
+			this.$nextTick(function(){
+				console.log(this.thisUserInfo);
+				uni.setNavigationBarTitle({
+					title: this.thisUserInfo.nickname + "的主页"
+				});
+			})
+			
+			// this.mySocket.init()
 		},
 
 		onPullDownRefresh() {
@@ -186,7 +182,7 @@
 			
 			goToChatPage: function(){
 				var friendInfo = this.thisUserInfo;
-				uni.navigateTo({
+				uni.redirectTo({
 					url: '../chatpage/chatpage?friendInfo=' + JSON.stringify(friendInfo),
 				});
 			},
@@ -195,8 +191,34 @@
 			 * @param {Object} currentTab 0: 关注 1: 粉丝
 			 */
 			goToFansFollow: function(currentTab) {
-				uni.navigateTo({
-					url: '../followlist/followlist?currentTab=' + currentTab + '&userId=' + this.thisUserInfo.id,
+				console.log("goToFansFollow...")
+				var data={
+					currentTab: currentTab,
+					thisUserInfo: this.thisUserInfo
+				}
+				uni.redirectTo({
+					url: '../followlist/followlist?data=' + JSON.stringify(data),
+				});
+			},
+			
+			queryUserInfo: function(userId){
+				var that = this;
+				uni.request({
+					url: that.$serverUrl + '/user/queryUser',
+					method: "POST",
+					data: {
+						userId: userId
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {
+						// console.log(res)
+						if(res.data.status == 200){
+							that.thisUserInfo = res.data.data;
+							
+						}
+					}
 				});
 			}
 		}

@@ -153,7 +153,6 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
 
   onLoad: function onLoad() {
     this.showArticles();
-
     var userInfo = this.getGlobalUserInfo();
     if (this.isNull(userInfo)) {
       uni.navigateTo({
@@ -165,35 +164,6 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
     this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
 
     // [测试代码块]
-    // this.setUserInfoToUserList(userInfo);
-    // var testRes = this.getUserInfoFromUserList("123");
-    // if (this.isNull(testRes)){
-    // 	console.log("找不到该用户");
-    // } else {
-    // 	console.log(testRes);
-    // }
-
-    // var that = this;
-    // var testRes;
-    // uni.request({
-    // 	url: that.$serverUrl + '/user/queryUser',
-    // 	method: "POST",
-    // 	data: {
-    // 		userId: userInfo.id
-    // 	},
-    // 	header: {
-    // 		'content-type': 'application/x-www-form-urlencoded'
-    // 	},
-    // 	success: (res) => {
-    // 		// console.log(res)
-    // 		if (res.data.status == 200) {
-    // 			// 获取返回的用户信息 写到缓存里
-    // 			testRes = res.data.data;
-    // 			console.log("里面：" + testRes.id)
-    // 		}
-    // 	}
-    // });
-    // console.log("外面：" + testRes.id);
 
   },
   onShow: function onShow() {
@@ -204,7 +174,6 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
     }
   },
   methods: {
-
     showArticles: function showArticles() {
       var _this = this;
       uni.request({
@@ -350,10 +319,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 var _default =
 {
   name: 'aticlebrief',
@@ -380,17 +345,6 @@ var _default =
 
   },
   methods: {
-    // loadcss(){
-    // 	var a = Math.random()
-    // console.log('brif1');
-    // 	if(a==0.5){
-    // 		console.log('yes');
-    // 		require('./articleCardBrief.css');}else{
-    // 		console.log('not');
-    // 	}
-    // 	console.log('brif2');
-    // 	
-    // },
     jumpToDetail: function jumpToDetail() {
       var navData = JSON.stringify(this.articleCard); // 这里转换成 字符串
       uni.navigateTo({

@@ -6,8 +6,8 @@ package com.nuoquan.enums;
  */
 public enum MsgSignFlagEnum {
 	
-	unsign(0, "未签收"),
-	signed(1, "已签收");	
+	UNSIGN(0, "未签收"),
+	SIGNED(1, "已签收");	
 	
 	public final Integer type;
 	public final String content;

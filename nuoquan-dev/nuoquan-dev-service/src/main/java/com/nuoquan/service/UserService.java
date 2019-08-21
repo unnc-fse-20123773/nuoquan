@@ -2,6 +2,7 @@ package com.nuoquan.service;
 
 import java.util.List;
 
+import com.nuoquan.pojo.ChatMsg;
 import com.nuoquan.pojo.User;
 import com.nuoquan.pojo.netty.ChatMessage;
 
@@ -82,5 +83,12 @@ public interface UserService {
 	 * @Description 批量签收消息
 	 */
 	public void updateMsgSigned(List<String> msgIdList);
+	
+	/**
+	 * 获取未签收消息列表
+	 * @param acceptUserId
+	 * @return
+	 */
+	public List<ChatMsg> getUnsignedMsgList(String acceptUserId);
 
 }

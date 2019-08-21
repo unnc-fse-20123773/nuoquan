@@ -65,7 +65,10 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
 
 
 
@@ -124,10 +127,65 @@ var _articlebrief = _interopRequireDefault(__webpack_require__(/*! ../../compone
 //
 //
 //
-var comment = function comment() {return __webpack_require__.e(/*! import() | components/comment */ "components/comment").then(__webpack_require__.bind(null, /*! ../../components/comment */ 168));};var _default = { data: function data() {return { comments: [['00001', '评论者ID', '楼主好棒', '一小时前', '60', '7'], ['00003', '评论者ID', '楼主求微信', '一小时前', '90', '7'], ['00005', '评论者ID', '楼主求微信', '一小时前', '60', '7'], ['00009', '评论者ID', '楼主求微信', '一小时前', '9', '70']], articleCard: "", taglist: [['123', 'background:red'], ['13', 'background:blue'], ['163', 'background:yellow']] };}, components: { articlebrief: _articlebrief.default, commentbox: comment }, methods: {}, onLoad: function onLoad(options) {console.log('detail receved');console.log(options.data);this.articleCard = JSON.parse(options.data);
-    console.log(this.articleCard);
-    console.log(this.articleCard.artiticleTitle);
+//
+//
+//
+var comment = function comment() {return __webpack_require__.e(/*! import() | components/comment */ "components/comment").then(__webpack_require__.bind(null, /*! ../../components/comment */ 168));};var _default = { data: function data() {return { userInfo: {}, comments: [// ['00001', '评论者ID', '楼主好棒', '一小时前', '60', '7'],
+        // ['00003', '评论者ID', '楼主求微信', '一小时前', '90', '7'],
+        // ['00005', '评论者ID', '楼主求微信', '一小时前', '60', '7'],
+        // ['00009', '评论者ID', '楼主求微信', '一小时前', '9', '70']
+      ], articleCard: "", // taglist: [
+      // 	['123', 'background:red'],
+      // 	['13', 'background:blue'],
+      // 	['163', 'background:yellow']
+      // ],
+      commentList: '' };}, components: { articlebrief: _articlebrief.default, commentbox: comment }, methods: { saveComment: function saveComment(e) {var that = this;var content = e.detail.value;var userInfoTemp = this.getGlobalUserInfo();if (this.isNull(userInfoTemp)) {uni.navigateTo({ url: "../wechatLogin/wechatLogin" });} else {uni.request({ url: this.SeverUrl + '/saveComment', method: 'POST', data: { fromUserId: that.userInfo.id, articleId: that.articleCard.id,
+            comment: content },
+
+          success: function success(res) {
+            console.log(res.data);
+          } });
+
+      }
+    },
+    getComments: function getComments() {
+      var that = this;
+      uni.request({
+        url: this.SeverUrl + '/getArticleComments',
+        method: "POST",
+        data: {
+          articleId: that.articleCard.id
+          // page: '',
+          // pageSize: ''
+        },
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          that.commentList = res.data.data.rows;
+          console.log(that.articleCard.id),
+          console.log(res);
+        } });
+
+    } },
+
+  onLoad: function onLoad(options) {
+    // console.log('detail receved');
+    // console.log(options.data);
+
+    this.articleCard = JSON.parse(options.data);
+    // console.log(this.articleCard);
+    // console.log(this.articleCard.artiticleTitle);
+
+    var userInfo = this.getGlobalUserInfo();
+    if (!this.isNull(userInfo)) {
+      this.userInfo = this.getGlobalUserInfo();
+    }
+    // console.log(this.articleCard.id);
+    // console.log(this.userInfo.nickname);
+    this.getComments();
   } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 
@@ -289,10 +347,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 var _default =
 {
   name: 'aticlebrief',
@@ -319,17 +373,6 @@ var _default =
 
   },
   methods: {
-    // loadcss(){
-    // 	var a = Math.random()
-    // console.log('brif1');
-    // 	if(a==0.5){
-    // 		console.log('yes');
-    // 		require('./articleCardBrief.css');}else{
-    // 		console.log('not');
-    // 	}
-    // 	console.log('brif2');
-    // 	
-    // },
     jumpToDetail: function jumpToDetail() {
       var navData = JSON.stringify(this.articleCard); // 这里转换成 字符串
       uni.navigateTo({
