@@ -48,7 +48,6 @@
 			this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
 			
 			// [测试代码块]
-			
 		},
 		onShow() {
 			var userInfo = this.getGlobalUserInfo();
@@ -73,6 +72,12 @@
 					}
 				});
 			},
+			
+			// async testFunction(userId){
+			// 	this.test = await this.myQueryUserInfo(userId);
+			// 	console.log("here");
+			// 	console.log(this.test);
+			// }
 		}
 	};
 </script>

@@ -131,12 +131,12 @@
 
 		computed: {
 			...mapState([
-				'ChatMessageCard',
+				'chatMessageCard',
 			])
 		},
 
 		watch: {
-			ChatMessageCard(newVal, oldVal) { //监听数据变化，即可做相关操作
+			chatMessageCard(newVal, oldVal) { //监听数据变化，即可做相关操作
 				this.loadingChatSnapshot();
 				console.log("newVal:");
 				console.log(newVal);

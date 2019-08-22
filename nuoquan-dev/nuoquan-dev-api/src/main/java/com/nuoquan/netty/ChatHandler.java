@@ -111,7 +111,8 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
 				userService.updateMsgSigned(msgIdList);
 			}
 		} else if (action == MsgActionEnum.KEEPALIVE.type){
-			// 2.4	心跳类型，
+			// 2.4	心跳类型消息
+			System.out.println("收到来自 channel 为[" + currentChannel + "]的心跳包...");
 		}
 			
 		
