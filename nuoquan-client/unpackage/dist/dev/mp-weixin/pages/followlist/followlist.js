@@ -147,7 +147,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-var _default =
+//
+//
+//
+//
+//
+//
+
+var me;var _default =
 {
   data: function data() {
     return {
@@ -167,11 +174,7 @@ var _default =
       ],
       followList: '',
       fansList: '',
-
-      // 用于分页的属性
-      totalPage: 1,
-      page: 1,
-      videoList: [],
+      myId: '',
 
       screenWidth: 350,
       serverUrl: "",
@@ -204,6 +207,9 @@ var _default =
     uni.setNavigationBarTitle({
       title: thisUserInfo.nickname + '的主页' });
 
+
+    me = this.getGlobalUserInfo();
+    this.myId = me.id;
 
     // 获取userId
     var userId = thisUserInfo.id;
@@ -287,6 +293,73 @@ var _default =
     },
 
     /**
+        * 添加关注
+        */
+    addFollow: function addFollow(index1, index2) {
+      console.log("加关注...");
+      var list;
+      if (index1 == 0) {
+        list = this.followList;
+      } else if (index1 == 1) {
+        list = this.fansList;
+      }
+
+      var thisUser = list[index2];
+
+      var that = this;
+      uni.request({
+        url: that.$serverUrl + '/user/follow',
+        method: "POST",
+        data: {
+          userId: thisUser.id,
+          fanId: me.id },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          if (res.data.status == 200) {
+            // 刷新用户信息，这里本地改就好就不用重新刷新列表了
+            thisUser.follow = true;
+          }
+        } });
+
+    },
+    /**
+        * 取消关注
+        */
+    cancelFollow: function cancelFollow(index1, index2) {
+      console.log("取关...");
+      var list;
+      if (index1 == 0) {
+        list = this.followList;
+      } else if (index1 == 1) {
+        list = this.fansList;
+      }
+
+      var thisUser = list[index2];
+
+      var that = this;
+      uni.request({
+        url: that.$serverUrl + '/user/dontFollow',
+        method: "POST",
+        data: {
+          userId: thisUser.id,
+          fanId: me.id },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          if (res.data.status == 200) {
+            // 刷新用户信息
+            thisUser.follow = false;
+          }
+        } });
+
+    },
+
+    /**
         * 查询该用户的粉丝和关注用户信息列表
         */
     queryFansFollow: function queryFansFollow(userId) {
@@ -295,7 +368,8 @@ var _default =
         url: that.$serverUrl + '/user/queryFansAndFollow',
         method: "POST",
         data: {
-          userId: userId },
+          userId: userId,
+          myId: me.id },
 
         header: {
           'content-type': 'application/x-www-form-urlencoded' },

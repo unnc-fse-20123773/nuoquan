@@ -6,66 +6,48 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class UserVO {
-    @Id
+ 
     private String id;
-
     private String email;
-    
     @JsonIgnore
     private String password;
-
     private String nickname;
-
-    @Column(name = "create_date")
     private Date createDate;
-
-    @Column(name = "face_img")
     private String faceImg;
-
     /**
      * 小头像
      */
-    @Column(name = "face_img_thumb")
     private String faceImgThumb;
-
     /**
      * 关注数
      */
-    @Column(name = "follow_num")
     private Integer followNum;
-
     /**
      * 粉丝数
      */
-    @Column(name = "fans_num")
     private Integer fansNum;
-
     /**
      * 0 = female, 1 = male, 2 = others
      */
     private Byte gender;
-
     private String major;
-
     /**
      * Example: 2022
      */
-    @Column(name = "graduation_year")
     private Integer graduationYear;
-
     /**
      * 0 = high school, 1 = undergraduate, 2 = graduate
      */
     private Byte degree;
-
-    @Column(name = "receive_like_counts")
     private Integer receiveLikeCounts;
-
     /**
      * Client-id 设备id，用于消息推送
      */
     private String cid;
 
+    private boolean isFollow; // 是否关注该用户
+    
+    
     /**
      * @return id
      */
@@ -303,4 +285,12 @@ public class UserVO {
     public void setCid(String cid) {
         this.cid = cid;
     }
+
+	public boolean isFollow() {
+		return isFollow;
+	}
+
+	public void setFollow(boolean isFollow) {
+		this.isFollow = isFollow;
+	}
 }

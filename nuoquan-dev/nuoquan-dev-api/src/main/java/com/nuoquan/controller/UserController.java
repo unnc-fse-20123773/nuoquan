@@ -117,10 +117,10 @@ public class UserController extends BasicController {
 	@ApiImplicitParams({ 
 		@ApiImplicitParam(name = "userId", required = true, dataType = "String", paramType = "form"),})
 	@PostMapping("/queryFansAndFollow")
-	public JSONResult queryFansAndFollow(String userId) {
+	public JSONResult queryFansAndFollow(String userId, String myId) {
 		
-		List<User> fansList = userService.queryUserFans(userId);
-		List<User> followList = userService.queryUserFollow(userId);
+		List<UserVO> fansList = userService.queryUserFans(userId, myId);
+		List<UserVO> followList = userService.queryUserFollow(userId, myId);
 		FansFollow fansAndFollow= new FansFollow(fansList, followList);
 		
 		return JSONResult.ok(fansAndFollow);
@@ -181,6 +181,24 @@ public class UserController extends BasicController {
 		// 将 user 对象转换为 userVO 输出，userVO 中不返回密码，且可加上其他属性。
 		UserVO userVO = ConvertUserToUserVO(user);
 
+		return JSONResult.ok(userVO);
+	}
+	
+	@ApiOperation(value = "query the user's info and whether I followed him")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "userId", required = true, dataType = "String", paramType = "form"),
+			@ApiImplicitParam(name = "fanId", required = true, dataType = "String", paramType = "form"),})
+	@PostMapping("/queryUserWithFollow")
+	public JSONResult queryUserWithFollow(String userId, String fanId) throws Exception {
+
+		if (StringUtils.isBlank(userId)) {
+			return JSONResult.errorMsg("User id can not be null.");
+		}
+		User user = userService.queryUserById(userId);
+		// 将 user 对象转换为 userVO 输出，userVO 中不返回密码，且可加上其他属性。
+		UserVO userVO = ConvertUserToUserVO(user);
+		userVO.setFollow(userService.queryIfFollow(userId, fanId));
+		
 		return JSONResult.ok(userVO);
 	}
 	

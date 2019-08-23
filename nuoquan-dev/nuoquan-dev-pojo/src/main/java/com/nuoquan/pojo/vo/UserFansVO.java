@@ -10,6 +10,7 @@ public class UserFansVO {
     private String faceImg; 		// 大头像
     private String faceImgThumb;	// 小头像
     private Byte gender;			// 性别
+    private boolean isFollow;		// 是否关注该用户
     
     public String getId() {
 		return id;
@@ -40,5 +41,11 @@ public class UserFansVO {
 	}
 	public void setGender(Byte gender) {
 		this.gender = gender;
+	}
+	public boolean isFollow() {
+		return isFollow;
+	}
+	public void setFollow(boolean isFollow) {
+		this.isFollow = isFollow;
 	}
 }

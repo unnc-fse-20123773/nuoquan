@@ -5,6 +5,7 @@ import java.util.List;
 import com.nuoquan.pojo.ChatMsg;
 import com.nuoquan.pojo.User;
 import com.nuoquan.pojo.netty.ChatMessage;
+import com.nuoquan.pojo.vo.UserVO;
 
 public interface UserService {
 	/**
@@ -63,16 +64,26 @@ public interface UserService {
 	public void deleteUserFanRelation(String userId, String fanId);
 	
 	/**
-	 * @Description 查询用户粉丝列表
+	 * 查询用户是否关注
 	 * @param userId
+	 * @param fanId
+	 * @return
 	 */
-	public List<User> queryUserFans(String userId);
+	public boolean queryIfFollow(String userId, String fanId);
 	
 	/**
-	 * @Description 查询用户关注列表
+	 * @Description 查询用户粉丝列表, 以及我是否关注
 	 * @param userId
+	 * @param myId
 	 */
-	public List<User> queryUserFollow(String userId);
+	public List<UserVO> queryUserFans(String userId, String myId);
+	
+	/**
+	 * @Description 查询用户关注列表，以及我是否关注
+	 * @param userId
+	 * @param myId
+	 */
+	public List<UserVO> queryUserFollow(String userId, String myId);
 	
 	/**
 	 * @Description 保存聊天消息到数据库

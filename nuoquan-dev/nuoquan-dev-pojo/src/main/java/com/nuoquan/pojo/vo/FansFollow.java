@@ -10,27 +10,27 @@ import com.nuoquan.pojo.User;
  */
 public class FansFollow {
 
-	private List<User> fansList;
-	private List<User> followList;
+	private List<UserVO> fansList;
+	private List<UserVO> followList;
 	
-	public FansFollow(List<User> fansList, List<User> followList) {
-		this.fansList = fansList;
-		this.followList = followList;
+	public FansFollow(List<UserVO> fansList2, List<UserVO> followList2) {
+		this.setFansList(fansList2);
+		this.setFollowList(followList2);
 	}
-	
-	public List<User> getFansList() {
+
+	public List<UserVO> getFansList() {
 		return fansList;
 	}
 
-	public void setFansList(List<User> fansList) {
+	public void setFansList(List<UserVO> fansList) {
 		this.fansList = fansList;
 	}
 
-	public List<User> getFollowList() {
+	public List<UserVO> getFollowList() {
 		return followList;
 	}
 
-	public void setFollowList(List<User> followList) {
+	public void setFollowList(List<UserVO> followList) {
 		this.followList = followList;
 	}
 	
