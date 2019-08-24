@@ -102,7 +102,7 @@ public class ArticleController extends BasicController{
 				String articleContent, @ApiParam(value="图片或视频", required=false) MultipartFile file) throws Exception {
 		
 		//文件保存的命名空间
-		String fileSpace = "/Users/xudeyan/Desktop/JUMBOX/内容";
+		String fileSpace = "C:/Users/WalkingDemon/Desktop/Git NQ/content";
 		//保存到数据库的相对路径
 		String uplpadPathDB = "/" + userId + "/article";
 		FileOutputStream fileOutputStream = null;

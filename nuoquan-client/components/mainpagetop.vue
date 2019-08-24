@@ -8,7 +8,7 @@
 			<view class="topBar">
 				<image class="topBarTouxiang" :src='userInfo.faceImg' @click="controlShowLeft(1)"></image>
 				<input class="topBarSearch" placeholder="  搜索" />
-				<view class="topBarPlus">
+				<view class="topBarPlus" @click="jumpToSubmit()">
 					<view style="font-size: 20px;color:#FDD041;border-radius: 3px;">+</view>
 				</view>
 				<view class="topBarwaiting"></view>
@@ -45,17 +45,22 @@
 		components: {
 			mainpageleft
 		},
-		
+
 		data() {
 			return {
 				showMainPageLeft: 0,
 			};
 		},
-		
+
 		methods: {
 			controlShowLeft(a) {
 				this.showMainPageLeft = a;
 				// console.log(this.showMainPageLeft);
+			},
+			jumpToSubmit() {
+				uni.navigateTo({
+					url: '/pages/submit/submit'
+				});
 			}
 		}
 	};
@@ -164,5 +169,4 @@
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
-
 </style>

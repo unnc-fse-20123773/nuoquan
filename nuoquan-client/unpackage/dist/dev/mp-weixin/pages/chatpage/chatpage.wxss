@@ -196,7 +196,7 @@
  * TODO： 滚动区域高度需固定
  * 					by Jerrio
  */
-.messageArea.data-v-0318fac1 {
+.messageArea.data-v-13bf3097 {
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -ms-flexbox;
@@ -206,7 +206,7 @@
 	overflow: hidden;
 	background: #F5F5F5;
 }
-.bottomBar.data-v-0318fac1 {
+.bottomBar.data-v-13bf3097 {
 	position: fixed;
 	display: -webkit-box;
 	display: -webkit-flex;
@@ -225,7 +225,7 @@
 	        box-shadow: 0px -2px 2px 0px rgba(130, 130, 130, 0.20);
 	background: #FFFFFF;
 }
-.bottomBar textarea.data-v-0318fac1 {
+.bottomBar textarea.data-v-13bf3097 {
 	display: inline-block;
 	width: 534rpx;
 	height: 50rpx;
@@ -233,7 +233,7 @@
 	border: solid 1px #C6C6C6;
 	margin-left: 14rpx;
 }
-.icons.data-v-0318fac1 {
+.icons.data-v-13bf3097 {
 	display: -webkit-inline-box;
 	display: -webkit-inline-flex;
 	display: -ms-inline-flexbox;
@@ -250,7 +250,7 @@
 	    -ms-flex-align: center;
 	        align-items: center;
 }
-.icons image.data-v-0318fac1 {
+.icons image.data-v-13bf3097 {
 	width: 34rpx;
 	height: 34rpx;
 	vertical-align: middle;

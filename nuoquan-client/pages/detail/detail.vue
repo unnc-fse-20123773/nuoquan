@@ -1,12 +1,10 @@
 <template>
-	<view>
+	<view style="height:100%;width:100%;">
 		<view class="topbar">
-			<image src="../../static/icon/返回.svg" class="backk"></image>
 			<view class="detailtitle">{{ articleCard.articleTitle }}</view>
 		</view>
 
 		<view class="drtailmain">
-			<view style="height:5px;background-color: white;width:60%;margin:auto;"></view>
 			<view class="detailcontent">{{ articleCard.articleContent }}</view>
 			<view class="detailpics">
 				<!-- <image class="detailpic" src="../../static/0001/pic3.jpg"></image>
@@ -21,17 +19,30 @@
 			</view>
 			<view class="tags">
 				<view class="tag" v-for="(i,index) in articleCard.tags" v-bind:key="index">{{i}}</view>
+			</view>		<view class="bottombar">
+			<view style="width:70%;display:inline-block;">
+				<image :src="commentDetail.faceImage" class="touxiang"></image>
+				<view class="name">{{ commentDetail.nickname }}</view>
+
+				<view class="time">{{ commentDetail.timeAgo }}</view>
 			</view>
-			<view class="commentPart">
-				<input class="commentSth" placeholder="评论点什么..." confirm-type="send" @confirm="saveComment" />
+			<view class="icons">
+				<!-- 点赞按钮 -->
+				<image class="icon" src="../../../static/icon/like.svg"></image>
+				<view class="icom">{{ commentDetail.likeNum }}</view>
 			</view>
-			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i"></commentbox>
 		</view>
+			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i"></commentbox>
+			<view class="fengexian" style="height: 1px;width: 90%;background-color: #d6d6d6;margin:auto;"></view>
+			<!-- <view class="commentPart">
+				<input class="commentSth" placeholder="评论点什么..." confirm-type="send" @confirm="saveComment" />
+			</view> -->
+		</view>
+
 	</view>
 </template>
 
 <script>
-	import articlebrief from '../../components/articlebrief';
 	import comment from '../../components/comment';
 	export default {
 		data() {
@@ -49,12 +60,12 @@
 				// 	['13', 'background:blue'],
 				// 	['163', 'background:yellow']
 				// ],
-				commentList: ''
+				commentList: {},
 			};
 		},
 
 		components: {
-			articlebrief,
+
 			commentbox: comment
 		},
 		methods: {
@@ -98,9 +109,9 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: (res) => {
-						 that.commentList = res.data.data.rows;
+						that.commentList = res.data.data.rows;
 						console.log(that.articleCard.id),
-						console.log(res)
+							console.log(res)
 					},
 				});
 			},
@@ -125,14 +136,14 @@
 </script>
 
 <style>
+	page {
+		height: 100%;
+		width: 100%;
+	}
+
 	.topbar {
 		height: 100px;
 		background-color: RGB(253, 217, 108);
-	}
-
-	.backk {
-		width: 15px;
-		height: 10px;
 	}
 
 	.detailtitle {
@@ -144,16 +155,19 @@
 	}
 
 	.drtailmain {
-		border-radius: 20px;
+		border-top-left-radius: 20px;
+		border-top-right-radius: 20px;
 		margin-top: -20px;
 		background: white;
 		box-shadow: 0 -1px 8px grey;
+		height: 100%;
 	}
 
 	.detailcontent {
+		padding-top: 25px;
 		font-size: 13px;
 		width: 85%;
-		margin: 20px auto;
+		margin: 0px auto 10px;
 		font-weight: 400;
 	}
 
@@ -162,7 +176,6 @@
 		justify-content: center;
 		align-items: center;
 		flex-wrap: wrap;
-		margin-bottom: 30px;
 	}
 
 	.detailpic {
@@ -171,7 +184,12 @@
 		margin: 6px;
 	}
 
-	.tags {}
+	.tags {
+		max-height:20px;
+		line-height: 15px;
+		width: 85%;
+		margin: auto;
+	}
 
 	.tag {
 		display: inline-block;
@@ -180,8 +198,11 @@
 		padding-right: 5px;
 		margin-left: 5px;
 		height: 15px;
+		line-height: 15px;
 		color: #ffffff;
 		font-size: 10px;
+		background: #621E81;
+		vertical-align: middle;
 	}
 
 	.articleCard {
@@ -190,11 +211,42 @@
 		border-radius: 5px;
 	}
 
+	.bottombar {
+		position: relative;
+		border-radius: 20px;
+		height: 25px;
+		margin-top: 20px;
+	}
 	.touxiang {
-		border-border-radius: 30px;
 		width: 20px;
 		height: 20px;
-		margin-right: 5px;
+		border-radius: 20px;
+		display: inline-block;
 		vertical-align: middle;
+		margin-right: 5px;
 	}
+	
+	.time,
+	.name {
+		font-size: 10px;
+		margin-right: 10px;
+		color:#888888;
+	}
+	.icons {
+		justify-content: flex-end;
+		display: inline-flex;
+		align-items: center;
+		width: 30%;
+		font-size: 10px;
+		
+	}
+	.icon {
+		width: 11px;
+		height: 11px;
+		font-size: 2px;
+			padding-left: 45upx;
+		padding-right:8upx;
+		
+	}
+	
 </style>

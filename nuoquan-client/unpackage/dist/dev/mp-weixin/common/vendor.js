@@ -1,9 +1,9 @@
 (global["webpackJsonp"] = global["webpackJsonp"] || []).push([["common/vendor"],{
 
 /***/ 0:
-/*!**********************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js ***!
-  \**********************************************************************/
+/*!***************************************************************************!*\
+  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js ***!
+  \***************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1373,7 +1373,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -2217,10 +2217,21 @@ function normalizeComponent (
 
 /***/ }),
 
+/***/ 103:
+/*!*****************************************************************************************************!*\
+  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/pages/black-index/black-index.css ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ 106:
-/*!*********************************************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Fsignin%2Fsignin"} ***!
-  \*********************************************************************************************************/
+/*!**************************************************************************************************************!*\
+  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fsignin%2Fsignin"} ***!
+  \**************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2235,9 +2246,9 @@ createPage(_signin.default);
 /***/ }),
 
 /***/ 11:
-/*!*****************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/store/index.js ***!
-  \*****************************************************************************/
+/*!**********************************************************************************!*\
+  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/store/index.js ***!
+  \**********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2263,9 +2274,9 @@ store;exports.default = _default;
 /***/ }),
 
 /***/ 114:
-/*!***********************************************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"components%2Farticlebrief"} ***!
-  \***********************************************************************************************************/
+/*!****************************************************************************************************************!*\
+  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"components%2Farticlebrief"} ***!
+  \****************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2280,9 +2291,9 @@ createPage(_articlebrief.default);
 /***/ }),
 
 /***/ 115:
-/*!*******************************************************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Fmessagelist%2Fmessagelist"} ***!
-  \*******************************************************************************************************************/
+/*!************************************************************************************************************************!*\
+  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fmessagelist%2Fmessagelist"} ***!
+  \************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3248,9 +3259,9 @@ var index_esm = {
 /***/ }),
 
 /***/ 123:
-/*!*******************************************************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2FwechatLogin%2FwechatLogin"} ***!
-  \*******************************************************************************************************************/
+/*!************************************************************************************************************************!*\
+  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2FwechatLogin%2FwechatLogin"} ***!
+  \************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3265,9 +3276,9 @@ createPage(_wechatLogin.default);
 /***/ }),
 
 /***/ 13:
-/*!*******************************************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Findex%2Findex"} ***!
-  \*******************************************************************************************************/
+/*!************************************************************************************************************!*\
+  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Findex%2Findex"} ***!
+  \************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8749,7 +8760,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -8770,14 +8781,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -8853,7 +8864,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -9231,9 +9242,9 @@ internalMixin(Vue);
 /***/ }),
 
 /***/ 28:
-/*!*************************************************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Fchatpage%2Fchatpage"} ***!
-  \*************************************************************************************************************/
+/*!**************************************************************************************************************!*\
+  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fdetail%2Fdetail"} ***!
+  \**************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9241,8 +9252,8 @@ internalMixin(Vue);
 /* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _chatpage = _interopRequireDefault(__webpack_require__(/*! ./pages/chatpage/chatpage.vue */ 29));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_chatpage.default);
+var _detail = _interopRequireDefault(__webpack_require__(/*! ./pages/detail/detail.vue */ 29));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_detail.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
 
 /***/ }),
@@ -9279,9 +9290,9 @@ module.exports = g;
 /***/ }),
 
 /***/ 36:
-/*!*********************************************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Fsubmit%2Fsubmit"} ***!
-  \*********************************************************************************************************/
+/*!**************************************************************************************************************!*\
+  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fsubmit%2Fsubmit"} ***!
+  \**************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9296,9 +9307,9 @@ createPage(_submit.default);
 /***/ }),
 
 /***/ 4:
-/*!*************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/pages.json ***!
-  \*************************************************************************/
+/*!******************************************************************************!*\
+  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/pages.json ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9308,9 +9319,9 @@ createPage(_submit.default);
 /***/ }),
 
 /***/ 44:
-/*!*****************************************************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Ffollowlist%2Ffollowlist"} ***!
-  \*****************************************************************************************************************/
+/*!******************************************************************************************************************!*\
+  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fchatpage%2Fchatpage"} ***!
+  \******************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9318,25 +9329,42 @@ createPage(_submit.default);
 /* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _followlist = _interopRequireDefault(__webpack_require__(/*! ./pages/followlist/followlist.vue */ 45));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _chatpage = _interopRequireDefault(__webpack_require__(/*! ./pages/chatpage/chatpage.vue */ 45));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_chatpage.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
+
+/***/ }),
+
+/***/ 52:
+/*!**********************************************************************************************************************!*\
+  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Ffollowlist%2Ffollowlist"} ***!
+  \**********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _followlist = _interopRequireDefault(__webpack_require__(/*! ./pages/followlist/followlist.vue */ 53));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_followlist.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
 
 /***/ }),
 
-/***/ 50:
+/***/ 58:
 /*!**********************************************************!*\
   !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
   \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! regenerator-runtime */ 51);
+module.exports = __webpack_require__(/*! regenerator-runtime */ 59);
 
 
 /***/ }),
 
-/***/ 51:
+/***/ 59:
 /*!************************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime-module.js ***!
   \************************************************************/
@@ -9367,7 +9395,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(/*! ./runtime */ 52);
+module.exports = __webpack_require__(/*! ./runtime */ 60);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -9384,7 +9412,7 @@ if (hadRuntime) {
 
 /***/ }),
 
-/***/ 52:
+/***/ 60:
 /*!*****************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime.js ***!
   \*****************************************************/
@@ -10116,10 +10144,10 @@ if (hadRuntime) {
 
 /***/ }),
 
-/***/ 55:
-/*!***********************************************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Fprofile%2Fprofile"} ***!
-  \***********************************************************************************************************/
+/***/ 63:
+/*!****************************************************************************************************************!*\
+  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fprofile%2Fprofile"} ***!
+  \****************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10127,16 +10155,16 @@ if (hadRuntime) {
 /* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _profile = _interopRequireDefault(__webpack_require__(/*! ./pages/profile/profile.vue */ 56));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _profile = _interopRequireDefault(__webpack_require__(/*! ./pages/profile/profile.vue */ 64));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_profile.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
 
 /***/ }),
 
-/***/ 63:
-/*!*********************************************************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Fpersonpublic%2Fpersonpublic"} ***!
-  \*********************************************************************************************************************/
+/***/ 71:
+/*!**************************************************************************************************************************!*\
+  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fpersonpublic%2Fpersonpublic"} ***!
+  \**************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10144,16 +10172,16 @@ createPage(_profile.default);
 /* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _personpublic = _interopRequireDefault(__webpack_require__(/*! ./pages/personpublic/personpublic.vue */ 64));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _personpublic = _interopRequireDefault(__webpack_require__(/*! ./pages/personpublic/personpublic.vue */ 72));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_personpublic.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
 
 /***/ }),
 
-/***/ 71:
-/*!*********************************************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Fsearch%2Fsearch"} ***!
-  \*********************************************************************************************************/
+/***/ 79:
+/*!**************************************************************************************************************!*\
+  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fsearch%2Fsearch"} ***!
+  \**************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10161,16 +10189,16 @@ createPage(_personpublic.default);
 /* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _search = _interopRequireDefault(__webpack_require__(/*! ./pages/search/search.vue */ 72));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _search = _interopRequireDefault(__webpack_require__(/*! ./pages/search/search.vue */ 80));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_search.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
 
 /***/ }),
 
-/***/ 79:
-/*!*************************************************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Ffanslist%2Ffanslist"} ***!
-  \*************************************************************************************************************/
+/***/ 87:
+/*!******************************************************************************************************************!*\
+  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Ffanslist%2Ffanslist"} ***!
+  \******************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10178,16 +10206,16 @@ createPage(_search.default);
 /* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _fanslist = _interopRequireDefault(__webpack_require__(/*! ./pages/fanslist/fanslist.vue */ 80));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _fanslist = _interopRequireDefault(__webpack_require__(/*! ./pages/fanslist/fanslist.vue */ 88));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_fanslist.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
 
 /***/ }),
 
-/***/ 89:
-/*!*******************************************************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Fblack-index%2Fblack-index"} ***!
-  \*******************************************************************************************************************/
+/***/ 97:
+/*!************************************************************************************************************************!*\
+  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fblack-index%2Fblack-index"} ***!
+  \************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10195,36 +10223,8 @@ createPage(_fanslist.default);
 /* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _blackIndex = _interopRequireDefault(__webpack_require__(/*! ./pages/black-index/black-index.vue */ 90));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _blackIndex = _interopRequireDefault(__webpack_require__(/*! ./pages/black-index/black-index.vue */ 98));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_blackIndex.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
-
-/***/ }),
-
-/***/ 95:
-/*!************************************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/pages/black-index/black-index.css ***!
-  \************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
-/***/ 98:
-/*!*********************************************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Fdetail%2Fdetail"} ***!
-  \*********************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _detail = _interopRequireDefault(__webpack_require__(/*! ./pages/detail/detail.vue */ 99));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_detail.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
 
 /***/ })

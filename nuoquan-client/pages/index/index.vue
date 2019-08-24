@@ -2,6 +2,7 @@
 	<view class="index">
 		<mainpagetop :userInfo='userInfo'></mainpagetop>
 		<articlebrief v-for="i in showlist" :key="i.id" v-bind:articleCard="i"></articlebrief>
+		<view style="margin:750upx auto 0;font-size:13px;text-align: center;">到~底~线~啦~！</view>
 	</view>
 </template>
 
@@ -78,8 +79,12 @@
 </script>
 
 <style>
+	page{
+		height:100%;
+	}
 	.index {
 		background-color: #f3f3f3;
+		height:100%;
 	}
 
 	image {

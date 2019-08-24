@@ -5,15 +5,18 @@
 			"style": {
 				"navigationBarTitleText": "uni-app"
 			}
+		}, {
+			"path": "pages/detail/detail",
+			"style": {}
+		}, {
+			"path": "pages/submit/submit",
+			"style": {}
 		},
 		{
 			"path": "pages/chatpage/chatpage",
 			"style": {}
 		},
 		{
-			"path": "pages/submit/submit",
-			"style": {}
-		}, {
 			"path": "pages/followlist/followlist",
 			"style": {}
 		},
@@ -37,10 +40,7 @@
 			"path": "pages/black-index/black-index",
 			"style": {}
 		},
-		{
-			"path": "pages/detail/detail",
-			"style": {}
-		},
+
 		{
 			"path": "pages/signin/signin",
 			"style": {}

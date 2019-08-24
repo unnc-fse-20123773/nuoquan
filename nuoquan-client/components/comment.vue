@@ -1,7 +1,7 @@
 <template>
 	<view class="comment" id="'+commentDetail.id'">
 		<view class="fengexian"></view>
-		<text class="contentarea">{{ commentDetail.comment }}</text>
+		<view class="contentarea">{{ commentDetail.comment }}</view>
 		<view class="bottombar">
 			<view style="width:70%;display:inline-block;">
 				<image :src="commentDetail.faceImage" class="touxiang"></image>
@@ -50,16 +50,16 @@ export default {
 	background-color: #d6d6d6;
 }
 .contentarea {
+	padding-top: 14px;
 	background: white;
 	font-size: 16px;
 	border-radius: 20px;
-	margin-top: 20px;
 }
 .bottombar {
 	position: relative;
 	border-radius: 20px;
-	height: 40px;
-	margin-top: 20px;
+	height: 25px;
+	margin-top: 10px;
 }
 .touxiang {
 	width: 20px;
@@ -72,21 +72,26 @@ export default {
 
 .time,
 .name {
-	font-size: 13px;
+	font-size: 10px;
 	margin-right: 10px;
+	color:#888888;
 }
 .icons {
 	justify-content: flex-end;
 	display: inline-flex;
 	align-items: center;
 	width: 30%;
+	font-size: 10px;
 	
 }
 .icon {
-	width: 35px;
-	height: 15px;
+	width: 11px;
+	height: 11px;
 	font-size: 2px;
+		padding-left: 45upx;
+	padding-right:8upx;
 	
 }
+
 
 </style>

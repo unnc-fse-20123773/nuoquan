@@ -98,7 +98,7 @@ export default {
 			console.log(me.articleTitle);
 			console.log(me.imgPath);
 
-			var serverUrl = me.SeverUrl;
+			var serverUrl = me.$serverUrl + '/upload';
 			uni.uploadFile({
 				url: serverUrl + '/upload',
 				filePath: me.imgPath[0],
@@ -144,8 +144,8 @@ page {
 	height: 100%;
 	width: 606upx;
 	padding: 38upx 72upx;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
+	border-top-left-radius: 18px;
+	border-top-right-radius: 18px;
 	background: #FFFFFF;
 	box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.35);
 }

@@ -9,12 +9,12 @@
 			<image src="../static/0001/pic3.jpg" v-if="articleCard[5]"></image>
 		</view>
 		<view class="tags">
-			<view class="tag" v-for="(i, index) in articleCard.tags" v-bind:key="index" >{{ i}}</view>
+			<view class="tag" v-for="(i, index) in articleCard.tags" v-bind:key="index">{{ i}}</view>
 		</view>
 		<view class="menubar">
 			<image :src="articleCard.faceImg" class="touxiang"></image>
-			<view class="name">{{ articleCard.nickName }}</view>
-			<view class="time">{{ articleCard[7] }}</view>
+			<view class="name">{{ articleCard.nickname }}</view>
+			<view class="time">{{ articleCard.createDate | timeDeal}}</view>
 
 			<view class="icons">
 				<image class="comment" src="../static/icon/comment.svg">{{ articleCard.commentNum }}</image>
@@ -25,152 +25,181 @@
 </template>
 
 <script>
-export default {
-	name: 'aticlebrief',
-	props: {
-		articleCard: {}
-	},
-	data() {
-		return {
-			taglist: [
-				['123', 'background:#40A792'],
-				['13', 'background:#621E81'],
-				['163', 'background:#738598'],
-				['标签', 'background:#F3AE4B'],
-				['13', 'background:#621E81'],
-				['163', 'background:#738598'],
-				['123', 'background:#40A792'],
-				['13', 'background:#621E81']
-			]
-		};
-	},
-	created(){
-		console.log(this.articleCard.tags);
-		console.log(typeof(this.articleCard.tags));
-		
+	export default {
+		name: 'aticlebrief',
+		props: {
+			articleCard: {}
+		},
+		data() {
+			return {
+				taglist: [
+					['123', 'background:#40A792'],
+					['13', 'background:#621E81'],
+					['163', 'background:#738598'],
+					['标签', 'background:#F3AE4B'],
+					['13', 'background:#621E81'],
+					['163', 'background:#738598'],
+					['123', 'background:#40A792'],
+					['13', 'background:#621E81']
+				]
+			};
+		},
+		created() {
+			console.log(this.articleCard);
+		},
+		filters: {
+			timeDeal(isostr) {
+				var parts = isostr.match(/\d+/g);				
+				var oldTime = new Date(parts[0]+'-'+parts[1]+'-'+parts[2]+' '+parts[3]+':'+parts[4]+':'+parts[5]).getTime();
+				var newTime = Date.parse(new Date().toDateString()); //typescript转换写法
+				var milliseconds = 0;
+				var timeSpanStr;
+				milliseconds = newTime - oldTime;
+				if (milliseconds <= 1000 * 60 * 1) {
+					timeSpanStr = '刚刚';
+				} else if (1000 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60) {
+					timeSpanStr = Math.round((milliseconds / (1000 * 60))) + '分钟前';
+				} else if (1000 * 60 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24) {
+					timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
+				} else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
+					timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
+				} else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && year == now.getFullYear()) {
+					timeSpanStr = month + '-' + day + ' ' + hour + ':' + minute;
+				} else {
+					timeSpanStr = year + '-' + month + '-' + day + ' ' + hour + ':' + minute;
+				}
+				debugger;
+				return timeSpanStr;
+			
+		}
+
 	},
 	methods: {
-		jumpToDetail() {
-			var navData = JSON.stringify(this.articleCard); // 这里转换成 字符串
-			uni.navigateTo({
-				url: '/pages/detail/detail?data=' + navData
-			});
-		}
-	},
+			jumpToDetail() {
+				var navData = JSON.stringify(this.articleCard); // 这里转换成 字符串
+				uni.navigateTo({
+					url: '/pages/detail/detail?data=' + navData
+				});
+			}
+		},
 
-};
+	};
 </script>
 
 <style>
-	image{
-		border:none;
+	image {
+		border: none;
 		outline: none;
 	}
-.articlecard {
-	width: 650upx;
-	border-radius: 8px;
-	margin: 11px auto 0;
-	background-color: #ffffff;
-}
 
-.title {
-	margin: 16px 25px 0 25px;
-	font-size: 15px;
-	font: MicrosoftYaHei;
-	font-weight: bold;
-	line-height: 19px;
-	margin: 16px 13px 0 15px;
-	padding-top: 16px;
-}
+	.articlecard {
+		width: 650upx;
+		border-radius: 8px;
+		margin: 11px auto 0;
+		background-color: #ffffff;
+	}
 
-.briefarticleCard {
-	margin: 10px 13px 0 15px;
-	font-size: 13px;
-	line-height: 15px;
-	margin-bottom: 15px;
-}
+	.title {
+		margin: 16px 25px 0 25px;
+		font-size: 15px;
+		font: MicrosoftYaHei;
+		font-weight: bold;
+		line-height: 19px;
+		margin: 16px 13px 0 15px;
+		padding-top: 16px;
+	}
 
-.tags {
-	margin-left:10px;
+	.briefarticleCard {
+		margin: 10px 13px 0 15px;
+		font-size: 13px;
+		line-height: 15px;
+		margin-bottom: 15px;
+	}
 
-}
+	.tags {
+		margin-left: 10px;
 
-.tag {
-	display: inline-block;
-	border-radius: 4px;
-	padding-left: 5px;
-	padding-right: 5px;
-	margin-left: 5px;
-	height: 15px;
-	color: #ffffff;
-	font-size: 10px;
-	background: #621E81;
-}
+	}
 
-.menubar {
-	position: relative;
-	vertical-align: middle;
-	margin-left: 15px;
-	border-radius: 8px;
-}
+	.tag {
+		display: inline-block;
+		border-radius: 4px;
+		padding-left: 5px;
+		padding-right: 5px;
+		margin-left: 5px;
+		height: 15px;
+		color: #ffffff;
+		font-size: 10px;
+		background: #621E81;
+	}
 
-.touxiang {
-	border-radius: 30px;
-	width: 20px;
-	height: 20px;
-	margin-right: 5px;
-	vertical-align: middle;
-}
+	.menubar {
+		position: relative;
+		vertical-align: middle;
+		margin-left: 15px;
+		border-radius: 8px;
+	}
 
-.name {
-	display: inline-block;
-	font-size: 10px;
-	margin-left: 7px;
-	color: #888888;
-}
+	.touxiang {
+		border-radius: 30px;
+		width: 20px;
+		height: 20px;
+		margin-right: 5px;
+		vertical-align: middle;
 
-.time {
-	display: inline-block;
-	left: 120px;
-	font-size: 10px;
-	margin-left: 25px;
-	color: #888888;
-}
+	}
 
-.icons {
-	position: absolute;
-	right: 0;
-	width: 206upx;
-	text-align: right;
-	display: inline-block;
-	background-image: url(../static/icon/iconsBG.png);
-/* 		background-image: url(../static/icon/signinline.png);
- */	
-/* 	background-repeat: no-repeat;
- */	overflow: hidden;
-	border-bottom-right-radius: 8px;
-	border: 10px #621E81;
-		outline : 0px solid deeppink;
-	
-}
+	.name {
+		display: inline-block;
+		font-size: 10px;
+		margin-left: 7px;
+		color: #888888;
+		padding-bottom: 5px;
+	}
 
-.icons image {
-	position: relative;
-	/* G添加相对位置 */
-	width: 11px;
-	height: 11px;
-	padding-right: 10px;
-}
+	.time {
+		display: inline-block;
+		left: 120px;
+		font-size: 10px;
+		margin-left: 25px;
+		color: #888888;
+	}
 
-.picturearea {
-	margin: auto;
-	display: flex;
-	justify-content: center;
-}
+	.icons {
+		position: absolute;
+		right: 0;
+		width: 206upx;
+		text-align: right;
+		display: inline-block;
+		background-image: url(../static/icon/iconsBG.png);
+		/* 		background-image: url(../static/icon/signinline.png);
+ */
+		/* 	background-repeat: no-repeat;
+ */
+		overflow: hidden;
+		border-bottom-right-radius: 8px;
+		border: 10px #621E81;
+		outline: 0px solid deeppink;
 
-image {
-	width: 30%;
-	height: 200upx;
-	margin: auto;
-}
+	}
+
+	.icons image {
+		position: relative;
+		/* G添加相对位置 */
+		width: 11px;
+		height: 11px;
+		padding-right: 10px;
+	}
+
+	.picturearea {
+		margin: auto;
+		display: flex;
+		justify-content: center;
+	}
+
+	image {
+		width: 30%;
+		height: 200upx;
+		margin: auto;
+	}
 </style>
