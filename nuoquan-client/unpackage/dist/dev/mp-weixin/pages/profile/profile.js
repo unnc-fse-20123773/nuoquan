@@ -133,10 +133,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-var _default =
+//
+//
+//
+
+var userInfo;var _default =
 {
   data: function data() {
-    return {};
+    return {
+      userInfo: '' };
 
   },
 
@@ -144,6 +149,10 @@ var _default =
     uni.setNavigationBarTitle({
       title: "个人信息" });
 
+
+    userInfo = this.getGlobalUserInfo();
+    this.userInfo = userInfo;
+    console.log(userInfo);
   },
   methods: {} };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

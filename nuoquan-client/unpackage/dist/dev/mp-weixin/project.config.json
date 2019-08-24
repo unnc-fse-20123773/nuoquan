@@ -27,57 +27,63 @@
       "current": 0,
       "list": [
         {
-          "name": "signin",
+          "name": "index",
           "query": "",
           "id": 0,
+          "pathName": "pages/index/index"
+        },
+        {
+          "name": "signin",
+          "query": "",
+          "id": 1,
           "pathName": "pages/signin/signin"
         },
         {
           "name": "submit",
           "query": "",
-          "id": 1,
+          "id": 2,
           "pathName": "pages/submit/submit"
         },
         {
           "name": "chatpage",
           "query": "",
-          "id": 2,
+          "id": 3,
           "pathName": "pages/chatpage/chatpage"
         },
         {
           "name": "fanslist",
           "query": "",
-          "id": 3,
+          "id": 4,
           "pathName": "pages/fanslist/fanslist"
         },
         {
           "name": "followlist",
           "query": "",
-          "id": 4,
+          "id": 5,
           "pathName": "pages/followlist/followlist"
         },
         {
           "name": "messagelist",
           "query": "",
-          "id": 5,
+          "id": 6,
           "pathName": "pages/messagelist/messagelist"
         },
         {
           "name": "profile",
           "query": "",
-          "id": 6,
+          "id": 7,
           "pathName": "pages/profile/profile"
         },
         {
           "name": "personpublic",
           "query": "",
-          "id": 7,
+          "id": 8,
           "pathName": "pages/personpublic/personpublic"
         },
         {
           "name": "wechatLogin",
           "query": "",
-          "id": 8,
+          "id": 9,
           "pathName": "pages/wechatLogin/wechatLogin"
         }
       ]

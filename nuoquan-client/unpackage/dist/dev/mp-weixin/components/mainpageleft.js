@@ -167,6 +167,12 @@ name: 'mainpageleft';var _default =
       uni.navigateTo({
         url: '../messagelist/messagelist' });
 
+    },
+
+    goToProfile: function goToProfile() {
+      uni.navigateTo({
+        url: '../profile/profile' });
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

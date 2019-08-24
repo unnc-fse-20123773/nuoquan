@@ -17,14 +17,14 @@ import org.springframework.stereotype.Component;
 @PropertySource(value="classpath:resource-dev.properties")
 public class ResourceConfig {
 	
-	private String server;
+	private String fileSpace;
 
-	public String getServer() {
-		return server;
+	public String getFileSpace() {
+		return fileSpace;
 	}
 
-	public void setServer(String server) {
-		this.server = server;
+	public void setFileSpace(String fileSpace) {
+		this.fileSpace = fileSpace;
 	}
 
 }
