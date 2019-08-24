@@ -133,13 +133,19 @@ _vue.default.prototype.getCurrentPage = function () {
 // 				// 4.分割邮箱地址, 重构user
 // 				finalUser = that.myUser(finalUser);
 // 			}
+// 			console.log("里面");
+// 			console.log(finalUser);
+// 			return finalUser;
 // 		}
 // 	});
 // 	
-// 	app.$nextTick(function(){
-// 		console.log(finalUser);
-// 	})
-// 	return finalUser;
+// 	// app.$nextTick(function(){
+// 	// 	console.log(finalUser);
+// 	// })
+// 	
+// 	// console.log("里面2");
+// 	// console.log(finalUser);
+// 	// return finalUser;
 // }
 
 /**
@@ -187,23 +193,26 @@ _vue.default.prototype.mySocket = {
       that.isOpen = true;
       console.log('WebSocket连接已打开！isSocketOpen=' + that.isOpen);
       //发送连接消息，向服务器注册信息
-      that.sendObj(app.netty.CONNECT, null, null);
+      that.sendObj(app.netty.CONNECT, null, null, null);
       // 发送未发送的信息
       for (var i = 0; i < that.socketMsgQueue.length; i++) {
-        // console.log(that.socketMsgQueue[i]);
-        that.sendObj(app.netty.CHAT, that.socketMsgQueue[i], null);
+        if (that.socketMsgQueue[i].action == app.netty.CHAT) {
+          that.sendDataContent(that.socketMsgQueue[i]);
+        }
       }
       that.socketMsgQueue = [];
 
       // 签收未签收消息
       app.chat.fetchUnsignedMsg();
+
+      // 定时发送心跳
+      setInterval(that.keepAlive, 50000);
     });
 
     uni.onSocketError(function (res) {
       console.log('WebSocket连接打开失败，请检查！');
     });
 
-    // 已在index页面重写
     uni.onSocketMessage(function (res) {
       var dataContent = JSON.parse(res.data);
       var chatMessage = dataContent.chatMessage;
@@ -263,13 +272,13 @@ _vue.default.prototype.mySocket = {
 
   },
   /**
-      * 向服务器发送JSON数据对象
+      * 向 netty 服务器发送 socket 数据的方法
       * @param {Object} type
       * @param {Object} toUserId
       * @param {Object} msg
       * @param {Object} extand
       */
-  sendObj: function sendObj(type, toUserId, msg, extand) {
+  sendObj: function sendObj(action, toUserId, msg, extand) {
     var myUserId = app.getGlobalUserInfo().id; // 调用全局用户缓存，需要先请求获取
     if (app.isNull(myUserId)) {
       console.log("请先获取用户数据");
@@ -280,28 +289,46 @@ _vue.default.prototype.mySocket = {
 
     // 构建载体
     var chatMessage = new app.netty.ChatMessage(myUserId, toUserId, msg, null, timeStamp);
-    var dataContent = new app.netty.DataContent(type, chatMessage, extand);
+    var dataContent = new app.netty.DataContent(action, chatMessage, extand);
 
-    var data = JSON.stringify(dataContent);
     var isSocketOpen = app.mySocket.isOpen;
     if (isSocketOpen == true) {
-      // console.log("sendObj... isSocketOpen=" + isSocketOpen);
-      uni.sendSocketMessage({
-        data: data });
-
-
-      //保存聊天历史到本地缓存，保存聊天快照到本地
-      if (type == app.netty.CHAT) {
-        var createDate = app.formatTime(timeStamp);
-        // console.log("发消息的时间戳：" + createDate);
-        app.chat.saveUserChatHistory(myUserId, toUserId, msg, app.chat.ME, createDate);
-        app.chat.saveUserChatSnapshot(myUserId, toUserId, msg, app.chat.READ, createDate);
-      }
+      this.sendDataContent(dataContent);
     } else {
       console.log("isSocketOpen=" + isSocketOpen);
-      this.socketMsgQueue.push(data);
+      this.socketMsgQueue.push(dataContent);
       console.log(this.socketMsgQueue);
+    }
+  },
 
+  /**
+      * 向 netty 服务器发送 DataConten 对象
+      * @param {Object} dataContent
+      */
+  sendDataContent: function sendDataContent(dataContent) {
+    var data = JSON.stringify(dataContent);
+    uni.sendSocketMessage({
+      data: data });
+
+
+    if (dataContent.action == app.netty.CHAT) {
+      // 保存聊天历史到本地缓存，保存聊天快照到本地
+      var chatMessage = dataContent.chatMessage;
+      var createDate = app.formatTime(chatMessage.createDate);
+
+      // console.log("发消息的时间戳：" + createDate);
+      app.chat.saveUserChatHistory(chatMessage.senderId,
+      chatMessage.receiverId,
+      chatMessage.msg,
+      app.chat.ME,
+      createDate);
+      app.chat.saveUserChatSnapshot(chatMessage.senderId,
+      chatMessage.receiverId,
+      chatMessage.msg,
+      app.chat.READ,
+      createDate);
+      // 刷到对话窗口
+      app.$store.commit('doFlashChatPage');
     }
   },
 
@@ -311,6 +338,14 @@ _vue.default.prototype.mySocket = {
       */
   signMsgList: function signMsgList(msgIds) {
     this.sendObj(app.netty.SIGNED, null, null, msgIds);
+  },
+
+  /**
+      * 发送心跳
+      */
+  keepAlive: function keepAlive() {
+    // 用 setInterval 调用时，使用 this 获取不到实例，故用 app
+    app.mySocket.sendObj(app.netty.KEEPALIVE, null, null, null);
   } };
 
 
@@ -541,22 +576,24 @@ _vue.default.prototype.chat = {
         // console.log(res)
         if (res.data.status == 200) {
           var unsignedMsgList = res.data.data;
-          // console.log(unsignedMsgList);
+          console.log(unsignedMsgList);
           if (!app.isNull(unsignedMsgList)) {
             for (var i = 0; i < unsignedMsgList.length; i++) {
               var msgObj = unsignedMsgList[i];
+              var timeStamp = new Date(msgObj.createDate).getTime();
+              var createDate = app.formatTime(timeStamp);
               // 1.逐条存入聊天记录
               _this.saveUserChatHistory(msgObj.acceptUserId,
               msgObj.sendUserId,
               msgObj.msg,
               _this.FRIEND,
-              msgObj.createDate);
+              createDate);
               // 2.保存聊天快照到本地
               _this.saveUserChatSnapshot(msgObj.acceptUserId,
               msgObj.sendUserId,
               msgObj.msg,
               _this.UNREAD,
-              msgObj.createDate);
+              createDate);
               // 3.拼接批量签收id的字符串
               msgIds += msgObj.id + ",";
             }
@@ -2260,11 +2297,17 @@ _vue.default.use(_vuex.default);
 
 var store = new _vuex.default.Store({
   state: {
-    ChatMessageCard: '' // 暂存一条socket接收的消息
+    chatMessageCard: '', // 暂存一条socket接收的消息
+    flashChatPage: "doFlash" // 作为触发 chatPage 刷新的条件
   },
   mutations: {
     setChatMessageCard: function setChatMessageCard(state, value) {
-      state.ChatMessageCard = value;
+      state.chatMessageCard = value;
+    },
+
+    doFlashChatPage: function doFlashChatPage(state, value) {
+      // 获取当前时间，使数据变化
+      state.flashChatPage = new Date().getTime();
     } } });var _default =
 
 

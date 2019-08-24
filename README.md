@@ -1,4 +1,10 @@
 # Update Log:
+**v19.8.23 更新**
+1. 新增 心跳机制
+2. 新增 聊天消息重发机制
+3. 新增 用户关注完整逻辑
+4. 修改 时间的显示，对 Date 形式的时间进行解析
+
 **v19.8.22 更新**
 1. 整合 deyan 分支代码
 2. 新增 submit 页面添加标签
@@ -7,7 +13,6 @@
 5. 小改 数据库，详情见 sqlRecord.sql (两期)
 6. TODO [yaoyao] 修改主页，submit，chatpage页面效果
 7. TODO [guetta] 修改messageList页面效果，并协助 yaoyao 修改页面
-
 
 **v19.8.16 更新**
 1. 整合 yaoyao 分支代码

@@ -163,7 +163,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-var _default =
+//
+//
+//
+//
+//
+
+var me;var _default =
+
 {
   data: function data() {
     return {
@@ -189,15 +196,11 @@ var _default =
       []],
 
 
-      // 用于分页的属性
-      totalPage: 1,
-      page: 1,
-      videoList: [],
-
       screenWidth: 350,
       serverUrl: "",
 
-      thisUserInfo: '' };
+      thisUserInfo: '',
+      myPublic: false };
 
   },
 
@@ -215,6 +218,14 @@ var _default =
   },
 
   onLoad: function onLoad(opt) {
+    var userId = opt.userId;
+
+    me = this.getGlobalUserInfo();
+    if (me.id == userId) {
+      // 如果打开自己的页面，屏蔽关注和发私信按钮
+      this.myPublic = true;
+    }
+
     var screenWidth = uni.getSystemInfoSync().screenWidth;
     this.screenWidth = screenWidth;
 
@@ -222,17 +233,15 @@ var _default =
     var page = this.page;
 
     // 获取这个人的信息, TODO: 更新本地用户信息缓存
-    var userId = opt.userId;
-    this.queryUserInfo(userId);
+    this.queryUserWithFollow(userId);
 
-    // [测试代码块]
     this.$nextTick(function () {
-      console.log(this.thisUserInfo);
       uni.setNavigationBarTitle({
         title: this.thisUserInfo.nickname + "的主页" });
 
     });
 
+    // [测试代码块]
     // this.mySocket.init()
   },
 
@@ -281,9 +290,51 @@ var _default =
       this.getDateList(tabIndex);
     },
     /**
-        * 调用添加关注的接口
+        * 添加关注
         */
-    addFollow: function addFollow() {
+    addFollow: function addFollow(userId) {
+      console.log("加关注...");
+      var that = this;
+      uni.request({
+        url: that.$serverUrl + '/user/follow',
+        method: "POST",
+        data: {
+          userId: userId,
+          fanId: me.id },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          if (res.data.status == 200) {
+            // 刷新用户信息
+            that.queryUserWithFollow(userId);
+          }
+        } });
+
+    },
+    /**
+        * 取消关注
+        */
+    cancelFollow: function cancelFollow(userId) {
+      console.log("取关...");
+      var that = this;
+      uni.request({
+        url: that.$serverUrl + '/user/dontFollow',
+        method: "POST",
+        data: {
+          userId: userId,
+          fanId: me.id },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          if (res.data.status == 200) {
+            // 刷新用户信息
+            that.queryUserWithFollow(userId);
+          }
+        } });
 
     },
 
@@ -308,13 +359,18 @@ var _default =
 
     },
 
-    queryUserInfo: function queryUserInfo(userId) {
+    /**
+        * 查询该用户信息和我是否关注该用户
+        * @param {Object} userId 该用户 id
+        */
+    queryUserWithFollow: function queryUserWithFollow(userId) {
       var that = this;
       uni.request({
-        url: that.$serverUrl + '/user/queryUser',
+        url: that.$serverUrl + '/user/queryUserWithFollow',
         method: "POST",
         data: {
-          userId: userId },
+          userId: userId,
+          fanId: me.id },
 
         header: {
           'content-type': 'application/x-www-form-urlencoded' },
@@ -323,7 +379,6 @@ var _default =
           // console.log(res)
           if (res.data.status == 200) {
             that.thisUserInfo = res.data.data;
-
           }
         } });
 

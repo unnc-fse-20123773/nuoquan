@@ -165,7 +165,6 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
     this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
 
     // [测试代码块]
-
   },
   onShow: function onShow() {
     var userInfo = this.getGlobalUserInfo();

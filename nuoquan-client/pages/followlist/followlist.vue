@@ -19,16 +19,22 @@
 					 @scroll="scroll" enable-back-to-top="true">
 						<view class="user-operation-line" v-for="(item,index2) in (index1==0?followList:fansList)" :key="index2">
 							<view class="user-one-line column_center">
-								<!-- for 里方法直接传 item 获取不到，官方的一个Bug -->
+								<!-- 这里方法直接传 item 获取不到，应该是官方的一个Bug -->
 								<image class="publicTouxiang" mode="aspectFill" :src="item.faceImg" @tap='goToPersonPublic(index1, index2)'></image>
 								<view class="userid">
 									{{item.nickname}}
 								</view>
 								<!-- 暂时先拿掉，TODO: 获取列表同时查询我是否已关注该用户 
 																				by Jerrio-->
-								<!-- <view class="attentionButton super_center" @tap="followHim">
-									<text class="attentionButton-text">关注</text>
-								</view> -->
+								<view v-if="item.id != myId">
+									<view class="attentionButton super_center" v-if="item.follow==true" @tap="cancelFollow(index1, index2)">
+										<text class="attentionButton-text">已关注</text>
+									</view>
+									<view class="attentionButton super_center" v-if="item.follow==false" @tap="addFollow(index1, index2)">
+										<text class="attentionButton-text">关注</text>
+									</view>
+								</view>
+
 							</view>
 							<view class="border-bottom-line">
 							</view>
@@ -41,6 +47,7 @@
 </template>
 
 <script>
+	var me;
 	export default {
 		data() {
 			return {
@@ -60,11 +67,7 @@
 				],
 				followList: '',
 				fansList: '',
-
-				// 用于分页的属性
-				totalPage: 1,
-				page: 1,
-				videoList: [],
+				myId: '',
 
 				screenWidth: 350,
 				serverUrl: "",
@@ -93,18 +96,21 @@
 			var data = JSON.parse(opt.data)
 			var thisUserInfo = data.thisUserInfo;
 			var currentTab = currentTab;
-			
+
 			uni.setNavigationBarTitle({
-				title: thisUserInfo.nickname+'的主页'
+				title: thisUserInfo.nickname + '的主页'
 			});
-			
+
+			me = this.getGlobalUserInfo();
+			this.myId = me.id;
+
 			// 获取userId
 			var userId = thisUserInfo.id;
 			this.queryFansFollow(userId);
-			
+
 			// 设置列表 index
 			this.currentTab = currentTab;
-			
+
 			var screenWidth = uni.getSystemInfoSync().screenWidth;
 			this.screenWidth = screenWidth;
 
@@ -180,6 +186,73 @@
 			},
 
 			/**
+			 * 添加关注
+			 */
+			addFollow: function(index1, index2) {
+				console.log("加关注...");
+				var list;
+				if (index1 == 0) {
+					list = this.followList;
+				} else if (index1 == 1) {
+					list = this.fansList;
+				}
+
+				var thisUser = list[index2];
+
+				var that = this;
+				uni.request({
+					url: that.$serverUrl + '/user/follow',
+					method: "POST",
+					data: {
+						userId: thisUser.id,
+						fanId: me.id
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {
+						if (res.data.status == 200) {
+							// 刷新用户信息，这里本地改就好就不用重新刷新列表了
+							thisUser.follow = true;
+						}
+					}
+				});
+			},
+			/**
+			 * 取消关注
+			 */
+			cancelFollow: function(index1, index2) {
+				console.log("取关...");
+				var list;
+				if (index1 == 0) {
+					list = this.followList;
+				} else if (index1 == 1) {
+					list = this.fansList;
+				}
+
+				var thisUser = list[index2];
+
+				var that = this;
+				uni.request({
+					url: that.$serverUrl + '/user/dontFollow',
+					method: "POST",
+					data: {
+						userId: thisUser.id,
+						fanId: me.id
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {
+						if (res.data.status == 200) {
+							// 刷新用户信息
+							thisUser.follow = false;
+						}
+					}
+				});
+			},
+
+			/**
 			 * 查询该用户的粉丝和关注用户信息列表
 			 */
 			queryFansFollow(userId) {
@@ -188,7 +261,8 @@
 					url: that.$serverUrl + '/user/queryFansAndFollow',
 					method: "POST",
 					data: {
-						userId: userId
+						userId: userId,
+						myId: me.id,
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'

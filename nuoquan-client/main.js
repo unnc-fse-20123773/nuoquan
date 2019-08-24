@@ -122,13 +122,19 @@ Vue.prototype.getCurrentPage = function() {
 // 				// 4.分割邮箱地址, 重构user
 // 				finalUser = that.myUser(finalUser);
 // 			}
+// 			console.log("里面");
+// 			console.log(finalUser);
+// 			return finalUser;
 // 		}
 // 	});
 // 	
-// 	app.$nextTick(function(){
-// 		console.log(finalUser);
-// 	})
-// 	return finalUser;
+// 	// app.$nextTick(function(){
+// 	// 	console.log(finalUser);
+// 	// })
+// 	
+// 	// console.log("里面2");
+// 	// console.log(finalUser);
+// 	// return finalUser;
 // }
 
 /**
@@ -176,23 +182,26 @@ Vue.prototype.mySocket = {
 			that.isOpen = true;
 			console.log('WebSocket连接已打开！isSocketOpen=' + that.isOpen);
 			//发送连接消息，向服务器注册信息
-			that.sendObj(app.netty.CONNECT, null, null);
+			that.sendObj(app.netty.CONNECT, null, null, null);
 			// 发送未发送的信息
 			for (var i = 0; i < that.socketMsgQueue.length; i++) {
-				// console.log(that.socketMsgQueue[i]);
-				that.sendObj(app.netty.CHAT, that.socketMsgQueue[i], null);
+				if (that.socketMsgQueue[i].action == app.netty.CHAT){
+					that.sendDataContent(that.socketMsgQueue[i]);
+				}
 			}
 			that.socketMsgQueue = [];
 
 			// 签收未签收消息
 			app.chat.fetchUnsignedMsg();
+
+			// 定时发送心跳
+			setInterval(that.keepAlive, 50000);
 		});
 
 		uni.onSocketError(function(res) {
 			console.log('WebSocket连接打开失败，请检查！');
 		});
 
-		// 已在index页面重写
 		uni.onSocketMessage(function(res) {
 			var dataContent = JSON.parse(res.data);
 			var chatMessage = dataContent.chatMessage;
@@ -211,7 +220,7 @@ Vue.prototype.mySocket = {
 				var createDate = app.formatTime(chatMessage.createDate); // 对时间戳进行格式化
 
 				app.chat.saveUserChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);
-				
+
 				// 判断当前页面，保存聊天快照
 				var page = app.getCurrentPage();
 				if (page.route == 'pages/chatpage/chatpage') {
@@ -223,7 +232,7 @@ Vue.prototype.mySocket = {
 					*/
 					// var pagestr = JSON.stringify(page.data);
 					// console.log(pagestr);
-					if (pageFriendId == friendId){
+					if (pageFriendId == friendId) {
 						// 与该用户在聊天，标记为已读
 						console.log("与该用户在聊天，标记为已读");
 						app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.READ, createDate);
@@ -233,7 +242,7 @@ Vue.prototype.mySocket = {
 					console.log("聊天页面未打开或不是与该用户聊天，标记为未读");
 					app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.UNREAD, createDate);
 				}
-				
+
 				// 修改 store，发送信号，把消息卡片渲染到对话窗口 和 消息列表
 				var newMessage = new app.chat.ChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);
 				app.$store.commit('setChatMessageCard', newMessage);
@@ -252,55 +261,81 @@ Vue.prototype.mySocket = {
 
 	},
 	/**
-	 * 向服务器发送JSON数据对象
+	 * 向 netty 服务器发送 socket 数据的方法
 	 * @param {Object} type
 	 * @param {Object} toUserId
 	 * @param {Object} msg
 	 * @param {Object} extand
 	 */
-	sendObj(type, toUserId, msg, extand) {
+	sendObj(action, toUserId, msg, extand) {
 		var myUserId = app.getGlobalUserInfo().id; // 调用全局用户缓存，需要先请求获取
 		if (app.isNull(myUserId)) {
 			console.log("请先获取用户数据");
 		}
-		
+
 		// 获取当前时间戳，传输时间戳
 		var timeStamp = new Date().getTime();
-		
+
 		// 构建载体
 		var chatMessage = new app.netty.ChatMessage(myUserId, toUserId, msg, null, timeStamp);
-		var dataContent = new app.netty.DataContent(type, chatMessage, extand)
+		var dataContent = new app.netty.DataContent(action, chatMessage, extand)
 
-		var data = JSON.stringify(dataContent);
 		var isSocketOpen = app.mySocket.isOpen;
 		if (isSocketOpen == true) {
-			// console.log("sendObj... isSocketOpen=" + isSocketOpen);
-			uni.sendSocketMessage({
-				data: data,
-			});
-			
-			//保存聊天历史到本地缓存，保存聊天快照到本地
-			if (type == app.netty.CHAT) {
-				var createDate = app.formatTime(timeStamp);
-				// console.log("发消息的时间戳：" + createDate);
-				app.chat.saveUserChatHistory(myUserId, toUserId, msg, app.chat.ME, createDate);
-				app.chat.saveUserChatSnapshot(myUserId, toUserId, msg, app.chat.READ, createDate)
-			}
+			this.sendDataContent(dataContent);
 		} else {
 			console.log("isSocketOpen=" + isSocketOpen);
-			this.socketMsgQueue.push(data);
+			this.socketMsgQueue.push(dataContent);
 			console.log(this.socketMsgQueue);
-
 		}
 	},
 	
 	/**
+	 * 向 netty 服务器发送 DataConten 对象
+	 * @param {Object} dataContent
+	 */
+	sendDataContent(dataContent) {
+		var data = JSON.stringify(dataContent);
+		uni.sendSocketMessage({
+			data: data,
+		});
+		
+		if (dataContent.action == app.netty.CHAT) {
+			// 保存聊天历史到本地缓存，保存聊天快照到本地
+			var chatMessage = dataContent.chatMessage;
+			var createDate = app.formatTime(chatMessage.createDate);
+			
+			// console.log("发消息的时间戳：" + createDate);
+			app.chat.saveUserChatHistory(chatMessage.senderId, 
+										 chatMessage.receiverId, 
+										 chatMessage.msg, 
+										 app.chat.ME, 
+										 createDate);
+			app.chat.saveUserChatSnapshot(chatMessage.senderId, 
+										  chatMessage.receiverId, 
+										  chatMessage.msg, 
+										  app.chat.READ, 
+										  createDate);
+			// 刷到对话窗口
+			app.$store.commit('doFlashChatPage');
+		}
+	},
+
+	/**
 	 * 批量签收消息
 	 * @param {Object} msgIds
 	 */
-	signMsgList(msgIds){
+	signMsgList(msgIds) {
 		this.sendObj(app.netty.SIGNED, null, null, msgIds);
-	}
+	},
+
+	/**
+	 * 发送心跳
+	 */
+	keepAlive() {
+		// 用 setInterval 调用时，使用 this 获取不到实例，故用 app
+		app.mySocket.sendObj(app.netty.KEEPALIVE, null, null, null);
+	},
 }
 
 Vue.prototype.chat = {
@@ -386,13 +421,13 @@ Vue.prototype.chat = {
 
 		return chatHistoryList;
 	},
-	
+
 	/**
 	 * 删除我和朋友的聊天记录
 	 * @param {Object} myId
 	 * @param {Object} friendId
 	 */
-	deletUserChatHistory: function(myId, friendId){
+	deletUserChatHistory: function(myId, friendId) {
 		var chatKey = "chat-" + myId + "-" + friendId;
 		uni.removeStorageSync(chatKey);
 	},
@@ -453,13 +488,13 @@ Vue.prototype.chat = {
 
 		return chatSnapshotList;
 	},
-	
+
 	/**
 	 * 删除与该用户的聊天快照记录
 	 * @param {Object} myId
 	 * @param {Object} friendId
 	 */
-	deletUserChatSnapShot: function(myId, friendId){
+	deletUserChatSnapShot: function(myId, friendId) {
 		var chatKey = "chat-snapshot" + myId;
 		// 从本地缓存获取聊天快照的 list
 		var chatSnapshotListStr = uni.getStorageSync(chatKey);
@@ -478,10 +513,10 @@ Vue.prototype.chat = {
 				}
 			}
 		}
-		
+
 		uni.setStorageSync(chatKey, JSON.stringify(chatSnapshotList));
 	},
-	
+
 	/**
 	 * 把快照标记为已读，并且不改变在列表中的位置
 	 * @param {Object} myId
@@ -530,26 +565,28 @@ Vue.prototype.chat = {
 				// console.log(res)
 				if (res.data.status == 200) {
 					var unsignedMsgList = res.data.data;
-					// console.log(unsignedMsgList);
-					if(!app.isNull(unsignedMsgList)){
+					console.log(unsignedMsgList);
+					if (!app.isNull(unsignedMsgList)) {
 						for (var i = 0; i < unsignedMsgList.length; i++) {
 							var msgObj = unsignedMsgList[i];
+							var timeStamp = new Date(msgObj.createDate).getTime();
+							var createDate = app.formatTime(timeStamp);
 							// 1.逐条存入聊天记录
 							this.saveUserChatHistory(msgObj.acceptUserId,
-													 msgObj.sendUserId,
-													 msgObj.msg,
-													 this.FRIEND,
-													 msgObj.createDate);
+								msgObj.sendUserId,
+								msgObj.msg,
+								this.FRIEND,
+								createDate);
 							// 2.保存聊天快照到本地
 							this.saveUserChatSnapshot(msgObj.acceptUserId,
-													 msgObj.sendUserId,
-													 msgObj.msg,
-													 this.UNREAD,
-													 msgObj.createDate);
+								msgObj.sendUserId,
+								msgObj.msg,
+								this.UNREAD,
+								createDate);
 							// 3.拼接批量签收id的字符串
 							msgIds += msgObj.id + ",";
 						}
-						
+
 						// 调用批量签收方法
 						app.mySocket.signMsgList(msgIds);
 					}

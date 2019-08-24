@@ -210,18 +210,25 @@ var socketOpen = false;var _default =
 
   computed: _objectSpread({},
   (0, _vuex.mapState)([
-  'ChatMessageCard'])),
+  'chatMessageCard',
+  'flashChatPage'])),
 
 
 
   watch: {
-    ChatMessageCard: function ChatMessageCard(newVal, oldVal) {//监听数据变化，即可做相关操作
+    chatMessageCard: function chatMessageCard(newVal, oldVal) {//监听数据变化，即可做相关操作
       console.log("newVal:");
       console.log(newVal);
       // 渲染到窗口
       this.chatContent.push(newVal);
       this.scrollToBottom();
+    },
 
+    flashChatPage: function flashChatPage(newVal, oldVal) {//监听数据变化，即可做相关操作
+      // 重载聊天记录就可
+      // console.log("重载聊天记录就可");
+      this.getChatHistory();
+      this.scrollToBottom();
     } },
 
 
@@ -261,6 +268,7 @@ var socketOpen = false;var _default =
         return;
       }
       this.mySocket.sendObj(this.netty.CHAT, this.friendInfo.id, this.textMsg, null);
+      this.textMsg = ''; //清空输入框
 
       // 渲染到窗口
       // var message = {
@@ -273,9 +281,9 @@ var socketOpen = false;var _default =
       // this.chatContent.push(message);
 
       // 直接重新加载聊天历史, 代替渲染到窗口
-      this.getChatHistory();
-      this.scrollToBottom();
-      this.textMsg = ''; //清空输入框
+      // this.getChatHistory();
+      // this.scrollToBottom();
+
     },
 
     getChatHistory: function getChatHistory() {

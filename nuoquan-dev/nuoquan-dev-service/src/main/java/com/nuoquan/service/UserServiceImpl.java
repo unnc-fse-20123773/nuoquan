@@ -19,6 +19,7 @@ import com.nuoquan.pojo.ChatMsg;
 import com.nuoquan.pojo.User;
 import com.nuoquan.pojo.UserFans;
 import com.nuoquan.pojo.netty.ChatMessage;
+import com.nuoquan.pojo.vo.UserVO;
 
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.entity.Example.Criteria;
@@ -138,17 +139,29 @@ public class UserServiceImpl implements UserService {
 
 	@Transactional(propagation = Propagation.SUPPORTS) 
 	@Override
-	public List<User> queryUserFans(String userId) {
+	public List<UserVO> queryUserFans(String userId, String myId) {
 		
-		List<User> list = UserFansMapperCustom.queryFansInfo(userId);
+		List<UserVO> list = UserFansMapperCustom.queryFansInfo(userId);
+		for (UserVO u : list) {
+			// 逐个查询我是否关注
+			Boolean isFollow = queryIfFollow(u.getId(), myId);
+			u.setFollow(isFollow);
+		}
+		
 		return list;
 	}
 
 	@Transactional(propagation = Propagation.SUPPORTS) 
 	@Override
-	public List<User> queryUserFollow(String userId) {
+	public List<UserVO> queryUserFollow(String userId, String myId) {
 		
-		List<User> list = UserFansMapperCustom.queryFollowInfo(userId);
+		List<UserVO> list = UserFansMapperCustom.queryFollowInfo(userId);
+		for (UserVO u : list) {
+			// 逐个查询我是否关注
+			Boolean isFollow = queryIfFollow(u.getId(), myId);
+			u.setFollow(isFollow);
+		}
+		
 		return list;
 	}
 	
@@ -158,13 +171,28 @@ public class UserServiceImpl implements UserService {
 		Example example = new Example(UserFans.class);
 		Criteria criteria = example.createCriteria();
 		criteria.andEqualTo("userId", userId);
-		criteria.andEqualTo("fanId", fanId);
+		criteria.andEqualTo("fansId", fanId);
 		
 		userFansMapper.deleteByExample(example);
 		
 		userMapper.reduceFansCount(userId);
 		userMapper.reduceFollowCount(fanId);
 		
+	}
+	
+	@Transactional(propagation = Propagation.SUPPORTS) 
+	@Override
+	public boolean queryIfFollow(String userId, String fanId) {
+		Example example = new Example(UserFans.class);
+		Criteria criteria = example.createCriteria();
+		criteria.andEqualTo("userId", userId);
+		criteria.andEqualTo("fansId", fanId);
+		
+		List<UserFans> list = userFansMapper.selectByExample(example);
+		if (list != null && !list.isEmpty()) {
+			return true;
+		}
+		return false;
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED) 
