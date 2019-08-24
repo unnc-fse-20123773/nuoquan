@@ -67,10 +67,37 @@
 						</view>
 					</view>
 				</view>
+				<view style="height: 134upx;position: relative;">
+					<scroll-view class="delate-test" scroll-x="true" @scroll="scroll" scroll-left="120">
+						<view class="delate-box">
+							delate
+						</view>
+						
+						<view class="msglist-card-test column_center">
+							<image class="msglist-Touxiang" mode="aspectFill" src="../../static/touxiang2.jpg"></image>
+							<view class="msglist-content">
+								<view class="msglist-id font-family">
+									陈仅仅一号111
+								</view>
+								<view class="msglist-brief font-family">
+									用来模拟场景中天空的光线，也可以使用真...
+								</view>
+							</view>
+							<view class="time-numicon">
+								<view class="msglist-time">
+									11-26
+								</view>
+								<view class="msglist-icon super_center">
+									12
+								</view>
+							</view>
+						</view>
+					</scroll-view>
+				</view>
 			</scroll-view>
 		</view>
 
-<!-- 		<navigator url="../chatpage/chatpage">
+		<!-- 		<navigator url="../chatpage/chatpage">
 			<button type="primary" size="mini">进入聊天窗口</button>
 		</navigator> -->
 	</view>
@@ -81,9 +108,13 @@
 	export default {
 		data() {
 			return {
-			cardlist:[1,1,1],
-			readlist:[1,1,1],
-			msgicon:[]
+				cardlist: [1, 1, 1],
+				readlist: [1, 1, 1],
+				msgicon: [],
+				scrollTop: 0,
+				old: {
+					scrollTop: 0
+				}
 			}
 		},
 		onLoad: function() {
@@ -92,7 +123,10 @@
 			});
 		},
 		methods: {
-
+		scroll: function(e) {
+            console.log(e)
+            this.old.scrollTop = e.detail.scrollTop
+        },
 		}
 	}
 </script>
@@ -172,6 +206,7 @@
 		background-color: #d1d1d1;
 		margin-left: 5%;
 	}
+
 	.msglist-comment-bg {
 		position: absolute;
 		height: 58upx;
@@ -187,7 +222,7 @@
 		margin-top: 5upx;
 		margin-left: 1upx;
 	}
-	
+
 	.msglist-comment {
 		width: 100%;
 		height: 49%;
@@ -264,8 +299,8 @@
 		margin-left: 20upx;
 		width: 480upx;
 		height: 70upx;
-		display: flex;
-		flex-direction: column;
+		/* display: flex; */
+display: inline-block;
 	}
 
 	.msglist-id {
@@ -283,7 +318,7 @@
 		font-weight: 500;
 		color: #9b9b9b;
 	}
-	
+
 	.msglist-brief {
 		width: 100%;
 		font-weight: 500;
@@ -293,7 +328,7 @@
 		margin-top: 6upx;
 	}
 
-.msglist-brief-read {
+	.msglist-brief-read {
 		width: 100%;
 		height: 32upx;
 		font-size: xx-small;
@@ -327,8 +362,32 @@
 		font-size: 20upx;
 		border-radius: 999upx;
 	}
-	
-	.msglist-icon-read {
-	
+
+	.msglist-icon-read {}
+
+	.delate-test {
+		white-space: nowrap;
+		width: 100%;
+		background-color: blue;
+	}
+
+	.delate-box {
+		display: inline-block;
+		width: 80upx;
+		height: 120upx;
+		line-height: 120upx;
+		background-color: red;
+	}
+
+	.msglist-card-test {
+		display: inline-block;
+		width: 700upx;
+		margin-left: 6%;
+		margin-top: 8upx;
+		height: 120upx;
+		line-height: 120upx;
+		background-color: white;
+		border-radius: 12upx;
+		box-shadow: 0upx 0upx 14upx 0upx #B2B2B2;
 	}
 </style>

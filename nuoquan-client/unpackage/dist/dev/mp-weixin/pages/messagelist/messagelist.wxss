@@ -158,15 +158,8 @@ page {
 		margin-left: 20rpx;
 		width: 480rpx;
 		height: 70rpx;
-		display: -webkit-box;
-		display: -webkit-flex;
-		display: -ms-flexbox;
-		display: flex;
-		-webkit-box-orient: vertical;
-		-webkit-box-direction: normal;
-		-webkit-flex-direction: column;
-		    -ms-flex-direction: column;
-		        flex-direction: column;
+		/* display: flex; */
+display: inline-block;
 }
 .msglist-id {
 		width: 100%;
@@ -221,6 +214,29 @@ page {
 		font-size: 20rpx;
 		border-radius: 999rpx;
 }
-.msglist-icon-read {
+.msglist-icon-read {}
+.delate-test {
+		white-space: nowrap;
+		width: 100%;
+		background-color: blue;
+}
+.delate-box {
+		display: inline-block;
+		width: 80rpx;
+		height: 120rpx;
+		line-height: 120rpx;
+		background-color: red;
+}
+.msglist-card-test {
+		display: inline-block;
+		width: 700rpx;
+		margin-left: 6%;
+		margin-top: 8rpx;
+		height: 120rpx;
+		line-height: 120rpx;
+		background-color: white;
+		border-radius: 12rpx;
+		-webkit-box-shadow: 0rpx 0rpx 14rpx 0rpx #B2B2B2;
+		        box-shadow: 0rpx 0rpx 14rpx 0rpx #B2B2B2;
 }
 

@@ -177,13 +177,44 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
     return {
       cardlist: [1, 1, 1],
       readlist: [1, 1, 1],
-      msgicon: [] };
+      msgicon: [],
+      scrollTop: 0,
+      old: {
+        scrollTop: 0 } };
+
 
   },
   onLoad: function onLoad() {
@@ -191,7 +222,11 @@ var _default =
       title: "私信列表" });
 
   },
-  methods: {} };exports.default = _default;
+  methods: {
+    scroll: function scroll(e) {
+      console.log(e);
+      this.old.scrollTop = e.detail.scrollTop;
+    } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
