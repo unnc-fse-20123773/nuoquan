@@ -15,7 +15,7 @@
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3306/nuoquan"
                         userId="root"
-                        password="root">
+                        password="Xudeyan0939">
         </jdbcConnection>
 
         <!-- 对应生成的pojo所在包 -->
@@ -32,12 +32,13 @@
 		<!-- <table tableName="administrator"></table> -->
 		<!-- <table tableName="comments"></table> -->
 		<!-- <table tableName="search_records"></table> -->
-		<table tableName="user"></table>
+		<!-- <table tableName="user"></table> -->
 		<!-- <table tableName="chat_msg"></table> -->
 		<!-- <table tableName="users_fans"></table>
 		<table tableName="users_like_videos"></table>
 		<table tableName="videos"></table>
 		<table tableName="users_report"></table> -->
+		<table tableName="article_tags"></table>
 		 
     </context>
 </generatorConfiguration>

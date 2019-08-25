@@ -2,6 +2,12 @@
 -- +  Database update  +
 -- +++++++++++++++++++++
 
+-- v19.8.20 @author:xdy
+-- 修改：tag表
+ALTER TABLE `nuoquan`.`tags` 
+CHANGE COLUMN `tag_content` `article_id` VARCHAR(45) NOT NULL ,
+CHANGE COLUMN `article_id` `tag_content` VARCHAR(45) NOT NULL , RENAME TO  `nuoquan`.`article_tgs` ;
+
 
 -- v19.8.20 @author:xdy
 -- 修改： comment表添加comment_num属性

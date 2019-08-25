@@ -334,7 +334,8 @@ var comment = function comment() {return __webpack_require__.e(/*! import() | co
       // 	['13', 'background:blue'],
       // 	['163', 'background:yellow']
       // ],
-      commentList: '' };}, components: { articlebrief: _articlebrief.default, commentbox: comment }, methods: { saveComment: function saveComment(e) {var that = this;var content = e.detail.value;var userInfoTemp = this.getGlobalUserInfo();if (this.isNull(userInfoTemp)) {uni.navigateTo({ url: "../wechatLogin/wechatLogin" });} else {uni.request({ url: this.SeverUrl + '/saveComment', method: 'POST', data: { fromUserId: that.userInfo.id, articleId: that.articleCard.id,
+      commentList: '' };}, components: { articlebrief: _articlebrief.default, commentbox: comment }, methods: { saveComment: function saveComment(e) {var that = this;var content = e.detail.value;var userInfoTemp = this.getGlobalUserInfo();if (this.isNull(userInfoTemp)) {uni.navigateTo({ url: "../wechatLogin/wechatLogin" });} else {uni.request({ url: this.SeverUrl + '/saveComment', // url: that.SeverUrl + '/saveComment',
+          method: 'POST', data: { fromUserId: that.userInfo.id, articleId: that.articleCard.id,
             comment: content },
 
           success: function success(res) {

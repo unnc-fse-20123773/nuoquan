@@ -69,6 +69,7 @@
 				} else {
 					uni.request({
 						url: this.SeverUrl + '/saveComment',
+						// url: that.SeverUrl + '/saveComment',
 						method: 'POST',
 						data: {
 							fromUserId: that.userInfo.id,

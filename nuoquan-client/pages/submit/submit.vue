@@ -18,7 +18,7 @@
 						+ 添加标签
 					</view>
 					<view v-if="showInputTagArea">
-						<input focus="true" placeholder="请输入标签..." @confirm="checkInput" @blur="checkInput" />
+						<input focus="true" placeholder="请输入标签..."  @blur="checkInput" />
 					</view>
 				</view>
 			</view>
@@ -88,6 +88,7 @@ export default {
 				success: function(res) {
 					var tempFilePaths = res.tempFilePaths;
 					that.imgPath = tempFilePaths;
+					
 				}
 			})
 		},

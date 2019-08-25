@@ -95,7 +95,7 @@ public class ArticleServiceImpl implements ArticleService {
 		articleMapperCustom.addArticleLikeCount(articleId);
 		
 		//用户受喜欢数量的累加
-		userMapper.addReceiveLikeCount(userId);
+		userMapper.addReceiveLikeCount(articleCreaterId);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -116,7 +116,7 @@ public class ArticleServiceImpl implements ArticleService {
 		articleMapperCustom.reduceArticleLikeCount(articleId);
 		
 		//3.用户受喜欢数量的累减
-		userMapper.reduceReceiveLikeCount(userId);
+		userMapper.reduceReceiveLikeCount(articleCreaterId);
 		
 	}
 	

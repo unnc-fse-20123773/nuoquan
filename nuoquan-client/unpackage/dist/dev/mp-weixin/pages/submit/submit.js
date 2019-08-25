@@ -188,6 +188,7 @@ var _default =
         success: function success(res) {
           var tempFilePaths = res.tempFilePaths;
           that.imgPath = tempFilePaths;
+
         } });
 
     },
