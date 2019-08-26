@@ -1,15 +1,12 @@
 com/nuoquan/mapper/ArticleMapper.class
+com/nuoquan/mapper/UserReportMapper.class
+com/nuoquan/mapper/SearchRecordMapper.class
+com/nuoquan/mapper/ArticleMapperCustom.class
 com/nuoquan/mapper/UserArticleCommentMapper.class
 com/nuoquan/mapper/TagsMapper.class
-com/nuoquan/mapper/UserReportMapper.class
 com/nuoquan/mapper/ChatMsgMapper.class
 com/nuoquan/mapper/UserLikeArticleMapper.class
 com/nuoquan/mapper/UserFansMapper.class
 com/nuoquan/mapper/AdministratorMapper.class
-com/nuoquan/mapper/SearchRecordMapper.class
-<<<<<<< HEAD
 com/nuoquan/mapper/UserMapperCustom.class
-=======
->>>>>>> ae6652b61935144f3e887c2dec99f94a348adbf6
 com/nuoquan/mapper/UserMapper.class
-com/nuoquan/mapper/ArticleMapperCustom.class

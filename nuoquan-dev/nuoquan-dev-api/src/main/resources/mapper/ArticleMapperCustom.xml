@@ -18,6 +18,7 @@
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="is_anonymous" jdbcType="TINYINT" property="isAnonymous" />
     <result column="article_path" jdbcType="VARCHAR" property="articlePath" />
+    <result column="view_num" property="viewNum" jdbcType="INTEGER" />
     
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
     <result column="face_img" property="faceImg" jdbcType="VARCHAR" />
@@ -55,5 +56,37 @@
   		<!-- and a.is_anonymous = 0 -->
   	order by a.create_date desc
   </select>
+  
+  <update id="upadtePopByFunction">
+  	update nuoquan.article as a left join 
+		(select article_id, count(article_id) as c_in24h from nuoquan.user_article_comment
+		where 
+		1=1  
+		and HOUR( timediff( now(), create_time) ) &lt; 24
+		GROUP BY article_id) as c on a.id = c.article_id left join
+			(select article_id, count(article_id) as l_in24h from nuoquan.user_like_article
+			where 
+			1=1 
+			and HOUR( timediff( now(), create_time) ) &lt; 24
+			GROUP BY article_id) as l on a.id=l.article_id
+	set a.popularity = if(c.article_id is null, 
+						if(l.article_id is null, 0, l.l_in24h), 
+							if(l.article_id is null, c.c_in24h, c.c_in24h+l.l_in24h));
+  </update>
+  
+<!-- 【勿删】upadtePopByFunction 的数据库测试用例 mysql代码：查看 c_in24h + l_in24h = popularity? by Jerrio
+select * from (
+	select * from nuoquan.article as a left join (
+		select article_id, count(article_id) as c_in24h from nuoquan.user_article_comment
+		where 
+		HOUR( timediff( now(), create_time) ) < 24
+		GROUP BY article_id 
+	) as b on a.id = b.article_id
+) as c left join (
+	select article_id, count(article_id) as l_in24h from nuoquan.user_like_article
+	where 
+	HOUR( timediff( now(), create_time) ) < 24
+	GROUP BY article_id
+) as d on c.id=d.article_id -->
   
 </mapper>

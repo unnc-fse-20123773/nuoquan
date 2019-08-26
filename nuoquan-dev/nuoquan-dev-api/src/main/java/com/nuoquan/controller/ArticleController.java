@@ -101,7 +101,6 @@ public class ArticleController extends BasicController{
 		@ApiImplicitParam(name="articleTitle", value="文章题目", required=true, dataType="String", paramType="form"),
 		@ApiImplicitParam(name="articleContent", value="文章内容", required=true, dataType="String", paramType="form")
 	})
-	
 	@PostMapping(value="upload", headers="content-type=multipart/form-data")
 	public JSONResult upload(String userId, String articleTag, String articleTitle, 
 				String articleContent, @ApiParam(value="图片或视频", required=false) MultipartFile file) throws Exception {

@@ -2,6 +2,17 @@
 -- +  Database update  +
 -- +++++++++++++++++++++
 
+-- v19.8.- @author: Jerrio
+-- 添加文章浏览量,点赞创建时间, 以支持热度逻辑
+ALTER TABLE `nuoquan`.`article` 
+ADD COLUMN `view_num` INT NOT NULL DEFAULT 0 COMMENT '浏览量' AFTER `article_path`;
+
+ALTER TABLE `nuoquan`.`user_like_article` 
+ADD COLUMN `create_time` DATETIME NOT NULL AFTER `article_id`;
+
+ALTER TABLE `nuoquan`.`user_like_article` 
+CHANGE COLUMN `create_time` `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
 -- v19.8.22 @author: Jerrio
 -- 为 sign_flag 添加注释
 ALTER TABLE `nuoquan`.`chat_msg` 

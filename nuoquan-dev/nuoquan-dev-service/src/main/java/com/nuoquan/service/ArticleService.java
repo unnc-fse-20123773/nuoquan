@@ -59,4 +59,9 @@ public interface ArticleService {
 	 * @return
 	 */
 	public PagedResult getAllComments(String articleId, Integer page, Integer pageSize);
+	
+	/**
+	 * 根据公式更新文章热度
+	 */
+	public void upadtePopByFunction();
 }

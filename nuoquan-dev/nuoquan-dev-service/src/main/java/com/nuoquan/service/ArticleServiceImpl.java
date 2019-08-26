@@ -203,4 +203,9 @@ public class ArticleServiceImpl implements ArticleService {
 		return grid;
 	}
 
+	@Override
+	public void upadtePopByFunction() {
+		articleMapperCustom.upadtePopByFunction();
+	}
+
 }
