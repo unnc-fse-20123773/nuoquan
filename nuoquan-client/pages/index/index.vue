@@ -21,8 +21,8 @@
 				userInfo: {
 					id: 'test-id123',
 					nickname: 'test-name',
-					faceImg: '../static/touxiang.jpg',
-					faceImgThumb: '../static/touxiang.jpg',
+					faceImg: '',
+					faceImgThumb: '',
 					email: 'zy22089@nottingham.edu.cn',
 					emailPrefix: 'zy22089',
 					emailSuffix: '@nottingham.edu.cn'

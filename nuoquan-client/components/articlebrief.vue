@@ -3,10 +3,8 @@
 		<view class="title">{{ articleCard.articleTitle }}</view>
 		<view class="briefarticleCard">{{ articleCard.articleContent }}</view>
 		<view class="picturearea">
-			<image src="../static/0001/pic1.jpg" v-if="articleCard[3]"></image>
-			<!-- G暂时用地址表示 -->
-			<image src="../static/0001/pic2.jpg" v-if="articleCard[4]"></image>
-			<image src="../static/0001/pic3.jpg" v-if="articleCard[5]"></image>
+			<!-- 这里是文章配图的位置
+ -->
 		</view>
 		<view class="tags">
 			<view class="tag" v-for="(i, index) in articleCard.tags" v-bind:key="index">{{ i}}</view>
@@ -17,8 +15,11 @@
 			<view class="time">{{ articleCard.createDate | timeDeal}}</view>
 
 			<view class="icons">
-				<image class="comment" src="../static/icon/comment.svg">{{ articleCard.commentNum }}</image>
-				<image class="like" src="../static/icon/like.svg">{{ articleCard.likeNum }}</image>
+				<image class="comment" src="../static/icon/comment.png"></image>
+				<view class="icom">{{articleCard.commentNum}}</view>
+				<image class="like" src="../static/icon/like.png"></image>
+				<view class="icom">{{articleCard.likeNum}}</view>
+
 			</view>
 		</view>
 	</view>
@@ -48,10 +49,11 @@
 			console.log(this.articleCard);
 		},
 		filters: {
-			timeDeal(isostr) {
-				var parts = isostr.match(/\d+/g);				
-				var oldTime = new Date(parts[0]+'-'+parts[1]+'-'+parts[2]+' '+parts[3]+':'+parts[4]+':'+parts[5]).getTime();
-				var newTime = Date.parse(new Date().toDateString()); //typescript转换写法
+			timeDeal(timediff) {
+				timediff = new Date(timediff);
+				var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(),timediff.getSeconds()];
+				var oldTime = timediff.getTime();
+				var newTime = new Date().getTime();
 				var milliseconds = 0;
 				var timeSpanStr;
 				milliseconds = newTime - oldTime;
@@ -64,17 +66,15 @@
 				} else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
 					timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
 				} else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && year == now.getFullYear()) {
-					timeSpanStr = month + '-' + day + ' ' + hour + ':' + minute;
+					timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
 				} else {
-					timeSpanStr = year + '-' + month + '-' + day + ' ' + hour + ':' + minute;
+					timeSpanStr = parts[0] + '-' + parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
 				}
-				debugger;
 				return timeSpanStr;
-			
-		}
+			}
 
-	},
-	methods: {
+		},
+		methods: {
 			jumpToDetail() {
 				var navData = JSON.stringify(this.articleCard); // 这里转换成 字符串
 				uni.navigateTo({
@@ -91,7 +91,8 @@
 		border: none;
 		outline: none;
 	}
-
+</style>
+<style scoped>
 	.articlecard {
 		width: 650upx;
 		border-radius: 8px;
@@ -118,7 +119,6 @@
 
 	.tags {
 		margin-left: 10px;
-
 	}
 
 	.tag {
@@ -159,7 +159,6 @@
 
 	.time {
 		display: inline-block;
-		left: 120px;
 		font-size: 10px;
 		margin-left: 25px;
 		color: #888888;
@@ -168,19 +167,14 @@
 	.icons {
 		position: absolute;
 		right: 0;
+		bottom:0;
 		width: 206upx;
 		text-align: right;
 		display: inline-block;
-		background-image: url(../static/icon/iconsBG.png);
-		/* 		background-image: url(../static/icon/signinline.png);
- */
-		/* 	background-repeat: no-repeat;
- */
+		background-image: url(../static/BG/iconsBG.png);
 		overflow: hidden;
 		border-bottom-right-radius: 8px;
 		border: 10px #621E81;
-		outline: 0px solid deeppink;
-
 	}
 
 	.icons image {
@@ -188,7 +182,17 @@
 		/* G添加相对位置 */
 		width: 11px;
 		height: 11px;
-		padding-right: 10px;
+		padding-right: 5px;
+	}
+
+	.icom {
+		display: inline-block;
+		color: #353535;
+		font-size: 10px;
+		padding-right: 11px;
+		text-align: center;
+		vertical-align: middle;
+
 	}
 
 	.picturearea {

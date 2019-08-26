@@ -1,3 +1,4 @@
+com\nuoquan\netty\HeartBeatHandler.class
 com\nuoquan\controller\UserController.class
 com\nuoquan\NettyBooter.class
 com\nuoquan\SpringUtil.class

@@ -19,24 +19,31 @@
 			</view>
 			<view class="tags">
 				<view class="tag" v-for="(i,index) in articleCard.tags" v-bind:key="index">{{i}}</view>
-			</view>		<view class="bottombar">
-			<view style="width:70%;display:inline-block;">
-				<image :src="commentDetail.faceImage" class="touxiang"></image>
-				<view class="name">{{ commentDetail.nickname }}</view>
+			</view>
+			<view class="bottombar">
+				<view style="width:70%;display:inline-block;">
+					<image :src="articleCard.faceImg" class="touxiang"></image>
+					<view class="name">{{ articleCard.nickname }}</view>
 
-				<view class="time">{{ commentDetail.timeAgo }}</view>
+					<view class="time">{{ articleCard.createDate | timeDeal}}</view>
+				</view>
+				<view class="icons">
+					<!-- 点赞按钮 -->
+					<image class="icon" src="../../static/icon/like.png"></image>
+					<view class="icom">{{ articleCard.likeNum }}</view>
+				</view>
 			</view>
-			<view class="icons">
-				<!-- 点赞按钮 -->
-				<image class="icon" src="../../../static/icon/like.svg"></image>
-				<view class="icom">{{ commentDetail.likeNum }}</view>
-			</view>
-		</view>
 			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i"></commentbox>
-			<view class="fengexian" style="height: 1px;width: 90%;background-color: #d6d6d6;margin:auto;"></view>
-			<!-- <view class="commentPart">
-				<input class="commentSth" placeholder="评论点什么..." confirm-type="send" @confirm="saveComment" />
-			</view> -->
+			<view class="fengexian" style="height: 1px;width: 100%;background-color: #d6d6d6;margin:auto;"></view>
+			<view class="submitComment" @click="controlInput()">发 表 评 论</view>
+
+
+			<view class="commentPart" v-show="writingComment">
+				<view class="emoji"></view>
+				<view class="submit"></view>
+				<textarea class="commentSth" placeholder=" 评论点什么..." :focus="writingComment" auto-height="true" confirm-type="send" @confirm="saveComment()" adjust-position="false" />
+			</view>
+
 		</view>
 
 	</view>
@@ -48,19 +55,11 @@
 		data() {
 			return {
 				userInfo: {},
-				comments: [
-					// ['00001', '评论者ID', '楼主好棒', '一小时前', '60', '7'],
-					// ['00003', '评论者ID', '楼主求微信', '一小时前', '90', '7'],
-					// ['00005', '评论者ID', '楼主求微信', '一小时前', '60', '7'],
-					// ['00009', '评论者ID', '楼主求微信', '一小时前', '9', '70']
-				],
+				comments: [],
 				articleCard: "",
-				// taglist: [
-				// 	['123', 'background:red'],
-				// 	['13', 'background:blue'],
-				// 	['163', 'background:yellow']
-				// ],
+
 				commentList: {},
+				writingComment:false,
 			};
 		},
 
@@ -78,6 +77,7 @@
 						url: "../wechatLogin/wechatLogin"
 					})
 				} else {
+					console.log(content)
 					uni.request({
 						url: that.$serverUrl + '/saveComment',
 						method: 'POST',
@@ -115,14 +115,16 @@
 					},
 				});
 			},
+			controlInput(){
+				this.writingComment = true;
+			}
 		},
 		onLoad(options) {
 			// console.log('detail receved');
 			// console.log(options.data);
 
 			this.articleCard = JSON.parse(options.data);
-			// console.log(this.articleCard);
-			// console.log(this.articleCard.artiticleTitle);
+			console.log(this.articleCard);
 
 			var userInfo = this.getGlobalUserInfo();
 			if (!this.isNull(userInfo)) {
@@ -131,7 +133,35 @@
 			// console.log(this.articleCard.id);
 			// console.log(this.userInfo.nickname);
 			this.getComments();
-		}
+		},
+		filters: {
+			timeDeal(timediff) {
+				timediff = new Date(timediff);
+				var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(),
+					timediff.getSeconds()
+				];
+				var oldTime = timediff.getTime();
+				var newTime = new Date().getTime();
+				var milliseconds = 0;
+				var timeSpanStr;
+				milliseconds = newTime - oldTime;
+				if (milliseconds <= 1000 * 60 * 1) {
+					timeSpanStr = '刚刚';
+				} else if (1000 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60) {
+					timeSpanStr = Math.round((milliseconds / (1000 * 60))) + '分钟前';
+				} else if (1000 * 60 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24) {
+					timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
+				} else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
+					timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
+				} else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && year == now.getFullYear()) {
+					timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
+				} else {
+					timeSpanStr = parts[0] + '-' + parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
+				}
+				return timeSpanStr;
+			}
+
+		},
 	};
 </script>
 
@@ -161,13 +191,15 @@
 		background: white;
 		box-shadow: 0 -1px 8px grey;
 		height: 100%;
+		width: 85%;
+		padding: 0 7.5%;
 	}
 
 	.detailcontent {
 		padding-top: 25px;
 		font-size: 13px;
-		width: 85%;
-		margin: 0px auto 10px;
+		/* width: 85%;
+		margin: 0px auto 10px; */
 		font-weight: 400;
 	}
 
@@ -185,7 +217,7 @@
 	}
 
 	.tags {
-		max-height:20px;
+		max-height: 20px;
 		line-height: 15px;
 		width: 85%;
 		margin: auto;
@@ -214,39 +246,103 @@
 	.bottombar {
 		position: relative;
 		border-radius: 20px;
-		height: 25px;
 		margin-top: 20px;
 	}
+
 	.touxiang {
+		border-radius: 30px;
 		width: 20px;
 		height: 20px;
-		border-radius: 20px;
-		display: inline-block;
-		vertical-align: middle;
 		margin-right: 5px;
+		vertical-align: middle;
+
 	}
-	
-	.time,
+
 	.name {
+		display: inline-block;
 		font-size: 10px;
-		margin-right: 10px;
-		color:#888888;
+		margin-left: 7px;
+		color: #888888;
+		padding-bottom: 5px;
 	}
+
+	.time {
+		display: inline-block;
+		font-size: 10px;
+		margin-left: 25px;
+		color: #888888;
+	}
+
+
 	.icons {
 		justify-content: flex-end;
 		display: inline-flex;
 		align-items: center;
 		width: 30%;
 		font-size: 10px;
-		
+
 	}
+
 	.icon {
 		width: 11px;
 		height: 11px;
 		font-size: 2px;
-			padding-left: 45upx;
-		padding-right:8upx;
+		padding-left: 45upx;
+		padding-right: 8upx;
+
+	}
+
+	.submitComment {
+		background: #FFCC30;
+		border-radius: 5px;
+		width: 120px;
+		height: 30px;
+		font-size: 10px;
+		font-weight: bold;
+		color: #FFFFFF;
+		margin: auto;
+		text-align: center;
+		line-height: 30px;
+	}
+
+	.commentPart {
+		box-shadow: 0px 1px 5px 0px rgba(139, 139, 139, 0.32);
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		width: 670upx;
+		padding:11px 40upx;
+		min-height: 50px;
+	}
+
+	.emoji {
+		background: url(../../static/icon/emoji.png);
+		background-repeat: no-repeat;
+		background-position: center;
+		border: none;
+		width: 21px;
+		height: 21px;
+		background-size: 21px 21px;
+		margin-bottom: 7px;
+		display: inline-block;
+	}
+.submit{
+	display: inline-block;
+	width: 21px;
+	height:21px;
+	background: url(../../static/icon/arrow-right.png);
+	background-size: 14px 14px;
+	background-repeat: no-repeat;
+	background-position:center;
+	float:right;
+}
+	.commentSth {
+		width: calc(670upx - 20px);
+		border: solid 1px #FCC041;
+		border-radius: 10px;
+		line-height: 20px;
+		font-size: 14px;
+		padding:8px 10px;
 		
 	}
-	
 </style>
