@@ -84,8 +84,7 @@
 		/* 	height: 168px;
  */
 		width: 100%;
-		background: linear-gradient(to top,rgba(253, 208, 65, 1),rgba(253, 208, 65, 0.5)),
-		url(../static/BG/indexBG.jpg) no-repeat;
+		background: url(../static/BG/indexBG2.png), url(../static/BG/indexBG.png);
 		background-size: 100% 100%;
 		box-shadow: 0 -2px 10px #000000;
 		border-bottom-right-radius: 25px;

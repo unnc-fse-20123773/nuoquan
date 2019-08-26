@@ -15,26 +15,26 @@
 		<view class="personPageList">
 			<!-- TODO: 最好把 view 都改成 button 并加上样式 
 											  by Jerrio -->
-			<view class="pageLine">
-				<image src="../static/touxiang.jpg"></image>
+			<button class="pageLine">
+				<image src="../static/icon/write.png"></image>
 				<view>我的发布</view>
-			</view>
+			</button>
 			<button class="pageLine" @tap="goToMessageListPage">
-				<image src="../static/touxiang.jpg"></image>
+				<image src="../static/icon/message.png"></image>
 				<view>我的消息</view>
 			</button>
-			<view class="pageLine">
-				<image src="../static/touxiang.jpg"></image>
+			<button class="pageLine">
+				<image src="../static/icon/star.png"></image>
 				<view>我的收藏</view>
-			</view>
-			<view class="pageLine">
-				<image src="../static/touxiang.jpg"></image>
+			</button>
+			<button class="pageLine">
+				<image src="../static/icon/report.png"></image>
 				<view>举报投诉</view>
-			</view>
-			<view class="pageLine">
-				<image src="../static/touxiang.jpg"></image>
-				<view>关于</view>
-			</view>
+			</button>
+			<button class="pageLine">
+				<image src="../static/icon/about.png"></image>
+				<view>关于&nbsp;&nbsp;</view>
+			</button>
 		</view>
 	</view>
 </template>
@@ -52,7 +52,7 @@
 		},
 		data() {
 			return {
-				
+
 			};
 		},
 		methods: {
@@ -128,9 +128,16 @@
 		margin-top: 40px;
 	}
 
-	.pageLine {
-		margin-left: 34px;
-		margin-bottom: 20px;
+	button {
+		background: #fcfcfc;
+		border-radius: 0;
+		text-align: left;
+		margin:0;
+		padding:0 33px;
+	}
+
+	button::after {
+		border: none;
 	}
 
 	.pageLine image {
@@ -145,9 +152,5 @@
 		font-size: 13px;
 		font-weight: bold;
 		margin-left: 17px;
-	}
-	
-	.pageLine button {
-		
 	}
 </style>
