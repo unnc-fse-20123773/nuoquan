@@ -11,10 +11,10 @@
 			</view>
 			<view class="icons">
 				<!-- 评论按钮 -->
-				<image class="icon" src="../../../../static/icon/comment.svg"></image>
+				<image class="icon" src="../../../../static/icon/comment.png"></image>
 				<text class="icom">{{ commentDetail.commentNum }}</text>
 				<!-- 点赞按钮 -->
-				<image class="icon" src="../../../static/icon/like.svg"></image>
+				<image class="icon" src="../../../static/icon/like.png"></image>
 				<text class="icom">{{ commentDetail.likeNum }}</text>
 			</view>
 		</view>
@@ -41,7 +41,7 @@ export default {
 	/* 	background-color:gray;
  */
 	border-radius: 20px;
-	width: 90%;
+	width: 100%;
 	margin: auto;
 }
 .fengexian {
