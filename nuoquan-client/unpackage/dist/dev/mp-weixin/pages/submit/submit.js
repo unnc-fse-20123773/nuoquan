@@ -300,11 +300,10 @@ var sizeType = [
       console.log(me.articleTitle);
       console.log(me.imgPath);
 
-      var serverUrl = me.SeverUrl;
+      var serverUrl = me.$serverUrl;
       uni.uploadFile({
         url: serverUrl + '/upload',
-        filePath: me.imgPath[0],
-        name: 'file',
+
         formData: {
           userId: me.userName,
           articleTitle: me.articleTitle,

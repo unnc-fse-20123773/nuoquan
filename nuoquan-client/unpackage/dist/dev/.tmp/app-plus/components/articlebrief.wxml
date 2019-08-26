@@ -1,2 +1,2 @@
 <import src="./articlebrief.vue.wxml" />
-    <template is="7ae45256" data="{{ ...$root['0'], $root }}"/>
+    <template is="6f647f53" data="{{ ...$root['0'], $root }}"/>

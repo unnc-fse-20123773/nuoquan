@@ -1,1 +1,0 @@
-<view class="index"><mainpagetop vue-id="1" userInfo="{{userInfo}}" bind:__l="__l"></mainpagetop><block wx:for="{{showlist}}" wx:for-item="i" wx:for-index="__i0__" wx:key="id"><articlebrief vue-id="{{'2-'+__i0__}}" articleCard="{{i}}" bind:__l="__l"></articlebrief></block></view>

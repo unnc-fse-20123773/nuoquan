@@ -17,6 +17,5 @@
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="is_anonymous" jdbcType="TINYINT" property="isAnonymous" />
-    <result column="article_path" jdbcType="VARCHAR" property="articlePath" />
   </resultMap>
 </mapper>

@@ -43,19 +43,7 @@ public class Article {
     @Column(name = "is_anonymous")
     private Byte isAnonymous;
     
-    /**
-     * 文章存放的路径
-     */
-    @Column(name = "article_path")
-    private String articlePath;
     
-    public String getArticlePath() {
-		return articlePath;
-	}
-
-	public void setArticlePath(String articlePath) {
-		this.articlePath = articlePath;
-	}
 
 	/**
      * @return id

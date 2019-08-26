@@ -2,16 +2,16 @@ package com.nuoquan.pojo;
 
 import javax.persistence.*;
 
-@Table(name = "article_tags")
-public class ArticleTags {
+@Table(name = "article_image")
+public class ArticleImage {
     @Id
     private String id;
 
     @Column(name = "article_id")
     private String articleId;
 
-    @Column(name = "tag_content")
-    private String tagContent;
+    @Column(name = "image_path")
+    private String imagePath;
 
     /**
      * @return id
@@ -42,16 +42,16 @@ public class ArticleTags {
     }
 
     /**
-     * @return tag_content
+     * @return image_path
      */
-    public String getTagContent() {
-        return tagContent;
+    public String getImagePath() {
+        return imagePath;
     }
 
     /**
-     * @param tagContent
+     * @param imagePath
      */
-    public void setTagContent(String tagContent) {
-        this.tagContent = tagContent;
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

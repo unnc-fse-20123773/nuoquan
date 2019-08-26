@@ -2,6 +2,17 @@
 -- +  Database update  +
 -- +++++++++++++++++++++
 
+-- v19.8.26 @author: Deyan
+-- 在article中删除article_path
+ALTER TABLE `nuoquan`.`article` 
+DROP COLUMN `article_path`;
+-- 新建artocle_image表
+CREATE TABLE `nuoquan`.`article_image` (
+  `id` VARCHAR(45) NOT NULL,
+  `article_id` VARCHAR(45) NOT NULL,
+  `image_path` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`));
+
 -- v19.8.22 @author: Jerrio
 -- 为 sign_flag 添加注释
 ALTER TABLE `nuoquan`.`chat_msg` 
