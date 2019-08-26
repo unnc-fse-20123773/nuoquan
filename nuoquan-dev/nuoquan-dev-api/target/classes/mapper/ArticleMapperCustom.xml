@@ -17,7 +17,6 @@
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="is_anonymous" jdbcType="TINYINT" property="isAnonymous" />
-    <result column="article_path" jdbcType="VARCHAR" property="articlePath" />
     <result column="view_num" property="viewNum" jdbcType="INTEGER" />
     
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />

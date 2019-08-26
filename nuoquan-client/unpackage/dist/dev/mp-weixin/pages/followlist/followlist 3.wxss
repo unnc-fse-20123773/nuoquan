@@ -1,0 +1,200 @@
+
+page {
+	width: 100%;
+	height: 100%;
+}
+#public-container {
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	background-color: #f3f3f3;
+}
+#public-infobox {
+	position: fixed;
+	height: 20%;
+	width: 100%;
+}
+#public-message-futherbox
+
+/* 这里是帖子块最高级父组件*/
+	{
+	/* border: 1upx solid red; 如果想快速了解该组件样式,则取消这个注释*/
+	position: fixed;
+	width: 100%;
+	height: 100%;
+}
+
+/* 以下是帖子展示块的样式 */
+.top-menu-view {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-justify-content: space-around;
+	    -ms-flex-pack: distribute;
+	        justify-content: space-around;
+	width: 100%;
+	background-color: #f3f3f3;
+	height: 6%;
+	/* 在这里设置导航条高度 */
+}
+.menu-one-view {
+	display: inline-block;
+	white-space: nowrap;
+	height: 100%;
+	width: 48%;
+}
+.top-menu-view .menu-one-view .menu-one {
+	/* 在这里写 单个按钮样式 */
+	margin-left: 8%;
+	position: relative;
+	height: 100%;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	    -ms-flex-align: center;
+	        align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	    -ms-flex-pack: center;
+	        justify-content: center;
+	width: 100%;
+}
+.top-menu-view .menu-one-view .menu-one .menu-one-txt {
+	height: 40rpx;
+	font-size: 32rpx;
+	font-weight: 550;
+	color: #888888;
+	line-height: 40rpx;
+}
+.top-menu-view .menu-one-view .menu-one .menu-one-bottom {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
+.top-menu-view .menu-one-view .menu-one .menu-one-bottom .menu-one-bottom-color {
+	width: 60%;
+	height: 4rpx;
+}
+.top-menu-view .menu-one-view .menu-one-act {
+	/* 在这里写 单个按钮样式 */
+	margin-left: 8%;
+	position: relative;
+	height: 100%;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	    -ms-flex-align: center;
+	        align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	    -ms-flex-pack: center;
+	        justify-content: center;
+	width: 100%;
+}
+.top-menu-view .menu-one-view .menu-one-act .menu-one-txt {
+	height: 40rpx;
+	font-size: 36rpx;
+	font-weight: 550;
+	color: #353535;
+	line-height: 40rpx;
+}
+.top-menu-view .menu-one-view .menu-one-act .menu-one-bottom {
+	/* 在这里设置底部横条宽度 */
+	position: absolute;
+	bottom: 0;
+	width: 80%;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	    -ms-flex-align: center;
+	        align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	    -ms-flex-pack: center;
+	        justify-content: center;
+}
+.top-menu-view .menu-one-view .menu-one-act .menu-one-bottom .menu-one-bottom-color {
+	/* 在这里设置底部横条高度和颜色 */
+	width: 60%;
+	height: 6rpx;
+	background: #FFCF3C;
+}
+.swiper-box-list {
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	    -ms-flex: 1;
+	        flex: 1;
+	min-height: 94%;
+	height: 94%;
+	width: 100%;
+	background-color: #f3f3f3;
+}
+
+/* swiper */
+.swiper {
+	height: 360rpx;
+}
+.slideimage {
+	width: 100%;
+}
+
+/* 一个粉丝 */
+.user-one-line {
+	background-color: #f3f3f3;
+	width: 100%;
+	height: 80rpx;
+}
+.publicTouxiang {
+	margin-left: 40rpx;
+	width: 62rpx;
+	height: 62rpx;
+	border-radius: 999rpx;
+	display: inline-block;
+	vertical-align: middle;
+}
+.border-bottom-line {
+	height: 1px;
+	background-color: #dcdcdc;
+	margin-left: 130rpx;
+	width: 580rpx;
+}
+.userid {
+	margin-left: 20rpx;
+	font-size: x-small;
+	color: #353535;
+}
+.attentionButton {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	width: 100rpx;
+	height: 52rpx;
+	border-radius: 10rpx;
+	margin-left: 320rpx;
+	border: 1rpx solid #FFCF3C;
+}
+.attentionButton-text {
+	color: #FFCF3C;
+	font-size: small;
+	letter-spacing: 10rpx;
+	margin-left: 10rpx;
+}
+.scroll-test {
+	height: 100%
+}
+.swiper-box {
+	width: 100%;
+	height: 100%;
+}
+

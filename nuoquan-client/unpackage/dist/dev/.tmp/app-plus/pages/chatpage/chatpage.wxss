@@ -1,10 +1,10 @@
 
-.touxiang.data-v-d203d3ca {
+.touxiang.data-v-285d9fe6 {
 	width: 60rpx;
 	height: 60rpx;
 	border-radius: 60rpx;
 }
-.bottomBar.data-v-d203d3ca {
+.bottomBar.data-v-285d9fe6 {
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -ms-flexbox;
@@ -20,7 +20,7 @@
 	    -ms-flex-pack: inherit;
 	        justify-content: inherit;
 }
-.time.data-v-d203d3ca {
+.time.data-v-285d9fe6 {
 	display: -webkit-inline-box;
 	display: -webkit-inline-flex;
 	display: -ms-inline-flexbox;
@@ -33,7 +33,7 @@
 	color: #939393;
 	margin-right: 6px;
 }
-.status.data-v-d203d3ca {
+.status.data-v-285d9fe6 {
 	display: -webkit-inline-box;
 	display: -webkit-inline-flex;
 	display: -ms-inline-flexbox;
@@ -44,7 +44,7 @@
 	line-height: 18px;
 	margin-right: 6px;
 }
-.contentText.data-v-d203d3ca {
+.contentText.data-v-285d9fe6 {
 	width: 400rpx;
 	font-size: 12px;
 	word-break: break-all;
@@ -322,7 +322,7 @@
  * TODO： 滚动区域高度需固定
  * 					by Jerrio
  */
-.messageArea.data-v-0318fac1 {
+.messageArea.data-v-cd242d9a {
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -ms-flexbox;
@@ -332,7 +332,7 @@
 	overflow: hidden;
 	background: #F5F5F5;
 }
-.bottomBar.data-v-0318fac1 {
+.bottomBar.data-v-cd242d9a {
 	position: fixed;
 	display: -webkit-box;
 	display: -webkit-flex;
@@ -351,7 +351,7 @@
 	        box-shadow: 0px -2px 2px 0px rgba(130, 130, 130, 0.20);
 	background: #FFFFFF;
 }
-.bottomBar textarea.data-v-0318fac1 {
+.bottomBar textarea.data-v-cd242d9a {
 	display: inline-block;
 	width: 534rpx;
 	height: 50rpx;
@@ -359,7 +359,7 @@
 	border: solid 1px #C6C6C6;
 	margin-left: 14rpx;
 }
-.icons.data-v-0318fac1 {
+.icons.data-v-cd242d9a {
 	display: -webkit-inline-box;
 	display: -webkit-inline-flex;
 	display: -ms-inline-flexbox;
@@ -376,7 +376,7 @@
 	    -ms-flex-align: center;
 	        align-items: center;
 }
-.icons image.data-v-0318fac1 {
+.icons image.data-v-cd242d9a {
 	width: 34rpx;
 	height: 34rpx;
 	vertical-align: middle;

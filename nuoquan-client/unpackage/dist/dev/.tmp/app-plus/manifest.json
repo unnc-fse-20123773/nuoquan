@@ -4,7 +4,7 @@
     "iPhone",
     "iPad"
   ],
-  "id": "",
+  "id": "__UNI__910C4BE",
   "name": "nuoquan",
   "version": {
     "name": "1.0.0",
@@ -77,9 +77,10 @@
     "arguments": "{\"name\":\"index\",\"query\":\"\",\"id\":0,\"pathName\":\"pages/index/index\"}",
     "allowsInlineMediaPlayback": true,
     "uni-app": {
-      "compilerVersion": "2.1.3",
+      "compilerVersion": "2.2.2",
       "control": "webview",
-      "nvueCompiler": "weex"
+      "nvueCompiler": "weex",
+      "renderer": "auto"
     }
   }
 }

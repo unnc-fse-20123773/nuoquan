@@ -85,6 +85,12 @@
           "query": "",
           "id": 9,
           "pathName": "pages/wechatLogin/wechatLogin"
+        },
+        {
+          "name": "detail",
+          "query": "",
+          "id": 10,
+          "pathName": "pages/detail/detail"
         }
       ]
     }

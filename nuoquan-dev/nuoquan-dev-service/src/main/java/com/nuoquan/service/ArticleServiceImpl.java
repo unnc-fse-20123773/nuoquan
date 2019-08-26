@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.nuoquan.utils.TimeAgoUtils;
+import com.nuoquan.mapper.ArticleImageMapper;
 import com.nuoquan.mapper.ArticleMapper;
 import com.nuoquan.mapper.ArticleMapperCustom;
 import com.nuoquan.mapper.SearchRecordMapper;
@@ -20,6 +21,7 @@ import com.nuoquan.mapper.UserArticleCommentMapperCustom;
 import com.nuoquan.mapper.UserLikeArticleMapper;
 import com.nuoquan.mapper.UserMapper;
 import com.nuoquan.pojo.Article;
+import com.nuoquan.pojo.ArticleImage;
 import com.nuoquan.pojo.SearchRecord;
 import com.nuoquan.pojo.UserArticleComment;
 import com.nuoquan.pojo.UserLikeArticle;
@@ -58,6 +60,9 @@ public class ArticleServiceImpl implements ArticleService {
 	@Autowired
 	private UserArticleCommentMapperCustom userArticleCommentMapperCustom;
 	
+	@Autowired
+	private ArticleImageMapper articleImageMapper;
+	
 	@Override
 	public PagedResult getAllArticles(Integer page, Integer pageSize) {
 		
@@ -95,7 +100,7 @@ public class ArticleServiceImpl implements ArticleService {
 		articleMapperCustom.addArticleLikeCount(articleId);
 		
 		//用户受喜欢数量的累加
-		userMapper.addReceiveLikeCount(userId);
+		userMapper.addReceiveLikeCount(articleCreaterId);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -116,7 +121,7 @@ public class ArticleServiceImpl implements ArticleService {
 		articleMapperCustom.reduceArticleLikeCount(articleId);
 		
 		//3.用户受喜欢数量的累减
-		userMapper.reduceReceiveLikeCount(userId);
+		userMapper.reduceReceiveLikeCount(articleCreaterId);
 		
 	}
 	
@@ -157,11 +162,13 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void saveArticle(Article article) {
+	public String saveArticle(Article article) {
 		
 		String id = sid.nextShort();
 		article.setId(id);
 		articleMapper.insertSelective(article);
+		
+		return id;
 		
 	}
 
@@ -201,6 +208,14 @@ public class ArticleServiceImpl implements ArticleService {
 		grid.setRecords(pageList.getTotal());
 		
 		return grid;
+	}
+
+	@Override
+	public void saveArticleImages(ArticleImage articleImage) {
+		
+		String id = sid.nextShort();
+		articleImage.setId(id);
+		articleImageMapper.insertSelective(articleImage);
 	}
 
 	@Override

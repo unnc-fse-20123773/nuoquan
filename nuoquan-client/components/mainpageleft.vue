@@ -15,26 +15,26 @@
 		<view class="personPageList">
 			<!-- TODO: 最好把 view 都改成 button 并加上样式 
 											  by Jerrio -->
-			<view class="pageLine">
-				<image src="../static/touxiang.jpg"></image>
+			<button class="pageLine">
+				<image src="../static/icon/write.png"></image>
 				<view>我的发布</view>
-			</view>
+			</button>
 			<button class="pageLine" @tap="goToMessageListPage">
-				<image src="../static/touxiang.jpg"></image>
+				<image src="../static/icon/message.png"></image>
 				<view>我的消息</view>
 			</button>
-			<view class="pageLine">
-				<image src="../static/touxiang.jpg"></image>
+			<button class="pageLine">
+				<image src="../static/icon/star.png"></image>
 				<view>我的收藏</view>
-			</view>
-			<view class="pageLine">
-				<image src="../static/touxiang.jpg"></image>
+			</button>
+			<button class="pageLine">
+				<image src="../static/icon/report.png"></image>
 				<view>举报投诉</view>
-			</view>
-			<view class="pageLine">
-				<image src="../static/touxiang.jpg"></image>
-				<view>关于</view>
-			</view>
+			</button>
+			<button class="pageLine">
+				<image src="../static/icon/about.png"></image>
+				<view>关于&nbsp;&nbsp;</view>
+			</button>
 		</view>
 	</view>
 </template>
@@ -77,20 +77,16 @@
 		from {
 			display: none;
 		}
-
 		to {
 			display: block;
 		}
 	}
-
 	.bottomLayerCoverScreen {
 		position: fixed;
 		width: 750upx;
 		height: 100%;
 		z-index: 5;
-
 	}
-
 	.mainPageLeft {
 		background: #fcfcfc;
 		animation: slidefromleft 3s;
@@ -102,26 +98,22 @@
 		box-shadow: 1px 0px 5px #a6a6a6;
 		border-bottom-right-radius: 80px;
 	}
-
 	.topInfoArea {
 		height: 60px;
 		margin-top: 29px;
 	}
-
 	.topLeft {
 		margin-left: 20px;
 		display: inline-block;
 		width: 60px;
 		vertical-align: top;
 	}
-
 	.touxiang {
 		height: 60px;
 		width: 60px;
 		border-radius: 60px;
 		display: block;
 	}
-
 	.topRight {
 		display: inline-block;
 		margin-left: 8px;
@@ -129,31 +121,29 @@
 		width: 80px;
 		vertical-align: bottom;
 	}
-
 	.personPageList {
 		margin-top: 40px;
 	}
-
-	.pageLine {
-		margin-left: 34px;
-		margin-bottom: 20px;
+	button {
+		background: #fcfcfc;
+		border-radius: 0;
+		text-align: left;
+		margin:0;
+		padding:0 33px;
 	}
-
+	button::after {
+		border: none;
+	}
 	.pageLine image {
 		width: 20px;
 		height: 20px;
 		display: inline-block;
 		vertical-align: middle;
 	}
-
 	.pageLine view {
 		display: inline-block;
 		font-size: 13px;
 		font-weight: bold;
 		margin-left: 17px;
-	}
-	
-	.pageLine button {
-		
 	}
 </style>

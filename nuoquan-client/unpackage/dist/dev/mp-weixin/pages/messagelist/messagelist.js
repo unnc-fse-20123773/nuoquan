@@ -262,7 +262,7 @@ var socketOpen = false;var _default =
     }
 
     // [测试代码块]
-    this.mySocket.init();
+    // this.mySocket.init();
   },
 
   onShow: function onShow() {

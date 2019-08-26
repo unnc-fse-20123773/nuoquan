@@ -2,7 +2,7 @@
 -- +  Database update  +
 -- +++++++++++++++++++++
 
--- v19.8.- @author: Jerrio
+-- v19.8.27 @author: Jerrio
 -- 添加文章浏览量,点赞创建时间, 以支持热度逻辑
 ALTER TABLE `nuoquan`.`article` 
 ADD COLUMN `view_num` INT NOT NULL DEFAULT 0 COMMENT '浏览量' AFTER `article_path`;
@@ -13,12 +13,23 @@ ADD COLUMN `create_time` DATETIME NOT NULL AFTER `article_id`;
 ALTER TABLE `nuoquan`.`user_like_article` 
 CHANGE COLUMN `create_time` `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
 
+-- v19.8.26 @author: Deyan
+-- 在article中删除article_path
+ALTER TABLE `nuoquan`.`article` 
+DROP COLUMN `article_path`;
+-- 新建artocle_image表
+CREATE TABLE `nuoquan`.`article_image` (
+  `id` VARCHAR(45) NOT NULL,
+  `article_id` VARCHAR(45) NOT NULL,
+  `image_path` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`));
+
 -- v19.8.22 @author: Jerrio
 -- 为 sign_flag 添加注释
 ALTER TABLE `nuoquan`.`chat_msg` 
 CHANGE COLUMN `sign_flag` `sign_flag` INT(11) NOT NULL COMMENT '0: 未签收\n1：签收';
 
--- v19.8.20 @author: xdy
+-- v19.8.20 @author: Deyan
 -- 修改： comment表添加comment_num属性
 ALTER TABLE `nuoquan`.`user_article_comment` 
 ADD COLUMN `comment_num` INT(11) NOT NULL DEFAULT '0' AFTER `dislike_num`;
