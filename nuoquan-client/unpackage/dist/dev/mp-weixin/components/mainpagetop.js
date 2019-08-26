@@ -105,7 +105,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ 136));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ 136));};var _default =
 
 
 
@@ -163,7 +163,13 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     controlShowLeft: function controlShowLeft(a) {
       this.showMainPageLeft = a;
       // console.log(this.showMainPageLeft);
+    },
+    jumpToSubmit: function jumpToSubmit() {
+      uni.navigateTo({
+        url: '/pages/submit/submit' });
+
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 
