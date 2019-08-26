@@ -4,7 +4,7 @@
 	<view class="mainPageLeft" @click.stop="">
 		<view class="topInfoArea">
 			<view class="topLeft">
-				<image class="touxiang" :src='userInfo.faceImg'></image>
+				<image class="touxiang" :src='userInfo.faceImg' @tap="goToProfile"></image>
 			</view>
 			<view class="topRight">
 				<view style="font-size: 13px;margin-bottom:9px;width:100%;vertical-align: bottom;">{{userInfo.nickname}}</view>
@@ -59,6 +59,12 @@
 			goToMessageListPage() {
 				uni.navigateTo({
 					url: '../messagelist/messagelist',
+				});
+			},
+			
+			goToProfile(){
+				uni.navigateTo({
+					url: '../profile/profile',
 				});
 			}
 		},

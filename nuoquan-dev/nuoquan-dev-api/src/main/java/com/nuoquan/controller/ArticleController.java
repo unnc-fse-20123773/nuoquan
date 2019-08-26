@@ -8,9 +8,11 @@ import java.util.Date;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -33,6 +35,9 @@ public class ArticleController extends BasicController{
 	
 	@Autowired
 	private ArticleService articleService;
+
+	@Value("${upload.maxFaceImageSize}")
+	private long MAX_FACE_IMAGE_SIZE;
 	
 	@ApiOperation(value="查询全部文章", notes="查询全部文章的接口")
 	@PostMapping("/queryAllArticles")
@@ -101,8 +106,47 @@ public class ArticleController extends BasicController{
 	public JSONResult upload(String userId, String articleTag, String articleTitle, 
 				String articleContent, @ApiParam(value="图片或视频", required=false) MultipartFile file) throws Exception {
 		
+		if (StringUtils.isBlank(userId) || StringUtils.isEmpty(userId)) {
+			return JSONResult.errorMsg("Id can't be null");
+		}
+
+		// 保存视频信息到数据库
+		Article article = new Article();
+		article.setArticleTitle(articleTitle);
+		article.setArticleContent(articleContent);
+		article.setUserId(userId);
+		article.setTags(articleTag);
+		article.setStatus(ArticleStatusEnums.SUCCESS.value);
+		article.setCreateDate(new Date());
+		
+		if (file != null) {
+			// 判断是否超出大小限制
+			if (file.getSize() > MAX_FACE_IMAGE_SIZE) {
+				return JSONResult.errorException("Uploaded file size exceed server's limit (10MB)");
+			}
+			// 保存图片
+			String fileSpace = resourceConfig.getFileSpace();	// 文件保存空间地址
+			String fileName = file.getOriginalFilename();		// 获取原文件名
+			// 保存到数据库中的相对路径
+			String uploadPathDB = "/" + userId + "/article" + "/" + fileName;
+			// 文件上传的最终保存路径
+			String finalVideoPath = "";
+			
+			if (StringUtils.isNotBlank(fileName)) {
+				finalVideoPath = fileSpace + uploadPathDB;
+				uploadFile(file, finalVideoPath);	// 调用 BasicController 里的方法
+
+				article.setArticlePath(uploadPathDB);
+			}
+		}
+		
+		articleService.saveArticle(article);
+		return JSONResult.ok();
+		
+		/*	保存文件可使用上面方法代替, 你TMD uploadPathDB 都能写成 uplpadPathDB...砍你哦
+		 *  																	by Jerrio
 		//文件保存的命名空间
-		String fileSpace = "/Users/xudeyan/Desktop/JUMBOX/内容";
+		String fileSpace = resourceConfig.getFileSpace();;
 		//保存到数据库的相对路径
 		String uplpadPathDB = "/" + userId + "/article";
 		FileOutputStream fileOutputStream = null;
@@ -138,20 +182,8 @@ public class ArticleController extends BasicController{
 				fileOutputStream.close();
 			}
 		}
+		*/
 		
-		// 保存视频信息到数据库
-		Article article = new Article();
-		article.setArticleTitle(articleTitle);
-		article.setArticleContent(articleContent);
-		article.setUserId(userId);
-		article.setTags(articleTag);
-		article.setArticlePath(uplpadPathDB);
-		article.setStatus(ArticleStatusEnums.SUCCESS.value);
-		article.setCreateDate(new Date());
-		
-		articleService.saveArticle(article);
-		
-		return JSONResult.ok();
 	}	
 	
 	@PostMapping("/saveComment")
@@ -170,7 +202,7 @@ public class ArticleController extends BasicController{
 	public JSONResult getArticleComments(String articleId, Integer page, Integer pageSize) throws Exception {
 		
 		if (StringUtils.isBlank(articleId)) {
-			return JSONResult.ok();
+			return JSONResult.errorMsg("articleId can't be null");
 		}
 		
 		if(page == null) {

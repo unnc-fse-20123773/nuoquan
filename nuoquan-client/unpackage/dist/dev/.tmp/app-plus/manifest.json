@@ -36,7 +36,7 @@
     "statusbar": {
       "immersed": "supportedDevice",
       "style": "dark",
-      "background": "#F8F8F8"
+      "background": "#fdd041"
     },
     "distribute": {
       "google": {
@@ -74,7 +74,7 @@
         }
       }
     },
-    "arguments": "{\"name\":\"signin\",\"query\":\"\",\"id\":0,\"pathName\":\"pages/signin/signin\"}",
+    "arguments": "{\"name\":\"index\",\"query\":\"\",\"id\":0,\"pathName\":\"pages/index/index\"}",
     "allowsInlineMediaPlayback": true,
     "uni-app": {
       "compilerVersion": "2.1.3",

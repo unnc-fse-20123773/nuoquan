@@ -9,7 +9,7 @@
 	import articlebrief from '../../components/articlebrief';
 	import mainpagetop from '../../components/mainpagetop.vue';
 	import mainpageleft from '@/components/mainpageleft.vue'
-
+	
 	export default {
 		data() {
 			return {
@@ -44,6 +44,10 @@
 				})
 				return;
 			} 
+		
+			this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
+			
+			// [测试代码块]
 		},
 		onShow() {
 			var userInfo = this.getGlobalUserInfo();
@@ -51,7 +55,6 @@
 				// 设置 userInfo 传给 mainpagetop 组件
 				this.userInfo = this.getGlobalUserInfo();
 			}
-
 		},
 		methods: {
 			showArticles() {
@@ -69,6 +72,12 @@
 					}
 				});
 			},
+			
+			// async testFunction(userId){
+			// 	this.test = await this.myQueryUserInfo(userId);
+			// 	console.log("here");
+			// 	console.log(this.test);
+			// }
 		}
 	};
 </script>

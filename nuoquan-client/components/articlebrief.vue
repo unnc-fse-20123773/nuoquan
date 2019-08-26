@@ -1,7 +1,5 @@
 <template>
 	<view class="articlecard" id="'+articleCard.id+'" @click="jumpToDetail()">
-		
-		
 		<view class="title">{{ articleCard.articleTitle }}</view>
 		<view class="briefarticleCard">{{ articleCard.articleContent }}</view>
 		<view class="picturearea">

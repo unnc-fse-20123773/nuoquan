@@ -17,7 +17,7 @@ public class ChatMsg {
     private String msg;
 
     @Column(name = "sign_flag")
-    private Integer signFlag;
+    private Integer signFlag; // 0: 未签收，1：签收
 
     @Column(name = "create_date")
     private Date createDate;

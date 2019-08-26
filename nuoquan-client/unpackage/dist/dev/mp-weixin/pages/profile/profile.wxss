@@ -23,8 +23,7 @@ page {
 	width: 86%;
 	height: 300rpx;
 	background-color: white;
-	-webkit-border-radius: 20rpx;
-	        border-radius: 20rpx;
+	border-radius: 20rpx;
 	-webkit-box-shadow: 0rpx 0rpx 11rpx 1rpx #A6A6A6;
 	        box-shadow: 0rpx 0rpx 11rpx 1rpx #A6A6A6;
 }
@@ -32,8 +31,7 @@ page {
 	margin-left: 6%;
 	width: 160rpx;
 	height: 160rpx;
-	-webkit-border-radius: 120px;
-	        border-radius: 120px;
+	border-radius: 120px;
 	display: inline-block;
 	vertical-align: middle;
 }
@@ -96,8 +94,7 @@ page {
 	margin-top: 61%;
 	width: 86%;
 	background-color: white;
-	-webkit-border-radius: 20rpx;
-	        border-radius: 20rpx;
+	border-radius: 20rpx;
 	-webkit-box-shadow: 0rpx 0rpx 11rpx 1rpx #A6A6A6;
 	        box-shadow: 0rpx 0rpx 11rpx 1rpx #A6A6A6;
 }
@@ -112,8 +109,7 @@ page {
 	width: 86%;
 	height: 5%;
 	background-color: #FFCF3C;
-	-webkit-border-radius: 20rpx;
-	        border-radius: 20rpx;
+	border-radius: 20rpx;
 }
 .editprofile-text{
 	color: white;

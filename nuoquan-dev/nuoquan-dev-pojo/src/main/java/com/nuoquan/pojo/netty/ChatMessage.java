@@ -1,6 +1,7 @@
 package com.nuoquan.pojo.netty;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class ChatMessage implements Serializable {
 	
@@ -10,6 +11,7 @@ public class ChatMessage implements Serializable {
 	private String receiverId = ""; 	// 接收者id
 	private String msg = ""; 		// 聊天内容
 	private String msgId = ""; 		// 用于消息签收
+	private Date createDate = null;
 	
 	public String getSenderId() {
 		return senderId;
@@ -34,5 +36,11 @@ public class ChatMessage implements Serializable {
 	}
 	public void setMsgId(String msgId) {
 		this.msgId = msgId;
+	}
+	public Date getCreateDate() {
+		return createDate;
+	}
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 }

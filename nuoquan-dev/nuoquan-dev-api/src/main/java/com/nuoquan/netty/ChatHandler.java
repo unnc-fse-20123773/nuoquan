@@ -3,6 +3,7 @@ package com.nuoquan.netty;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.xml.crypto.Data;
@@ -58,15 +59,13 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
 			// 2.2 聊天类型的消息，把聊天记录保存到数据库（加密/解密），
 			// 	   同时标记签收状态。[未签收]
 			ChatMessage chatMessage = dataContent.getChatMessage();
-			String msgContent = chatMessage.getMsg();
 			String receiverId = chatMessage.getReceiverId();
-			String senderId = chatMessage.getSenderId();
 			
 			// handle 无法直接通过 Service 注入数据库，
 			// 所以用 SpringUtil 手动获取被 Spring 管理的 bean 对象。
 			// (使用普通的java类调用托管给spring的service)
 			UserService userService = (UserService)SpringUtil.getBean("userServiceImpl");
-			String msgId = userService.saveMsg(chatMessage);
+			String msgId = userService.saveMsg(chatMessage); // 保存后获取返回的 msgId
 			chatMessage.setMsgId(msgId);
 			
 //			DataContent dataContentBcak = new DataContent();
@@ -112,7 +111,8 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
 				userService.updateMsgSigned(msgIdList);
 			}
 		} else if (action == MsgActionEnum.KEEPALIVE.type){
-			// 2.4	心跳类型，
+			// 2.4	心跳类型消息
+			System.out.println("收到来自 channel 为[" + currentChannel + "]的心跳包...");
 		}
 			
 		

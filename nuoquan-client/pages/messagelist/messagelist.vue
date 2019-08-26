@@ -29,22 +29,46 @@
 			</view>
 			<!-- 消息内容滑块区 -->
 			<scroll-view scroll-y="true" style="position: fixed;left: 0upx;top: 314upx;width: 100%;height: 1132upx;">
-				<view class="msglist-card column_center" v-for="(cardlist,index1) in cardlist" :key="index1" @tap="goToChatpage">
-					<image class="msglist-Touxiang" mode="aspectFill" src="../../static/touxiang2.jpg"></image>
-					<view class="msglist-content">
-						<view class="msglist-id font-family">
-							陈仅仅一号111
+				<view v-for="(item, index) in chatSnapShotList" :key="index">
+					<view class="msglist-card column_center" v-if="item.isRead == UNREAD" @tap="goToChatpage(item)">
+						<image class="msglist-Touxiang" mode="aspectFill" :src="item.friendInfo.faceImg"></image>
+						<view class="msglist-content">
+							<view class="msglist-id font-family">
+								{{item.friendInfo.nickname}}
+							</view>
+							<view class="msglist-brief font-family">
+								{{item.msg}}
+							</view>
 						</view>
-						<view class="msglist-brief font-family">
-							用来模拟场景中天空的光线，也可以使用真...
+						<view class="time-numicon">
+							<view class="msglist-time">
+								{{item.createDate}}
+							</view>
+							<view class="msglist-icon super_center">
+								<!-- 12 -->
+							</view>
 						</view>
 					</view>
-					<view class="time-numicon">
-						<view class="msglist-time">
-							11-26
+
+					<view class="msglist-card-read column_center" v-if="item.isRead == READ" @tap="goToChatpage(item)">
+						<image class="msglist-Touxiang" mode="aspectFill" :src="item.friendInfo.faceImg"></image>
+						<view class="msglist-content">
+							<view class="msglist-id-read font-family">
+								{{item.friendInfo.nickname}}
+							</view>
+							<view class="msglist-brief-read font-family">
+								{{item.msg}}
+							</view>
 						</view>
-						<view class="msglist-icon super_center">
-							12
+						<view class="time-numicon">
+							<view class="msglist-time">
+								{{item.createDate}}
+							</view>
+							<!-- 预留的icon位置 
+											by Guetta -->
+							<!-- <view class="msglist-icon-read super_center">
+								{{msgicon}}
+							</view> -->
 						</view>
 					</view>
 				</view>
@@ -55,23 +79,170 @@
 </template>
 
 <script>
+	import {
+		mapState
+	} from 'vuex';
+
+	var userInfo;
+
+	var socketTask;
+	var socketOpen = false;
+
 	export default {
 		data() {
 			return {
-			cardlist:[1,1,1,1,1,1,11,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+				msgicon: [],
+				chatSnapShotList: [ //测试用数据
+					{
+						createDate: "2019/08/22 03:35:02",
+						friendId: "1",
+						friendInfo: {
+							id: "1",
+							email: "x@nottingham.edu.cn",
+							nickname: "test1",
+							createDate: "2019-07-05T17:17:23.000+0000",
+							faceImg: "http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTI3ic84wG7jlib3gCOlemyy53Ribg1IJM2px221hCDNync15P0MdJcPibY4QFIOibjqrVQnrI8xZ7Vg5hg/132",
+						},
+						isRead: 3,
+						msg: "1",
+						myId: "test-id123",
+					},
+					
+					{
+						createDate: "2019/08/22 03:35:02",
+						friendId: "1",
+						friendInfo: {
+							id: "1",
+							email: "x@nottingham.edu.cn",
+							nickname: "test1",
+							createDate: "2019-07-05T17:17:23.000+0000",
+							faceImg:"http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTI3ic84wG7jlib3gCOlemyy53Ribg1IJM2px221hCDNync15P0MdJcPibY4QFIOibjqrVQnrI8xZ7Vg5hg/132",
+						},
+						isRead: 3,
+						msg: "1",
+						myId: "test-id123",
+					},
+				],
+
+				READ: this.chat.READ,
+				UNREAD: this.chat.UNREAD,
 			}
 		},
+
+		computed: {
+			...mapState([
+				'chatMessageCard',
+			])
+		},
+
+		watch: {
+			chatMessageCard(newVal, oldVal) { //监听数据变化，即可做相关操作
+				this.loadingChatSnapshot();
+				console.log("newVal:");
+				console.log(newVal);
+			}
+		},
+
 		onLoad: function() {
 			uni.setNavigationBarTitle({
 				title: "私信列表"
 			});
-		},
-		methods: {
-			goToChatpage(){
-				uni.navigateTo({
-					url: '../chatpage/chatpage',
-				});
+
+			userInfo = this.getGlobalUserInfo();
+			if (this.isNull(userInfo)) {
+				console.log("No userInfo!!");
+				return;
 			}
+
+			// [测试代码块]
+			this.mySocket.init();
+		},
+
+		onShow() {
+			this.loadingChatSnapshot(); // 载入聊天快照
+		},
+
+		methods: {
+			/**
+			 * 展示聊天快照，渲染列表.
+			 */
+			loadingChatSnapshot() {
+				var chatSnapShotList = this.chat.getUserChatSnapShot(userInfo.id);
+				// 提前渲染
+				this.chatSnapShotList = chatSnapShotList;
+				// 拼接信息: 根据 friendId 获取用户信息
+				var sendCount = 0; // 网络请求为异步，计数返回结果判断是否全部完成
+				var receiveCount = 0;
+				console.log(chatSnapShotList)
+				for (var i = 0; i < chatSnapShotList.length; i++) {
+					var thisFrindId = chatSnapShotList[i].friendId;
+					// 查看缓存
+					var thisFriendInfo = this.getUserInfoFromUserList(thisFrindId);
+					if (this.isNull(thisFriendInfo)) {
+						// 不在缓存中, 向服务器请求
+						sendCount++;
+						var that = this;
+						uni.request({
+							url: that.$serverUrl + '/user/queryUser',
+							method: "POST",
+							data: {
+								userId: thisFrindId
+							},
+							header: {
+								'content-type': 'application/x-www-form-urlencoded'
+							},
+							success: (res) => {
+								// console.log(res)
+								if (res.data.status == 200) {
+									// 获取返回的用户信息 写到缓存里
+									thisFriendInfo = res.data.data;
+									that.setUserInfoToUserList(thisFriendInfo);
+
+									// 查看 sent & receive 是否相等
+									receiveCount++;
+									console.log("sendCount=" + sendCount + " receiveCount=" + receiveCount);
+									if (sendCount == receiveCount) {
+										// 再次加载渲染
+										that.loadingChatSnapshot();
+									}
+								}
+							},
+						});
+					} else {
+						// 添加朋友信息到快照列表对象
+						chatSnapShotList[i].friendInfo = thisFriendInfo;
+					}
+				}
+			},
+			
+			/**
+			 * 右滑删除, TODO: 施工中...未测试
+			 */
+			deleteChat(e){
+				// 获取朋友 id
+				var frindId = e.id
+				// 1. 删除我和朋友的聊天记录
+				this.chat.deletUserChatHistory(userInfo.id, frindId);
+				// 2. 删除快照
+				this.chat.deletUserChatSnapShot(userInfo.id, frindId);
+				// 重载快照
+			},
+			
+			goToChatpage(e) {
+				// console.log(e)
+				var myId = e.myId;
+				var friendId = e.friendId;
+				var msg = e.msg;
+				var friendInfo = e.friendInfo;
+				// 覆盖快照，设为已读 (myId, friendId, msg, isRead)
+				this.chat.readUserChatSnapShot(myId, friendId);
+				// this.chat.saveUserChatSnapshot(e.myId, e.friendId, e.msg, this.chat.READ);
+
+				uni.navigateTo({
+					url: '../chatpage/chatpage?friendInfo=' + JSON.stringify(friendInfo),
+				});
+			},
+
 		}
 	}
 </script>
@@ -151,6 +322,7 @@
 		background-color: #d1d1d1;
 		margin-left: 5%;
 	}
+
 	.msglist-comment-bg {
 		position: absolute;
 		height: 58upx;
@@ -166,7 +338,7 @@
 		margin-top: 5upx;
 		margin-left: 1upx;
 	}
-	
+
 	.msglist-comment {
 		width: 100%;
 		height: 49%;
@@ -207,7 +379,7 @@
 		background-color: #058ecc;
 		color: white;
 		border-radius: 7upx;
-		width: 56upx;
+		width: 36upx;
 		right: 40upx;
 	}
 
@@ -219,6 +391,15 @@
 		background-color: white;
 		border-radius: 12upx;
 		box-shadow: 0upx 0upx 14upx 0upx #B2B2B2;
+	}
+
+	.msglist-card-read {
+		width: 88%;
+		margin-left: 6%;
+		margin-top: 8upx;
+		height: 120upx;
+		background-color: white;
+		border-radius: 12upx;
 	}
 
 	.msglist-Touxiang {
@@ -246,11 +427,28 @@
 		color: #353535;
 	}
 
+	.msglist-id-read {
+		width: 100%;
+		height: 32upx;
+		font-size: x-small;
+		font-weight: 500;
+		color: #9b9b9b;
+	}
+
 	.msglist-brief {
 		width: 100%;
+		font-weight: 500;
 		height: 32upx;
 		font-size: xx-small;
 		color: #6f6f6f;
+		margin-top: 6upx;
+	}
+
+	.msglist-brief-read {
+		width: 100%;
+		height: 32upx;
+		font-size: xx-small;
+		color: #9b9b9b;
 		margin-top: 6upx;
 	}
 
@@ -280,4 +478,6 @@
 		font-size: 20upx;
 		border-radius: 999upx;
 	}
+
+	.msglist-icon-read {}
 </style>

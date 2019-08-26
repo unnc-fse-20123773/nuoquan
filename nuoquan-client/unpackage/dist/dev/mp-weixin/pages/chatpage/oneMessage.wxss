@@ -2,8 +2,7 @@
 .touxiang.data-v-285d9fe6 {
 	width: 60rpx;
 	height: 60rpx;
-	-webkit-border-radius: 60rpx;
-	        border-radius: 60rpx;
+	border-radius: 60rpx;
 }
 .bottomBar.data-v-285d9fe6 {
 	display: -webkit-box;
@@ -48,7 +47,7 @@
 .contentText.data-v-285d9fe6 {
 	width: 400rpx;
 	font-size: 12px;
-	word-break: break-word;
+	word-break: break-all;
 }
 
 
@@ -76,8 +75,7 @@
 	        flex-direction: column;
 	width: 400rpx;
 	background: #FCCB2E;
-	-webkit-border-radius: 10pt 0pt 10pt 10pt;
-	        border-radius: 10pt 0pt 10pt 10pt;
+	border-radius: 10pt 0pt 10pt 10pt;
 	margin-top: 30rpx;
 	margin-right: 20rpx;
 	padding: 16rpx 14rpx 0rpx 16rpx;
@@ -108,8 +106,7 @@
 	        flex-direction: column;
 	width: 400rpx;
 	background: #FFFFFF;
-	-webkit-border-radius: 10pt 0pt 10pt 10pt;
-	        border-radius: 10pt 0pt 10pt 10pt;
+	border-radius: 10pt 0pt 10pt 10pt;
 	margin-top: 30rpx;
 	margin-right: 20rpx;
 	padding: 16rpx 16rpx 0rpx 14rpx;

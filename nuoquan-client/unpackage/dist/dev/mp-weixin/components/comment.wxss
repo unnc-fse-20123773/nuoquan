@@ -2,8 +2,7 @@
 .comment.data-v-a79986f2 {
 	/* 	background-color:gray;
  */
-	-webkit-border-radius: 20px;
-	        border-radius: 20px;
+	border-radius: 20px;
 	width: 90%;
 	margin: auto;
 }
@@ -15,22 +14,19 @@
 .contentarea.data-v-a79986f2 {
 	background: white;
 	font-size: 16px;
-	-webkit-border-radius: 20px;
-	        border-radius: 20px;
+	border-radius: 20px;
 	margin-top: 20px;
 }
 .bottombar.data-v-a79986f2 {
 	position: relative;
-	-webkit-border-radius: 20px;
-	        border-radius: 20px;
+	border-radius: 20px;
 	height: 40px;
 	margin-top: 20px;
 }
 .touxiang.data-v-a79986f2 {
 	width: 20px;
 	height: 20px;
-	-webkit-border-radius: 20px;
-	        border-radius: 20px;
+	border-radius: 20px;
 	display: inline-block;
 	vertical-align: middle;
 	margin-right: 5px;

@@ -41,8 +41,7 @@ page {
 	margin-left: 13px;
 	width: 33px;
 	height: 33px;
-	-webkit-border-radius: 33px;
-	        border-radius: 33px;
+	border-radius: 33px;
 	vertical-align: middle;
 	line-height: 45px;
 }
@@ -58,8 +57,7 @@ page {
 }
 .goFocus.data-v-48554f13 {
 	border: solid 1px #ECC138;
-	-webkit-border-radius: 5px;
-	        border-radius: 5px;
+	border-radius: 5px;
 	font-size: 13px;
 	color: #ECC138;
 	position: absolute;

@@ -1,9 +1,11 @@
 package com.nuoquan.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nuoquan.utils.FastDFSClient;
+import com.nuoquan.mapper.UserMapper;
+import com.nuoquan.pojo.ChatMsg;
 import com.nuoquan.pojo.User;
+import com.nuoquan.pojo.UserFans;
+import com.nuoquan.pojo.vo.FansFollow;
 import com.nuoquan.pojo.vo.UserVO;
 import com.nuoquan.service.UserService;
 import com.nuoquan.utils.JSONResult;
@@ -31,7 +37,7 @@ public class UserController extends BasicController {
 
 	@Autowired
 	private UserService userService;
-
+	
 	/**
 	 * Description 上传文件到 fdfs 文件服务器 的实例方法
 	 *
@@ -84,7 +90,7 @@ public class UserController extends BasicController {
 	public JSONResult follow(String userId, String fanId) throws Exception {
 
 		if (StringUtils.isBlank(fanId) || StringUtils.isBlank(userId)) {
-			return JSONResult.errorMsg("");
+			return JSONResult.errorMsg("Id can't be null");
 		}
 
 		userService.saveUserFanRelation(userId, fanId);
@@ -99,14 +105,27 @@ public class UserController extends BasicController {
 	public JSONResult dontFollow(String userId, String fanId) throws Exception {
 
 		if (StringUtils.isBlank(fanId) || StringUtils.isBlank(userId)) {
-			return JSONResult.errorMsg("");
+			return JSONResult.errorMsg("Id can't be null");
 		}
 
 		userService.deleteUserFanRelation(userId, fanId);
 
 		return JSONResult.ok("Cancle follow success");
 	}
-
+	
+	@ApiOperation(value = "Query a user's fans and follow lists")
+	@ApiImplicitParams({ 
+		@ApiImplicitParam(name = "userId", required = true, dataType = "String", paramType = "form"),})
+	@PostMapping("/queryFansAndFollow")
+	public JSONResult queryFansAndFollow(String userId, String myId) {
+		
+		List<UserVO> fansList = userService.queryUserFans(userId, myId);
+		List<UserVO> followList = userService.queryUserFollow(userId, myId);
+		FansFollow fansAndFollow= new FansFollow(fansList, followList);
+		
+		return JSONResult.ok(fansAndFollow);
+	}
+	
 	@ApiOperation(value = "Wechat first login or change profile")
 	@PostMapping("/updateUser")
 	public JSONResult updateUser(@RequestBody User userData) throws Exception {
@@ -163,5 +182,39 @@ public class UserController extends BasicController {
 		UserVO userVO = ConvertUserToUserVO(user);
 
 		return JSONResult.ok(userVO);
+	}
+	
+	@ApiOperation(value = "query the user's info and whether I followed him")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "userId", required = true, dataType = "String", paramType = "form"),
+			@ApiImplicitParam(name = "fanId", required = true, dataType = "String", paramType = "form"),})
+	@PostMapping("/queryUserWithFollow")
+	public JSONResult queryUserWithFollow(String userId, String fanId) throws Exception {
+
+		if (StringUtils.isBlank(userId)) {
+			return JSONResult.errorMsg("User id can not be null.");
+		}
+		User user = userService.queryUserById(userId);
+		// 将 user 对象转换为 userVO 输出，userVO 中不返回密码，且可加上其他属性。
+		UserVO userVO = ConvertUserToUserVO(user);
+		userVO.setFollow(userService.queryIfFollow(userId, fanId));
+		
+		return JSONResult.ok(userVO);
+	}
+	
+	@ApiOperation(value = "Get the user's unread msg")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "userId", required = true, dataType = "String", paramType = "form"), })
+	@PostMapping("/getUnsignedMsg")
+	public JSONResult getUnsignedMsg(String userId) throws Exception {
+
+		if (StringUtils.isBlank(userId)) {
+			return JSONResult.errorMsg("User id can not be null.");
+		}
+		
+		// 查询列表
+		List<ChatMsg> unreadMsgList = userService.getUnsignedMsgList(userId);
+
+		return JSONResult.ok(unreadMsgList);
 	}
 }

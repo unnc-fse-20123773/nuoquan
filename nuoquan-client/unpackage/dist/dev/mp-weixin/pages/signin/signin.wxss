@@ -11,8 +11,7 @@
 .touxiang {
 	height: 100px;
 	width: 100px;
-	-webkit-border-radius: 50px;
-	        border-radius: 50px;
+	border-radius: 50px;
 	display: block;
 	margin: auto;
 }

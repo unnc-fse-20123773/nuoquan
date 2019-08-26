@@ -18,8 +18,7 @@ page {
 	width: 190px;
 	height: 28px;
 	vertical-align: middle;
-	-webkit-border-radius: 8px;
-	        border-radius: 8px;
+	border-radius: 8px;
 	background: white;
 	letter-spacing: 1px;
 	color: #b2b2b2;
@@ -42,10 +41,8 @@ page {
 	font-size: 25px;
 	height: 35px;
 	width: 37px;
--webkit-border-radius: 5PX;
-        border-radius: 5PX;
+border-radius: 5PX;
  	background: -webkit-gradient(linear, left top, left bottom, color-stop(49%, #4D4D4D), color-stop(49%, #5F5F5F));
- 	background: -webkit-linear-gradient(#4D4D4D 49%, #5F5F5F 49%);
  	background: -o-linear-gradient(#4D4D4D 49%, #5F5F5F 49%);
  	background: linear-gradient(#4D4D4D 49%, #5F5F5F 49%);
 	text-align: center;

@@ -1,23 +1,34 @@
 <template>
 	<view id="public-container">
 		<view id="public-infobox" class="column_center">
-			<image class="publicTouxiang" mode="aspectFill" src="../../static/touxiang2.jpg" ></image>
+			<image class="publicTouxiang" mode="aspectFill" :src="thisUserInfo.faceImg"></image>
 			<view class="personInfo">
 				<view class="personName">
-					<text class="personName-text">陈仅仅六号</text>
+					<text class="personName-text">{{thisUserInfo.nickname}}</text>
 				</view>
-				<navigator url="../followlist/followlist?currentTab=0" class="personFans super_center">
+				<view class="personFans super_center" @tap="goToFansFollow(0)">
 					<text class="personFans-text">他关注的</text>
-					<text class="personFansNum-text">101</text>
-				</navigator>
-				<navigator url="../followlist/followlist?currentTab=1" class="personFans super_center">
+					<text class="personFansNum-text">{{thisUserInfo.followNum}}</text>
+				</view>
+				<view class="personFans super_center" @tap="goToFansFollow(1)">
 					<text class="personFans-text">关注他的</text>
-					<text class="personFansNum-text">101</text>
-				</navigator>
+					<text class="personFansNum-text">{{thisUserInfo.fansNum}}</text>
+				</view>
 			</view>
-			<button type="default" size="mini" class="guanzhuButton" @tap="addFollow">
-				<text class="guanzhuButton-text">关注</text>
-			</button>
+
+			<view v-if="!myPublic">
+				<button type="default" size="mini" class="guanzhuButton" @tap="cancelFollow(thisUserInfo.id)"  v-if="thisUserInfo.follow==true">
+					<text class="guanzhuButton-text">已关注</text>
+				</button>
+				<button type="default" size="mini" class="guanzhuButton" @tap="addFollow(thisUserInfo.id)"  v-if="thisUserInfo.follow==false">
+					<text class="guanzhuButton-text">关注</text>
+				</button>
+				<!-- TODO: 加完发私信的按钮格式乱了...要改一下
+													by Jerrio-->
+				<button type="default" size="mini" class="guanzhuButton" @tap="goToChatPage">
+					<text class="guanzhuButton-text">发私信</text>
+				</button>
+			</view>
 		</view>
 
 		<view id="public-message-futherbox">
@@ -39,7 +50,7 @@
 						<scroll-view class="swiper-one-list" scroll-y="true" @scrolltolower="loadMore(index1)">
 							<view class="warning-text-box super_center">
 								<view class="warning-text">
-								Function under developed.
+									Function under developed.
 								</view>
 							</view>
 						</scroll-view>
@@ -51,6 +62,8 @@
 </template>
 
 <script>
+	var me;
+
 	export default {
 		data() {
 			return {
@@ -76,14 +89,11 @@
 					[]
 				],
 
-				// 用于分页的属性
-				totalPage: 1,
-				page: 1,
-				videoList: [],
-
 				screenWidth: 350,
 				serverUrl: "",
 
+				thisUserInfo: '',
+				myPublic: false,
 			}
 		},
 
@@ -100,17 +110,32 @@
 			this.duration = e.target.value
 		},
 
-		onLoad() {
-			uni.setNavigationBarTitle({
-				title: 'XXX的主页'
-			});
+		onLoad(opt) {
+			var userId = opt.userId;
+
+			me = this.getGlobalUserInfo();
+			if (me.id == userId) {
+				// 如果打开自己的页面，屏蔽关注和发私信按钮
+				this.myPublic = true;
+			}
 
 			var screenWidth = uni.getSystemInfoSync().screenWidth;
 			this.screenWidth = screenWidth;
 
-			// 获取当前页面
+			// 获取当前分页
 			var page = this.page;
 
+			// 获取这个人的信息, TODO: 更新本地用户信息缓存
+			this.queryUserWithFollow(userId);
+
+			this.$nextTick(function() {
+				uni.setNavigationBarTitle({
+					title: this.thisUserInfo.nickname + "的主页"
+				});
+			})
+
+			// [测试代码块]
+			// this.mySocket.init()
 		},
 
 		onPullDownRefresh() {
@@ -158,10 +183,98 @@
 				this.getDateList(tabIndex);
 			},
 			/**
-			 * 调用添加关注的接口
+			 * 添加关注
 			 */
-			addFollow: function(){
-				
+			addFollow: function(userId) {
+				console.log("加关注...");
+				var that = this;
+				uni.request({
+					url: that.$serverUrl + '/user/follow',
+					method: "POST",
+					data: {
+						userId: userId,
+						fanId: me.id
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {
+						if (res.data.status == 200) {
+							// 刷新用户信息
+							that.queryUserWithFollow(userId);
+						}
+					}
+				});
+			},
+			/**
+			 * 取消关注
+			 */
+			cancelFollow: function(userId){
+				console.log("取关...");
+				var that = this;
+				uni.request({
+					url: that.$serverUrl + '/user/dontFollow',
+					method: "POST",
+					data: {
+						userId: userId,
+						fanId: me.id
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {
+						if (res.data.status == 200) {
+							// 刷新用户信息
+							that.queryUserWithFollow(userId);
+						}
+					}
+				});
+			},
+			
+			goToChatPage: function() {
+				var friendInfo = this.thisUserInfo;
+				uni.redirectTo({
+					url: '../chatpage/chatpage?friendInfo=' + JSON.stringify(friendInfo),
+				});
+			},
+
+			/**
+			 * @param {Object} currentTab 0: 关注 1: 粉丝
+			 */
+			goToFansFollow: function(currentTab) {
+				console.log("goToFansFollow...")
+				var data = {
+					currentTab: currentTab,
+					thisUserInfo: this.thisUserInfo
+				}
+				uni.redirectTo({
+					url: '../followlist/followlist?data=' + JSON.stringify(data),
+				});
+			},
+
+			/**
+			 * 查询该用户信息和我是否关注该用户
+			 * @param {Object} userId 该用户 id
+			 */
+			queryUserWithFollow: function(userId) {
+				var that = this;
+				uni.request({
+					url: that.$serverUrl + '/user/queryUserWithFollow',
+					method: "POST",
+					data: {
+						userId: userId,
+						fanId: me.id
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {
+						// console.log(res)
+						if (res.data.status == 200) {
+							that.thisUserInfo = res.data.data;
+						}
+					}
+				});
 			}
 		}
 	}
@@ -185,8 +298,11 @@
 		height: 20%;
 		width: 100%;
 	}
-	
-	#public-message-futherbox /* 这里是帖子块最高级父组件*/{
+
+	#public-message-futherbox
+
+	/* 这里是帖子块最高级父组件*/
+		{
 		/* border: 1upx solid red; 如果想快速了解该组件样式,则取消这个注释*/
 		position: fixed;
 		top: 20%;
@@ -199,7 +315,7 @@
 	}
 
 	/* 以下是个人信息展示块的样式 */
-	
+
 	.publicTouxiang {
 		margin-left: 4%;
 		width: 180upx;
@@ -208,25 +324,25 @@
 		display: inline-block;
 		vertical-align: middle;
 	}
-	
-	.personInfo{
+
+	.personInfo {
 		margin-left: 4%;
 		height: 180upx;
 		width: 180upx;
 	}
-	
-	.personName{
+
+	.personName {
 		width: 100%;
 		margin-top: 2%;
 	}
-	
-	.personName-text{
+
+	.personName-text {
 		color: white;
 		font-size: 32upx;
 		font-weight: 550;
 	}
-	
-	.personFans{
+
+	.personFans {
 		height: 25%;
 		width: 100%;
 		margin-top: 10upx;
@@ -235,40 +351,41 @@
 		display: flex;
 		justify-content: space-around;
 	}
-	
-	.personFans-text{
+
+	.personFans-text {
 		color: white;
 		font-size: 23upx;
 		font-weight: 550;
 	}
-	
-	.personFansNum-text{
+
+	.personFansNum-text {
 		color: white;
 		font-size: 23upx;
 		font-weight: 550;
 	}
-	
-	.guanzhuButton{
+
+	.guanzhuButton {
 		margin-top: 13%;
 		margin-left: 20%;
 		width: 20%;
 	}
-	
-	.guanzhuButton-text{
+
+	.guanzhuButton-text {
 		font-size: 28upx;
 		font-weight: 550;
 		color: #FFCF3C;
 	}
-	
-	
+
+
 	/* 以下是帖子展示块的样式 */
-	
+
 	.top-menu-view {
 		display: flex;
 		justify-content: space-around;
 		width: 100%;
 		background-color: white;
-		height: 8%; /* 在这里设置导航条高度 */
+		height: 8%;
+		/* 在这里设置导航条高度 */
 		border-top-left-radius: 50upx;
 		border-top-right-radius: 50upx;
 	}
@@ -377,13 +494,14 @@
 	.slideimage {
 		width: 100%;
 	}
+
 	/* under development 盖板 */
-	.warning-text-box{
+	.warning-text-box {
 		height: 100%;
 		background-color: #D5D5D5;
 	}
-	
-	.warning-text-box .warning-text{
+
+	.warning-text-box .warning-text {
 		color: black;
 		font-size: 35upx;
 	}

@@ -14,18 +14,27 @@
 				</block>
 			</scroll-view>
 			<swiper :current="currentTab" class="swiper-box-list" duration="300" @change="swiperChange">
-				<swiper-item class="swiper-box" v-for="(swiperDate,index1) in swiperDateList" :key="index1">
+				<swiper-item class="swiper-box" v-for="(swiperData,index1) in swiperDataList" :key="index1">
 					<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-test" @scrolltoupper="upper" @scrolltolower="lower"
 					 @scroll="scroll" enable-back-to-top="true">
-						<view class="user-operation-line" v-for="(userOperation,index2) in userOperationList" :key="index2">
+						<view class="user-operation-line" v-for="(item,index2) in (index1==0?followList:fansList)" :key="index2">
 							<view class="user-one-line column_center">
-								<image class="publicTouxiang" mode="aspectFill" src="../../static/touxiang2.jpg"></image>
+								<!-- 这里方法直接传 item 获取不到，应该是官方的一个Bug -->
+								<image class="publicTouxiang" mode="aspectFill" :src="item.faceImg" @tap='goToPersonPublic(index1, index2)'></image>
 								<view class="userid">
-									陈仅仅1号 111
+									{{item.nickname}}
 								</view>
-								<view class="attentionButton super_center">
-									<text class="attentionButton-text">关注</text>
+								<!-- 暂时先拿掉，TODO: 获取列表同时查询我是否已关注该用户 
+																				by Jerrio-->
+								<view v-if="item.id != myId">
+									<view class="attentionButton super_center" v-if="item.follow==true" @tap="cancelFollow(index1, index2)">
+										<text class="attentionButton-text">已关注</text>
+									</view>
+									<view class="attentionButton super_center" v-if="item.follow==false" @tap="addFollow(index1, index2)">
+										<text class="attentionButton-text">关注</text>
+									</view>
 								</view>
+
 							</view>
 							<view class="border-bottom-line">
 							</view>
@@ -38,29 +47,27 @@
 </template>
 
 <script>
+	var me;
 	export default {
 		data() {
 			return {
 				scrollLeft: 0,
 				isClickChange: false,
-				currentTab: 0,			// 切换 list 0/1
+				currentTab: '', // 切换 list 0/1
 				menuTabs: [{
 					name: '他关注的'
 				}, {
 					name: '关注他的'
 				}],
 
-				swiperDateList: [
-					[],
-					[]
+				// 关注粉丝列表属性
+				swiperDataList: [
+					[], // followList 把数据写进里面首次进入页面加载不出，所以写到外面
+					[] // fansList
 				],
-				userOperationList: [
-					1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-				],
-				// 用于分页的属性
-				totalPage: 1,
-				page: 1,
-				videoList: [],
+				followList: '',
+				fansList: '',
+				myId: '',
 
 				screenWidth: 350,
 				serverUrl: "",
@@ -86,23 +93,32 @@
 		},
 
 		onLoad(opt) {
+			var data = JSON.parse(opt.data)
+			var thisUserInfo = data.thisUserInfo;
+			var currentTab = currentTab;
+
 			uni.setNavigationBarTitle({
-				title: 'XXX的主页'
+				title: thisUserInfo.nickname + '的主页'
 			});
+
+			me = this.getGlobalUserInfo();
+			this.myId = me.id;
+
+			// 获取userId
+			var userId = thisUserInfo.id;
+			this.queryFansFollow(userId);
+
 			// 设置列表 index
-			this.currentTab = opt.currentTab;
-			// console.log(opt);
-			
+			this.currentTab = currentTab;
+
 			var screenWidth = uni.getSystemInfoSync().screenWidth;
 			this.screenWidth = screenWidth;
 
 			// 获取当前页面
 			// var page = this.page;
-			
-			
-			
+
 		},
-		
+
 		onPullDownRefresh() {
 			console.log('refresh');
 			setTimeout(function() {
@@ -168,6 +184,122 @@
 				// 	title: "回到顶部喽~"
 				// })
 			},
+
+			/**
+			 * 添加关注
+			 */
+			addFollow: function(index1, index2) {
+				console.log("加关注...");
+				var list;
+				if (index1 == 0) {
+					list = this.followList;
+				} else if (index1 == 1) {
+					list = this.fansList;
+				}
+
+				var thisUser = list[index2];
+
+				var that = this;
+				uni.request({
+					url: that.$serverUrl + '/user/follow',
+					method: "POST",
+					data: {
+						userId: thisUser.id,
+						fanId: me.id
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {
+						if (res.data.status == 200) {
+							// 刷新用户信息，这里本地改就好就不用重新刷新列表了
+							thisUser.follow = true;
+						}
+					}
+				});
+			},
+			/**
+			 * 取消关注
+			 */
+			cancelFollow: function(index1, index2) {
+				console.log("取关...");
+				var list;
+				if (index1 == 0) {
+					list = this.followList;
+				} else if (index1 == 1) {
+					list = this.fansList;
+				}
+
+				var thisUser = list[index2];
+
+				var that = this;
+				uni.request({
+					url: that.$serverUrl + '/user/dontFollow',
+					method: "POST",
+					data: {
+						userId: thisUser.id,
+						fanId: me.id
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {
+						if (res.data.status == 200) {
+							// 刷新用户信息
+							thisUser.follow = false;
+						}
+					}
+				});
+			},
+
+			/**
+			 * 查询该用户的粉丝和关注用户信息列表
+			 */
+			queryFansFollow(userId) {
+				var that = this;
+				uni.request({
+					url: that.$serverUrl + '/user/queryFansAndFollow',
+					method: "POST",
+					data: {
+						userId: userId,
+						myId: me.id,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {
+						console.log(res)
+						if (res.data.status == 200) {
+							var data = res.data.data;
+							console.log(data);
+							that.followList = data.followList;
+							that.fansList = data.fansList;
+
+							// that.swiperDataList[0] = data.followList;
+							// that.swiperDataList[1] = data.fansList;
+						}
+					}
+				});
+			},
+
+			/**
+			 * 直接传 item 有 bug, 所以用这个复杂一点的方式曲线救国
+			 * @param {Object} index1 0=followList; 1=fansList
+			 * @param {Object} index2 列表里的索引
+			 */
+			goToPersonPublic(index1, index2) {
+				var list;
+				if (index1 == 0) {
+					list = this.followList;
+				} else if (index1 == 1) {
+					list = this.fansList;
+				}
+
+				var userId = list[index2].id
+				uni.redirectTo({
+					url: '../personpublic/personpublic?userId=' + userId,
+				});
+			}
 		}
 	}
 </script>
@@ -342,7 +474,7 @@
 		border: 1upx solid #FFCF3C;
 	}
 
-	.attentionButton-text{
+	.attentionButton-text {
 		color: #FFCF3C;
 		font-size: small;
 		letter-spacing: 10upx;

@@ -9,23 +9,14 @@
 			<view style="height:5px;background-color: white;width:60%;margin:auto;"></view>
 			<view class="detailcontent">{{ articleCard.articleContent }}</view>
 			<view class="detailpics">
-				<!-- <image class="detailpic" src="../../static/0001/pic3.jpg"></image>
-				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
-				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
-				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
-				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
-				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
-				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
-				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
-				<image class="detailpic" src="../../static/0001/pic3.jpg"></image> -->
+				<view class="tags">
+					<view class="tag" v-for="(i,index) in articleCard.tags" v-bind:key="index">{{i}}</view>
+				</view>
+				<view class="commentPart">
+					<input class="commentSth" placeholder="评论点什么..." confirm-type="send" @confirm="saveComment" />
+				</view>
+				<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i"></commentbox>
 			</view>
-			<view class="tags">
-				<view class="tag" v-for="(i,index) in articleCard.tags" v-bind:key="index">{{i}}</view>
-			</view>
-			<view class="commentPart">
-				<input class="commentSth" placeholder="评论点什么..." confirm-type="send" @confirm="saveComment" />
-			</view>
-			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i"></commentbox>
 		</view>
 	</view>
 </template>
@@ -37,18 +28,8 @@
 		data() {
 			return {
 				userInfo: {},
-				comments: [
-					// ['00001', '评论者ID', '楼主好棒', '一小时前', '60', '7'],
-					// ['00003', '评论者ID', '楼主求微信', '一小时前', '90', '7'],
-					// ['00005', '评论者ID', '楼主求微信', '一小时前', '60', '7'],
-					// ['00009', '评论者ID', '楼主求微信', '一小时前', '9', '70']
-				],
+				comments: [],
 				articleCard: "",
-				// taglist: [
-				// 	['123', 'background:red'],
-				// 	['13', 'background:blue'],
-				// 	['163', 'background:yellow']
-				// ],
 				commentList: ''
 			};
 		},
@@ -68,8 +49,7 @@
 					})
 				} else {
 					uni.request({
-						url: this.SeverUrl + '/saveComment',
-						// url: that.SeverUrl + '/saveComment',
+						url: that.$serverUrl + '/saveComment',
 						method: 'POST',
 						data: {
 							fromUserId: that.userInfo.id,
@@ -78,9 +58,6 @@
 						},
 						success: function(res) {
 							console.log(res.data)
-							// uni.redirectTo({
-							// 	url: '/pages/detail/detail'
-							// })
 						}
 					})
 				}
@@ -88,20 +65,18 @@
 			getComments: function() {
 				var that = this;
 				uni.request({
-					url: this.SeverUrl + '/getArticleComments',
 					method: "POST",
+					url: that.$serverUrl + '/getArticleComments',
 					data: {
 						articleId: that.articleCard.id,
-						// page: '',
-						// pageSize: ''
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: (res) => {
-						 that.commentList = res.data.data.rows;
+						that.commentList = res.data.data.rows;
 						console.log(that.articleCard.id),
-						console.log(res)
+							console.log(res)
 					},
 				});
 			},
