@@ -14,7 +14,10 @@ page {
 		/* 	height: 168px;
  */
 		width: 100%;
-		background: #fdd041;
+/* 		background: #fdd041;
+ */	
+ background-image: url(../../static/img/indexBG.59c894ac.png);
+		background-size: 100% 100%;
 		-webkit-box-shadow: 0 -2px 10px #000000;
 		        box-shadow: 0 -2px 10px #000000;
 		border-bottom-right-radius: 25px;

@@ -40,13 +40,13 @@
 
 			<view class="commentPart" v-show="writingComment">
 				<view class="emoji"></view>
-				<view class="submit"></view>
-				<textarea class="commentSth" placeholder=" 评论点什么..." :focus="writingComment" auto-height="true" confirm-type="send" @confirm="saveComment()" adjust-position="false" />
-			</view>
+				<view class="submit" @click="saveComment()"></view>
+				<textarea class="commentSth" placeholder=" 评论点什么..." :focus="writingComment" auto-height="true" confirm-type="send"
+				 @confirm="saveComment()" adjust-position="false" v-model="commentContent"/>
+				</view>
 
-		</view>
-
-	</view>
+		</view> 
+ </view>
 </template>
 
 <script>
@@ -55,22 +55,19 @@
 		data() {
 			return {
 				userInfo: {},
-				comments: [],
-				articleCard: "",
-
-				commentList: {},
-				writingComment:false,
+				articleCard: "",  //detail的主角，由index传过来的单个文章信息
+                commentContent:"",  //用户准备提交的评论内容
+				commentList: {},  //返回值，获取评论列表信息
+				writingComment:false,  //控制输入框，true时显示输入框同时输入框自动获取焦点，拉起输入法
 			};
 		},
-
 		components: {
-
 			commentbox: comment
 		},
 		methods: {
 			saveComment: function(e) {
 				var that = this;
-				var content = e.detail.value;
+				var content = this.commentContent;
 				var userInfoTemp = this.getGlobalUserInfo();
 				if (this.isNull(userInfoTemp)) {
 					uni.navigateTo({
@@ -88,10 +85,13 @@
 						},
 						success: function(res) {
 							console.log(res.data)
+							that.writingComment = false;
+							that.commentContent = "";
 							// uni.redirectTo({
 							// 	url: '/pages/detail/detail'
 							// })
-						}
+						},
+
 					})
 				}
 			},

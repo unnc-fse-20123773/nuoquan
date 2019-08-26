@@ -84,7 +84,10 @@
 		/* 	height: 168px;
  */
 		width: 100%;
-		background: #fdd041;
+/* 		background: #fdd041;
+ */	
+ background-image: url(../static/BG/indexBG.png);
+		background-size: 100% 100%;
 		box-shadow: 0 -2px 10px #000000;
 		border-bottom-right-radius: 25px;
 		border-bottom-left-radius: 25px;
