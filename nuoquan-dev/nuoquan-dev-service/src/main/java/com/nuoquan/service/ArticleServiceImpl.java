@@ -223,4 +223,9 @@ public class ArticleServiceImpl implements ArticleService {
 		articleMapperCustom.upadtePopByFunction();
 	}
 
+	@Override
+	public List<ArticleVO> getTop3ByPopularity() {
+		return articleMapperCustom.getTop3ByPopularity();
+	}
+
 }

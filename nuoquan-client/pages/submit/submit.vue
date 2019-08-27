@@ -41,6 +41,9 @@
 </template>
 
 <script>
+	// #ifdef APP-PLUS
+	import permision from "@/common/permission.js"
+	// #endif
 	var sourceType = [
 		['camera'],
 		['album'],
@@ -65,7 +68,6 @@
 				tagList: [],
 				tagIndex: 0,
 
-
 				imageList: [],
 				sourceTypeIndex: 2,
 				sourceType: ['拍照', '相册', '拍照或相册'],
@@ -77,11 +79,11 @@
 		},
 		onUnload() {
 			this.imageList = [],
-				this.sourceTypeIndex = 2,
-				this.sourceType = ['拍照', '相册', '拍照或相册'],
-				this.sizeTypeIndex = 2,
-				this.sizeType = ['压缩', '原图', '压缩或原图'],
-				this.countIndex = 8;
+			this.sourceTypeIndex = 2,
+			this.sourceType = ['拍照', '相册', '拍照或相册'],
+			this.sizeTypeIndex = 2,
+			this.sizeType = ['压缩', '原图', '压缩或原图'],
+			this.countIndex = 8;
 		},
 		onLoad() {
 
@@ -139,6 +141,8 @@
 					count: this.imageList.length + this.count[this.countIndex] > 9 ? 9 - this.imageList.length : this.count[this.countIndex],
 					success: (res) => {
 						this.imageList = this.imageList.concat(res.tempFilePaths);
+						
+						console.log(res)
 						// for(var i = 0; i < 9; i++){
 						// 	console.log(this.imageList[i]);
 						// }
@@ -199,7 +203,10 @@
 						});
 					}
 				});
-			}
+			},
+			
+			/* 以下为 Jerrio 测试代码块 */
+			
 		}
 	};
 </script>

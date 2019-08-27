@@ -157,6 +157,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+
+
 var sourceType = [
 ['camera'],
 ['album'],
@@ -180,7 +183,6 @@ var sizeType = [
       showTagArea: 0,
       tagList: [],
       tagIndex: 0,
-
 
       imageList: [],
       sourceTypeIndex: 2,
@@ -255,6 +257,8 @@ var sizeType = [
                   count: this.imageList.length + this.count[this.countIndex] > 9 ? 9 - this.imageList.length : this.count[this.countIndex],
                   success: function success(res) {
                     _this.imageList = _this.imageList.concat(res.tempFilePaths);
+
+                    console.log(res);
                     // for(var i = 0; i < 9; i++){
                     // 	console.log(this.imageList[i]);
                     // }
@@ -315,7 +319,9 @@ var sizeType = [
 
         } });
 
-    } } };exports.default = _default;
+    }
+
+    /* 以下为 Jerrio 测试代码块 */ } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

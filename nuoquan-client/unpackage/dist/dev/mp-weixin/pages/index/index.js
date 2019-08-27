@@ -133,8 +133,9 @@ var _articlebrief = _interopRequireDefault(__webpack_require__(/*! ../../compone
 //
 var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! import() | components/mainpagetop */ "components/mainpagetop").then(__webpack_require__.bind(null, /*! ../../components/mainpagetop.vue */ 131));};var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ 138));};var _default = { data: function data() {return { title: 'Hello', hottitlelist: ['热门标题111', '热门标题222', '热门标题333'],
       showlist: '',
+      topArticles: '',
 
-      userInfo: {
+      userInfo: { // 默认user设置
         id: 'test-id123',
         nickname: 'test-name',
         faceImg: '',
@@ -153,7 +154,6 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
 
 
   onLoad: function onLoad() {
-    this.showArticles();
     var userInfo = this.getGlobalUserInfo();
     if (this.isNull(userInfo)) {
       uni.navigateTo({
@@ -161,6 +161,10 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
 
       return;
     }
+
+    this.showArticles(); // 显示文章流
+
+    this.getTop3Articles(); // 获取热度榜
 
     this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
 
@@ -177,14 +181,26 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
     showArticles: function showArticles() {
       var _this = this;
       uni.request({
-        url: 'http://127.0.0.1:8080/queryAllArticles',
+        url: 'http://127.0.0.1:8080/article/queryAllArticles',
         method: "POST",
         success: function success(res) {
           _this.showlist = res.data.data.rows;
-          console.log(res);
+          // console.log(res)
         },
         fail: function fail(res) {
           console.log("index unirequest fail");
+          console.log(res);
+        } });
+
+    },
+
+    getTop3Articles: function getTop3Articles() {
+      var that = this;
+      uni.request({
+        url: 'http://127.0.0.1:8080/article/getHotTop3',
+        method: "POST",
+        success: function success(res) {
+          that.topArticles = res.data.data;
           console.log(res);
         } });
 
@@ -353,7 +369,7 @@ var _default =
 
   },
   created: function created() {
-    console.log(this.articleCard);
+    // console.log(this.articleCard);
   },
   filters: {
     timeDeal: function timeDeal(timediff) {

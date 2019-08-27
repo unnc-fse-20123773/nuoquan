@@ -5,7 +5,7 @@
 -- v19.8.27 @author: Jerrio
 -- 添加文章浏览量,点赞创建时间, 以支持热度逻辑
 ALTER TABLE `nuoquan`.`article` 
-ADD COLUMN `view_num` INT NOT NULL DEFAULT 0 COMMENT '浏览量' AFTER `article_path`;
+ADD COLUMN `view_num` INT NOT NULL DEFAULT 0 COMMENT '浏览量' AFTER `is_anonymous`;
 
 ALTER TABLE `nuoquan`.`user_like_article` 
 ADD COLUMN `create_time` DATETIME NOT NULL AFTER `article_id`;

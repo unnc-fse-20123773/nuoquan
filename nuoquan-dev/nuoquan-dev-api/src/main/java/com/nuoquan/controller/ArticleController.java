@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +23,7 @@ import com.nuoquan.enums.ArticleStatusEnums;
 import com.nuoquan.pojo.Article;
 import com.nuoquan.pojo.ArticleImage;
 import com.nuoquan.pojo.UserArticleComment;
+import com.nuoquan.pojo.vo.ArticleVO;
 import com.nuoquan.service.ArticleService;
 import com.nuoquan.utils.JSONResult;
 import com.nuoquan.utils.PagedResult;
@@ -33,6 +36,7 @@ import io.swagger.annotations.ApiParam;
 
 @RestController
 @Api(value="文章相关接口", tags= {"Article-Controller"})
+@RequestMapping("/article")
 public class ArticleController extends BasicController{
 	
 	@Autowired
@@ -201,4 +205,11 @@ public class ArticleController extends BasicController{
 		return JSONResult.ok(list);
 	}
 	
+	@ApiOperation(value="Get the top 3 hot article")
+	@PostMapping("/getHotTop3")
+	public JSONResult getHotTop3() throws Exception {
+		
+		List<ArticleVO> list = articleService.getTop3ByPopularity();
+		return JSONResult.ok(list);
+	}
 }
