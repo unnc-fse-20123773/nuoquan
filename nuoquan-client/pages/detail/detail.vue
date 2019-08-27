@@ -28,8 +28,9 @@
 					<view class="time">{{ articleCard.createDate | timeDeal}}</view>
 				</view>
 				<view class="icons">
-					<!-- 点赞按钮 -->
-					<image class="icon" src="../../static/icon/like.png"></image>
+					<!-- 点赞MM按钮 -->
+<!-- 					MMMMMMMM
+ -->					<image class="icon" src="../../static/icon/like.png"></image>
 					<view class="icom">{{ articleCard.likeNum }}</view>
 				</view>
 			</view>
