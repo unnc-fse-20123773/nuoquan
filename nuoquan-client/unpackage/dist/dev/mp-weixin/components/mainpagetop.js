@@ -146,8 +146,9 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     // 渲染时候替换默认值会被替换
     userInfo: {
-      faceImg: '../static/touxiang.jpg' } },
+      faceImg: '../static/touxiang.jpg' },
 
+    topArticles: '' },
 
   components: {
     mainpageleft: mainpageleft },

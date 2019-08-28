@@ -33,14 +33,15 @@
 					</view>
 				</block>
 				<view v-show="isAddImage(this.imageList.length)" id="clickToChooseImage" class="addPic" @click="chooseImg">+</view>
-				<view class="placeHolderForPic"></view>
 			</view>
-
 		</view>
 	</viwe>
 </template>
 
 <script>
+	// #ifdef APP-PLUS
+	import permision from "@/common/permission.js"
+	// #endif
 	var sourceType = [
 		['camera'],
 		['album'],
@@ -54,7 +55,7 @@
 	export default {
 		data() {
 			return {
-				userName: '许德琰测试账号',
+				userName: 'xdy123123123123',
 				articleTitle: '',
 				articleContent: '',
 				articleTag: '',
@@ -64,7 +65,6 @@
 				showTagArea: 0,
 				tagList: [],
 				tagIndex: 0,
-
 
 				imageList: [],
 				sourceTypeIndex: 2,
@@ -90,12 +90,12 @@
 			// 将标题存放在articleTitle中
 			saveAsArticleTitle: function(event) {
 				this.articleTitle = event.target.value;
-				// console.log(this.title);
+				// console.log(this.articleTitle);
 			},
 			// 将内容存放在articleContent中
 			saveAsArticleContent: function(event) {
 				this.articleContent = event.target.value;
-				// console.log(this.content);
+				// console.log(this.articleContent);
 			},
 			addTag: function(res) {
 				this.showInputTagArea = 1;
@@ -139,6 +139,8 @@
 					count: this.imageList.length + this.count[this.countIndex] > 9 ? 9 - this.imageList.length : this.count[this.countIndex],
 					success: (res) => {
 						this.imageList = this.imageList.concat(res.tempFilePaths);
+
+						console.log(res)
 						// for(var i = 0; i < 9; i++){
 						// 	console.log(this.imageList[i]);
 						// }
@@ -180,129 +182,162 @@
 			upload: function(e) {
 				var me = this;
 
-				console.log(me.articleContent);
 				console.log(me.articleTitle);
-				console.log(me.imgPath);
+				console.log(me.articleContent);
+				console.log(me.userName);
 
 				var serverUrl = me.$serverUrl;
-				uni.uploadFile({
-					url: serverUrl + '/upload',
-
-					formData: {
+				uni.request({
+					url: serverUrl + '/article/uploadArticle',
+					method: 'POST',
+					data: {
 						userId: me.userName,
 						articleTitle: me.articleTitle,
 						articleContent: me.articleContent
 					},
-					success: res => {
-						uni.redirectTo({
-							url: '../index/index',
-						});
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {
+						// console.log(res.data.data);
+						const articleId = res.data.data;
+						for (var i = 0; i < me.imageList.length; i++) {
+							uni.uploadFile({
+								url: this.$serverUrl + '/article/uploadArticleImg',
+								filePath: me.imageList[i],
+								name: 'file',
+								formData: {
+									userId: me.userName,
+									articleId: articleId
+								},
+								success: (uploadFileRes) => {
+									uni.redirectTo({
+										url: '../index/index'
+									})
+								}
+							});
+						}
 					}
-				});
-			}
+				})
+			},
+
+			/* 以下为 Jerrio 测试代码块 */
+
 		}
 	};
 </script>
 <style>
-page {
-	background: #FDD047;
-	height: 100%;
-}
-.submit {
-	float: right;
-	margin-right: 80upx;
-	margin-top: 14px;
-	width: 55px;
-	height: 26px;
-	line-height: 26px;
-	border: solid 1px #FDD041;
-	border-radius: 5px;
-	font-weight: bold;
-	font-size: 15px;
-	color: #FDD041;
-	text-align: center;
-	background: #FFFFFF;
-}
-.submitMain {
-	height: 100%;
-	width: 606upx;
-	padding: 38upx 72upx;
-	border-top-left-radius: 18px;
-	border-top-right-radius: 18px;
-	background: #FFFFFF;
-	box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.35);
-}
-.title {
-	height: 36px;
-	border-radius: 5px;
-	background: #F4F1E9;
-	margin-top: 19px;
-}
-.tagsArea {
-	margin-top: 13px;
-}
-.tag {
-	display: inline-block;
-	color: #353535;
-	font-size: 13px;
-	line-height: 28px;
-	height: 28px;
-	padding-right: 27px;
-	padding-left: 12px;
-	border: solid 2px #FE5F55;
-	border-radius: 14px;
-	position: relative;
-	margin-right: 12px;
-	margin-bottom: 12px;
-}
-.tag::after {
-	position: absolute;
-	content: "X";
-	right: 12px;
-}
-.addTag {
-	display: inline-block;
-	color: #353535;
-	font-size: 13px;
-	line-height: 28px;
-	height: 28px;
-	padding-right: 12px;
-	padding-left: 12px;
-	border: solid 2px #FE5F55;
-	border-radius: 14px;
-}
-.content {
-	min-height: 136px;
-	background: #F4F1E9;
-	margin-top: 13px;
-	width: 100%;
-}
-.picturearea {
-	display: flex;
-	justify-content: space-between;
-	flex-wrap: wrap;
-	flex: 0 0 auto;
-	margin-top: 10px;
-}
-.picturearea image {
-	width: 190upx;
-	height: 190upx;
-	margin: 6px 0;
-}
-.addPic {
-	width: 190upx;
-	height: 190upx;
-	line-height: 180upx;
-	margin: 6px 0;
-	border: dashed 3px #BEBCB5;
-	text-align: center;
-	vertical-align: middle;
-	color: #BEBCB5;
-	font-size: 70px;
-	font-weight: 200;
-}
-.placeHolderForPic {
-	width: 190upx;
-	height: 190upx;
-}
+	page {
+		background: #FDD047;
+		height: 100%;
+	}
+
+	.submit {
+		float: right;
+		margin-right: 80upx;
+		margin-top: 14px;
+		width: 55px;
+		height: 26px;
+		line-height: 26px;
+		border: solid 1px #FDD041;
+		border-radius: 5px;
+		font-weight: bold;
+		font-size: 15px;
+		color: #FDD041;
+		text-align: center;
+		background: #FFFFFF;
+	}
+
+	.submitMain {
+		height: 100%;
+		width: 606upx;
+		padding: 38upx 72upx;
+		border-top-left-radius: 18px;
+		border-top-right-radius: 18px;
+		background: #FFFFFF;
+		box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.35);
+	}
+
+	.title {
+		height: 36px;
+		border-radius: 5px;
+		background: #F4F1E9;
+		margin-top: 19px;
+	}
+
+	.tagsArea {
+		margin-top: 13px;
+	}
+
+	.tag {
+		display: inline-block;
+		color: #353535;
+		font-size: 13px;
+		line-height: 28px;
+		height: 28px;
+		padding-right: 27px;
+		padding-left: 12px;
+		border: solid 2px #FE5F55;
+		border-radius: 14px;
+		position: relative;
+		margin-right: 12px;
+		margin-bottom: 12px;
+	}
+
+	.tag::after {
+		position: absolute;
+		content: "X";
+		right: 12px;
+	}
+
+	.addTag {
+		display: inline-block;
+		color: #353535;
+		font-size: 13px;
+		line-height: 28px;
+		height: 28px;
+		padding-right: 12px;
+		padding-left: 12px;
+		border: solid 2px #FE5F55;
+		border-radius: 14px;
+	}
+
+	.content {
+		min-height: 136px;
+		background: #F4F1E9;
+		margin-top: 13px;
+		width: 100%;
+	}
+
+	.picturearea {
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		flex: 0 0 auto;
+		margin-top: 10px;
+	}
+
+	.picturearea image {
+		width: 190upx;
+		height: 190upx;
+		margin: 6px 0;
+	}
+
+	.addPic {
+		width: 190upx;
+		height: 190upx;
+		line-height: 180upx;
+		margin: 6px 0;
+		border: dashed 3px #BEBCB5;
+		text-align: center;
+		vertical-align: middle;
+		color: #BEBCB5;
+		font-size: 70px;
+		font-weight: 200;
+	}
+
+	.placeHolderForPic {
+		width: 190upx;
+		height: 190upx;
+	}
 </style>

@@ -87,5 +87,8 @@ select * from (
 	HOUR( timediff( now(), create_time) ) < 24
 	GROUP BY article_id
 ) as d on c.id=d.article_id -->
-  
+  	
+  <select id="getTop3ByPopularity" resultMap="BaseResultMap">
+  	SELECT * FROM nuoquan.article order by popularity desc limit 0,3;
+  </select>
 </mapper>

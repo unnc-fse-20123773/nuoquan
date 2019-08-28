@@ -154,8 +154,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
+
+
+
 
 var sourceType = [
 ['camera'],
@@ -170,7 +171,7 @@ var sizeType = [
 {
   data: function data() {
     return {
-      userName: '许德琰测试账号',
+      userName: 'xdy123123123123',
       articleTitle: '',
       articleContent: '',
       articleTag: '',
@@ -180,7 +181,6 @@ var sizeType = [
       showTagArea: 0,
       tagList: [],
       tagIndex: 0,
-
 
       imageList: [],
       sourceTypeIndex: 2,
@@ -206,12 +206,12 @@ var sizeType = [
     // 将标题存放在articleTitle中
     saveAsArticleTitle: function saveAsArticleTitle(event) {
       this.articleTitle = event.target.value;
-      // console.log(this.title);
+      // console.log(this.articleTitle);
     },
     // 将内容存放在articleContent中
     saveAsArticleContent: function saveAsArticleContent(event) {
       this.articleContent = event.target.value;
-      // console.log(this.content);
+      // console.log(this.articleContent);
     },
     addTag: function addTag(res) {
       this.showInputTagArea = 1;
@@ -255,6 +255,8 @@ var sizeType = [
                   count: this.imageList.length + this.count[this.countIndex] > 9 ? 9 - this.imageList.length : this.count[this.countIndex],
                   success: function success(res) {
                     _this.imageList = _this.imageList.concat(res.tempFilePaths);
+
+                    console.log(res);
                     // for(var i = 0; i < 9; i++){
                     // 	console.log(this.imageList[i]);
                     // }
@@ -293,29 +295,49 @@ var sizeType = [
         return true;
       }
     },
-    upload: function upload(e) {
+    upload: function upload(e) {var _this3 = this;
       var me = this;
 
-      console.log(me.articleContent);
       console.log(me.articleTitle);
-      console.log(me.imgPath);
+      console.log(me.articleContent);
+      console.log(me.userName);
 
       var serverUrl = me.$serverUrl;
-      uni.uploadFile({
-        url: serverUrl + '/upload',
-
-        formData: {
+      uni.request({
+        url: serverUrl + '/article/uploadArticle',
+        method: 'POST',
+        data: {
           userId: me.userName,
           articleTitle: me.articleTitle,
           articleContent: me.articleContent },
 
-        success: function success(res) {
-          uni.redirectTo({
-            url: '../index/index' });
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
 
+        success: function success(res) {
+          // console.log(res.data.data);
+          var articleId = res.data.data;
+          for (var i = 0; i < me.imageList.length; i++) {
+            uni.uploadFile({
+              url: _this3.$serverUrl + '/article/uploadArticleImg',
+              filePath: me.imageList[i],
+              name: 'file',
+              formData: {
+                userId: me.userName,
+                articleId: articleId },
+
+              success: function success(uploadFileRes) {
+                uni.redirectTo({
+                  url: '../index/index' });
+
+              } });
+
+          }
         } });
 
-    } } };exports.default = _default;
+    }
+
+    /* 以下为 Jerrio 测试代码块 */ } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

@@ -1,6 +1,6 @@
 <template>
 	<view class="index">
-		<mainpagetop :userInfo='userInfo'></mainpagetop>
+		<mainpagetop :userInfo='userInfo' :topArticles='topArticles'></mainpagetop>
 		<articlebrief v-for="i in showlist" :key="i.id" v-bind:articleCard="i"></articlebrief>
 		<view style="margin:750upx auto 0;font-size:13px;text-align: center;">到~底~线~啦~！</view>
 	</view>
@@ -17,8 +17,9 @@
 				title: 'Hello',
 				hottitlelist: ['热门标题111', '热门标题222', '热门标题333'],
 				showlist: '',
+				topArticles: '',
 
-				userInfo: {
+				userInfo: { // 默认user设置
 					id: 'test-id123',
 					nickname: 'test-name',
 					faceImg: '',
@@ -36,16 +37,19 @@
 			mainpageleft,
 		},
 
-		onLoad() {
-			this.showArticles();			
+		onLoad() {			
 			var userInfo = this.getGlobalUserInfo();
 			if (this.isNull(userInfo)) {
 				uni.navigateTo({
 					url: "../wechatLogin/wechatLogin"
 				})
 				return;
-			} 
-		
+			}
+			
+			this.showArticles(); // 显示文章流
+			
+			this.getTop3Articles(); // 获取热度榜
+			
 			this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
 			
 			// [测试代码块]
@@ -61,11 +65,11 @@
 			showArticles() {
 				var _this = this;
 				uni.request({
-					url: 'http://127.0.0.1:8080/queryAllArticles',
+					url: 'http://127.0.0.1:8080/article/queryAllArticles',
 					method: "POST",
 					success: (res) => {
 						_this.showlist = res.data.data.rows;
-						console.log(res)
+						// console.log(res)
 					},
 					fail: (res) => {
 						console.log("index unirequest fail");
@@ -74,11 +78,17 @@
 				});
 			},
 			
-			// async testFunction(userId){
-			// 	this.test = await this.myQueryUserInfo(userId);
-			// 	console.log("here");
-			// 	console.log(this.test);
-			// }
+			getTop3Articles(){
+				var that = this;
+				uni.request({
+					url: 'http://127.0.0.1:8080/article/getHotTop3',
+					method: "POST",
+					success: (res) => {
+						that.topArticles = res.data.data;
+						console.log(res)
+					}
+				})
+			}
 		}
 	};
 </script>

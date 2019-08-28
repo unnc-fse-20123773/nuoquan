@@ -5,6 +5,7 @@ import java.util.List;
 import com.nuoquan.pojo.Article;
 import com.nuoquan.pojo.ArticleImage;
 import com.nuoquan.pojo.UserArticleComment;
+import com.nuoquan.pojo.vo.ArticleVO;
 import com.nuoquan.utils.PagedResult;
 
 public interface ArticleService {
@@ -70,4 +71,10 @@ public interface ArticleService {
 	 * 根据公式更新文章热度
 	 */
 	public void upadtePopByFunction();
+	
+	/**
+	 * 获取热度值前三的文章
+	 * @return
+	 */
+	public List<ArticleVO> getTop3ByPopularity();
 }

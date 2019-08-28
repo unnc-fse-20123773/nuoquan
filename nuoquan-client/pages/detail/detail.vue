@@ -45,7 +45,7 @@
 				} else {
 					console.log(content)
 					uni.request({
-						url: that.$serverUrl + '/saveComment',
+						url: that.$serverUrl + '/article/saveComment',
 						method: 'POST',
 						data: {
 							fromUserId: that.userInfo.id,
@@ -62,7 +62,7 @@
 				var that = this;
 				uni.request({
 					method: "POST",
-					url: that.$serverUrl + '/getArticleComments',
+					url: that.$serverUrl + '/article/getArticleComments',
 					data: {
 						articleId: that.articleCard.id,
 					},

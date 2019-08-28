@@ -165,7 +165,7 @@ var _default =
 
   },
   created: function created() {
-    console.log(this.articleCard);
+    // console.log(this.articleCard);
   },
   filters: {
     timeDeal: function timeDeal(timediff) {

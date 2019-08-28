@@ -42,4 +42,10 @@ public interface ArticleMapperCustom extends MyMapper<Article> {
 	 * (24小时内的点赞数+24小时内的评论数)
 	 */
 	public void upadtePopByFunction();
+	
+	/**
+	 * 获取热度值前三的文章
+	 * @return
+	 */
+	public List<ArticleVO> getTop3ByPopularity();
 }

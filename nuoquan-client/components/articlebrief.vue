@@ -46,7 +46,7 @@
 			};
 		},
 		created() {
-			console.log(this.articleCard);
+			// console.log(this.articleCard);
 		},
 		filters: {
 			timeDeal(timediff) {
