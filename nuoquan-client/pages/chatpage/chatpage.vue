@@ -1,14 +1,16 @@
+<!-- 本页面的 websocket 应写在 messagelist 里-->
 <template>
 	<view>
-		<view class="messageArea">
-			<onemessage v-for="(i,index) in chatContent" :key=index :thisMessage='i'></onemessage>
-		</view>
+		<scroll-view class="messageArea" style="background-color: #FFFFFF;">
+			<onemessage v-for="(i,index) in chatContent" :key=index :thisMessage='i' 
+			:userInfo="userInfo" :friendInfo="friendInfo"></onemessage>
+		</scroll-view>
 		<view class="bottomBar">
-			<input />
+			<textarea auto-height="true" v-model="textMsg" />
 			<view class="icons">
 				<image src="../../static/icon/viewLocalPic.png"></image>
 				<image src="../../static/icon/emoji.png"></image>
-				<image src="../../static/icon/littlePlane.png"></image>
+				<image src="../../static/icon/littlePlane.png" @click="sendText(textMsg)"></image>
 
 			</view>
 		</view>
@@ -17,64 +19,194 @@
 </template>
 
 <script>
-	import onemessage from './oneMessage'
+	import onemessage from './oneMessage';
+	import {mapState} from 'vuex';
+
+	var socketTask;
+	var socketOpen = false;
+	
 	export default {
 		components: {
 			onemessage,
 		},
 		data() {
 			return {
-
+				/**
+				 * ChatMessageCard example
+				ChatMessageCard = {
+					this.senderId = senderId;
+					this.receiverId = receiverId;
+					this.msg = msg;		// 显示
+					this.msgId = msgId; // 前端不需要用到
+					this.creatTime = creatTime; // 显示 flag
+				},
+				*/
+				
 				chatContent: [{
-					messageId: '0001',
-					messageType: '1',
-					messageTime: '11:29',
+					msgId: '0001',
+					flag: '1',
+					msg: '第一条消息',
+					createDate: '11:29',
 					messageStatus: '0'
 				}, {
-					messageId: '0002',
-					messageType: '1',
-					messageTime: '11:29',
+					msgId: '0002',
+					flag: '1',
+					msg: 'abab',
+					createDate: '11:29',
 					messageStatus: '0'
 				}, {
-					messageId: '0003',
-					messageType: '1',
-					messageTime: '11:29',
+					msgId: '0003',
+					flag: '1',
+					msg: 'abab',
+					createDate: '11:29',
 					messageStatus: '0'
 				}, {
-					messageId: '0004',
-					messageType: '0',
-					messageTime: '11:29',
+					msgId: '0004',
+					flag: '2',
+					msg: 'abab',
+					createDate: '11:29',
 					messageStatus: '1'
 				}, {
-					messageId: '0006',
-					messageType: '1',
-					messageTime: '11:29',
+					msgId: '0006',
+					flag: '1',
+					msg: 'abab',
+					createDate: '11:29',
 					messageStatus: '0'
 				}, {
-					messageId: '0006',
-					messageType: '0',
-					messageTime: '11:29',
+					msgId: '0006',
+					flag: '2',
+					msg: 'abab',
+					createDate: '11:29',
 					messageStatus: '1'
-				}, ]
+				}, {
+					msgId: '0001',
+					flag: '1',
+					msg: 'abab',
+					createDate: '11:29',
+					messageStatus: '0'
+				}, {
+					msgId: '0002',
+					flag: '1',
+					msg: 'abab',
+					createDate: '11:29',
+					messageStatus: '0'
+				}],
 
-
+				socketMsgQueue: [], // 未发送的消息队列
+				textMsg: '', // 输入框中的text
+				windowHeight: '',
+				
+				userInfo: '',
+				friendInfo: '',
 			}
 		},
-		onLoad: function() {
-			uni.setNavigationBarTitle({
-				title: "XXXX（聊天人的昵称）"
-			});
+		
+		computed: {
+			...mapState([
+				'chatMessageCard',
+				'flashChatPage',
+			])
 		},
+		
+		watch: {
+			chatMessageCard(newVal, oldVal) { //监听数据变化，即可做相关操作
+				console.log("newVal:");
+				console.log(newVal);
+				// 渲染到窗口
+				this.chatContent.push(newVal);
+				this.scrollToBottom();
+			},
+			
+			flashChatPage(newVal, oldVal) { //监听数据变化，即可做相关操作
+				// 重载聊天记录就可
+				// console.log("重载聊天记录就可");
+				this.getChatHistory();
+				this.scrollToBottom();
+			}
+		},
+		
+		onLoad: function(opt) {
+			// 获取界面传参
+			this.friendInfo = JSON.parse(opt.friendInfo);
+			
+			uni.setNavigationBarTitle({
+				title: this.friendInfo.nickname
+			});
+			
+			// 获取我的信息
+			var userInfo = this.getGlobalUserInfo();
+			if (this.isNull(userInfo)) {
+				console.log("No userInfo!!");
+				return;
+			}
+			this.userInfo = userInfo;
+			
+			// 获取屏幕高度
+			var that = this;
+			uni.getSystemInfo({
+			  success: function(res) {
+				that.windowHeight = res.windowHeight;
+			  }
+			});
+			
+			// 获取与该用户的聊天历史记录
+			this.getChatHistory();
+			this.scrollToBottom();
+		},
+		
 		methods: {
-
+			
+			sendText() {
+				if(!this.textMsg){
+					return;
+				}
+				this.mySocket.sendObj(this.netty.CHAT, this.friendInfo.id, this.textMsg, null);
+				this.textMsg = '';//清空输入框
+				
+				// 渲染到窗口
+				// var message = {
+				// 	msgId: '',
+				// 	flag: this.chat.ME,
+				// 	msg: this.textMsg,
+				// 	createDate: '11:29',
+				// 	messageStatus: '1',
+				// }
+				// this.chatContent.push(message);
+				
+				// 直接重新加载聊天历史, 代替渲染到窗口
+				// this.getChatHistory();
+				// this.scrollToBottom();
+				
+			},
+			
+			getChatHistory(){
+				var localChatHistory = this.chat.getUserChatHistory(this.userInfo.id, this.friendInfo.id);
+				this.chatContent = localChatHistory;
+				// console.log(this.chatContent);
+			},
+			
+			scrollToBottom(){
+				// 将页面滚动到底部，延时滚动,等待渲染
+				// 页面高度乘以列表长度...绝对能滚到底
+				this.$nextTick( function(){
+					uni.pageScrollTo({
+						scrollTop: this.windowHeight * this.chatContent.length,
+						duration: 0
+					});
+				});
+			}
 		}
 	}
 </script>
 
 <style scoped>
+	/**
+	 * TODO： 滚动区域高度需固定
+	 * 					by Jerrio
+	 */
 	.messageArea {
 		display: flex;
-		flex-flow: column-reverse;
+		/* flex-flow: column-reverse; */
 		margin-bottom: 90upx;
 		overflow: hidden;
 		background: #F5F5F5;
@@ -93,7 +225,7 @@
 		background: #FFFFFF;
 	}
 
-	.bottomBar input {
+	.bottomBar textarea {
 		display: inline-block;
 		width: 534upx;
 		height: 50upx;

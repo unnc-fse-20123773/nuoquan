@@ -1,24 +1,25 @@
 {
   "pages": [
-    "pages/messagelist/messagelist",
     "pages/index/index",
-    "pages/fanslist/fanslist",
+    "pages/chatpage/chatpage",
+    "pages/submit/submit",
     "pages/followlist/followlist",
     "pages/profile/profile",
     "pages/personpublic/personpublic",
     "pages/search/search",
+    "pages/fanslist/fanslist",
     "pages/black-index/black-index",
     "pages/detail/detail",
     "pages/signin/signin",
     "components/articlebrief",
-    "pages/submit/submit",
-    "pages/chatpage/chatpage"
+    "pages/messagelist/messagelist",
+    "pages/wechatLogin/wechatLogin"
   ],
   "subPackages": [],
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",
-    "navigationBarBackgroundColor": "#F8F8F8",
+    "navigationBarBackgroundColor": "#fdd041",
     "backgroundColor": "#F8F8F8"
   },
   "usingComponents": {}

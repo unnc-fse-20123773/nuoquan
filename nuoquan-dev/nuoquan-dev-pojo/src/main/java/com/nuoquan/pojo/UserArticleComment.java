@@ -24,8 +24,19 @@ public class UserArticleComment {
 
     @Column(name = "dislike_num")
     private Integer dislikeNum;
+    
+    @Column(name = "comment_num")
+    private Integer commentNum;
 
-    /**
+    public Integer getCommentNum() {
+		return commentNum;
+	}
+
+	public void setCommentNum(Integer commentNum) {
+		this.commentNum = commentNum;
+	}
+
+	/**
      * @return id
      */
     public String getId() {

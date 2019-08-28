@@ -3,55 +3,64 @@
  -->
 	<view class="mainPageLeft" @click.stop="">
 		<view class="topInfoArea">
-			<navigator class="topLeft" url="../../pages/profile/profile">
-				<view class="topLeft">
-					<image class="touxiang" src="../../../static/touxiang.jpg"></image>
-				</view>
-			</navigator>
+			<view class="topLeft">
+				<image class="touxiang" :src='userInfo.faceImg'></image>
+			</view>
 			<view class="topRight">
-				<view style="font-size: 13px;margin-bottom:9px;width:100%;vertical-align: bottom;">壹贰叁</view>
-				<view style="font-size:8px ;font-weight: bold;margin-bottom:3px;width:100%;vertical-align: bottom;">zy21000</view>
-				<view style="color:#B2B2B2;font-size: 6px;width:80px;position: relative;left: 10px;width:100%;vertical-align: bottom;">@nottingham.edu.cn</view>
+				<view style="font-size: 13px;margin-bottom:9px;width:100%;vertical-align: bottom;">{{userInfo.nickname}}</view>
+				<view style="font-size:8px ;font-weight: bold;margin-bottom:3px;width:100%;vertical-align: bottom;">{{userInfo.emailPrefix}}</view>
+				<view style="color:#B2B2B2;font-size: 6px;width:80px;position: relative;left: 10px;width:100%;vertical-align: bottom;">{{userInfo.emailSuffix}}</view>
 			</view>
 		</view>
 		<view class="personPageList">
+			<!-- TODO: 最好把 view 都改成 button 并加上样式 
+											  by Jerrio -->
 			<view class="pageLine">
-				<image src="../../../static/touxiang.jpg"></image>
+				<image src="../static/touxiang.jpg"></image>
 				<view>我的发布</view>
 			</view>
-
+			<button class="pageLine" @tap="goToMessageListPage">
+				<image src="../static/touxiang.jpg"></image>
+				<view>我的消息</view>
+			</button>
 			<view class="pageLine">
-				<navigator class="" url="../../pages/messagelist/messagelist">
-					<image src="../../../static/touxiang.jpg"></image>
-					<view>我的消息</view>
-				</navigator>
-			</view>
-
-			<view class="pageLine">
-				<image src="../../../static/touxiang.jpg"></image>
+				<image src="../static/touxiang.jpg"></image>
 				<view>我的收藏</view>
 			</view>
 			<view class="pageLine">
-				<image src="../../../static/touxiang.jpg"></image>
+				<image src="../static/touxiang.jpg"></image>
 				<view>举报投诉</view>
 			</view>
 			<view class="pageLine">
-				<image src="../../../static/touxiang.jpg"></image>
+				<image src="../static/touxiang.jpg"></image>
 				<view>关于</view>
 			</view>
 		</view>
 	</view>
-	<!-- 	</view>
- -->
 </template>
 
 <script>
 	name: 'mainpageleft'
-
 	export default {
-
+		props: {
+			// 渲染时候替换默认值会被替换
+			userInfo: {
+				faceImg: '../static/touxiang.jpg',
+				emailPrefix: 'test123',
+				emailSuffix: '@nottingham.edu.cn'
+			}
+		},
 		data() {
-			return {};
+			return {
+				
+			};
+		},
+		methods: {
+			goToMessageListPage() {
+				uni.navigateTo({
+					url: '../messagelist/messagelist',
+				});
+			}
 		},
 
 	};
@@ -136,5 +145,9 @@
 		font-size: 13px;
 		font-weight: bold;
 		margin-left: 17px;
+	}
+	
+	.pageLine button {
+		
 	}
 </style>

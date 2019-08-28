@@ -98,7 +98,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var onemessage = function onemessage() {return __webpack_require__.e(/*! import() | pages/chatpage/oneMessage */ "pages/chatpage/oneMessage").then(__webpack_require__.bind(null, /*! ./oneMessage */ "../../../../../../../../../code/nuoquan/nuoquan-client/pages/chatpage/oneMessage.vue"));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -117,6 +117,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+var _vuex = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var onemessage = function onemessage() {return __webpack_require__.e(/*! import() | pages/chatpage/oneMessage */ "pages/chatpage/oneMessage").then(__webpack_require__.bind(null, /*! ./oneMessage */ "../../../../../../../../../code/nuoquan/nuoquan-client/pages/chatpage/oneMessage.vue"));};
+
+var socketTask;
+var socketOpen = false;var _default =
 
 {
   components: {
@@ -124,48 +131,170 @@ __webpack_require__.r(__webpack_exports__);
 
   data: function data() {
     return {
+      /**
+              * ChatMessageCard example
+             ChatMessageCard = {
+             	this.senderId = senderId;
+             	this.receiverId = receiverId;
+             	this.msg = msg;		// 显示
+             	this.msgId = msgId; // 前端不需要用到
+             	this.creatTime = creatTime; // 显示 flag
+             },
+             */
 
       chatContent: [{
-        messageId: '0001',
-        messageType: '1',
-        messageTime: '11:29',
+        msgId: '0001',
+        flag: '1',
+        msg: '第一条消息',
+        createDate: '11:29',
         messageStatus: '0' },
       {
-        messageId: '0002',
-        messageType: '1',
-        messageTime: '11:29',
+        msgId: '0002',
+        flag: '1',
+        msg: 'abab',
+        createDate: '11:29',
         messageStatus: '0' },
       {
-        messageId: '0003',
-        messageType: '1',
-        messageTime: '11:29',
+        msgId: '0003',
+        flag: '1',
+        msg: 'abab',
+        createDate: '11:29',
         messageStatus: '0' },
       {
-        messageId: '0004',
-        messageType: '0',
-        messageTime: '11:29',
+        msgId: '0004',
+        flag: '2',
+        msg: 'abab',
+        createDate: '11:29',
         messageStatus: '1' },
       {
-        messageId: '0006',
-        messageType: '1',
-        messageTime: '11:29',
+        msgId: '0006',
+        flag: '1',
+        msg: 'abab',
+        createDate: '11:29',
         messageStatus: '0' },
       {
-        messageId: '0006',
-        messageType: '0',
-        messageTime: '11:29',
-        messageStatus: '1' }] };
+        msgId: '0006',
+        flag: '2',
+        msg: 'abab',
+        createDate: '11:29',
+        messageStatus: '1' },
+      {
+        msgId: '0001',
+        flag: '1',
+        msg: 'abab',
+        createDate: '11:29',
+        messageStatus: '0' },
+      {
+        msgId: '0002',
+        flag: '1',
+        msg: 'abab',
+        createDate: '11:29',
+        messageStatus: '0' }],
 
 
+      socketMsgQueue: [], // 未发送的消息队列
+      textMsg: '', // 输入框中的text
+      windowHeight: '',
 
+      userInfo: '',
+      friendInfo: '' };
 
   },
-  onLoad: function onLoad() {
+
+  computed: _objectSpread({},
+  (0, _vuex.mapState)([
+  'chatMessageCard',
+  'flashChatPage'])),
+
+
+
+  watch: {
+    chatMessageCard: function chatMessageCard(newVal, oldVal) {//监听数据变化，即可做相关操作
+      console.log("newVal:");
+      console.log(newVal);
+      // 渲染到窗口
+      this.chatContent.push(newVal);
+      this.scrollToBottom();
+    },
+
+    flashChatPage: function flashChatPage(newVal, oldVal) {//监听数据变化，即可做相关操作
+      // 重载聊天记录就可
+      // console.log("重载聊天记录就可");
+      this.getChatHistory();
+      this.scrollToBottom();
+    } },
+
+
+  onLoad: function onLoad(opt) {
+    // 获取界面传参
+    this.friendInfo = JSON.parse(opt.friendInfo);
+
     uni.setNavigationBarTitle({
-      title: "XXXX（聊天人的昵称）" });
+      title: this.friendInfo.nickname });
 
+
+    // 获取我的信息
+    var userInfo = this.getGlobalUserInfo();
+    if (this.isNull(userInfo)) {
+      console.log("No userInfo!!");
+      return;
+    }
+    this.userInfo = userInfo;
+
+    // 获取屏幕高度
+    var that = this;
+    uni.getSystemInfo({
+      success: function success(res) {
+        that.windowHeight = res.windowHeight;
+      } });
+
+
+    // 获取与该用户的聊天历史记录
+    this.getChatHistory();
+    this.scrollToBottom();
   },
-  methods: {} };exports.default = _default;
+
+  methods: {
+
+    sendText: function sendText() {
+      if (!this.textMsg) {
+        return;
+      }
+      this.mySocket.sendObj(this.netty.CHAT, this.friendInfo.id, this.textMsg, null);
+      this.textMsg = ''; //清空输入框
+
+      // 渲染到窗口
+      // var message = {
+      // 	msgId: '',
+      // 	flag: this.chat.ME,
+      // 	msg: this.textMsg,
+      // 	createDate: '11:29',
+      // 	messageStatus: '1',
+      // }
+      // this.chatContent.push(message);
+
+      // 直接重新加载聊天历史, 代替渲染到窗口
+      // this.getChatHistory();
+      // this.scrollToBottom();
+
+    },
+
+    getChatHistory: function getChatHistory() {
+      var localChatHistory = this.chat.getUserChatHistory(this.userInfo.id, this.friendInfo.id);
+      this.chatContent = localChatHistory;
+      // console.log(this.chatContent);
+    },
+
+    scrollToBottom: function scrollToBottom() {
+      // 将页面滚动到底部，延时滚动,等待渲染
+      // 页面高度乘以列表长度...绝对能滚到底
+      this.$nextTick(function () {
+        uni.pageScrollTo({
+          scrollTop: this.windowHeight * this.chatContent.length,
+          duration: 0 });
+
+      });
+    } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),

@@ -198,7 +198,7 @@ page {
 	        flex: 1;
 	height: 92%;
 	width: 100%;
-	background-color: #CCCCCC;
+	background-color: red;
 }
 .swiper-one-list {
 	height: 100%;

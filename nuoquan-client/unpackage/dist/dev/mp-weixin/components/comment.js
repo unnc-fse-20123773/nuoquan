@@ -119,16 +119,18 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
+//
+//
 var _default =
 {
+  name: 'comment',
   props: {
-    comment: {
-      type: Array } },
-
+    commentDetail: {} },
 
   data: function data() {
     return {};
-  } };exports.default = _default;
+  },
+  methods: {} };exports.default = _default;
 
 /***/ }),
 

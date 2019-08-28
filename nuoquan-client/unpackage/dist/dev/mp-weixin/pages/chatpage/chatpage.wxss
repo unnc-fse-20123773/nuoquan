@@ -1,14 +1,215 @@
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * TODO： 滚动区域高度需固定
+ * 					by Jerrio
+ */
 .messageArea.data-v-e2ad6224 {
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -ms-flexbox;
 	display: flex;
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: reverse;
-	-webkit-flex-flow: column-reverse;
-	    -ms-flex-flow: column-reverse;
-	        flex-flow: column-reverse;
+	/* flex-flow: column-reverse; */
 	margin-bottom: 90rpx;
 	overflow: hidden;
 	background: #F5F5F5;
@@ -32,7 +233,7 @@
 	        box-shadow: 0px -2px 2px 0px rgba(130, 130, 130, 0.20);
 	background: #FFFFFF;
 }
-.bottomBar input.data-v-e2ad6224 {
+.bottomBar textarea.data-v-e2ad6224 {
 	display: inline-block;
 	width: 534rpx;
 	height: 50rpx;

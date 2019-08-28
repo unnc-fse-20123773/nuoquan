@@ -134,9 +134,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -184,15 +182,26 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 var _default =
 {
   props: {
-    thisMEssage: {} },
+    userInfo: '',
+    friendInfo: '',
+    thisMessage: {} },
 
   data: function data() {
-    return {};
+    return {
+      ME: this.chat.ME,
+      FRIEND: this.chat.FRIEND };
+
   },
-  onLoad: function onLoad() {
-    console.log(this.thisMessage);
-    debugger;
-  } };exports.default = _default;
+  onReady: function onReady() {
+    // console.log(this.thisMessage);
+  },
+  methods: {
+    goToPersonPublic: function goToPersonPublic(userId) {
+      uni.redirectTo({ // 关闭页面再跳转，防止页面栈满, 无法返回
+        url: '../personpublic/personpublic?userId=' + userId });
+
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 

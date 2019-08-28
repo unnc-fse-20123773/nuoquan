@@ -1,8 +1,6 @@
 <template>
-	<view class="articlecard" id="'+articleCard.id+'">
-		
-		
-		<view class="title" @click="loadcss()">{{ articleCard.articleTitle }}</view>
+	<view class="articlecard" id="'+articleCard.id+'" @click="jumpToDetail()">
+		<view class="title">{{ articleCard.articleTitle }}</view>
 		<view class="briefarticleCard">{{ articleCard.articleContent }}</view>
 		<view class="picturearea">
 			<image src="../static/0001/pic1.jpg" v-if="articleCard[3]"></image>
@@ -14,7 +12,7 @@
 			<view class="tag" v-for="(i, index) in articleCard.tags" v-bind:key="index" >{{ i}}</view>
 		</view>
 		<view class="menubar">
-			<image src="../static/touxiang.jpg" class="touxiang"></image>
+			<image :src="articleCard.faceImg" class="touxiang"></image>
 			<view class="name">{{ articleCard.nickName }}</view>
 			<view class="time">{{ articleCard[7] }}</view>
 
@@ -23,8 +21,6 @@
 				<image class="like" src="../static/icon/like.svg">{{ articleCard.likeNum }}</image>
 			</view>
 		</view>
-		<!-- 		</navigator>
- -->
 	</view>
 </template>
 
@@ -50,21 +46,10 @@ export default {
 	},
 	created(){
 		console.log(this.articleCard.tags);
-				console.log(typeof(this.articleCard.tags));
+		console.log(typeof(this.articleCard.tags));
 		
 	},
 	methods: {
-		// loadcss(){
-		// 	var a = Math.random()
-		// console.log('brif1');
-		// 	if(a==0.5){
-		// 		console.log('yes');
-		// 		require('./articleCardBrief.css');}else{
-		// 		console.log('not');
-		// 	}
-		// 	console.log('brif2');
-		// 	
-		// },
 		jumpToDetail() {
 			var navData = JSON.stringify(this.articleCard); // 这里转换成 字符串
 			uni.navigateTo({

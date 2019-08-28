@@ -135,36 +135,27 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 {
+  props: {
+    // 渲染时候替换默认值会被替换
+    userInfo: {
+      faceImg: '../static/touxiang.jpg' } },
+
+
+  components: {
+    mainpageleft: mainpageleft },
+
+
   data: function data() {
     return {
       showMainPageLeft: 0 };
 
   },
-  components: {
-    mainpageleft: mainpageleft },
 
   methods: {
     controlShowLeft: function controlShowLeft(a) {
       this.showMainPageLeft = a;
-      console.log(a);
-      console.log(this.showMainPageLeft);
+      // console.log(this.showMainPageLeft);
     } } };exports.default = _default;
 
 /***/ }),

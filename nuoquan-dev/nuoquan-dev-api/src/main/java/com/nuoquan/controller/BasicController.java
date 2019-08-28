@@ -14,7 +14,7 @@ public class BasicController {
 	public String fdfsGroupName;
 	
 	// 每页分页的记录数
-	public static final Integer PAGE_SIZE = 5;
+	public static final Integer PAGE_SIZE = 10;
 	
 	public UserVO ConvertUserToUserVO (User user) {
 		UserVO userVO = new UserVO();

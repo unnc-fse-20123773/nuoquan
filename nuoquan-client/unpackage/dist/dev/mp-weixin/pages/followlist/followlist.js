@@ -137,30 +137,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-var _default =
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var me;var _default =
 {
   data: function data() {
     return {
       scrollLeft: 0,
       isClickChange: false,
-      currentTab: 0,
+      currentTab: '', // 切换 list 0/1
       menuTabs: [{
         name: '他关注的' },
       {
         name: '关注他的' }],
 
 
-      swiperDateList: [
-      [],
-      []],
-
-      userOperationList: [
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-
-      // 用于分页的属性
-      totalPage: 1,
-      page: 1,
-      videoList: [],
+      // 关注粉丝列表属性
+      swiperDataList: [
+      [], // followList 把数据写进里面首次进入页面加载不出，所以写到外面
+      [] // fansList
+      ],
+      followList: '',
+      fansList: '',
+      myId: '',
 
       screenWidth: 350,
       serverUrl: "",
@@ -185,16 +192,30 @@ var _default =
     this.duration = e.target.value;
   },
 
-  onLoad: function onLoad() {
-    uni.setNavigationBarTitle({
-      title: 'XXX的主页' });
+  onLoad: function onLoad(opt) {
+    var data = JSON.parse(opt.data);
+    var thisUserInfo = data.thisUserInfo;
+    var currentTab = currentTab;
 
+    uni.setNavigationBarTitle({
+      title: thisUserInfo.nickname + '的主页' });
+
+
+    me = this.getGlobalUserInfo();
+    this.myId = me.id;
+
+    // 获取userId
+    var userId = thisUserInfo.id;
+    this.queryFansFollow(userId);
+
+    // 设置列表 index
+    this.currentTab = currentTab;
 
     var screenWidth = uni.getSystemInfoSync().screenWidth;
     this.screenWidth = screenWidth;
 
     // 获取当前页面
-    var page = this.page;
+    // var page = this.page;
 
   },
 
@@ -258,9 +279,125 @@ var _default =
       this.$nextTick(function () {
         this.scrollTop = 0;
       });
-      uni.showToast({
-        icon: "none",
-        title: "回到顶部喽~" });
+      // uni.showToast({
+      // 	icon: "none",
+      // 	title: "回到顶部喽~"
+      // })
+    },
+
+    /**
+        * 添加关注
+        */
+    addFollow: function addFollow(index1, index2) {
+      console.log("加关注...");
+      var list;
+      if (index1 == 0) {
+        list = this.followList;
+      } else if (index1 == 1) {
+        list = this.fansList;
+      }
+
+      var thisUser = list[index2];
+
+      var that = this;
+      uni.request({
+        url: that.$serverUrl + '/user/follow',
+        method: "POST",
+        data: {
+          userId: thisUser.id,
+          fanId: me.id },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          if (res.data.status == 200) {
+            // 刷新用户信息，这里本地改就好就不用重新刷新列表了
+            thisUser.follow = true;
+          }
+        } });
+
+    },
+    /**
+        * 取消关注
+        */
+    cancelFollow: function cancelFollow(index1, index2) {
+      console.log("取关...");
+      var list;
+      if (index1 == 0) {
+        list = this.followList;
+      } else if (index1 == 1) {
+        list = this.fansList;
+      }
+
+      var thisUser = list[index2];
+
+      var that = this;
+      uni.request({
+        url: that.$serverUrl + '/user/dontFollow',
+        method: "POST",
+        data: {
+          userId: thisUser.id,
+          fanId: me.id },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          if (res.data.status == 200) {
+            // 刷新用户信息
+            thisUser.follow = false;
+          }
+        } });
+
+    },
+
+    /**
+        * 查询该用户的粉丝和关注用户信息列表
+        */
+    queryFansFollow: function queryFansFollow(userId) {
+      var that = this;
+      uni.request({
+        url: that.$serverUrl + '/user/queryFansAndFollow',
+        method: "POST",
+        data: {
+          userId: userId,
+          myId: me.id },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          console.log(res);
+          if (res.data.status == 200) {
+            var data = res.data.data;
+            console.log(data);
+            that.followList = data.followList;
+            that.fansList = data.fansList;
+
+            // that.swiperDataList[0] = data.followList;
+            // that.swiperDataList[1] = data.fansList;
+          }
+        } });
+
+    },
+
+    /**
+        * 直接传 item 有 bug, 所以用这个复杂一点的方式曲线救国
+        * @param {Object} index1 0=followList; 1=fansList
+        * @param {Object} index2 列表里的索引
+        */
+    goToPersonPublic: function goToPersonPublic(index1, index2) {
+      var list;
+      if (index1 == 0) {
+        list = this.followList;
+      } else if (index1 == 1) {
+        list = this.fansList;
+      }
+
+      var userId = list[index2].id;
+      uni.redirectTo({
+        url: '../personpublic/personpublic?userId=' + userId });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))

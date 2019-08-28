@@ -98,47 +98,155 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var picker = function picker() {return __webpack_require__.e(/*! import() | components/picker */ "components/picker").then(__webpack_require__.bind(null, /*! ../../components/picker.vue */ "../../../../../../../../../code/nuoquan/nuoquan-client/components/picker.vue"));};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var userInfo;var _default =
 {
   data: function data() {
-    return {};
+    return {
+      isEdit: false,
+      userInfo: '',
+      gender: -1,
+      picker: false };
 
   },
+
+  components: {
+    picker: picker },
+
 
   onLoad: function onLoad() {
     uni.setNavigationBarTitle({
       title: "个人信息" });
 
+
+    userInfo = this.getGlobalUserInfo();
+    this.userInfo = userInfo;
+    console.log(userInfo);
   },
-  methods: {} };exports.default = _default;
+  methods: {
+    genderChanger: function genderChanger(gender) {
+      if (this.gender == gender) {
+        this.gender = -1;
+        console.log(gender);
+      } else {
+        this.gender = gender;
+      }
+    },
+
+    pickerChanger: function pickerChanger(picker) {
+      if (this.picker == false) {
+        this.picker = true;
+      } else {
+        this.picker = false;
+      }
+      console.log(this.picker);
+    },
+
+    editProfile: function editProfile(isEdit) {
+      if (isEdit == false) {
+        this.isEdit = true;
+      } else if (isEdit == true) {
+        this.isEdit = false;
+      }
+      console.log(this.isEdit);
+    },
+
+    submit: function submit() {
+      // 提交表单操作
+
+      // 完成修改，更改 isEdit 为 false
+      this.editProfile(this.isEdit);
+    },
+
+    cancle: function cancle() {
+      // 取消修改操作
+
+      this.editProfile(this.isEdit);
+    } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),

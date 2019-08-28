@@ -1,6 +1,9 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/chatpage/chatpage",
+    "pages/submit/submit",
+    "pages/followlist/followlist",
     "pages/profile/profile",
     "pages/personpublic/personpublic",
     "pages/search/search",
@@ -9,16 +12,13 @@
     "pages/detail/detail",
     "pages/signin/signin",
     "components/articlebrief",
-    "pages/submit/submit",
-    "pages/followlist/followlist",
     "pages/messagelist/messagelist",
-    "pages/chatpage/chatpage"
+    "pages/wechatLogin/wechatLogin"
   ],
-  "subPackages": [],
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",
-    "navigationBarBackgroundColor": "#F8F8F8",
+    "navigationBarBackgroundColor": "#fdd041",
     "backgroundColor": "#F8F8F8"
   },
   "usingComponents": {},
@@ -28,5 +28,5 @@
     "autoclose": false
   },
   "appname": "nuoquan",
-  "compilerVersion": "2.1.0"
+  "compilerVersion": "2.1.3"
 }

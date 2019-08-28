@@ -1,0 +1,79 @@
+
+page {
+	background-color: #F3F3F3;
+}
+
+
+.tabs.data-v-9bff3ebe {
+	margin: 26rpx 0 0;
+}
+.focusER.data-v-9bff3ebe,
+.itsFocus.data-v-9bff3ebe {
+	color: #353535;
+	font-size: 15px;
+	display: inline-block;
+	width: 50%;
+	margin: auto;
+	text-align: center;
+}
+.devidingLine.data-v-9bff3ebe {
+	border-top: solid 3px #FDD453;
+	width: 258rpx;
+	margin-left: 58.5rpx;
+}
+.listItem.data-v-9bff3ebe {
+	position: relative;
+	height: 45px;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	    -ms-flex-align: center;
+	        align-items: center;
+}
+.touxiang.data-v-9bff3ebe {
+	display: -webkit-inline-box;
+	display: -webkit-inline-flex;
+	display: -ms-inline-flexbox;
+	display: inline-flex;
+	margin-left: 13px;
+	width: 33px;
+	height: 33px;
+	border-radius: 33px;
+	vertical-align: middle;
+	line-height: 45px;
+}
+.name.data-v-9bff3ebe {
+	display: -webkit-inline-box;
+	display: -webkit-inline-flex;
+	display: -ms-inline-flexbox;
+	display: inline-flex;
+	color: #353535;
+	font-size: 13px;
+	margin-left: 13px;
+	vertical-align: middle;
+}
+.goFocus.data-v-9bff3ebe {
+	border: solid 1px #ECC138;
+	border-radius: 5px;
+	font-size: 13px;
+	color: #ECC138;
+	position: absolute;
+	right: 26px;
+	height: 26px;
+	line-height: 26px;
+	width: 51px;
+	top: 9px;
+	vertical-align: middle;
+	text-align: center;
+}
+.listItemBottomLine.data-v-9bff3ebe {
+	border-top: solid 1px #DCDCDC;
+	width: 590rpx;
+	position: absolute;
+	bottom: 0;
+	left: 108rpx;
+}
+

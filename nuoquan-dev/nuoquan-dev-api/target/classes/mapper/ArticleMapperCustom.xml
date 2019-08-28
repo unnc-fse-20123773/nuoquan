@@ -14,17 +14,20 @@
     <result column="dislike_num" jdbcType="INTEGER" property="dislikeNum" />
     <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
     <result column="popularity" jdbcType="INTEGER" property="popularity" />
-    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="status" jdbcType="INTEGER" property="status" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="is_anonymous" jdbcType="TINYINT" property="isAnonymous" />
+    <result column="article_path" jdbcType="VARCHAR" property="articlePath" />
     
-     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="face_img" property="faceImg" jdbcType="VARCHAR" />
+    <result column="face_img_thumb" property="faceImgThumb" jdbcType="VARCHAR" />
   </resultMap>
   
   
   <select id="queryAllArticles" resultMap="BaseResultMap">
   	
- 	select a.*, u.nickname as nickname from nuoquan.article a
+ 	select a.*, u.nickname as nickname, u.face_img, u.face_img_thumb from nuoquan.article a
    	left join nuoquan.user u on u.id = a.user_id
   	where
   		1 = 1
@@ -49,9 +52,8 @@
   			and a.article_content like '%${articleContent}%'
   		</if>
   		and a.status = 1
-  		and a.is_anonymous = 0
+  		<!-- and a.is_anonymous = 0 -->
   	order by a.create_date desc
   </select>
-  
   
 </mapper>

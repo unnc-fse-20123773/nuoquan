@@ -98,134 +98,291 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _vuex = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var wkiwiSwipeAction = function wkiwiSwipeAction() {return __webpack_require__.e(/*! import() | components/wkiwi-swipe-action */ "components/wkiwi-swipe-action").then(__webpack_require__.bind(null, /*! ../../components/wkiwi-swipe-action.vue */ "../../../../../../../../../code/nuoquan/nuoquan-client/components/wkiwi-swipe-action.vue"));};
+
+
+
+
+var userInfo;
+
+var socketTask;
+var socketOpen = false;var _default =
+
 {
+  components: {
+    wkiwiSwipeAction: wkiwiSwipeAction },
+
   data: function data() {
     return {
-      cardlist: [1, 1, 1],
-      readlist: [1, 1, 1],
-      msgicon: [],
-      scrollTop: 0,
-      old: {
-        scrollTop: 0 } };
+      focus: false,
+      isShowView: true,
+      messages: [{
+        title: "系统消息",
+        url: [
+        "http://img1.3lian.com/gif/more/11/201212/0d1252b54be4f2d240b6b7fe4ed35054.jpg"],
 
+        message: "这是一条系统消息",
+        time: "15:15",
+        count: 5,
+        stick: false, //是否为置顶状态
+        disabled: false, //是否禁止滑动
+        type: 2 //通知类型消息
+      },
+      {
+        title: "马云",
+        url: [
+        "http://img1.3lian.com/gif/more/11/201212/0d1252b54be4f2d240b6b7fe4ed35054.jpg"],
+
+        message: "什么鬼，我有支付宝[禁止滑动]",
+        time: "15:15",
+        count: 5,
+        stick: false, //是否为置顶状态
+        disabled: false, //是否禁止滑动
+        type: 2 //普通用户类型消息
+      }],
+      // 测试分割
+      // 测试滑动单元
+      // 如遇问题，删除以上
+
+
+      msgicon: [],
+      chatSnapShotList: [//测试用数据
+      {
+        createDate: "2019/08/22 03:35:02",
+        friendId: "1",
+        friendInfo: {
+          id: "1",
+          email: "x@nottingham.edu.cn",
+          nickname: "test1",
+          createDate: "2019-07-05T17:17:23.000+0000",
+          faceImg: "http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTI3ic84wG7jlib3gCOlemyy53Ribg1IJM2px221hCDNync15P0MdJcPibY4QFIOibjqrVQnrI8xZ7Vg5hg/132" },
+
+        isRead: 3,
+        msg: "1",
+        myId: "test-id123" },
+
+
+      {
+        createDate: "2019/08/22 03:35:02",
+        friendId: "1",
+        friendInfo: {
+          id: "1",
+          email: "x@nottingham.edu.cn",
+          nickname: "test1",
+          createDate: "2019-07-05T17:17:23.000+0000",
+          faceImg: "http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTI3ic84wG7jlib3gCOlemyy53Ribg1IJM2px221hCDNync15P0MdJcPibY4QFIOibjqrVQnrI8xZ7Vg5hg/132" },
+
+        isRead: 3,
+        msg: "1",
+        myId: "test-id123" }],
+
+
+
+      READ: this.chat.READ,
+      UNREAD: this.chat.UNREAD };
 
   },
+
+  computed: _objectSpread({},
+  (0, _vuex.mapState)([
+  'chatMessageCard'])),
+
+
+
+  watch: {
+    chatMessageCard: function chatMessageCard(newVal, oldVal) {//监听数据变化，即可做相关操作
+      this.loadingChatSnapshot();
+      console.log("newVal:");
+      console.log(newVal);
+    } },
+
+
   onLoad: function onLoad() {
     uni.setNavigationBarTitle({
-      title: "私信列表" });
+      title: "消息列表" });
 
+
+    userInfo = this.getGlobalUserInfo();
+    if (this.isNull(userInfo)) {
+      console.log("No userInfo!!");
+      return;
+    }
+
+    // [测试代码块]
+    this.mySocket.init();
   },
+
+  onShow: function onShow() {
+    this.loadingChatSnapshot(); // 载入聊天快照
+  },
+
   methods: {
-    scroll: function scroll(e) {
-      console.log(e);
-      this.old.scrollTop = e.detail.scrollTop;
+    /**
+              * 展示聊天快照，渲染列表.
+              */
+    loadingChatSnapshot: function loadingChatSnapshot() {
+      var chatSnapShotList = this.chat.getUserChatSnapShot(userInfo.id);
+      // 提前渲染
+      this.chatSnapShotList = chatSnapShotList;
+      // 拼接信息: 根据 friendId 获取用户信息
+      var sendCount = 0; // 网络请求为异步，计数返回结果判断是否全部完成
+      var receiveCount = 0;
+      console.log(chatSnapShotList);
+      for (var i = 0; i < chatSnapShotList.length; i++) {
+        var thisFrindId = chatSnapShotList[i].friendId;
+        // 查看缓存
+        var thisFriendInfo = this.getUserInfoFromUserList(thisFrindId);
+        if (this.isNull(thisFriendInfo)) {
+          // 不在缓存中, 向服务器请求
+          sendCount++;
+          var that = this;
+          uni.request({
+            url: that.$serverUrl + '/user/queryUser',
+            method: "POST",
+            data: {
+              userId: thisFrindId },
+
+            header: {
+              'content-type': 'application/x-www-form-urlencoded' },
+
+            success: function success(res) {
+              // console.log(res)
+              if (res.data.status == 200) {
+                // 获取返回的用户信息 写到缓存里
+                thisFriendInfo = res.data.data;
+                that.setUserInfoToUserList(thisFriendInfo);
+
+                // 查看 sent & receive 是否相等
+                receiveCount++;
+                console.log("sendCount=" + sendCount + " receiveCount=" + receiveCount);
+                if (sendCount == receiveCount) {
+                  // 再次加载渲染
+                  that.loadingChatSnapshot();
+                }
+              }
+            } });
+
+        } else {
+          // 添加朋友信息到快照列表对象
+          chatSnapShotList[i].friendInfo = thisFriendInfo;
+        }
+      }
+    },
+
+    /**
+        * 右滑删除, TODO: 施工中...未测试
+        */
+    deleteChat: function deleteChat(e) {
+      // 获取朋友 id
+      var frindId = e.id;
+      // 1. 删除我和朋友的聊天记录
+      this.chat.deletUserChatHistory(userInfo.id, frindId);
+      // 2. 删除快照
+      this.chat.deletUserChatSnapShot(userInfo.id, frindId);
+      // 重载快照
+    },
+
+    goToChatpage: function goToChatpage(e) {
+      // console.log(e)
+      var myId = e.myId;
+      var friendId = e.friendId;
+      var msg = e.msg;
+      var friendInfo = e.friendInfo;
+      // 覆盖快照，设为已读 (myId, friendId, msg, isRead)
+      this.chat.readUserChatSnapShot(myId, friendId);
+      // this.chat.saveUserChatSnapshot(e.myId, e.friendId, e.msg, this.chat.READ);
+
+      uni.navigateTo({
+        url: '../chatpage/chatpage?friendInfo=' + JSON.stringify(friendInfo) });
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

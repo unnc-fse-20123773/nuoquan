@@ -1,19 +1,21 @@
 <template>
-	<view class="comment">
+	<view class="comment" id="'+commentDetail.id'">
 		<view class="fengexian"></view>
-		<text class="contentarea">{{ comment[2] }}</text>
+		<text class="contentarea">{{ commentDetail.comment }}</text>
 		<view class="bottombar">
 			<view style="width:70%;display:inline-block;">
-				<image src="../../../static/touxiang.jpg" class="touxiang"></image>
-				<text class="name">{{ comment[1] }}</text>
+				<image :src="commentDetail.faceImage" class="touxiang"></image>
+				<text class="name">{{ commentDetail.nickname }}</text>
 
-				<text class="time">{{ comment[3] }}</text>
+				<text class="time">{{ commentDetail.timeAgo }}</text>
 			</view>
 			<view class="icons">
+				<!-- 评论按钮 -->
 				<image class="icon" src="../../../../static/icon/comment.svg"></image>
-				<text class="icom">{{ comment[4] }}</text>
+				<text class="icom">{{ commentDetail.commentNum }}</text>
+				<!-- 点赞按钮 -->
 				<image class="icon" src="../../../static/icon/like.svg"></image>
-				<text class="icom">{{ comment[5] }}</text>
+				<text class="icom">{{ commentDetail.likeNum }}</text>
 			</view>
 		</view>
 	</view>
@@ -21,13 +23,15 @@
 
 <script>
 export default {
-	props: {
-		comment: {
-			type: Array
-		}
+	name: 'comment',
+	props:{
+			commentDetail: {}
 	},
 	data() {
 		return {};
+	},
+	methods:{
+		
 	}
 };
 </script>

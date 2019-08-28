@@ -89,7 +89,7 @@ page {
 	font-weight: 550;
 }
 .profile-moreinfo-card{
-	height: 30%;
+	height: 22%;
 	margin-left: 7%;
 	margin-top: 61%;
 	width: 86%;

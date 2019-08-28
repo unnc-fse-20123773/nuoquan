@@ -1,15 +1,667 @@
 import Vue from 'vue'
 import App from './App'
-
-
-Vue.config.productionTip = false
-Vue.prototype.SeverUrl="http://127.0.0.1:8080"
-
-App.mpType = 'app'
+import store from './store' // 引入 vuex 的 store 对象
+// import {mapMutations} from 'vuex';
 
 const app = new Vue({
-    ...App
+	store,
+	...App
 })
 app.$mount()
+App.mpType = 'app'
+
+Vue.config.productionTip = false
+
+Vue.prototype.$store = store
+Vue.prototype.$serverUrl = "http://127.0.0.1:8080"
+Vue.prototype.$wsServerUrl = "ws://localhost:8088/ws"
+// Vue.prototype.$serverUrl = "http://192.168.31.210:8080"
+// Vue.prototype.$wsServerUrl = "ws://192.168.31.210:8088/ws"
+
+/**
+ * 获取当前用户信息（我）
+ * @param {Object} user
+ */
+Vue.prototype.setGlobalUserInfo = function(user) {
+	uni.setStorageSync('userInfo', user);
+}
+
+/**
+ * 设置当前用户信息
+ */
+Vue.prototype.getGlobalUserInfo = function() {
+	var value = uni.getStorageSync('userInfo');
+	return value;
+}
+
+/**
+ * 清空当前用户信息
+ */
+Vue.prototype.removeGlobalUserInfo = function() {
+	uni.removeStorageSync('userInfo');
+}
+
+/**
+ * 把对象添加到列表尾部，并储存在缓存里
+ * @param {Object} obj
+ * @param {Object} list
+ */
+Vue.prototype.setIntoList = function(obj, listName) {
+	var listStr = uni.getStorageSync(listName)
+	// 从本地缓存获取列表名是否存在
+	var list;
+	if (app.isNull(listStr)) {
+		// 为空，赋一个空的list；
+		list = [];
+	} else {
+		// 不为空
+		list = JSON.parse(listStr);
+	}
+	// 插入对象d到尾部
+	list.push(obj);
+	uni.setStorageSync(listName, JSON.stringify(list));
+}
+
+/**
+ * 把该用户信息添加到本地缓存的 userlist 中
+ * @param {Object} userInfo
+ */
+Vue.prototype.setUserInfoToUserList = function(userInfo) {
+	app.setIntoList(userInfo, "userList");
+}
+
+/**
+ * 根据 userId，在本地缓存中获取该用户信息
+ * @param {Object} userId
+ */
+Vue.prototype.getUserInfoFromUserList = function(userId) {
+	var userListStr = uni.getStorageSync("userList");
+
+	if (app.isNull(userListStr)) {
+		// 为空，直接返回 null
+		return null;
+	} else {
+		// 不为空
+		var userList = JSON.parse(userListStr);
+		for (var i = 0; i < userList.length; i++) {
+			var user = userList[i];
+			if (user.id == userId) {
+				return user;
+				break;
+			}
+		}
+	}
+}
+
+/**
+ * 返回页面栈最后一页(当前页面)
+ */
+Vue.prototype.getCurrentPage = function() {
+	var pages = getCurrentPages();
+	var currentPage = pages[pages.length - 1];
+	return currentPage;
+}
+/**
+ * 从服务器查询用户信息, 并拼接额外信息。
+ * [需要设置同步否则得不到值，还未测试，暂时弃用，请手动调用myUser拼接]
+ */
+// Vue.prototype.myQueryUserInfo = async function(userId) {
+// 	var that = this;
+// 	var finalUser;
+// 	uni.request({
+// 		url: that.$serverUrl + '/user/queryUser',
+// 		method: "POST",
+// 		data: {
+// 			userId: userId
+// 		},
+// 		header: {
+// 			'content-type': 'application/x-www-form-urlencoded'
+// 		},
+// 		success: (res) => {
+// 			// console.log(res)
+// 			if (res.data.status == 200) {
+// 				// 3.获取返回的用户信息
+// 				finalUser = res.data.data;
+// 				// 4.分割邮箱地址, 重构user
+// 				finalUser = that.myUser(finalUser);
+// 			}
+// 			console.log("里面");
+// 			console.log(finalUser);
+// 			return finalUser;
+// 		}
+// 	});
+// 	
+// 	// app.$nextTick(function(){
+// 	// 	console.log(finalUser);
+// 	// })
+// 	
+// 	// console.log("里面2");
+// 	// console.log(finalUser);
+// 	// return finalUser;
+// }
+
+/**
+ * 分割邮箱地址, 重构user
+ * @param {Object} user
+ */
+Vue.prototype.myUser = function(user) {
+	// 分割邮箱地址
+	var email = user.email;
+	if (this.isNull(email)) {
+		email = "[Email]@nottingham.edu.cn";
+	}
+	var list = email.split('@');
+	user.emailPrefix = list[0];
+	user.emailSuffix = "@" + list[1];
+
+	return user
+}
+
+Vue.prototype.isNull = function(str) {
+	if (str == null || str == "" || str == undefined) {
+		return true;
+	}
+	return false;
+}
+
+/**
+ * 自定义封装 socket 供全局调用
+ * @author: Jerrio
+ */
+Vue.prototype.mySocket = {
+
+	isOpen: false,
+	socketMsgQueue: [], // 未发送的消息队列	
+
+	init: function() {
+		var that = this;
+		// 创建websocket长连接
+		uni.connectSocket({
+			url: app.$wsServerUrl,
+			complete: () => {}
+		});
+
+		uni.onSocketOpen(function(res) {
+			that.isOpen = true;
+			console.log('WebSocket连接已打开！isSocketOpen=' + that.isOpen);
+			//发送连接消息，向服务器注册信息
+			that.sendObj(app.netty.CONNECT, null, null, null);
+			// 发送未发送的信息
+			for (var i = 0; i < that.socketMsgQueue.length; i++) {
+				if (that.socketMsgQueue[i].action == app.netty.CHAT){
+					that.sendDataContent(that.socketMsgQueue[i]);
+				}
+			}
+			that.socketMsgQueue = [];
+
+			// 签收未签收消息
+			app.chat.fetchUnsignedMsg();
+
+			// 定时发送心跳
+			setInterval(that.keepAlive, 50000);
+		});
+
+		uni.onSocketError(function(res) {
+			console.log('WebSocket连接打开失败，请检查！');
+		});
+
+		uni.onSocketMessage(function(res) {
+			var dataContent = JSON.parse(res.data);
+			var chatMessage = dataContent.chatMessage;
+			console.log("收到服务器内容：");
+			console.log(dataContent);
+
+			// 如果消息类型为 CHAT
+			if (dataContent.action == app.netty.CHAT) {
+				// 发送签收消息
+				that.signMsgList(chatMessage.msgId);
+
+				// 保存聊天历史记录到本地缓存
+				var myId = chatMessage.receiverId;
+				var friendId = chatMessage.senderId;
+				var msg = chatMessage.msg;
+				var createDate = app.formatTime(chatMessage.createDate); // 对时间戳进行格式化
+
+				app.chat.saveUserChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);
+
+				// 判断当前页面，保存聊天快照
+				var page = app.getCurrentPage();
+				if (page.route == 'pages/chatpage/chatpage') {
+					var pageFriendId = page.data.friendInfo.id; // 打开页面才有对象，越层判断会报对象为空的错
+					/* 
+					【BUG】ISO 虚拟机获取 friendInfo.id 报错信息：
+					 undefined is not an object (evaluating 'page.data.friendInfo.id')
+					 不知道真机会不会有这种情况
+					*/
+					// var pagestr = JSON.stringify(page.data);
+					// console.log(pagestr);
+					if (pageFriendId == friendId) {
+						// 与该用户在聊天，标记为已读
+						console.log("与该用户在聊天，标记为已读");
+						app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.READ, createDate);
+					}
+				} else {
+					// 聊天页面未打开或不是与该用户聊天，标记为未读
+					console.log("聊天页面未打开或不是与该用户聊天，标记为未读");
+					app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.UNREAD, createDate);
+				}
+
+				// 修改 store，发送信号，把消息卡片渲染到对话窗口 和 消息列表
+				var newMessage = new app.chat.ChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);
+				app.$store.commit('setChatMessageCard', newMessage);
+			}
+		});
+
+		uni.onSocketClose(function(res) {
+			that.isOpen = false;
+			console.log('WebSocket 已关闭！isSocketOpen=' + that.isOpen);
+			// 三秒一次重连
+			console.log("重连中..");
+			setTimeout(function() {
+				that.init();
+			}, 3000);
+		});
+
+	},
+	/**
+	 * 向 netty 服务器发送 socket 数据的方法
+	 * @param {Object} type
+	 * @param {Object} toUserId
+	 * @param {Object} msg
+	 * @param {Object} extand
+	 */
+	sendObj(action, toUserId, msg, extand) {
+		var myUserId = app.getGlobalUserInfo().id; // 调用全局用户缓存，需要先请求获取
+		if (app.isNull(myUserId)) {
+			console.log("请先获取用户数据");
+		}
+
+		// 获取当前时间戳，传输时间戳
+		var timeStamp = new Date().getTime();
+
+		// 构建载体
+		var chatMessage = new app.netty.ChatMessage(myUserId, toUserId, msg, null, timeStamp);
+		var dataContent = new app.netty.DataContent(action, chatMessage, extand)
+
+		var isSocketOpen = app.mySocket.isOpen;
+		if (isSocketOpen == true) {
+			this.sendDataContent(dataContent);
+		} else {
+			console.log("isSocketOpen=" + isSocketOpen);
+			this.socketMsgQueue.push(dataContent);
+			console.log(this.socketMsgQueue);
+		}
+	},
+	
+	/**
+	 * 向 netty 服务器发送 DataConten 对象
+	 * @param {Object} dataContent
+	 */
+	sendDataContent(dataContent) {
+		var data = JSON.stringify(dataContent);
+		uni.sendSocketMessage({
+			data: data,
+		});
+		
+		if (dataContent.action == app.netty.CHAT) {
+			// 保存聊天历史到本地缓存，保存聊天快照到本地
+			var chatMessage = dataContent.chatMessage;
+			var createDate = app.formatTime(chatMessage.createDate);
+			
+			// console.log("发消息的时间戳：" + createDate);
+			app.chat.saveUserChatHistory(chatMessage.senderId, 
+										 chatMessage.receiverId, 
+										 chatMessage.msg, 
+										 app.chat.ME, 
+										 createDate);
+			app.chat.saveUserChatSnapshot(chatMessage.senderId, 
+										  chatMessage.receiverId, 
+										  chatMessage.msg, 
+										  app.chat.READ, 
+										  createDate);
+			// 刷到对话窗口
+			app.$store.commit('doFlashChatPage');
+		}
+	},
+
+	/**
+	 * 批量签收消息
+	 * @param {Object} msgIds
+	 */
+	signMsgList(msgIds) {
+		this.sendObj(app.netty.SIGNED, null, null, msgIds);
+	},
+
+	/**
+	 * 发送心跳
+	 */
+	keepAlive() {
+		// 用 setInterval 调用时，使用 this 获取不到实例，故用 app
+		app.mySocket.sendObj(app.netty.KEEPALIVE, null, null, null);
+	},
+}
+
+Vue.prototype.chat = {
+
+	ME: 1, // 我的消息-右边
+	FRIEND: 2, // 对方消息-左边
+	READ: 3,
+	UNREAD: 4,
+	/**
+	 * 历史记录对象
+	 * @param {Object} myId
+	 * @param {Object} friendId
+	 * @param {Object} msg
+	 * @param {Object} flag 是我的消息还是朋友的消息
+	 * @param {Object} createDate
+	 */
+	ChatHistory: function(myId, friendId, msg, flag, createDate) {
+		this.myId = myId;
+		this.friendId = friendId;
+		this.msg = msg;
+		this.flag = flag;
+		this.createDate = createDate;
+	},
+
+	/**
+	 * 快照对象
+	 * @param {Object} myId
+	 * @param {Object} friendId
+	 * @param {Object} msg
+	 * @param {Object} isRead 用于判断消息是已读还是未读
+	 * @param {Object} createDate
+	 */
+	ChatSnapshot: function(myId, friendId, msg, isRead, createDate) {
+		this.myId = myId;
+		this.friendId = friendId;
+		this.msg = msg;
+		this.isRead = isRead;
+		this.createDate = createDate;
+	},
+	/**
+	 * 保存用户的聊天记录
+	 * @param {Object} myId
+	 * @param {Object} friendId
+	 * @param {Object} msg
+	 * @param {Object} flag 判断本条消息是谁发送的, 1：我 2：朋友
+	 * @param {Object} createDate
+	 */
+	saveUserChatHistory: function(myId, friendId, msg, flag, createDate) {
+
+		var chatKey = "chat-" + myId + "-" + friendId;
+		// 从本地缓存获取聊天记录是否存在
+		var chatHistoryListStr = uni.getStorageSync(chatKey);
+		var chatHistoryList;
+		if (app.isNull(chatHistoryListStr)) {
+			// 为空，赋一个空的list；
+			chatHistoryList = [];
+		} else {
+			// 不为空
+			chatHistoryList = JSON.parse(chatHistoryListStr);
+		}
+
+		// 构建聊天记录对象
+		var singleMsg = new this.ChatHistory(myId, friendId, msg, flag, createDate);
+
+		// 添加到list尾部
+		chatHistoryList.push(singleMsg);
+
+		uni.setStorageSync(chatKey, JSON.stringify(chatHistoryList));
+
+	},
+
+	getUserChatHistory: function(myId, friendId) {
+		var chatKey = "chat-" + myId + "-" + friendId;
+		var chatHistoryListStr = uni.getStorageSync(chatKey);
+		var chatHistoryList;
+		if (app.isNull(chatHistoryListStr)) {
+			// 为空，赋一个空的list；
+			chatHistoryList = [];
+		} else {
+			// 不为空
+			chatHistoryList = JSON.parse(chatHistoryListStr);
+		}
+
+		return chatHistoryList;
+	},
+
+	/**
+	 * 删除我和朋友的聊天记录
+	 * @param {Object} myId
+	 * @param {Object} friendId
+	 */
+	deletUserChatHistory: function(myId, friendId) {
+		var chatKey = "chat-" + myId + "-" + friendId;
+		uni.removeStorageSync(chatKey);
+	},
+
+	/**
+	 * 聊天记录快照，仅保存每次和朋友聊天的最后一条消息
+	 * @param {Object} myId
+	 * @param {Object} friendId
+	 * @param {Object} msg
+	 * @param {Object} isRead
+	 * @param {Object} createDate
+	 */
+	saveUserChatSnapshot: function(myId, friendId, msg, isRead, createDate) {
+
+		var chatKey = "chat-snapshot" + myId;
+
+		// 从本地缓存获取聊天快照的 list
+		var chatSnapshotListStr = uni.getStorageSync(chatKey);
+		var chatSnapshotList;
+		if (app.isNull(chatSnapshotListStr)) {
+			// 为空，赋一个空的list；
+			chatSnapshotList = [];
+		} else {
+			// 不为空
+			chatSnapshotList = JSON.parse(chatSnapshotListStr);
+			// 循环快照list，删除含 friendId 的项
+			for (var i = 0; i < chatSnapshotList.length; i++) {
+				if (chatSnapshotList[i].friendId == friendId) {
+					chatSnapshotList.splice(i, 1); // 从i项往后删，只删一个
+					break;
+				}
+			}
+		}
+		// 构建聊天快照对象
+		var singleMsg = new this.ChatSnapshot(myId, friendId, msg, isRead, createDate);
+		// 添加到 list 第一项
+		chatSnapshotList.unshift(singleMsg);
+
+		uni.setStorageSync(chatKey, JSON.stringify(chatSnapshotList));
+	},
+
+	/**
+	 * 获取用户快照记录列表
+	 */
+	getUserChatSnapShot: function(myId) {
+		var chatKey = "chat-snapshot" + myId;
+
+		// 从本地缓存获取聊天快照的 list
+		var chatSnapshotListStr = uni.getStorageSync(chatKey);
+		var chatSnapshotList;
+		if (app.isNull(chatSnapshotListStr)) {
+			// 为空，赋一个空的list；
+			chatSnapshotList = [];
+		} else {
+			// 不为空
+			chatSnapshotList = JSON.parse(chatSnapshotListStr);
+		}
+
+		return chatSnapshotList;
+	},
+
+	/**
+	 * 删除与该用户的聊天快照记录
+	 * @param {Object} myId
+	 * @param {Object} friendId
+	 */
+	deletUserChatSnapShot: function(myId, friendId) {
+		var chatKey = "chat-snapshot" + myId;
+		// 从本地缓存获取聊天快照的 list
+		var chatSnapshotListStr = uni.getStorageSync(chatKey);
+		var chatSnapshotList;
+		if (app.isNull(chatSnapshotListStr)) {
+			// 为空，不作处理
+			return;
+		} else {
+			// 不为空
+			chatSnapshotList = JSON.parse(chatSnapshotListStr);
+			// 循环快照list，删除含 friendId 的项
+			for (var i = 0; i < chatSnapshotList.length; i++) {
+				if (chatSnapshotList[i].friendId == friendId) {
+					chatSnapshotList.splice(i, 1); // 从i项往后删，只删一个
+					break;
+				}
+			}
+		}
+
+		uni.setStorageSync(chatKey, JSON.stringify(chatSnapshotList));
+	},
+
+	/**
+	 * 把快照标记为已读，并且不改变在列表中的位置
+	 * @param {Object} myId
+	 * @param {Object} friendId
+	 */
+	readUserChatSnapShot: function(myId, friendId) {
+		var chatKey = "chat-snapshot" + myId;
+
+		// 从本地缓存获取聊天快照的 list
+		var chatSnapshotListStr = uni.getStorageSync(chatKey);
+		var chatSnapshotList;
+		if (app.isNull(chatSnapshotListStr)) {
+			// 为空，赋一个空的list；
+			return;
+		} else {
+			// 不为空
+			chatSnapshotList = JSON.parse(chatSnapshotListStr);
+			// 删除快照对象并放入新的在原有位置
+			for (var i = 0; i < chatSnapshotList.length; i++) {
+				var item = chatSnapshotList[i];
+				if (item.friendId == friendId) {
+					item.isRead = this.READ;
+					chatSnapshotList.splice(i, 1, item); // 替换
+					break;
+				}
+			}
+
+			uni.setStorageSync(chatKey, JSON.stringify(chatSnapshotList));
+		}
+	},
+
+	fetchUnsignedMsg: function() {
+		var user = app.getGlobalUserInfo();
+		var msgIds = "," // 格式: ,1001,1002,1003,
+		var that = this;
+		uni.request({
+			url: app.$serverUrl + '/user/getUnsignedMsg',
+			method: "POST",
+			data: {
+				userId: user.id
+			},
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: (res) => {
+				// console.log(res)
+				if (res.data.status == 200) {
+					var unsignedMsgList = res.data.data;
+					console.log(unsignedMsgList);
+					if (!app.isNull(unsignedMsgList)) {
+						for (var i = 0; i < unsignedMsgList.length; i++) {
+							var msgObj = unsignedMsgList[i];
+							var timeStamp = new Date(msgObj.createDate).getTime();
+							var createDate = app.formatTime(timeStamp);
+							// 1.逐条存入聊天记录
+							this.saveUserChatHistory(msgObj.acceptUserId,
+								msgObj.sendUserId,
+								msgObj.msg,
+								this.FRIEND,
+								createDate);
+							// 2.保存聊天快照到本地
+							this.saveUserChatSnapshot(msgObj.acceptUserId,
+								msgObj.sendUserId,
+								msgObj.msg,
+								this.UNREAD,
+								createDate);
+							// 3.拼接批量签收id的字符串
+							msgIds += msgObj.id + ",";
+						}
+
+						// 调用批量签收方法
+						app.mySocket.signMsgList(msgIds);
+					}
+				}
+			}
+		});
+	}
 
 
+}
+
+Vue.prototype.netty = {
+	/**
+	 * 和后端的枚举对应
+	 */
+	CONNECT: 1, // 第一次(或重连)初始化连接
+	CHAT: 2, // 聊天消息
+	SIGNED: 3, // 消息签收
+	KEEPALIVE: 4, // 客户端保持心跳
+
+	/**
+	 * 和后端 ChatMessage 聊天模型的对象保持一致
+	 * @param {Object} senderId
+	 * @param {Object} receiverId
+	 * @param {Object} msg
+	 * @param {Object} msgId
+	 * @param {Object} createDate
+	 */
+	ChatMessage: function(senderId, receiverId, msg, msgId, createDate) {
+		this.senderId = senderId;
+		this.receiverId = receiverId;
+		this.msg = msg;
+		this.msgId = msgId; // 前端发送设置null就好
+		this.createDate = createDate;
+	},
+
+	/**
+	 * 构建消息 DataContent 模型对象
+	 * @param {Object} action
+	 * @param {Object} chatMsg
+	 * @param {Object} extand
+	 */
+	DataContent: function(action, chatMessage, extand) {
+		this.action = action;
+		this.chatMessage = chatMessage;
+		this.extand = extand;
+	},
+
+}
+
+Vue.prototype.formatTime = function(timeStamp) {
+	// 将/[0-9]/位的数字编成/0[0-9]/  
+
+	if (timeStamp.length < 13) {
+		timeStamp += "000";
+	}
+	var d = new Date(parseInt(timeStamp));
+
+	var year = d.getFullYear();
+	var month = this.getTwo(d.getMonth() + 1);
+	var date = this.getTwo(d.getDate());
+	var hour = this.getTwo(d.getHours());
+	var minute = this.getTwo(d.getMinutes());
+	var second = this.getTwo(d.getSeconds());
+
+	return year + "/" + month + "/" + date + " " + hour + ":" + minute + ":" + second;
+}
+
+Vue.prototype.getTwo = function(s) {
+	if (parseInt(s) < 10) {
+		return "0" + s;
+	} else {
+		return "" + s;
+	}
+}

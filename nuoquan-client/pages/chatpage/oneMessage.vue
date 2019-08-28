@@ -1,45 +1,43 @@
 <template>
 	<view>
-		<view class="send">
-			<navigator url="../personpublic/personpublic">
-				<image class="touxiang" src="../../static/touxiang.jpg"></image>
-			</navigator>
+		<view class="send" v-if="thisMessage.flag == ME">
+			<view @tap="goToPersonPublic(userInfo.id)">
+				<image class="touxiang" :src="userInfo.faceImg"></image>
+			</view>
 			<view class="content">
 				<view class="contentText">
-					这里是1233聊天内容，巴123213拉巴拉一大堆,这里123是聊天内2，21巴拉21一大堆,1里是3聊天内容，巴拉巴拉一大堆,这里是聊天内容，巴拉巴拉一大堆
+					{{thisMessage.msg}}
 				</view>
 				<view class="bottomBar">
 					<view class="time">
-						11:29
+						{{thisMessage.createDate}}
 					</view>
-					<view class="status">
+					<view class="status" v-if="!thisMessage.isRead">
 						...
 					</view>
-					<view class="status" style="color:#3FC24A">
-						√ 
+					<view class="status" style="color:#3FC24A" v-if="thisMessage.messageStatus">
+						√
 					</view>
-					
+
 				</view>
 
 			</view>
 		</view>
 
-
-		<view class="receve">
-			<navigator url="../personpublic/personpublic">
-				<image class="touxiang" src="../../static/touxiang.jpg"></image>
-			</navigator>
+		<view class="receve" v-if="thisMessage.flag == FRIEND">
+			<view @tap="goToPersonPublic(friendInfo.id)">
+				<image class="touxiang" :src="friendInfo.faceImg"></image>
+			</view>
 			<view class="content">
 				<view class="contentText">
-					这里是1233聊天内容，巴123213拉巴拉一大堆,这里123是聊天内2，21巴拉21一大堆,1里是3聊天内容，巴拉巴拉一大堆,这里是聊天内容，巴拉巴拉一大堆
+					{{thisMessage.msg}}
 				</view>
 				<view class="bottomBar">
 					<view class="time">
-						11:29
+						{{thisMessage.createDate}}
 					</view>
-					
-				</view>
 
+				</view>
 			</view>
 		</view>
 	</view>
@@ -48,14 +46,25 @@
 <script>
 	export default {
 		props: {
-			thisMEssage: {},
+			userInfo: '',
+			friendInfo: '',
+			thisMessage: {},
 		},
 		data() {
-			return {};
+			return {
+				ME: this.chat.ME,
+				FRIEND: this.chat.FRIEND,
+			};
 		},
-		onLoad: function() {
-			console.log(this.thisMessage);
-			debugger;
+		onReady: function() {
+			// console.log(this.thisMessage);
+		},
+		methods: {
+			goToPersonPublic(userId) {
+				uni.redirectTo({ // 关闭页面再跳转，防止页面栈满, 无法返回
+					url: '../personpublic/personpublic?userId='+ userId,
+				});
+			}
 		},
 	};
 </script>
@@ -98,7 +107,7 @@
 	.contentText {
 		width: 400upx;
 		font-size: 12px;
-		word-break: break-word;
+		word-break: break-all;
 	}
 </style>
 <style>
