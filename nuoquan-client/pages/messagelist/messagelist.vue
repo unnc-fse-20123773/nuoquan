@@ -29,7 +29,14 @@
 			</view>
 			<!-- 消息内容滑块区 -->
 			<scroll-view scroll-y="true" style="position: fixed;left: 0upx;top: 314upx;width: 100%;height: 1132upx;">
-				<view v-for="(item, index) in chatSnapShotList" :key="index">
+				<!-- 新消息卡片 -->
+				<view>
+					<view class="message-list">
+						<wkiwi-swipe-action :options="options" :messagesList="messages"></wkiwi-swipe-action>
+					</view>
+				</view>
+
+				<!-- <view v-for="(item, index) in chatSnapShotList" :key="index">
 					<view class="msglist-card column_center" v-if="item.isRead == UNREAD" @tap="goToChatpage(item)">
 						<image class="msglist-Touxiang" mode="aspectFill" :src="item.friendInfo.faceImg"></image>
 						<view class="msglist-content">
@@ -44,9 +51,9 @@
 							<view class="msglist-time">
 								{{item.createDate}}
 							</view>
-							<view class="msglist-icon super_center">
+							<view class="msglist-icon super_center"> -->
 								<!-- 12 -->
-							</view>
+							<!-- </view>
 						</view>
 					</view>
 
@@ -63,15 +70,15 @@
 						<view class="time-numicon">
 							<view class="msglist-time">
 								{{item.createDate}}
-							</view>
+							</view> -->
 							<!-- 预留的icon位置 
 											by Guetta -->
 							<!-- <view class="msglist-icon-read super_center">
 								{{msgicon}}
 							</view> -->
-						</view>
+						<!-- </view>
 					</view>
-				</view>
+				</view> -->
 			</scroll-view>
 		</view>
 	</view>
@@ -82,6 +89,7 @@
 	import {
 		mapState
 	} from 'vuex';
+	import wkiwiSwipeAction from "../../components/wkiwi-swipe-action.vue";
 
 	var userInfo;
 
@@ -89,8 +97,42 @@
 	var socketOpen = false;
 
 	export default {
+		components: {
+			wkiwiSwipeAction
+		},
 		data() {
 			return {
+				focus: false,
+				isShowView: true,
+				messages: [{
+					title: "系统消息",
+					url: [
+						"http://img1.3lian.com/gif/more/11/201212/0d1252b54be4f2d240b6b7fe4ed35054.jpg"
+					],
+					message: "这是一条系统消息",
+					time: "15:15",
+					count: 5,
+					stick: false, //是否为置顶状态
+					disabled: false, //是否禁止滑动
+					type: 2 //通知类型消息
+				},
+					{
+						title: "马云",
+						url: [
+							"http://img1.3lian.com/gif/more/11/201212/0d1252b54be4f2d240b6b7fe4ed35054.jpg"
+						],
+						message: "什么鬼，我有支付宝[禁止滑动]",
+						time: "15:15",
+						count: 5,
+						stick: false, //是否为置顶状态
+						disabled: false, //是否禁止滑动
+						type: 2 //普通用户类型消息
+					}],
+				// 测试分割
+				// 测试滑动单元
+				// 如遇问题，删除以上
+
+
 				msgicon: [],
 				chatSnapShotList: [ //测试用数据
 					{
@@ -107,7 +149,7 @@
 						msg: "1",
 						myId: "test-id123",
 					},
-					
+
 					{
 						createDate: "2019/08/22 03:35:02",
 						friendId: "1",
@@ -116,7 +158,7 @@
 							email: "x@nottingham.edu.cn",
 							nickname: "test1",
 							createDate: "2019-07-05T17:17:23.000+0000",
-							faceImg:"http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTI3ic84wG7jlib3gCOlemyy53Ribg1IJM2px221hCDNync15P0MdJcPibY4QFIOibjqrVQnrI8xZ7Vg5hg/132",
+							faceImg: "http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTI3ic84wG7jlib3gCOlemyy53Ribg1IJM2px221hCDNync15P0MdJcPibY4QFIOibjqrVQnrI8xZ7Vg5hg/132",
 						},
 						isRead: 3,
 						msg: "1",
@@ -145,7 +187,7 @@
 
 		onLoad: function() {
 			uni.setNavigationBarTitle({
-				title: "私信列表"
+				title: "消息列表"
 			});
 
 			userInfo = this.getGlobalUserInfo();
@@ -214,11 +256,11 @@
 					}
 				}
 			},
-			
+
 			/**
 			 * 右滑删除, TODO: 施工中...未测试
 			 */
-			deleteChat(e){
+			deleteChat(e) {
 				// 获取朋友 id
 				var frindId = e.id
 				// 1. 删除我和朋友的聊天记录
@@ -227,7 +269,7 @@
 				this.chat.deletUserChatSnapShot(userInfo.id, frindId);
 				// 重载快照
 			},
-			
+
 			goToChatpage(e) {
 				// console.log(e)
 				var myId = e.myId;
@@ -415,8 +457,8 @@
 		margin-left: 20upx;
 		width: 480upx;
 		height: 70upx;
-		display: flex;
-		flex-direction: column;
+		/* display: flex; */
+		display: inline-block;
 	}
 
 	.msglist-id {
@@ -478,6 +520,4 @@
 		font-size: 20upx;
 		border-radius: 999upx;
 	}
-
-	.msglist-icon-read {}
 </style>

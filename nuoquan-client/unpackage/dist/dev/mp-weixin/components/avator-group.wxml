@@ -1,0 +1,1 @@
+<view class="avator-wrapper data-v-778d7dd3"><block wx:if="{{type==2}}"><view class="avator data-v-778d7dd3"><image class="img _img data-v-778d7dd3" src="{{avator[0]}}"></image></view></block></view>

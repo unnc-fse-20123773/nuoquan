@@ -1,7 +1,7 @@
 <!-- 本页面的 websocket 应写在 messagelist 里-->
 <template>
 	<view>
-		<scroll-view class="messageArea">
+		<scroll-view class="messageArea" style="background-color: #FFFFFF;">
 			<onemessage v-for="(i,index) in chatContent" :key=index :thisMessage='i' 
 			:userInfo="userInfo" :friendInfo="friendInfo"></onemessage>
 		</scroll-view>

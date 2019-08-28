@@ -129,7 +129,7 @@ public class UserController extends BasicController {
 	@ApiOperation(value = "Wechat first login or change profile")
 	@PostMapping("/updateUser")
 	public JSONResult updateUser(@RequestBody User userData) throws Exception {
-		// 1. 判断用户名和密码不为空
+		// 1. 判断用户名不为空
 		if (StringUtils.isEmpty(userData.getId())) {
 			return JSONResult.errorMsg("该账号为空");
 		}
