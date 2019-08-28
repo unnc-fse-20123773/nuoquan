@@ -99,12 +99,10 @@
 			getComments: function() {
 				var that = this;
 				uni.request({
-					url: that.$serverUrl + '/getArticleComments',
 					method: "POST",
+					url: that.$serverUrl + '/getArticleComments',
 					data: {
 						articleId: that.articleCard.id,
-						// page: '',
-						// pageSize: ''
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
@@ -126,6 +124,8 @@
 
 			this.articleCard = JSON.parse(options.data);
 			console.log(this.articleCard);
+			// console.log(this.articleCard);
+			// console.log(this.articleCard.artiticleTitle);
 
 			var userInfo = this.getGlobalUserInfo();
 			if (!this.isNull(userInfo)) {

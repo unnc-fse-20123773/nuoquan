@@ -46,14 +46,15 @@
 			};
 		},
 		created() {
-			console.log(this.articleCard);
+			// console.log(this.articleCard);
 		},
 		filters: {
 			timeDeal(timediff) {
 				timediff = new Date(timediff);
 				var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(),timediff.getSeconds()];
 				var oldTime = timediff.getTime();
-				var newTime = new Date().getTime();
+				var now = new Date();
+				var newTime = now.getTime();
 				var milliseconds = 0;
 				var timeSpanStr;
 				milliseconds = newTime - oldTime;
@@ -65,14 +66,13 @@
 					timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
 				} else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
 					timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
-				} else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && year == now.getFullYear()) {
+				} else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && parts[0] == now.getFullYear()) {
 					timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
 				} else {
 					timeSpanStr = parts[0] + '-' + parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
 				}
 				return timeSpanStr;
 			}
-
 		},
 		methods: {
 			jumpToDetail() {
@@ -82,7 +82,6 @@
 				});
 			}
 		},
-
 	};
 </script>
 
@@ -99,7 +98,6 @@
 		margin: 11px auto 0;
 		background-color: #ffffff;
 	}
-
 	.title {
 		margin: 16px 25px 0 25px;
 		font-size: 15px;
@@ -109,18 +107,15 @@
 		margin: 16px 13px 0 15px;
 		padding-top: 16px;
 	}
-
 	.briefarticleCard {
 		margin: 10px 13px 0 15px;
 		font-size: 13px;
 		line-height: 15px;
 		margin-bottom: 15px;
 	}
-
 	.tags {
 		margin-left: 10px;
 	}
-
 	.tag {
 		display: inline-block;
 		border-radius: 4px;
@@ -132,23 +127,19 @@
 		font-size: 10px;
 		background: #621E81;
 	}
-
 	.menubar {
 		position: relative;
 		vertical-align: middle;
 		margin-left: 15px;
 		border-radius: 8px;
 	}
-
 	.touxiang {
 		border-radius: 30px;
 		width: 20px;
 		height: 20px;
 		margin-right: 5px;
 		vertical-align: middle;
-
 	}
-
 	.name {
 		display: inline-block;
 		font-size: 10px;
@@ -156,14 +147,12 @@
 		color: #888888;
 		padding-bottom: 5px;
 	}
-
 	.time {
 		display: inline-block;
 		font-size: 10px;
 		margin-left: 25px;
 		color: #888888;
 	}
-
 	.icons {
 		position: absolute;
 		right: 0;
@@ -176,7 +165,6 @@
 		border-bottom-right-radius: 8px;
 		border: 10px #621E81;
 	}
-
 	.icons image {
 		position: relative;
 		/* G添加相对位置 */
@@ -184,7 +172,6 @@
 		height: 11px;
 		padding-right: 5px;
 	}
-
 	.icom {
 		display: inline-block;
 		color: #353535;
@@ -192,15 +179,12 @@
 		padding-right: 11px;
 		text-align: center;
 		vertical-align: middle;
-
 	}
-
 	.picturearea {
 		margin: auto;
 		display: flex;
 		justify-content: center;
 	}
-
 	image {
 		width: 30%;
 		height: 200upx;

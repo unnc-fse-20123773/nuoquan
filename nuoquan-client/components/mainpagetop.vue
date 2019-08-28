@@ -18,15 +18,15 @@
 			<view class="topicArea">
 				<view class="hot1">
 					<view class="hotNum1" style="font-size: 21px;margin-bottom: 14px;">1</view>
-					<view class="hotContent1" style="font-size: 15px;margin-bottom: 14px;">麻辣鸡结婚了</view>
+					<view class="hotContent1" style="font-size: 15px;margin-bottom: 14px;">{{topArticles[0].articleTitle}}</view>
 				</view>
 				<view class="hot2">
 					<view class="hotNum2" style="font-size: 17px;margin-bottom: 12px;">2</view>
-					<view class="hotContent2" style="font-size: 13px;margin-bottom: 12px;">打吊瓶看熊猫被终生免票打吊瓶看熊猫被...</view>
+					<view class="hotContent2" style="font-size: 13px;margin-bottom: 12px;">{{topArticles[1].articleTitle}}</view>
 				</view>
 				<view class="hot3">
 					<view class="hotNum3" style="font-size: 15px;">3</view>
-					<view class="hotContent3" style="font-size: 13px;">高考成绩今日公布</view>
+					<view class="hotContent3" style="font-size: 13px;">{{topArticles[2].articleTitle}}</view>
 				</view>
 			</view>
 		</view>
@@ -40,7 +40,8 @@
 			// 渲染时候替换默认值会被替换
 			userInfo: {
 				faceImg: '../static/touxiang.jpg',
-			}
+			},
+			topArticles: ''
 		},
 		components: {
 			mainpageleft

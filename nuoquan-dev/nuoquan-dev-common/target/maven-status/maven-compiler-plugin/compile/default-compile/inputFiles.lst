@@ -1,3 +1,33 @@
+<<<<<<< HEAD
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/utils/FastDFSClient.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/utils/Utils.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/utils/Serializes.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/enums/ArticleStatusEnums.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/utils/FileUtils.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/utils/JSONResult.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/utils/MyMapper.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/InvalidSystemClock.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/strategy/FileLock.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/Code.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/strategy/DefaultRandomCodeStrategy.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/utils/PagedResult.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/WorkerIdStrategy.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/Sid.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/DayCode.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/utils/MD5Utils.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/Id.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/utils/IPv4Utils.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/Test.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/utils/JsonUtils.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/RandomCodeStrategy.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/strategy/DefaultWorkerIdStrategy.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/IdWorker.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/utils/Props.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/utils/Ip.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/utils/HttpReq.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/strategy/DayPrefixRandomCodeStrategy.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/utils/TimeAgoUtils.java
+=======
 C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\strategy\DefaultWorkerIdStrategy.java
 C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\IdWorker.java
 C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\InvalidSystemClock.java
@@ -26,3 +56,4 @@ C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\
 C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\Test.java
 C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\com\nuoquan\utils\JsonUtils.java
 C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\utils\HttpReq.java
+>>>>>>> 5250d7c70dbfb4ecf068da113e9ede8a56077e1b

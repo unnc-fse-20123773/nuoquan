@@ -3,18 +3,21 @@
 		<view id="yellow-box">
 		</view>
 		<view class="profile-basicinfo-card column_center">
-			<image class="profileTouxiang" mode="aspectFill" src="../../static/touxiang2.jpg"></image>
+			<image class="profileTouxiang" mode="aspectFill" :src="userInfo.faceImg"></image>
 			<view class="profileText-box">
 				<text class="left-profileText1">昵称</text>
-				<text class="right-profileText1">诺圈一号</text>
+				<text class="right-profileText1" v-if="userInfo.nickname!=null" >{{userInfo.nickname}}</text>
+				<text class="right-profileText1" v-else >待设置</text>
 				<text class="left-profileText2">性别</text>
-				<text class="right-profileText2">男</text>
+				<text class="right-profileText2" v-if="userInfo.gender!=null">{{userInfo.gender}}</text>
+				<text class="right-profileText2" v-else >待设置</text>
 			</view>
 		</view>
 		<view class="profile-moreinfo-card super_center">
 			<view class="profilemoreText-box ">
 				<text class="left-profileText1">邮箱</text>
-				<text class="right-profileText1">zy21111@nottingham.edu.cn</text>
+				<text class="right-profileText1" v-if="userInfo.email!=null">{{userInfo.email}}</text>
+				<text class="right-profileText1" v-else >待设置</text>
 				<text class="left-profileText2">年级/专业</text>
 				<text class="right-profileText2">Y4 PDM</text>
 				<text class="left-profileText3">电话</text>
@@ -27,16 +30,22 @@
 	</view>
 </template>
 <script>
+	var userInfo;
 	export default {
 		data() {
-			return {}
-
+			return {
+				userInfo: '',
+			}
 		},
 
 		onLoad: function() {
 			uni.setNavigationBarTitle({
 				title: "个人信息"
 			});
+			
+			userInfo = this.getGlobalUserInfo();
+			this.userInfo = userInfo;
+			console.log(userInfo);
 		},
 		methods: {
 

@@ -4,7 +4,7 @@
 	<view class="mainPageLeft" @click.stop="">
 		<view class="topInfoArea">
 			<view class="topLeft">
-				<image class="touxiang" :src='userInfo.faceImg'></image>
+				<image class="touxiang" :src='userInfo.faceImg' @tap="goToProfile"></image>
 			</view>
 			<view class="topRight">
 				<view style="font-size: 13px;margin-bottom:9px;width:100%;vertical-align: bottom;">{{userInfo.nickname}}</view>
@@ -52,13 +52,19 @@
 		},
 		data() {
 			return {
-
+				
 			};
 		},
 		methods: {
 			goToMessageListPage() {
 				uni.navigateTo({
 					url: '../messagelist/messagelist',
+				});
+			},
+			
+			goToProfile(){
+				uni.navigateTo({
+					url: '../profile/profile',
 				});
 			}
 		},
@@ -71,20 +77,16 @@
 		from {
 			display: none;
 		}
-
 		to {
 			display: block;
 		}
 	}
-
 	.bottomLayerCoverScreen {
 		position: fixed;
 		width: 750upx;
 		height: 100%;
 		z-index: 5;
-
 	}
-
 	.mainPageLeft {
 		background: #fcfcfc;
 		animation: slidefromleft 3s;
@@ -96,26 +98,22 @@
 		box-shadow: 1px 0px 5px #a6a6a6;
 		border-bottom-right-radius: 80px;
 	}
-
 	.topInfoArea {
 		height: 60px;
 		margin-top: 29px;
 	}
-
 	.topLeft {
 		margin-left: 20px;
 		display: inline-block;
 		width: 60px;
 		vertical-align: top;
 	}
-
 	.touxiang {
 		height: 60px;
 		width: 60px;
 		border-radius: 60px;
 		display: block;
 	}
-
 	.topRight {
 		display: inline-block;
 		margin-left: 8px;
@@ -123,11 +121,9 @@
 		width: 80px;
 		vertical-align: bottom;
 	}
-
 	.personPageList {
 		margin-top: 40px;
 	}
-
 	button {
 		background: #fcfcfc;
 		border-radius: 0;
@@ -135,18 +131,15 @@
 		margin:0;
 		padding:0 33px;
 	}
-
 	button::after {
 		border: none;
 	}
-
 	.pageLine image {
 		width: 20px;
 		height: 20px;
 		display: inline-block;
 		vertical-align: middle;
 	}
-
 	.pageLine view {
 		display: inline-block;
 		font-size: 13px;

@@ -1,3 +1,24 @@
+<<<<<<< HEAD
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/User.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/Administrator.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/enums/MsgSignFlagEnum.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/SearchRecord.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/netty/DataContent.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/UserFans.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/enums/MsgActionEnum.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/UserLikeArticle.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/vo/ArticleVO.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/UserArticleComment.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/Article.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/ChatMsg.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/netty/ChatMessage.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/vo/UserArticleCommentVO.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/Tags.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/UserReport.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/vo/UserVO.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/vo/FansFollow.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/vo/UserFansVO.java
+=======
 C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\enums\MsgActionEnum.java
 C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\UserArticleComment.java
 C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\ChatMsg.java
@@ -17,3 +38,4 @@ C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\ma
 C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\vo\UserVO.java
 C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\Administrator.java
 C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\UserFans.java
+>>>>>>> 5250d7c70dbfb4ecf068da113e9ede8a56077e1b

@@ -1,4 +1,24 @@
 # Update Log:
+**v19.8.28 更新**
+1. 新增 获取热度榜前3的接口
+2. 新增 显示热度榜前三功能
+3. 修改 articleController 下访问接口前缀 (/article), 前端旧的相应请求地址注意修改
+
+**v19.8.27 更新**
+1. 整合 deyan & yaoyao 分支
+2. 新增 按公式（24小时中的点赞数+评论数）更新热度定时任务
+3. 修改 Detail，主页的顶部背景和左侧样式 [yaoyao]
+4. 修改 多图上传修改中 [deyan]
+5. 中改 数据库，详情见 sqlRecord.sql (两期)
+
+**v19.8.25 更新**
+1. 新增 对上传文件大小做限制，增加文章上传中图片大小的判断逻辑
+2. 新增 application 配置文件中，设置上传最大图片大小为，10MB
+3. 新增 BasicController 里统一 uploadFile 方法
+4. 修改 后端 fileSpace 为全局变量 
+5. 修改 优化 ArticalConroller upload 接口的实现方式
+6. 修改 前端 websockt 服务器地址为全局变量
+
 **v19.8.23 更新**
 1. 新增 心跳机制
 2. 新增 聊天消息重发机制

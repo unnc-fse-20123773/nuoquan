@@ -1,0 +1,81 @@
+
+@-webkit-keyframes slidefromleft {
+from {
+		display: none;
+}
+to {
+		display: block;
+}
+}
+@keyframes slidefromleft {
+from {
+		display: none;
+}
+to {
+		display: block;
+}
+}
+.bottomLayerCoverScreen {
+	position: fixed;
+	width: 750rpx;
+	height: 100%;
+	z-index: 5;
+}
+.mainPageLeft {
+	background: #fcfcfc;
+	-webkit-animation: slidefromleft 3s;
+	        animation: slidefromleft 3s;
+	width: 174px;
+	height: 100%;
+	position: fixed;
+	left: 0;
+	top: 0;
+	-webkit-box-shadow: 1px 0px 5px #a6a6a6;
+	        box-shadow: 1px 0px 5px #a6a6a6;
+	border-bottom-right-radius: 80px;
+}
+.topInfoArea {
+	height: 60px;
+	margin-top: 29px;
+}
+.topLeft {
+	margin-left: 20px;
+	display: inline-block;
+	width: 60px;
+	vertical-align: top;
+}
+.touxiang {
+	height: 60px;
+	width: 60px;
+	border-radius: 60px;
+	display: block;
+}
+.topRight {
+	display: inline-block;
+	margin-left: 8px;
+	height: 60px;
+	width: 80px;
+	vertical-align: bottom;
+}
+.personPageList {
+	margin-top: 40px;
+}
+.pageLine {
+	margin-left: 34px;
+	margin-bottom: 20px;
+}
+.pageLine image {
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	vertical-align: middle;
+}
+.pageLine view {
+	display: inline-block;
+	font-size: 13px;
+	font-weight: bold;
+	margin-left: 17px;
+}
+.pageLine button {
+}
+

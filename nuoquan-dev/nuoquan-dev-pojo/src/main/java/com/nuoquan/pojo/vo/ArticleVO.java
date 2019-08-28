@@ -18,7 +18,7 @@ public class ArticleVO {
     private Date createDate;
     private Byte isAnonymous;
     private String articlePath;
-    
+    private Integer viewNum;
     
     private String nickname;
     private String faceImg;
@@ -232,5 +232,13 @@ public class ArticleVO {
 
 	public void setFaceImgThumb(String faceImgThumb) {
 		this.faceImgThumb = faceImgThumb;
+	}
+
+	public Integer getViewNum() {
+		return viewNum;
+	}
+
+	public void setViewNum(Integer viewNum) {
+		this.viewNum = viewNum;
 	}
 }

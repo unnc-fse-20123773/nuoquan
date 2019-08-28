@@ -1,0 +1,9 @@
+<import src="/pages/chatpage/oneMessage.vue.wxml" />
+<import src="/components/mainpagetop.vue.wxml" />
+<import src="/components/articlebrief.vue.wxml" />
+<import src="/pages/black-index/black-articlebrief.vue.wxml" />
+<import src="/pages/black-index/black-popup.vue.wxml" />
+<import src="/components/comment.vue.wxml" />
+<import src="/components/mainpageleft.vue.wxml" />
+<import src="/pages/black-index/black-comment.vue.wxml" />
+
