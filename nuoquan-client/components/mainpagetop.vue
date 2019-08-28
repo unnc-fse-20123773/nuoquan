@@ -8,7 +8,7 @@
 			<view class="topBar">
 				<image class="topBarTouxiang" :src='userInfo.faceImg' @click="controlShowLeft(1)"></image>
 				<input class="topBarSearch" placeholder="  搜索" />
-				<view class="topBarPlus">
+				<view class="topBarPlus" @click="jumpToSubmit()">
 					<view style="font-size: 20px;color:#FDD041;border-radius: 3px;">+</view>
 				</view>
 				<view class="topBarwaiting"></view>
@@ -18,15 +18,15 @@
 			<view class="topicArea">
 				<view class="hot1">
 					<view class="hotNum1" style="font-size: 21px;margin-bottom: 14px;">1</view>
-					<view class="hotContent1" style="font-size: 15px;margin-bottom: 14px;">麻辣鸡结婚了</view>
+					<view class="hotContent1" style="font-size: 15px;margin-bottom: 14px;">{{topArticles[0].articleTitle}}</view>
 				</view>
 				<view class="hot2">
 					<view class="hotNum2" style="font-size: 17px;margin-bottom: 12px;">2</view>
-					<view class="hotContent2" style="font-size: 13px;margin-bottom: 12px;">打吊瓶看熊猫被终生免票打吊瓶看熊猫被...</view>
+					<view class="hotContent2" style="font-size: 13px;margin-bottom: 12px;">{{topArticles[1].articleTitle}}</view>
 				</view>
 				<view class="hot3">
 					<view class="hotNum3" style="font-size: 15px;">3</view>
-					<view class="hotContent3" style="font-size: 13px;">高考成绩今日公布</view>
+					<view class="hotContent3" style="font-size: 13px;">{{topArticles[2].articleTitle}}</view>
 				</view>
 			</view>
 		</view>
@@ -40,22 +40,28 @@
 			// 渲染时候替换默认值会被替换
 			userInfo: {
 				faceImg: '../static/touxiang.jpg',
-			}
+			},
+			topArticles: ''
 		},
 		components: {
 			mainpageleft
 		},
-		
+
 		data() {
 			return {
 				showMainPageLeft: 0,
 			};
 		},
-		
+
 		methods: {
 			controlShowLeft(a) {
 				this.showMainPageLeft = a;
 				// console.log(this.showMainPageLeft);
+			},
+			jumpToSubmit() {
+				uni.navigateTo({
+					url: '/pages/submit/submit'
+				});
 			}
 		}
 	};
@@ -79,7 +85,8 @@
 		/* 	height: 168px;
  */
 		width: 100%;
-		background: #fdd041;
+		background: url(../static/BG/indexBG2.png), url(../static/BG/indexBG.png);
+		background-size: 100% 100%;
 		box-shadow: 0 -2px 10px #000000;
 		border-bottom-right-radius: 25px;
 		border-bottom-left-radius: 25px;
@@ -164,5 +171,4 @@
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
-
 </style>

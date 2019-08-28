@@ -3,7 +3,9 @@ package com.nuoquan.service;
 import java.util.List;
 
 import com.nuoquan.pojo.Article;
+import com.nuoquan.pojo.ArticleImage;
 import com.nuoquan.pojo.UserArticleComment;
+import com.nuoquan.pojo.vo.ArticleVO;
 import com.nuoquan.utils.PagedResult;
 
 public interface ArticleService {
@@ -43,7 +45,7 @@ public interface ArticleService {
 	/**
 	 * 保存文章
 	 */
-	public void saveArticle(Article article);
+	public String saveArticle(Article article);
 	
 	/**
 	 * 上传留言到数据库
@@ -59,4 +61,20 @@ public interface ArticleService {
 	 * @return
 	 */
 	public PagedResult getAllComments(String articleId, Integer page, Integer pageSize);
+	
+	/**
+	 * 
+	 */
+	public void saveArticleImages(ArticleImage articleImage);
+	
+	/**
+	 * 根据公式更新文章热度
+	 */
+	public void upadtePopByFunction();
+	
+	/**
+	 * 获取热度值前三的文章
+	 * @return
+	 */
+	public List<ArticleVO> getTop3ByPopularity();
 }

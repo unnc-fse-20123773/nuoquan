@@ -1,15 +1,15 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/chatpage/chatpage",
+    "pages/detail/detail",
     "pages/submit/submit",
+    "pages/chatpage/chatpage",
     "pages/followlist/followlist",
     "pages/profile/profile",
     "pages/personpublic/personpublic",
     "pages/search/search",
     "pages/fanslist/fanslist",
     "pages/black-index/black-index",
-    "pages/detail/detail",
     "pages/signin/signin",
     "components/articlebrief",
     "pages/messagelist/messagelist",

@@ -15,6 +15,7 @@ Vue.config.productionTip = false
 Vue.prototype.$store = store
 Vue.prototype.$serverUrl = "http://127.0.0.1:8080"
 Vue.prototype.$wsServerUrl = "ws://localhost:8088/ws"
+
 // Vue.prototype.$serverUrl = "http://192.168.31.210:8080"
 // Vue.prototype.$wsServerUrl = "ws://192.168.31.210:8088/ws"
 
@@ -654,8 +655,10 @@ Vue.prototype.formatTime = function(timeStamp) {
 	var hour = this.getTwo(d.getHours());
 	var minute = this.getTwo(d.getMinutes());
 	var second = this.getTwo(d.getSeconds());
-
-	return year + "/" + month + "/" + date + " " + hour + ":" + minute + ":" + second;
+	
+	return month + "/" + date + " " + hour + ":" + minute;
+	// 明年改加上年的逻辑 鸣谦说的...
+	// return year + "/" + month + "/" + date + " " + hour + ":" + minute + ":" + second;
 }
 
 Vue.prototype.getTwo = function(s) {

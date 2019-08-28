@@ -3,7 +3,7 @@
 	/* 	background-color:gray;
  */
 	border-radius: 20px;
-	width: 90%;
+	width: 100%;
 	margin: auto;
 }
 .fengexian.data-v-6b97edec {
@@ -12,16 +12,16 @@
 	background-color: #d6d6d6;
 }
 .contentarea.data-v-6b97edec {
+	padding-top: 14px;
 	background: white;
 	font-size: 16px;
 	border-radius: 20px;
-	margin-top: 20px;
 }
 .bottombar.data-v-6b97edec {
 	position: relative;
 	border-radius: 20px;
-	height: 40px;
-	margin-top: 20px;
+	height: 25px;
+	margin-top: 10px;
 }
 .touxiang.data-v-6b97edec {
 	width: 20px;
@@ -33,8 +33,9 @@
 }
 .time.data-v-6b97edec,
 .name.data-v-6b97edec {
-	font-size: 13px;
+	font-size: 10px;
 	margin-right: 10px;
+	color:#888888;
 }
 .icons.data-v-6b97edec {
 	-webkit-box-pack: end;
@@ -50,11 +51,15 @@
 	    -ms-flex-align: center;
 	        align-items: center;
 	width: 30%;
+	font-size: 10px;
 }
 .icon.data-v-6b97edec {
-	width: 35px;
-	height: 15px;
+	width: 11px;
+	height: 11px;
 	font-size: 2px;
+		padding-left: 45rpx;
+	padding-right:8rpx;
 }
+
 
 

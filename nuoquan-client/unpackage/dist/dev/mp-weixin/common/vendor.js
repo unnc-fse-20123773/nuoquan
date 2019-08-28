@@ -26,6 +26,7 @@ _vue.default.config.productionTip = false;
 _vue.default.prototype.$store = _store.default;
 _vue.default.prototype.$serverUrl = "http://127.0.0.1:8080";
 _vue.default.prototype.$wsServerUrl = "ws://localhost:8088/ws";
+
 // Vue.prototype.$serverUrl = "http://192.168.31.210:8080"
 // Vue.prototype.$wsServerUrl = "ws://192.168.31.210:8088/ws"
 
@@ -666,7 +667,9 @@ _vue.default.prototype.formatTime = function (timeStamp) {
   var minute = this.getTwo(d.getMinutes());
   var second = this.getTwo(d.getSeconds());
 
-  return year + "/" + month + "/" + date + " " + hour + ":" + minute + ":" + second;
+  return month + "/" + date + " " + hour + ":" + minute;
+  // 明年改加上年的逻辑 鸣谦说的...
+  // return year + "/" + month + "/" + date + " " + hour + ":" + minute + ":" + second;
 };
 
 _vue.default.prototype.getTwo = function (s) {

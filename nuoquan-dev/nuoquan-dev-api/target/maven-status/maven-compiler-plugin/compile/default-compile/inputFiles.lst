@@ -7,31 +7,31 @@
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/controller/UserController.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/controller/HelloController.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/GlobalExceptionHandler.java
-/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/netty/ChatMessage.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/SpringUtil.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/scheduler/popularityScheduler.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/netty/WSServer.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/Application.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/netty/WSServerInitializer.java
-/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/enums/MsgSignFlagEnum.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/netty/UserChannelRel.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/netty/HeartBeatHandler.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/netty/ChatHandler.java
-/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/enums/MsgActionEnum.java
-/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/netty/DataContent.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/NettyBooter.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/controller/BasicController.java
 =======
-/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/cofig/ResourceConfig.java
-/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/netty/ChatHandler.java
-/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/NettyBooter.java
-/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/FastdfsImporter.java
-/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/controller/BasicController.java
-/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/Swagger2.java
-/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/netty/WSServer.java
-/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/controller/UserController.java
-/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/controller/ArticleController.java
-/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/netty/WSServerInitializer.java
-/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/GlobalExceptionHandler.java
-/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/controller/HelloController.java
-/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/controller/RegistLoginController.java
-/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/Application.java
->>>>>>> ae6652b61935144f3e887c2dec99f94a348adbf6
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-api\src\main\java\com\nuoquan\netty\UserChannelRel.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-api\src\main\java\com\nuoquan\controller\BasicController.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-api\src\main\java\com\nuoquan\netty\ChatHandler.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-api\src\main\java\com\nuoquan\config\ResourceConfig.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-api\src\main\java\com\nuoquan\controller\RegistLoginController.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-api\src\main\java\com\nuoquan\FastdfsImporter.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-api\src\main\java\com\nuoquan\netty\WSServer.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-api\src\main\java\com\nuoquan\GlobalExceptionHandler.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-api\src\main\java\com\nuoquan\Application.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-api\src\main\java\com\nuoquan\controller\HelloController.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-api\src\main\java\com\nuoquan\NettyBooter.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-api\src\main\java\com\nuoquan\Swagger2.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-api\src\main\java\com\nuoquan\controller\UserController.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-api\src\main\java\com\nuoquan\SpringUtil.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-api\src\main\java\com\nuoquan\controller\ArticleController.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-api\src\main\java\com\nuoquan\netty\WSServerInitializer.java
+>>>>>>> 5250d7c70dbfb4ecf068da113e9ede8a56077e1b

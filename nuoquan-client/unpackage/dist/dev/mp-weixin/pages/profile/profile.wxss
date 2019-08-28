@@ -80,6 +80,13 @@ page {
 	border-bottom: 1rpx solid #C0C0C0;
 	width: 260px;
 }
+.input-border3 {
+	position: absolute;
+	margin-top: 292rpx;
+	right: 0;
+	border-bottom: 1rpx solid #C0C0C0;
+	width: 126px;
+}
 .left-profileText2 {
 	color: #888888;
 	position: absolute;
@@ -106,6 +113,14 @@ page {
 }
 .right-profileText3 {
 	color: #3D3D3D;
+	position: absolute;
+	margin-top: 246rpx;
+	right: 0;
+	font-size: 32rpx;
+	font-weight: 550;
+}
+.right-profileText3-3 {
+	color: #888888;
 	position: absolute;
 	margin-top: 246rpx;
 	right: 0;
@@ -217,7 +232,7 @@ page {
 	z-index: 999;
 	right: 10px;
 	margin-top: 146rpx;
-	top: -130rpx;
+	top: -148rpx;
 	right: 126rpx;
 }
 .yearPicker {

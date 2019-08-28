@@ -1,19 +1,35 @@
+<<<<<<< HEAD
 com/nuoquan/pojo/SearchRecord.class
-com/nuoquan/pojo/Administrator.class
 com/nuoquan/pojo/User.class
+com/nuoquan/pojo/UserReport.class
+com/nuoquan/pojo/Tags.class
+com/nuoquan/pojo/Administrator.class
 com/nuoquan/pojo/UserArticleComment.class
 com/nuoquan/pojo/ChatMsg.class
 com/nuoquan/pojo/UserFans.class
-<<<<<<< HEAD
 com/nuoquan/enums/MsgSignFlagEnum.class
 com/nuoquan/pojo/netty/ChatMessage.class
 com/nuoquan/pojo/vo/UserVO.class
-=======
-com/nuoquan/pojo/UserReport.class
->>>>>>> ae6652b61935144f3e887c2dec99f94a348adbf6
 com/nuoquan/pojo/UserLikeArticle.class
-com/nuoquan/pojo/Tags.class
 com/nuoquan/pojo/Article.class
 com/nuoquan/pojo/netty/DataContent.class
 com/nuoquan/enums/MsgActionEnum.class
 com/nuoquan/pojo/vo/ArticleVO.class
+=======
+com\nuoquan\enums\MsgActionEnum.class
+com\nuoquan\pojo\SearchRecord.class
+com\nuoquan\pojo\UserLikeArticle.class
+com\nuoquan\enums\MsgSignFlagEnum.class
+com\nuoquan\pojo\UserFans.class
+com\nuoquan\pojo\vo\UserVO.class
+com\nuoquan\pojo\ChatMsg.class
+com\nuoquan\pojo\netty\ChatMessage.class
+com\nuoquan\pojo\netty\DataContent.class
+com\nuoquan\pojo\Article.class
+com\nuoquan\pojo\UserArticleComment.class
+com\nuoquan\pojo\UserReport.class
+com\nuoquan\pojo\Tags.class
+com\nuoquan\pojo\User.class
+com\nuoquan\pojo\Administrator.class
+com\nuoquan\pojo\vo\ArticleVO.class
+>>>>>>> 5250d7c70dbfb4ecf068da113e9ede8a56077e1b

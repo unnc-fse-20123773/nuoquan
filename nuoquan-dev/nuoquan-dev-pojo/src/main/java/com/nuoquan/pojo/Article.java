@@ -42,22 +42,17 @@ public class Article {
      */
     @Column(name = "is_anonymous")
     private Byte isAnonymous;
-    
-    /**
-     * 文章存放的路径
-     */
+
     @Column(name = "article_path")
     private String articlePath;
-    
-    public String getArticlePath() {
-		return articlePath;
-	}
 
-	public void setArticlePath(String articlePath) {
-		this.articlePath = articlePath;
-	}
+    /**
+     * 浏览量
+     */
+    @Column(name = "view_num")
+    private Integer viewNum;
 
-	/**
+    /**
      * @return id
      */
     public String getId() {
@@ -231,5 +226,37 @@ public class Article {
      */
     public void setIsAnonymous(Byte isAnonymous) {
         this.isAnonymous = isAnonymous;
+    }
+
+    /**
+     * @return article_path
+     */
+    public String getArticlePath() {
+        return articlePath;
+    }
+
+    /**
+     * @param articlePath
+     */
+    public void setArticlePath(String articlePath) {
+        this.articlePath = articlePath;
+    }
+
+    /**
+     * 获取浏览量
+     *
+     * @return view_num - 浏览量
+     */
+    public Integer getViewNum() {
+        return viewNum;
+    }
+
+    /**
+     * 设置浏览量
+     *
+     * @param viewNum 浏览量
+     */
+    public void setViewNum(Integer viewNum) {
+        this.viewNum = viewNum;
     }
 }

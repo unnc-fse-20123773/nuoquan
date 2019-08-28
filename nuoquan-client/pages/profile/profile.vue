@@ -63,7 +63,9 @@
 				<picker class="pick-style" v-if="picker == true"></picker>
 
 				<text class="left-profileText3">电话</text>
-				<text class="right-profileText3">18000000000</text>
+				<input class="right-profileText3-3" style="width: 260px;text-align:right;min-height: 1upx;height:26px;" maxlength="11"
+				 :value="18888888888" />
+				 <view class="input-border3"></view>
 			</view>
 
 		</view>
@@ -241,6 +243,14 @@
 		border-bottom: 1upx solid #C0C0C0;
 		width: 260px;
 	}
+	
+		.input-border3 {
+		position: absolute;
+		margin-top: 292upx;
+		right: 0;
+		border-bottom: 1upx solid #C0C0C0;
+		width: 126px;
+	}
 
 	.left-profileText2 {
 		color: #888888;
@@ -271,6 +281,15 @@
 
 	.right-profileText3 {
 		color: #3D3D3D;
+		position: absolute;
+		margin-top: 246upx;
+		right: 0;
+		font-size: 32upx;
+		font-weight: 550;
+	}
+	
+	.right-profileText3-3 {
+		color: #888888;
 		position: absolute;
 		margin-top: 246upx;
 		right: 0;
@@ -376,7 +395,7 @@
 		z-index: 999;
 		right: 10px;
 		margin-top: 146upx;
-		top: -130upx;
+		top: -148upx;
 		right: 126upx;
 	}
 

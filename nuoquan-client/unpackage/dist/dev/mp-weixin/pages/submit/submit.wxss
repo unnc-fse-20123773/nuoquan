@@ -22,8 +22,8 @@ page {
 	height: 100%;
 	width: 606rpx;
 	padding: 38rpx 72rpx;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
+	border-top-left-radius: 18px;
+	border-top-right-radius: 18px;
 	background: #FFFFFF;
 	-webkit-box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.35);
 	        box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.35);
