@@ -193,7 +193,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _vuex = __webpack_require__(/*! vuex */ 12);function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var wkiwiSwipeAction = function wkiwiSwipeAction() {return __webpack_require__.e(/*! import() | components/wkiwi-swipe-action */ "components/wkiwi-swipe-action").then(__webpack_require__.bind(null, /*! ../../components/wkiwi-swipe-action.vue */ 186));};
+var _vuex = __webpack_require__(/*! vuex */ 12);function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var SwipeAction = function SwipeAction() {return __webpack_require__.e(/*! import() | components/swipe-action */ "components/swipe-action").then(__webpack_require__.bind(null, /*! ../../components/swipe-action.vue */ 186));};
 
 
 
@@ -205,7 +205,7 @@ var socketOpen = false;var _default =
 
 {
   components: {
-    wkiwiSwipeAction: wkiwiSwipeAction },
+    SwipeAction: SwipeAction },
 
   data: function data() {
     return {
@@ -213,15 +213,15 @@ var socketOpen = false;var _default =
       isShowView: true,
       messages: [{
         title: "系统消息",
-        url: [
-        "http://img1.3lian.com/gif/more/11/201212/0d1252b54be4f2d240b6b7fe4ed35054.jpg"],
-
+        // url: [
+        // 	"http://img1.3lian.com/gif/more/11/201212/0d1252b54be4f2d240b6b7fe4ed35054.jpg"
+        // ],
         message: "这是一条系统消息",
-        time: "15:15",
-        count: 5,
-        stick: false, //是否为置顶状态
-        disabled: false, //是否禁止滑动
-        type: 2 //通知类型消息
+        time: "15:15"
+        // count: 5,
+        // stick: false, //是否为置顶状态
+        // disabled: false, //是否禁止滑动
+        // type: 2 //通知类型消息
       },
       {
         title: "马云",
@@ -369,16 +369,17 @@ var socketOpen = false;var _default =
         */
     deleteChat: function deleteChat(e) {
       // 获取朋友 id
-      var frindId = e.id;
+      var frindId = e.friendId;
       // 1. 删除我和朋友的聊天记录
       this.chat.deletUserChatHistory(userInfo.id, frindId);
       // 2. 删除快照
       this.chat.deletUserChatSnapShot(userInfo.id, frindId);
       // 重载快照
+      this.loadingChatSnapshot();
     },
 
     goToChatpage: function goToChatpage(e) {
-      // console.log(e)
+      console.log(e);
       var myId = e.myId;
       var friendId = e.friendId;
       var msg = e.msg;

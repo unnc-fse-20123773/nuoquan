@@ -123,6 +123,14 @@
     background-color: rgba(243, 236, 221, 0.5);
 }
 .item .item-left {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
     text-align: center;
 }
 .item .item-left .image {
@@ -132,13 +140,16 @@
       background-color: #eee;
 }
 .item .item-left .avator {
-      width: 100rpx;
-      height: 100rpx;
-      text-align: center;
-      line-height: 100rpx;
-      background: #4191ea;
+      width: 80rpx;
+      height: 80rpx;
       border-radius: 50%;
-      overflow: hidden;
+      overflow: hiideen;
+      background: #f1f1f1;
+}
+.item .item-left .avator .img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
 }
 .item .item-left .avator .iconfont {
         width: 100rpx;
@@ -174,7 +185,23 @@
 }
 .item .item-middle .title {
       width: 100%;
-      color: #000;
+      color: #353535;
+      font-family: "\5FAE\8F6F\96C5\9ED1";
+      font-weight: 400;
+      font-size: 30rpx;
+      height: 50rpx;
+      line-height: 60rpx;
+      overflow: hidden;
+      /*自动隐藏文字*/
+      -o-text-overflow: ellipsis;
+         text-overflow: ellipsis;
+      /*文字隐藏后添加省略号*/
+      white-space: nowrap;
+      /**强制不换行*/
+}
+.item .item-middle .title-read {
+      width: 100%;
+      color: #9b9b9b;
       font-family: "\5FAE\8F6F\96C5\9ED1";
       font-weight: 400;
       font-size: 30rpx;
@@ -191,7 +218,22 @@
 .item .item-middle .message {
       width: 100%;
       font-family: "\5FAE\8F6F\96C5\9ED1";
-      color: #808080;
+      color: #6f6f6f;
+      height: 50rpx;
+      line-height: 40rpx;
+      font-size: 24rpx;
+      overflow: hidden;
+      /**自动隐藏文字*/
+      -o-text-overflow: ellipsis;
+         text-overflow: ellipsis;
+      /**文字隐藏后添加省略号*/
+      white-space: nowrap;
+      /**强制不换行*/
+}
+.item .item-middle .message-read {
+      width: 100%;
+      font-family: "\5FAE\8F6F\96C5\9ED1";
+      color: #9b9b9b;
       height: 50rpx;
       line-height: 40rpx;
       font-size: 24rpx;
@@ -204,6 +246,7 @@
       /**强制不换行*/
 }
 .item .item-right {
+    position: relative;
     overflow: hidden;
     display: -webkit-box;
     display: -webkit-flex;
@@ -220,13 +263,17 @@
             align-items: center;
 }
 .item .item-right .time {
+      margin-top: -10rpx;
       color: #808080;
       font-size: 18rpx;
       height: 60rpx;
       line-height: 60rpx;
 }
 .item .item-right .mark {
-      background-color: #f74c31;
+      position: absolute;
+      right: 0;
+      bottom: 15rpx;
+      background-color: #fdd453;
       line-height: 35rpx;
       text-align: center;
       font-size: 18rpx;

@@ -32,7 +32,7 @@
 				<!-- 新消息卡片 -->
 				<view>
 					<view class="message-list">
-						<wkiwi-swipe-action :options="options" :messagesList="messages"></wkiwi-swipe-action>
+						<swipe-action :options="options" :messagesList="chatSnapShotList" @tapCard="goToChatpage()" @tapDelete="deleteChat()"></swipe-action>
 					</view>
 				</view>
 
@@ -89,7 +89,7 @@
 	import {
 		mapState
 	} from 'vuex';
-	import wkiwiSwipeAction from "../../components/wkiwi-swipe-action.vue";
+	import SwipeAction from "../../components/swipe-action.vue";
 
 	var userInfo;
 
@@ -98,7 +98,7 @@
 
 	export default {
 		components: {
-			wkiwiSwipeAction
+			SwipeAction
 		},
 		data() {
 			return {
@@ -106,15 +106,15 @@
 				isShowView: true,
 				messages: [{
 					title: "系统消息",
-					url: [
-						"http://img1.3lian.com/gif/more/11/201212/0d1252b54be4f2d240b6b7fe4ed35054.jpg"
-					],
+					// url: [
+					// 	"http://img1.3lian.com/gif/more/11/201212/0d1252b54be4f2d240b6b7fe4ed35054.jpg"
+					// ],
 					message: "这是一条系统消息",
 					time: "15:15",
-					count: 5,
-					stick: false, //是否为置顶状态
-					disabled: false, //是否禁止滑动
-					type: 2 //通知类型消息
+					// count: 5,
+					// stick: false, //是否为置顶状态
+					// disabled: false, //是否禁止滑动
+					// type: 2 //通知类型消息
 				},
 					{
 						title: "马云",
@@ -262,16 +262,17 @@
 			 */
 			deleteChat(e) {
 				// 获取朋友 id
-				var frindId = e.id
+				var frindId = e.friendId
 				// 1. 删除我和朋友的聊天记录
 				this.chat.deletUserChatHistory(userInfo.id, frindId);
 				// 2. 删除快照
 				this.chat.deletUserChatSnapShot(userInfo.id, frindId);
 				// 重载快照
+				this.loadingChatSnapshot();
 			},
 
 			goToChatpage(e) {
-				// console.log(e)
+				console.log(e)
 				var myId = e.myId;
 				var friendId = e.friendId;
 				var msg = e.msg;
