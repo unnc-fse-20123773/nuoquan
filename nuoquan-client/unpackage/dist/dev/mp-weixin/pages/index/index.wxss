@@ -5,13 +5,13 @@ image {
 }
 
 
-.articlecard.data-v-2881634c {
+.articlecard.data-v-0734f7a0 {
 	width: 650rpx;
 	border-radius: 8px;
 	margin: 11px auto 0;
 	background-color: #ffffff;
 }
-.title.data-v-2881634c {
+.title.data-v-0734f7a0 {
 	margin: 16px 25px 0 25px;
 	font-size: 15px;
 	font: MicrosoftYaHei;
@@ -20,16 +20,16 @@ image {
 	margin: 16px 13px 0 15px;
 	padding-top: 16px;
 }
-.briefarticleCard.data-v-2881634c {
+.briefarticleCard.data-v-0734f7a0 {
 	margin: 10px 13px 0 15px;
 	font-size: 13px;
 	line-height: 15px;
 	margin-bottom: 15px;
 }
-.tags.data-v-2881634c {
+.tags.data-v-0734f7a0 {
 	margin-left: 10px;
 }
-.tag.data-v-2881634c {
+.tag.data-v-0734f7a0 {
 	display: inline-block;
 	border-radius: 4px;
 	padding-left: 5px;
@@ -40,33 +40,33 @@ image {
 	font-size: 10px;
 	background: #621E81;
 }
-.menubar.data-v-2881634c {
+.menubar.data-v-0734f7a0 {
 	position: relative;
 	vertical-align: middle;
 	margin-left: 15px;
 	border-radius: 8px;
 }
-.touxiang.data-v-2881634c {
+.touxiang.data-v-0734f7a0 {
 	border-radius: 30px;
 	width: 20px;
 	height: 20px;
 	margin-right: 5px;
 	vertical-align: middle;
 }
-.name.data-v-2881634c {
+.name.data-v-0734f7a0 {
 	display: inline-block;
 	font-size: 10px;
 	margin-left: 7px;
 	color: #888888;
 	padding-bottom: 5px;
 }
-.time.data-v-2881634c {
+.time.data-v-0734f7a0 {
 	display: inline-block;
 	font-size: 10px;
 	margin-left: 25px;
 	color: #888888;
 }
-.icons.data-v-2881634c {
+.icons.data-v-0734f7a0 {
 	position: absolute;
 	right: 0;
 	bottom:0;
@@ -78,14 +78,14 @@ image {
 	border-bottom-right-radius: 8px;
 	border: 10px #621E81;
 }
-.icons image.data-v-2881634c {
+.icons image.data-v-0734f7a0 {
 	position: relative;
 	/* G添加相对位置 */
 	width: 11px;
 	height: 11px;
 	padding-right: 5px;
 }
-.icom.data-v-2881634c {
+.icom.data-v-0734f7a0 {
 	display: inline-block;
 	color: #353535;
 	font-size: 10px;
@@ -93,7 +93,7 @@ image {
 	text-align: center;
 	vertical-align: middle;
 }
-.picturearea.data-v-2881634c {
+.picturearea.data-v-0734f7a0 {
 	margin: auto;
 	display: -webkit-box;
 	display: -webkit-flex;
@@ -104,7 +104,7 @@ image {
 	    -ms-flex-pack: center;
 	        justify-content: center;
 }
-image.data-v-2881634c {
+image.data-v-0734f7a0 {
 	width: 30%;
 	height: 200rpx;
 	margin: auto;

@@ -100,17 +100,17 @@
 				var that = this;
 				uni.request({
 					method: "POST",
-					url: that.$serverUrl + '/getArticleComments',
+					url: that.$serverUrl + '/article/getArticleComments',
 					data: {
 						articleId: that.articleCard.id,
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
-					success: (res) => {
+					success: (res) => {	console.log(res);
 						that.commentList = res.data.data.rows;
-						console.log(that.articleCard.id),
-							console.log(res)
+						console.log(that.articleCard.id);
+						
 					},
 				});
 			},
