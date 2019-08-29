@@ -247,7 +247,9 @@
 	button::after {
 		border: none;
 	}
-
+button-hover{
+	background: #000000;
+}
 	.pageLine image {
 		width: 20px;
 		height: 20px;
