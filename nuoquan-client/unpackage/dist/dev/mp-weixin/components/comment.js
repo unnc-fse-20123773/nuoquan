@@ -128,6 +128,27 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   name: 'comment',
@@ -135,9 +156,14 @@ var _default =
     commentDetail: {} },
 
   data: function data() {
-    return {};
+    return {
+      RECOMMENT: false };
+
   },
-  methods: {} };exports.default = _default;
+  methods: {
+    testRE: function testRE() {
+      this.RECOMMENT = !this.RECOMMENT;
+    } } };exports.default = _default;
 
 /***/ }),
 

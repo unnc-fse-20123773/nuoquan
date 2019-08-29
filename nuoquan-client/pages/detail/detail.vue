@@ -29,8 +29,9 @@
 				</view>
 				<view class="icons">
 					<!-- 点赞MM按钮 -->
-<!-- 					MMMMMMMM
- -->					<image class="icon" src="../../static/icon/like.png"></image>
+					<!-- 					MMMMMMMM
+ -->
+					<image class="icon" src="../../static/icon/like.png"></image>
 					<view class="icom">{{ articleCard.likeNum }}</view>
 				</view>
 			</view>
@@ -43,7 +44,7 @@
 				<view class="emoji"></view>
 				<view class="submit" @click="saveComment()"></view>
 				<textarea class="commentSth" placeholder=" 评论点什么..." :focus="writingComment" auto-height="true" confirm-type="send"
-				 @confirm="saveComment()" adjust-position="false" v-model="commentContent"/>
+				 @confirm="saveComment()" adjust-position="false" v-model="commentContent" />
 				</view>
 
 		</view> 
@@ -165,12 +166,12 @@
 		},
 	};
 </script>
-
-<style>
-	page {
+<style>	page {
 		height: 100%;
 		width: 100%;
-	}
+	}</style>
+
+<style scoped>
 
 	.topbar {
 		height: 100px;
@@ -248,6 +249,7 @@
 		position: relative;
 		border-radius: 20px;
 		margin-top: 20px;
+		padding-bottom: 5px;
 	}
 
 	.touxiang {
