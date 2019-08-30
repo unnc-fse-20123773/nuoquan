@@ -34,10 +34,10 @@
 			<button class="pageLine" @tap="goToMessageListPage">
 				<image src="../static/icon/message.png"></image>
 				<view>我的消息</view>
-				<view class="noticeNum">  </view>
+				<view class="noticeNum"> </view>
 
 			</button>
-			<button class="pageLine">
+			<button class="pageLine" @click="UD()">
 				<image src="../static/icon/star.png"></image>
 				<view>我的收藏</view>
 				<view class="noticeNum">23</view>
@@ -46,13 +46,12 @@
 			<button class="pageLine">
 				<image src="../static/icon/report.png"></image>
 				<view>举报投诉</view>
-				<view class="noticeNum">3</view>
-
+<!-- 				<view class="noticeNum">3</view>
+ -->
 			</button>
-			<button class="pageLine">
+			<button class="pageLine" @click="UD()">
 				<image src="../static/icon/about.png"></image>
 				<view>关于</view>
-				<view class="noticeNum"></view>
 
 			</button>
 		</view>
@@ -86,6 +85,14 @@
 				uni.navigateTo({
 					url: '../profile/profile',
 				});
+			},
+			UD() {
+				uni.showToast({
+					// title: '⠀⠀⠀⠀⠀under⠀⠀⠀⠀⠀development',//不是空格，是特殊符号，莫删
+					title: '上课不要玩手机',
+					duration: 20000,
+					icon: 'none',
+				})
 			}
 		},
 
@@ -232,7 +239,7 @@
 		font-size: 9px;
 		line-height: 18px;
 		border-radius: 3px;
-		padding:0 2px;
+		padding: 0 2px;
 
 	}
 
@@ -247,9 +254,11 @@
 	button::after {
 		border: none;
 	}
-button-hover{
-	background: #000000;
-}
+
+	button-hover {
+		background: #000000;
+	}
+
 	.pageLine image {
 		width: 20px;
 		height: 20px;

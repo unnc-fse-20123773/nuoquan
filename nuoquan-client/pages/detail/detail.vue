@@ -39,14 +39,14 @@
 			<view class="fengexian" style="height: 1px;width: 100%;background-color: #d6d6d6;margin:auto;"></view>
 			<view class="submitComment" @click="controlInput()">发 表 评 论</view>
 
-
-			<view class="commentPart" v-show="writingComment">
-				<view class="emoji"></view>
-				<view class="submit" @click="saveComment()"></view>
-				<textarea class="commentSth" placeholder=" 评论点什么..." :focus="writingComment" auto-height="true" confirm-type="send"
-				 @confirm="saveComment()" adjust-position="false" v-model="commentContent" />
+			<view class="bottoLayerOfInput" v-show="writingComment"  @click="controlInput()" @touchmove="controlInput()">
+				<view class="commentPart" @click.stop="">
+					<view class="emoji"></view>
+					<view class="submit" @click="saveComment()"></view>
+					<textarea class="commentSth" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
+					 confirm-type="send" @confirm="saveComment()" adjust-position="false" v-model="commentContent" />
 				</view>
-
+            </view>
 		</view> 
  </view>
 </template>
@@ -61,6 +61,7 @@
                 commentContent:"",  //用户准备提交的评论内容
 				commentList: {},  //返回值，获取评论列表信息
 				writingComment:false,  //控制输入框，true时显示输入框同时输入框自动获取焦点，拉起输入法
+				placeholderText:"评论点什么吧......",
 			};
 		},
 		components: {
@@ -116,7 +117,8 @@
 				});
 			},
 			controlInput(){
-				this.writingComment = true;
+				this.writingComment =!this.writingComment;
+				console.log(this.writingComment)
 			}
 		},
 		onLoad(options) {
@@ -308,10 +310,17 @@
 		text-align: center;
 		line-height: 30px;
 	}
-
+.bottoLayerOfInput{
+	position: fixed;
+	width: 750upx;
+	height: 1000px;
+	top:0;
+	left:0;
+	z-index: 3;
+}
 	.commentPart {
 		box-shadow: 0px 1px 5px 0px rgba(139, 139, 139, 0.32);
-		position: fixed;
+		position:fixed;
 		bottom: 0;
 		left: 0;
 		width: 670upx;

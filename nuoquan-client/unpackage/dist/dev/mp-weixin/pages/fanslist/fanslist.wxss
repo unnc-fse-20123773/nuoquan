@@ -4,19 +4,11 @@ page {
 }
 
 
-<<<<<<< HEAD
 .tabs.data-v-7ab2d312 {
 	margin: 26rpx 0 0;
 }
 .focusER.data-v-7ab2d312,
 .itsFocus.data-v-7ab2d312 {
-=======
-.tabs.data-v-48554f13 {
-	margin: 26rpx 0 0;
-}
-.focusER.data-v-48554f13,
-.itsFocus.data-v-48554f13 {
->>>>>>> deyan
 	color: #353535;
 	font-size: 15px;
 	display: inline-block;
@@ -24,20 +16,12 @@ page {
 	margin: auto;
 	text-align: center;
 }
-<<<<<<< HEAD
 .devidingLine.data-v-7ab2d312 {
-=======
-.devidingLine.data-v-48554f13 {
->>>>>>> deyan
 	border-top: solid 3px #FDD453;
 	width: 258rpx;
 	margin-left: 58.5rpx;
 }
-<<<<<<< HEAD
 .listItem.data-v-7ab2d312 {
-=======
-.listItem.data-v-48554f13 {
->>>>>>> deyan
 	position: relative;
 	height: 45px;
 	display: -webkit-box;
@@ -49,11 +33,7 @@ page {
 	    -ms-flex-align: center;
 	        align-items: center;
 }
-<<<<<<< HEAD
 .touxiang.data-v-7ab2d312 {
-=======
-.touxiang.data-v-48554f13 {
->>>>>>> deyan
 	display: -webkit-inline-box;
 	display: -webkit-inline-flex;
 	display: -ms-inline-flexbox;
@@ -65,11 +45,7 @@ page {
 	vertical-align: middle;
 	line-height: 45px;
 }
-<<<<<<< HEAD
 .name.data-v-7ab2d312 {
-=======
-.name.data-v-48554f13 {
->>>>>>> deyan
 	display: -webkit-inline-box;
 	display: -webkit-inline-flex;
 	display: -ms-inline-flexbox;
@@ -79,11 +55,7 @@ page {
 	margin-left: 13px;
 	vertical-align: middle;
 }
-<<<<<<< HEAD
 .goFocus.data-v-7ab2d312 {
-=======
-.goFocus.data-v-48554f13 {
->>>>>>> deyan
 	border: solid 1px #ECC138;
 	border-radius: 5px;
 	font-size: 13px;
@@ -97,11 +69,7 @@ page {
 	vertical-align: middle;
 	text-align: center;
 }
-<<<<<<< HEAD
 .listItemBottomLine.data-v-7ab2d312 {
-=======
-.listItemBottomLine.data-v-48554f13 {
->>>>>>> deyan
 	border-top: solid 1px #DCDCDC;
 	width: 590rpx;
 	position: absolute;

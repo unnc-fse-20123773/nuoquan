@@ -5,21 +5,13 @@ image {
 }
 
 
-<<<<<<< HEAD
 .articlecard.data-v-0734f7a0 {
-=======
-.articlecard.data-v-fbd78668 {
->>>>>>> deyan
 	width: 650rpx;
 	border-radius: 8px;
 	margin: 11px auto 0;
 	background-color: #ffffff;
 }
-<<<<<<< HEAD
 .title.data-v-0734f7a0 {
-=======
-.title.data-v-fbd78668 {
->>>>>>> deyan
 	margin: 16px 25px 0 25px;
 	font-size: 15px;
 	font: MicrosoftYaHei;
@@ -28,27 +20,16 @@ image {
 	margin: 16px 13px 0 15px;
 	padding-top: 16px;
 }
-<<<<<<< HEAD
 .briefarticleCard.data-v-0734f7a0 {
-=======
-.briefarticleCard.data-v-fbd78668 {
->>>>>>> deyan
 	margin: 10px 13px 0 15px;
 	font-size: 13px;
 	line-height: 15px;
 	margin-bottom: 15px;
 }
-<<<<<<< HEAD
 .tags.data-v-0734f7a0 {
 	margin-left: 10px;
 }
 .tag.data-v-0734f7a0 {
-=======
-.tags.data-v-fbd78668 {
-	margin-left: 10px;
-}
-.tag.data-v-fbd78668 {
->>>>>>> deyan
 	display: inline-block;
 	border-radius: 4px;
 	padding-left: 5px;
@@ -59,53 +40,33 @@ image {
 	font-size: 10px;
 	background: #621E81;
 }
-<<<<<<< HEAD
 .menubar.data-v-0734f7a0 {
-=======
-.menubar.data-v-fbd78668 {
->>>>>>> deyan
 	position: relative;
 	vertical-align: middle;
 	margin-left: 15px;
 	border-radius: 8px;
 }
-<<<<<<< HEAD
 .touxiang.data-v-0734f7a0 {
-=======
-.touxiang.data-v-fbd78668 {
->>>>>>> deyan
 	border-radius: 30px;
 	width: 20px;
 	height: 20px;
 	margin-right: 5px;
 	vertical-align: middle;
 }
-<<<<<<< HEAD
 .name.data-v-0734f7a0 {
-=======
-.name.data-v-fbd78668 {
->>>>>>> deyan
 	display: inline-block;
 	font-size: 10px;
 	margin-left: 7px;
 	color: #888888;
 	padding-bottom: 5px;
 }
-<<<<<<< HEAD
 .time.data-v-0734f7a0 {
-=======
-.time.data-v-fbd78668 {
->>>>>>> deyan
 	display: inline-block;
 	font-size: 10px;
 	margin-left: 25px;
 	color: #888888;
 }
-<<<<<<< HEAD
 .icons.data-v-0734f7a0 {
-=======
-.icons.data-v-fbd78668 {
->>>>>>> deyan
 	position: absolute;
 	right: 0;
 	bottom:0;
@@ -117,22 +78,14 @@ image {
 	border-bottom-right-radius: 8px;
 	border: 10px #621E81;
 }
-<<<<<<< HEAD
 .icons image.data-v-0734f7a0 {
-=======
-.icons image.data-v-fbd78668 {
->>>>>>> deyan
 	position: relative;
 	/* G添加相对位置 */
 	width: 11px;
 	height: 11px;
 	padding-right: 5px;
 }
-<<<<<<< HEAD
 .icom.data-v-0734f7a0 {
-=======
-.icom.data-v-fbd78668 {
->>>>>>> deyan
 	display: inline-block;
 	color: #353535;
 	font-size: 10px;
@@ -140,11 +93,7 @@ image {
 	text-align: center;
 	vertical-align: middle;
 }
-<<<<<<< HEAD
 .picturearea.data-v-0734f7a0 {
-=======
-.picturearea.data-v-fbd78668 {
->>>>>>> deyan
 	margin: auto;
 	display: -webkit-box;
 	display: -webkit-flex;
@@ -155,11 +104,7 @@ image {
 	    -ms-flex-pack: center;
 	        justify-content: center;
 }
-<<<<<<< HEAD
 image.data-v-0734f7a0 {
-=======
-image.data-v-fbd78668 {
->>>>>>> deyan
 	width: 30%;
 	height: 200rpx;
 	margin: auto;
