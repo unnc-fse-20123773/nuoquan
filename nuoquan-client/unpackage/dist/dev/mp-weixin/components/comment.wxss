@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 .comment.data-v-e8f832ba {
 		/* 	background-color:gray;
  */
@@ -81,5 +82,67 @@
 		border-radius: 10px;
 		margin-left: 187.5rpx;
 		margin-bottom: 10px;
+=======
+.comment.data-v-a79986f2 {
+	/* 	background-color:gray;
+ */
+	border-radius: 20px;
+	width: 100%;
+	margin: auto;
+}
+.fengexian.data-v-a79986f2 {
+	height: 1px;
+	width: 100%;
+	background-color: #d6d6d6;
+}
+.contentarea.data-v-a79986f2 {
+	padding-top: 14px;
+	background: white;
+	font-size: 16px;
+	border-radius: 20px;
+}
+.bottombar.data-v-a79986f2 {
+	position: relative;
+	border-radius: 20px;
+	height: 25px;
+	margin-top: 10px;
+}
+.touxiang.data-v-a79986f2 {
+	width: 20px;
+	height: 20px;
+	border-radius: 20px;
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 5px;
+}
+.time.data-v-a79986f2,
+.name.data-v-a79986f2 {
+	font-size: 10px;
+	margin-right: 10px;
+	color:#888888;
+}
+.icons.data-v-a79986f2 {
+	-webkit-box-pack: end;
+	-webkit-justify-content: flex-end;
+	    -ms-flex-pack: end;
+	        justify-content: flex-end;
+	display: -webkit-inline-box;
+	display: -webkit-inline-flex;
+	display: -ms-inline-flexbox;
+	display: inline-flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	    -ms-flex-align: center;
+	        align-items: center;
+	width: 30%;
+	font-size: 10px;
+}
+.icon.data-v-a79986f2 {
+	width: 11px;
+	height: 11px;
+	font-size: 2px;
+		padding-left: 45rpx;
+	padding-right:8rpx;
+>>>>>>> deyan
 }
 

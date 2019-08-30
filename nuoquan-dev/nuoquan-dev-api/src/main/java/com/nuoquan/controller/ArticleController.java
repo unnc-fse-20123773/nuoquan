@@ -104,7 +104,7 @@ public class ArticleController extends BasicController{
 			page = 1;
 		}
 		
-		PagedResult result = articleService.searchYangArticles(article, isSaveRecord, page, PAGE_SIZE);
+		PagedResult result = articleService.searchYangArticlesContent(article, isSaveRecord, page, PAGE_SIZE);
 		return JSONResult.ok(result);
 	}
 	
@@ -120,14 +120,13 @@ public class ArticleController extends BasicController{
 		@ApiImplicitParam(name="articleTag", value="文章标签", required=false, dataType="String", paramType="form"),
 		@ApiImplicitParam(name="articleTitle", value="文章题目", required=true, dataType="String", paramType="form"),
 		@ApiImplicitParam(name="articleContent", value="文章内容", required=true, dataType="String", paramType="form")
-	})
-	@PostMapping(value="upload", headers="content-type=multipart/form-data")
-	public JSONResult upload(String userId, String articleTag, String articleTitle, 
-				String articleContent, @ApiParam(value="file", required=false) MultipartFile[] files) throws Exception {
+	})	
+	@PostMapping(value="/uploadArticle")
+	public JSONResult upload(String userId, String articleTag, String articleTitle, String articleContent) throws Exception {
 		
-		if (StringUtils.isBlank(userId) || StringUtils.isEmpty(userId)) {
-			return JSONResult.errorMsg("Id can't be null");
-		}
+//		if (StringUtils.isBlank(userId) || StringUtils.isEmpty(userId)) {
+//			return JSONResult.errorMsg("Id can't be null");
+//		}
 
 		// 保存视频信息到数据库
 		Article article = new Article();
@@ -137,55 +136,43 @@ public class ArticleController extends BasicController{
 		article.setTags(articleTag);
 		article.setStatus(ArticleStatusEnums.SUCCESS.value);
 		article.setCreateDate(new Date());
-		String aid = articleService.saveArticle(article);
 		
+		String articleId = articleService.saveArticle(article);
+		
+		return JSONResult.ok(articleId);
+	}
+	
+	@PostMapping(value="/uploadArticleImg")
+	public JSONResult uploadArticleImg(String userId ,String articleId, @ApiParam(value="file", required=false) MultipartFile file) throws Exception {
+
 		ArticleImage articleImage = new ArticleImage();
 		
-		if (files != null && files.length > 0 ) {
-			Long totalFileSize =  (long) 0;
-			for (int i = 0; i < files.length; i++) {
-				totalFileSize += files[i].getSize();
-			}
+		if (file != null) {
 			// 判断是否超出大小限制
-			if (totalFileSize > MAX_FACE_IMAGE_SIZE) {
+			if (file.getSize() > MAX_FACE_IMAGE_SIZE) {
 				return JSONResult.errorException("Uploaded file size exceed server's limit (10MB)");
 			}
+			// 保存图片
+			String fileSpace = resourceConfig.getFileSpace();	// 文件保存空间地址
+			String fileName = file.getOriginalFilename();		// 获取原文件名
 			
-			for (int i = 0; i < files.length; i++) {
-				// 保存图片
-				String fileSpace = resourceConfig.getFileSpace();	// 文件保存空间地址
-				String fileName = files[i].getOriginalFilename();		// 获取原文件名
-				// 保存到数据库中的相对路径
-				String uploadPathDB = "/" + userId + "/article" + "/" + fileName;
-				// 文件上传的最终保存路径
-				String finalVideoPath = "";
-
-				if (StringUtils.isNotBlank(fileName)) {
-					finalVideoPath = fileSpace + uploadPathDB;
-					uploadFile(files[i], finalVideoPath);	// 调用 BasicController 里的方法
-					articleImage.setImagePath(uploadPathDB);
-					articleImage.setArticleId(aid);
-				}
-				articleService.saveArticleImages(articleImage);
-				
+			// 保存到数据库中的相对路径
+			String uploadPathDB = "/" + userId + "/article" + "/" + articleId + fileName;
+			// 文件上传的最终保存路径
+			String finalVideoPath = "";
+			
+			if (StringUtils.isNotBlank(fileName)) {
+				finalVideoPath = fileSpace + uploadPathDB;
+				uploadFile(file, finalVideoPath);	// 调用 BasicController 里的方法
+				articleImage.setImagePath(uploadPathDB);
+				articleImage.setArticleId(articleId);
 			}
-//			// 保存图片
-//			String fileSpace = resourceConfig.getFileSpace();	// 文件保存空间地址
-//			String fileName = file.getOriginalFilename();		// 获取原文件名
-//			// 保存到数据库中的相对路径
-//			String uploadPathDB = "/" + userId + "/article" + "/" + fileName;
-//			// 文件上传的最终保存路径
-//			String finalVideoPath = "";
+			articleService.saveArticleImages(articleImage);
 			
-//			if (StringUtils.isNotBlank(fileName)) {
-//				finalVideoPath = fileSpace + uploadPathDB;
-//				uploadFile(file, finalVideoPath);	// 调用 BasicController 里的方法
-
-//				article.setArticlePath(uploadPathDB);
-//			}
-		}	
+		}
+		
 		return JSONResult.ok();
-	}	
+	}
 	
 	@PostMapping("/saveComment")
 	public JSONResult saveComment(@RequestBody UserArticleComment comment) throws Exception {

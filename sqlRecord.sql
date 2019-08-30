@@ -2,6 +2,12 @@
 -- +  Database update  +
 -- +++++++++++++++++++++
 
+-- v19.8.28 @author: deyan
+-- 修改img_path VARCHAR(45) to VARCHAR(255) 
+ALTER TABLE `nuoquan`.`article_image` 
+CHANGE COLUMN `image_path` `image_path` VARCHAR(255) NOT NULL ;
+
+
 -- v19.8.27 @author: Jerrio
 -- 添加文章浏览量,点赞创建时间, 以支持热度逻辑
 ALTER TABLE `nuoquan`.`article` 
