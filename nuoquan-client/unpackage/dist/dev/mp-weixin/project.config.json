@@ -91,6 +91,12 @@
           "query": "",
           "id": 10,
           "pathName": "pages/detail/detail"
+        },
+        {
+          "name": "search",
+          "query": "",
+          "id": 11,
+          "pathName": "pages/search/search"
         }
       ]
     }

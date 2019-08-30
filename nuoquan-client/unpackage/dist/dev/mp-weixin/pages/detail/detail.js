@@ -73,6 +73,16 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var f0 = _vm._f("timeDeal")(_vm.articleCard.createDate)
+
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        f0: f0
+      }
+    }
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -128,14 +138,46 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {
   data: function data() {
     return {
       userInfo: {},
-      comments: [],
-      articleCard: "",
-      commentList: '' };
-
+      articleCard: "", //detail的主角，由index传过来的单个文章信息
+      commentContent: "", //用户准备提交的评论内容
+      commentList: {}, //返回值，获取评论列表信息
+      writingComment: false //控制输入框，true时显示输入框同时输入框自动获取焦点，拉起输入法
+    };
   },
   components: {
     commentbox: comment },
@@ -161,6 +203,11 @@ __webpack_require__.r(__webpack_exports__);
 
           success: function success(res) {
             console.log(res.data);
+            that.writingComment = false;
+            that.commentContent = "";
+            // uni.redirectTo({
+            // 	url: '/pages/detail/detail'
+            // })
           } });
 
       }
@@ -182,17 +229,18 @@ __webpack_require__.r(__webpack_exports__);
           console.log(res);
         } });
 
+    },
+    controlInput: function controlInput() {
+      this.writingComment = true;
     } },
 
   onLoad: function onLoad(options) {
     // console.log('detail receved');
     // console.log(options.data);
-
     this.articleCard = JSON.parse(options.data);
     console.log(this.articleCard);
     // console.log(this.articleCard);
     // console.log(this.articleCard.artiticleTitle);
-
     var userInfo = this.getGlobalUserInfo();
     if (!this.isNull(userInfo)) {
       this.userInfo = this.getGlobalUserInfo();
@@ -200,7 +248,33 @@ __webpack_require__.r(__webpack_exports__);
     // console.log(this.articleCard.id);
     // console.log(this.userInfo.nickname);
     this.getComments();
-  } };exports.default = _default;
+  },
+  filters: {
+    timeDeal: function timeDeal(timediff) {
+      timediff = new Date(timediff);
+      var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(),
+      timediff.getSeconds()];
+
+      var oldTime = timediff.getTime();
+      var newTime = new Date().getTime();
+      var milliseconds = 0;
+      var timeSpanStr;
+      milliseconds = newTime - oldTime;
+      if (milliseconds <= 1000 * 60 * 1) {
+        timeSpanStr = '刚刚';
+      } else if (1000 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60) {
+        timeSpanStr = Math.round(milliseconds / (1000 * 60)) + '分钟前';
+      } else if (1000 * 60 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24) {
+        timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
+      } else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
+        timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
+      } else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && year == now.getFullYear()) {
+        timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
+      } else {
+        timeSpanStr = parts[0] + '-' + parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
+      }
+      return timeSpanStr;
+    } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

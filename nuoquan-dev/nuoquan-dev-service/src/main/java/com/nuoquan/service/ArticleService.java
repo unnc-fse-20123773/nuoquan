@@ -34,7 +34,7 @@ public interface ArticleService {
 	/**
 	 *  查询阳面文章
 	 */
-	public PagedResult searchYangArticles(Article article, Integer isSaveRecord, Integer page, Integer pageSize);
+	public PagedResult searchYangArticlesContent(Article article, Integer isSaveRecord, Integer page, Integer pageSize);
 	
 	/**
 	 * 获取热搜词

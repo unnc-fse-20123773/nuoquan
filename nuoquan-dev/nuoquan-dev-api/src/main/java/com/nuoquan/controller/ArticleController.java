@@ -90,7 +90,7 @@ public class ArticleController extends BasicController{
 			page = 1;
 		}
 		
-		PagedResult result = articleService.searchYangArticles(article, isSaveRecord, page, PAGE_SIZE);
+		PagedResult result = articleService.searchYangArticlesContent(article, isSaveRecord, page, PAGE_SIZE);
 		return JSONResult.ok(result);
 	}
 	

@@ -1,68 +1,86 @@
 <template>
-	<view class="mainPageTop">
-		<view class="topBar">
-			<image class="topBarTouxiang" src="../../static/touxiang.jpg"></image>
-			<input class="topBarSearch" placeholder="  搜索" v-model="searchvalue" />
-			<view class="topBarPlus">
-				<view style="font-size: 20px;color:#FDD041;border-radius: 3px;" @click="searchfunction">搜</view>
+	<view class="weui-search-bar">
+		<view class="weui-search-bar__form">
+			<view class="weui-search-bar__box">
+				<icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+				<input type="text" class="weui-search-bar__input" placeholder="请输入要搜索的关键词" confirm-type="done" @blur="saveAsSearchKeyWords" />
+				<view class="weui-icon-clear" @tap="searchClear">
+					<icon type="clear" size="14"></icon>
+				</view>
+				<view class="searchButton" @tap="search">搜索</view>
 			</view>
-			<view class="topBarwaiting"></view>
 		</view>
-		<view>
-			<view>打印原始结果res</view>
-			<view style="height:10px;"></view>
-			<view class="result1 result">{{ oriData }}</view>
-			<view style="height:10px;"></view>
 
-			<view>打印res.data.data</view>
-
-			<view class="result2 result">{{ oriData.data.data }}</view>
-			<view style="height:10px;"></view>
-
-			<view>打印其他</view>
-
-			<view class="result3 result">
-				<!-- 				其他数据
- -->
+		<view class="search" style="height: 20upx;">
+			<view class="SearchHistoryItem">
+				<text class="SearchHistoryItemTitle">历史搜索:</text>
+				<icon type="clear" @tap="SearchDeleteAll" size="18"></icon>
+				<view class="searchList">
+					<block v-for="(i,index) in historySearchedArticles" :key="index"></block>
+				</view>
+			</view>
+			<view class="wxSearchKey">
+				<text class="exSearchTitle">搜索热点:</text>
+				<view class="searchList">
+					<view v-for="(i,index) in hotList" :key="index">
+						{{i}}
+					</view>
+				</view>
+				<view>搜索结果:</view>
+				<articlebrief v-for="i in searchedArticleList" :key="i.id" v-bind:articleCard="i"></articlebrief>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
+	import articlebrief from '../../components/articlebrief';
 	export default {
 		data() {
 			return {
-				oriData: {},
-				searchvalue: "",
+				historySearchedArticles: {},
+				hotList: {},
+				searchKeyWords: '',
+				searchedArticleList: {},
 			}
+		},
+		components:{
+			articlebrief
 		},
 		onLoad: function() {
-			uni.setNavigationBarTitle({
-				title: "搜索"
-			});
+			// 查询热搜词
+			var that = this;
+			uni.request({
+				url: that.$serverUrl + '/article/hot',
+				method: "POST",
+				success: (res) => {
+					console.log(res);
+					that.hotList = res.data.data;
+					console.log(this.hotList);
+				}
+
+			})
 		},
 		methods: {
-			searchfunction() {
-
-				debugger;
-				var _this = this;
-				// _this.searchvalue
-				// 
-				console.log(this.searchvalue);
+			saveAsSearchKeyWords: function(event) {
+				this.searchKeyWords = event.target.value;
+				console.log(this.searchKeyWords);
+			},
+			search: function(res) {
+				var that = this;
+				var isSaveRecord = 1;
 				uni.request({
-					url: this.SeverUrl+'/queryAllArticles',
-					method: 'POST',
-					success: res => {
-						console.log('success');
-						console.log(res);
-						_this.oriData = res.data.data.rows;
+					url: this.$serverUrl + '/article/searchArticleYANG?isSaveRecord=' + isSaveRecord,
+					method:"POST",
+					data: {
+						articleContent: this.searchKeyWords
 					},
-					fail: res => {
-						console.log(res);
+					success: function(result) {
+						console.log(result.data);
+						that.searchedArticleList = result.data.data.rows;
 					}
-				});
-			}
+				})
+			},
 		}
 	}
 </script>
