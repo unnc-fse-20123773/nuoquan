@@ -233,7 +233,8 @@
 
 	.bottomBar textarea {
 		display: inline-block;
-		width: 534upx;
+		width: 530upx;
+		padding:0 4upx;
 		min-height: 50upx;
 		max-height: 95px;
 		border-radius: 24upx;

@@ -247,7 +247,8 @@ page{
 }
 .bottomBar textarea.data-v-13bf3097 {
 		display: inline-block;
-		width: 534rpx;
+		width: 530rpx;
+		padding:0 4rpx;
 		min-height: 50rpx;
 		max-height: 95px;
 		border-radius: 24rpx;

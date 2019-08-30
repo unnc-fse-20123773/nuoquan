@@ -174,8 +174,8 @@
 <style scoped>
 
 	.topbar {
-		height: 100px;
-		background-color: RGB(253, 217, 108);
+		
+		background-color: RGB(253, 217, 108);padding-bottom: 60px;
 	}
 
 	.detailtitle {
@@ -184,6 +184,7 @@
 		font-size: 14px;
 		margin: auto;
 		font-weight: 400;
+		padding-top:12px;
 	}
 
 	.drtailmain {

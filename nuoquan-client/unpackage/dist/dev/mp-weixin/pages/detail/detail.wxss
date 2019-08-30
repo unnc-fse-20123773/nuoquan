@@ -5,8 +5,8 @@ page {
 }
 
 .topbar.data-v-0dddf152 {
-		height: 100px;
-		background-color: RGB(253, 217, 108);
+		
+		background-color: RGB(253, 217, 108);padding-bottom: 60px;
 }
 .detailtitle.data-v-0dddf152 {
 		width: 85%;
@@ -14,6 +14,7 @@ page {
 		font-size: 14px;
 		margin: auto;
 		font-weight: 400;
+		padding-top:12px;
 }
 .drtailmain.data-v-0dddf152 {
 		border-top-left-radius: 20px;
