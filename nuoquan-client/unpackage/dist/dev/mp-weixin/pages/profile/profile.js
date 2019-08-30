@@ -105,56 +105,315 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var mypicker = function mypicker() {return __webpack_require__.e(/*! import() | components/mypicker */ "components/mypicker").then(__webpack_require__.bind(null, /*! ../../components/mypicker.vue */ 163));};var _default =
 
-var userInfo;var _default =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {
   data: function data() {
+    // 为毕业年份 picker 传值
+    var date = new Date();
+    var years = [];
+    var thisYear = date.getFullYear();
+
+    for (var i = thisYear; i <= thisYear + 4; i++) {
+      years.push(i);
+    };
+
+    // major
+    var majors = ['AEE', 'ABE', 'CS', 'CEE', 'CIVE', 'ECON', 'EEE', 'ENGL',
+    'GEOG', 'IC', 'IS', 'MATH', 'PDM', 'NUBS'];
+
+
+    // degree 顺序和数据库保持一致
+    var degrees = ['高中', '本科', '研究生'];
+
     return {
-      userInfo: '' };
+      genderList: ['女', '男', '其他'], // 顺序和数据库保持一致
+
+      years: years, // 传入毕业年份 picker
+      yearPickerVal: [], // 毕业年份 picker 的起始值, 必须为list
+      majors: majors,
+      majorPickerVal: [],
+      degrees: degrees,
+      degreePickerVal: [],
+
+      gender: 2,
+      year: years[0], // 默认值
+      major: majors[0],
+      degree: degrees[1],
+      degreeDB: '1', // 数据库 degree 传值
+
+      isEdit: false,
+      userInfo: '',
+      yearPicker: false,
+      majorPicker: false,
+      degreePicker: false };
 
   },
+
+  components: {
+    mypicker: mypicker },
+
 
   onLoad: function onLoad() {
     uni.setNavigationBarTitle({
       title: "个人信息" });
 
 
-    userInfo = this.getGlobalUserInfo();
+    var userInfo = this.getGlobalUserInfo();
     this.userInfo = userInfo;
-    console.log(userInfo);
+
+    // 按已有信息修改默认值
+    var gender = userInfo.gender;
+    var year = userInfo.graduationYear;
+    var major = userInfo.major;
+    var degree = userInfo.degree;
+    if (gender != null) {// 判空，防止默认值被刷掉
+      this.gender = gender;
+    }
+    if (year != null) {
+      this.year = year;
+    }
+    if (major != null) {
+      this.major = major;
+    }
+    if (degree != null) {
+      this.degree = this.degrees[degree];
+      this.degreeDB = degree; // 修改对数据库的默认值
+    }
   },
-  methods: {} };exports.default = _default;
+  methods: {
+    genderChanger: function genderChanger(gender) {
+      if (this.gender == gender) {
+        this.gender = -1;
+        console.log(gender);
+      } else {
+        this.gender = gender;
+      }
+    },
+
+    yearPickerChanger: function yearPickerChanger() {
+      if (this.yearPicker == false) {
+        this.yearPicker = true;
+      } else {
+        this.yearPicker = false;
+      }
+      // console.log(this.yearPicker);
+    },
+
+    majorPickerChanger: function majorPickerChanger() {
+      if (this.majorPicker == false) {
+        this.majorPicker = true;
+      } else {
+        this.majorPicker = false;
+      }
+      // console.log(this.majorPicker);
+    },
+
+    degreePickerChanger: function degreePickerChanger() {
+      if (this.degreePicker == false) {
+        this.degreePicker = true;
+      } else {
+        this.degreePicker = false;
+      }
+      // console.log(this.degreePicker);
+    },
+
+    editProfile: function editProfile(isEdit) {
+      if (isEdit == false) {
+        this.isEdit = true;
+      } else if (isEdit == true) {
+        this.isEdit = false;
+      }
+      console.log(this.isEdit);
+    },
+
+    cancle: function cancle() {
+      // 取消修改操作
+      this.editProfile(this.isEdit);
+    },
+
+    yearChange: function yearChange(e) {
+      var year = this.years[e];
+      this.year = year;
+      // 给组件赋值回去，更改起始值
+      this.yearPickerVal[0] = e;
+
+    },
+
+    majorChange: function majorChange(e) {
+      var major = this.majors[e];
+      this.major = major;
+      // 给组件赋值回去，更改起始值
+      this.majorPickerVal[0] = e;
+    },
+
+    degreeChange: function degreeChange(e) {
+      var degree = this.degrees[e];
+      this.degree = degree;
+      this.degreeDB = e[0];
+      // 给组件赋值回去，更改起始值
+      this.degreePickerVal[0] = e;
+
+    },
+
+    formSubmit: function formSubmit(e) {var _this = this;
+      // 提交表单操作
+      var form = e.detail.value;
+      var data = {
+        id: this.userInfo.id,
+        nickname: form.nickname,
+        gender: this.gender,
+        email: form.email,
+        graduationYear: this.year,
+        major: this.major,
+        degree: this.degreeDB };
+
+      // console.log(data);
+
+      var that = this;
+      uni.request({
+        url: 'http://127.0.0.1:8080/user/updateUser',
+        method: "POST",
+        data: JSON.stringify(data),
+        header: {
+          'content-type': 'application/json' },
+
+        success: function success(res) {
+          if (res.data.status == 200) {
+            var user = res.data.data;
+            var finalUser = _this.myUser(user); // 分割邮箱地址, 重构 user
+            _this.setGlobalUserInfo(finalUser); // 把用户信息写入缓存
+            _this.userInfo = finalUser; // 更新页面用户数据
+            console.log(_this.userInfo);
+          }
+        } });
+
+
+      // 完成修改，更改 isEdit 为 false
+      this.editProfile(this.isEdit);
+    },
+
+    getIndex: function getIndex(list, item) {
+      for (var i = 0; i < list.length; i++) {
+        if (list[i] == item) {
+          return i;
+        }
+      }
+      return -1;
+    },
+
+    test: function test(e) {
+      console.log(e);
+    } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

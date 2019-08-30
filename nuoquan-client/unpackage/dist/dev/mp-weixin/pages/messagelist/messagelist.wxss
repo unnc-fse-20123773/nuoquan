@@ -158,15 +158,8 @@ page {
 	margin-left: 20rpx;
 	width: 480rpx;
 	height: 70rpx;
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: -ms-flexbox;
-	display: flex;
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	-webkit-flex-direction: column;
-	    -ms-flex-direction: column;
-	        flex-direction: column;
+	/* display: flex; */
+	display: inline-block;
 }
 .msglist-id {
 	width: 100%;
@@ -221,5 +214,4 @@ page {
 	font-size: 20rpx;
 	border-radius: 999rpx;
 }
-.msglist-icon-read {}
 

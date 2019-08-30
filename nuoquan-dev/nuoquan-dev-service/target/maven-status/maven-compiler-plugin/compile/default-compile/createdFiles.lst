@@ -1,11 +1,4 @@
-<<<<<<< HEAD
 com/nuoquan/service/ArticleService.class
 com/nuoquan/service/ArticleServiceImpl.class
 com/nuoquan/service/UserService.class
 com/nuoquan/service/UserServiceImpl.class
-=======
-com\nuoquan\service\ArticleServiceImpl.class
-com\nuoquan\service\UserServiceImpl.class
-com\nuoquan\service\ArticleService.class
-com\nuoquan\service\UserService.class
->>>>>>> 5250d7c70dbfb4ecf068da113e9ede8a56077e1b
