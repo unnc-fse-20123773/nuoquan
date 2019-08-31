@@ -208,12 +208,12 @@ Vue.prototype.mySocket = {
 
 		uni.onSocketMessage(function(res) {
 			var dataContent = JSON.parse(res.data);
-			var chatMessage = dataContent.chatMessage;
 			console.log("收到服务器内容：");
 			console.log(dataContent);
 
 			// 如果消息类型为 CHAT
 			if (dataContent.action == app.netty.CHAT) {
+				var chatMessage = dataContent.data;
 				// 发送签收消息
 				that.signMsgList(chatMessage.msgId);
 
@@ -306,7 +306,7 @@ Vue.prototype.mySocket = {
 		
 		if (dataContent.action == app.netty.CHAT) {
 			// 保存聊天历史到本地缓存，保存聊天快照到本地
-			var chatMessage = dataContent.chatMessage;
+			var chatMessage = dataContent.data;
 			var createDate = app.formatTime(chatMessage.createDate);
 			
 			// console.log("发消息的时间戳：" + createDate);
@@ -610,6 +610,9 @@ Vue.prototype.netty = {
 	CHAT: 2, // 聊天消息
 	SIGNED: 3, // 消息签收
 	KEEPALIVE: 4, // 客户端保持心跳
+	LIKEARTICLE: 5, // 点赞文章通知
+	LIKECOMMENT: 6, // 点赞评论通知
+	COMMENT: 7, // 评论通知
 
 	/**
 	 * 和后端 ChatMessage 聊天模型的对象保持一致
@@ -630,12 +633,12 @@ Vue.prototype.netty = {
 	/**
 	 * 构建消息 DataContent 模型对象
 	 * @param {Object} action
-	 * @param {Object} chatMsg
+	 * @param {Object} data
 	 * @param {Object} extand
 	 */
-	DataContent: function(action, chatMessage, extand) {
+	DataContent: function(action, data, extand) {
 		this.action = action;
-		this.chatMessage = chatMessage;
+		this.data = data;
 		this.extand = extand;
 	},
 

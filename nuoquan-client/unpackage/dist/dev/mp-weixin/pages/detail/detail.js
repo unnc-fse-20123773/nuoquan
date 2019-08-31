@@ -152,7 +152,7 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         console.log(content);
         uni.request({
-          url: that.$serverUrl + '/saveComment',
+          url: that.$serverUrl + '/article/saveComment',
           method: 'POST',
           data: {
             fromUserId: that.userInfo.id,
@@ -169,7 +169,7 @@ __webpack_require__.r(__webpack_exports__);
       var that = this;
       uni.request({
         method: "POST",
-        url: that.$serverUrl + '/getArticleComments',
+        url: that.$serverUrl + '/article/getArticleComments',
         data: {
           articleId: that.articleCard.id },
 

@@ -136,7 +136,26 @@ public class UserServiceImpl implements UserService {
 		userMapper.addFansCount(userId);
 		userMapper.addFollowCount(fanId);
 	}
-
+	
+	@Transactional(propagation = Propagation.REQUIRED) 
+	@Override
+	public void deleteUserFanRelation(String userId, String fanId) {
+		
+		Boolean isFollow = queryIfFollow(userId, fanId);
+		if (isFollow) {
+			// 有数据才删除并减少count
+			Example example = new Example(UserFans.class);
+			Criteria criteria = example.createCriteria();
+			criteria.andEqualTo("userId", userId);
+			criteria.andEqualTo("fansId", fanId);
+			
+			userFansMapper.deleteByExample(example); 
+			
+			userMapper.reduceFansCount(userId);
+			userMapper.reduceFollowCount(fanId);
+		}
+	}
+	
 	@Transactional(propagation = Propagation.SUPPORTS) 
 	@Override
 	public List<UserVO> queryUserFans(String userId, String myId) {
@@ -163,21 +182,6 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		return list;
-	}
-	
-	@Transactional(propagation = Propagation.REQUIRED) 
-	@Override
-	public void deleteUserFanRelation(String userId, String fanId) {
-		Example example = new Example(UserFans.class);
-		Criteria criteria = example.createCriteria();
-		criteria.andEqualTo("userId", userId);
-		criteria.andEqualTo("fansId", fanId);
-		
-		userFansMapper.deleteByExample(example);
-		
-		userMapper.reduceFansCount(userId);
-		userMapper.reduceFollowCount(fanId);
-		
 	}
 	
 	@Transactional(propagation = Propagation.SUPPORTS) 

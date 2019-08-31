@@ -1,4 +1,12 @@
 # Update Log:
+**v19.9.1 更新**
+1. 
+新增 消息提醒 功能后端代码
+新增 用户点赞评论 系列接口
+修改 用户点赞文章 系列接口
+修改 接口名 userLike -> userUnLikeArticle
+修复BUG-100000 快速点击关注/已关注出现用户受关注数递减情况，原因：未对删除关系结果做出判断就递减, 类似情况有点赞/取消点赞
+
 **v19.8.29 更新**
 1. 新增 profile 页面功能及样式 (Jerrio& Guetta)
 2. 新增 messageList 页面删除聊天消息 (Jerrio& Guetta)

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nuoquan.email.EmailTool;
-import com.nuoquan.netty.ChatHandler;
+import com.nuoquan.netty.MsgHandler;
 import com.nuoquan.pojo.netty.ChatMessage;
 import com.nuoquan.pojo.netty.DataContent;
 import com.nuoquan.utils.JsonUtils;
@@ -35,7 +35,7 @@ public class HelloController {
 		chatMessage.setSenderId("123");
 //		chatMessage.setMsgId("123");
 		
-		ChatHandler.clients.writeAndFlush(
+		MsgHandler.clients.writeAndFlush(
 				new TextWebSocketFrame(
 						JsonUtils.objectToJson(chatMessage)));
 
