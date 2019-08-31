@@ -17,16 +17,19 @@
 				<swiper-item class="swiper-box" v-for="(swiperData,index1) in swiperDataList" :key="index1">
 					<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-test" @scrolltoupper="upper" @scrolltolower="lower"
 					 @scroll="scroll" enable-back-to-top="true">
+					 <!-- 相对、绝对定位不能改 by Guetta -->
 						<view class="user-operation-line" v-for="(item,index2) in (index1==0?followList:fansList)" :key="index2">
 							<view class="user-one-line column_center">
 								<!-- 这里方法直接传 item 获取不到，应该是官方的一个Bug -->
-								<image class="publicTouxiang" mode="aspectFill" :src="item.faceImg" @tap='goToPersonPublic(index1, index2)'></image>
+								<view class="touxiangBox">
+									<image class="publicTouxiang" mode="scaleToFill" :src="item.faceImg" @tap='goToPersonPublic(index1, index2)'></image>
+								</view>
 								<view class="userid">
 									{{item.nickname}}
 								</view>
 								<!-- 暂时先拿掉，TODO: 获取列表同时查询我是否已关注该用户 
 																				by Jerrio-->
-								<view v-if="item.id != myId">
+								<view v-if="item.id != myId" style="position: relative;width: 100%;height: 52upx;">
 									<view class="attentionButton super_center" v-if="item.follow==true" @tap="cancelFollow(index1, index2)">
 										<text class="attentionButton-text">已关注</text>
 									</view>
@@ -437,16 +440,21 @@
 
 	/* 一个粉丝 */
 	.user-one-line {
-		background-color: #f3f3f3;
+		position: relative;
 		width: 100%;
 		height: 80upx;
+	}
 
+	.touxiangBox{
+		position: absolute;
+		left: 40upx;
+		width: 34px;
+		height: 34px;
 	}
 
 	.publicTouxiang {
-		margin-left: 40upx;
-		width: 62upx;
-		height: 62upx;
+		width: 100%;
+		height: 100%;
 		border-radius: 999upx;
 		display: inline-block;
 		vertical-align: middle;
@@ -460,17 +468,19 @@
 	}
 
 	.userid {
-		margin-left: 20upx;
+		position: absolute;
+		left: 120upx;
 		font-size: x-small;
 		color: #353535;
 	}
 
 	.attentionButton {
+		position: absolute;
+		right: 50upx;
 		display: flex;
-		width: 100upx;
+		min-width: 100upx;
 		height: 52upx;
 		border-radius: 10upx;
-		margin-left: 320upx;
 		border: 1upx solid #FFCF3C;
 	}
 

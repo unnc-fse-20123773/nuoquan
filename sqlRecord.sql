@@ -1,7 +1,7 @@
 -- +++++++++++++++++++++
 -- +  Database update  +
 -- +++++++++++++++++++++
--- v19.8.2- @author: Jerrio
+-- v19.9.1 @author: Jerrio
 -- 添加点赞评论数据表, 点赞文章签收, 评论父评论和对方id
 CREATE TABLE `nuoquan`.`user_like_comment` (
   `id` VARCHAR(45) NOT NULL,
