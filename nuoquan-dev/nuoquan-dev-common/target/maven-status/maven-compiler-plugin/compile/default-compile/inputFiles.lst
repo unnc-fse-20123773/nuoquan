@@ -1,4 +1,6 @@
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
 C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\Sid.java
 C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\com\nuoquan\utils\FastDFSClient.java
 C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\com\nuoquan\utils\TimeAgoUtils.java
@@ -29,6 +31,7 @@ C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\Wo
 C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\com\nuoquan\utils\JSONResult.java
 =======
 <<<<<<< HEAD
+>>>>>>> 0d691f076d8ec375f60b0f6808be9240722fe974
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/utils/FastDFSClient.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/utils/Utils.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/utils/Serializes.java
@@ -57,6 +60,8 @@ C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\com\nuoquan\utils\J
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/utils/HttpReq.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/strategy/DayPrefixRandomCodeStrategy.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/utils/TimeAgoUtils.java
+<<<<<<< HEAD
+=======
 =======
 C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\strategy\DefaultWorkerIdStrategy.java
 C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\IdWorker.java
@@ -88,3 +93,4 @@ C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\
 C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\utils\HttpReq.java
 >>>>>>> 5250d7c70dbfb4ecf068da113e9ede8a56077e1b
 >>>>>>> 86387fd6c3c82678111964959c793a4a7edb0055
+>>>>>>> 0d691f076d8ec375f60b0f6808be9240722fe974

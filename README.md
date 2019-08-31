@@ -1,4 +1,9 @@
 # Update Log:
+**v19.8.29 更新**
+1. 新增 profile 页面功能及样式 (Jerrio& Guetta)
+2. 新增 messageList 页面删除聊天消息 (Jerrio& Guetta)
+3. 新增 邮箱发送基本方法 
+
 **v19.8.28 更新**
 1. 新增 获取热度榜前3的接口
 2. 新增 显示热度榜前三功能

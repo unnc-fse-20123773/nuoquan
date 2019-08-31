@@ -2,113 +2,186 @@
 	<view id="profile-container">
 		<view id="yellow-box">
 		</view>
-		<view class="profile-basicinfo-card column_center">
-			<image class="profileTouxiang" mode="aspectFill" :src="userInfo.faceImg"></image>
-			<!-- 一般状态 -->
-			<view class="profileText-box" v-if="isEdit == false">
-				<text class="left-profileText1 ">昵称</text>
-				<text class="right-profileText1" v-if="userInfo.nickname!=null ">{{userInfo.nickname}}</text>
-				<text class="right-profileText1" v-else>待设置</text>
-				<text class="left-profileText2">性别</text>
-				<text class="right-profileText2" v-if="userInfo.gender!=null">{{userInfo.gender}}</text>
-				<text class="right-profileText2" v-else>待设置</text>
-			</view>
-			<!-- 修改时状态 -->
-			<view class="profileText-box" v-if="isEdit == true">
-				<text class="left-profileText1 ">昵称</text>
-				<input class="right-profileText1-1" style="text-align:right;min-height: 1upx;height:26px;" maxlength="16" :value="userInfo.nickname" />
-				<view class="input-border"></view>
-				<text class="left-profileText2">性别</text>
-				<view class="genderPicker">
-					<view :class="[gender == 1 ? 'genderPicker-buttonclick' : 'genderPicker-button']" @click="genderChanger(1)">
-						<text class="gender-text">男</text></view>
-					<view :class="[gender == 0 ? 'genderPicker-buttonclick' : 'genderPicker-button']" @click="genderChanger(0)">
-						<text class="gender-text">女</text></view>
-					<view :class="[gender == 2 ? 'genderPicker-buttonclick' : 'genderPicker-button']" @click="genderChanger(2)">
-						<text class="gender-text">其他</text></view>
+		<form @submit="formSubmit" @reset="formReset">
+			<view class="profile-basicinfo-card column_center">
+				<image class="profileTouxiang" mode="aspectFill" :src="userInfo.faceImg"></image>
+				<!-- 一般状态 -->
+				<view class="profileText-box" v-if="isEdit == false">
+					<text class="left-profileText1 ">昵称</text>
+					<text class="right-profileText1" v-if="userInfo.nickname!=null ">{{userInfo.nickname}}</text>
+					<text class="right-profileText1" v-else>待设置</text>
+					<text class="left-profileText2">性别</text>
+					<text class="right-profileText2" v-if="userInfo.gender==null || userInfo.gender==-1">待设置</text>
+					<text class="right-profileText2" v-else>{{genderList[userInfo.gender]}}</text>
+				</view>
+				<!-- 修改时状态 -->
+				<view class="profileText-box" v-if="isEdit == true">
+					<text class="left-profileText1 ">昵称</text>
+					<input class="right-profileText1-1" style="text-align:right;min-height: 1upx;height:26px;" maxlength="16" :value="userInfo.nickname"
+					 name="nickname" />
+					<view class="input-border"></view>
+					<text class="left-profileText2">性别</text>
+					<view class="genderPicker">
+						<view :class="[gender == 1 ? 'genderPicker-buttonclick' : 'genderPicker-button']" @click="genderChanger(1)">
+							<text class="gender-text">男</text></view>
+						<view :class="[gender == 0 ? 'genderPicker-buttonclick' : 'genderPicker-button']" @click="genderChanger(0)">
+							<text class="gender-text">女</text></view>
+						<view :class="[gender == 2 ? 'genderPicker-buttonclick' : 'genderPicker-button']" @click="genderChanger(2)">
+							<text class="gender-text">其他</text></view>
+					</view>
 				</view>
 			</view>
-		</view>
 
-		<view class="profile-moreinfo-card super_center">
-			<!-- 一般状态 -->
-			<view class="profilemoreText-box" v-if="isEdit == false">
-				<text class="left-profileText1">邮箱</text>
-				<text class="right-profileText1" v-if="userInfo.email!=null">{{userInfo.email}}</text>
-				<text class="right-profileText1" v-else>待设置</text>
-				<text class="left-profileText2">毕业年份/专业</text>
-				<text class="right-profileText2">Y4 PDM</text>
-				<text class="left-profileText3">电话</text>
-				<text class="right-profileText3">18000000000</text>
-			</view>
+			<view class="profile-moreinfo-card super_center">
+				<!-- 一般状态 -->
+				<view class="profilemoreText-box" v-if="isEdit == false">
+					<text class="left-profileText1">学校邮箱</text>
+					<text class="right-profileText1" v-if="userInfo.email!=null">{{userInfo.email}}</text>
+					<text class="right-profileText1" v-else>待设置</text>
+					<text class="left-profileText2">毕业年份/专业</text>
+					<text class="right-profileText2">{{userInfo.graduationYear}} {{userInfo.major}}</text>
+					<text class="left-profileText3">学位</text>
+					<text class="right-profileText3">{{degrees[userInfo.degree]}}</text>
+				</view>
 
-			<!-- 修改时状态 -->
-			<view class="profilemoreText-box" v-if="isEdit == true">
-				<text class="left-profileText1">邮箱</text>
-				<input class="right-profileText1-1" style="width: 260px;text-align:right;min-height: 1upx;height:26px;" maxlength="32"
-				 :value="userInfo.email" />
-				<view class="input-border2"></view>
-				<text class="left-profileText2">毕业年份/专业</text>
+				<!-- 修改时状态 -->
+				<view class="profilemoreText-box" v-if="isEdit == true">
+					<text class="left-profileText1">学校邮箱</text>
+					<input class="right-profileText1-1" style="width: 260px;text-align:right;min-height: 1upx;height:26px;" maxlength="32"
+					 :value="userInfo.email" name="email"/>
+					<view class="input-border2"></view>
+					<text class="left-profileText2">毕业年份/专业</text>
 
-				<view class="yearPicker">
-					<view class="yearPicker-button" @click="pickerChanger(picker)">
-						<text class="yearPicker-text">2020</text>
-						<view class="year-pointer">
-							<image class="year-pointerIcon" src="../../static/icon/angle-down/angle-down%20%20888888.png" mode="scaleToFill"></image>
+					<view class="yearPicker">
+						<view class="yearPicker-button" @click="yearPickerChanger()">
+							<text class="yearPicker-text">{{year}}</text>
+							<view class="year-pointer">
+								<image class="year-pointerIcon" src="../../static/icon/angle-down/angle-down%20%20888888.png" mode="scaleToFill"></image>
+							</view>
+						</view>
+						<view class="yearPicker-button" @click="majorPickerChanger()">
+							<text class="yearPicker-text">{{major}}</text>
+							<view class="year-pointer">
+								<image class="year-pointerIcon" src="../../static/icon/angle-down/angle-down%20%20888888.png" mode="scaleToFill"></image>
+							</view>
 						</view>
 					</view>
-					<view class="yearPicker-button" @click="pickerChanger(picker)">
-						<text class="gender-text">PDM</text></view>
-				</view>
-				
-				<picker class="pick-style" id="picker" v-if="picker == true"></picker>
-				
-				<text class="left-profileText3">电话</text>
-				<input class="right-profileText3-3" style="width: 260px;text-align:right;min-height: 1upx;height:26px;" maxlength="11"
-				 :value="18888888888" />
-				<view class="input-border3"></view>
-			</view>
 
-		</view>
-		<view style="display: flex; height: 5%;">
-			<view class="editProfile super_center" v-if="isEdit == false" @click="editProfile(isEdit)">
-				<text class="editProfile-text">编辑信息</text>
+					<text class="left-profileText3">学位</text>
+					<view class="degreePicker">
+						<view class="yearPicker-button" @click="degreePickerChanger()">
+							<text class="yearPicker-text">{{degree}}</text>
+							<view class="year-pointer">
+								<image class="year-pointerIcon" src="../../static/icon/angle-down/angle-down%20%20888888.png" mode="scaleToFill"></image>
+							</view>
+						</view>
+					</view>
+					<!-- <input class="right-profileText3-3" style="width: 260px;text-align:right;min-height: 1upx;height:26px;" maxlength="11"
+				 :value="18888888888" />
+				<view class="input-border3"></view> -->
+
+					<mypicker class="year-pick-style" v-if="yearPicker == true" :dataList="years" :value="yearPickerVal" @change="yearChange"
+					 @tapBackground="yearPickerChanger()" ></mypicker>
+
+					<mypicker class="major-pick-style" v-if="majorPicker == true" :dataList="majors" :value="majorPickerVal" @change="majorChange"
+					 @tapBackground="majorPickerChanger()"></mypicker>
+
+					<mypicker class="degree-pick-style" v-if="degreePicker == true" :dataList="degrees" :value="degreePickerVal"
+					 @change="degreeChange" @tapBackground="degreePickerChanger()"></mypicker>
+
+				</view>
+
 			</view>
-			<view class="editProfile-edit super_center" v-if="isEdit == true" @click="submit">
-				<text class="editProfile-text">完成修改</text>
+			<view style="display: flex; height: 5%;">
+				<view class="editProfile super_center" v-if="isEdit == false" @click="editProfile(isEdit)">
+					<text class="editProfile-text">编辑信息</text>
+				</view>
+				<button class="editProfile-edit super_center" v-if="isEdit == true" formType="submit">
+					<text class="editProfile-text">完成修改</text>
+				</button>
+				<button class="editProfile-cancle super_center" v-if="isEdit == true" @click="cancle">
+					<text class="editProfile-cancletext">取消</text>
+				</button>
 			</view>
-			<view class="editProfile-cancle super_center" v-if="isEdit == true" @click="cancle">
-				<text class="editProfile-cancletext">取消</text>
-			</view>
-		</view>
+		</form>
 	</view>
 </template>
 <script>
-	import picker from '../../components/picker.vue';
+	import mypicker from '../../components/mypicker.vue';
 
-	var userInfo;
 	export default {
 		data() {
+			// 为毕业年份 picker 传值
+			const date = new Date();
+			const years = [];
+			const thisYear = date.getFullYear();
+
+			for (let i = thisYear; i <= thisYear + 4; i++) {
+				years.push(i);
+			};
+
+			// major
+			const majors = ['AEE', 'ABE', 'CS', 'CEE', 'CIVE', 'ECON', 'EEE', 'ENGL',
+				'GEOG', 'IC', 'IS', 'MATH', 'PDM', 'NUBS'
+			];
+
+			// degree 顺序和数据库保持一致
+			const degrees = ['高中', '本科', '研究生'];
+
 			return {
+				genderList: ['女', '男', '其他'], // 顺序和数据库保持一致
+				
+				years, // 传入毕业年份 picker
+				yearPickerVal: [], // 毕业年份 picker 的起始值, 必须为list
+				majors,
+				majorPickerVal: [],
+				degrees,
+				degreePickerVal: [],
+
+				gender: 2,
+				year: years[0], // 默认值
+				major: majors[0],
+				degree: degrees[1],
+				degreeDB: '1', // 数据库 degree 传值
+				
 				isEdit: false,
 				userInfo: '',
-				gender: -1,
-				picker: false,
+				yearPicker: false,
+				majorPicker: false,
+				degreePicker: false,
 			}
 		},
 
 		components: {
-			picker,
+			mypicker,
 		},
 
 		onLoad: function() {
 			uni.setNavigationBarTitle({
 				title: "个人信息"
 			});
-
-			userInfo = this.getGlobalUserInfo();
+			
+			var userInfo = this.getGlobalUserInfo()
 			this.userInfo = userInfo;
-			console.log(userInfo);
+			
+			// 按已有信息修改默认值
+			var gender = userInfo.gender;
+			var year = userInfo.graduationYear;
+			var major = userInfo.major;
+			var degree = userInfo.degree;
+			if(gender!=null){ // 判空，防止默认值被刷掉
+				this.gender = gender;
+			}
+			if(year!=null){
+				this.year = year;
+			}
+			if(major!=null){
+				this.major = major;
+			}
+			if(degree!=null){
+				this.degree = this.degrees[degree];
+				this.degreeDB = degree; // 修改对数据库的默认值
+			}
 		},
 		methods: {
 			genderChanger: function(gender) {
@@ -120,13 +193,31 @@
 				}
 			},
 
-			pickerChanger: function(picker) {
-				if (this.picker == false) {
-					this.picker = true;
+			yearPickerChanger: function() {
+				if (this.yearPicker == false) {
+					this.yearPicker = true;
 				} else {
-					this.picker = false;
+					this.yearPicker = false;
 				}
-				console.log(this.picker);
+				// console.log(this.yearPicker);
+			},
+
+			majorPickerChanger: function() {
+				if (this.majorPicker == false) {
+					this.majorPicker = true;
+				} else {
+					this.majorPicker = false;
+				}
+				// console.log(this.majorPicker);
+			},
+
+			degreePickerChanger: function() {
+				if (this.degreePicker == false) {
+					this.degreePicker = true;
+				} else {
+					this.degreePicker = false;
+				}
+				// console.log(this.degreePicker);
 			},
 
 			editProfile: function(isEdit) {
@@ -138,17 +229,83 @@
 				console.log(this.isEdit);
 			},
 
-			submit: function() {
-				// 提交表单操作
+			cancle: function() {
+				// 取消修改操作
+				this.editProfile(this.isEdit);
+			},
 
+			yearChange: function(e) {
+				var year = this.years[e];
+				this.year = year;
+				// 给组件赋值回去，更改起始值
+				this.yearPickerVal[0] = e;
+
+			},
+
+			majorChange: function(e) {
+				var major = this.majors[e];
+				this.major = major;
+				// 给组件赋值回去，更改起始值
+				this.majorPickerVal[0] = e;
+			},
+
+			degreeChange: function(e) {
+				var degree = this.degrees[e];
+				this.degree = degree;
+				this.degreeDB = e[0];
+				// 给组件赋值回去，更改起始值
+				this.degreePickerVal[0] = e;
+
+			},
+
+			formSubmit: function(e) {
+				// 提交表单操作
+				var form = e.detail.value;
+				var data={
+					id: this.userInfo.id,
+					nickname: form.nickname,
+					gender: this.gender,
+					email: form.email,
+					graduationYear: this.year,
+					major: this.major,
+					degree: this.degreeDB
+				};
+				// console.log(data);
+				
+				var that = this;
+				uni.request({
+					url: 'http://127.0.0.1:8080/user/updateUser',
+					method: "POST",
+					data: JSON.stringify(data),
+					header: {
+						'content-type': 'application/json'
+					},
+					success: (res) => {
+						if(res.data.status == 200){
+							var user = res.data.data;
+							var finalUser = this.myUser(user);// 分割邮箱地址, 重构 user
+							this.setGlobalUserInfo(finalUser); // 把用户信息写入缓存
+							this.userInfo = finalUser; // 更新页面用户数据
+							console.log(this.userInfo);
+						}
+					},
+				});
+				
 				// 完成修改，更改 isEdit 为 false
 				this.editProfile(this.isEdit);
 			},
 
-			cancle: function() {
-				// 取消修改操作
+			getIndex(list, item) {
+				for (var i = 0; i < list.length; i++) {
+					if (list[i] == item) {
+						return i;
+					}
+				}
+				return -1;
+			},
 
-				this.editProfile(this.isEdit);
+			test(e) {
+				console.log(e);
 			}
 
 		}
@@ -341,7 +498,7 @@
 
 	.editProfile-cancle {
 		margin-top: 8%;
-		margin-left: 7%;
+		margin-right: 7%;
 		width: 21%;
 		height: 100%;
 		background-color: #dbdbdb;
@@ -392,13 +549,20 @@
 		font-weight: 550;
 	}
 
-	.pick-style {
+	.year-pick-style {
 		position: absolute;
 		z-index: 999;
-		right: 10px;
 		margin-top: 146upx;
 		top: -148upx;
 		right: 126upx;
+	}
+
+	.major-pick-style {
+		position: absolute;
+		z-index: 999;
+		margin-top: 146upx;
+		top: -148upx;
+		right: -20upx;
 	}
 
 	.yearPicker {
@@ -414,7 +578,7 @@
 
 	.yearPicker-button {
 		height: 100%;
-		width: 116upx;
+		width: 122upx;
 		border-radius: 16upx;
 		background-color: #dedede;
 		display: flex;
@@ -443,5 +607,24 @@
 		font-weight: 550;
 		color: #888888;
 		margin-left: -16upx;
+	}
+
+	.degreePicker {
+		position: absolute;
+		margin-top: 250upx;
+		right: -14upx;
+		width: 24%;
+		/* 在此更改按钮高度 */
+		height: 16%;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.degree-pick-style {
+		position: absolute;
+		z-index: 999;
+		margin-top: 200upx;
+		top: -100upx;
+		right: -20upx;
 	}
 </style>

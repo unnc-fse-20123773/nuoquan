@@ -146,6 +146,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 var me;var _default =
 {
@@ -195,7 +198,7 @@ var me;var _default =
   onLoad: function onLoad(opt) {
     var data = JSON.parse(opt.data);
     var thisUserInfo = data.thisUserInfo;
-    var currentTab = currentTab;
+    var currentTab = data.currentTab;
 
     uni.setNavigationBarTitle({
       title: thisUserInfo.nickname + '的主页' });

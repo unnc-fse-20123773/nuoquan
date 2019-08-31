@@ -1,5 +1,5 @@
 {
   "usingComponents": {
-    "picker": "/components/picker"
+    "mypicker": "/components/mypicker"
   }
 }

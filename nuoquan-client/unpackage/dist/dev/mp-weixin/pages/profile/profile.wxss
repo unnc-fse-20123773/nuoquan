@@ -165,7 +165,7 @@ page {
 }
 .editProfile-cancle {
 	margin-top: 8%;
-	margin-left: 7%;
+	margin-right: 7%;
 	width: 21%;
 	height: 100%;
 	background-color: #dbdbdb;
@@ -227,13 +227,19 @@ page {
 	font-size: 16px;
 	font-weight: 550;
 }
-.pick-style {
+.year-pick-style {
 	position: absolute;
 	z-index: 999;
-	right: 10px;
 	margin-top: 146rpx;
 	top: -148rpx;
 	right: 126rpx;
+}
+.major-pick-style {
+	position: absolute;
+	z-index: 999;
+	margin-top: 146rpx;
+	top: -148rpx;
+	right: -20rpx;
 }
 .yearPicker {
 	position: absolute;
@@ -253,7 +259,7 @@ page {
 }
 .yearPicker-button {
 	height: 100%;
-	width: 116rpx;
+	width: 122rpx;
 	border-radius: 16rpx;
 	background-color: #dedede;
 	display: -webkit-box;
@@ -285,5 +291,28 @@ page {
 	font-weight: 550;
 	color: #888888;
 	margin-left: -16rpx;
+}
+.degreePicker {
+	position: absolute;
+	margin-top: 250rpx;
+	right: -14rpx;
+	width: 24%;
+	/* 在此更改按钮高度 */
+	height: 16%;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	    -ms-flex-pack: justify;
+	        justify-content: space-between;
+}
+.degree-pick-style {
+	position: absolute;
+	z-index: 999;
+	margin-top: 200rpx;
+	top: -100rpx;
+	right: -20rpx;
 }
 

@@ -61,6 +61,13 @@ public class ArticleController extends BasicController{
 		return JSONResult.ok(result);
 	}
 	
+	@ApiOperation(value="点赞")
+	@ApiImplicitParams({
+		// uniapp使用formData时，paramType要改成form
+		@ApiImplicitParam(name="userId", value="操作者id", required=true, dataType="String", paramType="form"),
+		@ApiImplicitParam(name="articleId", value="文章id", required=false, dataType="String", paramType="form"),
+		@ApiImplicitParam(name="articleCreaterId", value="文章作者id", required=true, dataType="String", paramType="form")
+	})
 	@PostMapping(value="/userLike")
 	public JSONResult userLike(String userId, String articleId, String articleCreaterId) throws Exception {
 		
@@ -68,6 +75,13 @@ public class ArticleController extends BasicController{
 		return JSONResult.ok();
 	}
 	
+	@ApiOperation(value="踩")
+	@ApiImplicitParams({
+		// uniapp使用formData时，paramType要改成form
+		@ApiImplicitParam(name="userId", value="操作者id", required=true, dataType="String", paramType="form"),
+		@ApiImplicitParam(name="articleId", value="文章id", required=false, dataType="String", paramType="form"),
+		@ApiImplicitParam(name="articleCreaterId", value="文章作者id", required=true, dataType="String", paramType="form")
+	})
 	@PostMapping(value="/userUnLike")
 	public JSONResult userUnLike(String userId, String articleId, String articleCreaterId) throws Exception {
 		articleService.userUnLikeArticle(userId, articleId, articleCreaterId);
@@ -107,7 +121,6 @@ public class ArticleController extends BasicController{
 		@ApiImplicitParam(name="articleTitle", value="文章题目", required=true, dataType="String", paramType="form"),
 		@ApiImplicitParam(name="articleContent", value="文章内容", required=true, dataType="String", paramType="form")
 	})
-	
 	@PostMapping(value="upload", headers="content-type=multipart/form-data")
 	public JSONResult upload(String userId, String articleTag, String articleTitle, 
 				String articleContent, @ApiParam(value="file", required=false) MultipartFile[] files) throws Exception {
