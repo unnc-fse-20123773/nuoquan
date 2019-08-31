@@ -76,7 +76,7 @@
         },
         {
           "name": "personpublic",
-          "query": "",
+          "query": "userId=test-id123",
           "id": 8,
           "pathName": "pages/personpublic/personpublic"
         },

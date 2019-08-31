@@ -21,20 +21,22 @@
 						<view class="user-operation-line" v-for="(item,index2) in (index1==0?followList:fansList)" :key="index2">
 							<view class="user-one-line column_center">
 								<!-- 这里方法直接传 item 获取不到，应该是官方的一个Bug -->
-								<view class="touxiangBox">
-									<image class="publicTouxiang" mode="scaleToFill" :src="item.faceImg" @tap='goToPersonPublic(index1, index2)'></image>
+								<view class="touxiangBox" @tap='goToPersonPublic(index1, index2)'>
+									<image class="publicTouxiang" mode="scaleToFill" :src="item.faceImg"></image>
 								</view>
 								<view class="userid">
 									{{item.nickname}}
 								</view>
 								<!-- 暂时先拿掉，TODO: 获取列表同时查询我是否已关注该用户 
 																				by Jerrio-->
-								<view v-if="item.id != myId" style="position: relative;width: 100%;height: 52upx;">
-									<view class="attentionButton super_center" v-if="item.follow==true" @tap="cancelFollow(index1, index2)">
-										<text class="attentionButton-text">已关注</text>
-									</view>
-									<view class="attentionButton super_center" v-if="item.follow==false" @tap="addFollow(index1, index2)">
-										<text class="attentionButton-text">关注</text>
+								<view style="height: 52upx;position: absolute;right: 0;width: 30%;">
+									<view v-if="item.id != myId" style="position: relative;width: 100%;height: 52upx;">
+										<view class="attentionButton super_center" v-if="item.follow==true" @tap="cancelFollow(index1, index2)">
+											<text class="attentionButton-text">已关注</text>
+										</view>
+										<view class="attentionButton super_center" v-if="item.follow==false" @tap="addFollow(index1, index2)">
+											<text class="attentionButton-text">关注</text>
+										</view>
 									</view>
 								</view>
 
@@ -302,6 +304,8 @@
 				uni.redirectTo({
 					url: '../personpublic/personpublic?userId=' + userId,
 				});
+				
+				console.log(userId);
 			}
 		}
 	}
