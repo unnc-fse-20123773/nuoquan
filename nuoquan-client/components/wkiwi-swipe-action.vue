@@ -18,20 +18,7 @@
 				 
 					<view class="uni-swipe-action__content " @click="toMessageDetail(i,it.type)">
 						<view class="item" :class="it.stick  ? 'stick' : ''" >
-							<block v-if="it.type == 1">
-								<view class="item-left">
-									<view class="avator"><view class="iconfont ic_system-news"></view></view>
-								</view>
-								<view class="item-middle">
-									<text class="title">{{it.title}}</text>
-									<text class="message">{{it.message}}</text>
-								</view>
-								<view class="item-right">
-									<view class="mark" v-if="it.count>0">{{it.count}}</view>
-									<view class="time">{{it.time}}</view>
-								</view>
-							</block>
-							<block v-if="it.type == 2 || it.type == 3">
+							<block>
 								<view class="item-left">
 									<avator-group :type ="it.type" :avator = "it.url"></avator-group>
 								</view>
@@ -45,11 +32,6 @@
 								</view>
 							</block>
 						</view>
-					</view>
-					<view class="uni-swipe-action__btn-group" :id="elId">
-						<div v-for="(item,index) in options" :key="index" class="uni-swipe-action--btn" @click="bindClickBtn(item,i)">
-							{{item.text }}
-						</div>
 					</view>
 				</view>
 			</view>

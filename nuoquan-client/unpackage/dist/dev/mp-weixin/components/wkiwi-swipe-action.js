@@ -141,24 +141,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 {
   name: 'wkiwi-swipe-action',
   props: {

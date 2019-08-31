@@ -267,25 +267,23 @@ page {
 	align-item: center;
 	position: relative;
 }
-.year-pointer{
+.year-pointer {
 	position: absolute;
 	right: 0;
 	width: 22rpx;
 	height: 100%;
 }
-.year-pointerIcon{
+.year-pointerIcon {
 	width: 36rpx;
 	height: 36rpx;
 	margin-top: 10rpx;
 	margin-left: -8rpx;
 }
-.yearPicker-text{
+.yearPicker-text {
 	margin-top: 3px;
 	font-size: 16px;
 	font-weight: 550;
 	color: #888888;
 	margin-left: -16rpx;
 }
-
-
 

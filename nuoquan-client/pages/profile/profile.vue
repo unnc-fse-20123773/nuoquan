@@ -51,21 +51,22 @@
 				<text class="left-profileText2">毕业年份/专业</text>
 
 				<view class="yearPicker">
-					<view class="yearPicker-button" v-if="picker == false" @click="pickerChanger(picker)">
+					<view class="yearPicker-button" @click="pickerChanger(picker)">
 						<text class="yearPicker-text">2020</text>
 						<view class="year-pointer">
 							<image class="year-pointerIcon" src="../../static/icon/angle-down/angle-down%20%20888888.png" mode="scaleToFill"></image>
 						</view>
 					</view>
-					<view class="yearPicker-button" v-if="picker == false" @click="pickerChanger(picker)">
+					<view class="yearPicker-button" @click="pickerChanger(picker)">
 						<text class="gender-text">PDM</text></view>
 				</view>
-				<picker class="pick-style" v-if="picker == true"></picker>
-
+				
+				<picker class="pick-style" id="picker" v-if="picker == true"></picker>
+				
 				<text class="left-profileText3">电话</text>
 				<input class="right-profileText3-3" style="width: 260px;text-align:right;min-height: 1upx;height:26px;" maxlength="11"
 				 :value="18888888888" />
-				 <view class="input-border3"></view>
+				<view class="input-border3"></view>
 			</view>
 
 		</view>
@@ -149,6 +150,7 @@
 
 				this.editProfile(this.isEdit);
 			}
+
 		}
 	}
 </script>
@@ -243,8 +245,8 @@
 		border-bottom: 1upx solid #C0C0C0;
 		width: 260px;
 	}
-	
-		.input-border3 {
+
+	.input-border3 {
 		position: absolute;
 		margin-top: 292upx;
 		right: 0;
@@ -287,7 +289,7 @@
 		font-size: 32upx;
 		font-weight: 550;
 	}
-	
+
 	.right-profileText3-3 {
 		color: #888888;
 		position: absolute;
@@ -420,28 +422,26 @@
 		align-item: center;
 		position: relative;
 	}
-	
-	.year-pointer{
+
+	.year-pointer {
 		position: absolute;
 		right: 0;
 		width: 22upx;
 		height: 100%;
 	}
-	
-	.year-pointerIcon{
+
+	.year-pointerIcon {
 		width: 36upx;
 		height: 36upx;
 		margin-top: 10upx;
 		margin-left: -8upx;
 	}
-	
-	.yearPicker-text{
+
+	.yearPicker-text {
 		margin-top: 3px;
 		font-size: 16px;
 		font-weight: 550;
 		color: #888888;
 		margin-left: -16upx;
 	}
-	
-	
 </style>
