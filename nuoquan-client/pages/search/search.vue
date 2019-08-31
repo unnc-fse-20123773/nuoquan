@@ -22,14 +22,14 @@
 			</view>
 		</view>
 		<view class="searchResult" v-show="!searching">			
-			<articlebrief v-for="i in searchedArticleList" :key="i.id" v-bind:articleCard="i"></articlebrief>
+			<searchResultArticle v-for="i in searchedArticleList" :key="i.id" v-bind:articleCard="i"></searchResultArticle>
 		</view>
 
 	</view>
 </template>
 
 <script>
-	import articlebrief from '../../components/articlebrief';
+	import searchResultArticle from '../../components/searchResultArticle.vue';
 	export default {
 		data() {
 			return {
@@ -41,7 +41,7 @@
 			}
 		},
 		components: {
-			articlebrief
+			searchResultArticle,
 		},
 		onLoad: function() {
 			// 查询热搜词
@@ -82,7 +82,7 @@
 	}
 </script>
 
-<style>
+<style scoped>
 	.input-bar {
 		margin-top: 10px;
 		margin-left: 23px;

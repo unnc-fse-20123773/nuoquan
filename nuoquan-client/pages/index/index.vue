@@ -92,11 +92,12 @@
 		}
 	};
 </script>
-
 <style>
 	page{
 		height:100%;
-	}
+	}</style>
+<style scoped>
+
 	.index {
 		background-color: #f3f3f3;
 		height:100%;

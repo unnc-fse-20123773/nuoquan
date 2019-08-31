@@ -66,11 +66,11 @@
 		}
 	};
 </script>
-
-<style>
-	page {
+<style>	page {
 		width: 100%;
-	}
+	}</style>
+<style scoped>
+
 
 	.bottomLayerOfLeft {
 

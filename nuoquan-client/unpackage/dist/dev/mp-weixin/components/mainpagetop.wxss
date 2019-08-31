@@ -1,15 +1,16 @@
 
 page {
-		width: 100%;
+	width: 100%;
 }
-.bottomLayerOfLeft {
+
+.bottomLayerOfLeft.data-v-e24eb85e {
 
 		position: fixed;
 		width: 750rpx;
 		height: 1000px;
 		z-index: 3;
 }
-.mainPageTop {
+.mainPageTop.data-v-e24eb85e {
 		padding-top: 4px;
 		/* 	height: 168px;
  */
@@ -21,7 +22,7 @@ page {
 		border-bottom-right-radius: 25px;
 		border-bottom-left-radius: 25px;
 }
-.topBarTouxiang {
+.topBarTouxiang.data-v-e24eb85e {
 		width: 30px;
 		height: 30px;
 		border-radius: 30px;
@@ -29,7 +30,7 @@ page {
 		vertical-align: middle;
 		margin-left: 12px;
 }
-.topBarSearch {
+.topBarSearch.data-v-e24eb85e {
 		font-size: 15px;
 		display: inline-block;
 		width: 190px;
@@ -43,7 +44,7 @@ page {
 		font-family: MicrosoftYaHei;
 		line-height: 10px;
 }
-.topBarPlus {
+.topBarPlus.data-v-e24eb85e {
 		font-size: 25px;
 		background: #ffffff;
 		display: inline-block;
@@ -55,7 +56,7 @@ page {
 		border-radius: 3px;
 		line-height: 23px;
 }
-.topicTitle {
+.topicTitle.data-v-e24eb85e {
 		color: #ffffff;
 		margin-left: 29px;
 		font-size: 13px;
@@ -63,18 +64,18 @@ page {
 		margin-top: 16px;
 		margin-bottom: 10px;
 }
-.hot1,
-	.hot2,
-	.hot3 {
+.hot1.data-v-e24eb85e,
+	.hot2.data-v-e24eb85e,
+	.hot3.data-v-e24eb85e {
 		height: 17px;
 		line-height: 17px;
 		/* margin-bottom: 10px;
  */
 		padding-bottom: 10px;
 }
-.hotNum1,
-	.hotNum2,
-	.hotNum3 {
+.hotNum1.data-v-e24eb85e,
+	.hotNum2.data-v-e24eb85e,
+	.hotNum3.data-v-e24eb85e {
 		color: #ffffff;
 		width: 77px;
 		font-weight: bold;
@@ -82,9 +83,9 @@ page {
 		vertical-align: middle;
 		display: inline-block;
 }
-.hotContent1,
-	.hotContent2,
-	.hotContent3 {
+.hotContent1.data-v-e24eb85e,
+	.hotContent2.data-v-e24eb85e,
+	.hotContent3.data-v-e24eb85e {
 		display: inline-block;
 		vertical-align: middle;
 		color: #ffffff;

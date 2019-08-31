@@ -99,7 +99,7 @@
 	};
 </script>
 
-<style>
+<style scoped>
 	@keyframes slidefromleft {
 		from {
 			display: none;
