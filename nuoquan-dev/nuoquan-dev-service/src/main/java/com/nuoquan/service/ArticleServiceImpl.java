@@ -211,6 +211,7 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void saveArticleImages(ArticleImage articleImage) {
 		
 		String id = sid.nextShort();

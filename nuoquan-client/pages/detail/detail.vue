@@ -79,7 +79,7 @@
 				} else {
 					console.log(content)
 					uni.request({
-						url: that.$serverUrl + '/saveComment',
+						url: that.$serverUrl + '/article/saveComment',
 						method: 'POST',
 						data: {
 							fromUserId: that.userInfo.id,
