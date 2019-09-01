@@ -16,7 +16,13 @@ public class UserLikeArticle {
 
     @Column(name = "create_time")
     private Date createTime;
-
+    
+    /**
+     * 点赞消息是否被签收\\n 0: 未签收 1：签收
+     */
+    @Column(name = "sign_flag")
+    private Integer signFlag;
+    
     /**
      * @return id
      */
@@ -71,5 +77,23 @@ public class UserLikeArticle {
      */
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+    
+    /**
+     * 获取点赞消息是否被签收\\n 0: 未签收 1：签收
+     *
+     * @return sign_flag - 点赞消息是否被签收\\n 0: 未签收 1：签收
+     */
+    public Integer getSignFlag() {
+        return signFlag;
+    }
+
+    /**
+     * 设置点赞消息是否被签收\\n 0: 未签收 1：签收
+     *
+     * @param signFlag 点赞消息是否被签收\\n 0: 未签收 1：签收
+     */
+    public void setSignFlag(Integer signFlag) {
+        this.signFlag = signFlag;
     }
 }

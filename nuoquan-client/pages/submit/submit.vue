@@ -17,7 +17,7 @@
 					<view v-if="showAddTagButton" @click="addTag">
 						+ 添加标签
 					</view>
-					<input v-if="showInputTagArea" focus="true" placeholder="请输入标签..." @blur="checkInput" />
+					<input v-if="showInputTagArea" v-model="articleTag" focus="true" placeholder="请输入标签..." @blur="checkInput" />
 
 
 				</view>
@@ -108,6 +108,7 @@
 				this.showInputTagArea = 1;
 				this.showAddTagButton = 0;
 			},
+			// 检查tagList的数量
 			checkInput: function(res) {
 				var that = this;
 				var tag = res.target.value;
@@ -193,12 +194,31 @@
 				console.log(me.articleContent);
 				console.log(me.userName);
 
+				if (me.articleTitle == '' || me.articleTitle == null) {
+					uni.showToast({
+						icon: 'none',
+						title: '文章标题不能为空～',
+						duration: 1000
+					});
+					return;
+				}
+
+				if (me.articleContent == '' || me.articleContent == null) {
+					uni.showToast({
+						icon: 'none',
+						title: '文章内容不能为空～',
+						duration: 1000
+					});
+					return;
+				}
+
 				var serverUrl = me.$serverUrl;
 				uni.request({
 					url: serverUrl + '/article/uploadArticle',
 					method: 'POST',
 					data: {
 						userId: me.userName,
+						articleTag: me.articleTag,
 						articleTitle: me.articleTitle,
 						articleContent: me.articleContent
 					},
@@ -207,22 +227,28 @@
 					},
 					success: (res) => {
 						// console.log(res.data.data);
-						const articleId = res.data.data;
-						for (var i = 0; i < me.imageList.length; i++) {
-							uni.uploadFile({
-								url: this.$serverUrl + '/article/uploadArticleImg',
-								filePath: me.imageList[i],
-								name: 'file',
-								formData: {
-									userId: me.userName,
-									articleId: articleId
-								},
-								success: (uploadFileRes) => {
-									uni.redirectTo({
-										url: '../index/index'
-									})
-								}
-							});
+						if (me.imageList.length <= 0) {
+							uni.redirectTo({
+								url: '../index/index'
+							})
+						} else {
+							const articleId = res.data.data;
+							for (var i = 0; i < me.imageList.length; i++) {
+								uni.uploadFile({
+									url: this.$serverUrl + '/article/uploadArticleImg',
+									filePath: me.imageList[i],
+									name: 'file',
+									formData: {
+										userId: me.userName,
+										articleId: articleId
+									},
+									success: (uploadFileRes) => {
+										uni.redirectTo({
+											url: '../index/index'
+										})
+									}
+								});
+							}
 						}
 					}
 				})

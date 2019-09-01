@@ -16,18 +16,23 @@
 				</view>
 			</view>
 
-			<view v-if="!myPublic">
-				<button type="default" size="mini" class="guanzhuButton" @tap="cancelFollow(thisUserInfo.id)"  v-if="thisUserInfo.follow==true">
-					<text class="guanzhuButton-text">已关注</text>
-				</button>
-				<button type="default" size="mini" class="guanzhuButton" @tap="addFollow(thisUserInfo.id)"  v-if="thisUserInfo.follow==false">
-					<text class="guanzhuButton-text">关注</text>
-				</button>
+			<view v-if="!myPublic" style="width: 36%;display: flex;position: fixed;right: 10upx;top: 148upx;">
+				<view class="messageButton super_center" @tap="goToChatPage" @click="showChatMask">
+					<image src="../../static/icon/comments/comments%20%20fed148.png"
+				 mode="scaleToFill" style="width: 24px;height: 24px;"></image>
+				</view>
+				<view class="guanzhuButton-Box">
+					<button type="default" size="mini" plain="true" style="border: 2upx solid white;" class="guanzhuButton" @tap="cancelFollow(thisUserInfo.id)"  v-if="thisUserInfo.follow==true">
+						<text class="guanzhuButton-text" style="color: white;">已关注</text>
+					</button>
+				</view>
+				<view class="guanzhuButton-Box">
+					<button type="default" size="mini" class="guanzhuButton" @tap="addFollow(thisUserInfo.id)"  v-if="thisUserInfo.follow==false">
+						<text class="guanzhuButton-text">关注</text>
+					</button>
+				</view>
 				<!-- TODO: 加完发私信的按钮格式乱了...要改一下
 													by Jerrio-->
-				<button type="default" size="mini" class="guanzhuButton" @tap="goToChatPage">
-					<text class="guanzhuButton-text">发私信</text>
-				</button>
 			</view>
 		</view>
 
@@ -343,31 +348,46 @@
 	}
 
 	.personFans {
+		position: relative;
 		height: 25%;
 		width: 100%;
 		margin-top: 10upx;
 		background-color: #ffe285;
 		border-radius: 5upx;
 		display: flex;
-		justify-content: space-around;
 	}
 
 	.personFans-text {
+		position: absolute;
 		color: white;
+		left: 20upx;
 		font-size: 23upx;
 		font-weight: 550;
 	}
 
 	.personFansNum-text {
+		position: absolute;
+		right: 20upx;
 		color: white;
 		font-size: 23upx;
 		font-weight: 550;
 	}
 
+	.messageButton{
+		display: flex;
+		width: 34px;
+		height: 34px;
+		border-radius: 15upx;
+		background-color: white;
+	}
+	
+	.guanzhuButton-Box{
+		margin-left: 18upx;
+	}
+
 	.guanzhuButton {
-		margin-top: 13%;
-		margin-left: 20%;
-		width: 20%;
+		min-width: 76px;
+		height: 34px;
 	}
 
 	.guanzhuButton-text {

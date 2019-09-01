@@ -150,14 +150,19 @@ page {
 
 /* 一个粉丝 */
 .user-one-line {
-	background-color: #f3f3f3;
+	position: relative;
 	width: 100%;
 	height: 80rpx;
 }
+.touxiangBox{
+	position: absolute;
+	left: 40rpx;
+	width: 34px;
+	height: 34px;
+}
 .publicTouxiang {
-	margin-left: 40rpx;
-	width: 62rpx;
-	height: 62rpx;
+	width: 100%;
+	height: 100%;
 	border-radius: 999rpx;
 	display: inline-block;
 	vertical-align: middle;
@@ -169,19 +174,21 @@ page {
 	width: 580rpx;
 }
 .userid {
-	margin-left: 20rpx;
+	position: absolute;
+	left: 120rpx;
 	font-size: x-small;
 	color: #353535;
 }
 .attentionButton {
+	position: absolute;
+	right: 50rpx;
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -ms-flexbox;
 	display: flex;
-	width: 100rpx;
+	min-width: 100rpx;
 	height: 52rpx;
 	border-radius: 10rpx;
-	margin-left: 320rpx;
 	border: 1rpx solid #FFCF3C;
 }
 .attentionButton-text {

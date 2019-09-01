@@ -8,6 +8,8 @@ public class UserArticleCommentVO {
 
     private String id;
     private String fromUserId;
+    private String toUserId;
+    private String fatherCommentId; // 复式评论，父评论，子评论无 article_id
     private String articleId;
     private String comment;
     private Date createTime;
@@ -148,5 +150,21 @@ public class UserArticleCommentVO {
 
 	public void setCommentNum(Integer commentNum) {
 		this.commentNum = commentNum;
+	}
+
+	public String getToUserId() {
+		return toUserId;
+	}
+
+	public void setToUserId(String toUserId) {
+		this.toUserId = toUserId;
+	}
+
+	public String getFatherCommentId() {
+		return fatherCommentId;
+	}
+
+	public void setFatherCommentId(String fatherCommentId) {
+		this.fatherCommentId = fatherCommentId;
 	}
 }

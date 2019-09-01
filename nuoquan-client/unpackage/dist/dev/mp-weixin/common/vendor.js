@@ -1,9 +1,9 @@
 (global["webpackJsonp"] = global["webpackJsonp"] || []).push([["common/vendor"],{
 
 /***/ 0:
-/*!***************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js ***!
-  \***************************************************************************/
+/*!**********************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -219,12 +219,12 @@ _vue.default.prototype.mySocket = {
 
     uni.onSocketMessage(function (res) {
       var dataContent = JSON.parse(res.data);
-      var chatMessage = dataContent.chatMessage;
       console.log("收到服务器内容：");
       console.log(dataContent);
 
       // 如果消息类型为 CHAT
       if (dataContent.action == app.netty.CHAT) {
+        var chatMessage = dataContent.data;
         // 发送签收消息
         that.signMsgList(chatMessage.msgId);
 
@@ -317,7 +317,7 @@ _vue.default.prototype.mySocket = {
 
     if (dataContent.action == app.netty.CHAT) {
       // 保存聊天历史到本地缓存，保存聊天快照到本地
-      var chatMessage = dataContent.chatMessage;
+      var chatMessage = dataContent.data;
       var createDate = app.formatTime(chatMessage.createDate);
 
       // console.log("发消息的时间戳：" + createDate);
@@ -621,6 +621,9 @@ _vue.default.prototype.netty = {
   CHAT: 2, // 聊天消息
   SIGNED: 3, // 消息签收
   KEEPALIVE: 4, // 客户端保持心跳
+  LIKEARTICLE: 5, // 点赞文章通知
+  LIKECOMMENT: 6, // 点赞评论通知
+  COMMENT: 7, // 评论通知
 
   /**
    * 和后端 ChatMessage 聊天模型的对象保持一致
@@ -641,12 +644,12 @@ _vue.default.prototype.netty = {
   /**
       * 构建消息 DataContent 模型对象
       * @param {Object} action
-      * @param {Object} chatMsg
+      * @param {Object} data
       * @param {Object} extand
       */
-  DataContent: function DataContent(action, chatMessage, extand) {
+  DataContent: function DataContent(action, data, extand) {
     this.action = action;
-    this.chatMessage = chatMessage;
+    this.data = data;
     this.extand = extand;
   } };
 
@@ -2261,9 +2264,9 @@ function normalizeComponent (
 /***/ }),
 
 /***/ 103:
-/*!************************************************************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fblack-index%2Fblack-index"} ***!
-  \************************************************************************************************************************/
+/*!*******************************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Fblack-index%2Fblack-index"} ***!
+  \*******************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2278,9 +2281,9 @@ createPage(_blackIndex.default);
 /***/ }),
 
 /***/ 109:
-/*!*****************************************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/pages/black-index/black-index.css ***!
-  \*****************************************************************************************************/
+/*!************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/pages/black-index/black-index.css ***!
+  \************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2289,9 +2292,9 @@ createPage(_blackIndex.default);
 /***/ }),
 
 /***/ 11:
-/*!**********************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/store/index.js ***!
-  \**********************************************************************************/
+/*!*****************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/store/index.js ***!
+  \*****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2323,9 +2326,9 @@ store;exports.default = _default;
 /***/ }),
 
 /***/ 112:
-/*!**************************************************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fsignin%2Fsignin"} ***!
-  \**************************************************************************************************************/
+/*!*********************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Fsignin%2Fsignin"} ***!
+  \*********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3291,9 +3294,9 @@ var index_esm = {
 /***/ }),
 
 /***/ 120:
-/*!****************************************************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"components%2Farticlebrief"} ***!
-  \****************************************************************************************************************/
+/*!***********************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"components%2Farticlebrief"} ***!
+  \***********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3308,9 +3311,9 @@ createPage(_articlebrief.default);
 /***/ }),
 
 /***/ 121:
-/*!************************************************************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fmessagelist%2Fmessagelist"} ***!
-  \************************************************************************************************************************/
+/*!*******************************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Fmessagelist%2Fmessagelist"} ***!
+  \*******************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3325,9 +3328,9 @@ createPage(_messagelist.default);
 /***/ }),
 
 /***/ 129:
-/*!************************************************************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2FwechatLogin%2FwechatLogin"} ***!
-  \************************************************************************************************************************/
+/*!*******************************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2FwechatLogin%2FwechatLogin"} ***!
+  \*******************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3342,9 +3345,9 @@ createPage(_wechatLogin.default);
 /***/ }),
 
 /***/ 13:
-/*!************************************************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Findex%2Findex"} ***!
-  \************************************************************************************************************/
+/*!*******************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Findex%2Findex"} ***!
+  \*******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9339,9 +9342,9 @@ module.exports = g;
 /***/ }),
 
 /***/ 30:
-/*!**************************************************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fdetail%2Fdetail"} ***!
-  \**************************************************************************************************************/
+/*!*********************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Fdetail%2Fdetail"} ***!
+  \*********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9356,9 +9359,9 @@ createPage(_detail.default);
 /***/ }),
 
 /***/ 4:
-/*!******************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/pages.json ***!
-  \******************************************************************************/
+/*!*************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/pages.json ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9368,9 +9371,9 @@ createPage(_detail.default);
 /***/ }),
 
 /***/ 40:
-/*!**************************************************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fsubmit%2Fsubmit"} ***!
-  \**************************************************************************************************************/
+/*!*********************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Fsubmit%2Fsubmit"} ***!
+  \*********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10177,9 +10180,9 @@ if (hadRuntime) {
 /***/ }),
 
 /***/ 51:
-/*!******************************************************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fchatpage%2Fchatpage"} ***!
-  \******************************************************************************************************************/
+/*!*************************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Fchatpage%2Fchatpage"} ***!
+  \*************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10194,9 +10197,9 @@ createPage(_chatpage.default);
 /***/ }),
 
 /***/ 61:
-/*!**********************************************************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Ffollowlist%2Ffollowlist"} ***!
-  \**********************************************************************************************************************/
+/*!*****************************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Ffollowlist%2Ffollowlist"} ***!
+  \*****************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10211,9 +10214,9 @@ createPage(_followlist.default);
 /***/ }),
 
 /***/ 69:
-/*!****************************************************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fprofile%2Fprofile"} ***!
-  \****************************************************************************************************************/
+/*!***********************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Fprofile%2Fprofile"} ***!
+  \***********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10228,9 +10231,9 @@ createPage(_profile.default);
 /***/ }),
 
 /***/ 77:
-/*!**************************************************************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fpersonpublic%2Fpersonpublic"} ***!
-  \**************************************************************************************************************************/
+/*!*********************************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Fpersonpublic%2Fpersonpublic"} ***!
+  \*********************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10245,9 +10248,9 @@ createPage(_personpublic.default);
 /***/ }),
 
 /***/ 85:
-/*!**************************************************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fsearch%2Fsearch"} ***!
-  \**************************************************************************************************************/
+/*!*********************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Fsearch%2Fsearch"} ***!
+  \*********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10262,9 +10265,9 @@ createPage(_search.default);
 /***/ }),
 
 /***/ 93:
-/*!******************************************************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Ffanslist%2Ffanslist"} ***!
-  \******************************************************************************************************************/
+/*!*************************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Ffanslist%2Ffanslist"} ***!
+  \*************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 

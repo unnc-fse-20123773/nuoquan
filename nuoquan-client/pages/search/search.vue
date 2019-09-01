@@ -2,7 +2,7 @@
 	<view class="weui-search-bar" style="background: FFFFFE;" >
 		<view class="input-bar">
 			<image class="back" src="../../static/icon/angle-left.png"></image>
-			<input type="text" placeholder="  搜索" confirm-type="done" @blur="saveAsSearchKeyWords" @confirm="search()" />
+			<input type="text" v-model="searchKeyWords" focus placeholder="  搜索" confirm-type="search" @confirm="search" />
 		</view>
 
 		<view class="wxSearchKey" v-show="searching">
@@ -17,13 +17,16 @@
 		<view class="SearchHistoryItem" v-show="searching">
 			<view class="SearchHistoryItemTitle">历史搜索:</view>
 			<icon type="clear" @tap="SearchDeleteAll" size="11"></icon>
+			<!-- <view v-for="key in searchHisKeyList" :key="key">{{key}}</view> -->
 			<view class="searchList">
-				<view class="item" v-for="(i,index) in historySearchedArticles" :key="index"></view>
+				<view class="item" v-for="(item,index) in searchHisKeyList" :key="index">{{item}}</view>
 			</view>
 		</view>
+        <view class="searchResultWrods">搜索结果:</view>
 		<view class="searchResult" v-show="!searching">			
 			<searchResultArticle v-for="i in searchedArticleList" :key="i.id" v-bind:articleCard="i"></searchResultArticle>
 		</view>
+		
 
 	</view>
 </template>
@@ -33,11 +36,11 @@
 	export default {
 		data() {
 			return {
-				historySearchedArticles: {},
 				hotList: {},
 				searchKeyWords: '',
 				searchedArticleList: {},
 				searching:true,
+				searchHisKeyList: uni.getStorageSync('search_history'),
 			}
 		},
 		components: {
@@ -57,19 +60,66 @@
 
 			})
 		},
+		
 		methods: {
-			saveAsSearchKeyWords: function(event) {
-				this.searchKeyWords = event.target.value;
-				console.log(this.searchKeyWords);
-			},
+			
 			search: function(res) {
 				var that = this;
 				var isSaveRecord = 1;
+				
+				// console.log(that.searchKeyWords);
+				if (this.searchKeyWords == '' || this.searchKeyWords == null){
+					uni.showToast({
+						title: '搜索内容不能为空',
+						duration: 1000,
+						icon:'none',
+					})
+					return;
+				}
+				
+				
+				uni.getStorage({
+					key:'search_history',
+					success(res){
+						let list = res.data;
+						console.log(list);
+						if(list.length > 10){
+							for(let item of list){
+								if(item == that.searchKeyWords){
+									return false;
+								}
+							}
+							list.pop();
+							list.unshift(that.searchKeyWords);
+						} else {
+							for(let item of list){
+								if(item == that.searchKeyWords){
+									return false;
+								}
+							}
+							list.unshift(that.searchKeyWords);
+						}
+						that.searchHisKeyList = list;
+						uni.setStorage({
+							key:'search_history',
+							data: that.searchHisKeyList
+						})
+					},
+					fail() {
+						that.searchHisKeyList = [];
+						that.searchHisKeyList.push(that.searchKeyWords);
+						uni.setStorage({
+							key:'search_history',
+							data: that.searchHisKeyList
+						});
+					}
+				});
+				
 				uni.request({
 					url: this.$serverUrl + '/article/searchArticleYANG?isSaveRecord=' + isSaveRecord,
 					method: "POST",
 					data: {
-						articleContent: this.searchKeyWords
+						articleContent: that.searchKeyWords
 					},
 					success: function(result) {
 						console.log(result.data);
@@ -78,6 +128,7 @@
 					}
 				})
 			},
+			
 		}
 	}
 </script>
@@ -130,6 +181,16 @@
 		font-weight: 300;
 	}
 
+	.searchResultWrods {
+		color: #888888;
+		font-size: 13px;
+		font-weight: 300;
+		margin-top: 26px;
+		width: calc(750upx-56px);
+		padding: 0 28px;
+		position: relative;
+	}
+	
 	.item {
 		display: inline-block;
 		padding: 0 11px;

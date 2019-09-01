@@ -9,5 +9,6 @@
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="article_id" property="articleId" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="sign_flag" property="signFlag" jdbcType="INTEGER" />
   </resultMap>
 </mapper>

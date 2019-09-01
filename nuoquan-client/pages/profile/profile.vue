@@ -56,13 +56,13 @@
 						<view class="yearPicker-button" @click="yearPickerChanger()">
 							<text class="yearPicker-text">{{year}}</text>
 							<view class="year-pointer">
-								<image class="year-pointerIcon" src="../../static/icon/angle-down/angle-down%20%20888888.png" mode="scaleToFill"></image>
+								<image class="year-pointerIcon" src="../../static/icon/angle-down.png" mode="scaleToFill"></image>
 							</view>
 						</view>
 						<view class="yearPicker-button" @click="majorPickerChanger()">
 							<text class="yearPicker-text">{{major}}</text>
 							<view class="year-pointer">
-								<image class="year-pointerIcon" src="../../static/icon/angle-down/angle-down%20%20888888.png" mode="scaleToFill"></image>
+								<image class="year-pointerIcon" src="../../static/icon/angle-down.png" mode="scaleToFill"></image>
 							</view>
 						</view>
 					</view>
@@ -72,7 +72,7 @@
 						<view class="yearPicker-button" @click="degreePickerChanger()">
 							<text class="yearPicker-text">{{degree}}</text>
 							<view class="year-pointer">
-								<image class="year-pointerIcon" src="../../static/icon/angle-down/angle-down%20%20888888.png" mode="scaleToFill"></image>
+								<image class="year-pointerIcon" src="../../static/icon/angle-down.png" mode="scaleToFill"></image>
 							</view>
 						</view>
 					</view>
@@ -169,16 +169,19 @@
 			var year = userInfo.graduationYear;
 			var major = userInfo.major;
 			var degree = userInfo.degree;
-			if(gender!=null){ // 判空，防止默认值被刷掉
+			if(!this.isNull(gender)){ // 判空，防止默认值被刷掉
 				this.gender = gender;
 			}
-			if(year!=null){
+			
+			if(!this.isNull(year)){
 				this.year = year;
 			}
-			if(major!=null){
+			
+			if(!this.isNull(major)){
 				this.major = major;
 			}
-			if(degree!=null){
+			
+			if(!this.isNull(degree)){
 				this.degree = this.degrees[degree];
 				this.degreeDB = degree; // 修改对数据库的默认值
 			}

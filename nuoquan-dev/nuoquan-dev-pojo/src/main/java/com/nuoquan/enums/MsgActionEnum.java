@@ -10,8 +10,10 @@ public enum MsgActionEnum {
 	CHAT(2, "聊天消息"),	
 	SIGNED(3, "消息签收"),
 	KEEPALIVE(4, "客户端保持心跳"),
-	LIKE(5,"点赞通知"),
-	COMMENT(6,"评论通知");
+	LIKEARTICLE(5, "点赞文章通知"),
+	LIKECOMMENT(6, "点赞评论通知"),
+	COMMENTARTICLE(7, "评论文章通知"),
+	COMMENTCOMMENT(8, "评论评论通知");
 	
 	public final Integer type;
 	public final String content;

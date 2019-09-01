@@ -1,10 +1,10 @@
 
-.touxiang.data-v-16ee2e71 {
+.touxiang.data-v-d203d3ca {
 	width: 60rpx;
 	height: 60rpx;
 	border-radius: 60rpx;
 }
-.bottomBar.data-v-16ee2e71 {
+.bottomBar.data-v-d203d3ca {
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -ms-flexbox;
@@ -20,7 +20,7 @@
 	    -ms-flex-pack: inherit;
 	        justify-content: inherit;
 }
-.time.data-v-16ee2e71 {
+.time.data-v-d203d3ca {
 	display: -webkit-inline-box;
 	display: -webkit-inline-flex;
 	display: -ms-inline-flexbox;
@@ -33,7 +33,7 @@
 	color: #939393;
 	margin-right: 6px;
 }
-.status.data-v-16ee2e71 {
+.status.data-v-d203d3ca {
 	display: -webkit-inline-box;
 	display: -webkit-inline-flex;
 	display: -ms-inline-flexbox;
@@ -44,7 +44,7 @@
 	line-height: 18px;
 	margin-right: 6px;
 }
-.contentText.data-v-16ee2e71 {
+.contentText.data-v-d203d3ca {
 	width: 400rpx;
 	font-size: 12px;
 	word-break: break-all;

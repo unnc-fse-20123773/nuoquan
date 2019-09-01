@@ -48,4 +48,11 @@ public interface ArticleMapperCustom extends MyMapper<Article> {
 	 * @return
 	 */
 	public List<ArticleVO> getTop3ByPopularity();
+	
+	/**
+	 * 按 articleId 获取文章
+	 * @param articleId
+	 * @return
+	 */
+	public ArticleVO getArticleById(String articleId);
 }
