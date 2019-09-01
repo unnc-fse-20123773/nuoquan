@@ -105,66 +105,68 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _vuex = __webpack_require__(/*! vuex */ 12);function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
 
 name: 'mainpageleft';var _default =
 {
@@ -177,12 +179,26 @@ name: 'mainpageleft';var _default =
 
 
   data: function data() {
-    return {};
-
-
+    return {
+      unreadMsgCount: uni.getStorageSync('myMsgCount') // 从缓存中获取初始值
+    };
   },
+
+  computed: _objectSpread({},
+  (0, _vuex.mapState)([
+  'myMsgCount'])),
+
+
+
+  watch: {
+    myMsgCount: function myMsgCount(newVal, oldVal) {// 左侧栏”我的消息“未读通知
+      this.unreadMsgCount = newVal;
+    } },
+
+
   methods: {
     goToMessageListPage: function goToMessageListPage() {
+      this.$store.commit('setMyMsgCount', 0);
       uni.navigateTo({
         url: '../messagelist/messagelist' });
 

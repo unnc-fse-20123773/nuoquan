@@ -210,11 +210,11 @@ public class ArticleController extends BasicController {
 	}
 
 	/**
-	 * fromUserId
-	 * toUserId
-	 * articleId
+	 * fromUserId 必填
+	 * toUserId 必填
+	 * articleId 
 	 * fatherCommentId
-	 * comment
+	 * comment 必填
 	 * PS: 父级（一级，给文章评论）评论有 articleId, 无 fatherCommentId;
 	 *     子级评论有 fatherCommentId, 无articleId
 	 */
