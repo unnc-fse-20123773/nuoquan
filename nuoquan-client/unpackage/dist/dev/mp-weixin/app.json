@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/cmt-likedetail/cmt-likedetail",
     "pages/detail/detail",
     "pages/submit/submit",
     "pages/chatpage/chatpage",

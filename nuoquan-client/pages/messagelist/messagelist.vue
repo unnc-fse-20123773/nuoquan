@@ -7,7 +7,7 @@
 		</view>
 		<!-- 点赞和评论数量 -->
 		<view id="msglist-likecommentnum">
-			<view class="msglist-like column_center">
+			<navigator class="msglist-like column_center" url="../cmt-likedetail/cmt-likedetail">
 				<view class="msglist-like-bg super_center">
 					<image src="../../static/icon/like.png" class="msglist-like-icon" mode=""></image>
 				</view>
@@ -15,7 +15,7 @@
 				<view class="msglist-like-num super_center">
 					121
 				</view>
-			</view>
+			</navigator>
 			<view class="msglist-likecommentnum-border">
 			</view>
 			<view class="msglist-comment column_center">
