@@ -1,17 +1,21 @@
 # Update Log:
 **v19.9.1 更新**
-1. 新增 消息提醒 功能后端代码
-2. 新增 用户点赞评论 系列接口
-3. 修改 用户点赞文章 系列接口
-4. 修改 接口名 userLike -> userUnLikeArticle
-5. 修正 personalPage buttons 样式
-6. 修正 关注粉丝列表 关注/已关注样式
-7. 中改 数据库，详情见 sqlRecord.sql
-8. 修复BUG-100000 快速点击关注/已关注出现用户受关注数递减情况，原因：未对删除关系结果做出判断就递减, 类似情况有点赞/取消点赞
+1. 整合 deyan & yaoyao
+2. 新增 搜索功能，搜索历史缓存 [deyan]
+3. 新增 部分样式修改 [yaoyao]
+4. 新增 用户 openid 获取并合并入数据库
+5. 新增 消息提醒 功能后端代码
+6. 新增 用户点赞评论 系列接口
+7. 修改 用户点赞文章 系列接口
+8. 修改 接口名 userLike -> userUnLikeArticle
+9. 修正 personalPage buttons 样式
+10. 修正 关注粉丝列表 关注/已关注样式
+11. 中改 数据库，详情见 sqlRecord.sql (8.28 和 9.1 两期)
+12. 修复BUG-100000 快速点击关注/已关注出现用户受关注数递减情况，原因：未对删除关系结果做出判断就递减, 类似情况有点赞/取消点赞
 
 **v19.8.29 更新**
-1. 新增 profile 页面功能及样式 (Jerrio& Guetta)
-2. 新增 messageList 页面删除聊天消息 (Jerrio& Guetta)
+1. 新增 profile 页面功能及样式 [Jerrio& Guetta]
+2. 新增 messageList 页面删除聊天消息 [Jerrio& Guetta]
 3. 新增 邮箱发送基本方法 
 
 **v19.8.28 更新**

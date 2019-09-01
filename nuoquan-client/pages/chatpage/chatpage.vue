@@ -1,16 +1,15 @@
 <!-- 本页面的 websocket 应写在 messagelist 里-->
 <template>
-	<view>
-		<scroll-view class="messageArea" style="background-color: #FFFFFF;">
-			<onemessage v-for="(i,index) in chatContent" :key=index :thisMessage='i' 
-			:userInfo="userInfo" :friendInfo="friendInfo"></onemessage>
+	<view style="height:100%;width:100%">
+		<scroll-view class="messageArea">
+			<onemessage v-for="(i,index) in chatContent" :key=index :thisMessage='i' :userInfo="userInfo" :friendInfo="friendInfo"></onemessage>
 		</scroll-view>
 		<view class="bottomBar">
 			<textarea auto-height="true" v-model="textMsg" />
 			<view class="icons">
-				<image src="../../static/icon/viewLocalPic.png"></image>
-				<image src="../../static/icon/emoji.png"></image>
-				<image src="../../static/icon/littlePlane.png" @click="sendText(textMsg)"></image>
+				<button><image src="../../static/icon/viewLocalPic.png"></image></button>
+				<button><image src="../../static/icon/emoji.png"></image></button>
+				<button><image src="../../static/icon/littlePlane.png" @click="sendText(textMsg)"></image></button>
 
 			</view>
 		</view>
@@ -198,6 +197,12 @@
 		}
 	}
 </script>
+<style>
+	page{
+		height:100%;
+		width:100%;
+	}
+</style>
 
 <style scoped>
 	/**
@@ -210,6 +215,7 @@
 		margin-bottom: 90upx;
 		overflow: hidden;
 		background: #F5F5F5;
+		height:100%;
 	}
 
 	.bottomBar {
@@ -217,7 +223,7 @@
 		display: flex;
 		align-items: center;
 		bottom: 0;
-		height: 90upx;
+		min-height: 90upx;
 		width: 100%;
 		margin: 0;
 		padding: 0;
@@ -227,11 +233,14 @@
 
 	.bottomBar textarea {
 		display: inline-block;
-		width: 534upx;
-		height: 50upx;
+		width: 530upx;
+		padding:0 4upx;
+		min-height: 50upx;
+		max-height: 95px;
 		border-radius: 24upx;
 		border: solid 1px #C6C6C6;
-		margin-left: 14upx;
+		margin: 20upx 0 20upx 14upx;
+		
 	}
 
 	.icons {
@@ -244,8 +253,27 @@
 	}
 
 	.icons image {
+		display: block;
 		width: 34upx;
 		height: 34upx;
 		vertical-align: middle;
 	}
+	.icons button.button-hover{
+	position: relative;
+  top: 3rpx;
+  box-shadow:0px 0px 8px #999 inset; 
+  
+    }
+	button{
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	width: 34upx;
+	height: 34upx;
+	vertical-align: middle;
+	background: #FFFFFF;
+	}
+    button::after{
+	border:none;
+    }
 </style>

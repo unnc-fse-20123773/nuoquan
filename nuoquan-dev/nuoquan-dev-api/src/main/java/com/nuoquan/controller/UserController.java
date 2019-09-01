@@ -1,11 +1,13 @@
 package com.nuoquan.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +21,11 @@ import com.nuoquan.pojo.User;
 import com.nuoquan.pojo.UserFans;
 import com.nuoquan.pojo.vo.FansFollow;
 import com.nuoquan.pojo.vo.UserVO;
+import com.nuoquan.pojo.vo.WxRes;
 import com.nuoquan.service.UserService;
 import com.nuoquan.utils.JSONResult;
+import com.nuoquan.utils.JsonUtils;
+import com.nuoquan.utils.UrlUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -216,5 +221,44 @@ public class UserController extends BasicController {
 		List<ChatMsg> unreadMsgList = userService.getUnsignedMsgList(userId);
 
 		return JSONResult.ok(unreadMsgList);
+	}
+	
+	
+	/**
+	 * 微信登陆获取openId
+	 * @param code
+	 * @param iv 加密算法的初始向量
+	 * @param encryptedData 加密数据，好像可以根据官方提供的方式自行解密，还没试验
+	 * @return
+	 */
+	@Value("${WXConst.appId}")
+	public String appId;
+	@Value("${WXConst.appSecret}")
+	public String appSecret;
+	@Value("${WXConst.wxGetOpenIdUrl}")
+	public String wxGetOpenIdUrl;
+	
+	@RequestMapping("/getWxUserInfo")
+	public JSONResult getWxUserInfo(String code,String iv,String encryptedData, String nickname, String faceImg) throws Exception {
+			
+			// 获取openid
+			Map<String,String> requestUrlParam = new HashMap<String,String>();
+			requestUrlParam.put("appid", appId);	 //开发者设置中的appId  
+			requestUrlParam.put("secret", appSecret); //开发者设置中的appSecret  
+			requestUrlParam.put("js_code", code);	//小程序调用wx.login返回的code 
+
+			//发送post请求读取调用微信 https://api.weixin.qq.com/sns/jscode2session 接口获取openid用户唯一标识  
+			String res = UrlUtil.sendPost(wxGetOpenIdUrl, requestUrlParam);
+			WxRes wxRes= JsonUtils.jsonToPojo(res, WxRes.class);
+//			System.out.println(res);
+//			System.out.println(wxRes.getOpenid());
+			
+			User user = new User();
+			user.setId(wxRes.getOpenid());
+			user.setNickname(nickname);
+			user.setFaceImg(faceImg);
+			UserVO userVO= (UserVO) updateUser(user).getData();
+			
+			return JSONResult.ok(userVO);
 	}
 }

@@ -57,18 +57,90 @@ to {
 	width: 80px;
 	vertical-align: bottom;
 }
+.personData {
+	padding-top: 17px;
+}
+.hotNum {
+	position: relative;
+	padding-left: 33px;
+	font-size: 15px;
+	color: #E15249;
+	font-weight: bold;
+	font-style: italic;
+}
+.hotNum::after {
+	content: "\5F71\54CD\529B";
+	font-weight: normal;
+	font-style: normal;
+	font-size: 8px;
+	color: #000000;
+	padding-left: 9px;
+}
+.yourFocus {
+	position: relative;
+	padding-top: 19px;
+	display: inline-block;
+	font-size: 13px;
+	font-weight: bold;
+	margin-left: 33px;
+}
+.yourFocus::after {
+	content: "\4F60\5173\6CE8\7684";
+	position: absolute;
+	bottom: -16px;
+	left: 0;
+	font-size: 7px;
+	color: #B2B2B2;
+	font-weight: 300;
+	width: 32px;
+}
+.focusYou {
+	position: relative;
+	padding-top: 19px;
+	display: inline-block;
+	font-size: 13px;
+	font-weight: bold;
+	margin-left: 43px;
+}
+.focusYou::after {
+	content: "\5173\6CE8\4F60\7684";
+	position: absolute;
+	bottom: -16px;
+	left: 0;
+	font-size: 7px;
+	color: #B2B2B2;
+	font-weight: 300;
+	width: 32px;
+}
 .personPageList {
 	margin-top: 40px;
+}
+.pageLine {
+	position: relative;
+}
+.noticeNum {
+	position: absolute;
+	right: 11px;
+	top: 16px;
+	background: #FDD041;
+	color: #FFFFFF;
+	font-size: 9px;
+	line-height: 18px;
+	border-radius: 3px;
+	padding: 0 2px;
 }
 button {
 	background: #fcfcfc;
 	border-radius: 0;
 	text-align: left;
-	margin:0;
-	padding:0 33px;
+	margin: 0;
+	padding: 0 33px;
 }
 button::after {
 	border: none;
+}
+button-hover {
+	background: #000000;
 }
 .pageLine image {
 	width: 20px;

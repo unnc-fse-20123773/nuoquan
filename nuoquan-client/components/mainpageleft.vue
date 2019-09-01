@@ -12,28 +12,47 @@
 				<view style="color:#B2B2B2;font-size: 6px;width:80px;position: relative;left: 10px;width:100%;vertical-align: bottom;">{{userInfo.emailSuffix}}</view>
 			</view>
 		</view>
+		<view class="personData">
+			<view class="hotNum">
+				4210121
+			</view>
+			<view class="yourFocus">
+				99
+			</view>
+			<view class="focusYou">
+				1021
+			</view>
+		</view>
 		<view class="personPageList">
 			<!-- TODO: 最好把 view 都改成 button 并加上样式 
 											  by Jerrio -->
 			<button class="pageLine">
 				<image src="../static/icon/write.png"></image>
 				<view>我的发布</view>
+				<view class="noticeNum">3</view>
 			</button>
 			<button class="pageLine" @tap="goToMessageListPage">
 				<image src="../static/icon/message.png"></image>
 				<view>我的消息</view>
+				<view class="noticeNum"> </view>
+
 			</button>
-			<button class="pageLine">
+			<button class="pageLine" @click="UD()">
 				<image src="../static/icon/star.png"></image>
 				<view>我的收藏</view>
+				<view class="noticeNum">23</view>
+
 			</button>
 			<button class="pageLine">
 				<image src="../static/icon/report.png"></image>
 				<view>举报投诉</view>
+<!-- 				<view class="noticeNum">3</view>
+ -->
 			</button>
-			<button class="pageLine">
+			<button class="pageLine" @click="UD()">
 				<image src="../static/icon/about.png"></image>
-				<view>关于&nbsp;&nbsp;</view>
+				<view>关于</view>
+
 			</button>
 		</view>
 	</view>
@@ -52,7 +71,7 @@
 		},
 		data() {
 			return {
-				
+
 			};
 		},
 		methods: {
@@ -61,11 +80,19 @@
 					url: '../messagelist/messagelist',
 				});
 			},
-			
-			goToProfile(){
+
+			goToProfile() {
 				uni.navigateTo({
 					url: '../profile/profile',
 				});
+			},
+			UD() {
+				uni.showToast({
+					// title: '⠀⠀⠀⠀⠀under⠀⠀⠀⠀⠀development',//不是空格，是特殊符号，莫删
+					title: '上课不要玩手机',
+					duration: 20000,
+					icon: 'none',
+				})
 			}
 		},
 
@@ -77,16 +104,19 @@
 		from {
 			display: none;
 		}
+
 		to {
 			display: block;
 		}
 	}
+
 	.bottomLayerCoverScreen {
 		position: fixed;
 		width: 750upx;
 		height: 100%;
 		z-index: 5;
 	}
+
 	.mainPageLeft {
 		background: #fcfcfc;
 		animation: slidefromleft 3s;
@@ -98,22 +128,26 @@
 		box-shadow: 1px 0px 5px #a6a6a6;
 		border-bottom-right-radius: 80px;
 	}
+
 	.topInfoArea {
 		height: 60px;
 		margin-top: 29px;
 	}
+
 	.topLeft {
 		margin-left: 20px;
 		display: inline-block;
 		width: 60px;
 		vertical-align: top;
 	}
+
 	.touxiang {
 		height: 60px;
 		width: 60px;
 		border-radius: 60px;
 		display: block;
 	}
+
 	.topRight {
 		display: inline-block;
 		margin-left: 8px;
@@ -121,25 +155,117 @@
 		width: 80px;
 		vertical-align: bottom;
 	}
+
+	.personData {
+		padding-top: 17px;
+	}
+
+	.hotNum {
+		position: relative;
+		padding-left: 33px;
+		font-size: 15px;
+		color: #E15249;
+		font-weight: bold;
+		font-style: italic;
+
+	}
+
+	.hotNum::after {
+		content: "影响力";
+		font-weight: normal;
+		font-style: normal;
+		font-size: 8px;
+		color: #000000;
+		padding-left: 9px;
+
+	}
+
+	.yourFocus {
+		position: relative;
+		padding-top: 19px;
+		display: inline-block;
+		font-size: 13px;
+		font-weight: bold;
+		margin-left: 33px;
+
+	}
+
+	.yourFocus::after {
+		content: "你关注的";
+		position: absolute;
+		bottom: -16px;
+		left: 0;
+		font-size: 7px;
+		color: #B2B2B2;
+		font-weight: 300;
+		width: 32px;
+
+	}
+
+	.focusYou {
+		position: relative;
+		padding-top: 19px;
+		display: inline-block;
+		font-size: 13px;
+		font-weight: bold;
+		margin-left: 43px;
+	}
+
+	.focusYou::after {
+		content: "关注你的";
+		position: absolute;
+		bottom: -16px;
+		left: 0;
+		font-size: 7px;
+		color: #B2B2B2;
+		font-weight: 300;
+		width: 32px;
+	}
+
 	.personPageList {
 		margin-top: 40px;
 	}
+
+	.pageLine {
+		position: relative;
+	}
+
+	.noticeNum {
+		position: absolute;
+		right: 11px;
+		top: 16px;
+		background: #FDD041;
+		color: #FFFFFF;
+		font-size: 9px;
+		line-height: 18px;
+		border-radius: 3px;
+		padding: 0 2px;
+
+	}
+
 	button {
 		background: #fcfcfc;
 		border-radius: 0;
 		text-align: left;
-		margin:0;
-		padding:0 33px;
+		margin: 0;
+		padding: 0 33px;
 	}
+
 	button::after {
 		border: none;
 	}
+
+	button-hover {
+		background: #000000;
+	}
+
 	.pageLine image {
 		width: 20px;
 		height: 20px;
 		display: inline-block;
 		vertical-align: middle;
 	}
+
 	.pageLine view {
 		display: inline-block;
 		font-size: 13px;

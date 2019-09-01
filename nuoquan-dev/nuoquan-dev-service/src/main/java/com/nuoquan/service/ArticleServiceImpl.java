@@ -142,8 +142,8 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public PagedResult searchYangArticles(Article article, Integer isSaveRecord, Integer page, Integer pageSize) {
-
+	public PagedResult searchYangArticlesContent(Article article, Integer isSaveRecord, Integer page, Integer pageSize) {
+		
 		// 保存热搜词
 		String articleContent = article.getArticleContent();
 		if (isSaveRecord != null && isSaveRecord == 1) {

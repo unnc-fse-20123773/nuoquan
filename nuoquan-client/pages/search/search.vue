@@ -1,130 +1,211 @@
 <template>
-	<view class="mainPageTop">
-		<view class="topBar">
-			<image class="topBarTouxiang" src="../../static/touxiang.jpg"></image>
-			<input class="topBarSearch" placeholder="  搜索" v-model="searchvalue" />
-			<view class="topBarPlus">
-				<view style="font-size: 20px;color:#FDD041;border-radius: 3px;" @click="searchfunction">搜</view>
-			</view>
-			<view class="topBarwaiting"></view>
+	<view class="weui-search-bar" style="background: FFFFFE;" >
+		<view class="input-bar">
+			<image class="back" src="../../static/icon/angle-left.png"></image>
+			<input type="text" v-model="searchKeyWords" focus placeholder="  搜索" confirm-type="search" @confirm="search" />
 		</view>
-		<view>
-			<view>打印原始结果res</view>
-			<view style="height:10px;"></view>
-			<view class="result1 result">{{ oriData }}</view>
-			<view style="height:10px;"></view>
 
-			<view>打印res.data.data</view>
+		<view class="wxSearchKey" v-show="searching">
+			<text class="exSearchTitle">搜索热点:</text>
+			<view class="searchList">
+				<view class="item" v-for="(i,index) in hotList" :key="index">
+					{{i}}
+				</view>
+			</view>
 
-			<view class="result2 result">{{ oriData.data.data }}</view>
-			<view style="height:10px;"></view>
-
-			<view>打印其他</view>
-
-			<view class="result3 result">
-				<!-- 				其他数据
- -->
+		</view>
+		<view class="SearchHistoryItem" v-show="searching">
+			<view class="SearchHistoryItemTitle">历史搜索:</view>
+			<icon type="clear" @tap="SearchDeleteAll" size="11"></icon>
+			<!-- <view v-for="key in searchHisKeyList" :key="key">{{key}}</view> -->
+			<view class="searchList">
+				<view class="item" v-for="(item,index) in searchHisKeyList" :key="index">{{item}}</view>
 			</view>
 		</view>
+		<view class="searchResultWrods">搜索结果:</view>
+		<view class="searchResult" v-show="!searching">		
+			<articlebrief v-for="i in searchedArticleList" :key="i.id" v-bind:articleCard="i"></articlebrief>
+		</view>
+
 	</view>
 </template>
 
 <script>
+	import articlebrief from '../../components/articlebrief';
 	export default {
 		data() {
 			return {
-				oriData: {},
-				searchvalue: "",
+				hotList: {},
+				searchKeyWords: '',
+				searchedArticleList: {},
+				searching:true,
+				searchHisKeyList: uni.getStorageSync('search_history'),
 			}
+		},
+		components: {
+			articlebrief
 		},
 		onLoad: function() {
-			uni.setNavigationBarTitle({
-				title: "搜索"
-			});
-		},
-		methods: {
-			searchfunction() {
+			// 查询热搜词
+			var that = this;
+			uni.request({
+				url: that.$serverUrl + '/article/hot',
+				method: "POST",
+				success: (res) => {
+					console.log(res);
+					that.hotList = res.data.data;
+					console.log(this.hotList);
+				}
 
-				debugger;
-				var _this = this;
-				// _this.searchvalue
-				// 
-				console.log(this.searchvalue);
-				uni.request({
-					url: this.SeverUrl+'/queryAllArticles',
-					method: 'POST',
-					success: res => {
-						console.log('success');
-						console.log(res);
-						_this.oriData = res.data.data.rows;
+			})
+		},
+		
+		methods: {
+			
+			search: function(res) {
+				var that = this;
+				var isSaveRecord = 1;
+				
+				// console.log(that.searchKeyWords);
+				if (this.searchKeyWords == '' || this.searchKeyWords == null){
+					uni.showToast({
+						title: '搜索内容不能为空',
+						duration: 1000,
+						icon:'none',
+					})
+					return;
+				}
+				
+				
+				uni.getStorage({
+					key:'search_history',
+					success(res){
+						let list = res.data;
+						console.log(list);
+						if(list.length > 10){
+							for(let item of list){
+								if(item == that.searchKeyWords){
+									return false;
+								}
+							}
+							list.pop();
+							list.unshift(that.searchKeyWords);
+						} else {
+							for(let item of list){
+								if(item == that.searchKeyWords){
+									return false;
+								}
+							}
+							list.unshift(that.searchKeyWords);
+						}
+						that.searchHisKeyList = list;
+						uni.setStorage({
+							key:'search_history',
+							data: that.searchHisKeyList
+						})
 					},
-					fail: res => {
-						console.log(res);
+					fail() {
+						that.searchHisKeyList = [];
+						that.searchHisKeyList.push(that.searchKeyWords);
+						uni.setStorage({
+							key:'search_history',
+							data: that.searchHisKeyList
+						});
 					}
 				});
-			}
+				
+				uni.request({
+					url: this.$serverUrl + '/article/searchArticleYANG?isSaveRecord=' + isSaveRecord,
+					method: "POST",
+					data: {
+						articleContent: that.searchKeyWords
+					},
+					success: function(result) {
+						console.log(result.data);
+						that.searchedArticleList = result.data.data.rows;
+						that.searching=false;
+					}
+				})
+			},
+			
 		}
 	}
 </script>
 
 <style>
-	.sousuokuang {
-		height: 50px;
-		width: 100%;
+	.input-bar {
+		margin-top: 10px;
+		margin-left: 23px;
+		height: 32px;
 	}
 
-	.result {
-		width: 100%;
-		border: 5px;
-		border-color: #b2b2b2;
-	}
-
-	.mainPageTop {
-		padding-top: 4px;
-		/* 	height: 168px;
-	 */
-		width: 100%;
-		background: #fdd041;
-		box-shadow: 0 -2px 10px #000000;
-		border-bottom-right-radius: 25px;
-		border-bottom-left-radius: 25px;
-	}
-
-	.topBarTouxiang {
-		width: 30px;
-		height: 30px;
-		border-radius: 30px;
+	.back {
 		display: inline-block;
-		vertical-align: middle;
-		margin-left: 12px;
+		width: 32px;
+		height: 32px;
+		background: #FDD041;
+		border-radius: 8px;
+
 	}
 
-	.topBarSearch {
+
+	.input-bar input {
 		font-size: 15px;
 		display: inline-block;
 		width: 190px;
 		height: 28px;
-		vertical-align: middle;
 		border-radius: 8px;
 		margin-left: 13px;
+		padding-left: 2px;
+		padding-bottom: 2px;
 		background: white;
 		letter-spacing: 1px;
 		color: #b2b2b2;
 		font-family: MicrosoftYaHei;
 		line-height: 10px;
-		min-height: 28px;
+		box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.16);
 	}
 
-	.topBarPlus {
-		font-size: 25px;
-		background: #ffffff;
+	.wxSearchKey, .SearchHistoryItem{
+		margin-top: 26px;
+		width: calc(750upx-56px);
+		padding: 0 28px;
+		position: relative;
+	}
+
+	.exSearchTitle,.SearchHistoryItemTitle
+	 {
+		color: #888888;
+		font-size: 13px;
+		font-weight: 300;
+	}
+
+	.searchResultWrods {
+		color: #888888;
+		font-size: 13px;
+		font-weight: 300;
+		margin-top: 26px;
+		width: calc(750upx-56px);
+		padding: 0 28px;
+		position: relative;
+	}
+	
+	.item {
 		display: inline-block;
-		height: 25px;
-		width: 25px;
-		vertical-align: middle;
-		text-align: center;
-		margin-left: 10px;
-		border-radius: 3px;
-		line-height: 23px;
+		padding: 0 11px;
+		background: #FFE9A2;
+		border-radius: 8px;
+		height: 24px;
+		line-height: 24px;
+		color: #353535;
+		font-size: 13px;
+		font-weight: 300;
+		margin-right: 14px;
+	}
+		
+	.SearchHistoryItem icon{
+		position: absolute;
+		right:28px;
+		top:0;
 	}
 </style>

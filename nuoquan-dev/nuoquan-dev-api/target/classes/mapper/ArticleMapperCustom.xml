@@ -44,7 +44,7 @@
   </update>
   
   <select id="searchArticleContentYang" resultMap="BaseResultMap" parameterType="String">
-  	select a.*, u.nickname as nickname from nuoquan.article a
+  	select a.*, u.nickname as nickname, u.face_img, u.face_img_thumb from nuoquan.article a
    	left join nuoquan.user u on u.id = a.user_id
   	where
   		1 = 1
