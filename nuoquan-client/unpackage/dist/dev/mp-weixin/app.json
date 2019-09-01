@@ -22,5 +22,6 @@
     "navigationBarBackgroundColor": "#fdd041",
     "backgroundColor": "#F8F8F8"
   },
+  "permission": {},
   "usingComponents": {}
 }

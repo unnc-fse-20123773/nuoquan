@@ -4,11 +4,13 @@
     "ignore": []
   },
   "setting": {
-    "urlCheck": true
+    "urlCheck": true,
+    "postcss": false,
+    "minified": true
   },
   "compileType": "miniprogram",
   "libVersion": "2.7.0",
-  "appid": "touristappid",
+  "appid": "wxebb29e9646be657f",
   "projectname": "nuoquan",
   "condition": {
     "search": {
