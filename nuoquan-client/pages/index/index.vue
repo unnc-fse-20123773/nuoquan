@@ -69,7 +69,7 @@
 					method: "POST",
 					success: (res) => {
 						_this.showlist = res.data.data.rows;
-						// console.log(res)
+						console.log(_this.showlist);
 					},
 					fail: (res) => {
 						console.log("index unirequest fail");

@@ -298,6 +298,29 @@ public class ArticleServiceImpl implements ArticleService {
 
 		return grid;
 	}
+	
+	@Transactional(propagation = Propagation.SUPPORTS)
+	@Override
+	public PagedResult getSonComments(String fatherCommentId, Integer page, Integer pageSize) {
+		
+		PageHelper.startPage(page, pageSize);
+		List<UserArticleCommentVO> list = userArticleCommentMapperCustom.querySonComments(fatherCommentId);
+		
+		for (UserArticleCommentVO c : list) {
+			String timeAgo = TimeAgoUtils.format(c.getCreateTime());
+			c.setTimeAgo(timeAgo);
+		}
+		
+		PageInfo<UserArticleCommentVO> pageList = new PageInfo<>(list);
+
+		PagedResult grid = new PagedResult();
+		grid.setTotal(pageList.getPages());
+		grid.setRows(list);
+		grid.setPage(page);
+		grid.setRecords(pageList.getTotal());
+
+		return grid;
+	}
 
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override

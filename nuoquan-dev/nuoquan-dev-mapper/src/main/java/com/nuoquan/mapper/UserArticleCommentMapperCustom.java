@@ -10,6 +10,8 @@ public interface UserArticleCommentMapperCustom extends MyMapper<UserArticleComm
 	
 	public List<UserArticleCommentVO> queryComments(String articleId);
 	
+	public List<UserArticleCommentVO> querySonComments(String fatherCommentId);
+	
 	public UserArticleCommentVO getCommentById(String commentId);
 	
 	/**

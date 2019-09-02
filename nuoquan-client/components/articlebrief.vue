@@ -33,19 +33,11 @@
 		},
 		data() {
 			return {
-				taglist: [
-					['123', 'background:#40A792'],
-					['13', 'background:#621E81'],
-					['163', 'background:#738598'],
-					['标签', 'background:#F3AE4B'],
-					['13', 'background:#621E81'],
-					['163', 'background:#738598'],
-					['123', 'background:#40A792'],
-					['13', 'background:#621E81']
-				]
+				// atags: JSON.(this.articleCard.tags);
 			};
 		},
 		created() {
+			// console.log(JSON.stringify(this.articleCard.tags));
 			// console.log(this.articleCard);
 		},
 		filters: {

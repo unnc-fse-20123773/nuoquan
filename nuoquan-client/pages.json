@@ -57,7 +57,7 @@
 			"path": "pages/wechatLogin/wechatLogin",
 			"style": {}
 		}
-	],
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",

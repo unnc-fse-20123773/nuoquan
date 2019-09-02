@@ -192,7 +192,7 @@ public class ArticleController extends BasicController {
 			String fileName = file.getOriginalFilename();		// 获取原文件名
 			
 			// 保存到数据库中的相对路径
-			String uploadPathDB = "/" + userId + "/article" + "/" + articleId + fileName;
+			String uploadPathDB = "/" + userId + "/article" + "/" + articleId + "/" + fileName;
 			// 文件上传的最终保存路径
 			String finalVideoPath = "";
 			
@@ -227,7 +227,7 @@ public class ArticleController extends BasicController {
 		DataContent dataContent = new DataContent();
 		
 		UserArticleCommentVO commentVO = articleService.getCommentById(commentId);
-		if (!StringUtils.isBlank(comment.getArticleId())) {
+		if (StringUtils.isBlank(comment.getFatherCommentId())) {
 			// 给文章评论
 			ArticleVO targetArticle = articleService.getArticleById(comment.getArticleId());
 			dataContent.setData(new CommentCard(commentVO, targetArticle));
@@ -248,8 +248,8 @@ public class ArticleController extends BasicController {
 			@ApiImplicitParam(name = "articleId", required = true, dataType = "String", paramType = "form"),
 			@ApiImplicitParam(name = "page", required = false, dataType = "Integer", paramType = "form"),
 			@ApiImplicitParam(name = "pageSize", required = false, dataType = "Integer", paramType = "form") })
-	@PostMapping("/getArticleComments")
-	public JSONResult getArticleComments(String articleId, Integer page, Integer pageSize) throws Exception {
+	@PostMapping("/getFatherComments")
+	public JSONResult getFatherArticleComments(String articleId, Integer page, Integer pageSize) throws Exception {
 
 		if (StringUtils.isBlank(articleId)) {
 			return JSONResult.errorMsg("articleId can't be null");
@@ -258,6 +258,7 @@ public class ArticleController extends BasicController {
 		if (page == null) {
 			page = 1;
 		}
+		
 		if (pageSize == null) {
 			pageSize = PAGE_SIZE;
 		}
@@ -265,6 +266,30 @@ public class ArticleController extends BasicController {
 		PagedResult list = articleService.getAllComments(articleId, page, pageSize);
 
 		return JSONResult.ok(list);
+	}
+	
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "fatherCommentId", required = true, dataType = "String", paramType = "form"),
+		@ApiImplicitParam(name = "page", required = false, dataType = "Integer", paramType = "form"),
+		@ApiImplicitParam(name = "pageSize", required = false, dataType = "Integer", paramType = "form") })
+	@PostMapping("/getSonComments")
+	public JSONResult getSonArticleComments(String fatherCommentId, Integer page, Integer pageSize) throws Exception {
+		
+		if (StringUtils.isBlank(fatherCommentId)) {
+			return JSONResult.errorMap("fatherCommentId can't be null");
+		}
+		
+		if (page == null) {
+			page = 1;
+		}
+		
+		if (pageSize == null) {
+			pageSize = PAGE_SIZE;
+		}
+		
+		PagedResult reCommentList = articleService.getSonComments(fatherCommentId, page, pageSize);
+		
+		return JSONResult.ok(reCommentList);
 	}
 
 	@ApiOperation(value = "Get the top 3 hot article")
