@@ -2,8 +2,6 @@ package com.nuoquan.pojo.vo;
 
 import java.util.List;
 
-import com.nuoquan.pojo.User;
-
 /**
  * 查询用户粉丝和关注列表的返回对象
  * @author jerrio

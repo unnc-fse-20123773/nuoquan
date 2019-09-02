@@ -120,24 +120,58 @@ __webpack_require__.r(__webpack_exports__);
     /**
               * 微信小程序登陆
               */
-    getUserInfo: function getUserInfo() {
+    getUserInfo: function getUserInfo() {var _this = this;
       var that = this;
       uni.login({
         success: function success(res_login) {
-          console.log('-------获取code-------');
-          console.log(res_login.code);
+          // console.log('-------res_login，获取code-------')
+          // console.log(res_login);
           uni.getUserInfo({
             success: function success(info) {
-              console.log('-------获取sessionKey、openid(unionid)-------');
-              console.log(info);
-              that.setUser(info.userInfo);
+              // console.log('-------获取sessionKey、openid(unionid)-------')
+              // console.log(info);
+              // 后端获取openid 并设置用户信息
+              uni.request({
+                url: that.$serverUrl + '/user/getWxUserInfo',
+                method: "POST",
+                data: {
+                  encryptedData: info.encryptedData,
+                  iv: info.iv,
+                  code: res_login.code,
+
+                  nickname: info.userInfo.nickName,
+                  faceImg: info.userInfo.avatarUrl },
+
+                header: {
+                  'content-type': 'application/x-www-form-urlencoded' },
+
+                success: function success(res) {
+                  // console.log(res)
+                  if (res.data.status == 200) {
+                    // 3.获取返回的用户信息
+                    var finalUser = res.data.data;
+                    // 4.分割邮箱地址, 重构 user
+                    finalUser = _this.myUser(finalUser);
+                    // 5.写入缓存
+                    _this.setGlobalUserInfo(finalUser);
+                    console.log(finalUser);
+
+                    // 6.返回
+                    uni.navigateBack({
+                      delta: 1 });
+
+                  }
+                } });
+
+              // that.setUser(info.userInfo);
             } });
 
         } });
 
     },
 
-    setUser: function setUser(wUserInfo) {var _this = this;
+    setUser: function setUser(wUserInfo) {var _this2 = this;
+      /* Deprecated ! 现用 /user/getWxUserInfo 直接处理代替 */
       // 1.微信用户信息 用于上传
       var weUser = {
         // id: wUserInfo.openid
@@ -145,7 +179,7 @@ __webpack_require__.r(__webpack_exports__);
         nickname: wUserInfo.nickName,
         faceImg: wUserInfo.avatarUrl };
 
-      console.log(weUser);
+      console.log(wUserInfo);
       var finalUser;
       // 2.把微信信息上传给服务器
       var that = this;
@@ -162,9 +196,9 @@ __webpack_require__.r(__webpack_exports__);
             // 3.获取返回的用户信息
             finalUser = res.data.data;
             // 4.分割邮箱地址, 重构 user
-            finalUser = _this.myUser(finalUser);
+            finalUser = _this2.myUser(finalUser);
             // 5.写入缓存
-            _this.setGlobalUserInfo(finalUser);
+            _this2.setGlobalUserInfo(finalUser);
             console.log(finalUser);
 
             // 6.返回
@@ -186,7 +220,7 @@ __webpack_require__.r(__webpack_exports__);
       console.log("所有缓存已清除");
     },
 
-    testLogIn: function testLogIn() {var _this2 = this;
+    testLogIn: function testLogIn() {var _this3 = this;
       console.log(this.userId);
       var that = this;
       uni.request({
@@ -202,7 +236,7 @@ __webpack_require__.r(__webpack_exports__);
           console.log(res);
           if (res.data.status == 200) {
             var finalUser = res.data.data;
-            _this2.setGlobalUserInfo(finalUser);
+            _this3.setGlobalUserInfo(finalUser);
             // 6.返回
             uni.navigateBack({
               delta: 1 });

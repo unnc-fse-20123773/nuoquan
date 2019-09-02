@@ -7,16 +7,48 @@
 		<view class="drtailmain">
 			<view class="detailcontent">{{ articleCard.articleContent }}</view>
 			<view class="detailpics">
-				<view class="tags">
-					<view class="tag" v-for="(i,index) in articleCard.tags" v-bind:key="index">{{i}}</view>
-				</view>
-				<view class="commentPart">
-					<input class="commentSth" placeholder="评论点什么..." confirm-type="send" @confirm="saveComment" />
-				</view>
-				<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i"></commentbox>
+				<!-- <image class="detailpic" src="../../static/0001/pic3.jpg"></image>
+				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
+				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
+				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
+				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
+				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
+				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
+				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
+				<image class="detailpic" src="../../static/0001/pic3.jpg"></image> -->
 			</view>
-		</view>
-	</view>
+			<view class="tags">
+				<view class="tag" v-for="(i,index) in articleCard.tags" v-bind:key="index">{{i}}</view>
+			</view>
+			<view class="bottombar">
+				<view style="width:70%;display:inline-block;">
+					<image :src="articleCard.faceImg" class="touxiang"></image>
+					<view class="name">{{ articleCard.nickname }}</view>
+
+					<view class="time">{{ articleCard.createDate | timeDeal}}</view>
+				</view>
+				<view class="icons">
+					<!-- 点赞MM按钮 -->
+					<!-- 					MMMMMMMM
+ -->
+					<image class="icon" src="../../static/icon/like.png"></image>
+					<view class="icom">{{ articleCard.likeNum }}</view>
+				</view>
+			</view>
+			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i"></commentbox>
+			<view class="fengexian" style="height: 1px;width: 100%;background-color: #d6d6d6;margin:auto;"></view>
+			<view class="submitComment" @click="controlInput()">发 表 评 论</view>
+
+			<view class="bottoLayerOfInput" v-show="writingComment"  @click="controlInput()" @touchmove="controlInput()">
+				<view class="commentPart" @click.stop="">
+					<view class="emoji"></view>
+					<view class="submit" @click="saveComment()"></view>
+					<textarea class="commentSth" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
+					 confirm-type="send" @confirm="saveComment()" adjust-position="false" v-model="commentContent" />
+				</view>
+            </view>
+		</view> 
+ </view>
 </template>
 
 <script>
@@ -25,9 +57,11 @@
 		data() {
 			return {
 				userInfo: {},
-				comments: [],
-				articleCard: "",
-				commentList: ''
+				articleCard: "",  //detail的主角，由index传过来的单个文章信息
+                commentContent:"",  //用户准备提交的评论内容
+				commentList: {},  //返回值，获取评论列表信息
+				writingComment:false,  //控制输入框，true时显示输入框同时输入框自动获取焦点，拉起输入法
+				placeholderText:"评论点什么吧......",
 			};
 		},
 		components: {
@@ -45,7 +79,7 @@
 				} else {
 					console.log(content)
 					uni.request({
-						url: that.$serverUrl + '/saveComment',
+						url: that.$serverUrl + '/article/saveComment',
 						method: 'POST',
 						data: {
 							fromUserId: that.userInfo.id,
@@ -54,7 +88,13 @@
 						},
 						success: function(res) {
 							console.log(res.data)
-						}
+							that.writingComment = false;
+							that.commentContent = "";
+							// uni.redirectTo({
+							// 	url: '/pages/detail/detail'
+							// })
+						},
+
 					})
 				}
 			},
@@ -62,20 +102,24 @@
 				var that = this;
 				uni.request({
 					method: "POST",
-					url: that.$serverUrl + '/getArticleComments',
+					url: that.$serverUrl + '/article/getArticleComments',
 					data: {
 						articleId: that.articleCard.id,
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
-					success: (res) => {
+					success: (res) => {	console.log(res);
 						that.commentList = res.data.data.rows;
-						console.log(that.articleCard.id),
-							console.log(res)
+						console.log(that.articleCard.id);
+						
 					},
 				});
 			},
+			controlInput(){
+				this.writingComment =!this.writingComment;
+				console.log(this.writingComment)
+			}
 		},
 		onLoad(options) {
 			// console.log('detail receved');
@@ -93,19 +137,47 @@
 			// console.log(this.articleCard.id);
 			// console.log(this.userInfo.nickname);
 			this.getComments();
-		}
+		},
+		filters: {
+			timeDeal(timediff) {
+				timediff = new Date(timediff);
+				var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(),
+					timediff.getSeconds()
+				];
+				var oldTime = timediff.getTime();
+				var newTime = new Date().getTime();
+				var milliseconds = 0;
+				var timeSpanStr;
+				milliseconds = newTime - oldTime;
+				if (milliseconds <= 1000 * 60 * 1) {
+					timeSpanStr = '刚刚';
+				} else if (1000 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60) {
+					timeSpanStr = Math.round((milliseconds / (1000 * 60))) + '分钟前';
+				} else if (1000 * 60 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24) {
+					timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
+				} else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
+					timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
+				} else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && year == now.getFullYear()) {
+					timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
+				} else {
+					timeSpanStr = parts[0] + '-' + parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
+				}
+				return timeSpanStr;
+			}
+
+		},
 	};
 </script>
-
-<style>
-	page {
+<style>	page {
 		height: 100%;
 		width: 100%;
-	}
+	}</style>
+
+<style scoped>
 
 	.topbar {
-		height: 100px;
-		background-color: RGB(253, 217, 108);
+		
+		background-color: RGB(253, 217, 108);padding-bottom: 60px;
 	}
 
 	.detailtitle {
@@ -114,6 +186,7 @@
 		font-size: 14px;
 		margin: auto;
 		font-weight: 400;
+		padding-top:12px;
 	}
 
 	.drtailmain {
@@ -179,6 +252,7 @@
 		position: relative;
 		border-radius: 20px;
 		margin-top: 20px;
+		padding-bottom: 5px;
 	}
 
 	.touxiang {
@@ -236,10 +310,17 @@
 		text-align: center;
 		line-height: 30px;
 	}
-
+.bottoLayerOfInput{
+	position: fixed;
+	width: 750upx;
+	height: 1000px;
+	top:0;
+	left:0;
+	z-index: 3;
+}
 	.commentPart {
 		box-shadow: 0px 1px 5px 0px rgba(139, 139, 139, 0.32);
-		position: fixed;
+		position:fixed;
 		bottom: 0;
 		left: 0;
 		width: 670upx;

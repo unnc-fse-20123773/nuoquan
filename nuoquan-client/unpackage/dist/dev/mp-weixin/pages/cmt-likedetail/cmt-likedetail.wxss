@@ -123,7 +123,13 @@ page {
 	    -ms-flex-pack: center;
 	        justify-content: center;
 }
-.top-menu-view .menu-one-view .menu-one-act .menu-one-bottom .menu-one-bottom-color {
+.top-menu-view .menu-one-view .menu-one-act .menu-one-bottom .menu-one-bottom-color1 {
+	/* 在这里设置底部横条高度和颜色 */
+	width: 60%;
+	height: 6rpx;
+	background: #ff5d6c;
+}
+.top-menu-view .menu-one-view .menu-one-act .menu-one-bottom .menu-one-bottom-color2 {
 	/* 在这里设置底部横条高度和颜色 */
 	width: 60%;
 	height: 6rpx;
@@ -165,8 +171,14 @@ page {
 }
 
 /* margingHelper */
-.marginHelper{
+.marginHelper1{
 	height: 15rpx;
+	width: 60%;
+	margin-left: 20%;
+	background-color: white;
+}
+.marginHelper2{
+	height: 28rpx;
 	width: 60%;
 	margin-left: 20%;
 	background-color: white;
@@ -175,8 +187,8 @@ page {
 /* --------------------ID 行--------------------- */
 .id-line-abs {
 	margin-bottom: 15rpx;
-	width: 94%;
-	margin-left: 3%;
+	width: 92%;
+	margin-left: 4%;
 	height: 30px;
 }
 .id-line-rel {
@@ -186,9 +198,10 @@ page {
 /* 头像 */
 .clTouxiang-box{
 	position: absolute;
-	height: 30px;
-	width: 30px;
+	height: 22px;
+	width: 22px;
 	left: 0;
+	top: 4px;
 }
 .clTouxiang{
 	width: 100%;
@@ -199,10 +212,11 @@ page {
 /* ID */
 .clID-box{
 	position: absolute;
-	left: 32px;
+	left: 30px;
 }
 .clID-text{
 	font-size: 13px;
+	font-weight: 500;
 	color: #3d3d3d;
 }
 .clID-operation{
@@ -222,26 +236,35 @@ page {
 
 /* ---------------------------预览行---------------------- */
 .brief-bar-abs {
+	/* 底部边距需要动态设置 */
 	margin-bottom: 15rpx;
-	min-height: 20rpx;
-	max-height: 200rpx;
 	overflow: hidden;
-	width: 94%;
-	margin-left: 3%;
+	width: 92%;
+	margin-left: 4%;
+	border-radius: 20rpx;
+	background-color: #f8eced;
 }
 .brief-bar-rel {
 	position: relative;
-	width: 100%;
+	width: 94%;
+	margin-left: 3%;
+	margin-top: 15rpx;
+	margin-bottom: 15rpx;
 	height: 100%;
 	font-size: 12px;
-	color: #3d3d3d;
+	color: #aba8a0;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+	overflow: hidden;
 }
 
 /* -------------------原评论预览行 -----------------*/
 .origin-bar-abs {
 	height: 146rpx;
-	width: 94%;
-	margin-left: 3%;
+	width: 92%;
+	margin-left: 4%;
+	border-radius: 20rpx;
 	background-color: #f5f4ed;
 }
 .origin-bar-rel {
@@ -261,6 +284,30 @@ page {
 	width: 146rpx;
 	marging-left: 20rpx;
 }
+
+/* 黑色盖板 */
+.origin-imageMask{
+	position: absolute;
+	height: 106rpx;
+	width: 106rpx;
+	left: 20rpx;
+	top: 20rpx;
+	background-color: #000000;
+	opacity:0.5;
+	z-index: 10;
+}
+.origin-imageMasknum{
+	position: absolute;
+	height: 106rpx;
+	width: 106rpx;
+	left: 20rpx;
+	top: 20rpx;
+	z-index: 20;
+}
+.origin-imageMasknumtext{
+	color: white;
+	font-size: 14px;
+}
 .origin-image{
 	position: absolute;
 	height: 106rpx;
@@ -273,6 +320,7 @@ page {
 .origin-briefBox{
 	max-height: 140rpx;
 	width: 79%;
+	/* margin-left: 4%; */
 }
 
 /* 标题 */

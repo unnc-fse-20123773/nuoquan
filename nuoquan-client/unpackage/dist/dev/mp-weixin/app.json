@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/index/index",
     "pages/cmt-likedetail/cmt-likedetail",
+    "pages/index/index",
     "pages/detail/detail",
     "pages/submit/submit",
     "pages/chatpage/chatpage",
@@ -23,5 +23,6 @@
     "navigationBarBackgroundColor": "#fdd041",
     "backgroundColor": "#F8F8F8"
   },
+  "permission": {},
   "usingComponents": {}
 }

@@ -149,6 +149,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 var me;var _default =
 {
@@ -402,6 +404,8 @@ var me;var _default =
       uni.redirectTo({
         url: '../personpublic/personpublic?userId=' + userId });
 
+
+      console.log(userId);
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

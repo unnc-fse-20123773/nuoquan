@@ -171,9 +171,44 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 var me;var _default =
 {
+  onLoad: function onLoad() {
+    uni.setNavigationBarTitle({
+      title: "新消息列表" });
+
+
+    var userInfo = this.getGlobalUserInfo();
+    this.userInfo = userInfo;
+
+    var currentTab = data.currentTab;
+
+    me = this.getGlobalUserInfo();
+    this.myId = me.id;
+
+    // 获取userId
+    var userId = thisUserInfo.id;
+    this.queryFansFollow(userId);
+
+    // 设置列表 index
+    this.currentTab = currentTab;
+
+    var screenWidth = uni.getSystemInfoSync().screenWidth;
+    this.screenWidth = screenWidth;
+
+    // 获取当前页面
+    // var page = this.page;
+  },
+
   data: function data() {
     return {
       scrollLeft: 0,
@@ -200,7 +235,8 @@ var me;var _default =
       old: {
         scrollTop: 0 },
 
-      briefDetail: '阿里大家啦；决定了看；就安静的ijfe绝对是理解啊i了几分里的杀了放假啦空手道解放而理解利斯的肌肤拉萨家乐福结了婚凯撒的部分拉尔三部分啊的设计开发按时发哈是否会二号发安科技示范饿啊' };
+      userInfo: '',
+      briefDetail: '阿四点零分假按揭拉萨酱豆腐拉萨酱豆腐阿斯弗就爱上了对方拉萨解放零三分静安寺弗拉卢卡斯就方腊时发生了发爱上了端口开放就爱上了里大家啦二号发安科技示范饿啊' };
 
   },
 
@@ -217,32 +253,6 @@ var me;var _default =
     this.duration = e.target.value;
   },
 
-  onLoad: function onLoad(opt) {
-    var data = JSON.parse(opt.data);
-    var thisUserInfo = data.thisUserInfo;
-    var currentTab = data.currentTab;
-
-    uni.setNavigationBarTitle({
-      title: thisUserInfo.nickname + '的主页' });
-
-
-    me = this.getGlobalUserInfo();
-    this.myId = me.id;
-
-    // 获取userId
-    var userId = thisUserInfo.id;
-    this.queryFansFollow(userId);
-
-    // 设置列表 index
-    this.currentTab = currentTab;
-
-    var screenWidth = uni.getSystemInfoSync().screenWidth;
-    this.screenWidth = screenWidth;
-
-    // 获取当前页面
-    // var page = this.page;
-
-  },
 
   onPullDownRefresh: function onPullDownRefresh() {
     console.log('refresh');

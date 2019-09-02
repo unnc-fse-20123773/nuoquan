@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view class="bottomLayerOfLeft" v-if="showMainPageLeft" @click="controlShowLeft(0)">
+		<view class="bottomLayerOfLeft" v-if="showMainPageLeft" @click="controlShowLeft(0)" @touchmove="controlShowLeft(0)">
 			<mainpageleft :userInfo="userInfo"></mainpageleft>
 		</view>
 
@@ -114,7 +114,7 @@
 		color: #b2b2b2;
 		font-family: MicrosoftYaHei;
 		line-height: 10px;
-		min-height: 28px;
+		
 	}
 
 	.topBarPlus {

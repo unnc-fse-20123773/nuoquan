@@ -269,16 +269,19 @@ __webpack_require__.r(__webpack_exports__);
     var year = userInfo.graduationYear;
     var major = userInfo.major;
     var degree = userInfo.degree;
-    if (gender != null) {// 判空，防止默认值被刷掉
+    if (!this.isNull(gender)) {// 判空，防止默认值被刷掉
       this.gender = gender;
     }
-    if (year != null) {
+
+    if (!this.isNull(year)) {
       this.year = year;
     }
-    if (major != null) {
+
+    if (!this.isNull(major)) {
       this.major = major;
     }
-    if (degree != null) {
+
+    if (!this.isNull(degree)) {
       this.degree = this.degrees[degree];
       this.degreeDB = degree; // 修改对数据库的默认值
     }

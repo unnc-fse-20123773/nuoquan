@@ -42,7 +42,6 @@ page {
 		color: #b2b2b2;
 		font-family: MicrosoftYaHei;
 		line-height: 10px;
-		min-height: 28px;
 }
 .topBarPlus {
 		font-size: 25px;

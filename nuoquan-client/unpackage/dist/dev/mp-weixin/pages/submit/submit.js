@@ -138,8 +138,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
@@ -157,7 +155,7 @@ var sizeType = [
 {
   data: function data() {
     return {
-      userName: '许德琰测试账号',
+      userName: 'xdy123123123123',
       articleTitle: '',
       articleContent: '',
       articleTag: '',
@@ -192,17 +190,18 @@ var sizeType = [
     // 将标题存放在articleTitle中
     saveAsArticleTitle: function saveAsArticleTitle(event) {
       this.articleTitle = event.target.value;
-      // console.log(this.title);
+      // console.log(this.articleTitle);
     },
     // 将内容存放在articleContent中
     saveAsArticleContent: function saveAsArticleContent(event) {
       this.articleContent = event.target.value;
-      // console.log(this.content);
+      // console.log(this.articleContent);
     },
     addTag: function addTag(res) {
       this.showInputTagArea = 1;
       this.showAddTagButton = 0;
     },
+    // 检查tagList的数量
     checkInput: function checkInput(res) {
       var that = this;
       var tag = res.target.value;
@@ -281,26 +280,69 @@ var sizeType = [
         return true;
       }
     },
-    upload: function upload(e) {
+    upload: function upload(e) {var _this3 = this;
       var me = this;
 
-      console.log(me.articleContent);
       console.log(me.articleTitle);
-      console.log(me.imgPath);
+      console.log(me.articleContent);
+      console.log(me.userName);
+
+      if (me.articleTitle == '' || me.articleTitle == null) {
+        uni.showToast({
+          icon: 'none',
+          title: '文章标题不能为空～',
+          duration: 1000 });
+
+        return;
+      }
+
+      if (me.articleContent == '' || me.articleContent == null) {
+        uni.showToast({
+          icon: 'none',
+          title: '文章内容不能为空～',
+          duration: 1000 });
+
+        return;
+      }
 
       var serverUrl = me.$serverUrl;
-      uni.uploadFile({
-        url: serverUrl + '/upload',
-
-        formData: {
+      uni.request({
+        url: serverUrl + '/article/uploadArticle',
+        method: 'POST',
+        data: {
           userId: me.userName,
+          articleTag: me.articleTag,
           articleTitle: me.articleTitle,
           articleContent: me.articleContent },
 
-        success: function success(res) {
-          uni.redirectTo({
-            url: '../index/index' });
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
 
+        success: function success(res) {
+          // console.log(res.data.data);
+          if (me.imageList.length <= 0) {
+            uni.redirectTo({
+              url: '../index/index' });
+
+          } else {
+            var articleId = res.data.data;
+            for (var i = 0; i < me.imageList.length; i++) {
+              uni.uploadFile({
+                url: _this3.$serverUrl + '/article/uploadArticleImg',
+                filePath: me.imageList[i],
+                name: 'file',
+                formData: {
+                  userId: me.userName,
+                  articleId: articleId },
+
+                success: function success(uploadFileRes) {
+                  uni.redirectTo({
+                    url: '../index/index' });
+
+                } });
+
+            }
+          }
         } });
 
     }

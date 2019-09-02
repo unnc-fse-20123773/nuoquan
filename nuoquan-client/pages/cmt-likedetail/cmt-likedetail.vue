@@ -7,7 +7,8 @@
 						<view :class="[currentTab==index ? 'menu-one-act' : 'menu-one']">
 							<view class="menu-one-txt" @tap="goTop">{{menuTabs.name}}</view>
 							<view class="menu-one-bottom">
-								<view class="menu-one-bottom-color"></view>
+								<view class="menu-one-bottom-color1" v-if="index == 0"></view>
+								<view class="menu-one-bottom-color2" v-else></view>
 							</view>
 						</view>
 					</view>
@@ -21,18 +22,19 @@
 						<!-- 详情卡片 -->
 						<view class="cmtlikeDetail-card">
 							<!-- 卡片高度未定义，上下边距会失效，用 marginHelper 填充空白 -->
-							<view class="marginHelper"></view>
+							<view class="marginHelper1"></view>
 							<!-- ID 行 -->
 							<view class="id-line-abs">
 								<!-- 相对绝对定位 -->
 								<view class="id-line-rel">
 									<view class="clTouxiang-box">
-										<image class="clTouxiang" src="../../static/OOOOO/smile/smile%20%20888888.png" mode="scaleToFill"></image>
+										<image class="clTouxiang" :src="userInfo.faceImg" mode="scaleToFill"></image>
 									</view>
 									<view class="clID-box">
-										<text class="clID-text">陈仅仅七号</text>
+										<text class="clID-text">{{userInfo.nickname}}</text>
 										<text class="clID-operation">点赞了你的评论</text>
 									</view>
+									<!-- 需要获取新消息时间戳 -->
 									<view class="clID-time">
 										11:29
 									</view>
@@ -48,6 +50,12 @@
 							<view class="origin-bar-abs">
 								<view class="origin-bar-rel">
 									<view class="origin-imageBox">
+										<view class="origin-imageMask"></view>
+										<view class="origin-imageMasknum super_center">
+											<view class="origin-imageMasknumtext">
+												+6
+											</view>
+										</view>
 										<image class="origin-image" src="../../static/BG/indexBG2.png" mode="scaleToFill"></image>
 									</view>
 									<view class="origin-briefBox">
@@ -61,7 +69,7 @@
 								</view>
 							</view>
 							<!-- 卡片高度未定义，上下边距会失效，用 marginHelper 填充空白 -->
-							<view class="marginHelper"></view>
+							<view class="marginHelper2"></view>
 						</view>
 
 					</scroll-view>
@@ -74,6 +82,33 @@
 <script>
 	var me;
 	export default {
+		onLoad: function() {
+			uni.setNavigationBarTitle({
+				title: "新消息列表"
+			});
+			
+			var userInfo = this.getGlobalUserInfo()
+			this.userInfo = userInfo;
+			
+			var currentTab = data.currentTab;
+			
+			me = this.getGlobalUserInfo();
+			this.myId = me.id;
+			
+			// 获取userId
+			var userId = thisUserInfo.id;
+			this.queryFansFollow(userId);
+			
+			// 设置列表 index
+			this.currentTab = currentTab;
+			
+			var screenWidth = uni.getSystemInfoSync().screenWidth;
+			this.screenWidth = screenWidth;
+			
+			// 获取当前页面
+			// var page = this.page;
+		},
+		
 		data() {
 			return {
 				scrollLeft: 0,
@@ -100,7 +135,8 @@
 				old: {
 					scrollTop: 0
 				},
-				briefDetail: '阿里大家啦；决定了看；就安静的ijfe绝对是理解啊i了几分里的杀了放假啦空手道解放而理解利斯的肌肤拉萨家乐福结了婚凯撒的部分拉尔三部分啊的设计开发按时发哈是否会二号发安科技示范饿啊'
+				userInfo: '',
+				briefDetail: '阿四点零分假按揭拉萨酱豆腐拉萨酱豆腐阿斯弗就爱上了对方拉萨解放零三分静安寺弗拉卢卡斯就方腊时发生了发爱上了端口开放就爱上了里大家啦二号发安科技示范饿啊'
 			}
 		},
 
@@ -117,32 +153,6 @@
 			this.duration = e.target.value
 		},
 
-		onLoad(opt) {
-			var data = JSON.parse(opt.data)
-			var thisUserInfo = data.thisUserInfo;
-			var currentTab = data.currentTab;
-
-			uni.setNavigationBarTitle({
-				title: thisUserInfo.nickname + '的主页'
-			});
-
-			me = this.getGlobalUserInfo();
-			this.myId = me.id;
-
-			// 获取userId
-			var userId = thisUserInfo.id;
-			this.queryFansFollow(userId);
-
-			// 设置列表 index
-			this.currentTab = currentTab;
-
-			var screenWidth = uni.getSystemInfoSync().screenWidth;
-			this.screenWidth = screenWidth;
-
-			// 获取当前页面
-			// var page = this.page;
-
-		},
 
 		onPullDownRefresh() {
 			console.log('refresh');
@@ -319,7 +329,14 @@
 		justify-content: center;
 	}
 
-	.top-menu-view .menu-one-view .menu-one-act .menu-one-bottom .menu-one-bottom-color {
+	.top-menu-view .menu-one-view .menu-one-act .menu-one-bottom .menu-one-bottom-color1 {
+		/* 在这里设置底部横条高度和颜色 */
+		width: 60%;
+		height: 6upx;
+		background: #ff5d6c;
+	}
+	
+	.top-menu-view .menu-one-view .menu-one-act .menu-one-bottom .menu-one-bottom-color2 {
 		/* 在这里设置底部横条高度和颜色 */
 		width: 60%;
 		height: 6upx;
@@ -361,8 +378,15 @@
 	}
 	
 	/* margingHelper */
-	.marginHelper{
+	.marginHelper1{
 		height: 15upx;
+		width: 60%;
+		margin-left: 20%;
+		background-color: white;
+	}
+	
+	.marginHelper2{
+		height: 28upx;
 		width: 60%;
 		margin-left: 20%;
 		background-color: white;
@@ -372,8 +396,8 @@
 	/* --------------------ID 行--------------------- */
 	.id-line-abs {
 		margin-bottom: 15upx;
-		width: 94%;
-		margin-left: 3%;
+		width: 92%;
+		margin-left: 4%;
 		height: 30px;
 	}
 
@@ -384,9 +408,10 @@
 	/* 头像 */
 	.clTouxiang-box{
 		position: absolute;
-		height: 30px;
-		width: 30px;
+		height: 22px;
+		width: 22px;
 		left: 0;
+		top: 4px;
 	}
 	
 	.clTouxiang{
@@ -398,11 +423,12 @@
 	/* ID */
 	.clID-box{
 		position: absolute;
-		left: 32px;
+		left: 30px;
 	}
 	
 	.clID-text{
 		font-size: 13px;
+		font-weight: 500;
 		color: #3d3d3d;
 	}
 	
@@ -423,27 +449,36 @@
 	
 	/* ---------------------------预览行---------------------- */
 	.brief-bar-abs {
+		/* 底部边距需要动态设置 */
 		margin-bottom: 15upx;
-		min-height: 20upx;
-		max-height: 200upx;
 		overflow: hidden;
-		width: 94%;
-		margin-left: 3%;
+		width: 92%;
+		margin-left: 4%;
+		border-radius: 20upx;
+		background-color: #f8eced;
 	}
 
 	.brief-bar-rel {
 		position: relative;
-		width: 100%;
+		width: 94%;
+		margin-left: 3%;
+		margin-top: 15upx;
+		margin-bottom: 15upx;
 		height: 100%;
 		font-size: 12px;
-		color: #3d3d3d;
+		color: #aba8a0;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+		overflow: hidden;
 	}
 
 	/* -------------------原评论预览行 -----------------*/
 	.origin-bar-abs {
 		height: 146upx;
-		width: 94%;
-		margin-left: 3%;
+		width: 92%;
+		margin-left: 4%;
+		border-radius: 20upx;
 		background-color: #f5f4ed;
 	}
 
@@ -462,6 +497,32 @@
 		marging-left: 20upx;
 	}
 	
+	/* 黑色盖板 */
+	.origin-imageMask{
+		position: absolute;
+		height: 106upx;
+		width: 106upx;
+		left: 20upx;
+		top: 20upx;
+		background-color: #000000;
+		opacity:0.5;
+		z-index: 10;
+	}
+	
+	.origin-imageMasknum{
+		position: absolute;
+		height: 106upx;
+		width: 106upx;
+		left: 20upx;
+		top: 20upx;
+		z-index: 20;
+	}
+	
+	.origin-imageMasknumtext{
+		color: white;
+		font-size: 14px;
+	}
+	
 	.origin-image{
 		position: absolute;
 		height: 106upx;
@@ -474,6 +535,7 @@
 	.origin-briefBox{
 		max-height: 140upx;
 		width: 79%;
+		/* margin-left: 4%; */
 	}
 	
 	/* 标题 */
