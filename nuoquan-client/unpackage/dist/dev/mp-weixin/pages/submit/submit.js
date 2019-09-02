@@ -349,7 +349,8 @@ var sizeType = [
                 name: 'file',
                 formData: {
                   userId: me.userName,
-                  articleId: articleId },
+                  articleId: articleId,
+                  order: i },
 
                 success: function success(uploadFileRes) {
                   uni.redirectTo({

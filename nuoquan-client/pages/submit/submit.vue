@@ -233,7 +233,8 @@
 									name: 'file',
 									formData: {
 										userId: me.userName,
-										articleId: articleId
+										articleId: articleId,
+										order: i
 									},
 									success: (uploadFileRes) => {
 										uni.redirectTo({

@@ -16,10 +16,10 @@
 			<view class="hotNum">
 				-
 			</view>
-			<view class="yourFocus">
+			<view class="yourFocus" @tap="goToFansFollow(0)">
 				{{userInfo.followNum}}
 			</view>
-			<view class="focusYou">
+			<view class="focusYou" @tap="goToFansFollow(1)">
 				{{userInfo.fansNum}}
 			</view>
 		</view>
@@ -102,6 +102,7 @@
 					url: '../profile/profile',
 				});
 			},
+			
 			UD() {
 				uni.showToast({
 					// title: '⠀⠀⠀⠀⠀under⠀⠀⠀⠀⠀development',//不是空格，是特殊符号，莫删
@@ -109,7 +110,21 @@
 					duration: 20000,
 					icon: 'none',
 				})
-			}
+			},
+			
+			/**
+			 * @param {Object} currentTab 0: 关注 1: 粉丝
+			 */
+			goToFansFollow(currentTab) {
+				console.log("goToFansFollow...")
+				var data = {
+					currentTab: currentTab,
+					thisUserInfo: this.getGlobalUserInfo()
+				}
+				uni.navigateTo({
+					url: '../followlist/followlist?data=' + JSON.stringify(data),
+				});
+			},
 		},
 
 	};

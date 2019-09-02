@@ -209,12 +209,27 @@ name: 'mainpageleft';var _default =
         url: '../profile/profile' });
 
     },
+
     UD: function UD() {
       uni.showToast({
         // title: '⠀⠀⠀⠀⠀under⠀⠀⠀⠀⠀development',//不是空格，是特殊符号，莫删
         title: '上课不要玩手机',
         duration: 20000,
         icon: 'none' });
+
+    },
+
+    /**
+        * @param {Object} currentTab 0: 关注 1: 粉丝
+        */
+    goToFansFollow: function goToFansFollow(currentTab) {
+      console.log("goToFansFollow...");
+      var data = {
+        currentTab: currentTab,
+        thisUserInfo: this.getGlobalUserInfo() };
+
+      uni.navigateTo({
+        url: '../followlist/followlist?data=' + JSON.stringify(data) });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
