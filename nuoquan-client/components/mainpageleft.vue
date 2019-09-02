@@ -90,7 +90,7 @@
 				uni.showToast({
 					// title: '⠀⠀⠀⠀⠀under⠀⠀⠀⠀⠀development',//不是空格，是特殊符号，莫删
 					title: '上课不要玩手机',
-					duration: 20000,
+					duration: 2000,
 					icon: 'none',
 				})
 			}

@@ -1,8 +1,14 @@
 <template>
 	<view class="index">
-		<mainpagetop :userInfo='userInfo' :topArticles='topArticles'></mainpagetop>
-		<articlebrief v-for="i in showlist" :key="i.id" v-bind:articleCard="i"></articlebrief>
-		<view style="margin:750upx auto 0;font-size:13px;text-align: center;">到~底~线~啦~！</view>
+		<mainpagetop :userInfo='userInfo' :topArticles='topArticles' :topHeight="topHeight" style="position: fixed;z-index: 5;height:100%;"></mainpagetop>
+		
+		<view class="indexSelf" style="height:100%;">
+			<scroll-view class="indexArticleArea" scroll-y="true" @scroll="linkageWithTop">
+				<view style="height:160px;width:100%;"></view>
+				<articlebrief v-for="i in showlist" :key="i.id" v-bind:articleCard="i"></articlebrief>
+			</scroll-view>
+		</view>
+
 	</view>
 </template>
 
@@ -10,7 +16,7 @@
 	import articlebrief from '../../components/articlebrief';
 	import mainpagetop from '../../components/mainpagetop.vue';
 	import mainpageleft from '@/components/mainpageleft.vue'
-	
+
 	export default {
 		data() {
 			return {
@@ -18,6 +24,7 @@
 				hottitlelist: ['热门标题111', '热门标题222', '热门标题333'],
 				showlist: '',
 				topArticles: '',
+				topHeight: "160",
 
 				userInfo: { // 默认user设置
 					id: 'test-id123',
@@ -28,7 +35,7 @@
 					emailPrefix: 'zy22089',
 					emailSuffix: '@nottingham.edu.cn'
 				},
-				
+
 			};
 		},
 		components: {
@@ -37,7 +44,7 @@
 			mainpageleft,
 		},
 
-		onLoad() {			
+		onLoad() {
 			var userInfo = this.getGlobalUserInfo();
 			if (this.isNull(userInfo)) {
 				uni.navigateTo({
@@ -45,13 +52,13 @@
 				})
 				return;
 			}
-			
+
 			this.showArticles(); // 显示文章流
-			
+
 			this.getTop3Articles(); // 获取热度榜
-			
+
 			this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
-			
+
 			// [测试代码块]
 		},
 		onShow() {
@@ -77,8 +84,8 @@
 					}
 				});
 			},
-			
-			getTop3Articles(){
+
+			getTop3Articles() {
 				var that = this;
 				uni.request({
 					url: 'http://127.0.0.1:8080/article/getHotTop3',
@@ -88,19 +95,36 @@
 						console.log(res)
 					}
 				})
-			}
+			},
+			linkageWithTop(e) {
+				var y = e.detail.scrollTop;
+				console.log(y);
+				if (this.topHeight >= 36) {
+					if (160 - y >= 36) {
+						this.topHeight = 160 - y;
+					} else {
+						this.topHeight = 36;
+					}
+
+				}
+
+			},
 		}
 	};
 </script>
 <style>
-	page{
-		height:100%;
-	}</style>
+	page {
+		height: 100%;
+	}
+</style>
 <style scoped>
-
 	.index {
 		background-color: #f3f3f3;
-		height:100%;
+		height: 100%;
+	}
+
+	.indexArticleArea {
+		height: 100%;
 	}
 
 	image {

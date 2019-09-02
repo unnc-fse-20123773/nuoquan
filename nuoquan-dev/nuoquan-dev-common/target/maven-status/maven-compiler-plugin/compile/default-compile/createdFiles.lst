@@ -20,6 +20,7 @@ org\n3r\idworker\utils\Utils.class
 com\nuoquan\utils\MyMapper.class
 org\n3r\idworker\DayCode.class
 org\n3r\idworker\strategy\DayPrefixRandomCodeStrategy.class
+com\nuoquan\utils\UrlUtil.class
 org\n3r\idworker\IdWorker.class
 org\n3r\idworker\strategy\DefaultWorkerIdStrategy$1.class
 org\n3r\idworker\utils\Serializes.class

@@ -234,6 +234,12 @@ __webpack_require__.r(__webpack_exports__);
           that.searching = false;
         } });
 
+    },
+    exitSearch: function exitSearch() {
+      this.hotList = "",
+      this.searchKeyWords = "",
+      this.searchedArticleList = "",
+      this.$emit("exitSearchSignal", 0);
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

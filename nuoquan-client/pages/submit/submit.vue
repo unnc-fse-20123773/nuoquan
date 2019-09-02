@@ -24,7 +24,7 @@
 			</view>
 			<textarea placeholder="内容" class="content" @blur="saveAsArticleContent"></textarea>
 			<view style="display: flex;justify-content: space-between;color: #353535;font-size: 13px;line-height: 28px;height: 24px;">
-				<view >点击可预览选好的图片</view>
+				<view>点击可预览选好的图片</view>
 				<view>{{imageList.length}}/9</view>
 			</view>
 
@@ -62,7 +62,6 @@
 	export default {
 		data() {
 			return {
-				userName: 'xdy123123123123',
 				articleTitle: '',
 				articleContent: '',
 				articleTag: '',
@@ -91,7 +90,11 @@
 				this.countIndex = 8;
 		},
 		onLoad() {
-
+			var userInfo = this.getGlobalUserInfo();
+			if (!this.isNull(userInfo)) {
+				// 设置 userInfo 传给 mainpagetop 组件
+				this.userInfo = this.getGlobalUserInfo();
+			}
 		},
 		methods: {
 			// 将标题存放在articleTitle中
@@ -217,7 +220,7 @@
 					url: serverUrl + '/article/uploadArticle',
 					method: 'POST',
 					data: {
-						userId: me.userName,
+						userId: me.userInfo.id,
 						articleTag: me.articleTag,
 						articleTitle: me.articleTitle,
 						articleContent: me.articleContent
@@ -322,17 +325,20 @@
 
 	.tag::after {
 		position: absolute;
-		content: "X";
+		content: "✕";
 		right: 12px;
+		color: #939393;
+		font-size: 13px;
 	}
-	
-.addTag{
-	height:30px;
-	display: inline-block;
-	vertical-align: bottom;
-	margin-bottom: 6px;
-	
-}
+
+	.addTag {
+		height: 30px;
+		display: inline-block;
+		vertical-align: bottom;
+		margin-bottom: 6px;
+
+	}
+
 	.addTag input {
 		display: inline-block;
 		color: #353535;
@@ -346,6 +352,7 @@
 		min-height: 24px;
 		vertical-align: bottom;
 		margin-top: 2px;
+
 	}
 
 	.addTag view {

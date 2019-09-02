@@ -1,7 +1,7 @@
 <template>
-	<view class="weui-search-bar" style="background: FFFFFE;" >
+	<view class="weui-search-bar">
 		<view class="input-bar">
-			<image class="back" src="../../static/icon/angle-left.png"></image>
+			<image class="back" src="../../static/icon/angle-left.png" @tap="exitSearch"></image>
 			<input type="text" v-model="searchKeyWords" focus placeholder="  搜索" confirm-type="search" @confirm="search" />
 		</view>
 
@@ -128,12 +128,26 @@
 					}
 				})
 			},
-			
+			exitSearch(){
+				this.hotList="",
+				this.searchKeyWords="",
+				this.searchedArticleList="",
+				this.$emit("exitSearchSignal",0)
+			},
 		}
 	}
 </script>
 
 <style scoped>
+	.weui-search-bar{
+		display: fixed;
+		top:0;
+		left:0;
+		width: 100%;
+		height:100%;
+		background: #FFFFFE;
+		z-index: 10;
+	}
 	.input-bar {
 		margin-top: 10px;
 		margin-left: 23px;
