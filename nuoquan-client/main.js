@@ -258,7 +258,7 @@ Vue.prototype.mySocket = {
 				|| action == app.netty.COMMENTARTICLE
 				|| action == app.netty.COMMENTCOMMENT) {
 				
-				app.$store.commit('setMyMsgCount'); // 累加 myMsgCount in index.js
+				app.$store.commit('setMyMsgCount'); // 累加 msgCount in index.js
 			}
 		});
 
@@ -686,10 +686,4 @@ Vue.prototype.getTwo = function(s) {
 	}
 }
 
-/**
- * 设置左侧栏我的消息未读数量
- * @param {Object} num
- */
-Vue.prototype.setMyMsgCount = function(num) {
-	uni.setStorageSync('myMsgCount', num);
-}
+

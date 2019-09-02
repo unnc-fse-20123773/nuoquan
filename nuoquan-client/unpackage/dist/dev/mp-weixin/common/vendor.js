@@ -269,7 +269,7 @@ _vue.default.prototype.mySocket = {
       action == app.netty.COMMENTARTICLE ||
       action == app.netty.COMMENTCOMMENT) {
 
-        app.$store.commit('setMyMsgCount'); // 累加 myMsgCount in index.js
+        app.$store.commit('setMyMsgCount'); // 累加 msgCount in index.js
       }
     });
 
@@ -695,14 +695,6 @@ _vue.default.prototype.getTwo = function (s) {
   } else {
     return "" + s;
   }
-};
-
-/**
-    * 设置左侧栏我的消息未读数量
-    * @param {Object} num
-    */
-_vue.default.prototype.setMyMsgCount = function (num) {
-  uni.setStorageSync('myMsgCount', num);
 };
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createApp"], __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

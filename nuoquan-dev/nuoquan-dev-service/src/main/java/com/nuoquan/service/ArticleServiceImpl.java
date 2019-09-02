@@ -76,7 +76,11 @@ public class ArticleServiceImpl implements ArticleService {
 		PageHelper.startPage(page, pageSize);
 
 		List<ArticleVO> list = articleMapperCustom.queryAllArticles();
-
+		// 为每个文章添加图片列表
+		for (ArticleVO a : list) {
+			a.setImgList(articleImageMapper.getArticleImgs(a.getId()));
+		}
+		
 		PageInfo<ArticleVO> pageList = new PageInfo<>(list);
 
 		PagedResult pagedResult = new PagedResult();

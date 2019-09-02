@@ -56,10 +56,4 @@ public interface ArticleMapperCustom extends MyMapper<Article> {
 	 */
 	public ArticleVO getArticleById(String articleId);
 	
-	/**
-	 * 获取文章图片列表
-	 * @param articleId
-	 * @return
-	 */
-	public List<String> getArticleImgs(String articleId);
 }

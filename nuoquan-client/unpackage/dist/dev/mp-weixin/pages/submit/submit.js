@@ -154,6 +154,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -171,7 +172,7 @@ var sizeType = [
 {
   data: function data() {
     return {
-      userName: 'xdy123123123123',
+      userInfo: '',
       articleTitle: '',
       articleContent: '',
       articleTag: '',
@@ -200,7 +201,7 @@ var sizeType = [
     this.countIndex = 8;
   },
   onLoad: function onLoad() {
-
+    this.userInfo = this.getGlobalUserInfo();
   },
   methods: {
     // 将标题存放在articleTitle中
@@ -241,14 +242,7 @@ var sizeType = [
     countChange: function countChange(e) {
       this.countIndex = e.target.value;
     },
-    chooseImg: function () {var _chooseImg = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var _this = this;var isContinue;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:if (!(
-                this.imageList.length === 9)) {_context.next = 7;break;}_context.next = 3;return (
-                  this.isFullImg());case 3:isContinue = _context.sent;
-                console.log("是否继续?", isContinue);if (
-                isContinue) {_context.next = 7;break;}return _context.abrupt("return");case 7:
-
-
-
+    chooseImg: function () {var _chooseImg = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var _this = this;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
 
                 uni.chooseImage({
                   sourceType: sourceType[this.sourceTypeIndex],
@@ -261,27 +255,9 @@ var sizeType = [
                     // for(var i = 0; i < 9; i++){
                     // 	console.log(this.imageList[i]);
                     // }
-                  } });case 8:case "end":return _context.stop();}}}, _callee, this);}));function chooseImg() {return _chooseImg.apply(this, arguments);}return chooseImg;}(),
+                  } });case 1:case "end":return _context.stop();}}}, _callee, this);}));function chooseImg() {return _chooseImg.apply(this, arguments);}return chooseImg;}(),
 
 
-    isFullImg: function isFullImg() {var _this2 = this;
-      return new Promise(function (res) {
-        uni.showModal({
-          content: "已经有9张图片了,是否清空现有图片？",
-          success: function success(e) {
-            if (e.confirm) {
-              _this2.imageList = [];
-              res(true);
-            } else {
-              res(false);
-            }
-          },
-          fail: function fail() {
-            res(false);
-          } });
-
-      });
-    },
     previewImage: function previewImage(e) {
       var current = e.target.dataset.src;
       uni.previewImage({
@@ -296,12 +272,11 @@ var sizeType = [
         return true;
       }
     },
-    upload: function upload(e) {var _this3 = this;
+    upload: function upload(e) {var _this2 = this;
       var me = this;
 
       console.log(me.articleTitle);
       console.log(me.articleContent);
-      console.log(me.userName);
 
       if (me.articleTitle == '' || me.articleTitle == null) {
         uni.showToast({
@@ -326,7 +301,7 @@ var sizeType = [
         url: serverUrl + '/article/uploadArticle',
         method: 'POST',
         data: {
-          userId: me.userName,
+          userId: me.userInfo.id,
           articleTag: me.articleTag,
           articleTitle: me.articleTitle,
           articleContent: me.articleContent },
@@ -344,11 +319,11 @@ var sizeType = [
             var articleId = res.data.data;
             for (var i = 0; i < me.imageList.length; i++) {
               uni.uploadFile({
-                url: _this3.$serverUrl + '/article/uploadArticleImg',
+                url: _this2.$serverUrl + '/article/uploadArticleImg',
                 filePath: me.imageList[i],
                 name: 'file',
                 formData: {
-                  userId: me.userName,
+                  userId: me.userInfo.id,
                   articleId: articleId,
                   order: i },
 

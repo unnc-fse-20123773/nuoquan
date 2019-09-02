@@ -396,8 +396,10 @@ var _default =
       ['13', 'background:#621E81'],
       ['163', 'background:#738598'],
       ['123', 'background:#40A792'],
-      ['13', 'background:#621E81']] };
+      ['13', 'background:#621E81']],
 
+
+      serverUrl: this.$serverUrl };
 
   },
   created: function created() {

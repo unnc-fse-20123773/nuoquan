@@ -1,6 +1,9 @@
 package com.nuoquan.pojo.vo;
 
 import java.util.Date;
+import java.util.List;
+
+import com.nuoquan.pojo.ArticleImage;
 
 public class ArticleVO {
     private String id;
@@ -17,7 +20,7 @@ public class ArticleVO {
     private Byte isAnonymous;
     private Integer viewNum;
     
-    private String[] imgList; // 文章图片列表
+    private List<ArticleImage> imgList; // 文章图片列表
     
     private String nickname;
     private String faceImg;
@@ -233,11 +236,11 @@ public class ArticleVO {
 		this.viewNum = viewNum;
 	}
 
-	public String[] getImgList() {
+	public List<ArticleImage> getImgList() {
 		return imgList;
 	}
 
-	public void setImgList(String[] imgList) {
+	public void setImgList(List<ArticleImage> imgList) {
 		this.imgList = imgList;
 	}
 }

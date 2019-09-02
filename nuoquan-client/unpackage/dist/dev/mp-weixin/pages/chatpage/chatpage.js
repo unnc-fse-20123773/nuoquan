@@ -282,8 +282,8 @@ var socketOpen = false;var _default =
       // this.chatContent.push(message);
 
       // 直接重新加载聊天历史, 代替渲染到窗口
-      // this.getChatHistory();
-      // this.scrollToBottom();
+      this.getChatHistory();
+      this.scrollToBottom();
 
     },
 

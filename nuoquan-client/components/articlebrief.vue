@@ -2,9 +2,9 @@
 	<view class="articlecard" id="'+articleCard.id+'" @click="jumpToDetail()">
 		<view class="title">{{ articleCard.articleTitle }}</view>
 		<view class="briefarticleCard">{{ articleCard.articleContent }}</view>
-		<view class="picturearea">
-			<!-- 这里是文章配图的位置
- -->
+		<view class="picturearea" v-for="(item,index) in articleCard.imgList" :key="index">
+			<!-- 这里是文章配图的位置-->
+			<image :src="serverUrl + item.imagePath"></image>
 		</view>
 		<view class="tags">
 			<view class="tag" v-for="(i, index) in articleCard.tags" v-bind:key="index">{{ i}}</view>
@@ -42,7 +42,9 @@
 					['163', 'background:#738598'],
 					['123', 'background:#40A792'],
 					['13', 'background:#621E81']
-				]
+				],
+				
+				serverUrl: this.$serverUrl,
 			};
 		},
 		created() {

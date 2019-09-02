@@ -219,7 +219,7 @@ public class UserServiceImpl implements UserService {
 	@Transactional(propagation = Propagation.REQUIRED) 
 	@Override
 	public void updateMsgSigned(List<String> msgIdList) {
-		userMapperCustom.batchUpdateMsgSigned(msgIdList);
+		chatMsgMapper.batchUpdateMsgSigned(msgIdList);
 	}
 
 	@Transactional(propagation = Propagation.SUPPORTS) 

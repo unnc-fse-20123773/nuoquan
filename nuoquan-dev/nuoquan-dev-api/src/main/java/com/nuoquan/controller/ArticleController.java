@@ -197,14 +197,17 @@ public class ArticleController extends BasicController {
 			}
 			// 保存图片
 			String fileSpace = resourceConfig.getFileSpace();	// 文件保存空间地址
-			String fileName = order;	// 把顺序 order 作为文件名
-			System.out.println(fileName);
+			// 获取文件后缀
+			String fileName = file.getOriginalFilename();
+			String[] strList = fileName.split("\\.");
+	
+			String newFileName = order + "." + strList[strList.length-1];	// 把顺序 order.原后缀 作为文件名
 			// 保存到数据库中的相对路径
-			String uploadPathDB = "/" + userId + "/article" + "/" + articleId + fileName;
+			String uploadPathDB = "/" + userId + "/article" + "/" + articleId + "/" + newFileName;
 			// 文件上传的最终保存路径
 			String finalVideoPath = "";
 			
-			if (StringUtils.isNotBlank(fileName)) {
+			if (StringUtils.isNotBlank(newFileName)) {
 				finalVideoPath = fileSpace + uploadPathDB;
 				uploadFile(file, finalVideoPath);	// 调用 BasicController 里的方法
 				articleImage.setImagePath(uploadPathDB);
