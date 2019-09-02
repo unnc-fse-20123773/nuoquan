@@ -86,9 +86,7 @@
 </template>
 
 <script>
-	import {
-		mapState
-	} from 'vuex';
+	import {mapState} from 'vuex';
 	import SwipeAction from "../../components/swipe-action.vue";
 
 	var userInfo;
@@ -178,7 +176,7 @@
 		},
 
 		watch: {
-			chatMessageCard(newVal, oldVal) { //监听数据变化，即可做相关操作
+			chatMessageCard(newVal, oldVal) { // 重载快照
 				this.loadingChatSnapshot();
 				console.log("newVal:");
 				console.log(newVal);

@@ -100,4 +100,10 @@ select * from (
   		and a.id = #{articleId}
   </select>
   
+  <select id="getArticleImgs">
+  	select image_path from nuoquan.article_image
+  	where
+  		1 = 1
+  		and a.id = #{articleId}
+  </select>
 </mapper>

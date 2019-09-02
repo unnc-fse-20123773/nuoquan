@@ -210,9 +210,9 @@ Vue.prototype.mySocket = {
 			var dataContent = JSON.parse(res.data);
 			console.log("收到服务器内容：");
 			console.log(dataContent);
-
+			var action = dataContent.action;
 			// 如果消息类型为 CHAT
-			if (dataContent.action == app.netty.CHAT) {
+			if (action == app.netty.CHAT) {
 				var chatMessage = dataContent.data;
 				// 发送签收消息
 				that.signMsgList(chatMessage.msgId);
@@ -250,6 +250,15 @@ Vue.prototype.mySocket = {
 				// 修改 store，发送信号，把消息卡片渲染到对话窗口 和 消息列表
 				var newMessage = new app.chat.ChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);
 				app.$store.commit('setChatMessageCard', newMessage);
+			}
+			
+			if (action == app.netty.CHAT 
+				|| action == app.netty.LIKEARTICLE 
+				|| action == app.netty.LIKECOMMENT
+				|| action == app.netty.COMMENTARTICLE
+				|| action == app.netty.COMMENTCOMMENT) {
+				
+				app.$store.commit('setMyMsgCount'); // 累加 myMsgCount in index.js
 			}
 		});
 
@@ -612,7 +621,8 @@ Vue.prototype.netty = {
 	KEEPALIVE: 4, // 客户端保持心跳
 	LIKEARTICLE: 5, // 点赞文章通知
 	LIKECOMMENT: 6, // 点赞评论通知
-	COMMENT: 7, // 评论通知
+	COMMENTARTICLE: 7, //评论文章通知
+	COMMENTCOMMENT: 8, // 评论评论通知
 
 	/**
 	 * 和后端 ChatMessage 聊天模型的对象保持一致
@@ -644,6 +654,10 @@ Vue.prototype.netty = {
 
 }
 
+/**
+ * 格式化时间戳
+ * @param {Object} timeStamp
+ */
 Vue.prototype.formatTime = function(timeStamp) {
 	// 将/[0-9]/位的数字编成/0[0-9]/  
 
@@ -670,4 +684,12 @@ Vue.prototype.getTwo = function(s) {
 	} else {
 		return "" + s;
 	}
+}
+
+/**
+ * 设置左侧栏我的消息未读数量
+ * @param {Object} num
+ */
+Vue.prototype.setMyMsgCount = function(num) {
+	uni.setStorageSync('myMsgCount', num);
 }

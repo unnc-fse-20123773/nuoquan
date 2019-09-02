@@ -310,7 +310,11 @@ var _default =
 
 
 
-var _articlebrief = _interopRequireDefault(__webpack_require__(/*! ../../components/articlebrief */ "../../../../../../../../../code/nuoquan/nuoquan-client/components/articlebrief.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+var _articlebrief = _interopRequireDefault(__webpack_require__(/*! ../../components/articlebrief */ "../../../../../../../../../code/nuoquan/nuoquan-client/components/articlebrief.vue"));
+
+
+
+var _vuex = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
 //
@@ -318,9 +322,7 @@ var _articlebrief = _interopRequireDefault(__webpack_require__(/*! ../../compone
 //
 //
 //
-var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! import() | components/mainpagetop */ "components/mainpagetop").then(__webpack_require__.bind(null, /*! ../../components/mainpagetop.vue */ "../../../../../../../../../code/nuoquan/nuoquan-client/components/mainpagetop.vue"));};var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ "../../../../../../../../../code/nuoquan/nuoquan-client/components/mainpageleft.vue"));};var _default = { data: function data() {return { title: 'Hello', hottitlelist: ['热门标题111', '热门标题222', '热门标题333'],
-      showlist: '',
-      topArticles: '',
+var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! import() | components/mainpagetop */ "components/mainpagetop").then(__webpack_require__.bind(null, /*! ../../components/mainpagetop.vue */ "../../../../../../../../../code/nuoquan/nuoquan-client/components/mainpagetop.vue"));};var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ "../../../../../../../../../code/nuoquan/nuoquan-client/components/mainpageleft.vue"));};var _default = { data: function data() {return { title: 'Hello', hottitlelist: ['热门标题111', '热门标题222', '热门标题333'], showlist: '', topArticles: '',
 
       userInfo: { // 默认user设置
         id: 'test-id123',
@@ -340,6 +342,8 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
     mainpageleft: mainpageleft },
 
 
+
+
   onLoad: function onLoad() {
     var userInfo = this.getGlobalUserInfo();
     if (this.isNull(userInfo)) {
@@ -348,6 +352,8 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
 
       return;
     }
+    // 更新用户信息缓存... 查询用户信息，并分割邮箱更新到缓存
+    this.queryUserInfo(userInfo.id);
 
     this.showArticles(); // 显示文章流
 
@@ -366,12 +372,12 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
   },
   methods: {
     showArticles: function showArticles() {
-      var _this = this;
+      var that = this;
       uni.request({
-        url: 'http://127.0.0.1:8080/article/queryAllArticles',
+        url: that.$serverUrl + '/article/queryAllArticles',
         method: "POST",
         success: function success(res) {
-          _this.showlist = res.data.data.rows;
+          that.showlist = res.data.data.rows;
           // console.log(res)
         },
         fail: function fail(res) {
@@ -384,11 +390,37 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
     getTop3Articles: function getTop3Articles() {
       var that = this;
       uni.request({
-        url: 'http://127.0.0.1:8080/article/getHotTop3',
+        url: that.$serverUrl + '/article/getHotTop3',
         method: "POST",
         success: function success(res) {
           that.topArticles = res.data.data;
           console.log(res);
+        } });
+
+    },
+
+    /**
+        * 查询用户信息，并分割邮箱更新到缓存
+        */
+    queryUserInfo: function queryUserInfo(userId) {var _this = this;
+      var that = this;
+      uni.request({
+        url: that.$serverUrl + '/user/queryUser',
+        method: "POST",
+        data: {
+          userId: userId },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          if (res.data.status == 200) {
+            var user = res.data.data;
+            var finalUser = _this.myUser(user); // 分割邮箱地址, 重构 user
+            _this.setGlobalUserInfo(finalUser); // 把用户信息写入缓存
+            _this.userInfo = finalUser; // 更新页面用户数据
+            // console.log(this.userInfo);
+          }
         } });
 
     } } };exports.default = _default;

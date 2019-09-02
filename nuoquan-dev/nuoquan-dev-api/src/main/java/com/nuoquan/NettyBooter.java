@@ -6,6 +6,10 @@ import org.springframework.stereotype.Component;
 
 import com.nuoquan.netty.WSServer;
 
+/**
+ * 启动 netty 服务
+ * @author jerrio
+ */
 @Component
 public class NettyBooter implements ApplicationListener<ContextRefreshedEvent> {
 

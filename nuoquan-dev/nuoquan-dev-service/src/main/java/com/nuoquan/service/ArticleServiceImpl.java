@@ -72,7 +72,7 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public PagedResult getAllArticles(Integer page, Integer pageSize) {
 
-		// 从controller中获取page和pageSize
+		// 从controller中获取page和pageSize (经实验，PageHelper 只拦截下一次查询)
 		PageHelper.startPage(page, pageSize);
 
 		List<ArticleVO> list = articleMapperCustom.queryAllArticles();

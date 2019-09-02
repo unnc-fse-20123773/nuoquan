@@ -221,9 +221,9 @@ _vue.default.prototype.mySocket = {
       var dataContent = JSON.parse(res.data);
       console.log("收到服务器内容：");
       console.log(dataContent);
-
+      var action = dataContent.action;
       // 如果消息类型为 CHAT
-      if (dataContent.action == app.netty.CHAT) {
+      if (action == app.netty.CHAT) {
         var chatMessage = dataContent.data;
         // 发送签收消息
         that.signMsgList(chatMessage.msgId);
@@ -261,6 +261,15 @@ _vue.default.prototype.mySocket = {
         // 修改 store，发送信号，把消息卡片渲染到对话窗口 和 消息列表
         var newMessage = new app.chat.ChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);
         app.$store.commit('setChatMessageCard', newMessage);
+      }
+
+      if (action == app.netty.CHAT ||
+      action == app.netty.LIKEARTICLE ||
+      action == app.netty.LIKECOMMENT ||
+      action == app.netty.COMMENTARTICLE ||
+      action == app.netty.COMMENTCOMMENT) {
+
+        app.$store.commit('setMyMsgCount'); // 累加 myMsgCount in index.js
       }
     });
 
@@ -623,7 +632,8 @@ _vue.default.prototype.netty = {
   KEEPALIVE: 4, // 客户端保持心跳
   LIKEARTICLE: 5, // 点赞文章通知
   LIKECOMMENT: 6, // 点赞评论通知
-  COMMENT: 7, // 评论通知
+  COMMENTARTICLE: 7, //评论文章通知
+  COMMENTCOMMENT: 8, // 评论评论通知
 
   /**
    * 和后端 ChatMessage 聊天模型的对象保持一致
@@ -651,10 +661,14 @@ _vue.default.prototype.netty = {
     this.action = action;
     this.data = data;
     this.extand = extand;
-  } };
+  }
 
 
 
+  /**
+     * 格式化时间戳
+     * @param {Object} timeStamp
+     */ };
 _vue.default.prototype.formatTime = function (timeStamp) {
   // 将/[0-9]/位的数字编成/0[0-9]/  
 
@@ -681,6 +695,14 @@ _vue.default.prototype.getTwo = function (s) {
   } else {
     return "" + s;
   }
+};
+
+/**
+    * 设置左侧栏我的消息未读数量
+    * @param {Object} num
+    */
+_vue.default.prototype.setMyMsgCount = function (num) {
+  uni.setStorageSync('myMsgCount', num);
 };
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createApp"], __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
@@ -972,15 +994,23 @@ createPage(_wechatLogin.default);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
 var _vuex = _interopRequireDefault(__webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 _vue.default.use(_vuex.default);
 
+var isNull = function isNull(str) {// 数字0会被判定为true
+  if (str == null || str == "" || str == undefined) {
+    return true;
+  }
+  return false;
+};
+
 var store = new _vuex.default.Store({
   state: {
-    chatMessageCard: '', // 暂存一条socket接收的消息
-    flashChatPage: "doFlash" // 作为触发 chatPage 刷新的条件
+    chatMessageCard: '', // 暂存一条socket接收的聊天消息 & 刷新消息列表的条件
+    flashChatPage: "doFlash", // 作为触发 chatPage 刷新的条件
+    myMsgCount: uni.getStorageSync('myMsgCount') // 左侧栏通用未读消息计数
   },
   mutations: {
     setChatMessageCard: function setChatMessageCard(state, value) {
@@ -990,11 +1020,25 @@ var store = new _vuex.default.Store({
     doFlashChatPage: function doFlashChatPage(state, value) {
       // 获取当前时间，使数据变化
       state.flashChatPage = new Date().getTime();
+    },
+
+    setMyMsgCount: function setMyMsgCount(state, value) {
+      if (value == undefined) {
+        state.myMsgCount++;
+        uni.setStorageSync('myMsgCount', state.myMsgCount);
+        // console.log("value未传值，当前myMsgCount=" + state.myMsgCount);
+      } else {
+        state.myMsgCount = value;
+        uni.setStorageSync('myMsgCount', state.myMsgCount);
+        // console.log("获取到value值，当前myMsgCount=" + state.myMsgCount);
+      }
     } } });var _default =
 
 
 
+
 store;exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 
