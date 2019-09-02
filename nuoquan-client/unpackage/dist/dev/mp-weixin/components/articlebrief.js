@@ -144,6 +144,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   name: 'aticlebrief',
@@ -163,10 +189,21 @@ var _default =
       ['13', 'background:#621E81']],
 
 
-      serverUrl: this.$serverUrl };
+      serverUrl: this.$serverUrl,
+      singleImgState: '0',
+
+      imgList: [] };
 
   },
   created: function created() {
+    if (this.articleCard.imgList.length > 3) {
+      // 只取前三
+      for (var i = 0; i < 3; i++) {
+        this.imgList.push(this.articleCard.imgList[i]);
+      }
+    } else {
+      this.imgList = this.articleCard.imgList;
+    }
     // console.log(this.articleCard);
   },
   filters: {
@@ -196,6 +233,17 @@ var _default =
     } },
 
   methods: {
+    singleImgeFit: function singleImgeFit(e) {
+      var height = e.detail.height;
+      var width = e.detail.width;
+      if (height >= width) {
+        this.singleImgState = 0;
+      } else {
+        this.singleImgState = 1;
+      }
+      console.log(e.detail);
+    },
+
     jumpToDetail: function jumpToDetail() {
       var navData = JSON.stringify(this.articleCard); // 这里转换成 字符串
       uni.navigateTo({
