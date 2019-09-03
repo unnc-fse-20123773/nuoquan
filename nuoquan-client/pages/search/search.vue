@@ -1,7 +1,7 @@
 <template>
-	<view class="weui-search-bar" style="background: FFFFFE;" >
+	<view class="weui-search-bar">
 		<view class="input-bar">
-			<image class="back" src="../../static/icon/angle-left.png"></image>
+			<image class="back" src="../../static/icon/angle-left.png" @tap="exitSearch"></image>
 			<input type="text" v-model="searchKeyWords" focus placeholder="  搜索" confirm-type="search" @confirm="search" />
 		</view>
 
@@ -22,16 +22,17 @@
 				<view class="item" v-for="(item,index) in searchHisKeyList" :key="index">{{item}}</view>
 			</view>
 		</view>
-		<view class="searchResultWrods">搜索结果:</view>
-		<view class="searchResult" v-show="!searching">		
-			<articlebrief v-for="i in searchedArticleList" :key="i.id" v-bind:articleCard="i"></articlebrief>
+        <view class="searchResultWrods">搜索结果:</view>
+		<view class="searchResult" v-show="!searching">			
+			<searchResultArticle v-for="i in searchedArticleList" :key="i.id" v-bind:articleCard="i"></searchResultArticle>
 		</view>
+		
 
 	</view>
 </template>
 
 <script>
-	import articlebrief from '../../components/articlebrief';
+	import searchResultArticle from '../../components/searchResultArticle.vue';
 	export default {
 		data() {
 			return {
@@ -43,7 +44,7 @@
 			}
 		},
 		components: {
-			articlebrief
+			searchResultArticle,
 		},
 		onLoad: function() {
 			// 查询热搜词
@@ -127,12 +128,26 @@
 					}
 				})
 			},
-			
+			exitSearch(){
+				this.hotList="",
+				this.searchKeyWords="",
+				this.searchedArticleList="",
+				this.$emit("exitSearchSignal",0)
+			},
 		}
 	}
 </script>
 
-<style>
+<style scoped>
+	.weui-search-bar{
+		display: fixed;
+		top:0;
+		left:0;
+		width: 100%;
+		height:100%;
+		background: #FFFFFE;
+		z-index: 10;
+	}
 	.input-bar {
 		margin-top: 10px;
 		margin-left: 23px;

@@ -45,7 +45,6 @@
 				<view class="icom">{{articleCard.commentNum}}</view>
 				<image class="like" src="../static/icon/like.png"></image>
 				<view class="icom">{{articleCard.likeNum}}</view>
-
 			</view>
 		</view>
 	</view>

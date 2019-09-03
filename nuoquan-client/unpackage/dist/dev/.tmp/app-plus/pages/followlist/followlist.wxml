@@ -1,2 +1,2 @@
 <import src="./followlist.vue.wxml" />
-    <template is="0a907eba" data="{{ ...$root['0'], $root }}"/>
+    <template is="1b0af484" data="{{ ...$root['0'], $root }}"/>
