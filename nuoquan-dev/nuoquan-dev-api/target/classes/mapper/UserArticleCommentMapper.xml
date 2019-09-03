@@ -11,7 +11,7 @@
     <result column="father_comment_id" property="fatherCommentId" jdbcType="VARCHAR" />
     <result column="article_id" property="articleId" jdbcType="VARCHAR" />
     <result column="comment" property="comment" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
     <result column="like_num" property="likeNum" jdbcType="INTEGER" />
     <result column="dislike_num" property="dislikeNum" jdbcType="INTEGER" />
     <result column="comment_num" property="commentNum" jdbcType="INTEGER" />

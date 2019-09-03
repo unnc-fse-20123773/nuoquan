@@ -12,12 +12,12 @@ public class UserArticleCommentVO {
     private String fatherCommentId; // 复式评论，父评论，子评论无 article_id
     private String articleId;
     private String comment;
-    private Date createTime;
+    private Date createDate;
     private Integer likeNum;
     private Integer dislikeNum;
     private Integer commentNum;
 
-    private String faceImage;
+    private String faceImg;
     private String nickname;
     private String timeAgo;
     
@@ -81,15 +81,15 @@ public class UserArticleCommentVO {
     /**
      * @return create_time
      */
-    public Date getCreateTime() {
-        return createTime;
+    public Date getCreateDate() {
+        return createDate;
     }
 
     /**
-     * @param createTime
+     * @param createDate
      */
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
     /**
@@ -120,12 +120,12 @@ public class UserArticleCommentVO {
         this.dislikeNum = dislikeNum;
     }
 
-	public String getFaceImage() {
-		return faceImage;
+	public String getFaceImg() {
+		return faceImg;
 	}
 
-	public void setFaceImage(String faceImage) {
-		this.faceImage = faceImage;
+	public void setFaceImg(String faceImg) {
+		this.faceImg = faceImg;
 	}
 
 	public String getNickname() {

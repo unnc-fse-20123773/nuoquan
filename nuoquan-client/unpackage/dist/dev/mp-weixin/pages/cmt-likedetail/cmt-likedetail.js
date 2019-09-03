@@ -105,7 +105,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 48));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};} //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 48));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;} //
 //
 //
 //
@@ -185,34 +185,150 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-var _default =
-{
-  onLoad: function onLoad() {
-    uni.setNavigationBarTitle({
-      title: "消息列表" });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-
-    var userInfo = this.getGlobalUserInfo();
-    this.userInfo = userInfo;
-
-    var currentTab = data.currentTab;
-
-    // 获取userId
-    var userId = thisUserInfo.id;
-    this.queryFansFollow(userId);
-
-    // 设置列表 index
-    this.currentTab = currentTab;
-
-    var screenWidth = uni.getSystemInfoSync().screenWidth;
-    this.screenWidth = screenWidth;
-
-    // 获取当前页面
-    // var page = this.page;
-  },
-
-  data: function data() {
-    return {
+// TODO 查询列表分页操作
+var _default = {
+  data: function data() {var _ref;
+    return _ref = {
       scrollLeft: 0,
       isClickChange: false,
       currentTab: '', // 切换 list 0/1
@@ -227,6 +343,8 @@ var _default =
       [], // 点赞 把数据写进里面首次进入页面加载不出，所以写到外面
       [] // 评论
       ],
+      likeList: '',
+      commentList: '',
 
       screenWidth: 350,
       serverUrl: "",
@@ -234,9 +352,44 @@ var _default =
       old: {
         scrollTop: 0 },
 
-      userInfo: '',
-      briefDetail: '这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符' };
 
+      // 类型枚举
+      LIKEARTICLE: this.netty.LIKEARTICLE, // 点赞文章通知
+      LIKECOMMENT: this.netty.LIKECOMMENT, // 点赞评论通知
+      COMMENTARTICLE: this.netty.COMMENTARTICLE, //评论文章通知
+      COMMENTCOMMENT: this.netty.COMMENTCOMMENT }, _defineProperty(_ref, "serverUrl",
+
+    this.$serverUrl), _defineProperty(_ref, "userInfo",
+
+
+    ''), _defineProperty(_ref, "briefDetail",
+    '这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符'), _ref;
+
+  },
+
+  onLoad: function onLoad(opt) {
+    var currentTab = JSON.parse(opt.currentTab);
+    uni.setNavigationBarTitle({
+      title: "消息列表" });
+
+
+    // 设置列表 index
+    this.currentTab = currentTab;
+
+    var screenWidth = uni.getSystemInfoSync().screenWidth;
+    this.screenWidth = screenWidth;
+
+    // [测试用代码块]
+    var userInfo = this.getGlobalUserInfo();
+    this.userInfo = userInfo;
+  },
+
+  onShow: function onShow() {
+    // 加载点赞评论通知缓存
+    this.likeList = this.notification.getLikeMsg();
+    this.commentList = this.notification.getCommentMsg();
+    console.log(this.likeList);
+    console.log(this.commentList);
   },
 
   changeIndicatorDots: function changeIndicatorDots(e) {
@@ -251,7 +404,6 @@ var _default =
   durationChange: function durationChange(e) {
     this.duration = e.target.value;
   },
-
 
   onPullDownRefresh: function onPullDownRefresh() {
     console.log('refresh');

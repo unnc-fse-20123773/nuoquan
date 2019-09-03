@@ -225,10 +225,6 @@ var _default = {
 
     var screenWidth = uni.getSystemInfoSync().screenWidth;
     this.screenWidth = screenWidth;
-
-    // 获取当前页面
-    // var page = this.page;
-
   },
 
   onPullDownRefresh: function onPullDownRefresh() {

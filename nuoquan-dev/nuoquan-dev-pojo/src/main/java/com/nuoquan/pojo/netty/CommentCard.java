@@ -1,4 +1,6 @@
-package com.nuoquan.pojo.vo;
+package com.nuoquan.pojo.netty;
+
+import com.nuoquan.pojo.vo.UserArticleCommentVO;
 
 /**
  * 评论通知卡片内容

@@ -98,7 +98,7 @@
 		},
 
 		onLoad(opt) {
-			var data = JSON.parse(opt.data)
+			var data = JSON.parse(opt.data);
 			var thisUserInfo = data.thisUserInfo;
 			var currentTab = data.currentTab;
 
@@ -118,10 +118,6 @@
 
 			var screenWidth = uni.getSystemInfoSync().screenWidth;
 			this.screenWidth = screenWidth;
-
-			// 获取当前页面
-			// var page = this.page;
-
 		},
 
 		onPullDownRefresh() {

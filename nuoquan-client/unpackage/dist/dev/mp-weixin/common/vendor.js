@@ -25,7 +25,7 @@ _vue.default.config.productionTip = false;
 
 _vue.default.prototype.$store = _store.default;
 _vue.default.prototype.$serverUrl = "http://127.0.0.1:8080";
-_vue.default.prototype.$wsServerUrl = "ws://localhost:8088/ws";
+_vue.default.prototype.$wsServerUrl = "ws://127.0.0.1:8088/ws";
 
 // Vue.prototype.$serverUrl = "http://192.168.31.210:8080"
 // Vue.prototype.$wsServerUrl = "ws://192.168.31.210:8088/ws"
@@ -75,11 +75,51 @@ _vue.default.prototype.setIntoList = function (obj, listName) {
 };
 
 /**
-    * 把该用户信息添加到本地缓存的 userlist 中
+    * 从缓存中按名字获取改名列表
+    * @param {Object} listName
+    */
+_vue.default.prototype.getListByKey = function (listName) {
+  var listStr = uni.getStorageSync(listName);
+  var list;
+  if (app.isNull(listStr)) {
+    // 为空，赋一个空的list；
+    list = [];
+  } else {
+    // 不为空
+    list = JSON.parse(listStr);
+  }
+
+  return list;
+};
+
+
+
+
+/** TODO: 可使用 Map 代替 List 提升查询性能（暂时不知道 map 在 uniapp 中怎么写）
+    *	 															by Jerrio
+    * 把该用户信息添加到本地缓存的 userlist 中，如果存在则替换
     * @param {Object} userInfo
     */
 _vue.default.prototype.setUserInfoToUserList = function (userInfo) {
-  app.setIntoList(userInfo, "userList");
+  var userListStr = uni.getStorageSync("userList");
+  var userList;
+  if (app.isNull(userListStr)) {
+    // 为空，赋一个空的list；
+    userList = [];
+  } else {
+    // 不为空，查看该用户是否存在
+    var userList = JSON.parse(userListStr);
+    for (var i = 0; i < userList.length; i++) {
+      var user = userList[i];
+      if (user.id == userInfo.id) {
+        userList.splice(i, 1, userInfo); // 替换
+        return;
+      }
+    }
+  }
+  // 用户不存在
+  userList.push(userInfo);
+  uni.setStorageSync("userList", JSON.stringify(userList));
 };
 
 /**
@@ -99,10 +139,10 @@ _vue.default.prototype.getUserInfoFromUserList = function (userId) {
       var user = userList[i];
       if (user.id == userId) {
         return user;
-        break;
       }
     }
   }
+  return null;
 };
 
 /**
@@ -270,6 +310,31 @@ _vue.default.prototype.mySocket = {
       action == app.netty.COMMENTCOMMENT) {
 
         app.$store.commit('setMyMsgCount'); // 累加 msgCount in index.js
+
+        switch (action) {
+          case app.netty.LIKEARTICLE:
+            console.log("获取点赞文章");
+            // 存入缓存 (TODO：登陆时获取未签收点赞消息)
+            app.notification.saveLikeMsg(dataContent);
+            break;
+          case app.netty.LIKECOMMENT:
+            console.log("获取点赞评论");
+            // 存入缓存
+            app.notification.saveLikeMsg(dataContent);
+            break;
+          case app.netty.COMMENTARTICLE:
+            console.log("获取评论文章");
+            // 存入缓存
+            app.notification.saveCommentMsg(dataContent);
+            break;
+          case app.netty.COMMENTCOMMENT:
+            console.log("获取评论评论");
+            // 存入缓存
+            app.notification.saveCommentMsg(dataContent);
+            break;
+          default:
+            break;}
+
       }
     });
 
@@ -617,8 +682,38 @@ _vue.default.prototype.chat = {
         }
       } });
 
-  } };
+  }
 
+
+  /**
+     * 点赞评论通知
+     */ };
+_vue.default.prototype.notification = {
+  LIKEMSG_KEY: "likeMsg",
+  COMMENTMSG_KEY: "commentMsg",
+  /**
+                                 * 把点赞通知存入缓存
+                                 * @param {Object} dataContent
+                                 */
+  saveLikeMsg: function saveLikeMsg(dataContent) {
+    app.setIntoList(dataContent, this.LIKEMSG_KEY);
+  },
+
+  getLikeMsg: function getLikeMsg() {
+    return app.getListByKey(this.LIKEMSG_KEY);
+  },
+
+  /**
+      * 把评论通知存入缓存
+      * @param {Object} dataContent
+      */
+  saveCommentMsg: function saveCommentMsg(dataContent) {
+    app.setIntoList(dataContent, this.COMMENTMSG_KEY);
+  },
+
+  getCommentMsg: function getCommentMsg() {
+    return app.getListByKey(this.COMMENTMSG_KEY);
+  } };
 
 
 
@@ -662,7 +757,6 @@ _vue.default.prototype.netty = {
     this.data = data;
     this.extand = extand;
   }
-
 
 
   /**

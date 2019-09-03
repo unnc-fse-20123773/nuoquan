@@ -302,7 +302,7 @@ var socketOpen = false;var _default =
     }
 
     // [测试代码块]
-    // this.mySocket.init();
+    this.mySocket.init();
   },
 
   onShow: function onShow() {
@@ -391,9 +391,12 @@ var socketOpen = false;var _default =
 
     },
 
-    goToCmtLikeDetail: function goToCmtLikeDetail() {
+    /**
+        * @param {Object} currentTab 0: 点赞 1: 评论
+        */
+    goToCmtLikeDetail: function goToCmtLikeDetail(currentTab) {
       uni.navigateTo({
-        url: '../cmt-likedetail/cmt-likedetail' });
+        url: '../cmt-likedetail/cmt-likedetail?currentTab=' + JSON.stringify(currentTab) });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

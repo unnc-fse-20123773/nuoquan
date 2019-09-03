@@ -7,7 +7,7 @@
 		</view>
 		<!-- 点赞和评论数量 -->
 		<view id="msglist-likecommentnum">
-			<view class="msglist-like column_center" @tap="goToCmtLikeDetail()">
+			<view class="msglist-like column_center" @tap="goToCmtLikeDetail(0)">
 				<view class="msglist-like-bg super_center">
 					<image src="../../static/icon/like.png" class="msglist-like-icon" mode=""></image>
 				</view>
@@ -18,7 +18,7 @@
 			</view>
 			<view class="msglist-likecommentnum-border">
 			</view>
-			<view class="msglist-comment column_center">
+			<view class="msglist-comment column_center" @tap="goToCmtLikeDetail(1)">
 				<view class="msglist-comment-bg super_center">
 					<image src="../../static/icon/comment.png" class="msglist-comment-icon" mode=""></image>
 				</view>
@@ -195,7 +195,7 @@
 			}
 
 			// [测试代码块]
-			// this.mySocket.init();
+			this.mySocket.init();
 		},
 
 		onShow() {
@@ -284,9 +284,12 @@
 				});
 			},
 			
-			goToCmtLikeDetail(){
+			/**
+			 * @param {Object} currentTab 0: 点赞 1: 评论
+			 */
+			goToCmtLikeDetail(currentTab){
 				uni.navigateTo({
-					url: '../cmt-likedetail/cmt-likedetail'
+					url: '../cmt-likedetail/cmt-likedetail?currentTab=' + JSON.stringify(currentTab),
 				})
 			}
 
