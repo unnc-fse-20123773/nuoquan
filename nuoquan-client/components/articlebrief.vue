@@ -42,9 +42,9 @@
 
 			<view class="icons">
 				<image class="comment" src="../static/icon/comment.png"></image>
-				<view class="icom">{{articleCard.commentNum}}</view>
+				<view class="icon">{{articleCard.commentNum}}</view>
 				<image class="like" src="../static/icon/like.png"></image>
-				<view class="icom">{{articleCard.likeNum}}</view>
+				<view class="icon">{{articleCard.likeNum}}</view>
 			</view>
 		</view>
 	</view>
@@ -220,7 +220,7 @@
 		height: 11px;
 		padding-right: 5px;
 	}
-	.icom {
+	.icon {
 		display: inline-block;
 		color: #353535;
 		font-size: 10px;

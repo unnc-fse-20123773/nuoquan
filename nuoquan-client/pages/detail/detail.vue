@@ -130,7 +130,6 @@
 					this.submitData.toUserId=this.articleCard.userId;
 					this.submitData.articleId=this.articleCard.id;
 					console.log(this.submitData);
-					debugger
 				}else{  //a==0, 关闭输入框，一切恢复默认状态
 					this.submitData = {};
 					this.placeholderText="评论";
