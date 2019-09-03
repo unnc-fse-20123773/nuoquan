@@ -1,6 +1,6 @@
 <!-- 本页面的 websocket 应写在 messagelist 里-->
 <template>
-	<view style="height:100%;width:100%">
+	<view style="height:100%;width:100%;background: #F5F5F5;">
 		<scroll-view class="messageArea">
 			<onemessage v-for="(i,index) in chatContent" :key=index :thisMessage='i' :userInfo="userInfo" :friendInfo="friendInfo"></onemessage>
 		</scroll-view>
@@ -9,8 +9,7 @@
 			<view class="icons">
 				<button><image src="../../static/icon/viewLocalPic.png"></image></button>
 				<button><image src="../../static/icon/emoji.png"></image></button>
-				<button><image src="../../static/icon/littlePlane.png" @click="sendText(textMsg)"></image></button>
-
+				<button @click="sendText(textMsg)"><image src="../../static/icon/littlePlane.png"></image></button>
 			</view>
 		</view>
 
@@ -173,8 +172,8 @@
 				// this.chatContent.push(message);
 				
 				// 直接重新加载聊天历史, 代替渲染到窗口
-				// this.getChatHistory();
-				// this.scrollToBottom();
+				this.getChatHistory();
+				this.scrollToBottom();
 				
 			},
 			
@@ -215,7 +214,9 @@
 		margin-bottom: 90upx;
 		overflow: hidden;
 		background: #F5F5F5;
-		height:100%;
+		height: 100%;
+		margin-left: 3%;
+		width: 94%;
 	}
 
 	.bottomBar {

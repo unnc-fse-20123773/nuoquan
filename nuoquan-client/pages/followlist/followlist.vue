@@ -52,7 +52,7 @@
 </template>
 
 <script>
-	var me;
+	var me; // 表示本人用户，区别于查询的用户
 	export default {
 		data() {
 			return {

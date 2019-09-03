@@ -5,7 +5,8 @@
 			"style": {
 				"navigationBarTitleText": "uni-app"
 			}
-		}, {
+		},
+		 {
 			"path": "pages/detail/detail",
 			"style": {}
 		}, {
@@ -56,8 +57,15 @@
 		{
 			"path": "pages/wechatLogin/wechatLogin",
 			"style": {}
+		},
+		{
+		    "path" : "pages/cmt-likedetail/cmt-likedetail",
+		    "style" : {},
+			"window" : {
+				"navigationBarBackgroundColor": "#ffffff"
+			}
 		}
-	],
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",

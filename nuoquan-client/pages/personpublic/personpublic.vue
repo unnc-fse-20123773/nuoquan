@@ -17,7 +17,7 @@
 			</view>
 
 			<view v-if="!myPublic" style="width: 36%;display: flex;position: fixed;right: 10upx;top: 148upx;">
-				<view class="messageButton super_center" @tap="goToChatPage" @click="showChatMask">
+				<view class="messageButton super_center" @tap="goToChatPage">
 					<image src="../../static/icon/comments/comments%20%20fed148.png"
 				 mode="scaleToFill" style="width: 24px;height: 24px;"></image>
 				</view>

@@ -14,14 +14,14 @@
 		</view>
 		<view class="personData">
 			<view class="hotNum">
-				4210121
+				-
 			</view>
-			<button class="yourFocus" hover-class="customHover">
-				99
-			</button>
-			<button class="focusYou"  hover-class="customHover">
-				1021
-			</button>
+			<view class="yourFocus" @tap="goToFansFollow(0)" hover-class="customHover">
+				{{userInfo.followNum}}
+			</view>
+			<view class="focusYou" @tap="goToFansFollow(1)" hover-class="customHover">
+				{{userInfo.fansNum}}
+			</view>
 		</view>
 		<view class="personPageList">
 			<!-- TODO: 最好把 view 都改成 button 并加上样式 
@@ -29,25 +29,25 @@
 			<button class="pageLine">
 				<image src="../static/icon/write.png"></image>
 				<view>我的发布</view>
-				<view class="noticeNum">3</view>
+				<!-- <view class="noticeNum">3</view> -->
 			</button>
 			<button class="pageLine" @tap="goToMessageListPage">
 				<image src="../static/icon/message.png"></image>
 				<view>我的消息</view>
-				<view class="noticeNum"> </view>
+				<view class="noticeNum" v-if="unreadMsgCount>0"> {{unreadMsgCount}} </view>
 
 			</button>
 			<button class="pageLine" @click="UD()">
 				<image src="../static/icon/star.png"></image>
 				<view>我的收藏</view>
-				<view class="noticeNum">23</view>
+				<!-- <view class="noticeNum">23</view> -->
 
 			</button>
 			<button class="pageLine">
 				<image src="../static/icon/report.png"></image>
 				<view>举报投诉</view>
-<!-- 				<view class="noticeNum">3</view>
- -->
+				<!-- <view class="noticeNum">3</view> -->
+
 			</button>
 			<button class="pageLine" @click="UD()">
 				<image src="../static/icon/about.png"></image>
@@ -59,6 +59,8 @@
 </template>
 
 <script>
+	import {mapState} from 'vuex';
+	
 	name: 'mainpageleft'
 	export default {
 		props: {
@@ -67,15 +69,29 @@
 				faceImg: '../static/touxiang.jpg',
 				emailPrefix: 'test123',
 				emailSuffix: '@nottingham.edu.cn'
-			}
+			},
 		},
 		data() {
 			return {
-
+				unreadMsgCount: uni.getStorageSync('myMsgCount'), // 从缓存中获取初始值
 			};
 		},
+		
+		computed: {
+			...mapState([
+				'myMsgCount',
+			])
+		},
+		
+		watch: {
+			myMsgCount(newVal, oldVal) { // 左侧栏”我的消息“未读通知
+				this.unreadMsgCount = newVal;
+			}
+		},
+		
 		methods: {
 			goToMessageListPage() {
+				this.$store.commit('setMyMsgCount', 0);
 				uni.navigateTo({
 					url: '../messagelist/messagelist',
 				});
@@ -86,6 +102,7 @@
 					url: '../profile/profile',
 				});
 			},
+			
 			UD() {
 				uni.showToast({
 					// title: '⠀⠀⠀⠀⠀under⠀⠀⠀⠀⠀development',//不是空格，是特殊符号，莫删
@@ -93,7 +110,21 @@
 					duration: 2000,
 					icon: 'none',
 				})
-			}
+			},
+			
+			/**
+			 * @param {Object} currentTab 0: 关注 1: 粉丝
+			 */
+			goToFansFollow(currentTab) {
+				console.log("goToFansFollow...")
+				var data = {
+					currentTab: currentTab,
+					thisUserInfo: this.getGlobalUserInfo()
+				}
+				uni.navigateTo({
+					url: '../followlist/followlist?data=' + JSON.stringify(data),
+				});
+			},
 		},
 
 	};

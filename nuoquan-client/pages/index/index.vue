@@ -8,7 +8,6 @@
 				<articlebrief v-for="i in showlist" :key="i.id" v-bind:articleCard="i"></articlebrief>
 			</scroll-view>
 		</view>
-
 	</view>
 </template>
 
@@ -16,7 +15,9 @@
 	import articlebrief from '../../components/articlebrief';
 	import mainpagetop from '../../components/mainpagetop.vue';
 	import mainpageleft from '@/components/mainpageleft.vue'
-
+	
+	import {mapState} from 'vuex';
+	
 	export default {
 		data() {
 			return {
@@ -43,8 +44,8 @@
 			mainpagetop,
 			mainpageleft,
 		},
-
-		onLoad() {
+		
+		onLoad() {			
 			var userInfo = this.getGlobalUserInfo();
 			if (this.isNull(userInfo)) {
 				uni.navigateTo({
@@ -52,13 +53,11 @@
 				})
 				return;
 			}
-
-			this.showArticles(); // 显示文章流
-
-			this.getTop3Articles(); // 获取热度榜
-
+			// 更新用户信息缓存... 查询用户信息，并分割邮箱更新到缓存
+			this.queryUserInfo(userInfo.id)
+			
 			this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
-
+			
 			// [测试代码块]
 		},
 		onShow() {
@@ -67,15 +66,19 @@
 				// 设置 userInfo 传给 mainpagetop 组件
 				this.userInfo = this.getGlobalUserInfo();
 			}
+			
+			this.showArticles(); // 显示文章流
+			
+			this.getTop3Articles(); // 获取热度榜
 		},
 		methods: {
 			showArticles() {
-				var _this = this;
+				var that = this;
 				uni.request({
-					url: 'http://127.0.0.1:8080/article/queryAllArticles',
+					url: that.$serverUrl + '/article/queryAllArticles',
 					method: "POST",
 					success: (res) => {
-						_this.showlist = res.data.data.rows;
+						that.showlist = res.data.data.rows;
 						// console.log(res)
 					},
 					fail: (res) => {
@@ -84,11 +87,11 @@
 					}
 				});
 			},
-
-			getTop3Articles() {
+			
+			getTop3Articles(){
 				var that = this;
 				uni.request({
-					url: 'http://127.0.0.1:8080/article/getHotTop3',
+					url: that.$serverUrl + '/article/getHotTop3',
 					method: "POST",
 					success: (res) => {
 						that.topArticles = res.data.data;
@@ -96,6 +99,33 @@
 					}
 				})
 			},
+			
+			/**
+			 * 查询用户信息，并分割邮箱更新到缓存
+			 */
+			queryUserInfo(userId){
+				var that = this;
+				uni.request({
+					url: that.$serverUrl + '/user/queryUser',
+					method: "POST",
+					data: {
+						userId: userId
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {
+						if(res.data.status == 200){
+							var user = res.data.data;
+							var finalUser = this.myUser(user);// 分割邮箱地址, 重构 user
+							this.setGlobalUserInfo(finalUser); // 把用户信息写入缓存
+							this.userInfo = finalUser; // 更新页面用户数据
+							// console.log(this.userInfo);
+						}
+					},
+				});
+			},
+			
 			linkageWithTop(e) {
 				var y = e.detail.scrollTop;
 				console.log(y);
@@ -107,7 +137,6 @@
 					}
 
 				}
-
 			},
 		}
 	};
@@ -117,10 +146,12 @@
 		height: 100%;
 	}
 </style>
+
 <style scoped>
 	.index {
+		/* 页面高度由内容扩充，最低值为100%（page 定义的）- by Guetta */
+		/* height:100%; */
 		background-color: #f3f3f3;
-		height: 100%;
 	}
 
 	.indexArticleArea {

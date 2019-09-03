@@ -177,8 +177,16 @@ public class ArticleController extends BasicController {
 		return JSONResult.ok(articleId);
 	}
 	
+	/**
+	 * @param userId
+	 * @param articleId
+	 * @param order 作为文件名 保证序列和发送一直
+	 * @param file
+	 * @return
+	 * @throws Exception
+	 */
 	@PostMapping(value="/uploadArticleImg")
-	public JSONResult uploadArticleImg(String userId ,String articleId, @ApiParam(value="file", required=false) MultipartFile file) throws Exception {
+	public JSONResult uploadArticleImg(String userId ,String articleId, String order, @ApiParam(value="file", required=true) MultipartFile file) throws Exception {
 
 		ArticleImage articleImage = new ArticleImage();
 		
@@ -189,14 +197,17 @@ public class ArticleController extends BasicController {
 			}
 			// 保存图片
 			String fileSpace = resourceConfig.getFileSpace();	// 文件保存空间地址
-			String fileName = file.getOriginalFilename();		// 获取原文件名
-			
+			// 获取文件后缀
+			String fileName = file.getOriginalFilename();
+			String[] strList = fileName.split("\\.");
+	
+			String newFileName = order + "." + strList[strList.length-1];	// 把顺序 order.原后缀 作为文件名
 			// 保存到数据库中的相对路径
-			String uploadPathDB = "/" + userId + "/article" + "/" + articleId + fileName;
+			String uploadPathDB = "/" + userId + "/article" + "/" + articleId + "/" + newFileName;
 			// 文件上传的最终保存路径
 			String finalVideoPath = "";
 			
-			if (StringUtils.isNotBlank(fileName)) {
+			if (StringUtils.isNotBlank(newFileName)) {
 				finalVideoPath = fileSpace + uploadPathDB;
 				uploadFile(file, finalVideoPath);	// 调用 BasicController 里的方法
 				articleImage.setImagePath(uploadPathDB);
@@ -210,13 +221,13 @@ public class ArticleController extends BasicController {
 	}
 
 	/**
-	 * fromUserId
-	 * toUserId
-	 * articleId
+	 * fromUserId 必填
+	 * toUserId 必填
+	 * articleId 必填
 	 * fatherCommentId
-	 * comment
-	 * PS: 父级（一级，给文章评论）评论有 articleId, 无 fatherCommentId;
-	 *     子级评论有 fatherCommentId, 无articleId
+	 * comment 必填
+	 * PS: 父级（一级，给文章评论）评论 无 fatherCommentId;
+	 *     子级评论有 fatherCommentId;
 	 */
 	@PostMapping("/saveComment")
 	public JSONResult saveComment(@RequestBody UserArticleComment comment) throws Exception {
@@ -227,7 +238,7 @@ public class ArticleController extends BasicController {
 		DataContent dataContent = new DataContent();
 		
 		UserArticleCommentVO commentVO = articleService.getCommentById(commentId);
-		if (!StringUtils.isBlank(comment.getArticleId())) {
+		if (StringUtils.isBlank(comment.getFatherCommentId())) {
 			// 给文章评论
 			ArticleVO targetArticle = articleService.getArticleById(comment.getArticleId());
 			dataContent.setData(new CommentCard(commentVO, targetArticle));

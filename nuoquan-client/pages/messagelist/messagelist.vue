@@ -7,7 +7,7 @@
 		</view>
 		<!-- 点赞和评论数量 -->
 		<view id="msglist-likecommentnum">
-			<view class="msglist-like column_center">
+			<view class="msglist-like column_center" @tap="goToCmtLikeDetail()">
 				<view class="msglist-like-bg super_center">
 					<image src="../../static/icon/like.png" class="msglist-like-icon" mode=""></image>
 				</view>
@@ -86,9 +86,7 @@
 </template>
 
 <script>
-	import {
-		mapState
-	} from 'vuex';
+	import {mapState} from 'vuex';
 	import SwipeAction from "../../components/swipe-action.vue";
 
 	var userInfo;
@@ -178,7 +176,7 @@
 		},
 
 		watch: {
-			chatMessageCard(newVal, oldVal) { //监听数据变化，即可做相关操作
+			chatMessageCard(newVal, oldVal) { // 重载快照
 				this.loadingChatSnapshot();
 				console.log("newVal:");
 				console.log(newVal);
@@ -272,7 +270,7 @@
 			},
 
 			goToChatpage(e) {
-				console.log(e)
+				// console.log(e)
 				var myId = e.myId;
 				var friendId = e.friendId;
 				var msg = e.msg;
@@ -285,6 +283,12 @@
 					url: '../chatpage/chatpage?friendInfo=' + JSON.stringify(friendInfo),
 				});
 			},
+			
+			goToCmtLikeDetail(){
+				uni.navigateTo({
+					url: '../cmt-likedetail/cmt-likedetail'
+				})
+			}
 
 		}
 	}

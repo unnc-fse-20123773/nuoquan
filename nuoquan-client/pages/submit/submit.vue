@@ -1,3 +1,4 @@
+<!-- TODO: 取消添加图片 -->
 <template>
 	<viwe>
 		<view style="height:45px;width:100%;">
@@ -62,6 +63,7 @@
 	export default {
 		data() {
 			return {
+				userInfo: '',
 				articleTitle: '',
 				articleContent: '',
 				articleTag: '',
@@ -90,11 +92,7 @@
 				this.countIndex = 8;
 		},
 		onLoad() {
-			var userInfo = this.getGlobalUserInfo();
-			if (!this.isNull(userInfo)) {
-				// 设置 userInfo 传给 mainpagetop 组件
-				this.userInfo = this.getGlobalUserInfo();
-			}
+			this.userInfo = this.getGlobalUserInfo();
 		},
 		methods: {
 			// 将标题存放在articleTitle中
@@ -136,13 +134,6 @@
 				this.countIndex = e.target.value;
 			},
 			chooseImg: async function() {
-				if (this.imageList.length === 9) {
-					let isContinue = await this.isFullImg();
-					console.log("是否继续?", isContinue);
-					if (!isContinue) {
-						return
-					}
-				}
 
 				uni.chooseImage({
 					sourceType: sourceType[this.sourceTypeIndex],
@@ -156,24 +147,6 @@
 						// 	console.log(this.imageList[i]);
 						// }
 					}
-				})
-			},
-			isFullImg: function() {
-				return new Promise((res) => {
-					uni.showModal({
-						content: "已经有9张图片了,是否清空现有图片？",
-						success: (e) => {
-							if (e.confirm) {
-								this.imageList = [];
-								res(true);
-							} else {
-								res(false)
-							}
-						},
-						fail: () => {
-							res(false)
-						}
-					})
 				})
 			},
 			previewImage: function(e) {
@@ -195,7 +168,6 @@
 
 				console.log(me.articleTitle);
 				console.log(me.articleContent);
-				console.log(me.userName);
 
 				if (me.articleTitle == '' || me.articleTitle == null) {
 					uni.showToast({
@@ -231,7 +203,7 @@
 					success: (res) => {
 						// console.log(res.data.data);
 						if (me.imageList.length <= 0) {
-							uni.redirectTo({
+							uni.navigateBack({
 								url: '../index/index'
 							})
 						} else {
@@ -242,12 +214,13 @@
 									filePath: me.imageList[i],
 									name: 'file',
 									formData: {
-										userId: me.userName,
-										articleId: articleId
+										userId: me.userInfo.id,
+										articleId: articleId,
+										order: i
 									},
 									success: (uploadFileRes) => {
-										uni.redirectTo({
-											url: '../index/index'
+										uni.navigateBack({
+											delta: 1
 										})
 									}
 								});

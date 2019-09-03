@@ -7,6 +7,6 @@ import com.nuoquan.utils.MyMapper;
 
 public interface UserMapperCustom extends MyMapper<User> {
 	
-	public void batchUpdateMsgSigned(List<String> msgIdList);
+	
 	
 }

@@ -277,7 +277,7 @@
 				
 				var that = this;
 				uni.request({
-					url: 'http://127.0.0.1:8080/user/updateUser',
+					url: that.$serverUrl + '/user/updateUser',
 					method: "POST",
 					data: JSON.stringify(data),
 					header: {

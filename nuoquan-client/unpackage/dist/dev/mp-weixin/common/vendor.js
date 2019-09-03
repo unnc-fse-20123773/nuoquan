@@ -1,9 +1,9 @@
 (global["webpackJsonp"] = global["webpackJsonp"] || []).push([["common/vendor"],{
 
 /***/ 0:
-/*!***************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js ***!
-  \***************************************************************************/
+/*!**********************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -221,9 +221,9 @@ _vue.default.prototype.mySocket = {
       var dataContent = JSON.parse(res.data);
       console.log("收到服务器内容：");
       console.log(dataContent);
-
+      var action = dataContent.action;
       // 如果消息类型为 CHAT
-      if (dataContent.action == app.netty.CHAT) {
+      if (action == app.netty.CHAT) {
         var chatMessage = dataContent.data;
         // 发送签收消息
         that.signMsgList(chatMessage.msgId);
@@ -261,6 +261,15 @@ _vue.default.prototype.mySocket = {
         // 修改 store，发送信号，把消息卡片渲染到对话窗口 和 消息列表
         var newMessage = new app.chat.ChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);
         app.$store.commit('setChatMessageCard', newMessage);
+      }
+
+      if (action == app.netty.CHAT ||
+      action == app.netty.LIKEARTICLE ||
+      action == app.netty.LIKECOMMENT ||
+      action == app.netty.COMMENTARTICLE ||
+      action == app.netty.COMMENTCOMMENT) {
+
+        app.$store.commit('setMyMsgCount'); // 累加 msgCount in index.js
       }
     });
 
@@ -623,7 +632,12 @@ _vue.default.prototype.netty = {
   KEEPALIVE: 4, // 客户端保持心跳
   LIKEARTICLE: 5, // 点赞文章通知
   LIKECOMMENT: 6, // 点赞评论通知
+<<<<<<< HEAD
   COMMENT: 7, // 评论通知
+=======
+  COMMENTARTICLE: 7, //评论文章通知
+  COMMENTCOMMENT: 8, // 评论评论通知
+>>>>>>> master
 
   /**
    * 和后端 ChatMessage 聊天模型的对象保持一致
@@ -651,10 +665,14 @@ _vue.default.prototype.netty = {
     this.action = action;
     this.data = data;
     this.extand = extand;
-  } };
+  }
 
 
 
+  /**
+     * 格式化时间戳
+     * @param {Object} timeStamp
+     */ };
 _vue.default.prototype.formatTime = function (timeStamp) {
   // 将/[0-9]/位的数字编成/0[0-9]/  
 
@@ -694,7 +712,7 @@ _vue.default.prototype.getTwo = function (s) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.createApp = createApp;exports.createComponent = createComponent;exports.createPage = createPage;exports.default = void 0;var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _slicedToArray(arr, i) {return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();}function _nonIterableRest() {throw new TypeError("Invalid attempt to destructure non-iterable instance");}function _iterableToArrayLimit(arr, i) {var _arr = [];var _n = true;var _d = false;var _e = undefined;try {for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {_arr.push(_s.value);if (i && _arr.length === i) break;}} catch (err) {_d = true;_e = err;} finally {try {if (!_n && _i["return"] != null) _i["return"]();} finally {if (_d) throw _e;}}return _arr;}function _arrayWithHoles(arr) {if (Array.isArray(arr)) return arr;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance");}function _iterableToArray(iter) {if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) {for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {arr2[i] = arr[i];}return arr2;}}
+Object.defineProperty(exports, "__esModule", { value: true });exports.createApp = createApp;exports.createPage = createPage;exports.createComponent = createComponent;exports.default = void 0;var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _slicedToArray(arr, i) {return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();}function _nonIterableRest() {throw new TypeError("Invalid attempt to destructure non-iterable instance");}function _iterableToArrayLimit(arr, i) {var _arr = [];var _n = true;var _d = false;var _e = undefined;try {for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {_arr.push(_s.value);if (i && _arr.length === i) break;}} catch (err) {_d = true;_e = err;} finally {try {if (!_n && _i["return"] != null) _i["return"]();} finally {if (_d) throw _e;}}return _arr;}function _arrayWithHoles(arr) {if (Array.isArray(arr)) return arr;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance");}function _iterableToArray(iter) {if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) {for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {arr2[i] = arr[i];}return arr2;}}
 
 var _toString = Object.prototype.toString;
 var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -1257,6 +1275,8 @@ function $emit() {
   return apply(getEmitter(), '$emit', Array.prototype.slice.call(arguments));
 }
 
+
+
 var eventApi = /*#__PURE__*/Object.freeze({
   $on: $on,
   $off: $off,
@@ -1375,14 +1395,14 @@ function initHooks(mpOptions, hooks, vueOptions) {
   });
 }
 
-function initVueComponent(Vue, vueOptions) {
+function initVueComponent(Vue$$1, vueOptions) {
   vueOptions = vueOptions.default || vueOptions;
   var VueComponent;
   if (isFn(vueOptions)) {
     VueComponent = vueOptions;
     vueOptions = VueComponent.extendOptions;
   } else {
-    VueComponent = Vue.extend(vueOptions);
+    VueComponent = Vue$$1.extend(vueOptions);
   }
   return [VueComponent, vueOptions];
 }
@@ -1417,7 +1437,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -1549,7 +1569,7 @@ function initProperties(props) {var isBehavior = arguments.length > 1 && argumen
           value = value();
         }
 
-        opts.type = parsePropType(key, opts.type);
+        opts.type = parsePropType(key, opts.type, value, file);
 
         properties[key] = {
           type: PROP_TYPES.indexOf(opts.type) !== -1 ? opts.type : null,
@@ -1557,7 +1577,7 @@ function initProperties(props) {var isBehavior = arguments.length > 1 && argumen
           observer: createObserver(key) };
 
       } else {// content:String
-        var type = parsePropType(key, opts);
+        var type = parsePropType(key, opts, null, file);
         properties[key] = {
           type: PROP_TYPES.indexOf(type) !== -1 ? type : null,
           observer: createObserver(key) };
@@ -1632,6 +1652,7 @@ function processEventExtra(vm, extra, event) {
 
   if (Array.isArray(extra) && extra.length) {
     /**
+<<<<<<< HEAD
                                               *[
                                               *    ['data.items', 'data.id', item.data.id],
                                               *    ['metas', 'id', meta.id]
@@ -1642,6 +1663,18 @@ function processEventExtra(vm, extra, event) {
                                               *],
                                               *'test'
                                               */
+=======
+                                                  *[
+                                                  *    ['data.items', 'data.id', item.data.id],
+                                                  *    ['metas', 'id', meta.id]
+                                                  *],
+                                                  *[
+                                                  *    ['data.items', 'data.id', item.data.id],
+                                                  *    ['metas', 'id', meta.id]
+                                                  *],
+                                                  *'test'
+                                                  */
+>>>>>>> master
     extra.forEach(function (dataPath, index) {
       if (typeof dataPath === 'string') {
         if (!dataPath) {// model,prop.sync
@@ -1744,9 +1777,6 @@ function handleEvent(event) {var _this = this;
 
   // [['handle',[1,2,a]],['handle1',[1,2,a]]]
   var eventType = event.type;
-
-  var ret = [];
-
   eventOpts.forEach(function (eventOpt) {
     var type = eventOpt[0];
     var eventsArray = eventOpt[1];
@@ -1778,26 +1808,18 @@ function handleEvent(event) {var _this = this;
             }
             handler.once = true;
           }
-          ret.push(handler.apply(handlerCtx, processEventArgs(
+          handler.apply(handlerCtx, processEventArgs(
           _this.$vm,
           event,
           eventArray[1],
           eventArray[2],
           isCustom,
-          methodName)));
+          methodName));
 
         }
       });
     }
   });
-
-  if (
-  eventType === 'input' &&
-  ret.length === 1 &&
-  typeof ret[0] !== 'undefined')
-  {
-    return ret[0];
-  }
 }
 
 var hooks = [
@@ -1959,7 +1981,7 @@ function createApp(vm) {
 function parseBaseComponent(vueComponentOptions)
 
 
-{var _ref5 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},isPage = _ref5.isPage,initRelation = _ref5.initRelation;var _initVueComponent =
+{var _ref5 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},isPage$$1 = _ref5.isPage,initRelation$$1 = _ref5.initRelation;var _initVueComponent =
   initVueComponent(_vue.default, vueComponentOptions),_initVueComponent2 = _slicedToArray(_initVueComponent, 2),VueComponent = _initVueComponent2[0],vueOptions = _initVueComponent2[1];
 
   var componentOptions = {
@@ -1975,7 +1997,7 @@ function parseBaseComponent(vueComponentOptions)
         var properties = this.properties;
 
         var options = {
-          mpType: isPage.call(this) ? 'page' : 'component',
+          mpType: isPage$$1.call(this) ? 'page' : 'component',
           mpInstance: this,
           propsData: properties };
 
@@ -1983,7 +2005,7 @@ function parseBaseComponent(vueComponentOptions)
         initVueIds(properties.vueId, this);
 
         // 处理父子关系
-        initRelation.call(this, {
+        initRelation$$1.call(this, {
           vuePid: this._$vuePid,
           vueOptions: options });
 
@@ -2027,7 +2049,7 @@ function parseBaseComponent(vueComponentOptions)
 
 
 
-  if (isPage) {
+  if (isPage$$1) {
     return componentOptions;
   }
   return [componentOptions, VueComponent];
@@ -2052,7 +2074,10 @@ function parseBasePage(vuePageOptions, _ref6)
 
 
 {var isPage = _ref6.isPage,initRelation = _ref6.initRelation;
-  var pageOptions = parseComponent(vuePageOptions);
+  var pageOptions = parseComponent(vuePageOptions, {
+    isPage: isPage,
+    initRelation: initRelation });
+
 
   initHooks(pageOptions.methods, hooks$1, vuePageOptions);
 
@@ -2270,9 +2295,9 @@ function normalizeComponent (
 /***/ }),
 
 /***/ 105:
-/*!************************************************************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fblack-index%2Fblack-index"} ***!
-  \************************************************************************************************************************/
+/*!*******************************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Fblack-index%2Fblack-index"} ***!
+  \*******************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2287,22 +2312,30 @@ createPage(_blackIndex.default);
 /***/ }),
 
 /***/ 11:
-/*!**********************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/store/index.js ***!
-  \**********************************************************************************/
+/*!*****************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/store/index.js ***!
+  \*****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
 var _vuex = _interopRequireDefault(__webpack_require__(/*! vuex */ 12));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 _vue.default.use(_vuex.default);
 
+var isNull = function isNull(str) {// 数字0会被判定为true
+  if (str == null || str == "" || str == undefined) {
+    return true;
+  }
+  return false;
+};
+
 var store = new _vuex.default.Store({
   state: {
-    chatMessageCard: '', // 暂存一条socket接收的消息
-    flashChatPage: "doFlash" // 作为触发 chatPage 刷新的条件
+    chatMessageCard: '', // 暂存一条socket接收的聊天消息 & 刷新消息列表的条件
+    flashChatPage: "doFlash", // 作为触发 chatPage 刷新的条件
+    myMsgCount: uni.getStorageSync('myMsgCount') // 左侧栏通用未读消息计数
   },
   mutations: {
     setChatMessageCard: function setChatMessageCard(state, value) {
@@ -2312,18 +2345,32 @@ var store = new _vuex.default.Store({
     doFlashChatPage: function doFlashChatPage(state, value) {
       // 获取当前时间，使数据变化
       state.flashChatPage = new Date().getTime();
+    },
+
+    setMyMsgCount: function setMyMsgCount(state, value) {
+      if (value == undefined) {
+        state.myMsgCount++;
+        uni.setStorageSync('myMsgCount', state.myMsgCount);
+        // console.log("value未传值，当前myMsgCount=" + state.myMsgCount);
+      } else {
+        state.myMsgCount = value;
+        uni.setStorageSync('myMsgCount', state.myMsgCount);
+        // console.log("获取到value值，当前myMsgCount=" + state.myMsgCount);
+      }
     } } });var _default =
 
 
 
+
 store;exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 
 /***/ 111:
-/*!*****************************************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/pages/black-index/black-index.css ***!
-  \*****************************************************************************************************/
+/*!************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/pages/black-index/black-index.css ***!
+  \************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2332,9 +2379,9 @@ store;exports.default = _default;
 /***/ }),
 
 /***/ 114:
-/*!**************************************************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fsignin%2Fsignin"} ***!
-  \**************************************************************************************************************/
+/*!*********************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Fsignin%2Fsignin"} ***!
+  \*********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3300,9 +3347,9 @@ var index_esm = {
 /***/ }),
 
 /***/ 122:
-/*!****************************************************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"components%2Farticlebrief"} ***!
-  \****************************************************************************************************************/
+/*!***********************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"components%2Farticlebrief"} ***!
+  \***********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3317,9 +3364,9 @@ createPage(_articlebrief.default);
 /***/ }),
 
 /***/ 123:
-/*!************************************************************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fmessagelist%2Fmessagelist"} ***!
-  \************************************************************************************************************************/
+/*!*******************************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Fmessagelist%2Fmessagelist"} ***!
+  \*******************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3334,9 +3381,9 @@ createPage(_messagelist.default);
 /***/ }),
 
 /***/ 13:
-/*!************************************************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Findex%2Findex"} ***!
-  \************************************************************************************************************/
+/*!*******************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Findex%2Findex"} ***!
+  \*******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3351,9 +3398,9 @@ createPage(_index.default);
 /***/ }),
 
 /***/ 131:
-/*!************************************************************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2FwechatLogin%2FwechatLogin"} ***!
-  \************************************************************************************************************************/
+/*!*******************************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2FwechatLogin%2FwechatLogin"} ***!
+  \*******************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3363,6 +3410,23 @@ createPage(_index.default);
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
 var _wechatLogin = _interopRequireDefault(__webpack_require__(/*! ./pages/wechatLogin/wechatLogin.vue */ 132));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_wechatLogin.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
+
+/***/ }),
+
+/***/ 137:
+/*!*************************************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Fcmt-likedetail%2Fcmt-likedetail"} ***!
+  \*************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _cmtLikedetail = _interopRequireDefault(__webpack_require__(/*! ./pages/cmt-likedetail/cmt-likedetail.vue */ 138));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_cmtLikedetail.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
 
 /***/ }),
@@ -8831,6 +8895,7 @@ function type(obj) {
     return Object.prototype.toString.call(obj)
 }
 
+<<<<<<< HEAD
 /*  */
 
 function flushCallbacks$1(vm) {
@@ -8855,15 +8920,41 @@ function hasRenderWatcher(vm) {
 function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
+=======
+/*  */
+
+function flushCallbacks$1(vm) {
+    if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
+        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+            var mpInstance = vm.$scope;
+            console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
+                ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
+        }
+        var copies = vm.__next_tick_callbacks.slice(0);
+        vm.__next_tick_callbacks.length = 0;
+        for (var i = 0; i < copies.length; i++) {
+            copies[i]();
+        }
+    }
+}
+
+function hasRenderWatcher(vm) {
+    return queue.find(function (watcher) { return vm._watcher === watcher; })
+}
+
+function nextTick$1(vm, cb) {
+    //1.nextTick 之前 已 setData 且 setData 还未回调完成
+    //2.nextTick 之前存在 render watcher
+>>>>>>> master
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -8920,6 +9011,7 @@ function cloneWithData(vm) {
 
 var patch = function(oldVnode, vnode) {
   var this$1 = this;
+<<<<<<< HEAD
 
   if (vnode === null) { //destroy
     return
@@ -8953,6 +9045,41 @@ var patch = function(oldVnode, vnode) {
       flushCallbacks$1(this);
     }
   }
+=======
+
+  if (vnode === null) { //destroy
+    return
+  }
+  if (this.mpType === 'page' || this.mpType === 'component') {
+    var mpInstance = this.$scope;
+    var data = Object.create(null);
+    try {
+      data = cloneWithData(this);
+    } catch (err) {
+      console.error(err);
+    }
+    data.__webviewId__ = mpInstance.data.__webviewId__;
+    var mpData = Object.create(null);
+    Object.keys(data).forEach(function (key) { //仅同步 data 中有的数据
+      mpData[key] = mpInstance.data[key];
+    });
+    var diffData = diff(data, mpData);
+    if (Object.keys(diffData).length) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
+          ']差量更新',
+          JSON.stringify(diffData));
+      }
+      this.__next_tick_pending = true;
+      mpInstance.setData(diffData, function () {
+        this$1.__next_tick_pending = false;
+        flushCallbacks$1(this$1);
+      });
+    } else {
+      flushCallbacks$1(this);
+    }
+  }
+>>>>>>> master
 };
 
 /*  */
@@ -9348,9 +9475,9 @@ module.exports = g;
 /***/ }),
 
 /***/ 32:
-/*!**************************************************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fdetail%2Fdetail"} ***!
-  \**************************************************************************************************************/
+/*!*********************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Fdetail%2Fdetail"} ***!
+  \*********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9365,9 +9492,9 @@ createPage(_detail.default);
 /***/ }),
 
 /***/ 4:
-/*!******************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/pages.json ***!
-  \******************************************************************************/
+/*!*************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/pages.json ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9377,9 +9504,9 @@ createPage(_detail.default);
 /***/ }),
 
 /***/ 42:
-/*!**************************************************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fsubmit%2Fsubmit"} ***!
-  \**************************************************************************************************************/
+/*!*********************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Fsubmit%2Fsubmit"} ***!
+  \*********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10186,9 +10313,9 @@ if (hadRuntime) {
 /***/ }),
 
 /***/ 53:
-/*!******************************************************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fchatpage%2Fchatpage"} ***!
-  \******************************************************************************************************************/
+/*!*************************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Fchatpage%2Fchatpage"} ***!
+  \*************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10203,9 +10330,9 @@ createPage(_chatpage.default);
 /***/ }),
 
 /***/ 63:
-/*!**********************************************************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Ffollowlist%2Ffollowlist"} ***!
-  \**********************************************************************************************************************/
+/*!*****************************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Ffollowlist%2Ffollowlist"} ***!
+  \*****************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10220,9 +10347,9 @@ createPage(_followlist.default);
 /***/ }),
 
 /***/ 71:
-/*!****************************************************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fprofile%2Fprofile"} ***!
-  \****************************************************************************************************************/
+/*!***********************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Fprofile%2Fprofile"} ***!
+  \***********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10237,9 +10364,9 @@ createPage(_profile.default);
 /***/ }),
 
 /***/ 79:
-/*!**************************************************************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fpersonpublic%2Fpersonpublic"} ***!
-  \**************************************************************************************************************************/
+/*!*********************************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Fpersonpublic%2Fpersonpublic"} ***!
+  \*********************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10254,9 +10381,9 @@ createPage(_personpublic.default);
 /***/ }),
 
 /***/ 87:
-/*!**************************************************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fsearch%2Fsearch"} ***!
-  \**************************************************************************************************************/
+/*!*********************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Fsearch%2Fsearch"} ***!
+  \*********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10271,9 +10398,9 @@ createPage(_search.default);
 /***/ }),
 
 /***/ 95:
-/*!******************************************************************************************************************!*\
-  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Ffanslist%2Ffanslist"} ***!
-  \******************************************************************************************************************/
+/*!*************************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Ffanslist%2Ffanslist"} ***!
+  \*************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
