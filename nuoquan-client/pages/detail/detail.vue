@@ -39,7 +39,7 @@
 			<view class="fengexian" style="height: 1px;width: 100%;background-color: #d6d6d6;margin:auto;"></view>
 			<view class="submitComment" @click="controlInput(1)">发 表 评 论</view>
 
-			<view class="bottoLayerOfInput" v-show="writingComment" @click="controlInput(0)" @touchmove="controlInput0()">
+			<view class="bottoLayerOfInput" v-show="showInput" @click="controlInput(0)" @touchmove="controlInput0()">
 				<view class="commentPart" @click.stop="">
 					<view class="emoji"></view>
 					<view class="submit" @click="saveComment()"></view>
@@ -60,7 +60,8 @@
 				articleCard: "",  //detail的主角，由index传过来的单个文章信息
                 commentContent:"",  //用户准备提交的评论内容
 				commentList: {},  //返回值，获取评论列表信息
-				writingComment:false,  //控制输入框，true时显示输入框同时输入框自动获取焦点，拉起输入法
+				showInput:false,        ////控制输入框，true时显示输入框
+				writingComment:false,  //控制输入框，true时自动获取焦点，拉起输入法
 				placeholderText:"评论点什么吧......",
 				inputData:{  //localData,用于拼接不同情况下的savecomment请求的数据
 					
@@ -120,20 +121,30 @@
 				});
 			},
 			controlInput(a){
-				this.writingComment =!this.writingComment;
 
 				if(a!=0&&a!=1){            //a!=0, !=1， 从子组件传来，包含被回复对象：被回复人ID，被回复评论ID，被回复人昵称
 					this.submitData=a;
-					this.placeholderText='回复'+a.nickname;
+					this.placeholderText='回复 @'+a.nickname+' 的评论';
 					delete(a.nickname)
+					if(a.mode = "re-re"){    //mode ="re-re", from grandson RECOMMENT
+						this.writingComment = true ;
+					}
+					this.showInput= true;
+					
 				}else if(a==1){           //a==1 当前页面调用，直接评论文章
 					this.submitData.toUserId=this.articleCard.userId;
 					this.submitData.articleId=this.articleCard.id;
+					this.showInput = true;
+					this.writingComment = true;
+					console.log('this is control input in detail. a ==')
+					console.log(a);
 					console.log(this.submitData);
-					debugger
 				}else{  //a==0, 关闭输入框，一切恢复默认状态
+				    console.log('this is control input in detail. a ==0, EXIT')
 					this.submitData = {};
 					this.placeholderText="评论";
+					this.showInput = false;
+					this.writingComment =false;
 				    }
 			},
 			goToPersonPublic(){
@@ -315,18 +326,19 @@
 	}
 
 	.submitComment {
+		position: fixed;
+		display: block;
+		left:34%;
+		bottom:9px;
 		background: #FFCC30;
 		border-radius: 5px;
-		width: 120px;
+		width: 32%;
 		height: 30px;
 		font-size: 10px;
 		font-weight: bold;
 		color: #FFFFFF;
-		margin: auto;
 		text-align: center;
 		line-height: 30px;
-		margin-top:12px;
-		margin-bottom: 50px;
 	}
 .bottoLayerOfInput{
 	position: fixed;

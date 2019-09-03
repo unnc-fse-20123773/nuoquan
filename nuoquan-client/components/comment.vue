@@ -1,7 +1,7 @@
 <template>
 	<view class="comment" :id="commentDetail.id">
 		<view class="fengexian"></view>
-		<view class="contentarea">{{ commentDetail.comment }}</view>
+		<view class="contentarea" @tap="controlInputInComment('inComment')">{{ commentDetail.comment }}</view>
 		<view class="bottombar">
 			<view style="width:70%;display:inline-block;">
 				<image :src="commentDetail.faceImage" class="touxiang"></image>
@@ -25,8 +25,8 @@
 
 		<view v-show="RECOMMENT" class="reCommentsArea">
 
-			<reComment v-for="(i,index) in reCommentList" v-bind:key="index" :reCommentDetail='i'></reComment>
-			<view class="submitComment" @tap="controlInputInComment()">发 表 评 论</view>
+			<reComment v-for="(i,index) in reCommentList" v-bind:key="index" :reCommentDetail='i'  @controlInputSignal="controlInputSignal"></reComment>
+			<view class="submitComment" >发 表 评 论</view>
 		</view>
 	</view>
 </template>
@@ -108,12 +108,19 @@
 					},
 				});
 			},
-			controlInputInComment() {
-				var dataOfRecomment={
+			controlInputInComment(a) {
+				if(a=="inComment"){
+					var dataOfRecomment={
+						mode:"re-co",
 					toUserId:this.commentDetail.fromUserId,
 					fatherCommentId:this.commentDetail.id,
 					nickname:this.commentDetail.nickname,
+				    }
+				}else{
+					var dataOfRecomment = a;
 				}
+				console.log("receive control input request, in comment");
+				console.log(dataOfRecomment);
 				this.$emit('controlInputSignal',dataOfRecomment)
 			},
 		},

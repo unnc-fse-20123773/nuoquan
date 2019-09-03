@@ -1,0 +1,137 @@
+
+page {
+	background: #FDD047;
+	height: 100%;
+}
+.submit {
+	float: right;
+	margin-right: 80rpx;
+	margin-top: 14px;
+	width: 55px;
+	height: 26px;
+	line-height: 26px;
+	border: solid 1px #FDD041;
+	border-radius: 5px;
+	font-weight: bold;
+	font-size: 15px;
+	color: #FDD041;
+	text-align: center;
+	background: #FFFFFF;
+}
+.submitMain {
+	height: 100%;
+	width: 606rpx;
+	padding: 38rpx 72rpx;
+	border-top-left-radius: 18px;
+	border-top-right-radius: 18px;
+	background: #FFFFFF;
+	-webkit-box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.35);
+	        box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.35);
+}
+.title {
+	height: 36px;
+	border-radius: 5px;
+	background: #F4F1E9;
+	margin-top: 19px;
+}
+.tagsArea {
+	margin-top: 13px;
+	vertical-align: bottom;
+	min-height: 42px;
+}
+.tag {
+	display: inline-block;
+	vertical-align: bottom;
+	color: #353535;
+	font-size: 13px;
+	line-height: 24px;
+	height: 24px;
+	padding-right: 27px;
+	padding-left: 12px;
+	border: solid 2px #FE5F55;
+	border-radius: 14px;
+	position: relative;
+	margin-right: 12px;
+	margin-bottom: 6px;
+}
+.tag::after {
+	position: absolute;
+	content: "\2715";
+	right: 12px;
+	color: #939393;
+	font-size: 13px;
+}
+.addTag {
+	height: 30px;
+	display: inline-block;
+	vertical-align: bottom;
+	margin-bottom: 6px;
+}
+.addTag input {
+	display: inline-block;
+	color: #353535;
+	font-size: 13px;
+	line-height: 24px;
+	height: 24px;
+	padding-right: 12px;
+	padding-left: 12px;
+	border: solid 2px #FE5F55;
+	border-radius: 14px;
+	min-height: 24px;
+	vertical-align: bottom;
+	margin-top: 2px;
+}
+.addTag view {
+	display: inline-block;
+	color: #353535;
+	font-size: 13px;
+	line-height: 28px;
+	height: 28px;
+	padding-right: 12px;
+	padding-left: 12px;
+	border-radius: 14px;
+	background: #FDD041;
+	margin-right: 12px;
+}
+.content {
+	min-height: 136px;
+	background: #F4F1E9;
+	margin-top: 13px;
+	width: 100%;
+}
+.picturearea {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	    -ms-flex-pack: justify;
+	        justify-content: space-between;
+	-webkit-flex-wrap: wrap;
+	    -ms-flex-wrap: wrap;
+	        flex-wrap: wrap;
+	-webkit-box-flex: 0;
+	-webkit-flex: 0 0 auto;
+	    -ms-flex: 0 0 auto;
+	        flex: 0 0 auto;
+	margin-top: 10px;
+}
+.picturearea image {
+	width: 190rpx;
+	height: 190rpx;
+	margin: 6px 0;
+}
+.addPic {
+	width: 178rpx;
+	height: 178rpx;
+	line-height: 160rpx;
+	margin: 6px 0;
+	border: dashed 3px #BEBCB5;
+	text-align: center;
+	vertical-align: middle;
+	color: #BEBCB5;
+	font-size: 70px;
+	font-weight: 200;
+}
+
