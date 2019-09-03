@@ -7,7 +7,7 @@
 		</view>
 		<!-- 点赞和评论数量 -->
 		<view id="msglist-likecommentnum">
-			<view class="msglist-like column_center">
+			<view class="msglist-like column_center" @tap="goToCmtLikeDetail()">
 				<view class="msglist-like-bg super_center">
 					<image src="../../static/icon/like.png" class="msglist-like-icon" mode=""></image>
 				</view>
@@ -270,7 +270,7 @@
 			},
 
 			goToChatpage(e) {
-				console.log(e)
+				// console.log(e)
 				var myId = e.myId;
 				var friendId = e.friendId;
 				var msg = e.msg;
@@ -283,6 +283,12 @@
 					url: '../chatpage/chatpage?friendInfo=' + JSON.stringify(friendInfo),
 				});
 			},
+			
+			goToCmtLikeDetail(){
+				uni.navigateTo({
+					url: '../cmt-likedetail/cmt-likedetail'
+				})
+			}
 
 		}
 	}

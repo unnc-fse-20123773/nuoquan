@@ -196,7 +196,7 @@
 					success: (res) => {
 						// console.log(res.data.data);
 						if (me.imageList.length <= 0) {
-							uni.redirectTo({
+							uni.navigateBack({
 								url: '../index/index'
 							})
 						} else {
@@ -212,8 +212,8 @@
 										order: i
 									},
 									success: (uploadFileRes) => {
-										uni.redirectTo({
-											url: '../index/index'
+										uni.navigateBack({
+											delta: 1
 										})
 									}
 								});

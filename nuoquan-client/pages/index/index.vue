@@ -39,8 +39,6 @@
 			mainpageleft,
 		},
 		
-		
-
 		onLoad() {			
 			var userInfo = this.getGlobalUserInfo();
 			if (this.isNull(userInfo)) {
@@ -52,10 +50,6 @@
 			// 更新用户信息缓存... 查询用户信息，并分割邮箱更新到缓存
 			this.queryUserInfo(userInfo.id)
 			
-			this.showArticles(); // 显示文章流
-			
-			this.getTop3Articles(); // 获取热度榜
-			
 			this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
 			
 			// [测试代码块]
@@ -66,6 +60,10 @@
 				// 设置 userInfo 传给 mainpagetop 组件
 				this.userInfo = this.getGlobalUserInfo();
 			}
+			
+			this.showArticles(); // 显示文章流
+			
+			this.getTop3Articles(); // 获取热度榜
 		},
 		methods: {
 			showArticles() {

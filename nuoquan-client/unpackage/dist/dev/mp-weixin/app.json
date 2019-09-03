@@ -13,7 +13,8 @@
     "pages/signin/signin",
     "components/articlebrief",
     "pages/messagelist/messagelist",
-    "pages/wechatLogin/wechatLogin"
+    "pages/wechatLogin/wechatLogin",
+    "pages/cmt-likedetail/cmt-likedetail"
   ],
   "subPackages": [],
   "window": {
