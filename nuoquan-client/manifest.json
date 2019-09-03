@@ -58,7 +58,7 @@
         "setting" : {
             "urlCheck" : false,
             "postcss" : false,
-            "minified" : true,
+            "minified" : false,
             "es6" : true
         },
         "usingComponents" : true,

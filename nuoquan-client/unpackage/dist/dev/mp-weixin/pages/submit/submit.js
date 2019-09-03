@@ -138,6 +138,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -155,7 +162,6 @@ var sizeType = [
 {
   data: function data() {
     return {
-      userName: 'xdy123123123123',
       articleTitle: '',
       articleContent: '',
       articleTag: '',
@@ -184,7 +190,11 @@ var sizeType = [
     this.countIndex = 8;
   },
   onLoad: function onLoad() {
-
+    var userInfo = this.getGlobalUserInfo();
+    if (!this.isNull(userInfo)) {
+      // 设置 userInfo 传给 mainpagetop 组件
+      this.userInfo = this.getGlobalUserInfo();
+    }
   },
   methods: {
     // 将标题存放在articleTitle中
@@ -310,7 +320,7 @@ var sizeType = [
         url: serverUrl + '/article/uploadArticle',
         method: 'POST',
         data: {
-          userId: me.userName,
+          userId: me.userInfo.id,
           articleTag: me.articleTag,
           articleTitle: me.articleTitle,
           articleContent: me.articleContent },

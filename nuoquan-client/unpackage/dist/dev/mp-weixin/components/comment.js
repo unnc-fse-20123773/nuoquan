@@ -98,65 +98,125 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var reComment = function reComment() {return __webpack_require__.e(/*! import() | components/reComment */ "components/reComment").then(__webpack_require__.bind(null, /*! ./reComment */ "../../../../../../../../../code/nuoquan/nuoquan-client/components/reComment.vue"));};var _default =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {
   name: 'comment',
   props: {
     commentDetail: {} },
 
+  components: {
+    reComment: reComment },
+
   data: function data() {
     return {
-      RECOMMENT: false };
+      RECOMMENT: false,
+      reCommentList: [{
+        faceImage: "https://wx.qlogo.cn/mmopen/vi_32/956oQqnmpuCiaF2ia1LWsPdpj2ZBqGOXgw2ymtQlxEfKDfoHxH1icCfZibtia28ibQqYXbpgZ10wSJvicV2fficctezcJQ/132",
+        comment: "123321",
+        nickname: "回复的妖",
+        timeAge: "12323154214",
+        likeNum: "3" },
+      {
+        faceImage: "https://wx.qlogo.cn/mmopen/vi_32/956oQqnmpuCiaF2ia1LWsPdpj2ZBqGOXgw2ymtQlxEfKDfoHxH1icCfZibtia28ibQqYXbpgZ10wSJvicV2fficctezcJQ/132",
+
+        comment: "123321",
+        nickname: "回复的妖",
+        timeAge: "12323154214",
+        likeNum: "3" },
+      {
+        faceImage: "https://wx.qlogo.cn/mmopen/vi_32/956oQqnmpuCiaF2ia1LWsPdpj2ZBqGOXgw2ymtQlxEfKDfoHxH1icCfZibtia28ibQqYXbpgZ10wSJvicV2fficctezcJQ/132",
+
+        comment: "123321",
+        nickname: "回复的妖",
+        timeAge: "12323154214",
+        likeNum: "3" },
+      {
+        faceImage: "https://wx.qlogo.cn/mmopen/vi_32/956oQqnmpuCiaF2ia1LWsPdpj2ZBqGOXgw2ymtQlxEfKDfoHxH1icCfZibtia28ibQqYXbpgZ10wSJvicV2fficctezcJQ/132",
+
+        comment: "123321",
+        nickname: "回复的妖",
+        timeAge: "12323154214",
+        likeNum: "3" },
+      {
+        faceImage: "https://wx.qlogo.cn/mmopen/vi_32/956oQqnmpuCiaF2ia1LWsPdpj2ZBqGOXgw2ymtQlxEfKDfoHxH1icCfZibtia28ibQqYXbpgZ10wSJvicV2fficctezcJQ/132",
+
+        comment: "123321",
+        nickname: "回复的妖",
+        timeAge: "12323154214",
+        likeNum: "3" }] };
+
+
 
   },
   methods: {
-    testRE: function testRE() {
+    showRecommentArea: function showRecommentArea() {
       this.RECOMMENT = !this.RECOMMENT;
+      if (this.RECOMMENT) {
+        this.getComments();
+      }
+    },
+    getComments: function getComments(a) {
+      var that = this;
+      uni.request({
+        method: "POST",
+        url: that.$serverUrl + '/article/getArticleComments',
+        data: {
+          commentId: this.commentDetail.id },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {console.log(res);
+          console.log(res);
+          debugger;
+          that.commentList = res.data.data.rows;
+          console.log(that.articleCard.id);
+        } });
+
+    },
+    controlInputInComment: function controlInputInComment() {
+      var dataOfRecomment = {
+        toUserId: this.commentDetail.fromUserId,
+        fatherCommentId: this.commentDetail.id,
+        nickname: this.commentDetail.nickname };
+
+      this.$emit('controlInputSignal', dataOfRecomment);
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 

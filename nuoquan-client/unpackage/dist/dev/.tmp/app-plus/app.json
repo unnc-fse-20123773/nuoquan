@@ -1,20 +1,22 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/chatpage/chatpage",
+    "pages/cmt-likedetail/cmt-likedetail",
+    "pages/detail/detail",
     "pages/submit/submit",
+    "pages/chatpage/chatpage",
     "pages/followlist/followlist",
     "pages/profile/profile",
     "pages/personpublic/personpublic",
     "pages/search/search",
     "pages/fanslist/fanslist",
     "pages/black-index/black-index",
-    "pages/detail/detail",
     "pages/signin/signin",
     "components/articlebrief",
     "pages/messagelist/messagelist",
     "pages/wechatLogin/wechatLogin"
   ],
+  "subPackages": [],
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",
@@ -23,11 +25,10 @@
   },
   "usingComponents": {},
   "nvueCompiler": "weex",
-  "renderer": "auto",
   "splashscreen": {
     "alwaysShowBeforeRender": true,
     "autoclose": false
   },
   "appname": "nuoquan",
-  "compilerVersion": "2.2.2"
+  "compilerVersion": "2.1.0"
 }

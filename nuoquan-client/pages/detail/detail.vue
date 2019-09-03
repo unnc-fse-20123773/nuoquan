@@ -22,30 +22,30 @@
 			</view>
 			<view class="bottombar">
 				<view style="width:70%;display:inline-block;">
-					<image :src="articleCard.faceImg" class="touxiang"></image>
+					<image :src="articleCard.faceImg" class="touxiang" @click="goToPersonPublic()"></image>
 					<view class="name">{{ articleCard.nickname }}</view>
 
 					<view class="time">{{ articleCard.createDate | timeDeal}}</view>
 				</view>
 				<view class="icons">
 					<!-- 点赞MM按钮 -->
-					<!-- 					MMMMMMMM
- -->
 					<image class="icon" src="../../static/icon/like.png"></image>
 					<view class="icom">{{ articleCard.likeNum }}</view>
 				</view>
 			</view>
-			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i"></commentbox>
-			<view class="fengexian" style="height: 1px;width: 100%;background-color: #d6d6d6;margin:auto;"></view>
-			<view class="submitComment" @click="controlInput()">发 表 评 论</view>
 
-			<view class="bottoLayerOfInput" v-show="writingComment"  @click="controlInput()" @touchmove="controlInput()">
+			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i" @controlInputSignal="controlInput"></commentbox>
+
+			<view class="fengexian" style="height: 1px;width: 100%;background-color: #d6d6d6;margin:auto;"></view>
+			<view class="submitComment" @click="controlInput(1)">发 表 评 论</view>
+
+			<view class="bottoLayerOfInput" v-show="writingComment" @click="controlInput(0)" @touchmove="controlInput0()">
 				<view class="commentPart" @click.stop="">
 					<view class="emoji"></view>
 					<view class="submit" @click="saveComment()"></view>
 					<textarea class="commentSth" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
 					 confirm-type="send" @confirm="saveComment()" adjust-position="false" v-model="commentContent" />
-				</view>
+					</view>
             </view>
 		</view> 
  </view>
@@ -62,6 +62,12 @@
 				commentList: {},  //返回值，获取评论列表信息
 				writingComment:false,  //控制输入框，true时显示输入框同时输入框自动获取焦点，拉起输入法
 				placeholderText:"评论点什么吧......",
+				inputData:{  //localData,用于拼接不同情况下的savecomment请求的数据
+					
+					},
+				submitData:{
+					//这个是从子组件传来的数据，回复评论的评论之类
+				}
 			};
 		},
 		components: {
@@ -72,33 +78,30 @@
 				var that = this;
 				var content = this.commentContent;
 				var userInfoTemp = this.getGlobalUserInfo();
+				console.log(that.userInfo.id)
 				if (this.isNull(userInfoTemp)) {
 					uni.navigateTo({
 						url: "../wechatLogin/wechatLogin"
 					})
 				} else {
-					console.log(content)
+					this.submitData.comment=this.commentContent;
+					this.submitData.fromUserId=this.userInfo.id;
+					console.log(this.submitData);
 					uni.request({
 						url: that.$serverUrl + '/article/saveComment',
 						method: 'POST',
-						data: {
-							fromUserId: that.userInfo.id,
-							articleId: that.articleCard.id,
-							comment: content
-						},
+						data: this.submitData,
 						success: function(res) {
 							console.log(res.data)
 							that.writingComment = false;
 							that.commentContent = "";
-							// uni.redirectTo({
-							// 	url: '/pages/detail/detail'
-							// })
+							that.getComments(0);
 						},
 
 					})
 				}
 			},
-			getComments: function() {
+			getComments: function(a) {		
 				var that = this;
 				uni.request({
 					method: "POST",
@@ -116,15 +119,31 @@
 					},
 				});
 			},
-			controlInput(){
+			controlInput(a){
 				this.writingComment =!this.writingComment;
-				console.log(this.writingComment)
+
+				if(a!=0&&a!=1){            //a!=0, !=1， 从子组件传来，包含被回复对象：被回复人ID，被回复评论ID，被回复人昵称
+					this.submitData=a;
+					this.placeholderText='回复'+a.nickname;
+					delete(a.nickname)
+				}else if(a==1){           //a==1 当前页面调用，直接评论文章
+					this.submitData.toUserId=this.articleCard.userId;
+					this.submitData.articleId=this.articleCard.id;
+					console.log(this.submitData);
+					debugger
+				}else{  //a==0, 关闭输入框，一切恢复默认状态
+					this.submitData = {};
+					this.placeholderText="评论";
+				    }
+			},
+			goToPersonPublic(){
+				var navData = JSON.stringify(this.articleCard.userId); // 这里转换成 字符串
+				uni.navigateTo({
+					url: '/pages/personpublic/personpublic?userId='+navData
+				})
 			}
 		},
 		onLoad(options) {
-			// console.log('detail receved');
-			// console.log(options.data);
-
 			this.articleCard = JSON.parse(options.data);
 			console.log(this.articleCard);
 			// console.log(this.articleCard);
@@ -134,18 +153,15 @@
 			if (!this.isNull(userInfo)) {
 				this.userInfo = this.getGlobalUserInfo();
 			}
-			// console.log(this.articleCard.id);
-			// console.log(this.userInfo.nickname);
 			this.getComments();
 		},
 		filters: {
 			timeDeal(timediff) {
 				timediff = new Date(timediff);
-				var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(),
-					timediff.getSeconds()
-				];
+				var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(),timediff.getSeconds()];
 				var oldTime = timediff.getTime();
-				var newTime = new Date().getTime();
+				var now = new Date();
+				var newTime = now.getTime();
 				var milliseconds = 0;
 				var timeSpanStr;
 				milliseconds = newTime - oldTime;
@@ -157,14 +173,13 @@
 					timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
 				} else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
 					timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
-				} else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && year == now.getFullYear()) {
+				} else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && parts[0] == now.getFullYear()) {
 					timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
 				} else {
 					timeSpanStr = parts[0] + '-' + parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
 				}
 				return timeSpanStr;
 			}
-
 		},
 	};
 </script>
@@ -198,6 +213,7 @@
 		height: 100%;
 		width: 85%;
 		padding: 0 7.5%;
+		overflow: scroll;
 	}
 
 	.detailcontent {
@@ -309,6 +325,8 @@
 		margin: auto;
 		text-align: center;
 		line-height: 30px;
+		margin-top:12px;
+		margin-bottom: 50px;
 	}
 .bottoLayerOfInput{
 	position: fixed;
@@ -326,6 +344,7 @@
 		width: 670upx;
 		padding:11px 40upx;
 		min-height: 50px;
+		background: #FFFFFF;
 	}
 
 	.emoji {

@@ -179,7 +179,13 @@ __webpack_require__.r(__webpack_exports__);
       commentContent: "", //用户准备提交的评论内容
       commentList: {}, //返回值，获取评论列表信息
       writingComment: false, //控制输入框，true时显示输入框同时输入框自动获取焦点，拉起输入法
-      placeholderText: "评论点什么吧......" };
+      placeholderText: "评论点什么吧......",
+      inputData: {//localData,用于拼接不同情况下的savecomment请求的数据
+      },
+
+      submitData: {
+        //这个是从子组件传来的数据，回复评论的评论之类
+      } };
 
   },
   components: {
@@ -190,33 +196,30 @@ __webpack_require__.r(__webpack_exports__);
       var that = this;
       var content = this.commentContent;
       var userInfoTemp = this.getGlobalUserInfo();
+      console.log(that.userInfo.id);
       if (this.isNull(userInfoTemp)) {
         uni.navigateTo({
           url: "../wechatLogin/wechatLogin" });
 
       } else {
-        console.log(content);
+        this.submitData.comment = this.commentContent;
+        this.submitData.fromUserId = this.userInfo.id;
+        console.log(this.submitData);
         uni.request({
           url: that.$serverUrl + '/article/saveComment',
           method: 'POST',
-          data: {
-            fromUserId: that.userInfo.id,
-            articleId: that.articleCard.id,
-            comment: content },
-
+          data: this.submitData,
           success: function success(res) {
             console.log(res.data);
             that.writingComment = false;
             that.commentContent = "";
-            // uni.redirectTo({
-            // 	url: '/pages/detail/detail'
-            // })
+            that.getComments(0);
           } });
 
 
       }
     },
-    getComments: function getComments() {
+    getComments: function getComments(a) {
       var that = this;
       uni.request({
         method: "POST",
@@ -234,15 +237,31 @@ __webpack_require__.r(__webpack_exports__);
         } });
 
     },
-    controlInput: function controlInput() {
+    controlInput: function controlInput(a) {
       this.writingComment = !this.writingComment;
-      console.log(this.writingComment);
+
+      if (a != 0 && a != 1) {//a!=0, !=1， 从子组件传来，包含被回复对象：被回复人ID，被回复评论ID，被回复人昵称
+        this.submitData = a;
+        this.placeholderText = '回复' + a.nickname;
+        delete a.nickname;
+      } else if (a == 1) {//a==1 当前页面调用，直接评论文章
+        this.submitData.toUserId = this.articleCard.userId;
+        this.submitData.articleId = this.articleCard.id;
+        console.log(this.submitData);
+        debugger;
+      } else {//a==0, 关闭输入框，一切恢复默认状态
+        this.submitData = {};
+        this.placeholderText = "评论";
+      }
+    },
+    goToPersonPublic: function goToPersonPublic() {
+      var navData = JSON.stringify(this.articleCard.userId); // 这里转换成 字符串
+      uni.navigateTo({
+        url: '/pages/personpublic/personpublic?userId=' + navData });
+
     } },
 
   onLoad: function onLoad(options) {
-    // console.log('detail receved');
-    // console.log(options.data);
-
     this.articleCard = JSON.parse(options.data);
     console.log(this.articleCard);
     // console.log(this.articleCard);
@@ -252,18 +271,15 @@ __webpack_require__.r(__webpack_exports__);
     if (!this.isNull(userInfo)) {
       this.userInfo = this.getGlobalUserInfo();
     }
-    // console.log(this.articleCard.id);
-    // console.log(this.userInfo.nickname);
     this.getComments();
   },
   filters: {
     timeDeal: function timeDeal(timediff) {
       timediff = new Date(timediff);
-      var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(),
-      timediff.getSeconds()];
-
+      var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(), timediff.getSeconds()];
       var oldTime = timediff.getTime();
-      var newTime = new Date().getTime();
+      var now = new Date();
+      var newTime = now.getTime();
       var milliseconds = 0;
       var timeSpanStr;
       milliseconds = newTime - oldTime;
@@ -275,7 +291,7 @@ __webpack_require__.r(__webpack_exports__);
         timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
       } else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
         timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
-      } else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && year == now.getFullYear()) {
+      } else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && parts[0] == now.getFullYear()) {
         timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
       } else {
         timeSpanStr = parts[0] + '-' + parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];

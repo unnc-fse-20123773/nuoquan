@@ -17,22 +17,29 @@
 					<view v-if="showAddTagButton" @click="addTag">
 						+ 添加标签
 					</view>
-					<view v-if="showInputTagArea">
-						<input v-model="articleTag" focus="true" placeholder="请输入标签..." @blur="checkInput" />
-					</view>
+					<input v-if="showInputTagArea" v-model="articleTag" focus="true" placeholder="请输入标签..." @blur="checkInput" />
+
+
 				</view>
 			</view>
 			<textarea placeholder="内容" class="content" @blur="saveAsArticleContent"></textarea>
-			<view class="picturearea">
+			<view style="display: flex;justify-content: space-between;color: #353535;font-size: 13px;line-height: 28px;height: 24px;">
 				<view>点击可预览选好的图片</view>
 				<view>{{imageList.length}}/9</view>
+			</view>
+
+			<view class="picturearea">
+
 				<block v-for="(image,index) in imageList" :key="index">
 					<view>
 						<!-- todo 预览图片缩放 -->
 						<image :src="image" :data-src="image" @tap="previewImage"></image>
 					</view>
+
 				</block>
 				<view v-show="isAddImage(this.imageList.length)" id="clickToChooseImage" class="addPic" @click="chooseImg">+</view>
+				<view v-if="imageList.length==1||imageList.length==4||imageList.length==7" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
+
 			</view>
 		</view>
 	</viwe>
@@ -55,7 +62,6 @@
 	export default {
 		data() {
 			return {
-				userName: 'xdy123123123123',
 				articleTitle: '',
 				articleContent: '',
 				articleTag: '',
@@ -84,7 +90,11 @@
 				this.countIndex = 8;
 		},
 		onLoad() {
-
+			var userInfo = this.getGlobalUserInfo();
+			if (!this.isNull(userInfo)) {
+				// 设置 userInfo 传给 mainpagetop 组件
+				this.userInfo = this.getGlobalUserInfo();
+			}
 		},
 		methods: {
 			// 将标题存放在articleTitle中
@@ -210,7 +220,7 @@
 					url: serverUrl + '/article/uploadArticle',
 					method: 'POST',
 					data: {
-						userId: me.userName,
+						userId: me.userInfo.id,
 						articleTag: me.articleTag,
 						articleTitle: me.articleTitle,
 						articleContent: me.articleContent
@@ -294,30 +304,59 @@
 
 	.tagsArea {
 		margin-top: 13px;
+		vertical-align: bottom;
+		min-height: 42px;
 	}
 
 	.tag {
 		display: inline-block;
+		vertical-align: bottom;
 		color: #353535;
 		font-size: 13px;
-		line-height: 28px;
-		height: 28px;
+		line-height: 24px;
+		height: 24px;
 		padding-right: 27px;
 		padding-left: 12px;
 		border: solid 2px #FE5F55;
 		border-radius: 14px;
 		position: relative;
 		margin-right: 12px;
-		margin-bottom: 12px;
+		margin-bottom: 6px;
 	}
 
 	.tag::after {
 		position: absolute;
-		content: "X";
+		content: "✕";
 		right: 12px;
+		color: #939393;
+		font-size: 13px;
 	}
 
 	.addTag {
+		height: 30px;
+		display: inline-block;
+		vertical-align: bottom;
+		margin-bottom: 6px;
+
+	}
+
+	.addTag input {
+		display: inline-block;
+		color: #353535;
+		font-size: 13px;
+		line-height: 24px;
+		height: 24px;
+		padding-right: 12px;
+		padding-left: 12px;
+		border: solid 2px #FE5F55;
+		border-radius: 14px;
+		min-height: 24px;
+		vertical-align: bottom;
+		margin-top: 2px;
+
+	}
+
+	.addTag view {
 		display: inline-block;
 		color: #353535;
 		font-size: 13px;
@@ -325,8 +364,9 @@
 		height: 28px;
 		padding-right: 12px;
 		padding-left: 12px;
-		border: solid 2px #FE5F55;
 		border-radius: 14px;
+		background: #FDD041;
+		margin-right: 12px;
 	}
 
 	.content {
@@ -351,9 +391,9 @@
 	}
 
 	.addPic {
-		width: 190upx;
-		height: 190upx;
-		line-height: 180upx;
+		width: 178upx;
+		height: 178upx;
+		line-height: 160upx;
 		margin: 6px 0;
 		border: dashed 3px #BEBCB5;
 		text-align: center;
@@ -361,10 +401,5 @@
 		color: #BEBCB5;
 		font-size: 70px;
 		font-weight: 200;
-	}
-
-	.placeHolderForPic {
-		width: 190upx;
-		height: 190upx;
 	}
 </style>
