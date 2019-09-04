@@ -244,6 +244,14 @@ page {
 	border-radius: 20rpx;
 	background-color: #f8eced;
 }
+.brief-bar-nocolor {
+	/* 底部边距需要动态设置 */
+	margin-bottom: 15rpx;
+	overflow: hidden;
+	width: 92%;
+	margin-left: 4%;
+	border-radius: 20rpx;
+}
 .brief-bar-rel {
 	position: relative;
 	width: 94%;

@@ -348,12 +348,14 @@ _vue.default.prototype.mySocket = {
           case app.netty.COMMENTARTICLE:
             console.log("获取评论文章");
             // 存入缓存
+            dataContent.data.comment.createDate = app.formatTime(dataContent.data.comment.createDate);
             app.notification.saveCommentMsg(dataContent);
             app.$store.commit('setCommentMsgCount');
             break;
           case app.netty.COMMENTCOMMENT:
             console.log("获取评论评论");
             // 存入缓存
+            dataContent.data.comment.createDate = app.formatTime(dataContent.data.comment.createDate);
             app.notification.saveCommentMsg(dataContent);
             app.$store.commit('setCommentMsgCount');
             break;
