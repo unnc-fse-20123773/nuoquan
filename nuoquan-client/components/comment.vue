@@ -83,14 +83,14 @@
 			};
 		},
 		mounted() {
-              this.getComments()
+              
 		},
 		methods: {
 			getComments() {
 				var that = this;
 				uni.request({
 					method: "POST",
-					url: that.$serverUrl + '/article/getSonArticleComments',
+					url: that.$serverUrl + '/article/getSonComments',
 					data: {
 						fatherCommentId: that.commentDetail.id,
 					},

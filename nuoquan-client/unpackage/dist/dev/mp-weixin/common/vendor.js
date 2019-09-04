@@ -1,15 +1,9 @@
 (global["webpackJsonp"] = global["webpackJsonp"] || []).push([["common/vendor"],{
 
 /***/ 0:
-<<<<<<< HEAD
 /*!***************************************************************************!*\
   !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js ***!
   \***************************************************************************/
-=======
-/*!**********************************************************************!*\
-  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js ***!
-  \**********************************************************************/
->>>>>>> deyan
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1439,7 +1433,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -2291,17 +2285,10 @@ function normalizeComponent (
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 105:
 /*!************************************************************************************************************************!*\
   !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fblack-index%2Fblack-index"} ***!
   \************************************************************************************************************************/
-=======
-/***/ 103:
-/*!*******************************************************************************************************************!*\
-  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fblack-index%2Fblack-index"} ***!
-  \*******************************************************************************************************************/
->>>>>>> deyan
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2315,28 +2302,10 @@ createPage(_blackIndex.default);
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 11:
 /*!**********************************************************************************!*\
   !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/store/index.js ***!
   \**********************************************************************************/
-=======
-/***/ 109:
-/*!************************************************************************************************!*\
-  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/pages/black-index/black-index.css ***!
-  \************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
-/***/ 11:
-/*!*****************************************************************************!*\
-  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/store/index.js ***!
-  \*****************************************************************************/
->>>>>>> deyan
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2389,7 +2358,6 @@ store;exports.default = _default;
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 111:
 /*!*****************************************************************************************************!*\
   !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/pages/black-index/black-index.css ***!
@@ -2405,12 +2373,6 @@ store;exports.default = _default;
 /*!**************************************************************************************************************!*\
   !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fsignin%2Fsignin"} ***!
   \**************************************************************************************************************/
-=======
-/***/ 112:
-/*!*********************************************************************************************************!*\
-  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fsignin%2Fsignin"} ***!
-  \*********************************************************************************************************/
->>>>>>> deyan
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3375,17 +3337,10 @@ var index_esm = {
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 122:
 /*!****************************************************************************************************************!*\
   !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"components%2Farticlebrief"} ***!
   \****************************************************************************************************************/
-=======
-/***/ 120:
-/*!***********************************************************************************************************!*\
-  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"components%2Farticlebrief"} ***!
-  \***********************************************************************************************************/
->>>>>>> deyan
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3399,17 +3354,10 @@ createPage(_articlebrief.default);
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 123:
 /*!************************************************************************************************************************!*\
   !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fmessagelist%2Fmessagelist"} ***!
   \************************************************************************************************************************/
-=======
-/***/ 121:
-/*!*******************************************************************************************************************!*\
-  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fmessagelist%2Fmessagelist"} ***!
-  \*******************************************************************************************************************/
->>>>>>> deyan
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3423,7 +3371,6 @@ createPage(_messagelist.default);
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 13:
 /*!************************************************************************************************************!*\
   !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Findex%2Findex"} ***!
@@ -3445,12 +3392,6 @@ createPage(_index.default);
 /*!************************************************************************************************************************!*\
   !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2FwechatLogin%2FwechatLogin"} ***!
   \************************************************************************************************************************/
-=======
-/***/ 129:
-/*!*******************************************************************************************************************!*\
-  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2FwechatLogin%2FwechatLogin"} ***!
-  \*******************************************************************************************************************/
->>>>>>> deyan
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3464,17 +3405,10 @@ createPage(_wechatLogin.default);
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 137:
 /*!******************************************************************************************************************************!*\
   !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fcmt-likedetail%2Fcmt-likedetail"} ***!
   \******************************************************************************************************************************/
-=======
-/***/ 13:
-/*!*******************************************************************************************************!*\
-  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Findex%2Findex"} ***!
-  \*******************************************************************************************************/
->>>>>>> deyan
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8956,7 +8890,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -8977,14 +8911,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -9060,7 +8994,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -9468,17 +9402,10 @@ module.exports = g;
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 32:
 /*!**************************************************************************************************************!*\
   !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fdetail%2Fdetail"} ***!
   \**************************************************************************************************************/
-=======
-/***/ 30:
-/*!*********************************************************************************************************!*\
-  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fdetail%2Fdetail"} ***!
-  \*********************************************************************************************************/
->>>>>>> deyan
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9493,15 +9420,9 @@ createPage(_detail.default);
 /***/ }),
 
 /***/ 4:
-<<<<<<< HEAD
 /*!******************************************************************************!*\
   !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/pages.json ***!
   \******************************************************************************/
-=======
-/*!*************************************************************************!*\
-  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/pages.json ***!
-  \*************************************************************************/
->>>>>>> deyan
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9510,17 +9431,10 @@ createPage(_detail.default);
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 42:
 /*!**************************************************************************************************************!*\
   !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fsubmit%2Fsubmit"} ***!
   \**************************************************************************************************************/
-=======
-/***/ 40:
-/*!*********************************************************************************************************!*\
-  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fsubmit%2Fsubmit"} ***!
-  \*********************************************************************************************************/
->>>>>>> deyan
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10326,17 +10240,10 @@ if (hadRuntime) {
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 53:
 /*!******************************************************************************************************************!*\
   !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fchatpage%2Fchatpage"} ***!
   \******************************************************************************************************************/
-=======
-/***/ 51:
-/*!*************************************************************************************************************!*\
-  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fchatpage%2Fchatpage"} ***!
-  \*************************************************************************************************************/
->>>>>>> deyan
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10350,17 +10257,10 @@ createPage(_chatpage.default);
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 63:
 /*!**********************************************************************************************************************!*\
   !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Ffollowlist%2Ffollowlist"} ***!
   \**********************************************************************************************************************/
-=======
-/***/ 61:
-/*!*****************************************************************************************************************!*\
-  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Ffollowlist%2Ffollowlist"} ***!
-  \*****************************************************************************************************************/
->>>>>>> deyan
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10374,17 +10274,10 @@ createPage(_followlist.default);
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 71:
 /*!****************************************************************************************************************!*\
   !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fprofile%2Fprofile"} ***!
   \****************************************************************************************************************/
-=======
-/***/ 69:
-/*!***********************************************************************************************************!*\
-  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fprofile%2Fprofile"} ***!
-  \***********************************************************************************************************/
->>>>>>> deyan
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10398,17 +10291,10 @@ createPage(_profile.default);
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 79:
 /*!**************************************************************************************************************************!*\
   !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fpersonpublic%2Fpersonpublic"} ***!
   \**************************************************************************************************************************/
-=======
-/***/ 77:
-/*!*********************************************************************************************************************!*\
-  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fpersonpublic%2Fpersonpublic"} ***!
-  \*********************************************************************************************************************/
->>>>>>> deyan
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10422,17 +10308,10 @@ createPage(_personpublic.default);
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 87:
 /*!**************************************************************************************************************!*\
   !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fsearch%2Fsearch"} ***!
   \**************************************************************************************************************/
-=======
-/***/ 85:
-/*!*********************************************************************************************************!*\
-  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fsearch%2Fsearch"} ***!
-  \*********************************************************************************************************/
->>>>>>> deyan
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10446,17 +10325,10 @@ createPage(_search.default);
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 95:
 /*!******************************************************************************************************************!*\
   !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Ffanslist%2Ffanslist"} ***!
   \******************************************************************************************************************/
-=======
-/***/ 93:
-/*!*************************************************************************************************************!*\
-  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Ffanslist%2Ffanslist"} ***!
-  \*************************************************************************************************************/
->>>>>>> deyan
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 

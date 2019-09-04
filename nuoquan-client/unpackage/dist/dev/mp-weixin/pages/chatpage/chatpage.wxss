@@ -214,11 +214,7 @@ page{
 	 * TODO： 滚动区域高度需固定
 	 * 					by Jerrio
 	 */
-<<<<<<< HEAD
 .messageArea.data-v-13bf3097 {
-=======
-.messageArea.data-v-cd242d9a {
->>>>>>> deyan
 		display: -webkit-box;
 		display: -webkit-flex;
 		display: -ms-flexbox;
@@ -231,11 +227,7 @@ page{
 		margin-left: 3%;
 		width: 94%;
 }
-<<<<<<< HEAD
 .bottomBar.data-v-13bf3097 {
-=======
-.bottomBar.data-v-cd242d9a {
->>>>>>> deyan
 		position: fixed;
 		display: -webkit-box;
 		display: -webkit-flex;
@@ -254,11 +246,7 @@ page{
 		        box-shadow: 0px -2px 2px 0px rgba(130, 130, 130, 0.20);
 		background: #FFFFFF;
 }
-<<<<<<< HEAD
 .bottomBar textarea.data-v-13bf3097 {
-=======
-.bottomBar textarea.data-v-cd242d9a {
->>>>>>> deyan
 		display: inline-block;
 		width: 530rpx;
 		padding:0 4rpx;
@@ -268,11 +256,7 @@ page{
 		border: solid 1px #C6C6C6;
 		margin: 20rpx 0 20rpx 14rpx;
 }
-<<<<<<< HEAD
 .icons.data-v-13bf3097 {
-=======
-.icons.data-v-cd242d9a {
->>>>>>> deyan
 		display: -webkit-inline-box;
 		display: -webkit-inline-flex;
 		display: -ms-inline-flexbox;
@@ -289,31 +273,19 @@ page{
 		    -ms-flex-align: center;
 		        align-items: center;
 }
-<<<<<<< HEAD
 .icons image.data-v-13bf3097 {
-=======
-.icons image.data-v-cd242d9a {
->>>>>>> deyan
 		display: block;
 		width: 34rpx;
 		height: 34rpx;
 		vertical-align: middle;
 }
-<<<<<<< HEAD
 .icons button.button-hover.data-v-13bf3097{
-=======
-.icons button.button-hover.data-v-cd242d9a{
->>>>>>> deyan
 	position: relative;
   top: 3rpx;
   -webkit-box-shadow:0px 0px 8px #999 inset;
           box-shadow:0px 0px 8px #999 inset;
 }
-<<<<<<< HEAD
 button.data-v-13bf3097{
-=======
-button.data-v-cd242d9a{
->>>>>>> deyan
 	display: inline-block;
 	margin: 0;
 	padding: 0;
@@ -322,11 +294,7 @@ button.data-v-cd242d9a{
 	vertical-align: middle;
 	background: #FFFFFF;
 }
-<<<<<<< HEAD
 button.data-v-13bf3097::after{
-=======
-button.data-v-cd242d9a::after{
->>>>>>> deyan
 	border:none;
 }
 

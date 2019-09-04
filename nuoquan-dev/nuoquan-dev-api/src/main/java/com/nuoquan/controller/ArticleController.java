@@ -203,11 +203,9 @@ public class ArticleController extends BasicController {
 	
 			String newFileName = order + "." + strList[strList.length-1];	// 把顺序 order.原后缀 作为文件名
 			// 保存到数据库中的相对路径
-<<<<<<< HEAD
+
 			String uploadPathDB = "/" + userId + "/article" + "/" + articleId + "/" + newFileName;
-=======
-			String uploadPathDB = "/" + userId + "/article" + "/" + articleId + "/" + fileName;
->>>>>>> deyan
+
 			// 文件上传的最终保存路径
 			String finalVideoPath = "";
 			
