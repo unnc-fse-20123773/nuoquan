@@ -10,11 +10,16 @@ var isNull = function(str) { // 数字0会被判定为true
 	return false;
 }
 
+var sMyMsg = uni.getStorageSync('myMsgCount'); // 其实返回 null 会被当成 0
+var sLikeMsg = uni.getStorageSync('likeMsgCount');
+var sCommentMsg = uni.getStorageSync('commentMsgCount');
 const store = new Vuex.Store({
 	state: {
 		chatMessageCard: '', // 暂存一条socket接收的聊天消息 & 刷新消息列表的条件
 		flashChatPage: "doFlash", // 作为触发 chatPage 刷新的条件
-		myMsgCount: uni.getStorageSync('myMsgCount'), // 左侧栏通用未读消息计数
+		myMsgCount: sMyMsg==null? 0 : sMyMsg, // 左侧栏通用未读消息计数
+		likeMsgCount: sLikeMsg==null? 0 : sLikeMsg, // 点赞未读消息计数
+		commentMsgCount: sCommentMsg==null? 0 : sCommentMsg, // 评论未读消息计数
 	},
 	mutations: {
 		setChatMessageCard(state, value) {
@@ -37,6 +42,26 @@ const store = new Vuex.Store({
 				// console.log("获取到value值，当前myMsgCount=" + state.myMsgCount);
 			}
 		},
+		
+		setLikeMsgCount(state, value){
+			if (value == undefined) {
+				state.likeMsgCount++;
+				uni.setStorageSync('likeMsgCount', state.likeMsgCount);
+			} else {
+				state.likeMsgCount = value;
+				uni.setStorageSync('likeMsgCount', state.likeMsgCount);
+			}
+		},
+		
+		setCommentMsgCount(state, value){
+			if (value == undefined) {
+				state.commentMsgCount++;
+				uni.setStorageSync('commentMsgCount', state.commentMsgCount);
+			} else {
+				state.commentMsgCount = value;
+				uni.setStorageSync('commentMsgCount', state.commentMsgCount);
+			}
+		}
 	},
 
 })

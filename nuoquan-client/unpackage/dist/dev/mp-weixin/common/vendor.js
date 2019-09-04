@@ -25,7 +25,7 @@ _vue.default.config.productionTip = false;
 
 _vue.default.prototype.$store = _store.default;
 _vue.default.prototype.$serverUrl = "http://127.0.0.1:8080";
-_vue.default.prototype.$wsServerUrl = "ws://localhost:8088/ws";
+_vue.default.prototype.$wsServerUrl = "ws://127.0.0.1:8088/ws";
 
 // Vue.prototype.$serverUrl = "http://192.168.31.210:8080"
 // Vue.prototype.$wsServerUrl = "ws://192.168.31.210:8088/ws"
@@ -69,17 +69,76 @@ _vue.default.prototype.setIntoList = function (obj, listName) {
     // 不为空
     list = JSON.parse(listStr);
   }
-  // 插入对象d到尾部
+  // 插入对象到尾部
   list.push(obj);
   uni.setStorageSync(listName, JSON.stringify(list));
 };
-
 /**
-    * 把该用户信息添加到本地缓存的 userlist 中
+    * 把对象添加到列表头部，并储存在缓存里
+    * @param {Object} obj
+    * @param {Object} listName
+    */
+_vue.default.prototype.addIntoList = function (obj, listName) {
+  var listStr = uni.getStorageSync(listName);
+  // 从本地缓存获取列表名是否存在
+  var list;
+  if (app.isNull(listStr)) {
+    // 为空，赋一个空的list；
+    list = [];
+  } else {
+    // 不为空
+    list = JSON.parse(listStr);
+  }
+  // 插入对象到头部
+  list.unshift(obj);
+  uni.setStorageSync(listName, JSON.stringify(list));
+};
+/**
+    * 从缓存中按名字获取改名列表
+    * @param {Object} listName
+    */
+_vue.default.prototype.getListByKey = function (listName) {
+  var listStr = uni.getStorageSync(listName);
+  var list;
+  if (app.isNull(listStr)) {
+    // 为空，赋一个空的list；
+    list = [];
+  } else {
+    // 不为空
+    list = JSON.parse(listStr);
+  }
+
+  return list;
+};
+
+
+
+
+/** TODO: 可使用 Map 代替 List 提升查询性能（暂时不知道 map 在 uniapp 中怎么写）
+    *	 															by Jerrio
+    * 把该用户信息添加到本地缓存的 userlist 中，如果存在则替换
     * @param {Object} userInfo
     */
 _vue.default.prototype.setUserInfoToUserList = function (userInfo) {
-  app.setIntoList(userInfo, "userList");
+  var userListStr = uni.getStorageSync("userList");
+  var userList;
+  if (app.isNull(userListStr)) {
+    // 为空，赋一个空的list；
+    userList = [];
+  } else {
+    // 不为空，查看该用户是否存在
+    var userList = JSON.parse(userListStr);
+    for (var i = 0; i < userList.length; i++) {
+      var user = userList[i];
+      if (user.id == userInfo.id) {
+        userList.splice(i, 1, userInfo); // 替换
+        return;
+      }
+    }
+  }
+  // 用户不存在
+  userList.push(userInfo);
+  uni.setStorageSync("userList", JSON.stringify(userList));
 };
 
 /**
@@ -99,10 +158,10 @@ _vue.default.prototype.getUserInfoFromUserList = function (userId) {
       var user = userList[i];
       if (user.id == userId) {
         return user;
-        break;
       }
     }
   }
+  return null;
 };
 
 /**
@@ -270,6 +329,37 @@ _vue.default.prototype.mySocket = {
       action == app.netty.COMMENTCOMMENT) {
 
         app.$store.commit('setMyMsgCount'); // 累加 msgCount in index.js
+
+        switch (action) {
+          case app.netty.LIKEARTICLE:
+            console.log("获取点赞文章");
+            // 存入缓存 (TODO：登陆时获取未签收点赞消息)
+            dataContent.data.createDate = app.formatTime(dataContent.data.createDate);
+            app.notification.saveLikeMsg(dataContent);
+            app.$store.commit('setLikeMsgCount');
+            break;
+          case app.netty.LIKECOMMENT:
+            console.log("获取点赞评论");
+            // 存入缓存
+            dataContent.data.createDate = app.formatTime(dataContent.data.createDate);
+            app.notification.saveLikeMsg(dataContent);
+            app.$store.commit('setLikeMsgCount');
+            break;
+          case app.netty.COMMENTARTICLE:
+            console.log("获取评论文章");
+            // 存入缓存
+            app.notification.saveCommentMsg(dataContent);
+            app.$store.commit('setCommentMsgCount');
+            break;
+          case app.netty.COMMENTCOMMENT:
+            console.log("获取评论评论");
+            // 存入缓存
+            app.notification.saveCommentMsg(dataContent);
+            app.$store.commit('setCommentMsgCount');
+            break;
+          default:
+            break;}
+
       }
     });
 
@@ -617,8 +707,38 @@ _vue.default.prototype.chat = {
         }
       } });
 
-  } };
+  }
 
+
+  /**
+     * 点赞评论通知
+     */ };
+_vue.default.prototype.notification = {
+  LIKEMSG_KEY: "likeMsg",
+  COMMENTMSG_KEY: "commentMsg",
+  /**
+                                 * 把点赞通知存入缓存
+                                 * @param {Object} dataContent
+                                 */
+  saveLikeMsg: function saveLikeMsg(dataContent) {
+    app.addIntoList(dataContent, this.LIKEMSG_KEY);
+  },
+
+  getLikeMsg: function getLikeMsg() {
+    return app.getListByKey(this.LIKEMSG_KEY);
+  },
+
+  /**
+      * 把评论通知存入缓存
+      * @param {Object} dataContent
+      */
+  saveCommentMsg: function saveCommentMsg(dataContent) {
+    app.addIntoList(dataContent, this.COMMENTMSG_KEY);
+  },
+
+  getCommentMsg: function getCommentMsg() {
+    return app.getListByKey(this.COMMENTMSG_KEY);
+  } };
 
 
 
@@ -662,7 +782,6 @@ _vue.default.prototype.netty = {
     this.data = data;
     this.extand = extand;
   }
-
 
 
   /**
@@ -998,11 +1117,16 @@ var isNull = function isNull(str) {// 数字0会被判定为true
   return false;
 };
 
+var sMyMsg = uni.getStorageSync('myMsgCount'); // 其实返回 null 会被当成 0
+var sLikeMsg = uni.getStorageSync('likeMsgCount');
+var sCommentMsg = uni.getStorageSync('commentMsgCount');
 var store = new _vuex.default.Store({
   state: {
     chatMessageCard: '', // 暂存一条socket接收的聊天消息 & 刷新消息列表的条件
     flashChatPage: "doFlash", // 作为触发 chatPage 刷新的条件
-    myMsgCount: uni.getStorageSync('myMsgCount') // 左侧栏通用未读消息计数
+    myMsgCount: sMyMsg == null ? 0 : sMyMsg, // 左侧栏通用未读消息计数
+    likeMsgCount: sLikeMsg == null ? 0 : sLikeMsg, // 点赞未读消息计数
+    commentMsgCount: sCommentMsg == null ? 0 : sCommentMsg // 评论未读消息计数
   },
   mutations: {
     setChatMessageCard: function setChatMessageCard(state, value) {
@@ -1023,6 +1147,26 @@ var store = new _vuex.default.Store({
         state.myMsgCount = value;
         uni.setStorageSync('myMsgCount', state.myMsgCount);
         // console.log("获取到value值，当前myMsgCount=" + state.myMsgCount);
+      }
+    },
+
+    setLikeMsgCount: function setLikeMsgCount(state, value) {
+      if (value == undefined) {
+        state.likeMsgCount++;
+        uni.setStorageSync('likeMsgCount', state.likeMsgCount);
+      } else {
+        state.likeMsgCount = value;
+        uni.setStorageSync('likeMsgCount', state.likeMsgCount);
+      }
+    },
+
+    setCommentMsgCount: function setCommentMsgCount(state, value) {
+      if (value == undefined) {
+        state.commentMsgCount++;
+        uni.setStorageSync('commentMsgCount', state.commentMsgCount);
+      } else {
+        state.commentMsgCount = value;
+        uni.setStorageSync('commentMsgCount', state.commentMsgCount);
       }
     } } });var _default =
 

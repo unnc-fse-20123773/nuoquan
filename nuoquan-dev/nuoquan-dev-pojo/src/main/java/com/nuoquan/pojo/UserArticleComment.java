@@ -25,8 +25,8 @@ public class UserArticleComment {
 
     private String comment;
 
-    @Column(name = "create_time")
-    private Date createTime;
+    @Column(name = "create_date")
+    private Date createDate;
 
     @Column(name = "like_num")
     private Integer likeNum;
@@ -128,15 +128,15 @@ public class UserArticleComment {
     /**
      * @return create_time
      */
-    public Date getCreateTime() {
-        return createTime;
+    public Date getCreateDate() {
+        return createDate;
     }
 
     /**
-     * @param createTime
+     * @param createDate
      */
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
     /**

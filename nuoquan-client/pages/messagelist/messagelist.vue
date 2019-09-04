@@ -7,24 +7,24 @@
 		</view>
 		<!-- 点赞和评论数量 -->
 		<view id="msglist-likecommentnum">
-			<view class="msglist-like column_center" @tap="goToCmtLikeDetail()">
+			<view class="msglist-like column_center" @tap="goToCmtLikeDetail(0)">
 				<view class="msglist-like-bg super_center">
 					<image src="../../static/icon/like.png" class="msglist-like-icon" mode=""></image>
 				</view>
 				<text class="msglist-like-text font-family">点赞</text>
-				<view class="msglist-like-num super_center">
-					121
+				<view class="msglist-like-num super_center" v-if="uLikeMsgCount>0">
+					{{uLikeMsgCount}}
 				</view>
 			</view>
 			<view class="msglist-likecommentnum-border">
 			</view>
-			<view class="msglist-comment column_center">
+			<view class="msglist-comment column_center" @tap="goToCmtLikeDetail(1)">
 				<view class="msglist-comment-bg super_center">
 					<image src="../../static/icon/comment.png" class="msglist-comment-icon" mode=""></image>
 				</view>
 				<text class="msglist-comment-text font-family">评论</text>
-				<view class="msglist-comment-num super_center">
-					12
+				<view class="msglist-comment-num super_center" v-if="uCommentMsgCount>0">
+					{{uCommentMsgCount}}
 				</view>
 			</view>
 			<!-- 消息内容滑块区 -->
@@ -147,7 +147,6 @@
 						msg: "1",
 						myId: "test-id123",
 					},
-
 					{
 						createDate: "2019/08/22 03:35:02",
 						friendId: "1",
@@ -166,12 +165,17 @@
 
 				READ: this.chat.READ,
 				UNREAD: this.chat.UNREAD,
+				
+				uLikeMsgCount: uni.getStorageSync('likeMsgCount'),
+				uCommentMsgCount: uni.getStorageSync('commentMsgCount'),
 			}
 		},
 
 		computed: {
 			...mapState([
 				'chatMessageCard',
+				'likeMsgCount',
+				'commentMsgCount',
 			])
 		},
 
@@ -180,7 +184,16 @@
 				this.loadingChatSnapshot();
 				console.log("newVal:");
 				console.log(newVal);
-			}
+			},
+			
+			likeMsgCount(newVal, oldVal){
+				this.uLikeMsgCount = newVal;
+			},
+			
+			commentMsgCount(newVal, oldVal){
+				this.uCommentMsgCount = newVal;
+			},
+			
 		},
 
 		onLoad: function() {
@@ -195,7 +208,7 @@
 			}
 
 			// [测试代码块]
-			// this.mySocket.init();
+			this.mySocket.init();
 		},
 
 		onShow() {
@@ -284,9 +297,12 @@
 				});
 			},
 			
-			goToCmtLikeDetail(){
+			/**
+			 * @param {Object} currentTab 0: 点赞 1: 评论
+			 */
+			goToCmtLikeDetail(currentTab){
 				uni.navigateTo({
-					url: '../cmt-likedetail/cmt-likedetail'
+					url: '../cmt-likedetail/cmt-likedetail?currentTab=' + JSON.stringify(currentTab),
 				})
 			}
 

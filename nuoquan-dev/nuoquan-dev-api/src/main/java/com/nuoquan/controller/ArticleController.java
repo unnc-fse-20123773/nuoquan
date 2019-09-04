@@ -18,9 +18,9 @@ import com.nuoquan.netty.MsgHandler;
 import com.nuoquan.pojo.Article;
 import com.nuoquan.pojo.ArticleImage;
 import com.nuoquan.pojo.UserArticleComment;
+import com.nuoquan.pojo.netty.CommentCard;
 import com.nuoquan.pojo.netty.DataContent;
 import com.nuoquan.pojo.vo.ArticleVO;
-import com.nuoquan.pojo.vo.CommentCard;
 import com.nuoquan.pojo.vo.UserArticleCommentVO;
 import com.nuoquan.service.ArticleService;
 import com.nuoquan.utils.JSONResult;
@@ -163,7 +163,7 @@ public class ArticleController extends BasicController {
 			return JSONResult.errorMsg("Id can't be null");
 		}
 
-		// 保存视频信息到数据库
+		// 保存文章信息到数据库
 		Article article = new Article();
 		article.setArticleTitle(articleTitle);
 		article.setArticleContent(articleContent);
