@@ -1,8 +1,9 @@
 package com.nuoquan.pojo.vo;
 
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.Column;
+import com.nuoquan.pojo.ArticleImage;
 
 public class ArticleVO {
     private String id;
@@ -17,22 +18,15 @@ public class ArticleVO {
     private Byte status;
     private Date createDate;
     private Byte isAnonymous;
-    private String articlePath;
     private Integer viewNum;
+    
+    private List<ArticleImage> imgList; // 文章图片列表
     
     private String nickname;
     private String faceImg;
     private String faceImgThumb;
     
-    
-    
-    public String getArticlePath() {
-		return articlePath;
-	}
-
-	public void setArticlePath(String articlePath) {
-		this.articlePath = articlePath;
-	}
+ 
     
     /**
      * @return id
@@ -240,5 +234,13 @@ public class ArticleVO {
 
 	public void setViewNum(Integer viewNum) {
 		this.viewNum = viewNum;
+	}
+
+	public List<ArticleImage> getImgList() {
+		return imgList;
+	}
+
+	public void setImgList(List<ArticleImage> imgList) {
+		this.imgList = imgList;
 	}
 }

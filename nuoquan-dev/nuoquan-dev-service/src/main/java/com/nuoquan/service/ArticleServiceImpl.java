@@ -72,11 +72,15 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public PagedResult getAllArticles(Integer page, Integer pageSize) {
 
-		// 从controller中获取page和pageSize
+		// 从controller中获取page和pageSize (经实验，PageHelper 只拦截下一次查询)
 		PageHelper.startPage(page, pageSize);
 
 		List<ArticleVO> list = articleMapperCustom.queryAllArticles();
-
+		// 为每个文章添加图片列表
+		for (ArticleVO a : list) {
+			a.setImgList(articleImageMapper.getArticleImgs(a.getId()));
+		}
+		
 		PageInfo<ArticleVO> pageList = new PageInfo<>(list);
 
 		PagedResult pagedResult = new PagedResult();

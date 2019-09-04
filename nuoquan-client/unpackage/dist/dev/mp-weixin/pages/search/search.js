@@ -144,6 +144,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   name: 'aticlebrief',
@@ -152,11 +178,32 @@ var _default =
 
   data: function data() {
     return {
-      // atags: JSON.(this.articleCard.tags);
-    };
+      taglist: [
+      ['123', 'background:#40A792'],
+      ['13', 'background:#621E81'],
+      ['163', 'background:#738598'],
+      ['标签', 'background:#F3AE4B'],
+      ['13', 'background:#621E81'],
+      ['163', 'background:#738598'],
+      ['123', 'background:#40A792'],
+      ['13', 'background:#621E81']],
+
+
+      serverUrl: this.$serverUrl,
+      singleImgState: '0',
+
+      imgList: [] };
+
   },
   created: function created() {
-    // console.log(JSON.stringify(this.articleCard.tags));
+    if (this.articleCard.imgList.length > 3) {
+      // 只取前三
+      for (var i = 0; i < 3; i++) {
+        this.imgList.push(this.articleCard.imgList[i]);
+      }
+    } else {
+      this.imgList = this.articleCard.imgList;
+    }
     // console.log(this.articleCard);
   },
   filters: {
@@ -186,6 +233,17 @@ var _default =
     } },
 
   methods: {
+    singleImgeFit: function singleImgeFit(e) {
+      var height = e.detail.height;
+      var width = e.detail.width;
+      if (height >= width) {
+        this.singleImgState = 0;
+      } else {
+        this.singleImgState = 1;
+      }
+      console.log(e.detail);
+    },
+
     jumpToDetail: function jumpToDetail() {
       var navData = JSON.stringify(this.articleCard); // 这里转换成 字符串
       uni.navigateTo({

@@ -68,10 +68,7 @@ public class MsgHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> 
 			UserService userService = (UserService)SpringUtil.getBean("userServiceImpl");
 			String msgId = userService.saveMsg(chatMessage); // 保存后获取返回的 msgId
 			chatMessage.setMsgId(msgId);
-			
-//			DataContent dataContentBcak = new DataContent();
-//			dataContentBcak.setChatMessage(chatMessage);
-//			dataContentBcak.setAction(MsgActionEnum.CHAT.type);
+			dataContent.setData(chatMessage);
 			// 发送消息给对方
 			sendMsgTo(receiverId, dataContent);
 

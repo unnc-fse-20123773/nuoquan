@@ -43,9 +43,6 @@ public class Article {
     @Column(name = "is_anonymous")
     private Byte isAnonymous;
 
-    @Column(name = "article_path")
-    private String articlePath;
-
     /**
      * 浏览量
      */
@@ -226,20 +223,6 @@ public class Article {
      */
     public void setIsAnonymous(Byte isAnonymous) {
         this.isAnonymous = isAnonymous;
-    }
-
-    /**
-     * @return article_path
-     */
-    public String getArticlePath() {
-        return articlePath;
-    }
-
-    /**
-     * @param articlePath
-     */
-    public void setArticlePath(String articlePath) {
-        this.articlePath = articlePath;
     }
 
     /**

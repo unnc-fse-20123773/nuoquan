@@ -2,12 +2,38 @@
 	<view class="articlecard" id="'+articleCard.id+'" @click="jumpToDetail()">
 		<view class="title">{{ articleCard.articleTitle }}</view>
 		<view class="briefarticleCard">{{ articleCard.articleContent }}</view>
-		<view class="picturearea">
-			<!-- 这里是文章配图的位置
- -->
+		<view :class="[articleCard.imgList.length == 1 ? 'picturearea-one' : 'picturearea-mul']">
+			<!-- *******这里是文章配图的位置*******-->
+
+			<!-- 下面两个 view 分别为蒙版背景层和数字层，都是由 margin-left = 67.5% 精准推至第三张图位置上的 -->
+			<view v-if="articleCard.imgList.length > 3" style="margin-left: 67.5%;position: absolute;width: 30%;height: 200upx;" class="super_center">
+				<view style="color: white;font-weight: 600;font-size: 24px;z-index: 20;">
+				+{{articleCard.imgList.length-3}}
+				</view>
+			</view>
+			<view v-if="articleCard.imgList.length > 3" style="position: absolute;width: 30%;height: 200upx;background-color: #000000;opacity: 0.5;margin-left: 67.5%;z-index: 10;"></view>
+			
+			<!-- 宽高和 image 保持一致 -->
+			<!-- 单图显示 -->
+			<view style="width: 100%;max-height: 400upx;" v-if="articleCard.imgList.length == 1">
+				<!-- 高 ＞ 宽 -->
+				<view v-if="singleImgState == 0" style="width: 360upx;">
+					<image mode="aspectFit" style="height: 360upx;" :src="serverUrl + articleCard.imgList[0].imagePath" @load="singleImgeFit"></image>
+				</view>
+				<!-- 宽 > 高 -->
+				<view v-else style="max-height: 400upx;display: flex;">
+					<image mode="aspectFit" style="width: 90%;" :src="serverUrl + articleCard.imgList[0].imagePath" @load="singleImgeFit"></image>
+				</view>
+			</view>
+			<!-- 多图显示 -->
+			
+			<view style="width:30%;height: 200upx;margin-left: 2.5%;display: flex;background-color: #D1D1D1;" v-else v-for="(item,index) in imgList" :key="index">
+				<image mode="aspectFit" :src="serverUrl + item.imagePath"></image>				
+			</view>
+			
 		</view>
 		<view class="tags">
-			<view class="tag" v-for="(i, index) in articleCard.tags" v-bind:key="index">{{ i}}</view>
+			<view class="tag" v-for="(i, index) in articleCard.tags" v-bind:key="index">{{i}}</view>
 		</view>
 		<view class="menubar">
 			<image :src="articleCard.faceImg" class="touxiang"></image>
@@ -33,11 +59,32 @@
 		},
 		data() {
 			return {
-				// atags: JSON.(this.articleCard.tags);
+				taglist: [
+					['123', 'background:#40A792'],
+					['13', 'background:#621E81'],
+					['163', 'background:#738598'],
+					['标签', 'background:#F3AE4B'],
+					['13', 'background:#621E81'],
+					['163', 'background:#738598'],
+					['123', 'background:#40A792'],
+					['13', 'background:#621E81']
+				],
+				
+				serverUrl: this.$serverUrl,
+				singleImgState: '0',
+				
+				imgList: [],
 			};
 		},
 		created() {
-			// console.log(JSON.stringify(this.articleCard.tags));
+			if(this.articleCard.imgList.length > 3){
+				// 只取前三
+				for (var i=0; i < 3; i++){
+					this.imgList.push(this.articleCard.imgList[i]);
+				}
+			}else{
+				this.imgList = this.articleCard.imgList;
+			}
 			// console.log(this.articleCard);
 		},
 		filters: {
@@ -67,6 +114,17 @@
 			}
 		},
 		methods: {
+			singleImgeFit(e){
+				var height = e.detail.height;
+				var width = e.detail.width;
+				if(height >= width){
+					this.singleImgState = 0;
+				}else{
+					this.singleImgState = 1;
+				}
+				console.log(e.detail);
+			},
+			
 			jumpToDetail() {
 				var navData = JSON.stringify(this.articleCard); // 这里转换成 字符串
 				uni.navigateTo({
@@ -155,7 +213,6 @@
 		background-image: url(../static/BG/iconsBG.png);
 		overflow: hidden;
 		border-bottom-right-radius: 8px;
-		border: 10px #621E81;
 	}
 	.icons image {
 		position: relative;
@@ -172,13 +229,24 @@
 		text-align: center;
 		vertical-align: middle;
 	}
-	.picturearea {
+	.picturearea-one {
 		margin: auto;
 		display: flex;
-		justify-content: center;
+		width: 94%;
+		margin-left: 3%;
 	}
+	
+	.picturearea-mul {
+		position: relative;
+		margin: auto;
+		display: flex;
+		/* 在此设置图片区域宽度 */
+		width: 94%;
+		margin-left: 3%;
+	}
+	
 	image {
-		width: 30%;
+		width: 100%;
 		height: 200upx;
 		margin: auto;
 	}

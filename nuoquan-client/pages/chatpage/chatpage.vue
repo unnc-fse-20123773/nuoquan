@@ -9,7 +9,7 @@
 			<view class="icons">
 				<button><image src="../../static/icon/viewLocalPic.png"></image></button>
 				<button><image src="../../static/icon/emoji.png"></image></button>
-				<button><image src="../../static/icon/littlePlane.png" @click="sendText(textMsg)"></image></button>
+				<button @click="sendText(textMsg)"><image src="../../static/icon/littlePlane.png"></image></button>
 
 			</view>
 		</view>
@@ -173,8 +173,8 @@
 				// this.chatContent.push(message);
 				
 				// 直接重新加载聊天历史, 代替渲染到窗口
-				// this.getChatHistory();
-				// this.scrollToBottom();
+				this.getChatHistory();
+				this.scrollToBottom();
 				
 			},
 			

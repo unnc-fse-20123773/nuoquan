@@ -55,4 +55,5 @@ public interface ArticleMapperCustom extends MyMapper<Article> {
 	 * @return
 	 */
 	public ArticleVO getArticleById(String articleId);
+	
 }
