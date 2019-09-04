@@ -301,6 +301,13 @@
 			 * @param {Object} currentTab 0: 点赞 1: 评论
 			 */
 			goToCmtLikeDetail(currentTab){
+				// 计数值归零
+				if(currentTab==0){
+					this.$store.commit('setLikeMsgCount', 0);
+				}else{
+					this.$store.commit('setCommentMsgCount', 0);
+				}
+				
 				uni.navigateTo({
 					url: '../cmt-likedetail/cmt-likedetail?currentTab=' + JSON.stringify(currentTab),
 				})
