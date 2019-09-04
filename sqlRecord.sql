@@ -1,7 +1,7 @@
 -- +++++++++++++++++++++
 -- +  Database update  +
 -- +++++++++++++++++++++
--- v19.9.- @author: Jerrio
+-- v19.9.4 @author: Jerrio
 -- 为用户点赞评论表 添加索引
 -- ！以后创建日期一律用 create_date
 ALTER TABLE `nuoquan`.`user_like_comment` 

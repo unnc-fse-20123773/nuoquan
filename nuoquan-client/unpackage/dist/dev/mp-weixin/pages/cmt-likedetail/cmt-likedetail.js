@@ -401,8 +401,18 @@ var _default = {
                 this.currentTab == current)) {_context.next = 4;break;}return _context.abrupt("return",
                 false);case 4:
 
+                if (current == 0) {
+                  // console.log("点了点赞"); 刷新 list 并设置计数值
+                  this.likeList = this.notification.getLikeMsg();
+                  this.$store.commit('setLikeMsgCount', 0);
+                } else {
+                  // console.log("点了评论");
+                  this.commentList = this.notification.getCommentMsg();
+                  this.$store.commit('setCommentMsgCount', 0);
+                }
+
                 this.currentTab = current;
-                this.setScrollLeft(current);case 6:case "end":return _context.stop();}}}, _callee, this);}));function swichMenu(_x) {return _swichMenu.apply(this, arguments);}return swichMenu;}(),
+                this.setScrollLeft(current);case 7:case "end":return _context.stop();}}}, _callee, this);}));function swichMenu(_x) {return _swichMenu.apply(this, arguments);}return swichMenu;}(),
 
 
     swiperChange: function () {var _swiperChange = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(e) {var index;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:

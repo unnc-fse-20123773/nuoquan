@@ -294,6 +294,16 @@
 				if (this.currentTab == current) {
 					return false;
 				} else {
+					if(current==0){
+						// console.log("点了点赞"); 刷新 list 并设置计数值
+						this.likeList = this.notification.getLikeMsg();
+						this.$store.commit('setLikeMsgCount', 0);
+					}else{
+						// console.log("点了评论");
+						this.commentList = this.notification.getCommentMsg();
+						this.$store.commit('setCommentMsgCount', 0);
+					}
+					
 					this.currentTab = current;
 					this.setScrollLeft(current);
 				}
