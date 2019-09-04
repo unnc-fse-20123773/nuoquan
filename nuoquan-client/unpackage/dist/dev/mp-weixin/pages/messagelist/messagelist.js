@@ -254,7 +254,6 @@ var socketOpen = false;var _default =
         msg: "1",
         myId: "test-id123" },
 
-
       {
         createDate: "2019/08/22 03:35:02",
         friendId: "1",
@@ -272,13 +271,18 @@ var socketOpen = false;var _default =
 
 
       READ: this.chat.READ,
-      UNREAD: this.chat.UNREAD };
+      UNREAD: this.chat.UNREAD,
+
+      uLikeMsgCount: uni.getStorageSync('likeMsgCount'),
+      uCommentMsgCount: uni.getStorageSync('commentMsgCount') };
 
   },
 
   computed: _objectSpread({},
   (0, _vuex.mapState)([
-  'chatMessageCard'])),
+  'chatMessageCard',
+  'likeMsgCount',
+  'commentMsgCount'])),
 
 
 
@@ -287,7 +291,16 @@ var socketOpen = false;var _default =
       this.loadingChatSnapshot();
       console.log("newVal:");
       console.log(newVal);
+    },
+
+    likeMsgCount: function likeMsgCount(newVal, oldVal) {
+      this.uLikeMsgCount = newVal;
+    },
+
+    commentMsgCount: function commentMsgCount(newVal, oldVal) {
+      this.uCommentMsgCount = newVal;
     } },
+
 
 
   onLoad: function onLoad() {

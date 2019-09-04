@@ -69,11 +69,30 @@ _vue.default.prototype.setIntoList = function (obj, listName) {
     // 不为空
     list = JSON.parse(listStr);
   }
-  // 插入对象d到尾部
+  // 插入对象到尾部
   list.push(obj);
   uni.setStorageSync(listName, JSON.stringify(list));
 };
-
+/**
+    * 把对象添加到列表头部，并储存在缓存里
+    * @param {Object} obj
+    * @param {Object} listName
+    */
+_vue.default.prototype.addIntoList = function (obj, listName) {
+  var listStr = uni.getStorageSync(listName);
+  // 从本地缓存获取列表名是否存在
+  var list;
+  if (app.isNull(listStr)) {
+    // 为空，赋一个空的list；
+    list = [];
+  } else {
+    // 不为空
+    list = JSON.parse(listStr);
+  }
+  // 插入对象到头部
+  list.unshift(obj);
+  uni.setStorageSync(listName, JSON.stringify(list));
+};
 /**
     * 从缓存中按名字获取改名列表
     * @param {Object} listName
@@ -315,22 +334,28 @@ _vue.default.prototype.mySocket = {
           case app.netty.LIKEARTICLE:
             console.log("获取点赞文章");
             // 存入缓存 (TODO：登陆时获取未签收点赞消息)
+            dataContent.data.createDate = app.formatTime(dataContent.data.createDate);
             app.notification.saveLikeMsg(dataContent);
+            app.$store.commit('setLikeMsgCount');
             break;
           case app.netty.LIKECOMMENT:
             console.log("获取点赞评论");
             // 存入缓存
+            dataContent.data.createDate = app.formatTime(dataContent.data.createDate);
             app.notification.saveLikeMsg(dataContent);
+            app.$store.commit('setLikeMsgCount');
             break;
           case app.netty.COMMENTARTICLE:
             console.log("获取评论文章");
             // 存入缓存
             app.notification.saveCommentMsg(dataContent);
+            app.$store.commit('setCommentMsgCount');
             break;
           case app.netty.COMMENTCOMMENT:
             console.log("获取评论评论");
             // 存入缓存
             app.notification.saveCommentMsg(dataContent);
+            app.$store.commit('setCommentMsgCount');
             break;
           default:
             break;}
@@ -696,7 +721,7 @@ _vue.default.prototype.notification = {
                                  * @param {Object} dataContent
                                  */
   saveLikeMsg: function saveLikeMsg(dataContent) {
-    app.setIntoList(dataContent, this.LIKEMSG_KEY);
+    app.addIntoList(dataContent, this.LIKEMSG_KEY);
   },
 
   getLikeMsg: function getLikeMsg() {
@@ -708,7 +733,7 @@ _vue.default.prototype.notification = {
       * @param {Object} dataContent
       */
   saveCommentMsg: function saveCommentMsg(dataContent) {
-    app.setIntoList(dataContent, this.COMMENTMSG_KEY);
+    app.addIntoList(dataContent, this.COMMENTMSG_KEY);
   },
 
   getCommentMsg: function getCommentMsg() {
@@ -2408,11 +2433,16 @@ var isNull = function isNull(str) {// 数字0会被判定为true
   return false;
 };
 
+var sMyMsg = uni.getStorageSync('myMsgCount'); // 其实返回 null 会被当成 0
+var sLikeMsg = uni.getStorageSync('likeMsgCount');
+var sCommentMsg = uni.getStorageSync('commentMsgCount');
 var store = new _vuex.default.Store({
   state: {
     chatMessageCard: '', // 暂存一条socket接收的聊天消息 & 刷新消息列表的条件
     flashChatPage: "doFlash", // 作为触发 chatPage 刷新的条件
-    myMsgCount: uni.getStorageSync('myMsgCount') // 左侧栏通用未读消息计数
+    myMsgCount: sMyMsg == null ? 0 : sMyMsg, // 左侧栏通用未读消息计数
+    likeMsgCount: sLikeMsg == null ? 0 : sLikeMsg, // 点赞未读消息计数
+    commentMsgCount: sCommentMsg == null ? 0 : sCommentMsg // 评论未读消息计数
   },
   mutations: {
     setChatMessageCard: function setChatMessageCard(state, value) {
@@ -2433,6 +2463,26 @@ var store = new _vuex.default.Store({
         state.myMsgCount = value;
         uni.setStorageSync('myMsgCount', state.myMsgCount);
         // console.log("获取到value值，当前myMsgCount=" + state.myMsgCount);
+      }
+    },
+
+    setLikeMsgCount: function setLikeMsgCount(state, value) {
+      if (value == undefined) {
+        state.likeMsgCount++;
+        uni.setStorageSync('likeMsgCount', state.likeMsgCount);
+      } else {
+        state.likeMsgCount = value;
+        uni.setStorageSync('likeMsgCount', state.likeMsgCount);
+      }
+    },
+
+    setCommentMsgCount: function setCommentMsgCount(state, value) {
+      if (value == undefined) {
+        state.commentMsgCount++;
+        uni.setStorageSync('commentMsgCount', state.commentMsgCount);
+      } else {
+        state.commentMsgCount = value;
+        uni.setStorageSync('commentMsgCount', state.commentMsgCount);
       }
     } } });var _default =
 

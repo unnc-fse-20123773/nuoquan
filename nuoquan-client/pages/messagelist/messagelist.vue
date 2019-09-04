@@ -12,8 +12,8 @@
 					<image src="../../static/icon/like.png" class="msglist-like-icon" mode=""></image>
 				</view>
 				<text class="msglist-like-text font-family">点赞</text>
-				<view class="msglist-like-num super_center">
-					121
+				<view class="msglist-like-num super_center" v-if="uLikeMsgCount>0">
+					{{uLikeMsgCount}}
 				</view>
 			</view>
 			<view class="msglist-likecommentnum-border">
@@ -23,8 +23,8 @@
 					<image src="../../static/icon/comment.png" class="msglist-comment-icon" mode=""></image>
 				</view>
 				<text class="msglist-comment-text font-family">评论</text>
-				<view class="msglist-comment-num super_center">
-					12
+				<view class="msglist-comment-num super_center" v-if="uCommentMsgCount>0">
+					{{uCommentMsgCount}}
 				</view>
 			</view>
 			<!-- 消息内容滑块区 -->
@@ -147,7 +147,6 @@
 						msg: "1",
 						myId: "test-id123",
 					},
-
 					{
 						createDate: "2019/08/22 03:35:02",
 						friendId: "1",
@@ -166,12 +165,17 @@
 
 				READ: this.chat.READ,
 				UNREAD: this.chat.UNREAD,
+				
+				uLikeMsgCount: uni.getStorageSync('likeMsgCount'),
+				uCommentMsgCount: uni.getStorageSync('commentMsgCount'),
 			}
 		},
 
 		computed: {
 			...mapState([
 				'chatMessageCard',
+				'likeMsgCount',
+				'commentMsgCount',
 			])
 		},
 
@@ -180,7 +184,16 @@
 				this.loadingChatSnapshot();
 				console.log("newVal:");
 				console.log(newVal);
-			}
+			},
+			
+			likeMsgCount(newVal, oldVal){
+				this.uLikeMsgCount = newVal;
+			},
+			
+			commentMsgCount(newVal, oldVal){
+				this.uCommentMsgCount = newVal;
+			},
+			
 		},
 
 		onLoad: function() {

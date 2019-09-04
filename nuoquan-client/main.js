@@ -58,11 +58,30 @@ Vue.prototype.setIntoList = function(obj, listName) {
 		// 不为空
 		list = JSON.parse(listStr);
 	}
-	// 插入对象d到尾部
+	// 插入对象到尾部
 	list.push(obj);
 	uni.setStorageSync(listName, JSON.stringify(list));
 }
-
+/**
+ * 把对象添加到列表头部，并储存在缓存里
+ * @param {Object} obj
+ * @param {Object} listName
+ */
+Vue.prototype.addIntoList = function(obj, listName) {
+	var listStr = uni.getStorageSync(listName)
+	// 从本地缓存获取列表名是否存在
+	var list;
+	if (app.isNull(listStr)) {
+		// 为空，赋一个空的list；
+		list = [];
+	} else {
+		// 不为空
+		list = JSON.parse(listStr);
+	}
+	// 插入对象到头部
+	list.unshift(obj);
+	uni.setStorageSync(listName, JSON.stringify(list));
+}
 /**
  * 从缓存中按名字获取改名列表
  * @param {Object} listName
@@ -304,22 +323,28 @@ Vue.prototype.mySocket = {
 					case app.netty.LIKEARTICLE:
 						console.log("获取点赞文章");
 						// 存入缓存 (TODO：登陆时获取未签收点赞消息)
+						dataContent.data.createDate = app.formatTime(dataContent.data.createDate);
 						app.notification.saveLikeMsg(dataContent);
+						app.$store.commit('setLikeMsgCount');
 						break;
 					case app.netty.LIKECOMMENT:
 						console.log("获取点赞评论");
 						// 存入缓存
+						dataContent.data.createDate = app.formatTime(dataContent.data.createDate);
 						app.notification.saveLikeMsg(dataContent);
+						app.$store.commit('setLikeMsgCount');
 						break;
 					case app.netty.COMMENTARTICLE:
 						console.log("获取评论文章");
 						// 存入缓存
 						app.notification.saveCommentMsg(dataContent);
+						app.$store.commit('setCommentMsgCount');
 						break;
 					case app.netty.COMMENTCOMMENT:
 						console.log("获取评论评论");
 						// 存入缓存
 						app.notification.saveCommentMsg(dataContent);
+						app.$store.commit('setCommentMsgCount');
 						break;
 					default:
 						break;
@@ -685,7 +710,7 @@ Vue.prototype.notification={
 	 * @param {Object} dataContent
 	 */
 	saveLikeMsg(dataContent){
-		app.setIntoList(dataContent, this.LIKEMSG_KEY);
+		app.addIntoList(dataContent, this.LIKEMSG_KEY);
 	},
 	
 	getLikeMsg(){
@@ -697,7 +722,7 @@ Vue.prototype.notification={
 	 * @param {Object} dataContent
 	 */
 	saveCommentMsg(dataContent){
-		app.setIntoList(dataContent, this.COMMENTMSG_KEY);
+		app.addIntoList(dataContent, this.COMMENTMSG_KEY);
 	},
 	
 	getCommentMsg(){

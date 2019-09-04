@@ -38,11 +38,10 @@
 										</view>
 										<!-- 需要获取新消息时间戳 -->
 										<view class="clID-time">
-											11:29
+											{{item.data.createDate}}
 										</view>
 									</view>
 								</view>
-								
 								<!-- 文章预览块 -->
 								<view class="origin-bar-abs">
 									<view class="origin-bar-rel">
@@ -87,7 +86,7 @@
 										</view>
 										<!-- 需要获取新消息时间戳 -->
 										<view class="clID-time">
-											11:29
+											{{item.data.createDate}}
 										</view>
 									</view>
 								</view>
