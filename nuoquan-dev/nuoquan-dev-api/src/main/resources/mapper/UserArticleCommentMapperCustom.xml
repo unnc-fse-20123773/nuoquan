@@ -11,20 +11,20 @@
     <result column="father_comment_id" property="fatherCommentId" jdbcType="VARCHAR" />
     <result column="article_id" property="articleId" jdbcType="VARCHAR" />
     <result column="comment" property="comment" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
     <result column="like_num" property="likeNum" jdbcType="INTEGER" />
     <result column="dislike_num" property="dislikeNum" jdbcType="INTEGER" />
     <result column="comment_num" property="commentNum" jdbcType="INTEGER" />
     
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
-    <result column="face_img" jdbcType="VARCHAR" property="faceImage" />
+    <result column="face_img" jdbcType="VARCHAR" property="faceImg" />
     <result column="face_img_thumb" property="faceImgThumb" jdbcType="VARCHAR" />
   </resultMap>
   
   <select id="queryComments" resultMap="BaseResultMap" parameterType="String">
   	select c.*, u.nickname, u.face_img, u.face_img_thumb from nuoquan.user_article_comment c
   	left join nuoquan.user u on c.from_user_id = u.id
-  	  where c.article_id = #{articleId} and c.father_comment_id is null order by c.create_time desc
+  	  where c.article_id = #{articleId} and c.father_comment_id is null order by c.create_date desc
   </select>
   
   <select id="getCommentById" resultMap="BaseResultMap" parameterType="String">

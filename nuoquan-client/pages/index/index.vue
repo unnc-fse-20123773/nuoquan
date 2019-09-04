@@ -1,8 +1,13 @@
 <template>
 	<view class="index">
-		<mainpagetop :userInfo='userInfo' :topArticles='topArticles' ></mainpagetop>
-		<articlebrief v-for="i in showlist" :key="i.id" v-bind:articleCard="i"></articlebrief>
-		<view style="margin:750upx auto 0;font-size:13px;text-align: center;">到~底~线~啦~！</view>
+		<mainpagetop :userInfo='userInfo' :topArticles='topArticles' :topHeight="topHeight" style="position: fixed;z-index: 5;height:100%;"></mainpagetop>
+		
+		<view class="indexSelf" style="height:100%;">
+			<scroll-view class="indexArticleArea" scroll-y="true" @scroll="linkageWithTop">
+				<view style="height:160px;width:100%;"></view>
+				<articlebrief v-for="i in showlist" :key="i.id" v-bind:articleCard="i"></articlebrief>
+			</scroll-view>
+		</view>
 	</view>
 </template>
 
@@ -20,6 +25,7 @@
 				hottitlelist: ['热门标题111', '热门标题222', '热门标题333'],
 				showlist: '',
 				topArticles: '',
+				topHeight: "160",
 
 				userInfo: { // 默认user设置
 					id: 'test-id123',
@@ -30,7 +36,7 @@
 					emailPrefix: 'zy22089',
 					emailSuffix: '@nottingham.edu.cn'
 				},
-				
+
 			};
 		},
 		components: {
@@ -39,8 +45,6 @@
 			mainpageleft,
 		},
 		
-		
-
 		onLoad() {			
 			var userInfo = this.getGlobalUserInfo();
 			if (this.isNull(userInfo)) {
@@ -52,10 +56,6 @@
 			// 更新用户信息缓存... 查询用户信息，并分割邮箱更新到缓存
 			this.queryUserInfo(userInfo.id)
 			
-			this.showArticles(); // 显示文章流
-			
-			this.getTop3Articles(); // 获取热度榜
-			
 			this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
 			
 			// [测试代码块]
@@ -66,6 +66,10 @@
 				// 设置 userInfo 传给 mainpagetop 组件
 				this.userInfo = this.getGlobalUserInfo();
 			}
+			
+			this.showArticles(); // 显示文章流
+			
+			this.getTop3Articles(); // 获取热度榜
 		},
 		methods: {
 			showArticles() {
@@ -120,18 +124,38 @@
 						}
 					},
 				});
-			}
+			},
+			
+			linkageWithTop(e) {
+				var y = e.detail.scrollTop;
+				console.log(y);
+				if (this.topHeight >= 36) {
+					if (160 - y >= 36) {
+						this.topHeight = 160 - y;
+					} else {
+						this.topHeight = 36;
+					}
+
+				}
+			},
 		}
 	};
 </script>
-
 <style>
-	page{
-		height:100%;
+	page {
+		height: 100%;
 	}
+</style>
+
+<style scoped>
 	.index {
+		/* 页面高度由内容扩充，最低值为100%（page 定义的）- by Guetta */
+		/* height:100%; */
 		background-color: #f3f3f3;
-		height:100%;
+	}
+
+	.indexArticleArea {
+		height: 100%;
 	}
 
 	image {

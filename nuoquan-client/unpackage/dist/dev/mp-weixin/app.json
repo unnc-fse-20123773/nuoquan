@@ -13,7 +13,8 @@
     "pages/signin/signin",
     "components/articlebrief",
     "pages/messagelist/messagelist",
-    "pages/wechatLogin/wechatLogin"
+    "pages/wechatLogin/wechatLogin",
+    "pages/cmt-likedetail/cmt-likedetail"
   ],
   "subPackages": [],
   "window": {
@@ -23,5 +24,6 @@
     "backgroundColor": "#F8F8F8"
   },
   "permission": {},
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap6.json"
 }

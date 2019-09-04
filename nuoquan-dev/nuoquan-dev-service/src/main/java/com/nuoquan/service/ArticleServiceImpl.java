@@ -95,8 +95,9 @@ public class ArticleServiceImpl implements ArticleService {
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
 	public ArticleVO getArticleById(String articleId) {
-
-		return articleMapperCustom.getArticleById(articleId);
+		ArticleVO articleVO = articleMapperCustom.getArticleById(articleId);
+		articleVO.setImgList(articleImageMapper.getArticleImgs(articleId));
+		return articleVO;
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -110,7 +111,7 @@ public class ArticleServiceImpl implements ArticleService {
 		ula.setId(likeId);
 		ula.setUserId(userId);
 		ula.setArticleId(articleId);
-		ula.setCreateTime(new Date());
+		ula.setCreateDate(new Date());
 
 		userLikeArticleMapper.insertSelective(ula);
 
@@ -199,7 +200,7 @@ public class ArticleServiceImpl implements ArticleService {
 		comment.setId(id);
 		comment.setDislikeNum(0);
 		comment.setLikeNum(0);
-		comment.setCreateTime(new Date());
+		comment.setCreateDate(new Date());
 		comment.setCommentNum(0);
 		userArticleCommentMapper.insert(comment);
 		return id;
@@ -215,7 +216,7 @@ public class ArticleServiceImpl implements ArticleService {
 		ula.setId(likeId);
 		ula.setUserId(userId);
 		ula.setCommentId(commentId);
-		ula.setCreateTime(new Date());
+		ula.setCreateDate(new Date());
 		userLikeCommentMapper.insertSelective(ula);
 
 		// 评论喜欢数量累加
@@ -288,7 +289,7 @@ public class ArticleServiceImpl implements ArticleService {
 		List<UserArticleCommentVO> list = userArticleCommentMapperCustom.queryComments(articleId);
 		// 对时间格式进行处理
 		for (UserArticleCommentVO c : list) {
-			String timeAgo = TimeAgoUtils.format(c.getCreateTime());
+			String timeAgo = TimeAgoUtils.format(c.getCreateDate());
 			c.setTimeAgo(timeAgo);
 		}
 
@@ -311,7 +312,7 @@ public class ArticleServiceImpl implements ArticleService {
 		List<UserArticleCommentVO> list = userArticleCommentMapperCustom.querySonComments(fatherCommentId);
 		
 		for (UserArticleCommentVO c : list) {
-			String timeAgo = TimeAgoUtils.format(c.getCreateTime());
+			String timeAgo = TimeAgoUtils.format(c.getCreateDate());
 			c.setTimeAgo(timeAgo);
 		}
 		

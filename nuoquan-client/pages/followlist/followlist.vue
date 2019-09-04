@@ -52,7 +52,7 @@
 </template>
 
 <script>
-	var me;
+	var me; // 表示本人用户，区别于查询的用户
 	export default {
 		data() {
 			return {
@@ -98,7 +98,7 @@
 		},
 
 		onLoad(opt) {
-			var data = JSON.parse(opt.data)
+			var data = JSON.parse(opt.data);
 			var thisUserInfo = data.thisUserInfo;
 			var currentTab = data.currentTab;
 
@@ -118,10 +118,6 @@
 
 			var screenWidth = uni.getSystemInfoSync().screenWidth;
 			this.screenWidth = screenWidth;
-
-			// 获取当前页面
-			// var page = this.page;
-
 		},
 
 		onPullDownRefresh() {

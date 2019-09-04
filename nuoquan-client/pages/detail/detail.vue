@@ -26,12 +26,14 @@
 				</view>
 			</view>
 
-			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i" @controlInputSignal="controlInput"></commentbox>
+			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i" @controlInputSignal="controlInput"
+			 :reCommentListFromDetail="reCommentListFromDetail">
+			</commentbox>
 
 			<view class="fengexian" style="height: 1px;width: 100%;background-color: #d6d6d6;margin:auto;"></view>
 			<view class="submitComment" @click="controlInput(1)">发 表 评 论</view>
 
-			<view class="bottoLayerOfInput" v-show="writingComment" @click="controlInput(0)" @touchmove="controlInput0(0)">
+			<view class="bottoLayerOfInput" v-show="writingComment" @click="controlInput(0)" @touchmove="controlInput(0)">
 				<view class="commentPart" @click.stop="">
 					<view class="emoji"></view>
 					<view class="submit" @click="saveComment()"></view>
@@ -59,7 +61,8 @@
 					},
 				submitData:{
 					//这个是从子组件传来的数据，回复评论的评论之类
-				}
+				},
+				reCommentListFromDetail: {}
 			};
 		},
 		components: {
@@ -79,21 +82,36 @@
 					this.submitData.comment=this.commentContent;
 					this.submitData.fromUserId=this.userInfo.id;
 					// console.log(this.submitData);
+					// console.log(that.submitData.fatherCommentId);
 					uni.request({
 						url: that.$serverUrl + '/article/saveComment',
 						method: 'POST',
 						data: this.submitData,
-						success: function(res) {
-							// console.log(res.data)
+						success: (res) => {
 							that.writingComment = false;
 							that.commentContent = "";
+							
 							that.getComments();
+							uni.request({
+								method: "POST",
+								url: that.$serverUrl + '/article/getSonComments',
+								data: {
+									fatherCommentId: that.submitData.fatherCommentId
+								},
+								header: {
+									'content-type': 'application/x-www-form-urlencoded'
+								},
+								success: (res) => {
+									that.reCommentListFromDetail = res.data.data.rows;
+									console.log(that.reCommentListFromDetail);
+								}
+							});
 						},
 
 					})
 				}
 			},
-			getComments: function() {		
+			getComments: function(a) {		
 				var that = this;
 				uni.request({
 					method: "POST",
@@ -112,25 +130,43 @@
 					},
 				});
 			},
+			// getSonComments: function(a) {
+			// 	var that = this;
+			// 	uni.request({
+			// 		method: "POST",
+			// 		url: that.$serverUrl + '/article/getSonComments',
+			// 		data: {
+			// 			fatherCommentId: that.submitData.fatherCommentId
+			// 		},
+			// 		header: {
+			// 			'content-type': 'application/x-www-form-urlencoded'
+			// 		},
+			// 		success: (res) => {
+			// 			that.reCommentList = res.data.data.rows;
+			// 			console.log(that.reCommentList);
+			// 		}
+			// 	});
+			// },
 			controlInput(a){
 				this.writingComment =!this.writingComment;
 
-				if(a !=0 && a != 1 ){
+				if(a!=0&&a!=1) {            
 					//a!=0, !=1， 从子组件传来，包含被回复对象：被回复人ID，被回复评论ID，被回复人昵称
 					this.submitData=a;
 					this.placeholderText='回复'+a.nickname;
-					delete(a.nickname)
-				}else if(a == 1){
+					delete(a.nickname);
+				}else if(a==1) {           
 					//a==1 当前页面调用，直接评论文章
 					this.submitData.toUserId=this.articleCard.userId;
 					this.submitData.articleId=this.articleCard.id;
+					this.submitData.fatherCommentId = null;
 					// console.log(this.submitData);
 					// debugger
-				}else{
+				}else{  
 					//a==0, 关闭输入框，一切恢复默认状态
 					this.submitData = {};
 					this.placeholderText="评论";
-				}
+				    }
 			},
 			goToPersonPublic(){
 				var navData = JSON.stringify(this.articleCard.userId); // 这里转换成 字符串
@@ -141,10 +177,7 @@
 		},
 		onLoad(options) {
 			this.articleCard = JSON.parse(options.data);
-			// console.log(this.articleCard);
-			// console.log(this.articleCard);
-			// console.log(this.articleCard.artiticleTitle);
-
+		
 			var userInfo = this.getGlobalUserInfo();
 			if (!this.isNull(userInfo)) {
 				this.userInfo = this.getGlobalUserInfo();

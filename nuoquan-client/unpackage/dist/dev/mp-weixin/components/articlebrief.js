@@ -169,7 +169,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 var _default =
 {
   name: 'aticlebrief',
@@ -308,5 +307,5 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ })
 
-},[[120,"common/runtime","common/vendor"]]]);
+},[[122,"common/runtime","common/vendor"]]]);
 //# sourceMappingURL=../../.sourcemap/mp-weixin/components/articlebrief.js.map

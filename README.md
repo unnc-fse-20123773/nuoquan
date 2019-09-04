@@ -1,4 +1,14 @@
 # Update Log:
+**v19.9.4 更新**
+1. 整合 guetta, 修复部分页面显示bug
+2. 新增 点赞/评论消息列表部分动态传参
+3. 新增 文档模块 testBugs, 内附部分页面调试手册
+4. 修改 comment 对象属性 faceImage -> faceImg
+5. 修改 数据库和后端所有 create_time (createTime) -> create_date (createDate) 如果哪里有报错 注意看是不是这个名字的问题
+6. 小改 数据库，详情见 sqlRecord.sql
+7. 修复Bug-100002，submit 回跳 index 发起额外长连接
+8. 修复Bug-100004：submit 9图添加显示格式错误 (yaoyao)
+
 **v19.9.3 更新**
 1. 新增 主页文章流显示图片
 2. 新增 左侧栏数据动态化
