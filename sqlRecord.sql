@@ -1,6 +1,12 @@
 -- +++++++++++++++++++++
 -- +  Database update  +
 -- +++++++++++++++++++++
+
+-- v19.9.2 @author: Deyan
+-- 在评论表中，article_id为NOT NULL
+ALTER TABLE `nuoquan`.`user_article_comment` 
+CHANGE COLUMN `article_id` `article_id` VARCHAR(45) NOT NULL ;
+
 -- v19.9.1 @author: Jerrio
 -- 添加点赞评论数据表, 点赞文章签收, 评论父评论和对方id
 CREATE TABLE `nuoquan`.`user_like_comment` (

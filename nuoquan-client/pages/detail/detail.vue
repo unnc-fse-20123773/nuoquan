@@ -7,15 +7,7 @@
 		<view class="drtailmain">
 			<view class="detailcontent">{{ articleCard.articleContent }}</view>
 			<view class="detailpics">
-				<!-- <image class="detailpic" src="../../static/0001/pic3.jpg"></image>
-				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
-				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
-				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
-				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
-				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
-				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
-				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
-				<image class="detailpic" src="../../static/0001/pic3.jpg"></image> -->
+
 			</view>
 			<view class="tags">
 				<view class="tag" v-for="(i,index) in articleCard.tags" v-bind:key="index">{{i}}</view>
@@ -93,7 +85,7 @@
 						method: 'POST',
 						data: this.submitData,
 						success: function(res) {
-							console.log(res.data)
+							// console.log(res.data)
 							that.writingComment = false;
 							that.commentContent = "";
 							that.getComments(0);
@@ -102,20 +94,21 @@
 					})
 				}
 			},
-			getComments: function(a) {		
+			getComments: function() {		
 				var that = this;
 				uni.request({
 					method: "POST",
-					url: that.$serverUrl + '/article/getArticleComments',
+					url: that.$serverUrl + '/article/getFatherComments',
 					data: {
 						articleId: that.articleCard.id,
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
-					success: (res) => {	console.log(res);
+					success: (res) => {	
+						// console.log(res);
 						that.commentList = res.data.data.rows;
-						console.log(that.articleCard.id);
+						// console.log(that.articleCard.id);
 						
 					},
 				});
@@ -159,7 +152,7 @@ debugger;
 		},
 		onLoad(options) {
 			this.articleCard = JSON.parse(options.data);
-			console.log(this.articleCard);
+			// console.log(this.articleCard);
 			// console.log(this.articleCard);
 			// console.log(this.articleCard.artiticleTitle);
 
@@ -342,6 +335,8 @@ debugger;
 		color: #FFFFFF;
 		text-align: center;
 		line-height: 30px;
+		margin-top:12px;
+		margin-bottom: 50px;
 	}
 .bottoLayerOfInput{
 	position: fixed;

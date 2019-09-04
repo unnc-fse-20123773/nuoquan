@@ -24,7 +24,7 @@
   <select id="queryComments" resultMap="BaseResultMap" parameterType="String">
   	select c.*, u.nickname, u.face_img, u.face_img_thumb from nuoquan.user_article_comment c
   	left join nuoquan.user u on c.from_user_id = u.id
-  	  where c.article_id = #{articleId} order by c.create_time desc
+  	  where c.article_id = #{articleId} and c.father_comment_id is null order by c.create_time desc
   </select>
   
   <select id="getCommentById" resultMap="BaseResultMap" parameterType="String">
@@ -33,6 +33,12 @@
   	  where
   	  	1 = 1 
   	  	and c.id = #{commentId}
+  </select>
+  
+  <select id="querySonComments" resultMap="BaseResultMap" parameterType="String">
+  	select c.*, u.nickname, u.face_img, u.face_img_thumb from nuoquan.user_article_comment c
+  	left join nuoquan.user u on c.from_user_id = u.id
+  	  where c.father_comment_id = #{fatherCommentId}
   </select>
   
   <update id="addCommentLikeCount" parameterType="String">
