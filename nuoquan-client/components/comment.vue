@@ -25,8 +25,8 @@
 
 		<view v-show="RECOMMENT" class="reCommentsArea">
 
-			<reComment v-for="(i,index) in reCommentList" v-bind:key="index" :reCommentDetail='i'  @controlInputSignal="controlInputSignal"></reComment>
-			<view class="submitComment" >发 表 评 论</view>
+			<reComment v-for="(i,index) in reCommentList" v-bind:key="index" :reCommentDetail='i' @controlInputSignal="controlInputSignal"></reComment>
+			<view class="submitComment">发 表 评 论</view>
 		</view>
 	</view>
 </template>
@@ -82,49 +82,58 @@
 
 			};
 		},
+		mounted() {
+              this.getComments()
+		},
 		methods: {
-			showRecommentArea() {
-				this.RECOMMENT = !this.RECOMMENT
-				if(this.RECOMMENT){
-					this.getComments()
-				}
-			},
-			getComments: function(a) {
+			getComments() {
 				var that = this;
 				uni.request({
 					method: "POST",
-					url: that.$serverUrl + '/article/getArticleComments',
+					url: that.$serverUrl + '/article/getSonArticleComments',
 					data: {
-						commentId:this.commentDetail.id,
+						fatherCommentId: that.commentDetail.id,
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
-					success: (res) => {	console.log(res);
-					console.log(res);
-					debugger;
+					success: (res) => {
+						console.log(res);
 						that.commentList = res.data.data.rows;
-						console.log(that.articleCard.id);				
+						console.log(that.articleCard.id);
+						debugger
+
 					},
 				});
+
 			},
+			showRecommentArea() {
+				this.RECOMMENT = !this.RECOMMENT
+				if (this.RECOMMENT) {
+					// this.getComments()
+					this.controlInputInComment('inComment');
+				} else {
+					this.controlInputInComment(0);
+				}
+			},
+
 			controlInputInComment(a) {
-				if(a=="inComment"){
-					var dataOfRecomment={
-						mode:"re-co",
-					toUserId:this.commentDetail.fromUserId,
-					fatherCommentId:this.commentDetail.id,
-					nickname:this.commentDetail.nickname,
-				    }
-				}else{
+				if (a == "inComment") {
+					var dataOfRecomment = {
+						mode: "re-co",
+						toUserId: this.commentDetail.fromUserId,
+						fatherCommentId: this.commentDetail.id,
+						nickname: this.commentDetail.nickname,
+					}
+				} else {
 					var dataOfRecomment = a;
 				}
 				console.log("receive control input request, in comment");
 				console.log(dataOfRecomment);
-				this.$emit('controlInputSignal',dataOfRecomment)
+				this.$emit('controlInputSignal', dataOfRecomment)
 			},
 		},
-		
+
 	};
 </script>
 
@@ -209,6 +218,7 @@
 		text-align: center;
 		line-height: 30px;
 	}
+
 	.reCommentsArea {
 		background: #EEEEEE;
 		width: 400upx;

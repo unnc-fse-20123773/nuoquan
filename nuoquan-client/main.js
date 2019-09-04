@@ -13,8 +13,10 @@ App.mpType = 'app'
 Vue.config.productionTip = false
 
 Vue.prototype.$store = store
-Vue.prototype.$serverUrl = "http://127.0.0.1:8080"
-Vue.prototype.$wsServerUrl = "ws://localhost:8088/ws"
+// Vue.prototype.$serverUrl = "http://127.0.0.1:8080"
+// Vue.prototype.$wsServerUrl = "ws://localhost:8088/ws"
+Vue.prototype.$serverUrl = "http://192.168.31.29:8080"
+Vue.prototype.$wsServerUrl = "ws://192.168.31.29:8088/ws"
 
 // Vue.prototype.$serverUrl = "http://192.168.31.210:8080"
 // Vue.prototype.$wsServerUrl = "ws://192.168.31.210:8088/ws"

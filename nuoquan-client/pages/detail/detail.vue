@@ -39,12 +39,12 @@
 			<view class="fengexian" style="height: 1px;width: 100%;background-color: #d6d6d6;margin:auto;"></view>
 			<view class="submitComment" @click="controlInput(1)">发 表 评 论</view>
 
-			<view class="bottoLayerOfInput" v-show="showInput" @click="controlInput(0)" @touchmove="controlInput0()">
+			<view class="bottoLayerOfInput" v-show="showInput" @click="controlInput(0)" @touchmove="controlInput(0)">
 				<view class="commentPart" @click.stop="">
 					<view class="emoji"></view>
 					<view class="submit" @click="saveComment()"></view>
 					<textarea class="commentSth" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
-					 confirm-type="send" @confirm="saveComment()" adjust-position="false" v-model="commentContent" />
+					 confirm-type="send" @confirm="saveComment()" adjust-position="false" v-model="commentContent" @click.stop=""/>
 					</view>
             </view>
 		</view> 
@@ -121,26 +121,29 @@
 				});
 			},
 			controlInput(a){
-
+debugger;
+	console.log(a)
 				if(a!=0&&a!=1){            //a!=0, !=1， 从子组件传来，包含被回复对象：被回复人ID，被回复评论ID，被回复人昵称
 					this.submitData=a;
 					this.placeholderText='回复 @'+a.nickname+' 的评论';
 					delete(a.nickname)
-					if(a.mode = "re-re"){    //mode ="re-re", from grandson RECOMMENT
+					if(a.mode =="re-re"){    //mode ="re-re", from grandson RECOMMENT
+					console.log(a.mode);
 						this.writingComment = true ;
 					}
 					this.showInput= true;
+					console.log(this.writingComment);
 					
 				}else if(a==1){           //a==1 当前页面调用，直接评论文章
 					this.submitData.toUserId=this.articleCard.userId;
 					this.submitData.articleId=this.articleCard.id;
 					this.showInput = true;
-					this.writingComment = true;
+					this.writingComment = true; 
 					console.log('this is control input in detail. a ==')
 					console.log(a);
 					console.log(this.submitData);
 				}else{  //a==0, 关闭输入框，一切恢复默认状态
-				    console.log('this is control input in detail. a ==0, EXIT')
+				    console.log('this is control input in detail. a ==0, EXIT');
 					this.submitData = {};
 					this.placeholderText="评论";
 					this.showInput = false;
@@ -347,6 +350,7 @@
 	top:0;
 	left:0;
 	z-index: 3;
+	pointer-events: none;
 }
 	.commentPart {
 		box-shadow: 0px 1px 5px 0px rgba(139, 139, 139, 0.32);
