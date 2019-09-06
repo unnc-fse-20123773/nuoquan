@@ -432,6 +432,7 @@ var _default =
 
   data: function data() {
     return {
+
       serverUrl: this.$serverUrl,
       singleImgState: '0',
 

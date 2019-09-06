@@ -17,8 +17,8 @@ public class UserLikeComment {
     @Column(name = "comment_id")
     private String commentId;
 
-    @Column(name = "create_time")
-    private Date createTime;
+    @Column(name = "create_date")
+    private Date createDate;
 
     /**
      * 点赞消息是否被签收\n 0: 未签收 1：签收
@@ -75,15 +75,15 @@ public class UserLikeComment {
     /**
      * @return create_time
      */
-    public Date getCreateTime() {
-        return createTime;
+    public Date getCreateDate() {
+        return createDate;
     }
 
     /**
-     * @param createTime
+     * @param createDate
      */
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
     /**

@@ -254,7 +254,6 @@ var socketOpen = false;var _default =
         msg: "1",
         myId: "test-id123" },
 
-
       {
         createDate: "2019/08/22 03:35:02",
         friendId: "1",
@@ -272,13 +271,18 @@ var socketOpen = false;var _default =
 
 
       READ: this.chat.READ,
-      UNREAD: this.chat.UNREAD };
+      UNREAD: this.chat.UNREAD,
+
+      uLikeMsgCount: uni.getStorageSync('likeMsgCount'),
+      uCommentMsgCount: uni.getStorageSync('commentMsgCount') };
 
   },
 
   computed: _objectSpread({},
   (0, _vuex.mapState)([
-  'chatMessageCard'])),
+  'chatMessageCard',
+  'likeMsgCount',
+  'commentMsgCount'])),
 
 
 
@@ -287,7 +291,16 @@ var socketOpen = false;var _default =
       this.loadingChatSnapshot();
       console.log("newVal:");
       console.log(newVal);
+    },
+
+    likeMsgCount: function likeMsgCount(newVal, oldVal) {
+      this.uLikeMsgCount = newVal;
+    },
+
+    commentMsgCount: function commentMsgCount(newVal, oldVal) {
+      this.uCommentMsgCount = newVal;
     } },
+
 
 
   onLoad: function onLoad() {
@@ -302,7 +315,7 @@ var socketOpen = false;var _default =
     }
 
     // [测试代码块]
-    // this.mySocket.init();
+    this.mySocket.init();
   },
 
   onShow: function onShow() {
@@ -391,9 +404,19 @@ var socketOpen = false;var _default =
 
     },
 
-    goToCmtLikeDetail: function goToCmtLikeDetail() {
+    /**
+        * @param {Object} currentTab 0: 点赞 1: 评论
+        */
+    goToCmtLikeDetail: function goToCmtLikeDetail(currentTab) {
+      // 计数值归零
+      if (currentTab == 0) {
+        this.$store.commit('setLikeMsgCount', 0);
+      } else {
+        this.$store.commit('setCommentMsgCount', 0);
+      }
+
       uni.navigateTo({
-        url: '../cmt-likedetail/cmt-likedetail' });
+        url: '../cmt-likedetail/cmt-likedetail?currentTab=' + JSON.stringify(currentTab) });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

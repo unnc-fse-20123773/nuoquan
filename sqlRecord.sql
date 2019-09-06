@@ -1,11 +1,20 @@
 -- +++++++++++++++++++++
 -- +  Database update  +
 -- +++++++++++++++++++++
+-- v19.9.4 @author: Jerrio
+-- 为用户点赞评论表 添加索引
+-- ！以后创建日期一律用 create_date
+ALTER TABLE `nuoquan`.`user_like_comment` 
+ADD UNIQUE INDEX `user_comment_rel` (`user_id` ASC, `comment_id` ASC);
 
--- v19.9.2 @author: Deyan
--- 在评论表中，article_id为NOT NULL
+ALTER TABLE `nuoquan`.`user_like_comment` 
+CHANGE COLUMN `create_time` `create_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ;
+
+ALTER TABLE `nuoquan`.`user_like_article` 
+CHANGE COLUMN `create_time` `create_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ;
+
 ALTER TABLE `nuoquan`.`user_article_comment` 
-CHANGE COLUMN `article_id` `article_id` VARCHAR(45) NOT NULL ;
+CHANGE COLUMN `create_time` `create_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ;
 
 -- v19.9.1 @author: Jerrio
 -- 添加点赞评论数据表, 点赞文章签收, 评论父评论和对方id
@@ -24,6 +33,7 @@ ALTER TABLE `nuoquan`.`user_article_comment`
 ADD COLUMN `to_user_id` VARCHAR(45) NOT NULL AFTER `from_user_id`,
 ADD COLUMN `father_comment_id` VARCHAR(45) NULL COMMENT '复式评论，父评论，子评论无 article_id' AFTER `to_user_id`,
 CHANGE COLUMN `article_id` `article_id` VARCHAR(45) NULL ;
+
 
 -- v19.8.28 @author: deyan
 -- 修改img_path VARCHAR(45) to VARCHAR(255) 

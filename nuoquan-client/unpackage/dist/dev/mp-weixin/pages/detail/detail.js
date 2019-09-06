@@ -164,6 +164,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 {
   data: function data() {
     return {
@@ -179,7 +181,8 @@ __webpack_require__.r(__webpack_exports__);
 
       submitData: {
         //这个是从子组件传来的数据，回复评论的评论之类
-      } };
+      },
+      reCommentListFromDetail: {} };
 
   },
   components: {
@@ -204,10 +207,24 @@ __webpack_require__.r(__webpack_exports__);
           method: 'POST',
           data: this.submitData,
           success: function success(res) {
-            // console.log(res.data)
             that.writingComment = false;
             that.commentContent = "";
-            that.getComments(0);
+
+            that.getComments();
+            uni.request({
+              method: "POST",
+              url: that.$serverUrl + '/article/getSonComments',
+              data: {
+                fatherCommentId: that.submitData.fatherCommentId },
+
+              header: {
+                'content-type': 'application/x-www-form-urlencoded' },
+
+              success: function success(res) {
+                that.reCommentListFromDetail = res.data.data.rows;
+                console.log(that.reCommentListFromDetail);
+              } });
+
           } });
 
 
@@ -233,8 +250,6 @@ __webpack_require__.r(__webpack_exports__);
 
     },
     controlInput: function controlInput(a) {
-      debugger;
-      console.log(a);
       if (a != 0 && a != 1) {//a!=0, !=1， 从子组件传来，包含被回复对象：被回复人ID，被回复评论ID，被回复人昵称
         this.submitData = a;
         this.placeholderText = '回复 @' + a.nickname + ' 的评论';
@@ -245,7 +260,6 @@ __webpack_require__.r(__webpack_exports__);
         }
         this.showInput = true;
         console.log(this.writingComment);
-
       } else if (a == 1) {//a==1 当前页面调用，直接评论文章
         this.submitData.toUserId = this.articleCard.userId;
         this.submitData.articleId = this.articleCard.id;
@@ -271,9 +285,6 @@ __webpack_require__.r(__webpack_exports__);
 
   onLoad: function onLoad(options) {
     this.articleCard = JSON.parse(options.data);
-    // console.log(this.articleCard);
-    // console.log(this.articleCard);
-    // console.log(this.articleCard.artiticleTitle);
 
     var userInfo = this.getGlobalUserInfo();
     if (!this.isNull(userInfo)) {

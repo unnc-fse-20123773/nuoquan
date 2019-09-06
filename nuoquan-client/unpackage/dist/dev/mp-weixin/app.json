@@ -25,5 +25,9 @@
   },
   "permission": {},
   "usingComponents": {},
+<<<<<<< HEAD
   "sitemapLocation": "sitemap65.json"
+=======
+  "sitemapLocation": "sitemap6.json"
+>>>>>>> deyan
 }

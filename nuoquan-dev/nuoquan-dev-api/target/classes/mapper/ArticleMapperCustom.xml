@@ -61,12 +61,12 @@
 		(select article_id, count(article_id) as c_in24h from nuoquan.user_article_comment
 		where 
 		1=1  
-		and HOUR( timediff( now(), create_time) ) &lt; 24
+		and HOUR( timediff( now(), create_date) ) &lt; 24
 		GROUP BY article_id) as c on a.id = c.article_id left join
 			(select article_id, count(article_id) as l_in24h from nuoquan.user_like_article
 			where 
 			1=1 
-			and HOUR( timediff( now(), create_time) ) &lt; 24
+			and HOUR( timediff( now(), create_date) ) &lt; 24
 			GROUP BY article_id) as l on a.id=l.article_id
 	set a.popularity = if(c.article_id is null, 
 						if(l.article_id is null, 0, l.l_in24h), 
@@ -78,13 +78,13 @@ select * from (
 	select * from nuoquan.article as a left join (
 		select article_id, count(article_id) as c_in24h from nuoquan.user_article_comment
 		where 
-		HOUR( timediff( now(), create_time) ) < 24
+		HOUR( timediff( now(), create_date) ) < 24
 		GROUP BY article_id 
 	) as b on a.id = b.article_id
 ) as c left join (
 	select article_id, count(article_id) as l_in24h from nuoquan.user_like_article
 	where 
-	HOUR( timediff( now(), create_time) ) < 24
+	HOUR( timediff( now(), create_date) ) < 24
 	GROUP BY article_id
 ) as d on c.id=d.article_id -->
   	

@@ -58,6 +58,7 @@
 		},
 		data() {
 			return {
+
 				serverUrl: this.$serverUrl,
 				singleImgState: '0',
 				

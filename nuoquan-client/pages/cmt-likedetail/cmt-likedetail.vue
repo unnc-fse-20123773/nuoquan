@@ -20,56 +20,179 @@
 					 @scroll="scroll" enable-back-to-top="true">
 						<!-- 卡片部分为文档流格式  -by Guetta-->
 						<!-- 详情卡片 -->
-						<view class="cmtlikeDetail-card">
-							<!-- 卡片高度未定义，上下边距会失效，用 marginHelper 填充空白 -->
-							<view class="marginHelper1"></view>
-							<!-- ID 行 -->
-							<view class="id-line-abs">
-								<!-- 相对绝对定位 -->
-								<view class="id-line-rel">
-									<view class="clTouxiang-box">
-										<image class="clTouxiang" :src="userInfo.faceImg" mode="scaleToFill"></image>
-									</view>
-									<view class="clID-box">
-										<text class="clID-text">{{userInfo.nickname}}</text>
-										<text class="clID-operation">点赞了你的评论</text>
-									</view>
-									<!-- 需要获取新消息时间戳 -->
-									<view class="clID-time">
-										11:29
+						<view v-for="(item,index2) in (index1==0 ? likeList : commentList)" :key="index2">
+							<!-- 点赞文章卡片 -->
+							<view v-if="item.action==LIKEARTICLE" class="cmtlikeDetail-card" >
+								<!-- 卡片高度未定义，上下边距会失效，用 marginHelper 填充空白 -->
+								<view class="marginHelper1"></view>
+								<!-- ID 行 -->
+								<view class="id-line-abs">
+									<!-- 相对绝对定位 -->
+									<view class="id-line-rel">
+										<view class="clTouxiang-box">
+											<image class="clTouxiang" :src="item.data.faceImg" mode="scaleToFill"></image>
+										</view>
+										<view class="clID-box">
+											<text class="clID-text">{{item.data.nickname}}</text>
+											<text class="clID-operation">点赞了你的文章</text>
+										</view>
+										<!-- 需要获取新消息时间戳 -->
+										<view class="clID-time">
+											{{item.data.createDate}}
+										</view>
 									</view>
 								</view>
-							</view>
-							<!-- 点赞 or 评论预览块 -->
-							<view class="brief-bar-abs">
-								<view class="brief-bar-rel">
-									{{briefDetail}}
-								</view>
-							</view>
-							<!-- 原评论预览块 -->
-							<view class="origin-bar-abs">
-								<view class="origin-bar-rel">
-									<view class="origin-imageBox">
-										<view class="origin-imageMask"></view>
-										<view class="origin-imageMasknum super_center">
-											<view class="origin-imageMasknumtext">
-												+6
+								<!-- 文章预览块 -->
+								<view class="origin-bar-abs">
+									<view class="origin-bar-rel">
+										<view class="origin-imageBox" v-if="item.data.imgList.length > 0">
+											<view class="origin-imageMask"></view>
+											<view class="origin-imageMasknum super_center">
+												<view class="origin-imageMasknumtext">
+													+{{item.data.imgList.length}}
+												</view>
+											</view>
+											<!-- 图片好像显示不出来 by Jerrio -->
+											<image class="origin-image" :src="serverUrl + item.data.imgList[0].imagePath" mode="scaleToFill"></image>
+										</view>
+										<view class="origin-briefBox">
+											<view class="origin-briefTitlebox">
+												<text class="origin-briefTitle">{{item.data.articleTitle}}</text>
+											</view>
+											<view class="origin-briefTextbox">
+												<text class="origin-briefText">{{item.data.articleContent}}</text>
 											</view>
 										</view>
-										<image class="origin-image" src="../../static/BG/indexBG2.png" mode="scaleToFill"></image>
 									</view>
-									<view class="origin-briefBox">
-										<view class="origin-briefTitlebox">
-											<text class="origin-briefTitle">{{briefDetail}}</text>
+								</view>
+								<!-- 卡片高度未定义，上下边距会失效，用 marginHelper 填充空白 -->
+								<view class="marginHelper2"></view>
+							</view>
+							
+							<!-- 点赞评论卡片 -->
+							<view v-if="item.action==LIKECOMMENT" class="cmtlikeDetail-card" >
+								<!-- 卡片高度未定义，上下边距会失效，用 marginHelper 填充空白 -->
+								<view class="marginHelper1"></view>
+								<!-- ID 行 -->
+								<view class="id-line-abs">
+									<!-- 相对绝对定位 -->
+									<view class="id-line-rel">
+										<view class="clTouxiang-box">
+											<image class="clTouxiang" :src="item.data.faceImg" mode="scaleToFill"></image>
 										</view>
-										<view class="origin-briefTextbox">
-											<text class="origin-briefText">{{briefDetail}}</text>
+										<view class="clID-box">
+											<text class="clID-text">{{item.data.nickname}}</text>
+											<text class="clID-operation">点赞了你的评论</text>
+										</view>
+										<!-- 需要获取新消息时间戳 -->
+										<view class="clID-time">
+											{{item.data.createDate}}
 										</view>
 									</view>
 								</view>
+								<!-- 点赞预览块 -->
+								<view class="brief-bar-abs">
+									<view class="brief-bar-rel">
+										{{item.data.comment}}
+									</view>
+								</view>
+
+								<!-- 卡片高度未定义，上下边距会失效，用 marginHelper 填充空白 -->
+								<view class="marginHelper2"></view>
 							</view>
-							<!-- 卡片高度未定义，上下边距会失效，用 marginHelper 填充空白 -->
-							<view class="marginHelper2"></view>
+							
+							<!-- 评论文章卡片 -->
+							<view v-if="item.action==COMMENTARTICLE" class="cmtlikeDetail-card" >
+								<!-- 卡片高度未定义，上下边距会失效，用 marginHelper 填充空白 -->
+								<view class="marginHelper1"></view>
+								<!-- ID 行 -->
+								<view class="id-line-abs">
+									<!-- 相对绝对定位 -->
+									<view class="id-line-rel">
+										<view class="clTouxiang-box">
+											<image class="clTouxiang" :src="item.data.comment.faceImg" mode="scaleToFill"></image>
+										</view>
+										<view class="clID-box">
+											<text class="clID-text">{{item.data.comment.nickname}}</text>
+											<text class="clID-operation">评论了你的文章</text>
+										</view>
+										<!-- 需要获取新消息时间戳 -->
+										<view class="clID-time">
+											{{item.data.comment.createDate}}
+										</view>
+									</view>
+								</view>
+								<!-- 点赞 or 评论预览块 -->
+								<view class="brief-bar-abs">
+									<view class="brief-bar-rel">
+										{{item.data.comment.comment}}
+									</view>
+								</view>
+								<!-- 原文章预览块 -->
+								<view class="origin-bar-abs">
+									<view class="origin-bar-rel">
+										<view class="origin-imageBox" v-if="item.data.target.imgList.length > 0">
+											<view class="origin-imageMask"></view>
+											<view class="origin-imageMasknum super_center">
+												<view class="origin-imageMasknumtext">
+													+{{item.data.target.imgList.length}}
+												</view>
+											</view>
+											<!-- 图片好像显示不出来 by Jerrio -->
+											<image class="origin-image" :src="serverUrl + item.data.target.imgList[0].imagePath" mode="scaleToFill"></image>
+										</view>
+										<view class="origin-briefBox">
+											<view class="origin-briefTitlebox">
+												<text class="origin-briefTitle">{{item.data.target.articleTitle}}</text>
+											</view>
+											<view class="origin-briefTextbox">
+												<text class="origin-briefText">{{item.data.target.articleContent}}</text>
+											</view>
+										</view>
+									</view>
+								</view>
+								<!-- 卡片高度未定义，上下边距会失效，用 marginHelper 填充空白 -->
+								<view class="marginHelper2"></view>
+							</view>
+							
+							<!-- 评论评论卡片 -->
+							<view v-if="item.action==COMMENTCOMMENT" class="cmtlikeDetail-card" >
+								<!-- 卡片高度未定义，上下边距会失效，用 marginHelper 填充空白 -->
+								<view class="marginHelper1"></view>
+								<!-- ID 行 -->
+								<view class="id-line-abs">
+									<!-- 相对绝对定位 -->
+									<view class="id-line-rel">
+										<view class="clTouxiang-box">
+											<image class="clTouxiang" :src="item.data.comment.faceImg" mode="scaleToFill"></image>
+										</view>
+										<view class="clID-box">
+											<text class="clID-text">{{item.data.comment.nickname}}</text>
+											<text class="clID-operation">回复了你的评论</text>
+										</view>
+										<!-- 需要获取新消息时间戳 -->
+										<view class="clID-time">
+											{{item.data.comment.createDate}}
+										</view>
+									</view>
+								</view>
+								<!-- 点赞 or 评论预览块 -->
+								<view class="brief-bar-nocolor">
+									<view class="brief-bar-rel">
+										{{item.data.comment.comment}}
+									</view>
+								</view>
+								<!-- 原评论预览块 -->
+								<!-- 点赞 or 评论预览块 -->
+								<view class="brief-bar-abs">
+									<view class="brief-bar-rel">
+										{{item.data.target.comment}}
+									</view>
+								</view>
+								<!-- 卡片高度未定义，上下边距会失效，用 marginHelper 填充空白 -->
+								<view class="marginHelper2"></view>
+							</view>
+							
 						</view>
 					</scroll-view>
 				</swiper-item>
@@ -79,31 +202,8 @@
 </template>
 
 <script>
+	// TODO 查询列表分页操作
 	export default {
-		onLoad: function() {
-			uni.setNavigationBarTitle({
-				title: "消息列表"
-			});
-			
-			var userInfo = this.getGlobalUserInfo()
-			this.userInfo = userInfo;
-			
-			var currentTab = data.currentTab;
-			
-			// 获取userId
-			var userId = thisUserInfo.id;
-			this.queryFansFollow(userId);
-			
-			// 设置列表 index
-			this.currentTab = currentTab;
-			
-			var screenWidth = uni.getSystemInfoSync().screenWidth;
-			this.screenWidth = screenWidth;
-			
-			// 获取当前页面
-			// var page = this.page;
-		},
-		
 		data() {
 			return {
 				scrollLeft: 0,
@@ -120,6 +220,8 @@
 					[], // 点赞 把数据写进里面首次进入页面加载不出，所以写到外面
 					[]  // 评论
 				],
+				likeList: '',
+				commentList: '',
 
 				screenWidth: 350,
 				serverUrl: "",
@@ -127,11 +229,46 @@
 				old: {
 					scrollTop: 0
 				},
+				
+				// 类型枚举
+				LIKEARTICLE: this.netty.LIKEARTICLE, // 点赞文章通知
+				LIKECOMMENT: this.netty.LIKECOMMENT, // 点赞评论通知
+				COMMENTARTICLE: this.netty.COMMENTARTICLE, //评论文章通知
+				COMMENTCOMMENT: this.netty.COMMENTCOMMENT, // 评论评论通知
+				
+				serverUrl: this.$serverUrl,
+				
+				
 				userInfo: '',
 				briefDetail: '这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符'
 			}
 		},
-
+		
+		onLoad(opt) {
+			var currentTab = JSON.parse(opt.currentTab);
+			uni.setNavigationBarTitle({
+				title: "消息列表"
+			});
+			
+			// 设置列表 index
+			this.currentTab = currentTab;
+			
+			var screenWidth = uni.getSystemInfoSync().screenWidth;
+			this.screenWidth = screenWidth;
+			
+			// [测试用代码块]
+			var userInfo = this.getGlobalUserInfo()
+			this.userInfo = userInfo;
+		},
+		
+		onShow() {
+			// 加载点赞评论通知缓存
+			this.likeList = this.notification.getLikeMsg();
+			this.commentList = this.notification.getCommentMsg();
+			console.log(this.likeList)
+			console.log(this.commentList)
+		},
+		
 		changeIndicatorDots(e) {
 			this.indicatorDots = !this.indicatorDots
 		},
@@ -145,7 +282,6 @@
 			this.duration = e.target.value
 		},
 
-
 		onPullDownRefresh() {
 			console.log('refresh');
 			setTimeout(function() {
@@ -158,6 +294,16 @@
 				if (this.currentTab == current) {
 					return false;
 				} else {
+					if(current==0){
+						// console.log("点了点赞"); 刷新 list 并设置计数值
+						this.likeList = this.notification.getLikeMsg();
+						this.$store.commit('setLikeMsgCount', 0);
+					}else{
+						// console.log("点了评论");
+						this.commentList = this.notification.getCommentMsg();
+						this.$store.commit('setCommentMsgCount', 0);
+					}
+					
 					this.currentTab = current;
 					this.setScrollLeft(current);
 				}
@@ -448,6 +594,15 @@
 		margin-left: 4%;
 		border-radius: 20upx;
 		background-color: #f8eced;
+	}
+	
+	.brief-bar-nocolor {
+		/* 底部边距需要动态设置 */
+		margin-bottom: 15upx;
+		overflow: hidden;
+		width: 92%;
+		margin-left: 4%;
+		border-radius: 20upx;
 	}
 
 	.brief-bar-rel {
