@@ -1,6 +1,10 @@
 -- +++++++++++++++++++++
 -- +  Database update  +
 -- +++++++++++++++++++++
+-- v19.9.6 @author: Jerrio
+ALTER TABLE `nuoquan`.`user_article_comment` 
+ADD COLUMN `under_comment_id` VARCHAR(45) NULL DEFAULT NULL AFTER `comment_num`;
+
 -- v19.9.4 @author: Jerrio
 -- 为用户点赞评论表 添加索引
 -- ！以后创建日期一律用 create_date

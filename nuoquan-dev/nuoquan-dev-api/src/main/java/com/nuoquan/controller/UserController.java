@@ -218,7 +218,7 @@ public class UserController extends BasicController {
 		}
 		
 		// 查询列表
-		List<ChatMsg> unreadMsgList = userService.getUnsignedMsgList(userId);
+		List<ChatMsg> unreadMsgList = userService.getUnsignedChat(userId);
 
 		return JSONResult.ok(unreadMsgList);
 	}
