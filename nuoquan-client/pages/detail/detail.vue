@@ -33,7 +33,7 @@
 			<view class="fengexian" style="height: 1px;width: 100%;background-color: #d6d6d6;margin:auto;"></view>
 			<view class="submitComment" @click="controlInput(1)">发 表 评 论</view>
 
-			<view class="bottoLayerOfInput" v-show="showInput" @click="controlInput(0)" @touchmove="controlInput(0)">
+			<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)">
 				<view class="commentPart" @click.stop="">
 					<view class="emoji"></view>
 					<view class="submit" @click="saveComment()"></view>
@@ -92,20 +92,20 @@
 							that.commentContent = "";
 							
 							that.getComments();
-							uni.request({
-								method: "POST",
-								url: that.$serverUrl + '/article/getSonComments',
-								data: {
-									fatherCommentId: that.submitData.fatherCommentId
-								},
-								header: {
-									'content-type': 'application/x-www-form-urlencoded'
-								},
-								success: (res) => {
-									that.reCommentListFromDetail = res.data.data.rows;
-									console.log(that.reCommentListFromDetail);
-								}
-							});
+							// uni.request({
+							// 	method: "POST",
+							// 	url: that.$serverUrl + '/article/getSonComments',
+							// 	data: {
+							// 		fatherCommentId: that.submitData.fatherCommentId
+							// 	},
+							// 	header: {
+							// 		'content-type': 'application/x-www-form-urlencoded'
+							// 	},
+							// 	success: (res) => {
+							// 		that.reCommentListFromDetail = res.data.data.rows;
+							// 		console.log(that.reCommentListFromDetail);
+							// 	}
+							// });
 						},
 
 					})
@@ -356,7 +356,6 @@
 	top:0;
 	left:0;
 	z-index: 3;
-	pointer-events: none;
 }
 	.commentPart {
 		box-shadow: 0px 1px 5px 0px rgba(139, 139, 139, 0.32);
@@ -370,7 +369,6 @@
 	}
 
 	.emoji {
-		background: url(../../static/icon/emoji.png);
 		background-repeat: no-repeat;
 		background-position: center;
 		border: none;

@@ -1,9 +1,5 @@
 
-<<<<<<< HEAD
 .weui-search-bar.data-v-65099777{
-=======
-.weui-search-bar.data-v-5a44fe13{
->>>>>>> deyan
 	display: fixed;
 	top:0;
 	left:0;
@@ -12,31 +8,19 @@
 	background: #FFFFFE;
 	z-index: 10;
 }
-<<<<<<< HEAD
 .input-bar.data-v-65099777 {
-=======
-.input-bar.data-v-5a44fe13 {
->>>>>>> deyan
 	margin-top: 10px;
 	margin-left: 23px;
 	height: 32px;
 }
-<<<<<<< HEAD
 .back.data-v-65099777 {
-=======
-.back.data-v-5a44fe13 {
->>>>>>> deyan
 	display: inline-block;
 	width: 32px;
 	height: 32px;
 	background: #FDD041;
 	border-radius: 8px;
 }
-<<<<<<< HEAD
 .input-bar input.data-v-65099777 {
-=======
-.input-bar input.data-v-5a44fe13 {
->>>>>>> deyan
 	font-size: 15px;
 	display: inline-block;
 	width: 190px;
@@ -53,31 +37,19 @@
 	-webkit-box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.16);
 	        box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.16);
 }
-<<<<<<< HEAD
 .wxSearchKey.data-v-65099777, .SearchHistoryItem.data-v-65099777{
-=======
-.wxSearchKey.data-v-5a44fe13, .SearchHistoryItem.data-v-5a44fe13{
->>>>>>> deyan
 	margin-top: 26px;
 	width: calc(750upx-56px);
 	padding: 0 28px;
 	position: relative;
 }
-<<<<<<< HEAD
 .exSearchTitle.data-v-65099777,.SearchHistoryItemTitle.data-v-65099777
-=======
-.exSearchTitle.data-v-5a44fe13,.SearchHistoryItemTitle.data-v-5a44fe13
->>>>>>> deyan
  {
 	color: #888888;
 	font-size: 13px;
 	font-weight: 300;
 }
-<<<<<<< HEAD
 .searchResultWrods.data-v-65099777 {
-=======
-.searchResultWrods.data-v-5a44fe13 {
->>>>>>> deyan
 	color: #888888;
 	font-size: 13px;
 	font-weight: 300;
@@ -86,11 +58,7 @@
 	padding: 0 28px;
 	position: relative;
 }
-<<<<<<< HEAD
 .item.data-v-65099777 {
-=======
-.item.data-v-5a44fe13 {
->>>>>>> deyan
 	display: inline-block;
 	padding: 0 11px;
 	background: #FFE9A2;
@@ -102,11 +70,7 @@
 	font-weight: 300;
 	margin-right: 14px;
 }
-<<<<<<< HEAD
 .SearchHistoryItem icon.data-v-65099777{
-=======
-.SearchHistoryItem icon.data-v-5a44fe13{
->>>>>>> deyan
 	position: absolute;
 	right:28px;
 	top:0;
@@ -117,28 +81,17 @@ page {
 	width: 100%;
 }
 
-<<<<<<< HEAD
 .searchPage.data-v-e24eb85e{
 	height: 100%;width: 100%;position: fixed;top:0;left:0;background: #FFFFFF;z-index:10;
 }
 .bottomLayerOfLeft.data-v-e24eb85e {
-=======
-.searchPage.data-v-7a6267b5{
-	height: 100%;width: 100%;position: fixed;top:0;left:0;background: #FFFFFF;z-index:10;
-}
-.bottomLayerOfLeft.data-v-7a6267b5 {
->>>>>>> deyan
 
 		position: fixed;
 		width: 750rpx;
 		height: 1000px;
 		z-index: 3;
 }
-<<<<<<< HEAD
 .mainPageTop.data-v-e24eb85e {
-=======
-.mainPageTop.data-v-7a6267b5 {
->>>>>>> deyan
 		padding-top: 4px;
 		position: fixed;
 		left: 0;
@@ -152,11 +105,7 @@ page {
 		border-bottom-right-radius: 25px;
 		border-bottom-left-radius: 25px;
 }
-<<<<<<< HEAD
 .topBarTouxiang.data-v-e24eb85e {
-=======
-.topBarTouxiang.data-v-7a6267b5 {
->>>>>>> deyan
 		width: 30px;
 		height: 30px;
 		border-radius: 30px;
@@ -164,11 +113,7 @@ page {
 		vertical-align: middle;
 		margin-left: 12px;
 }
-<<<<<<< HEAD
 .topBarSearch.data-v-e24eb85e {
-=======
-.topBarSearch.data-v-7a6267b5 {
->>>>>>> deyan
 		font-size: 15px;
 		display: inline-block;
 		width: 190px;
@@ -182,11 +127,7 @@ page {
 		font-family: MicrosoftYaHei;
 		line-height: 10px;
 }
-<<<<<<< HEAD
 .topBarPlus.data-v-e24eb85e {
-=======
-.topBarPlus.data-v-7a6267b5 {
->>>>>>> deyan
 		font-size: 25px;
 		background: #ffffff;
 		display: inline-block;
@@ -198,11 +139,7 @@ page {
 		border-radius: 3px;
 		line-height: 23px;
 }
-<<<<<<< HEAD
 .topicTitle.data-v-e24eb85e {
-=======
-.topicTitle.data-v-7a6267b5 {
->>>>>>> deyan
 		color: #ffffff;
 		margin-left: 29px;
 		font-size: 13px;
@@ -210,30 +147,18 @@ page {
 		margin-top: 16px;
 		margin-bottom: 10px;
 }
-<<<<<<< HEAD
 .hot1.data-v-e24eb85e,
 	.hot2.data-v-e24eb85e,
 	.hot3.data-v-e24eb85e {
-=======
-.hot1.data-v-7a6267b5,
-	.hot2.data-v-7a6267b5,
-	.hot3.data-v-7a6267b5 {
->>>>>>> deyan
 		height: 17px;
 		line-height: 17px;
 		/* margin-bottom: 10px;
  */
 		padding-bottom: 10px;
 }
-<<<<<<< HEAD
 .hotNum1.data-v-e24eb85e,
 	.hotNum2.data-v-e24eb85e,
 	.hotNum3.data-v-e24eb85e {
-=======
-.hotNum1.data-v-7a6267b5,
-	.hotNum2.data-v-7a6267b5,
-	.hotNum3.data-v-7a6267b5 {
->>>>>>> deyan
 		color: #ffffff;
 		width: 77px;
 		font-weight: bold;
@@ -241,15 +166,9 @@ page {
 		vertical-align: middle;
 		display: inline-block;
 }
-<<<<<<< HEAD
 .hotContent1.data-v-e24eb85e,
 	.hotContent2.data-v-e24eb85e,
 	.hotContent3.data-v-e24eb85e {
-=======
-.hotContent1.data-v-7a6267b5,
-	.hotContent2.data-v-7a6267b5,
-	.hotContent3.data-v-7a6267b5 {
->>>>>>> deyan
 		display: inline-block;
 		vertical-align: middle;
 		color: #ffffff;

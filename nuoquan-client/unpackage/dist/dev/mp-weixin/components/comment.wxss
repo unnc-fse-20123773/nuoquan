@@ -74,11 +74,7 @@
 		    -ms-flex-align: end;
 		        align-items: flex-end;
 }
-<<<<<<< HEAD
 .submitComment.data-v-e8f832ba {
-=======
-.submitComment.data-v-a79986f2 {
->>>>>>> deyan
 		background: #FFCC30;
 		border-radius: 5px;
 		width: 120px;
@@ -90,11 +86,7 @@
 		text-align: center;
 		line-height: 30px;
 }
-<<<<<<< HEAD
 .reCommentsArea.data-v-e8f832ba {
-=======
-.reCommentsArea.data-v-a79986f2 {
->>>>>>> deyan
 		background: #EEEEEE;
 		width: 400rpx;
 		padding: 14px 25rpx 11px;

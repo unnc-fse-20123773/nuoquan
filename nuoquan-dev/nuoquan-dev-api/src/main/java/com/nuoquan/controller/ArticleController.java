@@ -18,9 +18,9 @@ import com.nuoquan.netty.MsgHandler;
 import com.nuoquan.pojo.Article;
 import com.nuoquan.pojo.ArticleImage;
 import com.nuoquan.pojo.UserArticleComment;
-import com.nuoquan.pojo.netty.CommentCard;
 import com.nuoquan.pojo.netty.DataContent;
 import com.nuoquan.pojo.vo.ArticleVO;
+import com.nuoquan.pojo.vo.CommentCard;
 import com.nuoquan.pojo.vo.UserArticleCommentVO;
 import com.nuoquan.service.ArticleService;
 import com.nuoquan.utils.JSONResult;
@@ -203,13 +203,9 @@ public class ArticleController extends BasicController {
 	
 			String newFileName = order + "." + strList[strList.length-1];	// 把顺序 order.原后缀 作为文件名
 			// 保存到数据库中的相对路径
-<<<<<<< HEAD
 
 			String uploadPathDB = "/" + userId + "/article" + "/" + articleId + "/" + newFileName;
 
-=======
-			String uploadPathDB = "/" + userId + "/article" + "/" + articleId + "/" + newFileName;
->>>>>>> deyan
 			// 文件上传的最终保存路径
 			String finalVideoPath = "";
 			

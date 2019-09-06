@@ -211,20 +211,20 @@ __webpack_require__.r(__webpack_exports__);
             that.commentContent = "";
 
             that.getComments();
-            uni.request({
-              method: "POST",
-              url: that.$serverUrl + '/article/getSonComments',
-              data: {
-                fatherCommentId: that.submitData.fatherCommentId },
-
-              header: {
-                'content-type': 'application/x-www-form-urlencoded' },
-
-              success: function success(res) {
-                that.reCommentListFromDetail = res.data.data.rows;
-                console.log(that.reCommentListFromDetail);
-              } });
-
+            // uni.request({
+            // 	method: "POST",
+            // 	url: that.$serverUrl + '/article/getSonComments',
+            // 	data: {
+            // 		fatherCommentId: that.submitData.fatherCommentId
+            // 	},
+            // 	header: {
+            // 		'content-type': 'application/x-www-form-urlencoded'
+            // 	},
+            // 	success: (res) => {
+            // 		that.reCommentListFromDetail = res.data.data.rows;
+            // 		console.log(that.reCommentListFromDetail);
+            // 	}
+            // });
           } });
 
 

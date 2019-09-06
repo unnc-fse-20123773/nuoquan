@@ -92,11 +92,7 @@ image {
 	text-align: center;
 	vertical-align: middle;
 }
-<<<<<<< HEAD
 .picturearea-one.data-v-0734f7a0 {
-=======
-.picturearea-one.data-v-fbd78668 {
->>>>>>> deyan
 	margin: auto;
 	display: -webkit-box;
 	display: -webkit-flex;
@@ -105,11 +101,7 @@ image {
 	width: 94%;
 	margin-left: 3%;
 }
-<<<<<<< HEAD
 .picturearea-mul.data-v-0734f7a0 {
-=======
-.picturearea-mul.data-v-fbd78668 {
->>>>>>> deyan
 	position: relative;
 	margin: auto;
 	display: -webkit-box;
@@ -120,11 +112,7 @@ image {
 	width: 94%;
 	margin-left: 3%;
 }
-<<<<<<< HEAD
 image.data-v-0734f7a0 {
-=======
-image.data-v-fbd78668 {
->>>>>>> deyan
 	width: 100%;
 	height: 200rpx;
 	margin: auto;
