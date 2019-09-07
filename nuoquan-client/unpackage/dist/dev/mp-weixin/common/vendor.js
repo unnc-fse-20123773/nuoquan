@@ -24,16 +24,16 @@ _App.default.mpType = 'app';
 _vue.default.config.productionTip = false;
 
 _vue.default.prototype.$store = _store.default;
-// Vue.prototype.$serverUrl = "http://127.0.0.1:8080"
-// Vue.prototype.$wsServerUrl = "ws://127.0.0.1:8088/ws"
+_vue.default.prototype.$serverUrl = "http://127.0.0.1:8080";
+_vue.default.prototype.$wsServerUrl = "ws://127.0.0.1:8088/ws";
 
-_vue.default.prototype.$serverUrl = "http://192.168.31.210:8080";
-_vue.default.prototype.$wsServerUrl = "ws://192.168.31.210:8088/ws";
+// Vue.prototype.$serverUrl = "http://192.168.31.210:8080"
+// Vue.prototype.$wsServerUrl = "ws://192.168.31.210:8088/ws"
 
 /**
-                                                                      * 获取当前用户信息（我）
-                                                                      * @param {Object} user
-                                                                      */
+ * 获取当前用户信息（我）
+ * @param {Object} user
+ */
 _vue.default.prototype.setGlobalUserInfo = function (user) {
   uni.setStorageSync('userInfo', user);
 };

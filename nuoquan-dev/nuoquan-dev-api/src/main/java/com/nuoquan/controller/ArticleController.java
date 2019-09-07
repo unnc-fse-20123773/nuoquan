@@ -341,7 +341,7 @@ public class ArticleController extends BasicController {
 	}
 	
 	/**
-	 * TODO: 该接口最多返回100个对象...
+	 * TODO: 该接口最多返回100个对象...并造成卡顿 解决方法：分页并自动累加页数
 	 * @param userId
 	 * @return
 	 */

@@ -102,7 +102,6 @@
 					},
 					success: (res) => {	console.log(res);
 					console.log(res);
-					debugger;
 						that.commentList = res.data.data.rows;
 						console.log(that.articleCard.id);				
 					},

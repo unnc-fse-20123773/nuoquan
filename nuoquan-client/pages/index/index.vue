@@ -1,6 +1,6 @@
 <template>
 	<view class="index">
-		<mainpagetop :userInfo='userInfo' :topArticles='topArticles' :topHeight="topHeight" style="position: fixed;z-index: 5;height:100%;"></mainpagetop>
+		<mainpagetop :userInfo='userInfo' :topArticles='topArticles' :topHeight="topHeight" style="position: fixed;z-index: 30;height:100%;"></mainpagetop>
 		
 		<view class="indexSelf" style="height:100%;">
 			<scroll-view class="indexArticleArea" scroll-y="true" @scroll="linkageWithTop">
@@ -149,8 +149,7 @@
 
 <style scoped>
 	.index {
-		/* 页面高度由内容扩充，最低值为100%（page 定义的）- by Guetta */
-		/* height:100%; */
+		height:100%;
 		background-color: #f3f3f3;
 	}
 

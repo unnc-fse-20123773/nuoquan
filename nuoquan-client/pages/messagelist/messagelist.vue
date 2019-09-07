@@ -12,9 +12,10 @@
 					<image src="../../static/icon/like.png" class="msglist-like-icon" mode=""></image>
 				</view>
 				<text class="msglist-like-text font-family">点赞</text>
-				<view class="msglist-like-num super_center" v-if="uLikeMsgCount>0">
+				<view :class="[uLikeMsgCount > 9 ? 'msglist-like-num-2 super_center' : 'msglist-like-num-1 super_center']" v-if="uLikeMsgCount>0">
 					{{uLikeMsgCount}}
 				</view>
+				<!-- :class="[currentTab==index ? 'menu-one-act' : 'menu-one']" -->
 			</view>
 			<view class="msglist-likecommentnum-border">
 			</view>
@@ -23,7 +24,7 @@
 					<image src="../../static/icon/comment.png" class="msglist-comment-icon" mode=""></image>
 				</view>
 				<text class="msglist-comment-text font-family">评论</text>
-				<view class="msglist-comment-num super_center" v-if="uCommentMsgCount>0">
+				<view :class="[uCommentMsgCount > 9 ? 'msglist-comment-num-2 super_center' : 'msglist-comment-num-1 super_center']" v-if="uCommentMsgCount>0">
 					{{uCommentMsgCount}}
 				</view>
 			</view>
@@ -209,6 +210,7 @@
 
 			// [测试代码块]
 			this.mySocket.init();
+			console.log(this.uLikeMsgCount);
 		},
 
 		onShow() {
@@ -422,7 +424,8 @@
 		font-family: weiruanyahei;
 	}
 
-	.msglist-like-num {
+	/* 一位数和两位数的区分 */
+	.msglist-like-num-2 {
 		position: absolute;
 		font-size: small;
 		margin-left: 360upx;
@@ -433,6 +436,18 @@
 		width: 56upx;
 		right: 40upx;
 	}
+	
+	.msglist-like-num-1 {
+		position: absolute;
+		font-size: small;
+		margin-left: 360upx;
+		font-family: weiruanyahei;
+		background-color: #e4505d;
+		color: white;
+		border-radius: 7upx;
+		width: 36upx;
+		right: 40upx;
+	}
 
 	.msglist-comment-text {
 		font-size: 28upx;
@@ -440,8 +455,9 @@
 		left: 120upx;
 		font-family: weiruanyahei;
 	}
-
-	.msglist-comment-num {
+	
+	/* 一位数和两位数的区分 */
+	.msglist-comment-num-1 {
 		position: absolute;
 		font-size: small;
 		margin-left: 360upx;
@@ -452,6 +468,19 @@
 		width: 36upx;
 		right: 40upx;
 	}
+	
+	.msglist-comment-num-2 {
+		position: absolute;
+		font-size: small;
+		margin-left: 360upx;
+		font-family: weiruanyahei;
+		background-color: #058ecc;
+		color: white;
+		border-radius: 7upx;
+		width: 56upx;
+		right: 40upx;
+	}
+
 
 	.msglist-card {
 		width: 88%;
