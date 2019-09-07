@@ -24,16 +24,16 @@ _App.default.mpType = 'app';
 _vue.default.config.productionTip = false;
 
 _vue.default.prototype.$store = _store.default;
-_vue.default.prototype.$serverUrl = "http://127.0.0.1:8080";
-_vue.default.prototype.$wsServerUrl = "ws://127.0.0.1:8088/ws";
+// Vue.prototype.$serverUrl = "http://127.0.0.1:8080"
+// Vue.prototype.$wsServerUrl = "ws://127.0.0.1:8088/ws"
 
-// Vue.prototype.$serverUrl = "http://192.168.31.210:8080"
-// Vue.prototype.$wsServerUrl = "ws://192.168.31.210:8088/ws"
+_vue.default.prototype.$serverUrl = "http://192.168.31.210:8080";
+_vue.default.prototype.$wsServerUrl = "ws://192.168.31.210:8088/ws";
 
 /**
- * 获取当前用户信息（我）
- * @param {Object} user
- */
+                                                                      * 获取当前用户信息（我）
+                                                                      * @param {Object} user
+                                                                      */
 _vue.default.prototype.setGlobalUserInfo = function (user) {
   uni.setStorageSync('userInfo', user);
 };
@@ -256,7 +256,13 @@ _vue.default.prototype.mySocket = {
       that.isOpen = true;
       console.log('WebSocket连接已打开！isSocketOpen=' + that.isOpen);
       //发送连接消息，向服务器注册信息
-      that.sendObj(app.netty.CONNECT, null, null, null);
+      var myUserId = app.getGlobalUserInfo().id; // 调用全局用户缓存，需要先请求获取
+      if (app.isNull(myUserId)) {
+        console.log("请先获取用户数据");
+        return;
+      }
+      var dataContent = new app.netty.DataContent(app.netty.CONNECT, null, myUserId);
+      that.sendDataContent(dataContent);
       // 发送未发送的信息
       for (var i = 0; i < that.socketMsgQueue.length; i++) {
         if (that.socketMsgQueue[i].action == app.netty.CHAT) {
@@ -266,8 +272,9 @@ _vue.default.prototype.mySocket = {
       that.socketMsgQueue = [];
 
       // 签收未签收消息
-      app.chat.fetchUnsignedMsg();
-
+      app.chat.fetchUnsignedChatMsg(); // 获取聊天信息
+      app.notification.fetchUnsignedLikeMsg(); // 获取点赞通知
+      app.notification.fetchUnsignedCommentMsg(); // 获取评论通知
       // 定时发送心跳
       setInterval(that.keepAlive, 50000);
     });
@@ -281,46 +288,6 @@ _vue.default.prototype.mySocket = {
       console.log("收到服务器内容：");
       console.log(dataContent);
       var action = dataContent.action;
-      // 如果消息类型为 CHAT
-      if (action == app.netty.CHAT) {
-        var chatMessage = dataContent.data;
-        // 发送签收消息
-        that.signMsgList(chatMessage.msgId);
-
-        // 保存聊天历史记录到本地缓存
-        var myId = chatMessage.receiverId;
-        var friendId = chatMessage.senderId;
-        var msg = chatMessage.msg;
-        var createDate = app.formatTime(chatMessage.createDate); // 对时间戳进行格式化
-
-        app.chat.saveUserChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);
-
-        // 判断当前页面，保存聊天快照
-        var page = app.getCurrentPage();
-        if (page.route == 'pages/chatpage/chatpage') {
-          var pageFriendId = page.data.friendInfo.id; // 打开页面才有对象，越层判断会报对象为空的错
-          /* 
-          【BUG】ISO 虚拟机获取 friendInfo.id 报错信息：
-           undefined is not an object (evaluating 'page.data.friendInfo.id')
-           不知道真机会不会有这种情况
-          */
-          // var pagestr = JSON.stringify(page.data);
-          // console.log(pagestr);
-          if (pageFriendId == friendId) {
-            // 与该用户在聊天，标记为已读
-            console.log("与该用户在聊天，标记为已读");
-            app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.READ, createDate);
-          }
-        } else {
-          // 聊天页面未打开或不是与该用户聊天，标记为未读
-          console.log("聊天页面未打开或不是与该用户聊天，标记为未读");
-          app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.UNREAD, createDate);
-        }
-
-        // 修改 store，发送信号，把消息卡片渲染到对话窗口 和 消息列表
-        var newMessage = new app.chat.ChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);
-        app.$store.commit('setChatMessageCard', newMessage);
-      }
 
       if (action == app.netty.CHAT ||
       action == app.netty.LIKEARTICLE ||
@@ -331,31 +298,78 @@ _vue.default.prototype.mySocket = {
         app.$store.commit('setMyMsgCount'); // 累加 msgCount in index.js
 
         switch (action) {
+          case app.netty.CHAT: // 如果消息类型为 CHAT
+            var chatMessage = dataContent.data;
+            // 发送签收消息
+            that.signMsgList(chatMessage.msgId);
+
+            // 保存聊天历史记录到本地缓存
+            var myId = chatMessage.receiverId;
+            var friendId = chatMessage.senderId;
+            var msg = chatMessage.msg;
+            var createDate = app.formatTime(chatMessage.createDate); // 对时间戳进行格式化
+
+            app.chat.saveUserChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);
+
+            // 判断当前页面，保存聊天快照
+            var page = app.getCurrentPage();
+            if (page.route == 'pages/chatpage/chatpage') {
+              var pageFriendId = page.data.friendInfo.id; // 打开页面才有对象，越层判断会报对象为空的错
+              /* 
+              【BUG】ISO 虚拟机获取 friendInfo.id 报错信息：
+               undefined is not an object (evaluating 'page.data.friendInfo.id')
+               不知道真机会不会有这种情况
+              */
+              // var pagestr = JSON.stringify(page.data);
+              // console.log(pagestr);
+              if (pageFriendId == friendId) {
+                // 与该用户在聊天，标记为已读
+                console.log("与该用户在聊天，标记为已读");
+                app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.READ, createDate);
+              }
+            } else {
+              // 聊天页面未打开或不是与该用户聊天，标记为未读
+              console.log("聊天页面未打开或不是与该用户聊天，标记为未读");
+              app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.UNREAD, createDate);
+            }
+
+            // 修改 store，发送信号，把消息卡片渲染到对话窗口 和 消息列表
+            var newMessage = new app.chat.ChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);
+            app.$store.commit('setChatMessageCard', newMessage);
+            break;
           case app.netty.LIKEARTICLE:
             console.log("获取点赞文章");
+            // 签收消息
+            that.signLikeArticleList(dataContent.data.source.id);
             // 存入缓存 (TODO：登陆时获取未签收点赞消息)
-            dataContent.data.createDate = app.formatTime(dataContent.data.createDate);
+            dataContent.data.source.createDate = app.formatTime(dataContent.data.source.createDate);
             app.notification.saveLikeMsg(dataContent);
             app.$store.commit('setLikeMsgCount');
             break;
           case app.netty.LIKECOMMENT:
             console.log("获取点赞评论");
+            // 签收消息
+            that.signLikeCommentList(dataContent.data.source.id);
             // 存入缓存
-            dataContent.data.createDate = app.formatTime(dataContent.data.createDate);
+            dataContent.data.source.createDate = app.formatTime(dataContent.data.source.createDate);
             app.notification.saveLikeMsg(dataContent);
             app.$store.commit('setLikeMsgCount');
             break;
           case app.netty.COMMENTARTICLE:
             console.log("获取评论文章");
+            // 签收消息
+            that.signCommentList(dataContent.data.source.id);
             // 存入缓存
-            dataContent.data.comment.createDate = app.formatTime(dataContent.data.comment.createDate);
+            dataContent.data.source.createDate = app.formatTime(dataContent.data.source.createDate);
             app.notification.saveCommentMsg(dataContent);
             app.$store.commit('setCommentMsgCount');
             break;
           case app.netty.COMMENTCOMMENT:
             console.log("获取评论评论");
+            // 签收消息
+            that.signCommentList(dataContent.data.source.id);
             // 存入缓存
-            dataContent.data.comment.createDate = app.formatTime(dataContent.data.comment.createDate);
+            dataContent.data.source.createDate = app.formatTime(dataContent.data.source.createDate);
             app.notification.saveCommentMsg(dataContent);
             app.$store.commit('setCommentMsgCount');
             break;
@@ -377,7 +391,7 @@ _vue.default.prototype.mySocket = {
 
   },
   /**
-      * 向 netty 服务器发送 socket 数据的方法
+      * 向 netty 服务器发送 聊天信息的方法 sendChatObj
       * @param {Object} type
       * @param {Object} toUserId
       * @param {Object} msg
@@ -387,6 +401,7 @@ _vue.default.prototype.mySocket = {
     var myUserId = app.getGlobalUserInfo().id; // 调用全局用户缓存，需要先请求获取
     if (app.isNull(myUserId)) {
       console.log("请先获取用户数据");
+      return;
     }
 
     // 获取当前时间戳，传输时间戳
@@ -400,6 +415,7 @@ _vue.default.prototype.mySocket = {
     if (isSocketOpen == true) {
       this.sendDataContent(dataContent);
     } else {
+      // 加到待发送列表
       console.log("isSocketOpen=" + isSocketOpen);
       this.socketMsgQueue.push(dataContent);
       console.log(this.socketMsgQueue);
@@ -438,11 +454,39 @@ _vue.default.prototype.mySocket = {
   },
 
   /**
-      * 批量签收消息
+      * 批量签收聊天消息
       * @param {Object} msgIds
       */
   signMsgList: function signMsgList(msgIds) {
-    this.sendObj(app.netty.SIGNED, null, null, msgIds);
+    var dataContent = new app.netty.DataContent(app.netty.SIGNED, null, msgIds);
+    this.sendDataContent(dataContent);
+  },
+
+  /**
+      * 批量签收点赞文章消息
+      * @param {Object} msgIds
+      */
+  signLikeArticleList: function signLikeArticleList(msgIds) {
+    var dataContent = new app.netty.DataContent(app.netty.LIKEARTICLE_SIGN, null, msgIds);
+    this.sendDataContent(dataContent);
+  },
+
+  /**
+      * 批量签收点赞评论消息
+      * @param {Object} msgIds
+      */
+  signLikeCommentList: function signLikeCommentList(msgIds) {
+    var dataContent = new app.netty.DataContent(app.netty.LIKECOMMENT_SIGN, null, msgIds);
+    this.sendDataContent(dataContent);
+  },
+
+  /**
+      * 批量签收评论消息
+      * @param {Object} msgIds
+      */
+  signCommentList: function signCommentList(msgIds) {
+    var dataContent = new app.netty.DataContent(app.netty.COMMENT_SIGN, null, msgIds);
+    this.sendDataContent(dataContent);
   },
 
   /**
@@ -450,7 +494,8 @@ _vue.default.prototype.mySocket = {
       */
   keepAlive: function keepAlive() {
     // 用 setInterval 调用时，使用 this 获取不到实例，故用 app
-    app.mySocket.sendObj(app.netty.KEEPALIVE, null, null, null);
+    var dataContent = new app.netty.DataContent(app.netty.KEEPALIVE, null, null);
+    app.mySocket.sendDataContent(dataContent);
   } };
 
 
@@ -664,7 +709,7 @@ _vue.default.prototype.chat = {
     }
   },
 
-  fetchUnsignedMsg: function fetchUnsignedMsg() {var _this = this;
+  fetchUnsignedChatMsg: function fetchUnsignedChatMsg() {var _this = this;
     var user = app.getGlobalUserInfo();
     var msgIds = ","; // 格式: ,1001,1002,1003,
     var that = this;
@@ -683,6 +728,7 @@ _vue.default.prototype.chat = {
           var unsignedMsgList = res.data.data;
           console.log(unsignedMsgList);
           if (!app.isNull(unsignedMsgList)) {
+            app.$store.commit('setMyMsgCount', unsignedMsgList.length); // 增加 msgCount in index.js
             for (var i = 0; i < unsignedMsgList.length; i++) {
               var msgObj = unsignedMsgList[i];
               var timeStamp = new Date(msgObj.createDate).getTime();
@@ -740,8 +786,102 @@ _vue.default.prototype.notification = {
 
   getCommentMsg: function getCommentMsg() {
     return app.getListByKey(this.COMMENTMSG_KEY);
-  } };
+  },
 
+  /**
+      * 获取并签收未签收的点赞通知
+      */
+  fetchUnsignedLikeMsg: function fetchUnsignedLikeMsg() {
+    var user = app.getGlobalUserInfo();
+    var likeArticleIds = ","; // 格式: ,1001,1002,1003,
+    var likeCommentIds = ",";
+    var that = this;
+    uni.request({
+      url: app.$serverUrl + '/article/getUnsignedLikeMsg',
+      method: "POST",
+      data: {
+        userId: user.id },
+
+      header: {
+        'content-type': 'application/x-www-form-urlencoded' },
+
+      success: function success(res) {
+        // console.log(res)
+        if (res.data.status == 200) {
+          var unsignedMsgList = res.data.data;
+          console.log(unsignedMsgList);
+          if (!app.isNull(unsignedMsgList)) {
+            for (var i = 0; i < unsignedMsgList.length; i++) {
+              var dataContent = unsignedMsgList[i];
+              //累加信息
+              app.$store.commit('setMyMsgCount'); // 累加通用信息
+              app.$store.commit('setLikeMsgCount'); //累加点赞信息
+              // 逐条存入缓存
+              dataContent.data.source.createDate = app.formatTime(dataContent.data.source.createDate);
+              app.notification.saveLikeMsg(dataContent);
+              // 拼接批量签收id的字符串
+              switch (dataContent.action) {
+                case app.netty.LIKEARTICLE:
+                  likeArticleIds += dataContent.data.source.id + ",";
+                  break;
+                case app.netty.LIKECOMMENT:
+                  likeCommentIds += dataContent.data.source.id + ",";
+                  break;
+                default:
+                  break;}
+
+            }
+
+            // 调用批量签收方法
+            app.mySocket.signLikeArticleList(likeArticleIds);
+            app.mySocket.signLikeCommentList(likeCommentIds);
+          }
+        }
+      } });
+
+  },
+
+  /**
+      * 获取并签收未签收的评论通知
+      */
+  fetchUnsignedCommentMsg: function fetchUnsignedCommentMsg() {
+    var user = app.getGlobalUserInfo();
+    var commentIds = ","; // 格式: ,1001,1002,1003,
+    var that = this;
+    uni.request({
+      url: app.$serverUrl + '/article/getUnsignedCommentMsg',
+      method: "POST",
+      data: {
+        userId: user.id },
+
+      header: {
+        'content-type': 'application/x-www-form-urlencoded' },
+
+      success: function success(res) {
+        // console.log(res)
+        if (res.data.status == 200) {
+          var unsignedMsgList = res.data.data;
+          console.log(unsignedMsgList);
+          if (!app.isNull(unsignedMsgList)) {
+            for (var i = 0; i < unsignedMsgList.length; i++) {
+              var dataContent = unsignedMsgList[i];
+              //累加信息
+              app.$store.commit('setMyMsgCount'); // 累加通用信息
+              app.$store.commit('setCommentMsgCount'); //累加评论信息
+              // 逐条存入缓存
+              dataContent.data.source.createDate = app.formatTime(dataContent.data.source.createDate);
+              app.notification.saveCommentMsg(dataContent);
+              // 拼接批量签收id的字符串
+              commentIds += dataContent.data.source.id + ",";
+            }
+
+            // 调用批量签收方法
+            app.mySocket.signCommentList(commentIds);
+          }
+        }
+      } });
+
+  } };
 
 
 _vue.default.prototype.netty = {
@@ -754,8 +894,11 @@ _vue.default.prototype.netty = {
   KEEPALIVE: 4, // 客户端保持心跳
   LIKEARTICLE: 5, // 点赞文章通知
   LIKECOMMENT: 6, // 点赞评论通知
-  COMMENTARTICLE: 7, //评论文章通知
+  COMMENTARTICLE: 7, // 评论文章通知
   COMMENTCOMMENT: 8, // 评论评论通知
+  LIKEARTICLE_SIGN: 9, // 签收点赞文章通知
+  LIKECOMMENT_SIGN: 10, // 签收点赞评论通知
+  COMMENT_SIGN: 11, // 签收评论文章通知
 
   /**
    * 和后端 ChatMessage 聊天模型的对象保持一致

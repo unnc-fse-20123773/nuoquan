@@ -26,4 +26,17 @@ public interface UserArticleCommentMapperCustom extends MyMapper<UserArticleComm
 	 * @param commentId
 	 */
 	public void reduceCommentLikeCount(String commentId);
+	
+	/**
+	 * 批量签收
+	 * @param msgIdList
+	 */
+	public void batchUpdateMsgSigned(List<String> msgIdList);
+	
+	/**
+	 * 获取 user 的未签收评论消息
+	 * @param userId
+	 * @return
+	 */
+	public List<UserArticleCommentVO> getUnsignedCommentMsg(String userId);
 }

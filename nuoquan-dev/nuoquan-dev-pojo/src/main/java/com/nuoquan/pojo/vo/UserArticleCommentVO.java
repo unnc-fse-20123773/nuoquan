@@ -2,8 +2,6 @@ package com.nuoquan.pojo.vo;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-
 public class UserArticleCommentVO {
 
     private String id;
@@ -16,6 +14,8 @@ public class UserArticleCommentVO {
     private Integer likeNum;
     private Integer dislikeNum;
     private Integer commentNum;
+    private String underCommentId; // 显示在该条评论下方
+    private Integer signFlag;
 
     private String faceImg;
     private String nickname;
@@ -167,4 +167,30 @@ public class UserArticleCommentVO {
 	public void setFatherCommentId(String fatherCommentId) {
 		this.fatherCommentId = fatherCommentId;
 	}
+	
+    public String getUnderCommentId() {
+        return underCommentId;
+    }
+    
+    public void setUnderCommentId(String underCommentId) {
+        this.underCommentId = underCommentId;
+    }
+    
+    /**
+     * 获取评论消息是否被签收 0: 未签收 1：签收
+     *
+     * @return sign_flag - 评论消息是否被签收 0: 未签收 1：签收
+     */
+    public Integer getSignFlag() {
+        return signFlag;
+    }
+
+    /**
+     * 设置评论消息是否被签收 0: 未签收 1：签收
+     *
+     * @param signFlag 评论消息是否被签收 0: 未签收 1：签收
+     */
+    public void setSignFlag(Integer signFlag) {
+        this.signFlag = signFlag;
+    }
 }

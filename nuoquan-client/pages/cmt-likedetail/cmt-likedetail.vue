@@ -30,37 +30,37 @@
 									<!-- 相对绝对定位 -->
 									<view class="id-line-rel">
 										<view class="clTouxiang-box">
-											<image class="clTouxiang" :src="item.data.faceImg" mode="scaleToFill"></image>
+											<image class="clTouxiang" :src="item.data.source.faceImg" mode="scaleToFill"></image>
 										</view>
 										<view class="clID-box">
-											<text class="clID-text">{{item.data.nickname}}</text>
+											<text class="clID-text">{{item.data.source.nickname}}</text>
 											<text class="clID-operation">点赞了你的文章</text>
 										</view>
 										<!-- 需要获取新消息时间戳 -->
 										<view class="clID-time">
-											{{item.data.createDate}}
+											{{item.data.source.createDate}}
 										</view>
 									</view>
 								</view>
 								<!-- 文章预览块 -->
 								<view class="origin-bar-abs">
 									<view class="origin-bar-rel">
-										<view class="origin-imageBox" v-if="item.data.imgList.length > 0">
+										<view class="origin-imageBox" v-if="item.data.target.imgList.length > 0">
 											<view class="origin-imageMask"></view>
 											<view class="origin-imageMasknum super_center">
 												<view class="origin-imageMasknumtext">
-													+{{item.data.imgList.length}}
+													+{{item.data.target.imgList.length}}
 												</view>
 											</view>
 											<!-- 图片好像显示不出来 by Jerrio -->
-											<image class="origin-image" :src="serverUrl + item.data.imgList[0].imagePath" mode="scaleToFill"></image>
+											<image class="origin-image" :src="serverUrl + item.data.target.imgList[0].imagePath" mode="scaleToFill"></image>
 										</view>
 										<view class="origin-briefBox">
 											<view class="origin-briefTitlebox">
-												<text class="origin-briefTitle">{{item.data.articleTitle}}</text>
+												<text class="origin-briefTitle">{{item.data.target.articleTitle}}</text>
 											</view>
 											<view class="origin-briefTextbox">
-												<text class="origin-briefText">{{item.data.articleContent}}</text>
+												<text class="origin-briefText">{{item.data.target.articleContent}}</text>
 											</view>
 										</view>
 									</view>
@@ -78,22 +78,22 @@
 									<!-- 相对绝对定位 -->
 									<view class="id-line-rel">
 										<view class="clTouxiang-box">
-											<image class="clTouxiang" :src="item.data.faceImg" mode="scaleToFill"></image>
+											<image class="clTouxiang" :src="item.data.source.faceImg" mode="scaleToFill"></image>
 										</view>
 										<view class="clID-box">
-											<text class="clID-text">{{item.data.nickname}}</text>
+											<text class="clID-text">{{item.data.source.nickname}}</text>
 											<text class="clID-operation">点赞了你的评论</text>
 										</view>
 										<!-- 需要获取新消息时间戳 -->
 										<view class="clID-time">
-											{{item.data.createDate}}
+											{{item.data.source.createDate}}
 										</view>
 									</view>
 								</view>
 								<!-- 点赞预览块 -->
 								<view class="brief-bar-abs">
 									<view class="brief-bar-rel">
-										{{item.data.comment}}
+										{{item.data.target.comment}}
 									</view>
 								</view>
 
@@ -110,22 +110,22 @@
 									<!-- 相对绝对定位 -->
 									<view class="id-line-rel">
 										<view class="clTouxiang-box">
-											<image class="clTouxiang" :src="item.data.comment.faceImg" mode="scaleToFill"></image>
+											<image class="clTouxiang" :src="item.data.source.faceImg" mode="scaleToFill"></image>
 										</view>
 										<view class="clID-box">
-											<text class="clID-text">{{item.data.comment.nickname}}</text>
+											<text class="clID-text">{{item.data.source.nickname}}</text>
 											<text class="clID-operation">评论了你的文章</text>
 										</view>
 										<!-- 需要获取新消息时间戳 -->
 										<view class="clID-time">
-											{{item.data.comment.createDate}}
+											{{item.data.source.createDate}}
 										</view>
 									</view>
 								</view>
 								<!-- 点赞 or 评论预览块 -->
 								<view class="brief-bar-abs">
 									<view class="brief-bar-rel">
-										{{item.data.comment.comment}}
+										{{item.data.source.comment}}
 									</view>
 								</view>
 								<!-- 原文章预览块 -->
@@ -164,22 +164,22 @@
 									<!-- 相对绝对定位 -->
 									<view class="id-line-rel">
 										<view class="clTouxiang-box">
-											<image class="clTouxiang" :src="item.data.comment.faceImg" mode="scaleToFill"></image>
+											<image class="clTouxiang" :src="item.data.source.faceImg" mode="scaleToFill"></image>
 										</view>
 										<view class="clID-box">
-											<text class="clID-text">{{item.data.comment.nickname}}</text>
+											<text class="clID-text">{{item.data.source.nickname}}</text>
 											<text class="clID-operation">回复了你的评论</text>
 										</view>
 										<!-- 需要获取新消息时间戳 -->
 										<view class="clID-time">
-											{{item.data.comment.createDate}}
+											{{item.data.source.createDate}}
 										</view>
 									</view>
 								</view>
 								<!-- 点赞 or 评论预览块 -->
 								<view class="brief-bar-nocolor">
 									<view class="brief-bar-rel">
-										{{item.data.comment.comment}}
+										{{item.data.source.comment}}
 									</view>
 								</view>
 								<!-- 原评论预览块 -->
@@ -224,7 +224,6 @@
 				commentList: '',
 
 				screenWidth: 350,
-				serverUrl: "",
 				scrollTop: 0,
 				old: {
 					scrollTop: 0
