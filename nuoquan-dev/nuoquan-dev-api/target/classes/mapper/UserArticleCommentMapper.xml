@@ -16,5 +16,6 @@
     <result column="dislike_num" property="dislikeNum" jdbcType="INTEGER" />
     <result column="comment_num" property="commentNum" jdbcType="INTEGER" />
     <result column="under_comment_id" property="underCommentId" jdbcType="VARCHAR" />
+    <result column="sign_flag" property="signFlag" jdbcType="INTEGER" />
   </resultMap>
 </mapper>

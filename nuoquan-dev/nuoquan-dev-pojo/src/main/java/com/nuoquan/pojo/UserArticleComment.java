@@ -41,6 +41,12 @@ public class UserArticleComment {
     private String underCommentId;
 
     /**
+     * 评论消息是否被签收 0: 未签收 1：签收
+     */
+    @Column(name = "sign_flag")
+    private Integer signFlag;
+    
+    /**
      * @return id
      */
     public String getId() {
@@ -196,5 +202,23 @@ public class UserArticleComment {
      */
     public void setUnderCommentId(String underCommentId) {
         this.underCommentId = underCommentId;
+    }
+    
+    /**
+     * 获取评论消息是否被签收 0: 未签收 1：签收
+     *
+     * @return sign_flag - 评论消息是否被签收 0: 未签收 1：签收
+     */
+    public Integer getSignFlag() {
+        return signFlag;
+    }
+
+    /**
+     * 设置评论消息是否被签收 0: 未签收 1：签收
+     *
+     * @param signFlag 评论消息是否被签收 0: 未签收 1：签收
+     */
+    public void setSignFlag(Integer signFlag) {
+        this.signFlag = signFlag;
     }
 }

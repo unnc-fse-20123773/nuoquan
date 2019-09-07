@@ -87,6 +87,8 @@ public interface UserService {
 	
 	/**
 	 * @Description 保存聊天消息到数据库
+	 * @param chatMessage
+	 * @return msgId
 	 */
 	public String saveMsg(ChatMessage chatMessage);
 	

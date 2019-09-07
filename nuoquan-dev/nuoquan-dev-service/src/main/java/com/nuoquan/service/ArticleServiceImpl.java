@@ -20,16 +20,17 @@ import com.nuoquan.mapper.UserArticleCommentMapper;
 import com.nuoquan.mapper.UserArticleCommentMapperCustom;
 import com.nuoquan.mapper.UserLikeArticleMapper;
 import com.nuoquan.mapper.UserLikeCommentMapper;
+import com.nuoquan.mapper.UserLikeMapperCustom;
 import com.nuoquan.mapper.UserMapper;
 import com.nuoquan.pojo.Article;
 import com.nuoquan.pojo.ArticleImage;
 import com.nuoquan.pojo.SearchRecord;
 import com.nuoquan.pojo.UserArticleComment;
-import com.nuoquan.pojo.UserFans;
 import com.nuoquan.pojo.UserLikeArticle;
 import com.nuoquan.pojo.UserLikeComment;
 import com.nuoquan.pojo.vo.ArticleVO;
 import com.nuoquan.pojo.vo.UserArticleCommentVO;
+import com.nuoquan.pojo.vo.UserLikeVO;
 import com.nuoquan.utils.PagedResult;
 
 import tk.mybatis.mapper.entity.Example;
@@ -67,6 +68,9 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Autowired
 	private ArticleImageMapper articleImageMapper;
+	
+	@Autowired
+	private UserLikeMapperCustom userLikeMapperCustom;
 
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
@@ -96,13 +100,16 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public ArticleVO getArticleById(String articleId) {
 		ArticleVO articleVO = articleMapperCustom.getArticleById(articleId);
-		articleVO.setImgList(articleImageMapper.getArticleImgs(articleId));
+		List<ArticleImage> images = articleImageMapper.getArticleImgs(articleId);
+		if (!images.isEmpty()) {
+			articleVO.setImgList(images);
+		}
 		return articleVO;
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public void userLikeArticle(String userId, String articleId, String articleCreaterId) {
+	public UserLikeArticle userLikeArticle(String userId, String articleId, String articleCreaterId) {
 
 		// 保存用户和文章的点赞关联关系表
 		String likeId = sid.nextShort();
@@ -114,12 +121,12 @@ public class ArticleServiceImpl implements ArticleService {
 		ula.setCreateDate(new Date());
 
 		userLikeArticleMapper.insertSelective(ula);
-
 		// 文章喜欢数量累加
 		articleMapperCustom.addArticleLikeCount(articleId);
-
 		// 用户受喜欢数量的累加
 		userMapper.addReceiveLikeCount(articleCreaterId);
+		
+		return ula;
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -202,29 +209,30 @@ public class ArticleServiceImpl implements ArticleService {
 		comment.setLikeNum(0);
 		comment.setCreateDate(new Date());
 		comment.setCommentNum(0);
-		userArticleCommentMapper.insert(comment);
+		userArticleCommentMapper.insertSelective(comment);
+		// TODO 文章点赞数累加
 		return id;
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public void userLikeComment(String userId, String commentId, String createrId) {
+	public UserLikeComment userLikeComment(String userId, String commentId, String createrId) {
 		// 保存用户和文章的点赞关联关系表
 		String likeId = sid.nextShort();
 
-		UserLikeComment ula = new UserLikeComment();
-		ula.setId(likeId);
-		ula.setUserId(userId);
-		ula.setCommentId(commentId);
-		ula.setCreateDate(new Date());
-		userLikeCommentMapper.insertSelective(ula);
-
+		UserLikeComment ulc = new UserLikeComment();
+		ulc.setId(likeId);
+		ulc.setUserId(userId);
+		ulc.setCommentId(commentId);
+		ulc.setCreateDate(new Date());
+		
+		userLikeCommentMapper.insertSelective(ulc);
 		// 评论喜欢数量累加
 		userArticleCommentMapperCustom.addCommentLikeCount(commentId);
-
 		// 用户受喜欢数量的累加
 		userMapper.addReceiveLikeCount(createrId);
 
+		return ulc;
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -329,6 +337,37 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public List<ArticleVO> getTop3ByPopularity() {
 		return articleMapperCustom.getTop3ByPopularity();
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Override
+	public void updateLikeArticleSigned(List<String> msgIdList) {
+		userLikeArticleMapper.batchUpdateMsgSigned(msgIdList);
+	}
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Override
+	public void updateLikeCommentSigned(List<String> msgIdList) {
+		userLikeCommentMapper.batchUpdateMsgSigned(msgIdList);
+	}
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Override
+	public void updateCommentSigned(List<String> msgIdList) {
+		userArticleCommentMapperCustom.batchUpdateMsgSigned(msgIdList);		
+	}
+
+	@Transactional(propagation = Propagation.SUPPORTS)
+	@Override
+	public List<UserLikeVO> getUnsignedLikeMsg(String userId) {
+		List<UserLikeVO> userLikeVOs = userLikeMapperCustom.getUnsignedLikeMsg(userId);
+		return userLikeVOs;
+	}
+
+	@Override
+	public List<UserArticleCommentVO> getUnsignedCommentMsg(String userId) {
+		List<UserArticleCommentVO> commentVOs = userArticleCommentMapperCustom.getUnsignedCommentMsg(userId);
+		return commentVOs;
 	}
 
 }

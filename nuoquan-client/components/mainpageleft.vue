@@ -34,8 +34,8 @@
 			<button class="pageLine" @tap="goToMessageListPage">
 				<image src="../static/icon/message.png"></image>
 				<view>我的消息</view>
-				<view class="noticeNum" v-if="unreadMsgCount>0"> {{unreadMsgCount}} </view>
-
+				<view class="noticeNum" v-if="unreadMsgCount>0 && unreadMsgCount<=99"> {{unreadMsgCount}} </view>
+				<view class="noticeNum" v-else> 99+ </view>
 			</button>
 			<button class="pageLine" @click="UD()">
 				<image src="../static/icon/star.png"></image>

@@ -1,6 +1,10 @@
 -- +++++++++++++++++++++
 -- +  Database update  +
 -- +++++++++++++++++++++
+-- v19.9.7 @author: Jerrio
+ALTER TABLE `nuoquan`.`user_article_comment` 
+ADD COLUMN `sign_flag` INT NULL DEFAULT 0 COMMENT '评论消息是否被签收 0: 未签收 1：签收' AFTER `under_comment_id`;
+
 -- v19.9.6 @author: Jerrio
 ALTER TABLE `nuoquan`.`user_article_comment` 
 ADD COLUMN `under_comment_id` VARCHAR(45) NULL DEFAULT NULL AFTER `comment_num`;

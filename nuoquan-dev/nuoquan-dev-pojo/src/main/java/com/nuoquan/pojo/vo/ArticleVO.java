@@ -26,8 +26,6 @@ public class ArticleVO {
     private String faceImg;
     private String faceImgThumb;
     
- 
-    
     /**
      * @return id
      */

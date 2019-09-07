@@ -121,7 +121,7 @@
 				}else{
 					this.singleImgState = 1;
 				}
-				console.log(e.detail);
+				// console.log(e.detail);
 			},
 			
 			jumpToDetail() {
