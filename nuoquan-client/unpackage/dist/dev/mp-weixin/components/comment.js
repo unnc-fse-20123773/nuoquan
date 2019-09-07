@@ -206,6 +206,7 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     controlInputInComment: function controlInputInComment(a) {
+      debugger;
       if (a == "inComment") {
         var dataOfRecomment = {
           mode: "re-co",

@@ -25,7 +25,7 @@
   
 		<view v-show="RECOMMENT" class="reCommentsArea">
 
-			<reComment v-for="(i,index) in reCommentList" v-bind:key="index" :reCommentDetail='i' @controlInputSignal="controlInputSignal"></reComment>
+			<reComment v-for="(i,index) in reCommentList" v-bind:key="index" :reCommentDetail='i' @controlInputSignal="controlInputInComment"></reComment>
 			<view class="submitComment">发 表 评 论</view>
 		</view>
 	</view>
@@ -99,6 +99,7 @@
 			},
 
 			controlInputInComment(a) {
+				debugger;
 				if (a == "inComment") {
 					var dataOfRecomment = {
 						mode: "re-co",

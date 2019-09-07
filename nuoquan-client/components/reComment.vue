@@ -31,6 +31,7 @@
 		},
 		methods:{
 			controlInputInRecomment(){
+				debugger;
 				var dataOfRecomment={
 					mode:"re-re",
 					toUserId:this.reCommentDetail.fromUserId,
