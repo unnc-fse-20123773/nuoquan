@@ -135,7 +135,18 @@ var _default =
     return {};
 
 
-  } };exports.default = _default;
+  },
+  methods: {
+    controlInputInRecomment: function controlInputInRecomment() {
+      debugger;
+      var dataOfRecomment = {
+        mode: "re-re",
+        toUserId: this.reCommentDetail.fromUserId,
+        fatherCommentId: this.reCommentDetail.id,
+        nickname: this.reCommentDetail.nickname };
+
+      this.$emit('controlInputSignal', dataOfRecomment);
+    } } };exports.default = _default;
 
 /***/ }),
 

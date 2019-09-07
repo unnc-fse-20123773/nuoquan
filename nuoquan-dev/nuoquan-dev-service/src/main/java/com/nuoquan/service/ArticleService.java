@@ -101,13 +101,18 @@ public interface ArticleService {
 	public boolean isUserLikeComment(String userId, String commentId);
 	
 	/**
-	 * 留言分页
+	 * 留言分页  父评论
 	 * @param articleId
 	 * @param page
 	 * @param pageSize
 	 * @return
 	 */
 	public PagedResult getAllComments(String articleId, Integer page, Integer pageSize);
+	
+	/**
+	 * 留言分页 子评论
+	 */
+	public PagedResult getSonComments(String fatherCommentId, Integer page, Integer pageSize);
 	
 	/**
 	 * 根据 commentId 获取评论

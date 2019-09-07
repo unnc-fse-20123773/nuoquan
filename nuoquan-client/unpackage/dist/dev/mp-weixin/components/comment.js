@@ -143,7 +143,10 @@ __webpack_require__.r(__webpack_exports__);
 {
   name: 'comment',
   props: {
-    commentDetail: {} },
+    commentDetail: {},
+    reCommentListFromDetail: {
+      type: Array } },
+
 
   components: {
     reComment: reComment },
@@ -151,75 +154,71 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       RECOMMENT: false,
-      reCommentList: [{
-        faceImage: "https://wx.qlogo.cn/mmopen/vi_32/956oQqnmpuCiaF2ia1LWsPdpj2ZBqGOXgw2ymtQlxEfKDfoHxH1icCfZibtia28ibQqYXbpgZ10wSJvicV2fficctezcJQ/132",
-        comment: "123321",
-        nickname: "回复的妖",
-        timeAge: "12323154214",
-        likeNum: "3" },
-      {
-        faceImage: "https://wx.qlogo.cn/mmopen/vi_32/956oQqnmpuCiaF2ia1LWsPdpj2ZBqGOXgw2ymtQlxEfKDfoHxH1icCfZibtia28ibQqYXbpgZ10wSJvicV2fficctezcJQ/132",
-
-        comment: "123321",
-        nickname: "回复的妖",
-        timeAge: "12323154214",
-        likeNum: "3" },
-      {
-        faceImage: "https://wx.qlogo.cn/mmopen/vi_32/956oQqnmpuCiaF2ia1LWsPdpj2ZBqGOXgw2ymtQlxEfKDfoHxH1icCfZibtia28ibQqYXbpgZ10wSJvicV2fficctezcJQ/132",
-
-        comment: "123321",
-        nickname: "回复的妖",
-        timeAge: "12323154214",
-        likeNum: "3" },
-      {
-        faceImage: "https://wx.qlogo.cn/mmopen/vi_32/956oQqnmpuCiaF2ia1LWsPdpj2ZBqGOXgw2ymtQlxEfKDfoHxH1icCfZibtia28ibQqYXbpgZ10wSJvicV2fficctezcJQ/132",
-
-        comment: "123321",
-        nickname: "回复的妖",
-        timeAge: "12323154214",
-        likeNum: "3" },
-      {
-        faceImage: "https://wx.qlogo.cn/mmopen/vi_32/956oQqnmpuCiaF2ia1LWsPdpj2ZBqGOXgw2ymtQlxEfKDfoHxH1icCfZibtia28ibQqYXbpgZ10wSJvicV2fficctezcJQ/132",
-
-        comment: "123321",
-        nickname: "回复的妖",
-        timeAge: "12323154214",
-        likeNum: "3" }] };
-
-
+      reCommentList: {},
+      isPassingReComment: false };
 
   },
   methods: {
-    showRecommentArea: function showRecommentArea() {
-      this.RECOMMENT = !this.RECOMMENT;
-      if (this.RECOMMENT) {
-        this.getComments();
-      }
-    },
-    getComments: function getComments(a) {
+    getComments: function getComments() {
       var that = this;
       uni.request({
         method: "POST",
-        url: that.$serverUrl + '/article/getArticleComments',
+        url: that.$serverUrl + '/article/getSonComments',
         data: {
-          commentId: this.commentDetail.id },
+          fatherCommentId: that.commentDetail.id },
 
         header: {
           'content-type': 'application/x-www-form-urlencoded' },
 
-        success: function success(res) {console.log(res);
+        success: function success(res) {
           console.log(res);
           that.commentList = res.data.data.rows;
           console.log(that.articleCard.id);
+          debugger;
+
+        } });
+
+
+    },
+    showRecommentArea: function showRecommentArea() {
+      this.RECOMMENT = !this.RECOMMENT;
+      if (this.RECOMMENT) {
+        this.getSonComments();
+      }
+    },
+    getSonComments: function getSonComments(a) {
+      var that = this;
+      uni.request({
+        method: "POST",
+        url: that.$serverUrl + '/article/getSonComments',
+        data: {
+          fatherCommentId: that.commentDetail.id },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          // that.isPassingReComment = false;
+          // that.reCommentListFromDetail = '';
+          that.reCommentList = res.data.data.rows;
         } });
 
     },
-    controlInputInComment: function controlInputInComment() {
-      var dataOfRecomment = {
-        toUserId: this.commentDetail.fromUserId,
-        fatherCommentId: this.commentDetail.id,
-        nickname: this.commentDetail.nickname };
 
+    controlInputInComment: function controlInputInComment(a) {
+      debugger;
+      if (a == "inComment") {
+        var dataOfRecomment = {
+          mode: "re-co",
+          toUserId: this.commentDetail.fromUserId,
+          fatherCommentId: this.commentDetail.id,
+          nickname: this.commentDetail.nickname };
+
+      } else {
+        var dataOfRecomment = a;
+      }
+      console.log("receive control input request, in comment");
+      console.log(dataOfRecomment);
       this.$emit('controlInputSignal', dataOfRecomment);
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

@@ -7,15 +7,7 @@
 		<view class="drtailmain">
 			<view class="detailcontent">{{ articleCard.articleContent }}</view>
 			<view class="detailpics">
-				<!-- <image class="detailpic" src="../../static/0001/pic3.jpg"></image>
-				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
-				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
-				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
-				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
-				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
-				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
-				<image class="detailpic" src="../../static/0001/pic3.jpg"></image>
-				<image class="detailpic" src="../../static/0001/pic3.jpg"></image> -->
+
 			</view>
 			<view class="tags">
 				<view class="tag" v-for="(i,index) in articleCard.tags" v-bind:key="index">{{i}}</view>
@@ -34,17 +26,19 @@
 				</view>
 			</view>
 
-			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i" @controlInputSignal="controlInput"></commentbox>
+			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i" @controlInputSignal="controlInput"
+			 :reCommentListFromDetail="reCommentListFromDetail">
+			</commentbox>
 
 			<view class="fengexian" style="height: 1px;width: 100%;background-color: #d6d6d6;margin:auto;"></view>
 			<view class="submitComment" @click="controlInput(1)">发 表 评 论</view>
 
-			<view class="bottoLayerOfInput" v-show="writingComment" @click="controlInput(0)" @touchmove="controlInput0()">
+			<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)">
 				<view class="commentPart" @click.stop="">
 					<view class="emoji"></view>
 					<view class="submit" @click="saveComment()"></view>
 					<textarea class="commentSth" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
-					 confirm-type="send" @confirm="saveComment()" adjust-position="false" v-model="commentContent" />
+					 confirm-type="send" @confirm="saveComment()" adjust-position="false" v-model="commentContent" @click.stop=""/>
 					</view>
             </view>
 		</view> 
@@ -60,14 +54,16 @@
 				articleCard: "",  //detail的主角，由index传过来的单个文章信息
                 commentContent:"",  //用户准备提交的评论内容
 				commentList: {},  //返回值，获取评论列表信息
-				writingComment:false,  //控制输入框，true时显示输入框同时输入框自动获取焦点，拉起输入法
+				showInput:false,        ////控制输入框，true时显示输入框
+				writingComment:false,  //控制输入框，true时自动获取焦点，拉起输入法
 				placeholderText:"评论点什么吧......",
 				inputData:{  //localData,用于拼接不同情况下的savecomment请求的数据
 					
 					},
 				submitData:{
 					//这个是从子组件传来的数据，回复评论的评论之类
-				}
+				},
+				reCommentListFromDetail: {}
 			};
 		},
 		components: {
@@ -91,48 +87,74 @@
 						url: that.$serverUrl + '/article/saveComment',
 						method: 'POST',
 						data: this.submitData,
-						success: function(res) {
-							console.log(res.data)
+						success: (res) => {
 							that.writingComment = false;
 							that.commentContent = "";
-							that.getComments(0);
+							
+							that.getComments();
+							// uni.request({
+							// 	method: "POST",
+							// 	url: that.$serverUrl + '/article/getSonComments',
+							// 	data: {
+							// 		fatherCommentId: that.submitData.fatherCommentId
+							// 	},
+							// 	header: {
+							// 		'content-type': 'application/x-www-form-urlencoded'
+							// 	},
+							// 	success: (res) => {
+							// 		that.reCommentListFromDetail = res.data.data.rows;
+							// 		console.log(that.reCommentListFromDetail);
+							// 	}
+							// });
 						},
 
 					})
 				}
 			},
-			getComments: function(a) {		
+			getComments: function() {		
 				var that = this;
 				uni.request({
 					method: "POST",
-					url: that.$serverUrl + '/article/getArticleComments',
+					url: that.$serverUrl + '/article/getFatherComments',
 					data: {
 						articleId: that.articleCard.id,
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
-					success: (res) => {	console.log(res);
+					success: (res) => {	
+						// console.log(res);
 						that.commentList = res.data.data.rows;
-						console.log(that.articleCard.id);
+						// console.log(that.articleCard.id);
 						
 					},
 				});
 			},
 			controlInput(a){
-				this.writingComment =!this.writingComment;
-
 				if(a!=0&&a!=1){            //a!=0, !=1， 从子组件传来，包含被回复对象：被回复人ID，被回复评论ID，被回复人昵称
 					this.submitData=a;
-					this.placeholderText='回复'+a.nickname;
+					this.placeholderText='回复 @'+a.nickname+' 的评论';
 					delete(a.nickname)
+					if(a.mode =="re-re"){    //mode ="re-re", from grandson RECOMMENT
+					console.log(a.mode);
+						this.writingComment = true ;
+					}
+					this.showInput= true;
+					console.log(this.writingComment);
 				}else if(a==1){           //a==1 当前页面调用，直接评论文章
 					this.submitData.toUserId=this.articleCard.userId;
 					this.submitData.articleId=this.articleCard.id;
+					this.showInput = true;
+					this.writingComment = true; 
+					console.log('this is control input in detail. a ==')
+					console.log(a);
 					console.log(this.submitData);
 				}else{  //a==0, 关闭输入框，一切恢复默认状态
+				    console.log('this is control input in detail. a ==0, EXIT');
 					this.submitData = {};
 					this.placeholderText="评论";
+					this.showInput = false;
+					this.writingComment =false;
 				    }
 			},
 			goToPersonPublic(){
@@ -144,10 +166,7 @@
 		},
 		onLoad(options) {
 			this.articleCard = JSON.parse(options.data);
-			console.log(this.articleCard);
-			// console.log(this.articleCard);
-			// console.log(this.articleCard.artiticleTitle);
-
+		
 			var userInfo = this.getGlobalUserInfo();
 			if (!this.isNull(userInfo)) {
 				this.userInfo = this.getGlobalUserInfo();
@@ -314,14 +333,17 @@
 	}
 
 	.submitComment {
+		position: fixed;
+		display: block;
+		left:34%;
+		bottom:9px;
 		background: #FFCC30;
 		border-radius: 5px;
-		width: 120px;
+		width: 32%;
 		height: 30px;
 		font-size: 10px;
 		font-weight: bold;
 		color: #FFFFFF;
-		margin: auto;
 		text-align: center;
 		line-height: 30px;
 		margin-top:12px;
@@ -347,7 +369,6 @@
 	}
 
 	.emoji {
-		background: url(../../static/icon/emoji.png);
 		background-repeat: no-repeat;
 		background-position: center;
 		border: none;

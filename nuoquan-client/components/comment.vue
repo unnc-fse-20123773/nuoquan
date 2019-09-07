@@ -1,7 +1,7 @@
 <template>
 	<view class="comment" :id="commentDetail.id">
 		<view class="fengexian"></view>
-		<view class="contentarea">{{ commentDetail.comment }}</view>
+		<view class="contentarea" @tap="controlInputInComment('inComment')">{{ commentDetail.comment }}</view>
 		<view class="bottombar">
 			<view style="width:70%;display:inline-block;">
 				<image :src="commentDetail.faceImage" class="touxiang"></image>
@@ -22,11 +22,11 @@
 			</view>
 		</view>
 
-
+  
 		<view v-show="RECOMMENT" class="reCommentsArea">
 
-			<reComment v-for="(i,index) in reCommentList" v-bind:key="index" :reCommentDetail='i'></reComment>
-			<view class="submitComment" @tap="controlInputInComment()">发 表 评 论</view>
+			<reComment v-for="(i,index) in reCommentList" v-bind:key="index" :reCommentDetail='i' @controlInputSignal="controlInputInComment"></reComment>
+			<view class="submitComment">发 表 评 论</view>
 		</view>
 	</view>
 </template>
@@ -36,7 +36,10 @@
 	export default {
 		name: 'comment',
 		props: {
-			commentDetail: {}
+			commentDetail: {},
+			reCommentListFromDetail:{
+				type: Array
+			}
 		},
 		components: {
 			reComment,
@@ -44,79 +47,75 @@
 		data() {
 			return {
 				RECOMMENT: false,
-				reCommentList: [{
-					faceImage: "https://wx.qlogo.cn/mmopen/vi_32/956oQqnmpuCiaF2ia1LWsPdpj2ZBqGOXgw2ymtQlxEfKDfoHxH1icCfZibtia28ibQqYXbpgZ10wSJvicV2fficctezcJQ/132",
-					comment: "123321",
-					nickname: "回复的妖",
-					timeAge: "12323154214",
-					likeNum: "3",
-				}, {
-					faceImage: "https://wx.qlogo.cn/mmopen/vi_32/956oQqnmpuCiaF2ia1LWsPdpj2ZBqGOXgw2ymtQlxEfKDfoHxH1icCfZibtia28ibQqYXbpgZ10wSJvicV2fficctezcJQ/132",
-
-					comment: "123321",
-					nickname: "回复的妖",
-					timeAge: "12323154214",
-					likeNum: "3",
-				}, {
-					faceImage: "https://wx.qlogo.cn/mmopen/vi_32/956oQqnmpuCiaF2ia1LWsPdpj2ZBqGOXgw2ymtQlxEfKDfoHxH1icCfZibtia28ibQqYXbpgZ10wSJvicV2fficctezcJQ/132",
-
-					comment: "123321",
-					nickname: "回复的妖",
-					timeAge: "12323154214",
-					likeNum: "3",
-				}, {
-					faceImage: "https://wx.qlogo.cn/mmopen/vi_32/956oQqnmpuCiaF2ia1LWsPdpj2ZBqGOXgw2ymtQlxEfKDfoHxH1icCfZibtia28ibQqYXbpgZ10wSJvicV2fficctezcJQ/132",
-
-					comment: "123321",
-					nickname: "回复的妖",
-					timeAge: "12323154214",
-					likeNum: "3",
-				}, {
-					faceImage: "https://wx.qlogo.cn/mmopen/vi_32/956oQqnmpuCiaF2ia1LWsPdpj2ZBqGOXgw2ymtQlxEfKDfoHxH1icCfZibtia28ibQqYXbpgZ10wSJvicV2fficctezcJQ/132",
-
-					comment: "123321",
-					nickname: "回复的妖",
-					timeAge: "12323154214",
-					likeNum: "3",
-				}],
-
+				reCommentList: {},
+				isPassingReComment: false
 			};
 		},
 		methods: {
-			showRecommentArea() {
-				this.RECOMMENT = !this.RECOMMENT
-				if(this.RECOMMENT){
-					this.getComments()
-				}
-			},
-			getComments: function(a) {
+			getComments() {
 				var that = this;
 				uni.request({
 					method: "POST",
-					url: that.$serverUrl + '/article/getArticleComments',
+					url: that.$serverUrl + '/article/getSonComments',
 					data: {
-						commentId:this.commentDetail.id,
+						fatherCommentId: that.commentDetail.id,
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
-					success: (res) => {	console.log(res);
-					console.log(res);
+					success: (res) => {
+						console.log(res);
 						that.commentList = res.data.data.rows;
-						console.log(that.articleCard.id);				
+						console.log(that.articleCard.id);
+						debugger
+
 					},
 				});
+
 			},
-			controlInputInComment() {
-				var dataOfRecomment={
-					toUserId:this.commentDetail.fromUserId,
-					fatherCommentId:this.commentDetail.id,
-					nickname:this.commentDetail.nickname,
+			showRecommentArea() {
+				this.RECOMMENT = !this.RECOMMENT
+				if(this.RECOMMENT){
+					this.getSonComments();
 				}
-				this.$emit('controlInputSignal',dataOfRecomment)
+			},
+			getSonComments: function(a) {
+				var that = this;
+				uni.request({
+					method: "POST",
+					url: that.$serverUrl + '/article/getSonComments',
+					data: {
+						fatherCommentId:that.commentDetail.id
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {	
+						// that.isPassingReComment = false;
+						// that.reCommentListFromDetail = '';
+						that.reCommentList = res.data.data.rows;
+					}
+				});
+			},
+
+			controlInputInComment(a) {
+				debugger;
+				if (a == "inComment") {
+					var dataOfRecomment = {
+						mode: "re-co",
+						toUserId: this.commentDetail.fromUserId,
+						fatherCommentId: this.commentDetail.id,
+						nickname: this.commentDetail.nickname,
+					}
+				} else {
+					var dataOfRecomment = a;
+				}
+				console.log("receive control input request, in comment");
+				console.log(dataOfRecomment);
+				this.$emit('controlInputSignal', dataOfRecomment)
 			},
 		},
-		
+
 	};
 </script>
 
@@ -201,6 +200,7 @@
 		text-align: center;
 		line-height: 30px;
 	}
+
 	.reCommentsArea {
 		background: #EEEEEE;
 		width: 400upx;

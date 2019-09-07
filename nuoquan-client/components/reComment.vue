@@ -1,6 +1,6 @@
 <template>
 	<view class="reComment">
-		<view class="contentarea">{{ reCommentDetail.comment }}</view>
+		<view class="contentarea" @longtap="controlInputInRecomment()">{{ reCommentDetail.comment }}</view>
 		<view class="bottombar">
 			<view style="width:70%;display:inline-block;">
 				<image :src="reCommentDetail.faceImage" class="touxiang"></image>
@@ -28,6 +28,18 @@
 			return {
 				
 			};
+		},
+		methods:{
+			controlInputInRecomment(){
+				debugger;
+				var dataOfRecomment={
+					mode:"re-re",
+					toUserId:this.reCommentDetail.fromUserId,
+					fatherCommentId:this.reCommentDetail.id,
+					nickname:this.reCommentDetail.nickname,
+				}
+				this.$emit('controlInputSignal',dataOfRecomment)
+			}
 		}
 	}
 </script>

@@ -37,6 +37,12 @@
   	  	and c.id = #{commentId}
   </select>
   
+  <select id="querySonComments" resultMap="BaseResultMap" parameterType="String">
+  	select c.*, u.nickname, u.face_img, u.face_img_thumb from nuoquan.user_article_comment c
+  	left join nuoquan.user u on c.from_user_id = u.id
+  	  where c.father_comment_id = #{fatherCommentId}
+  </select>
+  
   <update id="addCommentLikeCount" parameterType="String">
   	update nuoquan.user_article_comment set like_num=like_num+1 where id=#{commentId}
   </update>

@@ -432,22 +432,13 @@ var _default =
 
   data: function data() {
     return {
-      taglist: [
-      ['123', 'background:#40A792'],
-      ['13', 'background:#621E81'],
-      ['163', 'background:#738598'],
-      ['标签', 'background:#F3AE4B'],
-      ['13', 'background:#621E81'],
-      ['163', 'background:#738598'],
-      ['123', 'background:#40A792'],
-      ['13', 'background:#621E81']],
-
 
       serverUrl: this.$serverUrl,
       singleImgState: '0',
 
-      imgList: [] };
-
+      imgList: []
+      // atags: JSON.(this.articleCard.tags);
+    };
   },
   created: function created() {
     if (this.articleCard.imgList.length > 3) {

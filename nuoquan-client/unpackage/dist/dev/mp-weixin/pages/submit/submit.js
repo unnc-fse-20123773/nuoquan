@@ -211,16 +211,6 @@ var sizeType = [
     this.userInfo = this.getGlobalUserInfo();
   },
   methods: {
-    // 将标题存放在articleTitle中
-    saveAsArticleTitle: function saveAsArticleTitle(event) {
-      this.articleTitle = event.target.value;
-      // console.log(this.articleTitle);
-    },
-    // 将内容存放在articleContent中
-    saveAsArticleContent: function saveAsArticleContent(event) {
-      this.articleContent = event.target.value;
-      // console.log(this.articleContent);
-    },
     addTag: function addTag(res) {
       this.showInputTagArea = 1;
       this.showAddTagButton = 0;
@@ -280,6 +270,7 @@ var sizeType = [
       }
     },
     upload: function upload(e) {var _this2 = this;
+
       var me = this;
 
       console.log(me.articleTitle);

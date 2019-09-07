@@ -16,10 +16,10 @@
 			<view class="hotNum">
 				-
 			</view>
-			<view class="yourFocus" @tap="goToFansFollow(0)">
+			<view class="yourFocus" @tap="goToFansFollow(0)" hover-class="customHover">
 				{{userInfo.followNum}}
 			</view>
-			<view class="focusYou" @tap="goToFansFollow(1)">
+			<view class="focusYou" @tap="goToFansFollow(1)" hover-class="customHover">
 				{{userInfo.fansNum}}
 			</view>
 		</view>
@@ -213,46 +213,60 @@
 
 	.yourFocus {
 		position: relative;
-		padding-top: 19px;
+		width:71px;
+		height:43;
+		line-height: 10px;
+		padding: 19px 28px 14px;
 		display: inline-block;
 		font-size: 13px;
 		font-weight: bold;
-		margin-left: 33px;
-
 	}
 
-	.yourFocus::after {
+	.yourFocus::before {
 		content: "你关注的";
 		position: absolute;
-		bottom: -16px;
-		left: 0;
+		top:unset;
+		bottom: 0px;
+		left: 28px;
 		font-size: 7px;
 		color: #B2B2B2;
 		font-weight: 300;
 		width: 32px;
+		height:8px;
+		line-height: 8px;
+		vertical-align: bottom;
+		
 
 	}
 
 	.focusYou {
-		position: relative;
-		padding-top: 19px;
-		display: inline-block;
-		font-size: 13px;
-		font-weight: bold;
-		margin-left: 43px;
+	position: relative;
+	width:71px;
+	height:43;
+	line-height: 10px;
+	padding: 19px 28px 14px;
+	display: inline-block;
+	font-size: 13px;
+	font-weight: bold;
 	}
 
-	.focusYou::after {
+	.focusYou::before {
 		content: "关注你的";
 		position: absolute;
-		bottom: -16px;
-		left: 0;
+		top:unset;
+		bottom: 0px;
+		left: 28px;
 		font-size: 7px;
 		color: #B2B2B2;
 		font-weight: 300;
 		width: 32px;
+		height:8px;
+		line-height: 8px;
+		vertical-align: bottom;
 	}
-
+.customHover{
+	background: #F4F5F6;
+}
 	.personPageList {
 		margin-top: 40px;
 	}

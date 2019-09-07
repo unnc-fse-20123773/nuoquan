@@ -149,6 +149,7 @@
 
 <style scoped>
 	.index {
+		/* 页面高度由内容扩充，最低值为100%（page 定义的）- by Guetta */
 		height:100%;
 		background-color: #f3f3f3;
 	}
