@@ -218,13 +218,13 @@ public class UserServiceImpl implements UserService {
 
 	@Transactional(propagation = Propagation.REQUIRED) 
 	@Override
-	public void updateMsgSigned(List<String> msgIdList) {
+	public void updateChatSigned(List<String> msgIdList) {
 		chatMsgMapper.batchUpdateMsgSigned(msgIdList);
 	}
 
 	@Transactional(propagation = Propagation.SUPPORTS) 
 	@Override
-	public List<ChatMsg> getUnsignedMsgList(String acceptUserId) {
+	public List<ChatMsg> getUnsignedChat(String acceptUserId) {
 		
 		Example chatExample = new Example(ChatMsg.class);
 		Criteria chatCriteria = chatExample.createCriteria();
@@ -233,6 +233,42 @@ public class UserServiceImpl implements UserService {
 		
 		 List<ChatMsg> result = chatMsgMapper.selectByExample(chatExample);
 		return result;
+	}
+
+	@Override
+	public void updateLikeArtSigned(List<String> msgIdList) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<ChatMsg> getUnsignedLikeArt(String acceptUserId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateLikeComSigned(List<String> msgIdList) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<ChatMsg> getUnsignedLikeCom(String acceptUserId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateComSigned(List<String> msgIdList) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<ChatMsg> getUnsignedCom(String acceptUserId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

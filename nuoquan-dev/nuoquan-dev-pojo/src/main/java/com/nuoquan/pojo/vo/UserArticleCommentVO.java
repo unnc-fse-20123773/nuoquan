@@ -2,8 +2,6 @@ package com.nuoquan.pojo.vo;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-
 public class UserArticleCommentVO {
 
     private String id;
@@ -16,6 +14,7 @@ public class UserArticleCommentVO {
     private Integer likeNum;
     private Integer dislikeNum;
     private Integer commentNum;
+    private String underCommentId; // 显示在该条评论下方
 
     private String faceImg;
     private String nickname;
@@ -167,4 +166,12 @@ public class UserArticleCommentVO {
 	public void setFatherCommentId(String fatherCommentId) {
 		this.fatherCommentId = fatherCommentId;
 	}
+	
+    public String getUnderCommentId() {
+        return underCommentId;
+    }
+    
+    public void setUnderCommentId(String underCommentId) {
+        this.underCommentId = underCommentId;
+    }
 }

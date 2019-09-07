@@ -37,6 +37,9 @@ public class UserArticleComment {
     @Column(name = "comment_num")
     private Integer commentNum;
 
+    @Column(name = "under_comment_id")
+    private String underCommentId;
+
     /**
      * @return id
      */
@@ -179,5 +182,19 @@ public class UserArticleComment {
      */
     public void setCommentNum(Integer commentNum) {
         this.commentNum = commentNum;
+    }
+    
+    /**
+     * @return under_comment_id
+     */
+    public String getUnderCommentId() {
+        return underCommentId;
+    }
+
+    /**
+     * @param underCommentId
+     */
+    public void setUnderCommentId(String underCommentId) {
+        this.underCommentId = underCommentId;
     }
 }

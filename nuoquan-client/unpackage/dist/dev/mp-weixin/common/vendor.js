@@ -281,46 +281,6 @@ _vue.default.prototype.mySocket = {
       console.log("收到服务器内容：");
       console.log(dataContent);
       var action = dataContent.action;
-      // 如果消息类型为 CHAT
-      if (action == app.netty.CHAT) {
-        var chatMessage = dataContent.data;
-        // 发送签收消息
-        that.signMsgList(chatMessage.msgId);
-
-        // 保存聊天历史记录到本地缓存
-        var myId = chatMessage.receiverId;
-        var friendId = chatMessage.senderId;
-        var msg = chatMessage.msg;
-        var createDate = app.formatTime(chatMessage.createDate); // 对时间戳进行格式化
-
-        app.chat.saveUserChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);
-
-        // 判断当前页面，保存聊天快照
-        var page = app.getCurrentPage();
-        if (page.route == 'pages/chatpage/chatpage') {
-          var pageFriendId = page.data.friendInfo.id; // 打开页面才有对象，越层判断会报对象为空的错
-          /* 
-          【BUG】ISO 虚拟机获取 friendInfo.id 报错信息：
-           undefined is not an object (evaluating 'page.data.friendInfo.id')
-           不知道真机会不会有这种情况
-          */
-          // var pagestr = JSON.stringify(page.data);
-          // console.log(pagestr);
-          if (pageFriendId == friendId) {
-            // 与该用户在聊天，标记为已读
-            console.log("与该用户在聊天，标记为已读");
-            app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.READ, createDate);
-          }
-        } else {
-          // 聊天页面未打开或不是与该用户聊天，标记为未读
-          console.log("聊天页面未打开或不是与该用户聊天，标记为未读");
-          app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.UNREAD, createDate);
-        }
-
-        // 修改 store，发送信号，把消息卡片渲染到对话窗口 和 消息列表
-        var newMessage = new app.chat.ChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);
-        app.$store.commit('setChatMessageCard', newMessage);
-      }
 
       if (action == app.netty.CHAT ||
       action == app.netty.LIKEARTICLE ||
@@ -331,6 +291,45 @@ _vue.default.prototype.mySocket = {
         app.$store.commit('setMyMsgCount'); // 累加 msgCount in index.js
 
         switch (action) {
+          case app.netty.CHAT: // 如果消息类型为 CHAT
+            var chatMessage = dataContent.data;
+            // 发送签收消息
+            that.signMsgList(chatMessage.msgId);
+
+            // 保存聊天历史记录到本地缓存
+            var myId = chatMessage.receiverId;
+            var friendId = chatMessage.senderId;
+            var msg = chatMessage.msg;
+            var createDate = app.formatTime(chatMessage.createDate); // 对时间戳进行格式化
+
+            app.chat.saveUserChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);
+
+            // 判断当前页面，保存聊天快照
+            var page = app.getCurrentPage();
+            if (page.route == 'pages/chatpage/chatpage') {
+              var pageFriendId = page.data.friendInfo.id; // 打开页面才有对象，越层判断会报对象为空的错
+              /* 
+              【BUG】ISO 虚拟机获取 friendInfo.id 报错信息：
+               undefined is not an object (evaluating 'page.data.friendInfo.id')
+               不知道真机会不会有这种情况
+              */
+              // var pagestr = JSON.stringify(page.data);
+              // console.log(pagestr);
+              if (pageFriendId == friendId) {
+                // 与该用户在聊天，标记为已读
+                console.log("与该用户在聊天，标记为已读");
+                app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.READ, createDate);
+              }
+            } else {
+              // 聊天页面未打开或不是与该用户聊天，标记为未读
+              console.log("聊天页面未打开或不是与该用户聊天，标记为未读");
+              app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.UNREAD, createDate);
+            }
+
+            // 修改 store，发送信号，把消息卡片渲染到对话窗口 和 消息列表
+            var newMessage = new app.chat.ChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);
+            app.$store.commit('setChatMessageCard', newMessage);
+
           case app.netty.LIKEARTICLE:
             console.log("获取点赞文章");
             // 存入缓存 (TODO：登陆时获取未签收点赞消息)
@@ -754,8 +753,11 @@ _vue.default.prototype.netty = {
   KEEPALIVE: 4, // 客户端保持心跳
   LIKEARTICLE: 5, // 点赞文章通知
   LIKECOMMENT: 6, // 点赞评论通知
-  COMMENTARTICLE: 7, //评论文章通知
+  COMMENTARTICLE: 7, // 评论文章通知
   COMMENTCOMMENT: 8, // 评论评论通知
+  LIKEARTICLE_SIGN: 9, // 签收点赞文章通知
+  LIKECOMMENT_SIGN: 10, // 签收点赞评论通知
+  COMMENT_SIGN: 11, // 签收评论文章通知
 
   /**
    * 和后端 ChatMessage 聊天模型的对象保持一致

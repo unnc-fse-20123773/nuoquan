@@ -223,8 +223,9 @@ public class ArticleController extends BasicController {
 	/**
 	 * fromUserId 必填
 	 * toUserId 必填
-	 * articleId 必填
-	 * fatherCommentId
+	 * articleId 必填 // 为了计算文章总评论数
+	 * underCommentId // 显示在该父级评论层ID下
+	 * fatherCommentId // 父级评论ID
 	 * comment 必填
 	 * PS: 父级（一级，给文章评论）评论 无 fatherCommentId;
 	 *     子级评论有 fatherCommentId;

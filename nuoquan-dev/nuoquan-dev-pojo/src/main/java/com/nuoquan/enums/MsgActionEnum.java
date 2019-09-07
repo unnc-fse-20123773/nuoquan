@@ -13,7 +13,10 @@ public enum MsgActionEnum {
 	LIKEARTICLE(5, "点赞文章通知"),
 	LIKECOMMENT(6, "点赞评论通知"),
 	COMMENTARTICLE(7, "评论文章通知"),
-	COMMENTCOMMENT(8, "评论评论通知");
+	COMMENTCOMMENT(8, "评论评论通知"),
+	LIKEARTICLE_SIGN(9, "签收点赞文章通知"),
+	LIKECOMMENT_SIGN(10, "签收点赞评论通知"),
+	COMMENT_SIGN(11, "签收评论文章通知");
 	
 	public final Integer type;
 	public final String content;

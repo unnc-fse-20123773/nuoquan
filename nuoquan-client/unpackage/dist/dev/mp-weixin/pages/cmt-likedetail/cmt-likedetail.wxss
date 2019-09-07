@@ -268,8 +268,14 @@ page {
 }
 
 /* -------------------原评论预览行 -----------------*/
-.origin-bar-abs {
+.origin-bar-abs-img {
 	height: 146rpx;
+	width: 92%;
+	margin-left: 4%;
+	border-radius: 20rpx;
+	background-color: #f5f4ed;
+}
+.origin-bar-abs-noimg {
 	width: 92%;
 	margin-left: 4%;
 	border-radius: 20rpx;
@@ -325,9 +331,16 @@ page {
 }
 
 /* 预览块 */
-.origin-briefBox{
+.origin-briefBox-img{
 	max-height: 140rpx;
 	width: 79%;
+	/* margin-left: 4%; */
+}
+.origin-briefBox-noimg{
+	max-height: 140rpx;
+	width: 79%;
+	margin-bottom: 15rpx;
+	margin-left: 3%;
 	/* margin-left: 4%; */
 }
 
