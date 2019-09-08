@@ -21,7 +21,7 @@
 						<!-- 卡片部分为文档流格式  -by Guetta-->
 						<!-- 详情卡片 -->
 						<view v-for="(item,index2) in (index1==0 ? likeList : commentList)" :key="index2">
-							<!-- 点赞文章卡片 -->
+							<!-- ******************** 点赞文章卡片 ********************** -->
 							<view v-if="item.action==LIKEARTICLE" class="cmtlikeDetail-card" >
 								<!-- 卡片高度未定义，上下边距会失效，用 marginHelper 填充空白 -->
 								<view class="marginHelper1"></view>
@@ -43,7 +43,7 @@
 									</view>
 								</view>
 								<!-- 文章预览块 -->
-								<view class="origin-bar-abs">
+								<view :class="[item.data.imgList.length > 0 ? 'origin-bar-abs-img' : 'origin-bar-abs-noimg']">
 									<view class="origin-bar-rel">
 										<view class="origin-imageBox" v-if="item.data.target.imgList.length > 0">
 											<view class="origin-imageMask"></view>
@@ -55,7 +55,7 @@
 											<!-- 图片好像显示不出来 by Jerrio -->
 											<image class="origin-image" :src="serverUrl + item.data.target.imgList[0].imagePath" mode="scaleToFill"></image>
 										</view>
-										<view class="origin-briefBox">
+										<view :class="[item.data.imgList.length > 0 ? 'origin-briefBox-img' : 'origin-briefBox-noimg']">
 											<view class="origin-briefTitlebox">
 												<text class="origin-briefTitle">{{item.data.target.articleTitle}}</text>
 											</view>
@@ -69,7 +69,7 @@
 								<view class="marginHelper2"></view>
 							</view>
 							
-							<!-- 点赞评论卡片 -->
+							<!-- ************************* 点赞评论卡片 *************************** -->
 							<view v-if="item.action==LIKECOMMENT" class="cmtlikeDetail-card" >
 								<!-- 卡片高度未定义，上下边距会失效，用 marginHelper 填充空白 -->
 								<view class="marginHelper1"></view>
@@ -101,7 +101,7 @@
 								<view class="marginHelper2"></view>
 							</view>
 							
-							<!-- 评论文章卡片 -->
+							<!--***************************** 评论文章卡片 *****************************-->
 							<view v-if="item.action==COMMENTARTICLE" class="cmtlikeDetail-card" >
 								<!-- 卡片高度未定义，上下边距会失效，用 marginHelper 填充空白 -->
 								<view class="marginHelper1"></view>
@@ -123,13 +123,13 @@
 									</view>
 								</view>
 								<!-- 点赞 or 评论预览块 -->
-								<view class="brief-bar-abs">
+								<view class="brief-bar-nocolor">
 									<view class="brief-bar-rel">
 										{{item.data.source.comment}}
 									</view>
 								</view>
 								<!-- 原文章预览块 -->
-								<view class="origin-bar-abs">
+								<view :class="[item.data.target.imgList.length > 0 ? 'origin-bar-abs-img' : 'origin-bar-abs-noimg']">
 									<view class="origin-bar-rel">
 										<view class="origin-imageBox" v-if="item.data.target.imgList.length > 0">
 											<view class="origin-imageMask"></view>
@@ -141,7 +141,7 @@
 											<!-- 图片好像显示不出来 by Jerrio -->
 											<image class="origin-image" :src="serverUrl + item.data.target.imgList[0].imagePath" mode="scaleToFill"></image>
 										</view>
-										<view class="origin-briefBox">
+										<view :class="[item.data.target.imgList.length > 0 ? 'origin-briefBox-img' : 'origin-briefBox-noimg']">
 											<view class="origin-briefTitlebox">
 												<text class="origin-briefTitle">{{item.data.target.articleTitle}}</text>
 											</view>
@@ -155,7 +155,7 @@
 								<view class="marginHelper2"></view>
 							</view>
 							
-							<!-- 评论评论卡片 -->
+							<!-- ***************************** 评论评论卡片 ************************ -->
 							<view v-if="item.action==COMMENTCOMMENT" class="cmtlikeDetail-card" >
 								<!-- 卡片高度未定义，上下边距会失效，用 marginHelper 填充空白 -->
 								<view class="marginHelper1"></view>
@@ -620,8 +620,15 @@
 	}
 
 	/* -------------------原评论预览行 -----------------*/
-	.origin-bar-abs {
+	.origin-bar-abs-img {
 		height: 146upx;
+		width: 92%;
+		margin-left: 4%;
+		border-radius: 20upx;
+		background-color: #f5f4ed;
+	}
+
+	.origin-bar-abs-noimg {
 		width: 92%;
 		margin-left: 4%;
 		border-radius: 20upx;
@@ -678,9 +685,17 @@
 	}
 	
 	/* 预览块 */
-	.origin-briefBox{
+	.origin-briefBox-img{
 		max-height: 140upx;
 		width: 79%;
+		/* margin-left: 4%; */
+	}	
+	
+	.origin-briefBox-noimg{
+		max-height: 140upx;
+		width: 79%;
+		margin-bottom: 15upx;
+		margin-left: 3%;
 		/* margin-left: 4%; */
 	}
 	

@@ -5,13 +5,13 @@ image {
 }
 
 
-.articlecard.data-v-0734f7a0 {
+.articlecard.data-v-2881634c {
 	width: 650rpx;
 	border-radius: 8px;
 	margin: 11px auto 0;
 	background-color: #ffffff;
 }
-.title.data-v-0734f7a0 {
+.title.data-v-2881634c {
 	margin: 16px 25px 0 25px;
 	font-size: 15px;
 	font: MicrosoftYaHei;
@@ -20,16 +20,16 @@ image {
 	margin: 16px 13px 0 15px;
 	padding-top: 16px;
 }
-.briefarticleCard.data-v-0734f7a0 {
+.briefarticleCard.data-v-2881634c {
 	margin: 10px 13px 0 15px;
 	font-size: 13px;
 	line-height: 15px;
 	margin-bottom: 15px;
 }
-.tags.data-v-0734f7a0 {
+.tags.data-v-2881634c {
 	margin-left: 10px;
 }
-.tag.data-v-0734f7a0 {
+.tag.data-v-2881634c {
 	display: inline-block;
 	border-radius: 4px;
 	padding-left: 5px;
@@ -40,33 +40,33 @@ image {
 	font-size: 10px;
 	background: #621E81;
 }
-.menubar.data-v-0734f7a0 {
+.menubar.data-v-2881634c {
 	position: relative;
 	vertical-align: middle;
 	margin-left: 15px;
 	border-radius: 8px;
 }
-.touxiang.data-v-0734f7a0 {
+.touxiang.data-v-2881634c {
 	border-radius: 30px;
 	width: 20px;
 	height: 20px;
 	margin-right: 5px;
 	vertical-align: middle;
 }
-.name.data-v-0734f7a0 {
+.name.data-v-2881634c {
 	display: inline-block;
 	font-size: 10px;
 	margin-left: 7px;
 	color: #888888;
 	padding-bottom: 5px;
 }
-.time.data-v-0734f7a0 {
+.time.data-v-2881634c {
 	display: inline-block;
 	font-size: 10px;
 	margin-left: 25px;
 	color: #888888;
 }
-.icons.data-v-0734f7a0 {
+.icons.data-v-2881634c {
 	position: absolute;
 	right: 0;
 	bottom:0;
@@ -77,14 +77,14 @@ image {
 	overflow: hidden;
 	border-bottom-right-radius: 8px;
 }
-.icons image.data-v-0734f7a0 {
+.icons image.data-v-2881634c {
 	position: relative;
 	/* G添加相对位置 */
 	width: 11px;
 	height: 11px;
 	padding-right: 5px;
 }
-.icom.data-v-0734f7a0 {
+.icon.data-v-2881634c {
 	display: inline-block;
 	color: #353535;
 	font-size: 10px;
@@ -92,7 +92,7 @@ image {
 	text-align: center;
 	vertical-align: middle;
 }
-.picturearea-one.data-v-0734f7a0 {
+.picturearea-one.data-v-2881634c {
 	margin: auto;
 	display: -webkit-box;
 	display: -webkit-flex;
@@ -101,7 +101,7 @@ image {
 	width: 94%;
 	margin-left: 3%;
 }
-.picturearea-mul.data-v-0734f7a0 {
+.picturearea-mul.data-v-2881634c {
 	position: relative;
 	margin: auto;
 	display: -webkit-box;
@@ -112,7 +112,7 @@ image {
 	width: 94%;
 	margin-left: 3%;
 }
-image.data-v-0734f7a0 {
+image.data-v-2881634c {
 	width: 100%;
 	height: 200rpx;
 	margin: auto;
@@ -124,23 +124,23 @@ page {
 }
 
 
-.index.data-v-123fcddd {
+.index.data-v-5ac200f2 {
 	/* 页面高度由内容扩充，最低值为100%（page 定义的）- by Guetta */
 	height:100%;
 	background-color: #f3f3f3;
 }
-.indexArticleArea.data-v-123fcddd {
+.indexArticleArea.data-v-5ac200f2 {
 	height: 100%;
 }
-image.data-v-123fcddd {
+image.data-v-5ac200f2 {
 	width: 60px;
 	height: 60px;
 	display: inline-block;
 }
-.touxiang.data-v-123fcddd {
+.touxiang.data-v-5ac200f2 {
 	border-radius: 30px;
 }
-.search.data-v-123fcddd {
+.search.data-v-5ac200f2 {
 	display: inline-block;
 	width: 70%;
 	-webkit-box-shadow: inset 0 0 20px #ccc;
@@ -148,11 +148,11 @@ image.data-v-123fcddd {
 	border-radius: 20rpx;
 	margin-left: 50rpx;
 }
-.hot.data-v-123fcddd {
+.hot.data-v-5ac200f2 {
 	background-color: #e4e4e4;
 	width: 100%;
 }
-.hotitem.data-v-123fcddd {
+.hotitem.data-v-5ac200f2 {
 	margin-bottom: 20px;
 	background: white;
 	height: 27px;
@@ -168,7 +168,7 @@ image.data-v-123fcddd {
 	font-weight: normal;
 	font-style: normal;
 }
-.arrow.data-v-123fcddd {
+.arrow.data-v-5ac200f2 {
 	width: 100rpx;
 	height: 60rpx;
 }

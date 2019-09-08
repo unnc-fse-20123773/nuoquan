@@ -1,4 +1,8 @@
 # Update Log:
+**v19.9.8 更新**
+1. 整合 所有分支代码
+2. 修复Bug-100006：主页卡片右下角黄色图片不同机型显示错乱
+
 **v19.9.7 更新**
 1. 修正 获取评论消息的 sql 语句
 2. 修改 重构 CommentCard.java -> NoticCard.java (泛化)
@@ -22,7 +26,7 @@
 4. 修改 comment 对象属性 faceImage -> faceImg
 5. 修改 数据库和后端所有 create_time (createTime) -> create_date (createDate) 如果哪里有报错 注意看是不是这个名字的问题
 6. 小改 数据库，详情见 sqlRecord.sql
-7. 修复Bug-100002，submit 回跳 index 发起额外长连接
+7. 修复Bug-100002：submit 回跳 index 发起额外长连接
 8. 修复Bug-100004：submit 9图添加显示格式错误 (yaoyao)
 
 **v19.9.3 更新**
