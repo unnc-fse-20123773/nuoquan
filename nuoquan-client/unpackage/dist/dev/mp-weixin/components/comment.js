@@ -140,10 +140,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 {
   name: 'comment',
   props: {
-    commentDetail: {},
+    commentDetail: '',
     reCommentListFromDetail: {
       type: Array } },
 
@@ -155,44 +156,26 @@ __webpack_require__.r(__webpack_exports__);
     return {
       RECOMMENT: false,
       reCommentList: {},
-      isPassingReComment: false };
+      isPassingReComment: false,
+
+      mainComment: this.commentDetail, // 为了动态修改数值，对对象重新赋值，转换组件内部对象
+      userInfo: this.getGlobalUserInfo() };
 
   },
   methods: {
-    getComments: function getComments() {
-      var that = this;
-      uni.request({
-        method: "POST",
-        url: that.$serverUrl + '/article/getSonComments',
-        data: {
-          fatherCommentId: that.commentDetail.id },
-
-        header: {
-          'content-type': 'application/x-www-form-urlencoded' },
-
-        success: function success(res) {
-          console.log(res);
-          that.commentList = res.data.data.rows;
-          console.log(that.articleCard.id);
-          debugger;
-
-        } });
-
-
-    },
     showRecommentArea: function showRecommentArea() {
       this.RECOMMENT = !this.RECOMMENT;
       if (this.RECOMMENT) {
-        this.getSonComments();
+        this.getSubComments();
       }
     },
-    getSonComments: function getSonComments(a) {
+    getSubComments: function getSubComments(a) {
       var that = this;
       uni.request({
         method: "POST",
-        url: that.$serverUrl + '/article/getSonComments',
+        url: that.$serverUrl + '/article/getSubComments',
         data: {
-          fatherCommentId: that.commentDetail.id },
+          fatherCommentId: that.mainComment.id },
 
         header: {
           'content-type': 'application/x-www-form-urlencoded' },
@@ -210,9 +193,9 @@ __webpack_require__.r(__webpack_exports__);
       if (a == "inComment") {
         var dataOfRecomment = {
           mode: "re-co",
-          toUserId: this.commentDetail.fromUserId,
-          fatherCommentId: this.commentDetail.id,
-          nickname: this.commentDetail.nickname };
+          toUserId: this.mainComment.fromUserId,
+          fatherCommentId: this.mainComment.id,
+          nickname: this.mainComment.nickname };
 
       } else {
         var dataOfRecomment = a;
@@ -220,6 +203,71 @@ __webpack_require__.r(__webpack_exports__);
       console.log("receive control input request, in comment");
       console.log(dataOfRecomment);
       this.$emit('controlInputSignal', dataOfRecomment);
+    },
+
+    /**
+        * 点赞或取消点赞主评论
+        * @param {Object} comment
+        */
+    swLikeMainComment: function swLikeMainComment(comment) {
+      if (comment.isLike) {
+        this.unLikeComment(comment);
+        this.mainComment.likeNum--;
+        console.log(this.mainComment.likeNum);
+      } else {
+        this.likeComment(comment);
+        this.mainComment.likeNum++;
+      }
+      this.mainComment.isLike = !this.mainComment.isLike;
+    },
+
+    likeComment: function likeComment(comment) {
+      console.log("点赞评论");
+      var that = this;
+      uni.request({
+        method: "POST",
+        url: that.$serverUrl + '/article/userLikeComment',
+        data: {
+          userId: that.userInfo.id,
+          commentId: comment.id,
+          createrId: comment.fromUserId },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          console.log(res);
+        } });
+
+    },
+
+    unLikeComment: function unLikeComment(comment) {
+      console.log("取消点赞评论");
+      var that = this;
+      uni.request({
+        method: "POST",
+        url: that.$serverUrl + '/article/userUnLikeComment',
+        data: {
+          userId: that.userInfo.id,
+          commentId: comment.id,
+          createrId: comment.fromUserId },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          console.log(res);
+        } });
+
+    },
+
+    /**
+        * 点赞或取消点赞二级评论
+        * @param {Object} comment
+        */
+    swLikeSubComment: function swLikeSubComment(comment) {
+      if (comment.isLike) {
+      }
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

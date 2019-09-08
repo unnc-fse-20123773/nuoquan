@@ -195,9 +195,17 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
       uni.request({
         url: that.$serverUrl + '/article/queryAllArticles',
         method: "POST",
+        data: {
+          page: '',
+          pageSize: '',
+          userId: that.userInfo.id },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
         success: function success(res) {
           that.showlist = res.data.data.rows;
-          // console.log(res)
+          console.log(res);
         },
         fail: function fail(res) {
           console.log("index unirequest fail");

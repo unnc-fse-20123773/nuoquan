@@ -74,15 +74,16 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
-	public PagedResult getAllArticles(Integer page, Integer pageSize) {
+	public PagedResult getAllArticles(Integer page, Integer pageSize, String userId) {
 
 		// 从controller中获取page和pageSize (经实验，PageHelper 只拦截下一次查询)
 		PageHelper.startPage(page, pageSize);
 
 		List<ArticleVO> list = articleMapperCustom.queryAllArticles();
-		// 为每个文章添加图片列表
+		// 为每个文章添加图片列表，和关于用户的点赞关系
 		for (ArticleVO a : list) {
 			a.setImgList(articleImageMapper.getArticleImgs(a.getId()));
+			a.setIsLike(isUserLikeArticle(userId, a.getId()));
 		}
 		
 		PageInfo<ArticleVO> pageList = new PageInfo<>(list);
@@ -290,15 +291,17 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
-	public PagedResult getAllComments(String articleId, Integer page, Integer pageSize) {
+	public PagedResult getAllComments(Integer page, Integer pageSize, String articleId, String userId) {
 
 		PageHelper.startPage(page, pageSize);
 
 		List<UserArticleCommentVO> list = userArticleCommentMapperCustom.queryComments(articleId);
-		// 对时间格式进行处理
 		for (UserArticleCommentVO c : list) {
+			// 对时间格式进行处理
 			String timeAgo = TimeAgoUtils.format(c.getCreateDate());
 			c.setTimeAgo(timeAgo);
+			// 查询并设置关于用户的点赞关系
+			c.setIsLike(isUserLikeComment(userId, c.getId()));
 		}
 
 		PageInfo<UserArticleCommentVO> pageList = new PageInfo<>(list);
@@ -314,7 +317,7 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
-	public PagedResult getSonComments(String fatherCommentId, Integer page, Integer pageSize) {
+	public PagedResult getSonComments(Integer page, Integer pageSize, String fatherCommentId) {
 		
 		PageHelper.startPage(page, pageSize);
 		List<UserArticleCommentVO> list = userArticleCommentMapperCustom.querySonComments(fatherCommentId);

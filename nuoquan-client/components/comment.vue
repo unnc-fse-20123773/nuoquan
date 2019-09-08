@@ -1,12 +1,12 @@
 <template>
-	<view class="comment" :id="commentDetail.id">
+	<view class="comment" :id="mainComment.id">
 		<view class="fengexian"></view>
-		<view class="contentarea" @tap="controlInputInComment('inComment')">{{ commentDetail.comment }}</view>
+		<view class="contentarea" @tap="controlInputInComment('inComment')">{{ mainComment.comment }}</view>
 		<view class="bottombar">
 			<view style="width:70%;display:inline-block;">
-				<image :src="commentDetail.faceImage" class="touxiang"></image>
-				<text class="name">{{ commentDetail.nickname }}</text>
-				<text class="time">{{ commentDetail.timeAgo }}</text>
+				<image :src="mainComment.faceImage" class="touxiang"></image>
+				<text class="name">{{ mainComment.nickname }}</text>
+				<text class="time">{{ mainComment.timeAgo }}</text>
 			</view>
 			<view class="icons">
 				<!-- 评论按钮 -->
@@ -17,16 +17,17 @@
 				 @click="showRecommentArea"></image>
 
 				<!-- 点赞按钮 -->
-				<image class="icon" src="../../../static/icon/like.png"></image>
-				<text class="icom">{{ commentDetail.likeNum }}</text>
+				<view @tap="swLikeMainComment(mainComment)">
+					<image class="icon" src="../../../static/icon/like.png"></image>
+					<text class="icom">{{ mainComment.likeNum }}</text>
+				</view>
 			</view>
 		</view>
 
-  
 		<view v-show="RECOMMENT" class="reCommentsArea">
 
 			<reComment v-for="(i,index) in reCommentList" v-bind:key="index" :reCommentDetail='i' @controlInputSignal="controlInputInComment"></reComment>
-			<view class="submitComment">发 表 评 论</view>
+			<!-- <view class="submitComment">发 表 评 论</view> -->
 		</view>
 	</view>
 </template>
@@ -36,8 +37,8 @@
 	export default {
 		name: 'comment',
 		props: {
-			commentDetail: {},
-			reCommentListFromDetail:{
+			commentDetail: '',
+			reCommentListFromDetail: {
 				type: Array
 			}
 		},
@@ -48,49 +49,31 @@
 			return {
 				RECOMMENT: false,
 				reCommentList: {},
-				isPassingReComment: false
+				isPassingReComment: false,
+				
+				mainComment: this.commentDetail, // 为了动态修改数值，对对象重新赋值，转换组件内部对象
+				userInfo: this.getGlobalUserInfo(),
 			};
 		},
 		methods: {
-			getComments() {
+			showRecommentArea() {
+				this.RECOMMENT = !this.RECOMMENT
+				if (this.RECOMMENT) {
+					this.getSubComments();
+				}
+			},
+			getSubComments(a) {
 				var that = this;
 				uni.request({
 					method: "POST",
-					url: that.$serverUrl + '/article/getSonComments',
+					url: that.$serverUrl + '/article/getSubComments',
 					data: {
-						fatherCommentId: that.commentDetail.id,
+						fatherCommentId: that.mainComment.id
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: (res) => {
-						console.log(res);
-						that.commentList = res.data.data.rows;
-						console.log(that.articleCard.id);
-						debugger
-
-					},
-				});
-
-			},
-			showRecommentArea() {
-				this.RECOMMENT = !this.RECOMMENT
-				if(this.RECOMMENT){
-					this.getSonComments();
-				}
-			},
-			getSonComments: function(a) {
-				var that = this;
-				uni.request({
-					method: "POST",
-					url: that.$serverUrl + '/article/getSonComments',
-					data: {
-						fatherCommentId:that.commentDetail.id
-					},
-					header: {
-						'content-type': 'application/x-www-form-urlencoded'
-					},
-					success: (res) => {	
 						// that.isPassingReComment = false;
 						// that.reCommentListFromDetail = '';
 						that.reCommentList = res.data.data.rows;
@@ -103,17 +86,82 @@
 				if (a == "inComment") {
 					var dataOfRecomment = {
 						mode: "re-co",
-						toUserId: this.commentDetail.fromUserId,
-						fatherCommentId: this.commentDetail.id,
-						nickname: this.commentDetail.nickname,
+						toUserId: this.mainComment.fromUserId,
+						fatherCommentId: this.mainComment.id,
+						nickname: this.mainComment.nickname,
 					}
 				} else {
 					var dataOfRecomment = a;
 				}
 				console.log("receive control input request, in comment");
 				console.log(dataOfRecomment);
-				this.$emit('controlInputSignal', dataOfRecomment)
+				this.$emit('controlInputSignal', dataOfRecomment);
 			},
+			
+			/**
+			 * 点赞或取消点赞主评论
+			 * @param {Object} comment
+			 */
+			swLikeMainComment(comment){
+				if(comment.isLike){
+					this.unLikeComment(comment);
+					this.mainComment.likeNum--;
+					console.log(this.mainComment.likeNum);
+				} else {
+					this.likeComment(comment);
+					this.mainComment.likeNum++;
+				}
+				this.mainComment.isLike = !this.mainComment.isLike;
+			},
+			
+			likeComment(comment){
+				console.log("点赞评论");
+				var that = this;
+				uni.request({
+					method: "POST",
+					url: that.$serverUrl + '/article/userLikeComment',
+					data: {
+						userId: that.userInfo.id,
+						commentId: comment.id,
+						createrId: comment.fromUserId,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {	
+						console.log(res);
+					},
+				});
+			},
+			
+			unLikeComment(comment){
+				console.log("取消点赞评论");
+				var that = this;
+				uni.request({
+					method: "POST",
+					url: that.$serverUrl + '/article/userUnLikeComment',
+					data: {
+						userId: that.userInfo.id,
+						commentId: comment.id,
+						createrId: comment.fromUserId,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {	
+						console.log(res);
+					},
+				});
+			},
+			
+			/**
+			 * 点赞或取消点赞二级评论
+			 * @param {Object} comment
+			 */
+			swLikeSubComment(comment){
+				if(comment.isLike){
+				}
+			}
 		},
 
 	};

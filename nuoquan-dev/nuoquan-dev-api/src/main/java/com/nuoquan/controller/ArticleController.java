@@ -3,7 +3,6 @@ package com.nuoquan.controller;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,8 +53,13 @@ public class ArticleController extends BasicController {
 	private long MAX_FACE_IMAGE_SIZE;
 
 	@ApiOperation(value = "查询全部文章", notes = "查询全部文章的接口")
+	@ApiImplicitParams({
+		// userId 查询用户和文章的点赞关系
+		@ApiImplicitParam(name = "userId", value = "操作者id", required = true, dataType = "String", paramType = "form"),
+		@ApiImplicitParam(name = "page", value = "页数", required = true, dataType = "String", paramType = "form"),
+		@ApiImplicitParam(name = "pageSize", value = "每页大小", required = true, dataType = "String", paramType = "form") })
 	@PostMapping("/queryAllArticles")
-	public JSONResult showAllArticles(Integer page, Integer pageSize) throws Exception {
+	public JSONResult showAllArticles(Integer page, Integer pageSize, String userId) throws Exception {
 
 		if (page == null) {
 			page = 1;
@@ -63,8 +67,7 @@ public class ArticleController extends BasicController {
 		if (pageSize == null) {
 			pageSize = PAGE_SIZE;
 		}
-
-		PagedResult result = articleService.getAllArticles(page, pageSize);
+		PagedResult result = articleService.getAllArticles(page, pageSize, userId);
 
 		return JSONResult.ok(result);
 	}
@@ -248,7 +251,7 @@ public class ArticleController extends BasicController {
 	 * fromUserId 必填
 	 * toUserId 必填
 	 * articleId 必填 // 为了计算文章总评论数
-	 * underCommentId // 显示在该父级评论层ID下
+	 * underCommentId // 显示在该主评论层ID下
 	 * fatherCommentId // 父级评论ID
 	 * comment 必填
 	 * PS: 父级（一级，给文章评论）评论 无 fatherCommentId;
@@ -281,11 +284,12 @@ public class ArticleController extends BasicController {
 	}
 
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "articleId", required = true, dataType = "String", paramType = "form"),
 			@ApiImplicitParam(name = "page", required = false, dataType = "Integer", paramType = "form"),
-			@ApiImplicitParam(name = "pageSize", required = false, dataType = "Integer", paramType = "form") })
-	@PostMapping("/getFatherComments")
-	public JSONResult getFatherArticleComments(String articleId, Integer page, Integer pageSize) throws Exception {
+			@ApiImplicitParam(name = "pageSize", required = false, dataType = "Integer", paramType = "form"),
+			@ApiImplicitParam(name = "articleId", required = true, dataType = "String", paramType = "form"),
+			@ApiImplicitParam(name = "userId", required = false, dataType = "String", paramType = "form")})
+	@PostMapping("/getMainComments")
+	public JSONResult getFatherArticleComments(Integer page, Integer pageSize, String articleId, String userId) throws Exception {
 
 		if (StringUtils.isBlank(articleId)) {
 			return JSONResult.errorMsg("articleId can't be null");
@@ -299,20 +303,20 @@ public class ArticleController extends BasicController {
 			pageSize = PAGE_SIZE;
 		}
 
-		PagedResult list = articleService.getAllComments(articleId, page, pageSize);
+		PagedResult list = articleService.getAllComments(page, pageSize, articleId, userId);
 
 		return JSONResult.ok(list);
 	}
 	
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "fatherCommentId", required = true, dataType = "String", paramType = "form"),
+		@ApiImplicitParam(name = "underCommentId", required = true, dataType = "String", paramType = "form"),
 		@ApiImplicitParam(name = "page", required = false, dataType = "Integer", paramType = "form"),
 		@ApiImplicitParam(name = "pageSize", required = false, dataType = "Integer", paramType = "form") })
-	@PostMapping("/getSonComments")
-	public JSONResult getSonArticleComments(String fatherCommentId, Integer page, Integer pageSize) throws Exception {
+	@PostMapping("/getSubComments")
+	public JSONResult getSonArticleComments(Integer page, Integer pageSize, String underCommentId, String userId) throws Exception {
 		
-		if (StringUtils.isBlank(fatherCommentId)) {
-			return JSONResult.errorMap("fatherCommentId can't be null");
+		if (StringUtils.isBlank(underCommentId)) {
+			return JSONResult.errorMsg("underCommentId can't be null");
 		}
 		
 		if (page == null) {
@@ -323,7 +327,7 @@ public class ArticleController extends BasicController {
 			pageSize = PAGE_SIZE;
 		}
 		
-		PagedResult reCommentList = articleService.getSonComments(fatherCommentId, page, pageSize);
+		PagedResult reCommentList = articleService.getSonComments(page, pageSize, underCommentId);
 		
 		return JSONResult.ok(reCommentList);
 	}

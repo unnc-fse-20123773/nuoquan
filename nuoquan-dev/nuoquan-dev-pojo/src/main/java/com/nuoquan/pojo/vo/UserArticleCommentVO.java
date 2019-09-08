@@ -21,6 +21,7 @@ public class UserArticleCommentVO {
     private String nickname;
     private String timeAgo;
     
+    private Boolean isLike; // 该用户是否点赞该评论
     
     /**
      * @return id
@@ -193,4 +194,12 @@ public class UserArticleCommentVO {
     public void setSignFlag(Integer signFlag) {
         this.signFlag = signFlag;
     }
+
+	public Boolean getIsLike() {
+		return isLike;
+	}
+
+	public void setIsLike(Boolean isLike) {
+		this.isLike = isLike;
+	}
 }

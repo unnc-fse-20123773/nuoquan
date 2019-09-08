@@ -166,6 +166,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 {
   data: function data() {
     return {
@@ -182,73 +184,111 @@ __webpack_require__.r(__webpack_exports__);
       submitData: {
         //这个是从子组件传来的数据，回复评论的评论之类
       },
-      reCommentListFromDetail: {} };
+      reCommentListFromDetail: {},
+
+      serverUrl: this.$serverUrl };
+
 
   },
   components: {
     commentbox: comment },
 
+
+  filters: {
+    timeDeal: function timeDeal(timediff) {
+      timediff = new Date(timediff);
+      var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(), timediff.getSeconds()];
+      var oldTime = timediff.getTime();
+      var now = new Date();
+      var newTime = now.getTime();
+      var milliseconds = 0;
+      var timeSpanStr;
+      milliseconds = newTime - oldTime;
+      if (milliseconds <= 1000 * 60 * 1) {
+        timeSpanStr = '刚刚';
+      } else if (1000 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60) {
+        timeSpanStr = Math.round(milliseconds / (1000 * 60)) + '分钟前';
+      } else if (1000 * 60 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24) {
+        timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
+      } else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
+        timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
+      } else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && parts[0] == now.getFullYear()) {
+        timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
+      } else {
+        timeSpanStr = parts[0] + '-' + parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
+      }
+      return timeSpanStr;
+    } },
+
+
+  onLoad: function onLoad(options) {
+    this.articleCard = JSON.parse(options.data);
+    console.log(this.articleCard);
+
+    var userInfo = this.getGlobalUserInfo();
+    if (!this.isNull(userInfo)) {
+      this.userInfo = this.getGlobalUserInfo();
+    }
+
+    this.getComments();
+  },
+
   methods: {
     saveComment: function saveComment(e) {
       var that = this;
       var content = this.commentContent;
-      var userInfoTemp = this.getGlobalUserInfo();
-      console.log(that.userInfo.id);
-      if (this.isNull(userInfoTemp)) {
-        uni.navigateTo({
-          url: "../wechatLogin/wechatLogin" });
 
-      } else {
-        this.submitData.comment = this.commentContent;
-        this.submitData.fromUserId = this.userInfo.id;
-        console.log(this.submitData);
-        uni.request({
-          url: that.$serverUrl + '/article/saveComment',
-          method: 'POST',
-          data: this.submitData,
-          success: function success(res) {
-            that.writingComment = false;
-            that.commentContent = "";
+      this.submitData.comment = this.commentContent;
+      this.submitData.fromUserId = this.userInfo.id;
+      console.log(this.submitData);
+      uni.request({
+        url: that.$serverUrl + '/article/saveComment',
+        method: 'POST',
+        data: this.submitData,
+        success: function success(res) {
+          that.writingComment = false;
+          that.commentContent = "";
 
-            that.getComments();
-            // uni.request({
-            // 	method: "POST",
-            // 	url: that.$serverUrl + '/article/getSonComments',
-            // 	data: {
-            // 		fatherCommentId: that.submitData.fatherCommentId
-            // 	},
-            // 	header: {
-            // 		'content-type': 'application/x-www-form-urlencoded'
-            // 	},
-            // 	success: (res) => {
-            // 		that.reCommentListFromDetail = res.data.data.rows;
-            // 		console.log(that.reCommentListFromDetail);
-            // 	}
-            // });
-          } });
+          that.getComments();
+          // uni.request({
+          // 	method: "POST",
+          // 	url: that.$serverUrl + '/article/getSubComments',
+          // 	data: {
+          // 		fatherCommentId: that.submitData.fatherCommentId
+          // 	},
+          // 	header: {
+          // 		'content-type': 'application/x-www-form-urlencoded'
+          // 	},
+          // 	success: (res) => {
+          // 		that.reCommentListFromDetail = res.data.data.rows;
+          // 		console.log(that.reCommentListFromDetail);
+          // 	}
+          // });
+        } });
 
-
-      }
     },
+
     getComments: function getComments() {
       var that = this;
       uni.request({
         method: "POST",
-        url: that.$serverUrl + '/article/getFatherComments',
+        url: that.$serverUrl + '/article/getMainComments',
         data: {
-          articleId: that.articleCard.id },
+          articleId: that.articleCard.id,
+          userId: that.userInfo.id },
 
         header: {
           'content-type': 'application/x-www-form-urlencoded' },
 
         success: function success(res) {
-          // console.log(res);
+          console.log(res);
           that.commentList = res.data.data.rows;
           // console.log(that.articleCard.id);
 
         } });
 
     },
+
     controlInput: function controlInput(a) {
       if (a != 0 && a != 1) {//a!=0, !=1， 从子组件传来，包含被回复对象：被回复人ID，被回复评论ID，被回复人昵称
         this.submitData = a;
@@ -276,46 +316,63 @@ __webpack_require__.r(__webpack_exports__);
         this.writingComment = false;
       }
     },
+
+    swLikeArticle: function swLikeArticle() {
+      if (this.articleCard.isLike) {
+        this.unLikeArticle();
+        this.articleCard.likeNum--;
+      } else {
+        this.likeArticle();
+        this.articleCard.likeNum++;
+      }
+      this.articleCard.isLike = !this.articleCard.isLike;
+    },
+
+    likeArticle: function likeArticle() {
+      console.log("点赞文章");
+      var that = this;
+      uni.request({
+        method: "POST",
+        url: that.$serverUrl + '/article/userLikeArticle',
+        data: {
+          userId: that.userInfo.id,
+          articleId: that.articleCard.id,
+          articleCreaterId: that.articleCard.userId },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          console.log(res);
+        } });
+
+    },
+
+    unLikeArticle: function unLikeArticle() {
+      console.log("取消点赞文章");
+      var that = this;
+      uni.request({
+        method: "POST",
+        url: that.$serverUrl + '/article/userUnLikeArticle',
+        data: {
+          userId: that.userInfo.id,
+          articleId: that.articleCard.id,
+          articleCreaterId: that.articleCard.userId },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          console.log(res);
+        } });
+
+    },
+
     goToPersonPublic: function goToPersonPublic() {
       var navData = JSON.stringify(this.articleCard.userId); // 这里转换成 字符串
       uni.navigateTo({
         url: '/pages/personpublic/personpublic?userId=' + navData });
 
-    } },
-
-  onLoad: function onLoad(options) {
-    this.articleCard = JSON.parse(options.data);
-
-    var userInfo = this.getGlobalUserInfo();
-    if (!this.isNull(userInfo)) {
-      this.userInfo = this.getGlobalUserInfo();
-    }
-    this.getComments();
-  },
-  filters: {
-    timeDeal: function timeDeal(timediff) {
-      timediff = new Date(timediff);
-      var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(), timediff.getSeconds()];
-      var oldTime = timediff.getTime();
-      var now = new Date();
-      var newTime = now.getTime();
-      var milliseconds = 0;
-      var timeSpanStr;
-      milliseconds = newTime - oldTime;
-      if (milliseconds <= 1000 * 60 * 1) {
-        timeSpanStr = '刚刚';
-      } else if (1000 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60) {
-        timeSpanStr = Math.round(milliseconds / (1000 * 60)) + '分钟前';
-      } else if (1000 * 60 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24) {
-        timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
-      } else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
-        timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
-      } else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && parts[0] == now.getFullYear()) {
-        timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
-      } else {
-        timeSpanStr = parts[0] + '-' + parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
-      }
-      return timeSpanStr;
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

@@ -17,7 +17,7 @@ public interface ArticleService {
 	/**
 	 * 分页查询全部文章
 	 */
-	public PagedResult getAllArticles(Integer page, Integer pageSize);
+	public PagedResult getAllArticles(Integer page, Integer pageSize, String userId);
 	
 	/**
 	 * 按 articleId 获取文章
@@ -102,17 +102,18 @@ public interface ArticleService {
 	
 	/**
 	 * 留言分页  父评论
-	 * @param articleId
 	 * @param page
 	 * @param pageSize
+	 * @param articleId
+	 * @param userId
 	 * @return
 	 */
-	public PagedResult getAllComments(String articleId, Integer page, Integer pageSize);
+	public PagedResult getAllComments(Integer page, Integer pageSize, String articleId, String userId);
 	
 	/**
 	 * 留言分页 子评论
 	 */
-	public PagedResult getSonComments(String fatherCommentId, Integer page, Integer pageSize);
+	public PagedResult getSonComments(Integer page, Integer pageSize, String fatherCommentId);
 	
 	/**
 	 * 根据 commentId 获取评论

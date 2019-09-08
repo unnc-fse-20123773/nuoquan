@@ -1,0 +1,97 @@
+
+.comment.data-v-51ea2b8e {
+		/* 	background-color:gray;
+ */
+		border-radius: 20px;
+		width: 100%;
+		margin: auto;
+}
+.fengexian.data-v-51ea2b8e {
+		height: 1px;
+		width: 100%;
+		background-color: #d6d6d6;
+}
+.contentarea.data-v-51ea2b8e {
+		padding-top: 14px;
+		background: white;
+		font-size: 16px;
+}
+.bottombar.data-v-51ea2b8e {
+		position: relative;
+		border-radius: 20px;
+		height: 25px;
+		margin-top: 10px;
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-pack: justify;
+		-webkit-justify-content: space-between;
+		    -ms-flex-pack: justify;
+		        justify-content: space-between;
+		padding-bottom: 5px;
+}
+.touxiang.data-v-51ea2b8e {
+		width: 20px;
+		height: 20px;
+		border-radius: 20px;
+		display: inline-block;
+		vertical-align: middle;
+		margin-right: 5px;
+}
+.time.data-v-51ea2b8e,
+	.name.data-v-51ea2b8e {
+		font-size: 10px;
+		margin-right: 10px;
+		color: #888888;
+}
+.icons.data-v-51ea2b8e {
+		-webkit-box-pack: end;
+		-webkit-justify-content: flex-end;
+		    -ms-flex-pack: end;
+		        justify-content: flex-end;
+		display: -webkit-inline-box;
+		display: -webkit-inline-flex;
+		display: -ms-inline-flexbox;
+		display: inline-flex;
+		-webkit-box-align: end;
+		-webkit-align-items: flex-end;
+		    -ms-flex-align: end;
+		        align-items: flex-end;
+		width: 30%;
+		font-size: 10px;
+}
+.icon.data-v-51ea2b8e {
+		width: 12px;
+		height: 12px;
+		font-size: 2px;
+		padding-right: 4px;
+}
+.icom.data-v-51ea2b8e {
+		padding-right: 17px;
+		-webkit-box-align: end;
+		-webkit-align-items: flex-end;
+		    -ms-flex-align: end;
+		        align-items: flex-end;
+}
+.submitComment.data-v-51ea2b8e {
+		background: #FFCC30;
+		border-radius: 5px;
+		width: 120px;
+		height: 30px;
+		font-size: 10px;
+		font-weight: bold;
+		color: #FFFFFF;
+		margin: auto;
+		text-align: center;
+		line-height: 30px;
+}
+.reCommentsArea.data-v-51ea2b8e {
+		background: #EEEEEE;
+		width: 400rpx;
+		padding: 14px 25rpx 11px;
+		border-radius: 10px;
+		margin-left: 187.5rpx;
+		margin-bottom: 10px;
+}
+

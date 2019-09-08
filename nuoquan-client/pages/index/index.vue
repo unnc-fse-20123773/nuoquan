@@ -77,9 +77,17 @@
 				uni.request({
 					url: that.$serverUrl + '/article/queryAllArticles',
 					method: "POST",
+					data:{
+						page: '',
+						pageSize: '', 
+						userId: that.userInfo.id,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
 					success: (res) => {
 						that.showlist = res.data.data.rows;
-						// console.log(res)
+						console.log(res)
 					},
 					fail: (res) => {
 						console.log("index unirequest fail");

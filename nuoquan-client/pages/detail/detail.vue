@@ -7,7 +7,9 @@
 		<view class="drtailmain">
 			<view class="detailcontent">{{ articleCard.articleContent }}</view>
 			<view class="detailpics">
-
+				<view v-for="(item, index) in articleCard.imgList" :key="index">
+					<image :src="serverUrl + item.imagePath"></image>
+				</view>
 			</view>
 			<view class="tags">
 				<view class="tag" v-for="(i,index) in articleCard.tags" v-bind:key="index">{{i}}</view>
@@ -19,8 +21,8 @@
 
 					<view class="time">{{ articleCard.createDate | timeDeal}}</view>
 				</view>
-				<view class="icons">
-					<!-- 点赞MM按钮 -->
+				<view class="icons" @tap="swLikeArticle()">
+					<!-- 点赞MM按钮 TODO: 增加点赞后样式-->
 					<image class="icon" src="../../static/icon/like.png"></image>
 					<view class="icom">{{ articleCard.likeNum }}</view>
 				</view>
@@ -38,7 +40,7 @@
 					<view class="emoji"></view>
 					<view class="submit" @click="saveComment()"></view>
 					<textarea class="commentSth" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
-					 confirm-type="send" @confirm="saveComment()" adjust-position="false" v-model="commentContent" @click.stop=""/>
+					 confirm-type="send" @confirm="saveComment()" adjust-position="false" v-model="commentContent" @click.stop="" />
 					</view>
             </view>
 		</view> 
@@ -63,73 +65,111 @@
 				submitData:{
 					//这个是从子组件传来的数据，回复评论的评论之类
 				},
-				reCommentListFromDetail: {}
+				reCommentListFromDetail: {},
+				
+				serverUrl: this.$serverUrl,
+
 			};
 		},
 		components: {
 			commentbox: comment
 		},
+		
+		filters: {
+			timeDeal(timediff) {
+				timediff = new Date(timediff);
+				var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(),timediff.getSeconds()];
+				var oldTime = timediff.getTime();
+				var now = new Date();
+				var newTime = now.getTime();
+				var milliseconds = 0;
+				var timeSpanStr;
+				milliseconds = newTime - oldTime;
+				if (milliseconds <= 1000 * 60 * 1) {
+					timeSpanStr = '刚刚';
+				} else if (1000 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60) {
+					timeSpanStr = Math.round((milliseconds / (1000 * 60))) + '分钟前';
+				} else if (1000 * 60 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24) {
+					timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
+				} else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
+					timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
+				} else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && parts[0] == now.getFullYear()) {
+					timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
+				} else {
+					timeSpanStr = parts[0] + '-' + parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
+				}
+				return timeSpanStr;
+			}
+		},
+		
+		onLoad(options) {
+			this.articleCard = JSON.parse(options.data);
+			console.log(this.articleCard);
+			
+			var userInfo = this.getGlobalUserInfo();
+			if (!this.isNull(userInfo)) {
+				this.userInfo = this.getGlobalUserInfo();
+			}
+			
+			this.getComments();
+		},
+		
 		methods: {
 			saveComment: function(e) {
 				var that = this;
 				var content = this.commentContent;
-				var userInfoTemp = this.getGlobalUserInfo();
-				console.log(that.userInfo.id)
-				if (this.isNull(userInfoTemp)) {
-					uni.navigateTo({
-						url: "../wechatLogin/wechatLogin"
-					})
-				} else {
-					this.submitData.comment=this.commentContent;
-					this.submitData.fromUserId=this.userInfo.id;
-					console.log(this.submitData);
-					uni.request({
-						url: that.$serverUrl + '/article/saveComment',
-						method: 'POST',
-						data: this.submitData,
-						success: (res) => {
-							that.writingComment = false;
-							that.commentContent = "";
-							
-							that.getComments();
-							// uni.request({
-							// 	method: "POST",
-							// 	url: that.$serverUrl + '/article/getSonComments',
-							// 	data: {
-							// 		fatherCommentId: that.submitData.fatherCommentId
-							// 	},
-							// 	header: {
-							// 		'content-type': 'application/x-www-form-urlencoded'
-							// 	},
-							// 	success: (res) => {
-							// 		that.reCommentListFromDetail = res.data.data.rows;
-							// 		console.log(that.reCommentListFromDetail);
-							// 	}
-							// });
-						},
-
-					})
-				}
+				
+				this.submitData.comment=this.commentContent;
+				this.submitData.fromUserId=this.userInfo.id;
+				console.log(this.submitData);
+				uni.request({
+					url: that.$serverUrl + '/article/saveComment',
+					method: 'POST',
+					data: this.submitData,
+					success: (res) => {
+						that.writingComment = false;
+						that.commentContent = "";
+						
+						that.getComments();
+						// uni.request({
+						// 	method: "POST",
+						// 	url: that.$serverUrl + '/article/getSubComments',
+						// 	data: {
+						// 		fatherCommentId: that.submitData.fatherCommentId
+						// 	},
+						// 	header: {
+						// 		'content-type': 'application/x-www-form-urlencoded'
+						// 	},
+						// 	success: (res) => {
+						// 		that.reCommentListFromDetail = res.data.data.rows;
+						// 		console.log(that.reCommentListFromDetail);
+						// 	}
+						// });
+					},
+				})
 			},
+			
 			getComments: function() {		
 				var that = this;
 				uni.request({
 					method: "POST",
-					url: that.$serverUrl + '/article/getFatherComments',
+					url: that.$serverUrl + '/article/getMainComments',
 					data: {
 						articleId: that.articleCard.id,
+						userId: that.userInfo.id,
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: (res) => {	
-						// console.log(res);
+						console.log(res);
 						that.commentList = res.data.data.rows;
 						// console.log(that.articleCard.id);
 						
 					},
 				});
 			},
+			
 			controlInput(a){
 				if(a!=0&&a!=1){            //a!=0, !=1， 从子组件传来，包含被回复对象：被回复人ID，被回复评论ID，被回复人昵称
 					this.submitData=a;
@@ -157,6 +197,58 @@
 					this.writingComment =false;
 				    }
 			},
+			
+			swLikeArticle(){
+				if (this.articleCard.isLike){
+					this.unLikeArticle();
+					this.articleCard.likeNum--;
+				}else{
+					this.likeArticle();
+					this.articleCard.likeNum++;
+				}
+				this.articleCard.isLike = !this.articleCard.isLike;
+			},
+			
+			likeArticle(){
+				console.log("点赞文章");
+				var that = this;
+				uni.request({
+					method: "POST",
+					url: that.$serverUrl + '/article/userLikeArticle',
+					data: {
+						userId: that.userInfo.id,
+						articleId: that.articleCard.id,
+						articleCreaterId: that.articleCard.userId,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {	
+						console.log(res);
+					},
+				});
+			},
+			
+			unLikeArticle(){
+				console.log("取消点赞文章");
+				var that = this;
+				uni.request({
+					method: "POST",
+					url: that.$serverUrl + '/article/userUnLikeArticle',
+					data: {
+						userId: that.userInfo.id,
+						articleId: that.articleCard.id,
+						articleCreaterId: that.articleCard.userId,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {	
+						console.log(res);
+					},
+				});
+			},
+			
 			goToPersonPublic(){
 				var navData = JSON.stringify(this.articleCard.userId); // 这里转换成 字符串
 				uni.navigateTo({
@@ -164,41 +256,7 @@
 				})
 			}
 		},
-		onLoad(options) {
-			this.articleCard = JSON.parse(options.data);
 		
-			var userInfo = this.getGlobalUserInfo();
-			if (!this.isNull(userInfo)) {
-				this.userInfo = this.getGlobalUserInfo();
-			}
-			this.getComments();
-		},
-		filters: {
-			timeDeal(timediff) {
-				timediff = new Date(timediff);
-				var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(),timediff.getSeconds()];
-				var oldTime = timediff.getTime();
-				var now = new Date();
-				var newTime = now.getTime();
-				var milliseconds = 0;
-				var timeSpanStr;
-				milliseconds = newTime - oldTime;
-				if (milliseconds <= 1000 * 60 * 1) {
-					timeSpanStr = '刚刚';
-				} else if (1000 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60) {
-					timeSpanStr = Math.round((milliseconds / (1000 * 60))) + '分钟前';
-				} else if (1000 * 60 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24) {
-					timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
-				} else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
-					timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
-				} else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && parts[0] == now.getFullYear()) {
-					timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
-				} else {
-					timeSpanStr = parts[0] + '-' + parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
-				}
-				return timeSpanStr;
-			}
-		},
 	};
 </script>
 <style>	page {
