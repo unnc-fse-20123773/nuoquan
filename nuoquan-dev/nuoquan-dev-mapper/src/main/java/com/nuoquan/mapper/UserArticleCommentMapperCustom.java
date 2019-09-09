@@ -20,12 +20,17 @@ public interface UserArticleCommentMapperCustom extends MyMapper<UserArticleComm
 	 */
 	public void addCommentLikeCount(String commentId);
 	
-	
 	/**
 	 * @description: 对评论喜欢的数量进行累减
 	 * @param commentId
 	 */
 	public void reduceCommentLikeCount(String commentId);
+	
+	/**
+	 * @description: 对评论的评论的数量进行累加
+	 * @param commentId
+	 */
+	public void addCommentCount(String commentId);
 	
 	/**
 	 * 批量签收

@@ -3,6 +3,7 @@ package com.nuoquan.service;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.n3r.idworker.Sid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -214,7 +215,13 @@ public class ArticleServiceImpl implements ArticleService {
 		comment.setCreateDate(new Date());
 		comment.setCommentNum(0);
 		userArticleCommentMapper.insertSelective(comment);
-		// TODO 文章点赞数累加
+		//文章评论数累加
+		articleMapperCustom.addArticleCommentCount(comment.getArticleId());
+		if (!StringUtils.isBlank(comment.getUnderCommentId())) {
+			//主评论的评论数累加
+			userArticleCommentMapperCustom.addCommentCount(comment.getUnderCommentId());
+		}
+		
 		return id;
 	}
 

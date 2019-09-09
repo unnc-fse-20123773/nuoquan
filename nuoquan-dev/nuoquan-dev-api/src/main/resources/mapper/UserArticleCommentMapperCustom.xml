@@ -58,6 +58,10 @@
   	update nuoquan.user_article_comment set like_num=like_num-1 where id=#{commentId}
   </update>
   
+  <update id="addCommentCount" parameterType="String">
+  	update nuoquan.user_article_comment set comment_num=comment_num+1 where id=#{commentId}
+  </update>
+  
   <!-- 批处理更新消息为已签收 -->
   <update id="batchUpdateMsgSigned">
 	update user_article_comment set sign_flag = 1 where id in

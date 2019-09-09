@@ -24,7 +24,6 @@
     <result column="face_img_thumb" property="faceImgThumb" jdbcType="VARCHAR" />
   </resultMap>
   
-  
   <select id="queryAllArticles" resultMap="BaseResultMap">
   	
  	select a.*, u.nickname as nickname, u.face_img, u.face_img_thumb from nuoquan.article a
@@ -41,6 +40,10 @@
   
   <update id="reduceArticleLikeCount" parameterType="String">
   	update nuoquan.article set like_num=like_num-1 where id=#{articleId}
+  </update>
+  
+  <update id="addArticleCommentCount" parameterType="String">
+  	update nuoquan.article set comment_num=comment_num+1 where id=#{articleId}
   </update>
   
   <select id="searchArticleContentYang" resultMap="BaseResultMap" parameterType="String">
