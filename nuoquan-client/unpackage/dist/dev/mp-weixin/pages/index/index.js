@@ -221,7 +221,7 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
         method: "POST",
         success: function success(res) {
           that.topArticles = res.data.data;
-          console.log(res);
+          // console.log(res)
         } });
 
     },

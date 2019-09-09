@@ -124,7 +124,7 @@
 								</view>
 								<!-- 点赞 or 评论预览块 -->
 								<view class="brief-bar-nocolor">
-									<view class="brief-bar-rel">
+									<view class="brief-bar-rel" style="color: #000000">
 										{{item.data.source.comment}}
 									</view>
 								</view>
@@ -178,7 +178,7 @@
 								</view>
 								<!-- 点赞 or 评论预览块 -->
 								<view class="brief-bar-nocolor">
-									<view class="brief-bar-rel">
+									<view class="brief-bar-rel" style="color: #000000">
 										{{item.data.source.comment}}
 									</view>
 								</view>

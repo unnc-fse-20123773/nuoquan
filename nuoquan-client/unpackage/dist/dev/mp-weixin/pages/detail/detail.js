@@ -234,13 +234,22 @@ __webpack_require__.r(__webpack_exports__);
   },
 
   methods: {
-    saveComment: function saveComment(e) {
-      var that = this;
-      var content = this.commentContent;
-
+    /**
+              * fromUserId 必填
+              * toUserId 必填
+              * articleId 必填 // 为了计算文章总评论数
+              * underCommentId // 显示在该主评论层ID下
+              * fatherCommentId // 父级评论ID
+              * comment 必填
+              * PS: 父级（一级，给文章评论）评论 无 fatherCommentId, underCommentId;
+              *     子级评论有 fatherCommentId, underCommentId;
+              */
+    saveComment: function saveComment() {
       this.submitData.comment = this.commentContent;
       this.submitData.fromUserId = this.userInfo.id;
+      this.submitData.articleId = this.articleCard.id;
       console.log(this.submitData);
+      var that = this;
       uni.request({
         url: that.$serverUrl + '/article/saveComment',
         method: 'POST',
@@ -291,9 +300,9 @@ __webpack_require__.r(__webpack_exports__);
 
     controlInput: function controlInput(a) {
       if (a != 0 && a != 1) {//a!=0, !=1， 从子组件传来，包含被回复对象：被回复人ID，被回复评论ID，被回复人昵称
-        this.submitData = a;
         this.placeholderText = '回复 @' + a.nickname + ' 的评论';
         delete a.nickname;
+        this.submitData = a;
         if (a.mode == "re-re") {//mode ="re-re", from grandson RECOMMENT
           console.log(a.mode);
           this.writingComment = true;
@@ -302,11 +311,9 @@ __webpack_require__.r(__webpack_exports__);
         console.log(this.writingComment);
       } else if (a == 1) {//a==1 当前页面调用，直接评论文章
         this.submitData.toUserId = this.articleCard.userId;
-        this.submitData.articleId = this.articleCard.id;
         this.showInput = true;
         this.writingComment = true;
-        console.log('this is control input in detail. a ==');
-        console.log(a);
+        console.log('this is control input in detail. a ==' + a);
         console.log(this.submitData);
       } else {//a==0, 关闭输入框，一切恢复默认状态
         console.log('this is control input in detail. a ==0, EXIT');

@@ -4,7 +4,7 @@
 		<view class="contentarea" @tap="controlInputInComment('inComment')">{{ mainComment.comment }}</view>
 		<view class="bottombar">
 			<view style="width:70%;display:inline-block;">
-				<image :src="mainComment.faceImage" class="touxiang"></image>
+				<image :src="mainComment.faceImg" class="touxiang"></image>
 				<text class="name">{{ mainComment.nickname }}</text>
 				<text class="time">{{ mainComment.timeAgo }}</text>
 			</view>
@@ -15,7 +15,7 @@
 
 				<image v-if="RECOMMENT" style="height:23px;width:50px;position:relative;bottom:-5px;padding-right:4px;" src="../../../../static/icon/ReComment.png"
 				 @click="showRecommentArea"></image>
-
+				<!-- <text class="icom">{{mainComment.commentNum}}</text> -->
 				<!-- 点赞按钮 -->
 				<view @tap="swLikeMainComment(mainComment)">
 					<image class="icon" src="../../../static/icon/like.png"></image>
@@ -55,6 +55,11 @@
 				userInfo: this.getGlobalUserInfo(),
 			};
 		},
+		
+		created() {
+			// console.log(this.commentDetail);
+		},
+		
 		methods: {
 			showRecommentArea() {
 				this.RECOMMENT = !this.RECOMMENT
@@ -68,7 +73,8 @@
 					method: "POST",
 					url: that.$serverUrl + '/article/getSubComments',
 					data: {
-						fatherCommentId: that.mainComment.id
+						underCommentId: that.mainComment.id,
+						userId: that.userInfo.id,
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
@@ -76,17 +82,20 @@
 					success: (res) => {
 						// that.isPassingReComment = false;
 						// that.reCommentListFromDetail = '';
-						that.reCommentList = res.data.data.rows;
+						if(res.data.status==200){
+							that.reCommentList = res.data.data.rows;
+							console.log(res);
+						}
 					}
 				});
 			},
 
 			controlInputInComment(a) {
-				debugger;
 				if (a == "inComment") {
 					var dataOfRecomment = {
 						mode: "re-co",
 						toUserId: this.mainComment.fromUserId,
+						underCommentId: this.mainComment.id,
 						fatherCommentId: this.mainComment.id,
 						nickname: this.mainComment.nickname,
 					}
@@ -235,7 +244,7 @@
 		padding-right: 17px;
 		align-items: flex-end;
 	}
-
+	
 	.submitComment {
 		background: #FFCC30;
 		border-radius: 5px;

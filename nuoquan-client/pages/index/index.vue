@@ -103,7 +103,7 @@
 					method: "POST",
 					success: (res) => {
 						that.topArticles = res.data.data;
-						console.log(res)
+						// console.log(res)
 					}
 				})
 			},

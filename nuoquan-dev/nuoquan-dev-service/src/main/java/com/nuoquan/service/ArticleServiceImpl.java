@@ -72,6 +72,9 @@ public class ArticleServiceImpl implements ArticleService {
 	@Autowired
 	private UserLikeMapperCustom userLikeMapperCustom;
 
+	@Autowired
+	private UserService userService;
+	
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
 	public PagedResult getAllArticles(Integer page, Integer pageSize, String userId) {
@@ -291,7 +294,7 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
-	public PagedResult getAllComments(Integer page, Integer pageSize, String articleId, String userId) {
+	public PagedResult getMainComments(Integer page, Integer pageSize, String articleId, String userId) {
 
 		PageHelper.startPage(page, pageSize);
 
@@ -317,14 +320,16 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
-	public PagedResult getSonComments(Integer page, Integer pageSize, String fatherCommentId) {
+	public PagedResult getSonComments(Integer page, Integer pageSize, String underCommentId) {
 		
 		PageHelper.startPage(page, pageSize);
-		List<UserArticleCommentVO> list = userArticleCommentMapperCustom.querySonComments(fatherCommentId);
+		List<UserArticleCommentVO> list = userArticleCommentMapperCustom.querySonComments(underCommentId);
 		
 		for (UserArticleCommentVO c : list) {
 			String timeAgo = TimeAgoUtils.format(c.getCreateDate());
 			c.setTimeAgo(timeAgo);
+			// 设置回复人昵称
+			c.setToNickname(userService.queryUserById(c.getToUserId()).getNickname());
 		}
 		
 		PageInfo<UserArticleCommentVO> pageList = new PageInfo<>(list);

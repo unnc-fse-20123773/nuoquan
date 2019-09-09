@@ -162,6 +162,11 @@ __webpack_require__.r(__webpack_exports__);
       userInfo: this.getGlobalUserInfo() };
 
   },
+
+  created: function created() {
+    // console.log(this.commentDetail);
+  },
+
   methods: {
     showRecommentArea: function showRecommentArea() {
       this.RECOMMENT = !this.RECOMMENT;
@@ -175,7 +180,8 @@ __webpack_require__.r(__webpack_exports__);
         method: "POST",
         url: that.$serverUrl + '/article/getSubComments',
         data: {
-          fatherCommentId: that.mainComment.id },
+          underCommentId: that.mainComment.id,
+          userId: that.userInfo.id },
 
         header: {
           'content-type': 'application/x-www-form-urlencoded' },
@@ -183,17 +189,20 @@ __webpack_require__.r(__webpack_exports__);
         success: function success(res) {
           // that.isPassingReComment = false;
           // that.reCommentListFromDetail = '';
-          that.reCommentList = res.data.data.rows;
+          if (res.data.status == 200) {
+            that.reCommentList = res.data.data.rows;
+            console.log(res);
+          }
         } });
 
     },
 
     controlInputInComment: function controlInputInComment(a) {
-      debugger;
       if (a == "inComment") {
         var dataOfRecomment = {
           mode: "re-co",
           toUserId: this.mainComment.fromUserId,
+          underCommentId: this.mainComment.id,
           fatherCommentId: this.mainComment.id,
           nickname: this.mainComment.nickname };
 

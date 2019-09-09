@@ -254,8 +254,8 @@ public class ArticleController extends BasicController {
 	 * underCommentId // 显示在该主评论层ID下
 	 * fatherCommentId // 父级评论ID
 	 * comment 必填
-	 * PS: 父级（一级，给文章评论）评论 无 fatherCommentId;
-	 *     子级评论有 fatherCommentId;
+	 * PS: 父级（一级，给文章评论）评论 无 fatherCommentId, underCommentId;
+	 *     子级评论有 fatherCommentId, underCommentId;
 	 */
 	@PostMapping("/saveComment")
 	public JSONResult saveComment(@RequestBody UserArticleComment comment) throws Exception {
@@ -303,7 +303,7 @@ public class ArticleController extends BasicController {
 			pageSize = PAGE_SIZE;
 		}
 
-		PagedResult list = articleService.getAllComments(page, pageSize, articleId, userId);
+		PagedResult list = articleService.getMainComments(page, pageSize, articleId, userId);
 
 		return JSONResult.ok(list);
 	}

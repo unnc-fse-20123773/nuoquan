@@ -1,9 +1,9 @@
 <template>
 	<view class="reComment">
-		<view class="contentarea" @longtap="controlInputInRecomment()">{{ reCommentDetail.comment }}</view>
+		<view class="contentarea" @tap="controlInputInRecomment()">回复@{{reCommentDetail.toNickname}}: {{reCommentDetail.comment}}</view>
 		<view class="bottombar">
 			<view style="width:70%;display:inline-block;">
-				<image :src="reCommentDetail.faceImage" class="touxiang"></image>
+				<image :src="reCommentDetail.faceImg" class="touxiang"></image>
 				<text class="name">{{ reCommentDetail.nickname }}</text>
 				<text class="time">{{ reCommentDetail.timeAgo }}</text>
 			</view>
@@ -31,11 +31,11 @@
 		},
 		methods:{
 			controlInputInRecomment(){
-				debugger;
 				var dataOfRecomment={
 					mode:"re-re",
 					toUserId:this.reCommentDetail.fromUserId,
 					fatherCommentId:this.reCommentDetail.id,
+					underCommentId:this.reCommentDetail.underCommentId,
 					nickname:this.reCommentDetail.nickname,
 				}
 				this.$emit('controlInputSignal',dataOfRecomment)

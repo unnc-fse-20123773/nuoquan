@@ -108,12 +108,12 @@ public interface ArticleService {
 	 * @param userId
 	 * @return
 	 */
-	public PagedResult getAllComments(Integer page, Integer pageSize, String articleId, String userId);
+	public PagedResult getMainComments(Integer page, Integer pageSize, String articleId, String userId);
 	
 	/**
 	 * 留言分页 子评论
 	 */
-	public PagedResult getSonComments(Integer page, Integer pageSize, String fatherCommentId);
+	public PagedResult getSonComments(Integer page, Integer pageSize, String underCommentId);
 	
 	/**
 	 * 根据 commentId 获取评论
