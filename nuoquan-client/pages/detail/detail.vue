@@ -5,7 +5,7 @@
 		</view>
 
 		<view class="drtailmain">
-			<view class="detailcontent">{{ articleCard.articleContent }}</view>
+			<text class="detailcontent">{{ articleCard.articleContent }}</text>
 			<view class="detailpics">
 				<view v-for="(item, index) in articleCard.imgList" :key="index">
 					<image :src="serverUrl + item.imagePath"></image>

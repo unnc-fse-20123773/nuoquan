@@ -17,6 +17,6 @@
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
     <result column="is_anonymous" property="isAnonymous" jdbcType="TINYINT" />
     <result column="view_num" property="viewNum" jdbcType="INTEGER" />
-    <result column="article_content" property="articleContent" jdbcType="LONGVARCHAR" />
+    <result column="article_content" property="articleContent" jdbcType="LONGVARBINARY" />
   </resultMap>
 </mapper>

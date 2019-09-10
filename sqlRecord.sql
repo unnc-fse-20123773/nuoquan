@@ -16,7 +16,7 @@ ALTER TABLE `nuoquan`.`user_article_comment`
 CHANGE COLUMN `comment` `comment` VARCHAR(255) CHARACTER SET 'utf8mb4' NOT NULL ;
 
 ALTER TABLE `nuoquan`.`article` 
-CHANGE COLUMN `article_content` `article_content` TEXT(1024) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NOT NULL ;
+CHANGE COLUMN `article_content` `article_content` TEXT(10240) NOT NULL ;
 
 
 -- v19.9.7 @author: Jerrio

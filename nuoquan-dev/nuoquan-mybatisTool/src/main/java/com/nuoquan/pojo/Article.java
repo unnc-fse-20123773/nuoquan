@@ -47,7 +47,7 @@ public class Article {
     private Integer viewNum;
 
     @Column(name = "article_content")
-    private String articleContent;
+    private byte[] articleContent;
 
     /**
      * @return id
@@ -232,14 +232,14 @@ public class Article {
     /**
      * @return article_content
      */
-    public String getArticleContent() {
+    public byte[] getArticleContent() {
         return articleContent;
     }
 
     /**
      * @param articleContent
      */
-    public void setArticleContent(String articleContent) {
+    public void setArticleContent(byte[] articleContent) {
         this.articleContent = articleContent;
     }
 }
