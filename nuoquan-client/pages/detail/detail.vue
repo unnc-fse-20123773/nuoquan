@@ -7,6 +7,12 @@
 		<view class="drtailmain">
 			<view class="detailcontent">{{ articleCard.articleContent }}</view>
 			<view class="detailpics">
+				<view v-if="articleCard.imgList.length==1" class="1pic" style="width: 100%;max-height: 400upx;">
+					<image v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFit" style="height: 360upx;"></image>
+				</view>
+				<image class="detailpic" v-else v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFill"></image>
+				<view v-if="articleCard.imgList.length==2||imageList.length==5||imageList.length==8" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
+				
 
 			</view>
 			<view class="tags">
@@ -50,6 +56,7 @@
 	export default {
 		data() {
 			return {
+				serverUrl: this.$serverUrl,
 				userInfo: {},
 				articleCard: "",  //detail的主角，由index传过来的单个文章信息
                 commentContent:"",  //用户准备提交的评论内容
@@ -166,6 +173,7 @@
 		},
 		onLoad(options) {
 			this.articleCard = JSON.parse(options.data);
+			console.log(this.articleCard);
 		
 			var userInfo = this.getGlobalUserInfo();
 			if (!this.isNull(userInfo)) {
@@ -220,6 +228,9 @@
 		margin: auto;
 		font-weight: 400;
 		padding-top:12px;
+		word-break: break-all;
+		word-wrap: break-word;
+		
 	}
 
 	.drtailmain {
@@ -236,23 +247,30 @@
 
 	.detailcontent {
 		padding-top: 25px;
+		padding-bottom: 15px;
 		font-size: 13px;
-		/* width: 85%;
-		margin: 0px auto 10px; */
 		font-weight: 400;
+		word-break: break-all;
+		word-wrap: break-word;
+		
+		
 	}
 
 	.detailpics {
 		display: flex;
-		justify-content: center;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		flex: 0 0 auto;
 		align-items: center;
 		flex-wrap: wrap;
+		width: 606upx;
+		margin: 0 auto;
 	}
 
 	.detailpic {
-		width: 180upx;
-		height: 180upx;
-		margin: 6px;
+		width: 190upx;
+		height: 190upx;
+		margin: 6px 0;
 	}
 
 	.tags {
@@ -346,8 +364,7 @@
 		color: #FFFFFF;
 		text-align: center;
 		line-height: 30px;
-		margin-top:12px;
-		margin-bottom: 50px;
+		
 	}
 .bottoLayerOfInput{
 	position: fixed;

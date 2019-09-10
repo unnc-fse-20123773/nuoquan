@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
 	"description": "项目配置文件。",
 	"packOptions": {
 		"ignore": []
@@ -7,7 +6,7 @@
 	"setting": {
 		"urlCheck": false,
 		"postcss": false,
-		"minified": false,
+		"minified": true,
 		"es6": true
 	},
 	"compileType": "miniprogram",
@@ -107,111 +106,4 @@
 			]
 		}
 	}
-=======
-  "description": "项目配置文件。",
-  "packOptions": {
-    "ignore": []
-  },
-  "setting": {
-    "urlCheck": false,
-    "postcss": false,
-    "minified": true,
-    "es6": true
-  },
-  "compileType": "miniprogram",
-  "libVersion": "2.7.0",
-  "appid": "wxebb29e9646be657f",
-  "projectname": "nuoquan",
-  "condition": {
-    "search": {
-      "current": -1,
-      "list": []
-    },
-    "conversation": {
-      "current": -1,
-      "list": []
-    },
-    "game": {
-      "current": -1,
-      "list": []
-    },
-    "miniprogram": {
-      "current": 0,
-      "list": [
-        {
-          "name": "index",
-          "query": "",
-          "id": 0,
-          "pathName": "pages/index/index"
-        },
-        {
-          "name": "signin",
-          "query": "",
-          "id": 1,
-          "pathName": "pages/signin/signin"
-        },
-        {
-          "name": "submit",
-          "query": "",
-          "id": 2,
-          "pathName": "pages/submit/submit"
-        },
-        {
-          "name": "chatpage",
-          "query": "",
-          "id": 3,
-          "pathName": "pages/chatpage/chatpage"
-        },
-        {
-          "name": "fanslist",
-          "query": "",
-          "id": 4,
-          "pathName": "pages/fanslist/fanslist"
-        },
-        {
-          "name": "followlist",
-          "query": "",
-          "id": 5,
-          "pathName": "pages/followlist/followlist"
-        },
-        {
-          "name": "messagelist",
-          "query": "",
-          "id": 6,
-          "pathName": "pages/messagelist/messagelist"
-        },
-        {
-          "name": "profile",
-          "query": "",
-          "id": 7,
-          "pathName": "pages/profile/profile"
-        },
-        {
-          "name": "personpublic",
-          "query": "userId=test-id123",
-          "id": 8,
-          "pathName": "pages/personpublic/personpublic"
-        },
-        {
-          "name": "wechatLogin",
-          "query": "",
-          "id": 9,
-          "pathName": "pages/wechatLogin/wechatLogin"
-        },
-        {
-          "name": "detail",
-          "query": "",
-          "id": 10,
-          "pathName": "pages/detail/detail"
-        },
-        {
-          "name": "search",
-          "query": "",
-          "id": 11,
-          "pathName": "pages/search/search"
-        }
-      ]
-    }
-  }
->>>>>>> master
 }

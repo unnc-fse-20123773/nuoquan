@@ -203,10 +203,10 @@
 
 	.reCommentsArea {
 		background: #EEEEEE;
-		width: 400upx;
+		width: 500upx;
 		padding: 14px 25upx 11px;
 		border-radius: 10px;
-		margin-left: 187.5upx;
+		margin-left: 87.5upx;
 		margin-bottom: 10px;
 	}
 </style>

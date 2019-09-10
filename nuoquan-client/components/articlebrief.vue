@@ -146,12 +146,18 @@
 		line-height: 19px;
 		margin: 16px 13px 0 15px;
 		padding-top: 16px;
+		word-wrap:break-word;
+		word-break: break-all;
+		white-space: normal;
 	}
 	.briefarticleCard {
 		margin: 10px 13px 0 15px;
 		font-size: 13px;
 		line-height: 15px;
 		margin-bottom: 15px;
+		word-wrap:break-word;
+		word-break: break-all;
+		white-space: normal;
 	}
 	.tags {
 		margin-left: 10px;
