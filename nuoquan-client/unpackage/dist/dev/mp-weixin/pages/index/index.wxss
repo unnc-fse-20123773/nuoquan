@@ -28,6 +28,7 @@ image {
 }
 .tags.data-v-2881634c {
 	margin-left: 10px;
+	min-height: 10px;
 }
 .tag.data-v-2881634c {
 	display: inline-block;
@@ -39,6 +40,12 @@ image {
 	color: #ffffff;
 	font-size: 10px;
 	background: #621E81;
+}
+.tag-empty.data-v-2881634c{
+	margin-left: 10px;
+	height: 15px;
+	width: auto;
+	background-color: white;
 }
 .menubar.data-v-2881634c {
 	position: relative;
@@ -171,5 +178,11 @@ image.data-v-5ac200f2 {
 .arrow.data-v-5ac200f2 {
 	width: 100rpx;
 	height: 60rpx;
+}
+.marginHelper.data-v-5ac200f2{
+	height: 15rpx;
+	margin-top: 15rpx;
+	width: 100%;
+	background-color: #f3f3f3;
 }
 

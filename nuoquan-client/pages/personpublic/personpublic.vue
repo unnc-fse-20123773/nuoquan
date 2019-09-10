@@ -337,7 +337,7 @@
 	}
 
 	.personName {
-		width: 100%;
+		width: 200%;
 		margin-top: 2%;
 	}
 

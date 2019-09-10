@@ -195,18 +195,11 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public String saveArticle(Article article) {
-		String[] test = article.getArticleContent().split("\\n");
-		for(String s : test) {
-			System.out.println(s);
-		}
-		
-		
 		String id = sid.nextShort();
 		article.setId(id);
 		articleMapper.insertSelective(article);
 
 		return id;
-
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)

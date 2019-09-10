@@ -2,7 +2,10 @@
 page{
 	height:100%;
 	width:100%;
+	background-color: #F5F5F5;
 }
+
+
 
 
 
@@ -219,11 +222,8 @@ page{
 		display: -webkit-flex;
 		display: -ms-flexbox;
 		display: flex;
-		/* flex-flow: column-reverse; */
 		margin-bottom: 90rpx;
-		overflow: hidden;
 		background: #F5F5F5;
-		height: 100%;
 		margin-left: 3%;
 		width: 94%;
 }
@@ -297,4 +297,10 @@ button.data-v-0318fac1{
 button.data-v-0318fac1::after{
 	border:none;
 }
+.marginHelper.data-v-0318fac1{
+		height: 40rpx;
+		width: 100%;
+		background-color: #f5f5f5;
+}
+	
 

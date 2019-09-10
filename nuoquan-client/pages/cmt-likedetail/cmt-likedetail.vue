@@ -124,7 +124,7 @@
 								</view>
 								<!-- 点赞 or 评论预览块 -->
 								<view class="brief-bar-nocolor">
-									<view class="brief-bar-rel" style="color: #000000">
+									<view class="brief-bar-rel">
 										{{item.data.source.comment}}
 									</view>
 								</view>
@@ -155,7 +155,7 @@
 								<view class="marginHelper2"></view>
 							</view>
 							
-							<!-- ***************************** 评论评论卡片 ************************ -->
+							<!-- ***************************** 评论评论卡片 ******************************** -->
 							<view v-if="item.action==COMMENTCOMMENT" class="cmtlikeDetail-card" >
 								<!-- 卡片高度未定义，上下边距会失效，用 marginHelper 填充空白 -->
 								<view class="marginHelper1"></view>
@@ -178,14 +178,13 @@
 								</view>
 								<!-- 点赞 or 评论预览块 -->
 								<view class="brief-bar-nocolor">
-									<view class="brief-bar-rel" style="color: #000000">
-										{{item.data.source.comment}}
+									<view class="brief-bar-rel">
+										{{item.data.comment.comment}}
 									</view>
 								</view>
 								<!-- 原评论预览块 -->
-								<!-- 点赞 or 评论预览块 -->
-								<view class="brief-bar-abs">
-									<view class="brief-bar-rel">
+								<view class="brief-bar-abs-cmtofcmt">
+									<view class="brief-bar-rel-cmtofcmt">
 										{{item.data.target.comment}}
 									</view>
 								</view>
@@ -194,6 +193,8 @@
 							</view>
 							
 						</view>
+						<!-- 用于添加底部空白 by Guetta 9.10 -->
+						<view class="marginHelper3"></view>
 					</scroll-view>
 				</swiper-item>
 			</swiper>
@@ -477,7 +478,7 @@
 		/* 在这里设置底部横条高度和颜色 */
 		width: 60%;
 		height: 6upx;
-		background: #FFCF3C;
+		background: #00a0e9;
 	}
 
 	.swiper-box-list {
@@ -527,6 +528,13 @@
 		width: 60%;
 		margin-left: 20%;
 		background-color: white;
+	}
+	
+	.marginHelper3{
+		height: 15upx;
+		margin-top: 15upx;
+		width: 100%;
+		background-color: #f3f3f3;
 	}
 		
 
@@ -587,7 +595,6 @@
 	/* ---------------------------预览行---------------------- */
 	.brief-bar-abs {
 		/* 底部边距需要动态设置 */
-		margin-bottom: 15upx;
 		overflow: hidden;
 		width: 92%;
 		margin-left: 4%;
@@ -595,16 +602,40 @@
 		background-color: #f8eced;
 	}
 	
-	.brief-bar-nocolor {
+	.brief-bar-abs-cmtofcmt {
 		/* 底部边距需要动态设置 */
-		margin-bottom: 15upx;
 		overflow: hidden;
 		width: 92%;
 		margin-left: 4%;
 		border-radius: 20upx;
+		background-color: #e5f3f9;
+	}
+	
+	.brief-bar-nocolor {
+		/* 底部边距需要动态设置 */
+		overflow: hidden;
+		width: 96%;
+		margin-left: 2%;
+		border-radius: 20upx;
 	}
 
 	.brief-bar-rel {
+		position: relative;
+		width: 94%;
+		margin-left: 3%;
+		margin-top: 15upx;
+		margin-bottom: 15upx;
+		height: 100%;
+		font-size: 12px;
+		color: #3d3d3d;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+		overflow: hidden;
+		word-break:break-all;
+	}
+	
+	.brief-bar-rel-cmtofcmt {
 		position: relative;
 		width: 94%;
 		margin-left: 3%;
@@ -617,6 +648,7 @@
 		-webkit-box-orient: vertical;
 		-webkit-line-clamp: 3;
 		overflow: hidden;
+		word-break:break-all;
 	}
 
 	/* -------------------原评论预览行 -----------------*/

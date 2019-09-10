@@ -309,30 +309,40 @@ var sizeType = [
 
         success: function success(res) {
           // console.log(res.data.data);
-          if (me.imageList.length <= 0) {
-            uni.navigateBack({
-              url: '../index/index' });
+          if (res.data.status == 200) {
+            if (me.imageList.length <= 0) {
+              uni.navigateBack({
+                url: '../index/index' });
 
-          } else {
-            var articleId = res.data.data;
-            for (var i = 0; i < me.imageList.length; i++) {
-              uni.uploadFile({
-                url: _this2.$serverUrl + '/article/uploadArticleImg',
-                filePath: me.imageList[i],
-                name: 'file',
-                formData: {
-                  userId: me.userInfo.id,
-                  articleId: articleId,
-                  order: i },
+            } else {
+              var articleId = res.data.data;
+              for (var i = 0; i < me.imageList.length; i++) {
+                uni.uploadFile({
+                  url: _this2.$serverUrl + '/article/uploadArticleImg',
+                  filePath: me.imageList[i],
+                  name: 'file',
+                  formData: {
+                    userId: me.userInfo.id,
+                    articleId: articleId,
+                    order: i },
 
-                success: function success(uploadFileRes) {
-                  uni.navigateBack({
-                    delta: 1 });
+                  success: function success(uploadFileRes) {
+                    uni.navigateBack({
+                      delta: 1 });
 
-                } });
+                  } });
 
+              }
             }
+          } else {
+            // 上传失败 用户提醒
+            uni.showToast({
+              title: '出现未知错误，上传失败',
+              duration: 2000,
+              icon: 'none' });
+
           }
+
         } });
 
     }

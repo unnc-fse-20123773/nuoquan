@@ -1,7 +1,7 @@
 -- +++++++++++++++++++++
 -- +  Database update  +
 -- +++++++++++++++++++++
--- v19.9.10 @author: Jerrio
+-- v19.9.11 @author: Jerrio
 -- 在 my.cnf 文件中加入以下两行代码 vim /usr/local/etc/my.cnf (每个人的不一样，这是我的位置)
 -- init-connect='SET NAMES utf8mb4'
 -- character-set-server=utf8mb4
