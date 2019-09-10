@@ -17,7 +17,8 @@
 				<!-- 修改时状态 -->
 				<view class="profileText-box" v-if="isEdit == true">
 					<text class="left-profileText1 ">昵称</text>
-					<input class="right-profileText1-1" style="text-align:right;min-height: 1upx;height:26px;" maxlength="16" :value="userInfo.nickname"
+					<text class="right-remind ">最长 8 位</text>
+					<input class="right-profileText1-1" style="text-align:right;min-height: 1upx;height:26px;" maxlength="8" :value="userInfo.nickname"
 					 name="nickname" />
 					<view class="input-border"></view>
 					<text class="left-profileText2">性别</text>
@@ -47,7 +48,7 @@
 				<!-- 修改时状态 -->
 				<view class="profilemoreText-box" v-if="isEdit == true">
 					<text class="left-profileText1">学校邮箱</text>
-					<input class="right-profileText1-1" style="width: 260px;text-align:right;min-height: 1upx;height:26px;" maxlength="32"
+					<input class="right-profileText1-1" style="width: 260px;text-align:right;min-height: 1upx;height:26px;" maxlength="26"
 					 :value="userInfo.email" name="email"/>
 					<view class="input-border2"></view>
 					<text class="left-profileText2">毕业年份/专业</text>
@@ -368,6 +369,14 @@
 		left: 0%;
 		font-size: 30upx;
 		font-weight: 550;
+	}
+	
+	.right-remind {
+		color: #888888;
+		position: absolute;
+		right: 0%;
+		font-size: 20upx;
+		font-weight: 500;
 	}
 
 	.right-profileText1 {

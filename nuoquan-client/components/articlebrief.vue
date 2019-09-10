@@ -164,6 +164,7 @@
 	}
 	.tags {
 		margin-left: 10px;
+		min-height: 10px;
 	}
 	.tag {
 		display: inline-block;
@@ -176,6 +177,14 @@
 		font-size: 10px;
 		background: #621E81;
 	}
+	
+	.tag-empty{
+		margin-left: 10px;
+		height: 15px;
+		width: auto;
+		background-color: white;
+	}
+	
 	.menubar {
 		position: relative;
 		vertical-align: middle;

@@ -6,6 +6,8 @@
 			<scroll-view class="indexArticleArea" scroll-y="true" @scroll="linkageWithTop">
 				<view style="height:160px;width:100%;"></view>
 				<articlebrief v-for="i in showlist" :key="i.id" v-bind:articleCard="i"></articlebrief>
+				<!-- 用于添加底部空白 by Guetta 9.10 -->
+				<view class="marginHelper"></view>
 			</scroll-view>
 		</view>
 	</view>
@@ -199,5 +201,12 @@
 	.arrow {
 		width: 100upx;
 		height: 60upx;
+	}
+	
+	.marginHelper{
+		height: 15upx;
+		margin-top: 15upx;
+		width: 100%;
+		background-color: #f3f3f3;
 	}
 </style>
