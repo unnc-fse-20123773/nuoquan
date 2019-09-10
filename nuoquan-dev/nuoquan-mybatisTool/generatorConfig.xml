@@ -31,6 +31,6 @@
 
 		<!-- <table tableName="user_like_comment"></table> -->
 		<!-- <table tableName="user_like_article"></table> -->
-		<table tableName="user_article_comment"></table>
+		<table tableName="article"></table>
     </context>
 </generatorConfiguration>
