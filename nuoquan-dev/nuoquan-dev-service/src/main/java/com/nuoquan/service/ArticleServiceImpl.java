@@ -327,7 +327,7 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
-	public PagedResult getSonComments(Integer page, Integer pageSize, String underCommentId) {
+	public PagedResult getSonComments(Integer page, Integer pageSize, String underCommentId, String userId) {
 		
 		PageHelper.startPage(page, pageSize);
 		List<UserArticleCommentVO> list = userArticleCommentMapperCustom.querySonComments(underCommentId);
@@ -335,6 +335,8 @@ public class ArticleServiceImpl implements ArticleService {
 		for (UserArticleCommentVO c : list) {
 			String timeAgo = TimeAgoUtils.format(c.getCreateDate());
 			c.setTimeAgo(timeAgo);
+			// 查询并设置关于用户的点赞关系
+			c.setIsLike(isUserLikeComment(userId, c.getId()));
 			// 设置回复人昵称
 			c.setToNickname(userService.queryUserById(c.getToUserId()).getNickname());
 		}

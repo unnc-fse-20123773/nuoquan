@@ -28,8 +28,7 @@
 				</view>
 			</view>
 
-			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i" @controlInputSignal="controlInput"
-			 :reCommentListFromDetail="reCommentListFromDetail">
+			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i" @controlInputSignal="controlInput">
 			</commentbox>
 
 			<view class="fengexian" style="height: 1px;width: 100%;background-color: #d6d6d6;margin:auto;"></view>
@@ -65,7 +64,6 @@
 				submitData:{
 					//这个是从子组件传来的数据，回复评论的评论之类
 				},
-				reCommentListFromDetail: {},
 				
 				serverUrl: this.$serverUrl,
 
@@ -257,9 +255,8 @@
 			},
 			
 			goToPersonPublic(){
-				var navData = JSON.stringify(this.articleCard.userId); // 这里转换成 字符串
 				uni.navigateTo({
-					url: '/pages/personpublic/personpublic?userId='+navData
+					url: '/pages/personpublic/personpublic?userId=' + this.articleCard.userId,
 				})
 			}
 		},

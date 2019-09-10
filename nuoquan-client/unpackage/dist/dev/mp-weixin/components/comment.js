@@ -141,13 +141,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 {
   name: 'comment',
   props: {
-    commentDetail: '',
-    reCommentListFromDetail: {
-      type: Array } },
-
+    commentDetail: '' },
 
   components: {
     reComment: reComment },
@@ -222,7 +220,6 @@ __webpack_require__.r(__webpack_exports__);
       if (comment.isLike) {
         this.unLikeComment(comment);
         this.mainComment.likeNum--;
-        console.log(this.mainComment.likeNum);
       } else {
         this.likeComment(comment);
         this.mainComment.likeNum++;
@@ -270,13 +267,10 @@ __webpack_require__.r(__webpack_exports__);
 
     },
 
-    /**
-        * 点赞或取消点赞二级评论
-        * @param {Object} comment
-        */
-    swLikeSubComment: function swLikeSubComment(comment) {
-      if (comment.isLike) {
-      }
+    goToPersonPublic: function goToPersonPublic(userId) {
+      uni.navigateTo({
+        url: '/pages/personpublic/personpublic?userId=' + userId });
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

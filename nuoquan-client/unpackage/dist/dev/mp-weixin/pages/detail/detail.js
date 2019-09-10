@@ -167,7 +167,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 {
   data: function data() {
     return {
@@ -184,7 +183,6 @@ __webpack_require__.r(__webpack_exports__);
       submitData: {
         //这个是从子组件传来的数据，回复评论的评论之类
       },
-      reCommentListFromDetail: {},
 
       serverUrl: this.$serverUrl };
 
@@ -376,9 +374,8 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     goToPersonPublic: function goToPersonPublic() {
-      var navData = JSON.stringify(this.articleCard.userId); // 这里转换成 字符串
       uni.navigateTo({
-        url: '/pages/personpublic/personpublic?userId=' + navData });
+        url: '/pages/personpublic/personpublic?userId=' + this.articleCard.userId });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

@@ -1,6 +1,10 @@
 -- +++++++++++++++++++++
 -- +  Database update  +
 -- +++++++++++++++++++++
+-- v19.9.10 @author: Jerrio
+ALTER TABLE `nuoquan`.`article` 
+CHARACTER SET = utf8mb4 , COLLATE = DEFAULT ;
+
 -- v19.9.7 @author: Jerrio
 ALTER TABLE `nuoquan`.`user_article_comment` 
 ADD COLUMN `sign_flag` INT NULL DEFAULT 0 COMMENT '评论消息是否被签收 0: 未签收 1：签收' AFTER `under_comment_id`;

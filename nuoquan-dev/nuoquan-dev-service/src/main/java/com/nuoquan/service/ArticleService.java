@@ -113,7 +113,7 @@ public interface ArticleService {
 	/**
 	 * 留言分页 子评论
 	 */
-	public PagedResult getSonComments(Integer page, Integer pageSize, String underCommentId);
+	public PagedResult getSonComments(Integer page, Integer pageSize, String underCommentId, String userId);
 	
 	/**
 	 * 根据 commentId 获取评论

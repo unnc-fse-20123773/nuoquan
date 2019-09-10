@@ -36,7 +36,7 @@
 			<view class="tag" v-for="(i, index) in articleCard.tags" v-bind:key="index">{{i}}</view>
 		</view>
 		<view class="menubar">
-			<image :src="articleCard.faceImg" class="touxiang"></image>
+			<image :src="articleCard.faceImg" class="touxiang" @tap="goToPersonPublic(articleCard.userId)"></image>
 			<view class="name">{{ articleCard.nickname }}</view>
 			<view class="time">{{ articleCard.createDate | timeDeal}}</view>
 
@@ -119,6 +119,12 @@
 				var navData = JSON.stringify(this.articleCard); // 这里转换成 字符串
 				uni.navigateTo({
 					url: '/pages/detail/detail?data=' + navData
+				});
+			},
+			
+			goToPersonPublic(userId){
+				uni.navigateTo({
+					url:'/pages/personpublic/personpublic?userId=' + userId,
 				});
 			}
 		},

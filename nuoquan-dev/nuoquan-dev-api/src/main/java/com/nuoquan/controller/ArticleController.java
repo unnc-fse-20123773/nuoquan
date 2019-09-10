@@ -327,7 +327,7 @@ public class ArticleController extends BasicController {
 			pageSize = PAGE_SIZE;
 		}
 		
-		PagedResult reCommentList = articleService.getSonComments(page, pageSize, underCommentId);
+		PagedResult reCommentList = articleService.getSonComments(page, pageSize, underCommentId, userId);
 		
 		return JSONResult.ok(reCommentList);
 	}

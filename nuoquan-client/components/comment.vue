@@ -4,7 +4,7 @@
 		<view class="contentarea" @tap="controlInputInComment('inComment')">{{ mainComment.comment }}</view>
 		<view class="bottombar">
 			<view style="width:70%;display:inline-block;">
-				<image :src="mainComment.faceImg" class="touxiang"></image>
+				<image :src="mainComment.faceImg" class="touxiang" @tap="goToPersonPublic(mainComment.fromUserId)"></image>
 				<text class="name">{{ mainComment.nickname }}</text>
 				<text class="time">{{ mainComment.timeAgo }}</text>
 			</view>
@@ -26,7 +26,8 @@
 
 		<view v-show="RECOMMENT" class="reCommentsArea">
 
-			<reComment v-for="(i,index) in reCommentList" v-bind:key="index" :reCommentDetail='i' @controlInputSignal="controlInputInComment"></reComment>
+			<reComment v-for="(i,index) in reCommentList" v-bind:key="index" :reCommentDetail='i' 
+			@controlInputSignal="controlInputInComment" @goToPersonPublic="goToPersonPublic"></reComment>
 			<!-- <view class="submitComment">发 表 评 论</view> -->
 		</view>
 	</view>
@@ -38,9 +39,6 @@
 		name: 'comment',
 		props: {
 			commentDetail: '',
-			reCommentListFromDetail: {
-				type: Array
-			}
 		},
 		components: {
 			reComment,
@@ -115,7 +113,6 @@
 				if(comment.isLike){
 					this.unLikeComment(comment);
 					this.mainComment.likeNum--;
-					console.log(this.mainComment.likeNum);
 				} else {
 					this.likeComment(comment);
 					this.mainComment.likeNum++;
@@ -163,13 +160,10 @@
 				});
 			},
 			
-			/**
-			 * 点赞或取消点赞二级评论
-			 * @param {Object} comment
-			 */
-			swLikeSubComment(comment){
-				if(comment.isLike){
-				}
+			goToPersonPublic(userId){
+				uni.navigateTo({
+					url:'/pages/personpublic/personpublic?userId=' + userId,
+				});
 			}
 		},
 
