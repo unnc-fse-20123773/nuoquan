@@ -257,6 +257,20 @@ __webpack_require__.r(__webpack_exports__);
           that.commentContent = "";
 
           that.getComments();
+          // uni.request({
+          // 	method: "POST",
+          // 	url: that.$serverUrl + '/article/getSubComments',
+          // 	data: {
+          // 		fatherCommentId: that.submitData.fatherCommentId
+          // 	},
+          // 	header: {
+          // 		'content-type': 'application/x-www-form-urlencoded'
+          // 	},
+          // 	success: (res) => {
+          // 		that.reCommentListFromDetail = res.data.data.rows;
+          // 		console.log(that.reCommentListFromDetail);
+          // 	}
+          // });
         } });
 
     },
@@ -276,6 +290,8 @@ __webpack_require__.r(__webpack_exports__);
         success: function success(res) {
           console.log(res);
           that.commentList = res.data.data.rows;
+          // console.log(that.articleCard.id);
+
         } });
 
     },

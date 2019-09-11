@@ -313,7 +313,7 @@ var sizeType = [
         method: 'POST',
         data: {
           userId: me.userInfo.id,
-          articleTag: me.articleTag,
+          articleTag: me.finalTag,
           articleTitle: me.articleTitle,
           articleContent: me.articleContent },
 
