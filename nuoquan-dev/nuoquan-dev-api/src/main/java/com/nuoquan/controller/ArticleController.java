@@ -71,6 +71,17 @@ public class ArticleController extends BasicController {
 
 		return JSONResult.ok(result);
 	}
+	
+	@ApiOperation(value = "按文章 id 查询文章", notes = "查询全部文章的接口")
+	@ApiImplicitParams({
+		// userId 查询用户和文章的点赞关系
+		@ApiImplicitParam(name = "articleId", value = "文章id", required = true, dataType = "String", paramType = "form"),
+		@ApiImplicitParam(name = "userId", value = "操作者id", required = true, dataType = "String", paramType = "form") })
+	@PostMapping("/getArticleById")
+	public JSONResult getArticleById(String articleId, String userId) throws Exception {
+
+		return JSONResult.ok(articleService.getArticleById(articleId, userId));
+	}
 
 	@ApiOperation(value = "点赞文章")
 	@ApiImplicitParams({

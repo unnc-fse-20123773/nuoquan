@@ -256,21 +256,11 @@ __webpack_require__.r(__webpack_exports__);
           that.writingComment = false;
           that.commentContent = "";
 
-          that.getComments();
-          // uni.request({
-          // 	method: "POST",
-          // 	url: that.$serverUrl + '/article/getSubComments',
-          // 	data: {
-          // 		fatherCommentId: that.submitData.fatherCommentId
-          // 	},
-          // 	header: {
-          // 		'content-type': 'application/x-www-form-urlencoded'
-          // 	},
-          // 	success: (res) => {
-          // 		that.reCommentListFromDetail = res.data.data.rows;
-          // 		console.log(that.reCommentListFromDetail);
-          // 	}
-          // });
+          if (that.isNull(that.submitData.underCommentId)) {
+            that.getComments();
+          } else {
+            uni.$emit("flashSubComment", that.submitData.underCommentId);
+          }
         } });
 
     },

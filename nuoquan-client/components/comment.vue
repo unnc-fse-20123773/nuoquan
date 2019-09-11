@@ -26,7 +26,7 @@
 
 		<view v-show="RECOMMENT" class="reCommentsArea">
 
-			<reComment v-for="(i,index) in reCommentList" v-bind:key="index" :reCommentDetail='i' 
+			<reComment v-for="(item,index) in reCommentList" v-bind:key="index" :reCommentDetail='item' 
 			@controlInputSignal="controlInputInComment" @goToPersonPublic="goToPersonPublic"></reComment>
 			<!-- <view class="submitComment">发 表 评 论</view> -->
 		</view>
@@ -56,6 +56,12 @@
 		
 		created() {
 			// console.log(this.commentDetail);
+			// 监听刷新次级评论事件
+			uni.$on('flashSubComment', (underCommentId)=>{
+				if (this.mainComment.id == underCommentId) {
+					this.getSubComments();
+				};
+			})
 		},
 		
 		methods: {
@@ -65,7 +71,7 @@
 					this.getSubComments();
 				}
 			},
-			getSubComments(a) {
+			getSubComments() {
 				var that = this;
 				uni.request({
 					method: "POST",
@@ -81,8 +87,12 @@
 						// that.isPassingReComment = false;
 						// that.reCommentListFromDetail = '';
 						if(res.data.status==200){
-							that.reCommentList = res.data.data.rows;
-							console.log(res);
+							// 强制子组件重新刷新
+							that.reCommentList = '';
+							that.$nextTick(function(){
+								that.reCommentList = res.data.data.rows;
+							});
+							// console.log(res);
 						}
 					}
 				});

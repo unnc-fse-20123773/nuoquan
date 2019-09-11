@@ -309,6 +309,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 // TODO 查询列表分页操作
 var _default = {
@@ -463,6 +466,42 @@ var _default = {
       // 	icon: "none",
       // 	title: "回到顶部喽~"
       // })
+    },
+
+    goToPersonPublic: function goToPersonPublic(userId) {
+      uni.navigateTo({
+        url: '/pages/personpublic/personpublic?userId=' + userId });
+
+    },
+
+    goToArticle: function goToArticle(article) {
+      // console.log(article)
+      uni.navigateTo({
+        url: '../detail/detail?data=' + JSON.stringify(article) });
+
+    },
+
+    goToComment: function goToComment(articleId) {
+      var that = this;
+      uni.request({
+        url: that.$serverUrl + '/article/getArticleById',
+        method: "POST",
+        data: {
+          articleId: articleId,
+          userId: that.userInfo.id },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          if (res.data.status == 200) {
+            var article = res.data.data;
+            uni.navigateTo({
+              url: '../detail/detail?data=' + JSON.stringify(article) });
+
+          }
+        } });
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

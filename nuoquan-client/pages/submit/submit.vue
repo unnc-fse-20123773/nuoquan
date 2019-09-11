@@ -1,4 +1,4 @@
-<!-- TODO: 取消添加图片 -->
+<!-- TODO: 取消添加图片, 标签输入不能含有特殊字符，颜色变化 -->
 <template>
 	<viwe>
 		<view style="height:45px;width:100%;">
@@ -19,7 +19,6 @@
 						+ 添加标签
 					</view>
 					<input v-if="showInputTagArea" v-model="articleTag" focus="true" placeholder="请输入标签..." @blur="checkInput" />
-
 
 				</view>
 			</view>

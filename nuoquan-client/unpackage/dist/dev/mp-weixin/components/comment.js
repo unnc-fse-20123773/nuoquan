@@ -161,8 +161,14 @@ __webpack_require__.r(__webpack_exports__);
 
   },
 
-  created: function created() {
+  created: function created() {var _this = this;
     // console.log(this.commentDetail);
+    // 监听刷新次级评论事件
+    uni.$on('flashSubComment', function (underCommentId) {
+      if (_this.mainComment.id == underCommentId) {
+        _this.getSubComments();
+      };
+    });
   },
 
   methods: {
@@ -172,7 +178,7 @@ __webpack_require__.r(__webpack_exports__);
         this.getSubComments();
       }
     },
-    getSubComments: function getSubComments(a) {
+    getSubComments: function getSubComments() {
       var that = this;
       uni.request({
         method: "POST",
@@ -188,8 +194,12 @@ __webpack_require__.r(__webpack_exports__);
           // that.isPassingReComment = false;
           // that.reCommentListFromDetail = '';
           if (res.data.status == 200) {
-            that.reCommentList = res.data.data.rows;
-            console.log(res);
+            // 强制子组件重新刷新
+            that.reCommentList = '';
+            that.$nextTick(function () {
+              that.reCommentList = res.data.data.rows;
+            });
+            // console.log(res);
           }
         } });
 

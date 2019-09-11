@@ -30,7 +30,7 @@
 									<!-- 相对绝对定位 -->
 									<view class="id-line-rel">
 										<view class="clTouxiang-box">
-											<image class="clTouxiang" :src="item.data.source.faceImg" mode="scaleToFill"></image>
+											<image class="clTouxiang" :src="item.data.source.faceImg" mode="scaleToFill" @tap="goToPersonPublic(likeList[index2].data.source.userId)"></image>
 										</view>
 										<view class="clID-box">
 											<text class="clID-text">{{item.data.source.nickname}}</text>
@@ -43,7 +43,7 @@
 									</view>
 								</view>
 								<!-- 文章预览块 -->
-								<view :class="[item.data.imgList.length > 0 ? 'origin-bar-abs-img' : 'origin-bar-abs-noimg']">
+								<view :class="[item.data.imgList.length > 0 ? 'origin-bar-abs-img' : 'origin-bar-abs-noimg']" @tap="goToArticle(likeList[index2].data.target)">
 									<view class="origin-bar-rel">
 										<view class="origin-imageBox" v-if="item.data.target.imgList.length > 0">
 											<view class="origin-imageMask"></view>
@@ -52,7 +52,6 @@
 													+{{item.data.target.imgList.length}}
 												</view>
 											</view>
-											<!-- 图片好像显示不出来 by Jerrio -->
 											<image class="origin-image" :src="serverUrl + item.data.target.imgList[0].imagePath" mode="scaleToFill"></image>
 										</view>
 										<view :class="[item.data.imgList.length > 0 ? 'origin-briefBox-img' : 'origin-briefBox-noimg']">
@@ -78,7 +77,7 @@
 									<!-- 相对绝对定位 -->
 									<view class="id-line-rel">
 										<view class="clTouxiang-box">
-											<image class="clTouxiang" :src="item.data.source.faceImg" mode="scaleToFill"></image>
+											<image class="clTouxiang" :src="item.data.source.faceImg" mode="scaleToFill" @tap="goToPersonPublic(likeList[index2].data.source.userId)"></image>
 										</view>
 										<view class="clID-box">
 											<text class="clID-text">{{item.data.source.nickname}}</text>
@@ -91,7 +90,7 @@
 									</view>
 								</view>
 								<!-- 点赞预览块 -->
-								<view class="brief-bar-abs">
+								<view class="brief-bar-abs" @tap="goToComment(likeList[index2].data.target.articleId)">
 									<view class="brief-bar-rel">
 										{{item.data.target.comment}}
 									</view>
@@ -110,7 +109,7 @@
 									<!-- 相对绝对定位 -->
 									<view class="id-line-rel">
 										<view class="clTouxiang-box">
-											<image class="clTouxiang" :src="item.data.source.faceImg" mode="scaleToFill"></image>
+											<image class="clTouxiang" :src="item.data.source.faceImg" mode="scaleToFill" @tap="goToPersonPublic(commentList[index2].data.source.fromUserId)"></image>
 										</view>
 										<view class="clID-box">
 											<text class="clID-text">{{item.data.source.nickname}}</text>
@@ -122,31 +121,33 @@
 										</view>
 									</view>
 								</view>
-								<!-- 点赞 or 评论预览块 -->
-								<view class="brief-bar-nocolor">
-									<view class="brief-bar-rel">
-										{{item.data.source.comment}}
-									</view>
-								</view>
-								<!-- 原文章预览块 -->
-								<view :class="[item.data.target.imgList.length > 0 ? 'origin-bar-abs-img' : 'origin-bar-abs-noimg']">
-									<view class="origin-bar-rel">
-										<view class="origin-imageBox" v-if="item.data.target.imgList.length > 0">
-											<view class="origin-imageMask"></view>
-											<view class="origin-imageMasknum super_center">
-												<view class="origin-imageMasknumtext">
-													+{{item.data.target.imgList.length}}
-												</view>
-											</view>
-											<!-- 图片好像显示不出来 by Jerrio -->
-											<image class="origin-image" :src="serverUrl + item.data.target.imgList[0].imagePath" mode="scaleToFill"></image>
+								<view @tap="goToComment(commentList[index2].data.source.articleId)">
+									<!-- 点赞 or 评论预览块 -->
+									<view class="brief-bar-nocolor">
+										<view class="brief-bar-rel">
+											{{item.data.source.comment}}
 										</view>
-										<view :class="[item.data.target.imgList.length > 0 ? 'origin-briefBox-img' : 'origin-briefBox-noimg']">
-											<view class="origin-briefTitlebox">
-												<text class="origin-briefTitle">{{item.data.target.articleTitle}}</text>
+									</view>
+									<!-- 原文章预览块 -->
+									<view :class="[item.data.target.imgList.length > 0 ? 'origin-bar-abs-img' : 'origin-bar-abs-noimg']">
+										<view class="origin-bar-rel">
+											<view class="origin-imageBox" v-if="item.data.target.imgList.length > 0">
+												<view class="origin-imageMask"></view>
+												<view class="origin-imageMasknum super_center">
+													<view class="origin-imageMasknumtext">
+														+{{item.data.target.imgList.length}}
+													</view>
+												</view>
+												<!-- 图片好像显示不出来 by Jerrio -->
+												<image class="origin-image" :src="serverUrl + item.data.target.imgList[0].imagePath" mode="scaleToFill"></image>
 											</view>
-											<view class="origin-briefTextbox">
-												<text class="origin-briefText">{{item.data.target.articleContent}}</text>
+											<view :class="[item.data.target.imgList.length > 0 ? 'origin-briefBox-img' : 'origin-briefBox-noimg']">
+												<view class="origin-briefTitlebox">
+													<text class="origin-briefTitle">{{item.data.target.articleTitle}}</text>
+												</view>
+												<view class="origin-briefTextbox">
+													<text class="origin-briefText">{{item.data.target.articleContent}}</text>
+												</view>
 											</view>
 										</view>
 									</view>
@@ -164,7 +165,7 @@
 									<!-- 相对绝对定位 -->
 									<view class="id-line-rel">
 										<view class="clTouxiang-box">
-											<image class="clTouxiang" :src="item.data.source.faceImg" mode="scaleToFill"></image>
+											<image class="clTouxiang" :src="item.data.source.faceImg" mode="scaleToFill" @tap="goToPersonPublic(commentList[index2].data.source.fromUserId)"></image>
 										</view>
 										<view class="clID-box">
 											<text class="clID-text">{{item.data.source.nickname}}</text>
@@ -176,16 +177,18 @@
 										</view>
 									</view>
 								</view>
-								<!-- 点赞 or 评论预览块 -->
-								<view class="brief-bar-nocolor">
-									<view class="brief-bar-rel">
-										{{item.data.comment.comment}}
+								<view @tap="goToComment(commentList[index2].data.source.articleId)">
+									<!-- 点赞 or 评论预览块 -->
+									<view class="brief-bar-nocolor">
+										<view class="brief-bar-rel">
+											{{item.data.source.comment}}
+										</view>
 									</view>
-								</view>
-								<!-- 原评论预览块 -->
-								<view class="brief-bar-abs-cmtofcmt">
-									<view class="brief-bar-rel-cmtofcmt">
-										{{item.data.target.comment}}
+									<!-- 原评论预览块 -->
+									<view class="brief-bar-abs-cmtofcmt">
+										<view class="brief-bar-rel-cmtofcmt">
+											{{item.data.target.comment}}
+										</view>
 									</view>
 								</view>
 								<!-- 卡片高度未定义，上下边距会失效，用 marginHelper 填充空白 -->
@@ -356,6 +359,42 @@
 				// 	icon: "none",
 				// 	title: "回到顶部喽~"
 				// })
+			},
+			
+			goToPersonPublic(userId){
+				uni.navigateTo({
+					url:'/pages/personpublic/personpublic?userId=' + userId,
+				});
+			},
+			
+			goToArticle(article){
+				// console.log(article)
+				uni.navigateTo({
+					url:'../detail/detail?data=' + JSON.stringify(article),
+				})
+			},
+			
+			goToComment(articleId){
+				var that = this;
+				uni.request({
+					url: that.$serverUrl + '/article/getArticleById',
+					method: "POST",
+					data:{
+						articleId: articleId,
+						userId: that.userInfo.id,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {
+						if (res.data.status == 200) {
+							var article = res.data.data;
+							uni.navigateTo({
+								url:'../detail/detail?data=' + JSON.stringify(article),
+							})
+						}
+					},
+				});
 			}
 		}
 	}
