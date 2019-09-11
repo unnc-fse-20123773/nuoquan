@@ -258,14 +258,13 @@ var sizeType = [
                     _this.imageList = _this.imageList.concat(res.tempFilePaths);
 
                     console.log(res);
-                    // for(var i = 0; i < 9; i++){
-                    // 	console.log(this.imageList[i]);
-                    // }
                   } });case 1:case "end":return _context.stop();}}}, _callee, this);}));function chooseImg() {return _chooseImg.apply(this, arguments);}return chooseImg;}(),
 
 
     previewImage: function previewImage(e) {
       var current = e.target.dataset.src;
+      // console.log(e)
+      console.log(this.imageList);
       uni.previewImage({
         current: current,
         urls: this.imageList });
@@ -279,13 +278,9 @@ var sizeType = [
       }
     },
     upload: function upload(e) {var _this2 = this;
-
       var me = this;
-
       console.log(me.articleTitle);
       console.log(me.articleContent);
-
-      // me.combineTagToString();
 
       if (me.articleTitle == '' || me.articleTitle == null) {
         uni.showToast({

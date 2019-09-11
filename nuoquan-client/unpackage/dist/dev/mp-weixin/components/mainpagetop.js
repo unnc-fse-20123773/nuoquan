@@ -348,7 +348,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var searchResultArticle = function searchResultArticle() {return __webpack_require__.e(/*! import() | components/searchResultArticle */ "components/searchResultArticle").then(__webpack_require__.bind(null, /*! ../../components/searchResultArticle.vue */ 188));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var searchResultArticle = function searchResultArticle() {return __webpack_require__.e(/*! import() | components/searchResultArticle */ "components/searchResultArticle").then(__webpack_require__.bind(null, /*! ../../components/searchResultArticle.vue */ 258));};var _default =
 
 
 
@@ -396,7 +396,9 @@ __webpack_require__.r(__webpack_exports__);
       searchKeyWords: '',
       searchedArticleList: {},
       searching: true,
-      searchHisKeyList: uni.getStorageSync('search_history') };
+      searchHisKeyList: uni.getStorageSync('search_history'),
+
+      userInfo: this.getGlobalUserInfo() };
 
   },
   components: {
@@ -471,10 +473,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
       uni.request({
-        url: this.$serverUrl + '/article/searchArticleYANG?isSaveRecord=' + isSaveRecord,
+        url: that.$serverUrl + '/article/searchArticleYANG?isSaveRecord=' + isSaveRecord,
         method: "POST",
         data: {
-          articleContent: that.searchKeyWords },
+          articleContent: that.searchKeyWords,
+          userId: that.userInfo.id },
 
         success: function success(result) {
           console.log(result.data);

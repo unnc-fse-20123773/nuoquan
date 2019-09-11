@@ -18,22 +18,22 @@
 			<view style="width: 100%;max-height: 400upx;" v-if="articleCard.imgList.length == 1">
 				<!-- 高 ＞ 宽 -->
 				<view v-if="singleImgState == 0" style="width: 360upx;">
-					<image mode="aspectFit" style="height: 360upx;" :src="serverUrl + articleCard.imgList[0].imagePath" @load="singleImgeFit"></image>
+					<image mode="aspectFit" style="height: 360upx;" :src="serverUrl + articleCard.imgList[0].imagePath" @load="singleImgeFit" @tap="previewImage"></image>
 				</view>
 				<!-- 宽 > 高 -->
 				<view v-else style="max-height: 400upx;display: flex;">
-					<image mode="aspectFit" style="width: 90%;" :src="serverUrl + articleCard.imgList[0].imagePath" @load="singleImgeFit"></image>
+					<image mode="aspectFit" style="width: 90%;" :src="serverUrl + articleCard.imgList[0].imagePath" @load="singleImgeFit" @tap="previewImage"></image>
 				</view>
 			</view>
 			<!-- 多图显示 -->
 			
 			<view style="width:30%;height: 200upx;margin-left: 2.5%;display: flex;background-color: #D1D1D1;" v-else v-for="(item,index) in imgList" :key="index">
-				<image mode="aspectFit" :src="serverUrl + item.imagePath"></image>				
+				<image mode="aspectFit" :src="serverUrl + item.imagePath" @tap="previewImage"></image>				
 			</view>
 			
 		</view>
 		<view class="tags">
-			<view class="tag" v-for="(i, index) in articleCard.tags" v-bind:key="index">{{i}}</view>
+			<view class="tag" v-for="(i, index) in articleCard.tagList" v-bind:key="index">{{i}}</view>
 		</view>
 		<view class="menubar">
 			<image :src="articleCard.faceImg" class="touxiang" @tap="goToPersonPublic(articleCard.userId)"></image>
@@ -126,7 +126,15 @@
 				uni.navigateTo({
 					url:'/pages/personpublic/personpublic?userId=' + userId,
 				});
-			}
+			},
+			// previewImage: function(e) {
+			// 	console.log(e);
+			// 	// var current = e.target.dataset.src
+			// 	// uni.previewImage({
+			// 	// 	current: current,
+			// 	// 	urls: e,
+			// 	// })
+			// },
 		},
 	};
 </script>

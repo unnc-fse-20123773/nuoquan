@@ -93,7 +93,7 @@ public class ArticleController extends BasicController {
 		// 给目标作者发推送
 		DataContent dataContent = new DataContent();
 		dataContent.setAction(MsgActionEnum.LIKEARTICLE.type);
-		dataContent.setData(new NoticeCard(likeVO, articleService.getArticleById(articleId)));
+		dataContent.setData(new NoticeCard(likeVO, articleService.getArticleById(articleId, userId)));
 		
 		MsgHandler.sendMsgTo(articleCreaterId, dataContent);
 		return JSONResult.ok();
@@ -120,7 +120,7 @@ public class ArticleController extends BasicController {
 		// 给作者发推送
 		DataContent dataContent = new DataContent();
 		dataContent.setAction(MsgActionEnum.LIKECOMMENT.type);
-		dataContent.setData(new NoticeCard(likeVO, articleService.getCommentById(commentId)));
+		dataContent.setData(new NoticeCard(likeVO, articleService.getCommentById(commentId, userId)));
 		
 		MsgHandler.sendMsgTo(createrId, dataContent);
 		return JSONResult.ok();
@@ -159,14 +159,14 @@ public class ArticleController extends BasicController {
 	 * @throws Exception
 	 */
 	@PostMapping(value = "/searchArticleYANG")
-	public JSONResult searchArticleYang(@RequestBody Article article, Integer isSaveRecord, Integer page)
+	public JSONResult searchArticleYang(@RequestBody Article article, Integer isSaveRecord, Integer page, String userId)
 			throws Exception {
 
 		if (page == null) {
 			page = 1;
 		}
 		
-		PagedResult result = articleService.searchYangArticlesContent(article, isSaveRecord, page, PAGE_SIZE);
+		PagedResult result = articleService.searchYangArticlesContent(isSaveRecord, page, PAGE_SIZE, article, userId);
 		return JSONResult.ok(result);
 	}
 
@@ -265,15 +265,15 @@ public class ArticleController extends BasicController {
 		// 给作者发推送
 		DataContent dataContent = new DataContent();
 		
-		UserArticleCommentVO commentVO = articleService.getCommentById(commentId);
+		UserArticleCommentVO commentVO = articleService.getCommentById(commentId, null); // 无需查询用户点赞关系
 		if (StringUtils.isBlank(comment.getFatherCommentId())) {
 			// 给文章评论
-			ArticleVO targetArticle = articleService.getArticleById(comment.getArticleId());
+			ArticleVO targetArticle = articleService.getArticleById(comment.getArticleId(), null);
 			dataContent.setData(new NoticeCard(commentVO, targetArticle));
 			dataContent.setAction(MsgActionEnum.COMMENTARTICLE.type);
 		}else {
 			// 给评论评论
-			UserArticleCommentVO targetComment = articleService.getCommentById(comment.getFatherCommentId());
+			UserArticleCommentVO targetComment = articleService.getCommentById(comment.getFatherCommentId(), null);
 			dataContent.setData(new NoticeCard(commentVO, targetComment));
 			dataContent.setAction(MsgActionEnum.COMMENTCOMMENT.type);
 		}
@@ -350,7 +350,7 @@ public class ArticleController extends BasicController {
 			DataContent dataContent = new DataContent();
 			if (!StringUtils.isBlank(like.getArticleId())) {
 				//System.out.println("点赞文章");
-				ArticleVO articleVO = articleService.getArticleById(like.getArticleId());
+				ArticleVO articleVO = articleService.getArticleById(like.getArticleId(), userId);
 				
 				dataContent.setAction(MsgActionEnum.LIKEARTICLE.type);
 				dataContent.setData(new NoticeCard(like, articleVO));
@@ -358,7 +358,7 @@ public class ArticleController extends BasicController {
 				dataList.add(dataContent);
 			} else {
 				//System.out.println("点赞评论");
-				UserArticleCommentVO commentVO = articleService.getCommentById(like.getCommentId());
+				UserArticleCommentVO commentVO = articleService.getCommentById(like.getCommentId(), userId);
 				
 				dataContent.setAction(MsgActionEnum.LIKECOMMENT.type);
 				dataContent.setData(new NoticeCard(like, commentVO));
@@ -384,7 +384,7 @@ public class ArticleController extends BasicController {
 			DataContent dataContent = new DataContent();
 			if (StringUtils.isBlank(comment.getFatherCommentId())) {
 				//System.out.println("评论文章");
-				ArticleVO targetArticle = articleService.getArticleById(comment.getArticleId());
+				ArticleVO targetArticle = articleService.getArticleById(comment.getArticleId(), userId);
 				
 				dataContent.setData(new NoticeCard(comment, targetArticle));
 				dataContent.setAction(MsgActionEnum.COMMENTARTICLE.type);
@@ -392,7 +392,7 @@ public class ArticleController extends BasicController {
 				dataList.add(dataContent);
 			} else {
 				//System.out.println("评论评论");
-				UserArticleCommentVO targetComment = articleService.getCommentById(comment.getFatherCommentId());
+				UserArticleCommentVO targetComment = articleService.getCommentById(comment.getFatherCommentId(), userId);
 				
 				dataContent.setData(new NoticeCard(comment, targetComment));
 				dataContent.setAction(MsgActionEnum.COMMENTCOMMENT.type);

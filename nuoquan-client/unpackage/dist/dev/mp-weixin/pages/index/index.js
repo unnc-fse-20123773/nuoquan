@@ -207,7 +207,7 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
 
         success: function success(res) {
           that.showlist = res.data.data.rows;
-          console.log(res);
+          // console.log(res)
         },
         fail: function fail(res) {
           console.log("index unirequest fail");

@@ -82,7 +82,7 @@
 						// that.reCommentListFromDetail = '';
 						if(res.data.status==200){
 							that.reCommentList = res.data.data.rows;
-							console.log(res);
+							// console.log(res);
 						}
 					}
 				});

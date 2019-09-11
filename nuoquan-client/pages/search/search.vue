@@ -45,8 +45,10 @@
 				hotList: {},
 				searchKeyWords: '',
 				searchedArticleList: {},
-				searching:true,
+				searching: true,
 				searchHisKeyList: uni.getStorageSync('search_history'),
+				
+				userInfo: this.getGlobalUserInfo(),
 			}
 		},
 		components: {
@@ -121,10 +123,11 @@
 				});
 				
 				uni.request({
-					url: this.$serverUrl + '/article/searchArticleYANG?isSaveRecord=' + isSaveRecord,
+					url: that.$serverUrl + '/article/searchArticleYANG?isSaveRecord=' + isSaveRecord,
 					method: "POST",
 					data: {
-						articleContent: that.searchKeyWords
+						articleContent: that.searchKeyWords,
+						userId: that.userInfo.id,
 					},
 					success: function(result) {
 						console.log(result.data);

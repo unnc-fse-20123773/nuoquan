@@ -183,7 +183,7 @@ __webpack_require__.r(__webpack_exports__);
       submitData: {
         //这个是从子组件传来的数据，回复评论的评论之类
       },
-
+      imgIndex: '',
       serverUrl: this.$serverUrl };
 
 
@@ -221,7 +221,7 @@ __webpack_require__.r(__webpack_exports__);
 
   onLoad: function onLoad(options) {
     this.articleCard = JSON.parse(options.data);
-    console.log(this.articleCard);
+    // console.log(this.articleCard);
 
     var userInfo = this.getGlobalUserInfo();
     if (!this.isNull(userInfo)) {
@@ -257,20 +257,6 @@ __webpack_require__.r(__webpack_exports__);
           that.commentContent = "";
 
           that.getComments();
-          // uni.request({
-          // 	method: "POST",
-          // 	url: that.$serverUrl + '/article/getSubComments',
-          // 	data: {
-          // 		fatherCommentId: that.submitData.fatherCommentId
-          // 	},
-          // 	header: {
-          // 		'content-type': 'application/x-www-form-urlencoded'
-          // 	},
-          // 	success: (res) => {
-          // 		that.reCommentListFromDetail = res.data.data.rows;
-          // 		console.log(that.reCommentListFromDetail);
-          // 	}
-          // });
         } });
 
     },
@@ -288,7 +274,7 @@ __webpack_require__.r(__webpack_exports__);
           'content-type': 'application/x-www-form-urlencoded' },
 
         success: function success(res) {
-          console.log(res);
+          // console.log(res);
           that.commentList = res.data.data.rows;
           // console.log(that.articleCard.id);
 
@@ -376,6 +362,25 @@ __webpack_require__.r(__webpack_exports__);
     goToPersonPublic: function goToPersonPublic() {
       uni.navigateTo({
         url: '/pages/personpublic/personpublic?userId=' + this.articleCard.userId });
+
+    },
+    previewImg: function previewImg(index) {
+      var imgIndex = index;
+      // console.log(res)
+      // 获取全部图片路径
+      var imgList = this.articleCard.imgList;
+      var arr = [];
+      var path;
+      for (var i = 0; i < imgList.length; i++) {
+        // console.log(imgList[i].imagePath);
+        path = this.serverUrl + imgList[i].imagePath;
+        arr = arr.concat(path);
+      }
+      // console.log(arr);
+
+      uni.previewImage({
+        current: index,
+        urls: arr });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
