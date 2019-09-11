@@ -242,7 +242,7 @@ __webpack_require__.r(__webpack_exports__);
               * PS: 父级（一级，给文章评论）评论 无 fatherCommentId, underCommentId;
               *     子级评论有 fatherCommentId, underCommentId;
               */
-    saveComment: function saveComment() {
+    saveComment: function saveComment() {var _this = this;
       this.submitData.comment = this.commentContent;
       this.submitData.fromUserId = this.userInfo.id;
       this.submitData.articleId = this.articleCard.id;
@@ -255,8 +255,13 @@ __webpack_require__.r(__webpack_exports__);
         success: function success(res) {
           that.writingComment = false;
           that.commentContent = "";
+          _this.showInput = false;
 
-          that.getComments();
+          if (that.isNull(that.submitData.underCommentId)) {
+            that.getComments();
+          } else {
+            uni.$emit("flashSubComment", that.submitData.underCommentId);
+          }
         } });
 
     },

@@ -136,8 +136,13 @@
 					success: (res) => {
 						that.writingComment = false;
 						that.commentContent = "";
+						this.showInput = false;
 						
-						that.getComments();
+						if(that.isNull(that.submitData.underCommentId)){
+							that.getComments();
+						}else{
+							uni.$emit("flashSubComment", that.submitData.underCommentId);
+						}
 					},
 				})
 			},
