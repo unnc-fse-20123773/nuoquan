@@ -347,10 +347,9 @@ var _default = {
       COMMENTCOMMENT: this.netty.COMMENTCOMMENT, // 评论评论通知
 
       serverUrl: this.$serverUrl,
-
-
       userInfo: '',
-      briefDetail: '这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符' };
+      likePage: 1,
+      commentPage: 1 };
 
   },
 
@@ -369,14 +368,16 @@ var _default = {
     // [测试用代码块]
     var userInfo = this.getGlobalUserInfo();
     this.userInfo = userInfo;
+
+    // 加载点赞评论通知缓存
+    this.likeList = this.notification.getLikeMsg(this.likePage);
+    this.commentList = this.notification.getCommentMsg(this.commentPage);
+    console.log(this.likeList);
+    console.log(this.commentList);
   },
 
   onShow: function onShow() {
-    // 加载点赞评论通知缓存
-    this.likeList = this.notification.getLikeMsg();
-    this.commentList = this.notification.getCommentMsg();
-    console.log(this.likeList);
-    console.log(this.commentList);
+
   },
 
   changeIndicatorDots: function changeIndicatorDots(e) {
@@ -406,11 +407,11 @@ var _default = {
 
                 if (current == 0) {
                   // console.log("点了点赞"); 刷新 list 并设置计数值
-                  this.likeList = this.notification.getLikeMsg();
+                  this.likeList = this.notification.getLikeMsg(this.likePage);
                   this.$store.commit('setLikeMsgCount', 0);
                 } else {
                   // console.log("点了评论");
-                  this.commentList = this.notification.getCommentMsg();
+                  this.commentList = this.notification.getCommentMsg(this.likePage);
                   this.$store.commit('setCommentMsgCount', 0);
                 }
 
@@ -442,17 +443,11 @@ var _default = {
         }).exec();
       });
     },
-    loadMore: function loadMore(tabIndex) {
-      console.log('正在加载更多数据。。。');
-      this.getDateList(tabIndex);
-    },
 
     upper: function upper(e) {
       console.log(e);
     },
-    lower: function lower(e) {
-      console.log(e);
-    },
+
     scroll: function scroll(e) {
       console.log(e);
       this.old.scrollTop = e.detail.scrollTop;
@@ -466,6 +461,30 @@ var _default = {
       // 	icon: "none",
       // 	title: "回到顶部喽~"
       // })
+    },
+
+    loadMore: function loadMore(tabIndex) {
+      console.log('正在加载更多数据。。。');
+      uni.showLoading({
+        title: '加载中' });
+
+      if (tabIndex == 0) {// like
+        this.likePage++;
+        var list = this.notification.getLikeMsg(this.likePage);
+        var that = this;
+        list.forEach(function (item) {
+          that.likeList.push(item);
+        });
+        uni.hideLoading();
+      } else {
+        this.commentPage++;
+        var list = this.notification.getCommentMsg(this.commentPage);
+        var that = this;
+        list.forEach(function (item) {
+          that.commentList.push(item);
+        });
+        uni.hideLoading();
+      }
     },
 
     goToPersonPublic: function goToPersonPublic(userId) {

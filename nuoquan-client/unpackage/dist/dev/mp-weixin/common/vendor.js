@@ -772,8 +772,15 @@ _vue.default.prototype.notification = {
     app.addIntoList(dataContent, this.LIKEMSG_KEY);
   },
 
-  getLikeMsg: function getLikeMsg() {
-    return app.getListByKey(this.LIKEMSG_KEY);
+  getLikeMsg: function getLikeMsg(page) {
+    var size = 10;
+    var list = app.getListByKey(this.LIKEMSG_KEY);
+    var start = (page - 1) * size;
+    var newList = [];
+    for (var i = 0; i < size; i++) {
+      newList.push(list[start + i]);
+    }
+    return newList;
   },
 
   /**
@@ -784,8 +791,15 @@ _vue.default.prototype.notification = {
     app.addIntoList(dataContent, this.COMMENTMSG_KEY);
   },
 
-  getCommentMsg: function getCommentMsg() {
-    return app.getListByKey(this.COMMENTMSG_KEY);
+  getCommentMsg: function getCommentMsg(page) {
+    var size = 10;
+    var list = app.getListByKey(this.COMMENTMSG_KEY);
+    var start = (page - 1) * size;
+    var newList = [];
+    for (var i = 0; i < size; i++) {
+      newList.push(list[start + i]);
+    }
+    return newList;
   },
 
   /**

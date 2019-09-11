@@ -16,8 +16,8 @@
 			</scroll-view>
 			<swiper :current="currentTab" class="swiper-box-list" duration="300" @change="swiperChange">
 				<swiper-item class="swiper-box" v-for="(swiperData,index1) in swiperDataList" :key="index1">
-					<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-test" @scrolltoupper="upper" @scrolltolower="lower"
-					 @scroll="scroll" enable-back-to-top="true">
+					<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-test" @scrolltoupper="upper" @scrolltolower="loadMore(index1)"
+					 @scroll="scroll" enable-back-to-top="true" >
 						<!-- 卡片部分为文档流格式  -by Guetta-->
 						<!-- 详情卡片 -->
 						<view v-for="(item,index2) in (index1==0 ? likeList : commentList)" :key="index2">
@@ -240,10 +240,9 @@
 				COMMENTCOMMENT: this.netty.COMMENTCOMMENT, // 评论评论通知
 				
 				serverUrl: this.$serverUrl,
-				
-				
 				userInfo: '',
-				briefDetail: '这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符'
+				likePage: 1,
+				commentPage: 1,
 			}
 		},
 		
@@ -262,14 +261,16 @@
 			// [测试用代码块]
 			var userInfo = this.getGlobalUserInfo()
 			this.userInfo = userInfo;
+			
+			// 加载点赞评论通知缓存
+			this.likeList = this.notification.getLikeMsg(this.likePage);
+			this.commentList = this.notification.getCommentMsg(this.commentPage);
+			console.log(this.likeList)
+			console.log(this.commentList)
 		},
 		
 		onShow() {
-			// 加载点赞评论通知缓存
-			this.likeList = this.notification.getLikeMsg();
-			this.commentList = this.notification.getCommentMsg();
-			console.log(this.likeList)
-			console.log(this.commentList)
+			
 		},
 		
 		changeIndicatorDots(e) {
@@ -299,11 +300,11 @@
 				} else {
 					if(current==0){
 						// console.log("点了点赞"); 刷新 list 并设置计数值
-						this.likeList = this.notification.getLikeMsg();
+						this.likeList = this.notification.getLikeMsg(this.likePage);
 						this.$store.commit('setLikeMsgCount', 0);
 					}else{
 						// console.log("点了评论");
-						this.commentList = this.notification.getCommentMsg();
+						this.commentList = this.notification.getCommentMsg(this.likePage);
 						this.$store.commit('setCommentMsgCount', 0);
 					}
 					
@@ -335,17 +336,11 @@
 					}).exec();
 				})
 			},
-			loadMore: function(tabIndex) {
-				console.log('正在加载更多数据。。。')
-				this.getDateList(tabIndex);
-			},
 
 			upper: function(e) {
 				console.log(e)
 			},
-			lower: function(e) {
-				console.log(e)
-			},
+			
 			scroll: function(e) {
 				console.log(e)
 				this.old.scrollTop = e.detail.scrollTop
@@ -359,6 +354,30 @@
 				// 	icon: "none",
 				// 	title: "回到顶部喽~"
 				// })
+			},
+			
+			loadMore(tabIndex) {
+				console.log('正在加载更多数据。。。');
+				uni.showLoading({
+					title: '加载中'
+				});
+				if(tabIndex == 0){ // like
+					this.likePage++;
+					var list = this.notification.getLikeMsg(this.likePage);
+					var that = this;
+					list.forEach(function(item){
+						that.likeList.push(item);
+					});
+					uni.hideLoading();
+				}else{
+					this.commentPage++;
+					var list = this.notification.getCommentMsg(this.commentPage);
+					var that = this;
+					list.forEach(function(item){
+						that.commentList.push(item);
+					});
+					uni.hideLoading();
+				}
 			},
 			
 			goToPersonPublic(userId){
