@@ -48,6 +48,13 @@ page {
 	font-size: 30rpx;
 	font-weight: 550;
 }
+.right-remind {
+	color: #888888;
+	position: absolute;
+	right: 0%;
+	font-size: 20rpx;
+	font-weight: 500;
+}
 .right-profileText1 {
 	color: #3D3D3D;
 	position: absolute;

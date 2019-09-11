@@ -12,8 +12,9 @@
 					{{i}}
 				</view>
 			</view>
-
 		</view>
+		
+		<!-- 历史搜索标题行及区域 -->
 		<view class="SearchHistoryItem" v-show="searching">
 			<view class="SearchHistoryItemTitle">历史搜索:</view>
 			<icon type="clear" @tap="SearchDeleteAll" size="11"></icon>
@@ -22,12 +23,17 @@
 				<view class="item" v-for="(item,index) in searchHisKeyList" :key="index">{{item}}</view>
 			</view>
 		</view>
-        <view class="searchResultWrods">搜索结果:</view>
+		
+		<!-- 搜索结果标题行 -->
+        <view class="searchResultWrods column_center">
+			<view style="color: #888888;font-size: 13px;font-weight: 300;">搜索结果:</view>
+			<icon type="clear" style="position: absolute;right:28px;" v-show="!searching" @click="searchCancle(searching)" size="11"></icon>
+		</view>
+		
+		<!-- 搜索结果显示区域 -->
 		<view class="searchResult" v-show="!searching">			
 			<searchResultArticle v-for="i in searchedArticleList" :key="i.id" v-bind:articleCard="i"></searchResultArticle>
 		</view>
-		
-
 	</view>
 </template>
 
@@ -62,7 +68,6 @@
 		},
 		
 		methods: {
-			
 			search: function(res) {
 				var that = this;
 				var isSaveRecord = 1;
@@ -127,6 +132,10 @@
 						that.searching=false;
 					}
 				})
+			},
+			searchCancle: function(searching){
+					this.searching = !searching;
+					console.log(this.searching);
 			},
 			exitSearch(){
 				this.hotList="",
@@ -196,9 +205,6 @@
 	}
 
 	.searchResultWrods {
-		color: #888888;
-		font-size: 13px;
-		font-weight: 300;
 		margin-top: 26px;
 		width: calc(750upx-56px);
 		padding: 0 28px;

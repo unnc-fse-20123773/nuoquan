@@ -75,11 +75,6 @@
 				uni.navigateTo({
 					url: '/pages/submit/submit'
 				});
-			},
-			jumpToSearch() {
-				uni.navigateTo({
-					url: '/pages/search/search'
-				});
 			}
 		}
 	};

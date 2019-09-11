@@ -105,7 +105,8 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 48));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;} //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 48));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};} //
+//
 //
 //
 //
@@ -311,8 +312,8 @@ __webpack_require__.r(__webpack_exports__);
 
 // TODO 查询列表分页操作
 var _default = {
-  data: function data() {var _ref;
-    return _ref = {
+  data: function data() {
+    return {
       scrollLeft: 0,
       isClickChange: false,
       currentTab: '', // 切换 list 0/1
@@ -331,7 +332,6 @@ var _default = {
       commentList: '',
 
       screenWidth: 350,
-      serverUrl: "",
       scrollTop: 0,
       old: {
         scrollTop: 0 },
@@ -341,13 +341,13 @@ var _default = {
       LIKEARTICLE: this.netty.LIKEARTICLE, // 点赞文章通知
       LIKECOMMENT: this.netty.LIKECOMMENT, // 点赞评论通知
       COMMENTARTICLE: this.netty.COMMENTARTICLE, //评论文章通知
-      COMMENTCOMMENT: this.netty.COMMENTCOMMENT }, _defineProperty(_ref, "serverUrl",
+      COMMENTCOMMENT: this.netty.COMMENTCOMMENT, // 评论评论通知
 
-    this.$serverUrl), _defineProperty(_ref, "userInfo",
+      serverUrl: this.$serverUrl,
 
 
-    ''), _defineProperty(_ref, "briefDetail",
-    '这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符'), _ref;
+      userInfo: '',
+      briefDetail: '这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符' };
 
   },
 

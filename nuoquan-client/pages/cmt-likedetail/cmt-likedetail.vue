@@ -21,7 +21,7 @@
 						<!-- 卡片部分为文档流格式  -by Guetta-->
 						<!-- 详情卡片 -->
 						<view v-for="(item,index2) in (index1==0 ? likeList : commentList)" :key="index2">
-							<!-- 点赞文章卡片 -->
+							<!-- ******************** 点赞文章卡片 ********************** -->
 							<view v-if="item.action==LIKEARTICLE" class="cmtlikeDetail-card" >
 								<!-- 卡片高度未定义，上下边距会失效，用 marginHelper 填充空白 -->
 								<view class="marginHelper1"></view>
@@ -30,106 +30,20 @@
 									<!-- 相对绝对定位 -->
 									<view class="id-line-rel">
 										<view class="clTouxiang-box">
-											<image class="clTouxiang" :src="item.data.faceImg" mode="scaleToFill"></image>
+											<image class="clTouxiang" :src="item.data.source.faceImg" mode="scaleToFill"></image>
 										</view>
 										<view class="clID-box">
-											<text class="clID-text">{{item.data.nickname}}</text>
+											<text class="clID-text">{{item.data.source.nickname}}</text>
 											<text class="clID-operation">点赞了你的文章</text>
 										</view>
 										<!-- 需要获取新消息时间戳 -->
 										<view class="clID-time">
-											{{item.data.createDate}}
+											{{item.data.source.createDate}}
 										</view>
 									</view>
 								</view>
 								<!-- 文章预览块 -->
-								<view class="origin-bar-abs">
-									<view class="origin-bar-rel">
-										<view class="origin-imageBox" v-if="item.data.imgList.length > 0">
-											<view class="origin-imageMask"></view>
-											<view class="origin-imageMasknum super_center">
-												<view class="origin-imageMasknumtext">
-													+{{item.data.imgList.length}}
-												</view>
-											</view>
-											<!-- 图片好像显示不出来 by Jerrio -->
-											<image class="origin-image" :src="serverUrl + item.data.imgList[0].imagePath" mode="scaleToFill"></image>
-										</view>
-										<view class="origin-briefBox">
-											<view class="origin-briefTitlebox">
-												<text class="origin-briefTitle">{{item.data.articleTitle}}</text>
-											</view>
-											<view class="origin-briefTextbox">
-												<text class="origin-briefText">{{item.data.articleContent}}</text>
-											</view>
-										</view>
-									</view>
-								</view>
-								<!-- 卡片高度未定义，上下边距会失效，用 marginHelper 填充空白 -->
-								<view class="marginHelper2"></view>
-							</view>
-							
-							<!-- 点赞评论卡片 -->
-							<view v-if="item.action==LIKECOMMENT" class="cmtlikeDetail-card" >
-								<!-- 卡片高度未定义，上下边距会失效，用 marginHelper 填充空白 -->
-								<view class="marginHelper1"></view>
-								<!-- ID 行 -->
-								<view class="id-line-abs">
-									<!-- 相对绝对定位 -->
-									<view class="id-line-rel">
-										<view class="clTouxiang-box">
-											<image class="clTouxiang" :src="item.data.faceImg" mode="scaleToFill"></image>
-										</view>
-										<view class="clID-box">
-											<text class="clID-text">{{item.data.nickname}}</text>
-											<text class="clID-operation">点赞了你的评论</text>
-										</view>
-										<!-- 需要获取新消息时间戳 -->
-										<view class="clID-time">
-											{{item.data.createDate}}
-										</view>
-									</view>
-								</view>
-								<!-- 点赞预览块 -->
-								<view class="brief-bar-abs">
-									<view class="brief-bar-rel">
-										{{item.data.comment}}
-									</view>
-								</view>
-
-								<!-- 卡片高度未定义，上下边距会失效，用 marginHelper 填充空白 -->
-								<view class="marginHelper2"></view>
-							</view>
-							
-							<!-- 评论文章卡片 -->
-							<view v-if="item.action==COMMENTARTICLE" class="cmtlikeDetail-card" >
-								<!-- 卡片高度未定义，上下边距会失效，用 marginHelper 填充空白 -->
-								<view class="marginHelper1"></view>
-								<!-- ID 行 -->
-								<view class="id-line-abs">
-									<!-- 相对绝对定位 -->
-									<view class="id-line-rel">
-										<view class="clTouxiang-box">
-											<image class="clTouxiang" :src="item.data.comment.faceImg" mode="scaleToFill"></image>
-										</view>
-										<view class="clID-box">
-											<text class="clID-text">{{item.data.comment.nickname}}</text>
-											<text class="clID-operation">评论了你的文章</text>
-										</view>
-										<!-- 需要获取新消息时间戳 -->
-										<view class="clID-time">
-											{{item.data.comment.createDate}}
-										</view>
-									</view>
-								</view>
-								<!-- 点赞 or 评论预览块 -->
-								<view class="brief-bar-abs">
-									<view class="brief-bar-rel">
-										{{item.data.comment.comment}}
-									</view>
-								</view>
-								<!-- 原文章预览块 -->
-								<view class="origin-bar-abs">
+								<view :class="[item.data.imgList.length > 0 ? 'origin-bar-abs-img' : 'origin-bar-abs-noimg']">
 									<view class="origin-bar-rel">
 										<view class="origin-imageBox" v-if="item.data.target.imgList.length > 0">
 											<view class="origin-imageMask"></view>
@@ -141,7 +55,7 @@
 											<!-- 图片好像显示不出来 by Jerrio -->
 											<image class="origin-image" :src="serverUrl + item.data.target.imgList[0].imagePath" mode="scaleToFill"></image>
 										</view>
-										<view class="origin-briefBox">
+										<view :class="[item.data.imgList.length > 0 ? 'origin-briefBox-img' : 'origin-briefBox-noimg']">
 											<view class="origin-briefTitlebox">
 												<text class="origin-briefTitle">{{item.data.target.articleTitle}}</text>
 											</view>
@@ -155,7 +69,93 @@
 								<view class="marginHelper2"></view>
 							</view>
 							
-							<!-- 评论评论卡片 -->
+							<!-- ************************* 点赞评论卡片 *************************** -->
+							<view v-if="item.action==LIKECOMMENT" class="cmtlikeDetail-card" >
+								<!-- 卡片高度未定义，上下边距会失效，用 marginHelper 填充空白 -->
+								<view class="marginHelper1"></view>
+								<!-- ID 行 -->
+								<view class="id-line-abs">
+									<!-- 相对绝对定位 -->
+									<view class="id-line-rel">
+										<view class="clTouxiang-box">
+											<image class="clTouxiang" :src="item.data.source.faceImg" mode="scaleToFill"></image>
+										</view>
+										<view class="clID-box">
+											<text class="clID-text">{{item.data.source.nickname}}</text>
+											<text class="clID-operation">点赞了你的评论</text>
+										</view>
+										<!-- 需要获取新消息时间戳 -->
+										<view class="clID-time">
+											{{item.data.source.createDate}}
+										</view>
+									</view>
+								</view>
+								<!-- 点赞预览块 -->
+								<view class="brief-bar-abs">
+									<view class="brief-bar-rel">
+										{{item.data.target.comment}}
+									</view>
+								</view>
+
+								<!-- 卡片高度未定义，上下边距会失效，用 marginHelper 填充空白 -->
+								<view class="marginHelper2"></view>
+							</view>
+							
+							<!--***************************** 评论文章卡片 *****************************-->
+							<view v-if="item.action==COMMENTARTICLE" class="cmtlikeDetail-card" >
+								<!-- 卡片高度未定义，上下边距会失效，用 marginHelper 填充空白 -->
+								<view class="marginHelper1"></view>
+								<!-- ID 行 -->
+								<view class="id-line-abs">
+									<!-- 相对绝对定位 -->
+									<view class="id-line-rel">
+										<view class="clTouxiang-box">
+											<image class="clTouxiang" :src="item.data.source.faceImg" mode="scaleToFill"></image>
+										</view>
+										<view class="clID-box">
+											<text class="clID-text">{{item.data.source.nickname}}</text>
+											<text class="clID-operation">评论了你的文章</text>
+										</view>
+										<!-- 需要获取新消息时间戳 -->
+										<view class="clID-time">
+											{{item.data.source.createDate}}
+										</view>
+									</view>
+								</view>
+								<!-- 点赞 or 评论预览块 -->
+								<view class="brief-bar-nocolor">
+									<view class="brief-bar-rel">
+										{{item.data.source.comment}}
+									</view>
+								</view>
+								<!-- 原文章预览块 -->
+								<view :class="[item.data.target.imgList.length > 0 ? 'origin-bar-abs-img' : 'origin-bar-abs-noimg']">
+									<view class="origin-bar-rel">
+										<view class="origin-imageBox" v-if="item.data.target.imgList.length > 0">
+											<view class="origin-imageMask"></view>
+											<view class="origin-imageMasknum super_center">
+												<view class="origin-imageMasknumtext">
+													+{{item.data.target.imgList.length}}
+												</view>
+											</view>
+											<!-- 图片好像显示不出来 by Jerrio -->
+											<image class="origin-image" :src="serverUrl + item.data.target.imgList[0].imagePath" mode="scaleToFill"></image>
+										</view>
+										<view :class="[item.data.target.imgList.length > 0 ? 'origin-briefBox-img' : 'origin-briefBox-noimg']">
+											<view class="origin-briefTitlebox">
+												<text class="origin-briefTitle">{{item.data.target.articleTitle}}</text>
+											</view>
+											<view class="origin-briefTextbox">
+												<text class="origin-briefText">{{item.data.target.articleContent}}</text>
+											</view>
+										</view>
+									</view>
+								</view>
+								<!-- 卡片高度未定义，上下边距会失效，用 marginHelper 填充空白 -->
+								<view class="marginHelper2"></view>
+							</view>
+							
+							<!-- ***************************** 评论评论卡片 ******************************** -->
 							<view v-if="item.action==COMMENTCOMMENT" class="cmtlikeDetail-card" >
 								<!-- 卡片高度未定义，上下边距会失效，用 marginHelper 填充空白 -->
 								<view class="marginHelper1"></view>
@@ -164,15 +164,15 @@
 									<!-- 相对绝对定位 -->
 									<view class="id-line-rel">
 										<view class="clTouxiang-box">
-											<image class="clTouxiang" :src="item.data.comment.faceImg" mode="scaleToFill"></image>
+											<image class="clTouxiang" :src="item.data.source.faceImg" mode="scaleToFill"></image>
 										</view>
 										<view class="clID-box">
-											<text class="clID-text">{{item.data.comment.nickname}}</text>
+											<text class="clID-text">{{item.data.source.nickname}}</text>
 											<text class="clID-operation">回复了你的评论</text>
 										</view>
 										<!-- 需要获取新消息时间戳 -->
 										<view class="clID-time">
-											{{item.data.comment.createDate}}
+											{{item.data.source.createDate}}
 										</view>
 									</view>
 								</view>
@@ -183,9 +183,8 @@
 									</view>
 								</view>
 								<!-- 原评论预览块 -->
-								<!-- 点赞 or 评论预览块 -->
-								<view class="brief-bar-abs">
-									<view class="brief-bar-rel">
+								<view class="brief-bar-abs-cmtofcmt">
+									<view class="brief-bar-rel-cmtofcmt">
 										{{item.data.target.comment}}
 									</view>
 								</view>
@@ -194,6 +193,8 @@
 							</view>
 							
 						</view>
+						<!-- 用于添加底部空白 by Guetta 9.10 -->
+						<view class="marginHelper3"></view>
 					</scroll-view>
 				</swiper-item>
 			</swiper>
@@ -224,7 +225,6 @@
 				commentList: '',
 
 				screenWidth: 350,
-				serverUrl: "",
 				scrollTop: 0,
 				old: {
 					scrollTop: 0
@@ -478,7 +478,7 @@
 		/* 在这里设置底部横条高度和颜色 */
 		width: 60%;
 		height: 6upx;
-		background: #FFCF3C;
+		background: #00a0e9;
 	}
 
 	.swiper-box-list {
@@ -528,6 +528,13 @@
 		width: 60%;
 		margin-left: 20%;
 		background-color: white;
+	}
+	
+	.marginHelper3{
+		height: 15upx;
+		margin-top: 15upx;
+		width: 100%;
+		background-color: #f3f3f3;
 	}
 		
 
@@ -588,7 +595,6 @@
 	/* ---------------------------预览行---------------------- */
 	.brief-bar-abs {
 		/* 底部边距需要动态设置 */
-		margin-bottom: 15upx;
 		overflow: hidden;
 		width: 92%;
 		margin-left: 4%;
@@ -596,16 +602,40 @@
 		background-color: #f8eced;
 	}
 	
-	.brief-bar-nocolor {
+	.brief-bar-abs-cmtofcmt {
 		/* 底部边距需要动态设置 */
-		margin-bottom: 15upx;
 		overflow: hidden;
 		width: 92%;
 		margin-left: 4%;
 		border-radius: 20upx;
+		background-color: #e5f3f9;
+	}
+	
+	.brief-bar-nocolor {
+		/* 底部边距需要动态设置 */
+		overflow: hidden;
+		width: 96%;
+		margin-left: 2%;
+		border-radius: 20upx;
 	}
 
 	.brief-bar-rel {
+		position: relative;
+		width: 94%;
+		margin-left: 3%;
+		margin-top: 15upx;
+		margin-bottom: 15upx;
+		height: 100%;
+		font-size: 12px;
+		color: #3d3d3d;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+		overflow: hidden;
+		word-break:break-all;
+	}
+	
+	.brief-bar-rel-cmtofcmt {
 		position: relative;
 		width: 94%;
 		margin-left: 3%;
@@ -618,11 +648,19 @@
 		-webkit-box-orient: vertical;
 		-webkit-line-clamp: 3;
 		overflow: hidden;
+		word-break:break-all;
 	}
 
 	/* -------------------原评论预览行 -----------------*/
-	.origin-bar-abs {
+	.origin-bar-abs-img {
 		height: 146upx;
+		width: 92%;
+		margin-left: 4%;
+		border-radius: 20upx;
+		background-color: #f5f4ed;
+	}
+
+	.origin-bar-abs-noimg {
 		width: 92%;
 		margin-left: 4%;
 		border-radius: 20upx;
@@ -679,9 +717,17 @@
 	}
 	
 	/* 预览块 */
-	.origin-briefBox{
+	.origin-briefBox-img{
 		max-height: 140upx;
 		width: 79%;
+		/* margin-left: 4%; */
+	}	
+	
+	.origin-briefBox-noimg{
+		max-height: 140upx;
+		width: 79%;
+		margin-bottom: 15upx;
+		margin-left: 3%;
 		/* margin-left: 4%; */
 	}
 	

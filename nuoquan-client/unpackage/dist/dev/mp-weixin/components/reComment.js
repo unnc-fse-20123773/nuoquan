@@ -105,7 +105,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -127,15 +127,88 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 var _default =
 {
-
   props: {
     reCommentDetail: {} },
 
   data: function data() {
-    return {};
+    return {
+      subComment: this.reCommentDetail, // 为了动态修改数值，对对象重新赋值，转换组件内部对象
 
+      userInfo: this.getGlobalUserInfo() };
 
-  } };exports.default = _default;
+  },
+  methods: {
+    controlInputInRecomment: function controlInputInRecomment() {
+      var dataOfRecomment = {
+        mode: "re-re",
+        toUserId: this.reCommentDetail.fromUserId,
+        fatherCommentId: this.reCommentDetail.id,
+        underCommentId: this.reCommentDetail.underCommentId,
+        nickname: this.reCommentDetail.nickname };
+
+      this.$emit('controlInputSignal', dataOfRecomment);
+    },
+
+    /**
+        * 点赞或取消点赞二级评论
+        * @param {Object} comment
+        */
+    swLikeSubComment: function swLikeSubComment() {
+      if (this.subComment.isLike) {
+        this.unLikeComment(this.subComment);
+        this.subComment.likeNum--;
+        console.log(this.subComment.likeNum);
+      } else {
+        this.likeComment(this.subComment);
+        this.subComment.likeNum++;
+      }
+      this.subComment.isLike = !this.subComment.isLike;
+    },
+
+    likeComment: function likeComment(comment) {
+      console.log("点赞评论");
+      var that = this;
+      uni.request({
+        method: "POST",
+        url: that.$serverUrl + '/article/userLikeComment',
+        data: {
+          userId: that.userInfo.id,
+          commentId: comment.id,
+          createrId: comment.fromUserId },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          console.log(res);
+        } });
+
+    },
+
+    unLikeComment: function unLikeComment(comment) {
+      console.log("取消点赞评论");
+      var that = this;
+      uni.request({
+        method: "POST",
+        url: that.$serverUrl + '/article/userUnLikeComment',
+        data: {
+          userId: that.userInfo.id,
+          commentId: comment.id,
+          createrId: comment.fromUserId },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          console.log(res);
+        } });
+
+    },
+
+    goToPersonPublic: function goToPersonPublic() {
+      this.$emit("goToPersonPublic", this.subComment.fromUserId);
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

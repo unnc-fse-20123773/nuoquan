@@ -2,7 +2,6 @@ package com.nuoquan.pojo.vo;
 
 import javax.persistence.*;
 
-@Table(name = "user_fans")
 public class UserFansVO {
 	
 	private String id; 				// 用户id

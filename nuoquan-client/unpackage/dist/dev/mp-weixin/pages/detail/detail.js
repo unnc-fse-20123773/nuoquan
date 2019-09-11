@@ -166,6 +166,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 {
   data: function data() {
     return {
@@ -173,7 +174,8 @@ __webpack_require__.r(__webpack_exports__);
       articleCard: "", //detail的主角，由index传过来的单个文章信息
       commentContent: "", //用户准备提交的评论内容
       commentList: {}, //返回值，获取评论列表信息
-      writingComment: false, //控制输入框，true时显示输入框同时输入框自动获取焦点，拉起输入法
+      showInput: false, ////控制输入框，true时显示输入框
+      writingComment: false, //控制输入框，true时自动获取焦点，拉起输入法
       placeholderText: "评论点什么吧......",
       inputData: {//localData,用于拼接不同情况下的savecomment请求的数据
       },
@@ -181,128 +183,15 @@ __webpack_require__.r(__webpack_exports__);
       submitData: {
         //这个是从子组件传来的数据，回复评论的评论之类
       },
-      reCommentListFromDetail: {} };
+
+      serverUrl: this.$serverUrl };
+
 
   },
   components: {
     commentbox: comment },
 
-  methods: {
-    saveComment: function saveComment(e) {
-      var that = this;
-      var content = this.commentContent;
-      var userInfoTemp = this.getGlobalUserInfo();
-      // console.log(that.userInfo.id)
-      if (this.isNull(userInfoTemp)) {
-        uni.navigateTo({
-          url: "../wechatLogin/wechatLogin" });
 
-      } else {
-        this.submitData.comment = this.commentContent;
-        this.submitData.fromUserId = this.userInfo.id;
-        // console.log(this.submitData);
-        // console.log(that.submitData.fatherCommentId);
-        uni.request({
-          url: that.$serverUrl + '/article/saveComment',
-          method: 'POST',
-          data: this.submitData,
-          success: function success(res) {
-            that.writingComment = false;
-            that.commentContent = "";
-
-            that.getComments();
-            uni.request({
-              method: "POST",
-              url: that.$serverUrl + '/article/getSonComments',
-              data: {
-                fatherCommentId: that.submitData.fatherCommentId },
-
-              header: {
-                'content-type': 'application/x-www-form-urlencoded' },
-
-              success: function success(res) {
-                that.reCommentListFromDetail = res.data.data.rows;
-                console.log(that.reCommentListFromDetail);
-              } });
-
-          } });
-
-
-      }
-    },
-    getComments: function getComments(a) {
-      var that = this;
-      uni.request({
-        method: "POST",
-        url: that.$serverUrl + '/article/getFatherComments',
-        data: {
-          articleId: that.articleCard.id },
-
-        header: {
-          'content-type': 'application/x-www-form-urlencoded' },
-
-        success: function success(res) {
-          // console.log(res);
-          that.commentList = res.data.data.rows;
-          // console.log(that.articleCard.id);
-
-        } });
-
-    },
-    // getSonComments: function(a) {
-    // 	var that = this;
-    // 	uni.request({
-    // 		method: "POST",
-    // 		url: that.$serverUrl + '/article/getSonComments',
-    // 		data: {
-    // 			fatherCommentId: that.submitData.fatherCommentId
-    // 		},
-    // 		header: {
-    // 			'content-type': 'application/x-www-form-urlencoded'
-    // 		},
-    // 		success: (res) => {
-    // 			that.reCommentList = res.data.data.rows;
-    // 			console.log(that.reCommentList);
-    // 		}
-    // 	});
-    // },
-    controlInput: function controlInput(a) {
-      this.writingComment = !this.writingComment;
-
-      if (a != 0 && a != 1) {
-        //a!=0, !=1， 从子组件传来，包含被回复对象：被回复人ID，被回复评论ID，被回复人昵称
-        this.submitData = a;
-        this.placeholderText = '回复' + a.nickname;
-        delete a.nickname;
-      } else if (a == 1) {
-        //a==1 当前页面调用，直接评论文章
-        this.submitData.toUserId = this.articleCard.userId;
-        this.submitData.articleId = this.articleCard.id;
-        this.submitData.fatherCommentId = null;
-        // console.log(this.submitData);
-        // debugger
-      } else {
-        //a==0, 关闭输入框，一切恢复默认状态
-        this.submitData = {};
-        this.placeholderText = "评论";
-      }
-    },
-    goToPersonPublic: function goToPersonPublic() {
-      var navData = JSON.stringify(this.articleCard.userId); // 这里转换成 字符串
-      uni.navigateTo({
-        url: '/pages/personpublic/personpublic?userId=' + navData });
-
-    } },
-
-  onLoad: function onLoad(options) {
-    this.articleCard = JSON.parse(options.data);
-
-    var userInfo = this.getGlobalUserInfo();
-    if (!this.isNull(userInfo)) {
-      this.userInfo = this.getGlobalUserInfo();
-    }
-    this.getComments();
-  },
   filters: {
     timeDeal: function timeDeal(timediff) {
       timediff = new Date(timediff);
@@ -327,6 +216,151 @@ __webpack_require__.r(__webpack_exports__);
         timeSpanStr = parts[0] + '-' + parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
       }
       return timeSpanStr;
+    } },
+
+
+  onLoad: function onLoad(options) {
+    this.articleCard = JSON.parse(options.data);
+    console.log(this.articleCard);
+
+    var userInfo = this.getGlobalUserInfo();
+    if (!this.isNull(userInfo)) {
+      this.userInfo = this.getGlobalUserInfo();
+    }
+
+    this.getComments();
+  },
+
+  methods: {
+    /**
+              * fromUserId 必填
+              * toUserId 必填
+              * articleId 必填 // 为了计算文章总评论数
+              * underCommentId // 显示在该主评论层ID下
+              * fatherCommentId // 父级评论ID
+              * comment 必填
+              * PS: 父级（一级，给文章评论）评论 无 fatherCommentId, underCommentId;
+              *     子级评论有 fatherCommentId, underCommentId;
+              */
+    saveComment: function saveComment() {
+      this.submitData.comment = this.commentContent;
+      this.submitData.fromUserId = this.userInfo.id;
+      this.submitData.articleId = this.articleCard.id;
+      console.log(this.submitData);
+      var that = this;
+      uni.request({
+        url: that.$serverUrl + '/article/saveComment',
+        method: 'POST',
+        data: this.submitData,
+        success: function success(res) {
+          that.writingComment = false;
+          that.commentContent = "";
+
+          that.getComments();
+        } });
+
+    },
+
+    getComments: function getComments() {
+      var that = this;
+      uni.request({
+        method: "POST",
+        url: that.$serverUrl + '/article/getMainComments',
+        data: {
+          articleId: that.articleCard.id,
+          userId: that.userInfo.id },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          console.log(res);
+          that.commentList = res.data.data.rows;
+        } });
+
+    },
+
+    controlInput: function controlInput(a) {
+      if (a != 0 && a != 1) {//a!=0, !=1， 从子组件传来，包含被回复对象：被回复人ID，被回复评论ID，被回复人昵称
+        this.placeholderText = '回复 @' + a.nickname + ' 的评论';
+        delete a.nickname;
+        this.submitData = a;
+        if (a.mode == "re-re") {//mode ="re-re", from grandson RECOMMENT
+          console.log(a.mode);
+          this.writingComment = true;
+        }
+        this.showInput = true;
+        console.log(this.writingComment);
+      } else if (a == 1) {//a==1 当前页面调用，直接评论文章
+        this.submitData.toUserId = this.articleCard.userId;
+        this.showInput = true;
+        this.writingComment = true;
+        console.log('this is control input in detail. a ==' + a);
+        console.log(this.submitData);
+      } else {//a==0, 关闭输入框，一切恢复默认状态
+        console.log('this is control input in detail. a ==0, EXIT');
+        this.submitData = {};
+        this.placeholderText = "评论";
+        this.showInput = false;
+        this.writingComment = false;
+      }
+    },
+
+    swLikeArticle: function swLikeArticle() {
+      if (this.articleCard.isLike) {
+        this.unLikeArticle();
+        this.articleCard.likeNum--;
+      } else {
+        this.likeArticle();
+        this.articleCard.likeNum++;
+      }
+      this.articleCard.isLike = !this.articleCard.isLike;
+    },
+
+    likeArticle: function likeArticle() {
+      console.log("点赞文章");
+      var that = this;
+      uni.request({
+        method: "POST",
+        url: that.$serverUrl + '/article/userLikeArticle',
+        data: {
+          userId: that.userInfo.id,
+          articleId: that.articleCard.id,
+          articleCreaterId: that.articleCard.userId },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          console.log(res);
+        } });
+
+    },
+
+    unLikeArticle: function unLikeArticle() {
+      console.log("取消点赞文章");
+      var that = this;
+      uni.request({
+        method: "POST",
+        url: that.$serverUrl + '/article/userUnLikeArticle',
+        data: {
+          userId: that.userInfo.id,
+          articleId: that.articleCard.id,
+          articleCreaterId: that.articleCard.userId },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          console.log(res);
+        } });
+
+    },
+
+    goToPersonPublic: function goToPersonPublic() {
+      uni.navigateTo({
+        url: '/pages/personpublic/personpublic?userId=' + this.articleCard.userId });
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

@@ -21,12 +21,12 @@ public class ArticleVO {
     private Integer viewNum;
     
     private List<ArticleImage> imgList; // 文章图片列表
+    private Boolean isLike; // 用户是否喜欢该文章
     
     private String nickname;
     private String faceImg;
     private String faceImgThumb;
     
- 
     
     /**
      * @return id
@@ -242,5 +242,13 @@ public class ArticleVO {
 
 	public void setImgList(List<ArticleImage> imgList) {
 		this.imgList = imgList;
+	}
+
+	public Boolean getIsLike() {
+		return isLike;
+	}
+
+	public void setIsLike(Boolean isLike) {
+		this.isLike = isLike;
 	}
 }

@@ -87,19 +87,58 @@ public interface UserService {
 	
 	/**
 	 * @Description 保存聊天消息到数据库
+	 * @param chatMessage
+	 * @return msgId
 	 */
 	public String saveMsg(ChatMessage chatMessage);
 	
 	/**
-	 * @Description 批量签收消息
+	 * @Description 批量签收聊天消息
 	 */
-	public void updateMsgSigned(List<String> msgIdList);
+	public void updateChatSigned(List<String> msgIdList);
 	
 	/**
-	 * 获取未签收消息列表
+	 * 获取未签收聊天消息列表
 	 * @param acceptUserId
 	 * @return
 	 */
-	public List<ChatMsg> getUnsignedMsgList(String acceptUserId);
+	public List<ChatMsg> getUnsignedChat(String acceptUserId);
+	
+	/**
+	 * @Description 批量签收点赞文章消息
+	 */
+	public void updateLikeArtSigned(List<String> msgIdList);
+	
+	/**
+	 * 获取未签收点赞评论消息列表
+	 * @param acceptUserId
+	 * @return
+	 */
+	public List<ChatMsg> getUnsignedLikeArt(String acceptUserId);
+	
+	/**
+	 * @Description 批量签收点赞评论消息
+	 */
+	public void updateLikeComSigned(List<String> msgIdList);
+	
+	/**
+	 * 获取未签收点赞评论消息列表
+	 * @param acceptUserId
+	 * @return
+	 */
+	public List<ChatMsg> getUnsignedLikeCom(String acceptUserId);
+	
+	/**
+	 * @Description 批量签收评论消息
+	 */
+	public void updateComSigned(List<String> msgIdList);
+	
+	/**
+	 * 获取未签收评论消息列表
+	 * @param acceptUserId
+	 * @return
+	 */
+	public List<ChatMsg> getUnsignedCom(String acceptUserId);
+	
 
 }

@@ -9,7 +9,7 @@
     <result column="article_title" jdbcType="VARCHAR" property="articleTitle" />
     <result column="user_id" jdbcType="VARCHAR" property="userId" />
     <result column="tags" jdbcType="VARCHAR" property="tags" />
-    <result column="article_content" jdbcType="VARCHAR" property="articleContent" />
+    <result column="article_content" jdbcType="LONGVARBINARY" property="articleContent" />
     <result column="like_num" jdbcType="INTEGER" property="likeNum" />
     <result column="dislike_num" jdbcType="INTEGER" property="dislikeNum" />
     <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
@@ -23,7 +23,6 @@
     <result column="face_img" property="faceImg" jdbcType="VARCHAR" />
     <result column="face_img_thumb" property="faceImgThumb" jdbcType="VARCHAR" />
   </resultMap>
-  
   
   <select id="queryAllArticles" resultMap="BaseResultMap">
   	
@@ -41,6 +40,10 @@
   
   <update id="reduceArticleLikeCount" parameterType="String">
   	update nuoquan.article set like_num=like_num-1 where id=#{articleId}
+  </update>
+  
+  <update id="addArticleCommentCount" parameterType="String">
+  	update nuoquan.article set comment_num=comment_num+1 where id=#{articleId}
   </update>
   
   <select id="searchArticleContentYang" resultMap="BaseResultMap" parameterType="String">

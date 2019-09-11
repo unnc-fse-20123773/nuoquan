@@ -1,16 +1,16 @@
 <template>
 	<view class="reComment">
-		<view class="contentarea">{{ reCommentDetail.comment }}</view>
+		<view class="contentarea" @tap="controlInputInRecomment()">回复@{{subComment.toNickname}}: {{subComment.comment}}</view>
 		<view class="bottombar">
 			<view style="width:70%;display:inline-block;">
-				<image :src="reCommentDetail.faceImage" class="touxiang"></image>
-				<text class="name">{{ reCommentDetail.nickname }}</text>
-				<text class="time">{{ reCommentDetail.timeAgo }}</text>
+				<image :src="subComment.faceImg" class="touxiang" @tap="goToPersonPublic"></image>
+				<text class="name">{{ subComment.nickname }}</text>
+				<text class="time">{{ subComment.timeAgo }}</text>
 			</view>
-			<view class="icons">
+			<view class="icons" @tap="swLikeSubComment()">
 				<!-- 点赞按钮 -->
 				<image class="icon" src="../../../static/icon/like.png"></image>
-				<text class="icom">{{ reCommentDetail.likeNum }}</text>
+				<text class="icom">{{ subComment.likeNum }}</text>
 			</view>
 		</view>
 		<view style="border-top:1px solid #DCDCDC"></view>
@@ -20,14 +20,87 @@
 
 <script>
 	export default {
-			
 		props:{
-			reCommentDetail:{},
+			reCommentDetail: {},
 		},
 		data() {
 			return {
+				subComment: this.reCommentDetail, // 为了动态修改数值，对对象重新赋值，转换组件内部对象
 				
+				userInfo: this.getGlobalUserInfo(),
 			};
+		},
+		methods:{
+			controlInputInRecomment(){
+				var dataOfRecomment={
+					mode:"re-re",
+					toUserId:this.reCommentDetail.fromUserId,
+					fatherCommentId:this.reCommentDetail.id,
+					underCommentId:this.reCommentDetail.underCommentId,
+					nickname:this.reCommentDetail.nickname,
+				}
+				this.$emit('controlInputSignal',dataOfRecomment)
+			},
+			
+			/**
+			 * 点赞或取消点赞二级评论
+			 * @param {Object} comment
+			 */
+			swLikeSubComment(){
+				if(this.subComment.isLike){
+					this.unLikeComment(this.subComment);
+					this.subComment.likeNum--;
+					console.log(this.subComment.likeNum);
+				} else {
+					this.likeComment(this.subComment);
+					this.subComment.likeNum++;
+				}
+				this.subComment.isLike = !this.subComment.isLike;
+			},
+			
+			likeComment(comment){
+				console.log("点赞评论");
+				var that = this;
+				uni.request({
+					method: "POST",
+					url: that.$serverUrl + '/article/userLikeComment',
+					data: {
+						userId: that.userInfo.id,
+						commentId: comment.id,
+						createrId: comment.fromUserId,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {	
+						console.log(res);
+					},
+				});
+			},
+			
+			unLikeComment(comment){
+				console.log("取消点赞评论");
+				var that = this;
+				uni.request({
+					method: "POST",
+					url: that.$serverUrl + '/article/userUnLikeComment',
+					data: {
+						userId: that.userInfo.id,
+						commentId: comment.id,
+						createrId: comment.fromUserId,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {	
+						console.log(res);
+					},
+				});
+			},
+			
+			goToPersonPublic(){
+				this.$emit("goToPersonPublic", this.subComment.fromUserId);
+			}
 		}
 	}
 </script>

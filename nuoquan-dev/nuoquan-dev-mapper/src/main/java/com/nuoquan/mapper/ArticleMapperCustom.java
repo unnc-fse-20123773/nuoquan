@@ -24,6 +24,12 @@ public interface ArticleMapperCustom extends MyMapper<Article> {
 	public void reduceArticleLikeCount(String articleId);
 	
 	/**
+	 * @Description: 文章评论数量累加
+	 * @param articleId
+	 */
+	public void addArticleCommentCount(String articleId);
+	
+	/**
 	 * 搜索文章内容
 	 * @param articleContent
 	 * @return

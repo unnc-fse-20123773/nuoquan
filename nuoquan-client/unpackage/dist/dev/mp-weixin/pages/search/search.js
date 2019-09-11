@@ -140,6 +140,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
 {
   data: function data() {
     return {
@@ -169,7 +175,6 @@ __webpack_require__.r(__webpack_exports__);
   },
 
   methods: {
-
     search: function search(res) {
       var that = this;
       var isSaveRecord = 1;
@@ -234,6 +239,10 @@ __webpack_require__.r(__webpack_exports__);
           that.searching = false;
         } });
 
+    },
+    searchCancle: function searchCancle(searching) {
+      this.searching = !searching;
+      console.log(this.searching);
     },
     exitSearch: function exitSearch() {
       this.hotList = "",

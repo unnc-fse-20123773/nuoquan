@@ -100,7 +100,9 @@ page {
 	left: 120rpx;
 	font-family: weiruanyahei;
 }
-.msglist-like-num {
+
+/* 一位数和两位数的区分 */
+.msglist-like-num-2 {
 	position: absolute;
 	font-size: small;
 	margin-left: 360rpx;
@@ -111,13 +113,26 @@ page {
 	width: 56rpx;
 	right: 40rpx;
 }
+.msglist-like-num-1 {
+	position: absolute;
+	font-size: small;
+	margin-left: 360rpx;
+	font-family: weiruanyahei;
+	background-color: #e4505d;
+	color: white;
+	border-radius: 7rpx;
+	width: 36rpx;
+	right: 40rpx;
+}
 .msglist-comment-text {
 	font-size: 28rpx;
 	position: absolute;
 	left: 120rpx;
 	font-family: weiruanyahei;
 }
-.msglist-comment-num {
+
+/* 一位数和两位数的区分 */
+.msglist-comment-num-1 {
 	position: absolute;
 	font-size: small;
 	margin-left: 360rpx;
@@ -126,6 +141,17 @@ page {
 	color: white;
 	border-radius: 7rpx;
 	width: 36rpx;
+	right: 40rpx;
+}
+.msglist-comment-num-2 {
+	position: absolute;
+	font-size: small;
+	margin-left: 360rpx;
+	font-family: weiruanyahei;
+	background-color: #058ecc;
+	color: white;
+	border-radius: 7rpx;
+	width: 56rpx;
 	right: 40rpx;
 }
 .msglist-card {

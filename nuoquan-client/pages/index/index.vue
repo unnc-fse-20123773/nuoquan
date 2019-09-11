@@ -1,11 +1,13 @@
 <template>
 	<view class="index">
-		<mainpagetop :userInfo='userInfo' :topArticles='topArticles' :topHeight="topHeight" style="position: fixed;z-index: 5;height:100%;"></mainpagetop>
+		<mainpagetop :userInfo='userInfo' :topArticles='topArticles' :topHeight="topHeight" style="position: fixed;z-index: 30;height:100%;"></mainpagetop>
 		
 		<view class="indexSelf" style="height:100%;">
 			<scroll-view class="indexArticleArea" scroll-y="true" @scroll="linkageWithTop">
 				<view style="height:160px;width:100%;"></view>
 				<articlebrief v-for="i in showlist" :key="i.id" v-bind:articleCard="i"></articlebrief>
+				<!-- 用于添加底部空白 by Guetta 9.10 -->
+				<view class="marginHelper"></view>
 			</scroll-view>
 		</view>
 	</view>
@@ -77,9 +79,17 @@
 				uni.request({
 					url: that.$serverUrl + '/article/queryAllArticles',
 					method: "POST",
+					data:{
+						page: '',
+						pageSize: '', 
+						userId: that.userInfo.id,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
 					success: (res) => {
 						that.showlist = res.data.data.rows;
-						// console.log(res)
+						console.log(res)
 					},
 					fail: (res) => {
 						console.log("index unirequest fail");
@@ -95,7 +105,7 @@
 					method: "POST",
 					success: (res) => {
 						that.topArticles = res.data.data;
-						console.log(res)
+						// console.log(res)
 					}
 				})
 			},
@@ -150,7 +160,7 @@
 <style scoped>
 	.index {
 		/* 页面高度由内容扩充，最低值为100%（page 定义的）- by Guetta */
-		/* height:100%; */
+		height:100%;
 		background-color: #f3f3f3;
 	}
 
@@ -200,5 +210,12 @@
 	.arrow {
 		width: 100upx;
 		height: 60upx;
+	}
+	
+	.marginHelper{
+		height: 15upx;
+		margin-top: 15upx;
+		width: 100%;
+		background-color: #f3f3f3;
 	}
 </style>

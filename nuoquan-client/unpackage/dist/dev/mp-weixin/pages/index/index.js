@@ -130,6 +130,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 var _articlebrief = _interopRequireDefault(__webpack_require__(/*! ../../components/articlebrief */ 19));
 
 
@@ -147,10 +149,10 @@ var _vuex = __webpack_require__(/*! vuex */ 12);function _interopRequireDefault(
 //
 //
 //
+//
+//
 var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! import() | components/mainpagetop */ "components/mainpagetop").then(__webpack_require__.bind(null, /*! ../../components/mainpagetop.vue */ 145));};var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ 154));};var _default = { data: function data() {return { title: 'Hello', hottitlelist: ['热门标题111', '热门标题222', '热门标题333'], showlist: '', topArticles: '', topHeight: "160", userInfo: { // 默认user设置
-        id: 'test-id123', nickname: 'test-name', faceImg: '',
-        faceImgThumb: '',
-        email: 'zy22089@nottingham.edu.cn',
+        id: 'test-id123', nickname: 'test-name', faceImg: '', faceImgThumb: '', email: 'zy22089@nottingham.edu.cn',
         emailPrefix: 'zy22089',
         emailSuffix: '@nottingham.edu.cn' } };
 
@@ -195,9 +197,17 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
       uni.request({
         url: that.$serverUrl + '/article/queryAllArticles',
         method: "POST",
+        data: {
+          page: '',
+          pageSize: '',
+          userId: that.userInfo.id },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
         success: function success(res) {
           that.showlist = res.data.data.rows;
-          // console.log(res)
+          console.log(res);
         },
         fail: function fail(res) {
           console.log("index unirequest fail");
@@ -213,7 +223,7 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
         method: "POST",
         success: function success(res) {
           that.topArticles = res.data.data;
-          console.log(res);
+          // console.log(res)
         } });
 
     },
@@ -432,22 +442,13 @@ var _default =
 
   data: function data() {
     return {
-      taglist: [
-      ['123', 'background:#40A792'],
-      ['13', 'background:#621E81'],
-      ['163', 'background:#738598'],
-      ['标签', 'background:#F3AE4B'],
-      ['13', 'background:#621E81'],
-      ['163', 'background:#738598'],
-      ['123', 'background:#40A792'],
-      ['13', 'background:#621E81']],
-
 
       serverUrl: this.$serverUrl,
       singleImgState: '0',
 
-      imgList: [] };
-
+      imgList: []
+      // atags: JSON.(this.articleCard.tags);
+    };
   },
   created: function created() {
     if (this.articleCard.imgList.length > 3) {
@@ -495,13 +496,19 @@ var _default =
       } else {
         this.singleImgState = 1;
       }
-      console.log(e.detail);
+      // console.log(e.detail);
     },
 
     jumpToDetail: function jumpToDetail() {
       var navData = JSON.stringify(this.articleCard); // 这里转换成 字符串
       uni.navigateTo({
         url: '/pages/detail/detail?data=' + navData });
+
+    },
+
+    goToPersonPublic: function goToPersonPublic(userId) {
+      uni.navigateTo({
+        url: '/pages/personpublic/personpublic?userId=' + userId });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

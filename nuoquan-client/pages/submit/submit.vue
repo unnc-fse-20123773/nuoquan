@@ -23,7 +23,7 @@
 
 				</view>
 			</view>
-			<textarea placeholder="内容" class="content" v-model="articleContent"></textarea>
+			<textarea placeholder="内容[最多2048字]" class="content" v-model="articleContent" maxlength=2048></textarea>
 			<view style="display: flex;justify-content: space-between;color: #353535;font-size: 13px;line-height: 28px;height: 24px;">
 				<view>点击可预览选好的图片</view>
 				<view>{{imageList.length}}/9</view>
@@ -72,6 +72,7 @@
 				showAddTagButton: 1,
 				showTagArea: 0,
 				tagList: [],
+				finalTag: '',
 				tagIndex: 0,
 
 				imageList: [],
@@ -95,16 +96,6 @@
 			this.userInfo = this.getGlobalUserInfo();
 		},
 		methods: {
-			// // 将标题存放在articleTitle中
-			// saveAsArticleTitle: function(event) {
-			// 	this.articleTitle = event.target.value;
-			// 	// console.log(this.articleTitle);
-			// },
-			// // 将内容存放在articleContent中
-			// saveAsArticleContent: function(event) {
-			// 	this.articleContent = event.target.value;
-			// 	// console.log(this.articleContent);
-			// },
 			addTag: function(res) {
 				this.showInputTagArea = 1;
 				this.showAddTagButton = 0;
@@ -122,7 +113,15 @@
 					that.tagIndex = that.tagIndex + 1;
 					that.showAddTagButton = 1;
 					that.showInputTagArea = 0;
+					that.articleTag = '';
 				}
+			},
+			combineTagToString: function(res) {
+				var that = this;
+				for(var i = 0; i < that.tagList.length; i++) {
+					that.finalTag = that.finalTag + '#' + that.tagList[i];
+				}
+				console.log(that.finalTag);
 			},
 			sourceTypeChange: function(e) {
 				this.sourceTypeIndex = parseInt(e.target.value)
@@ -164,11 +163,14 @@
 				}
 			},
 			upload: function(e) {
+				
 				var me = this;
 
 				console.log(me.articleTitle);
 				console.log(me.articleContent);
-
+				
+				me.combineTagToString();
+				
 				if (me.articleTitle == '' || me.articleTitle == null) {
 					uni.showToast({
 						icon: 'none',
@@ -186,7 +188,9 @@
 					});
 					return;
 				}
-
+				
+				// me.combineTagToString();
+				
 				var serverUrl = me.$serverUrl;
 				uni.request({
 					url: serverUrl + '/article/uploadArticle',
@@ -202,34 +206,41 @@
 					},
 					success: (res) => {
 						// console.log(res.data.data);
-						if (me.imageList.length <= 0) {
-							uni.navigateBack({
-								url: '../index/index'
-							})
-						} else {
-							const articleId = res.data.data;
-							for (var i = 0; i < me.imageList.length; i++) {
-								uni.uploadFile({
-									url: this.$serverUrl + '/article/uploadArticleImg',
-									filePath: me.imageList[i],
-									name: 'file',
-									formData: {
-										userId: me.userInfo.id,
-										articleId: articleId,
-										order: i
-									},
-									success: (uploadFileRes) => {
-										uni.navigateBack({
-											delta: 1
-										})
-									}
-								});
+						if (res.data.status == 200){
+							if (me.imageList.length <= 0) {
+								uni.navigateBack({
+									url: '../index/index'
+								})
+							} else {
+								const articleId = res.data.data;
+								for (var i = 0; i < me.imageList.length; i++) {
+									uni.uploadFile({
+										url: this.$serverUrl + '/article/uploadArticleImg',
+										filePath: me.imageList[i],
+										name: 'file',
+										formData: {
+											userId: me.userInfo.id,
+											articleId: articleId,
+											order: i
+										},
+										success: (uploadFileRes) => {
+											uni.navigateBack({
+												delta: 1
+											})
+										}
+									});
+								}
 							}
+						}else{
+							// 上传失败 用户提醒
+							uni.showToast({
+								title: '出现未知错误，上传失败',
+								duration: 2000,
+								icon: 'none',
+							})
 						}
-					},
-					// fail: (res) => {
-					// 	
-					// },
+						
+					}
 				})
 			},
 

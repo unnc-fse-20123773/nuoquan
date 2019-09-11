@@ -5,9 +5,11 @@
 		</view>
 
 		<view class="drtailmain">
-			<view class="detailcontent">{{ articleCard.articleContent }}</view>
+			<text class="detailcontent">{{ articleCard.articleContent }}</text>
 			<view class="detailpics">
-
+				<view v-for="(item, index) in articleCard.imgList" :key="index">
+					<image :src="serverUrl + item.imagePath"></image>
+				</view>
 			</view>
 			<view class="tags">
 				<view class="tag" v-for="(i,index) in articleCard.tags" v-bind:key="index">{{i}}</view>
@@ -19,26 +21,25 @@
 
 					<view class="time">{{ articleCard.createDate | timeDeal}}</view>
 				</view>
-				<view class="icons">
-					<!-- 点赞MM按钮 -->
+				<view class="icons" @tap="swLikeArticle()">
+					<!-- 点赞MM按钮 TODO: 增加点赞后样式-->
 					<image class="icon" src="../../static/icon/like.png"></image>
 					<view class="icom">{{ articleCard.likeNum }}</view>
 				</view>
 			</view>
 
-			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i" @controlInputSignal="controlInput"
-			 :reCommentListFromDetail="reCommentListFromDetail">
+			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i" @controlInputSignal="controlInput">
 			</commentbox>
 
 			<view class="fengexian" style="height: 1px;width: 100%;background-color: #d6d6d6;margin:auto;"></view>
 			<view class="submitComment" @click="controlInput(1)">发 表 评 论</view>
 
-			<view class="bottoLayerOfInput" v-show="writingComment" @click="controlInput(0)" @touchmove="controlInput(0)">
+			<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)">
 				<view class="commentPart" @click.stop="">
 					<view class="emoji"></view>
 					<view class="submit" @click="saveComment()"></view>
 					<textarea class="commentSth" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
-					 confirm-type="send" @confirm="saveComment()" adjust-position="false" v-model="commentContent" />
+					 confirm-type="send" @confirm="saveComment()" adjust-position="false" v-model="commentContent" @click.stop="" />
 					</view>
             </view>
 		</view> 
@@ -54,7 +55,8 @@
 				articleCard: "",  //detail的主角，由index传过来的单个文章信息
                 commentContent:"",  //用户准备提交的评论内容
 				commentList: {},  //返回值，获取评论列表信息
-				writingComment:false,  //控制输入框，true时显示输入框同时输入框自动获取焦点，拉起输入法
+				showInput:false,        ////控制输入框，true时显示输入框
+				writingComment:false,  //控制输入框，true时自动获取焦点，拉起输入法
 				placeholderText:"评论点什么吧......",
 				inputData:{  //localData,用于拼接不同情况下的savecomment请求的数据
 					
@@ -62,128 +64,15 @@
 				submitData:{
 					//这个是从子组件传来的数据，回复评论的评论之类
 				},
-				reCommentListFromDetail: {}
+				
+				serverUrl: this.$serverUrl,
+
 			};
 		},
 		components: {
 			commentbox: comment
 		},
-		methods: {
-			saveComment: function(e) {
-				var that = this;
-				var content = this.commentContent;
-				var userInfoTemp = this.getGlobalUserInfo();
-				// console.log(that.userInfo.id)
-				if (this.isNull(userInfoTemp)) {
-					uni.navigateTo({
-						url: "../wechatLogin/wechatLogin"
-					})
-				} else {
-					this.submitData.comment=this.commentContent;
-					this.submitData.fromUserId=this.userInfo.id;
-					// console.log(this.submitData);
-					// console.log(that.submitData.fatherCommentId);
-					uni.request({
-						url: that.$serverUrl + '/article/saveComment',
-						method: 'POST',
-						data: this.submitData,
-						success: (res) => {
-							that.writingComment = false;
-							that.commentContent = "";
-							
-							that.getComments();
-							uni.request({
-								method: "POST",
-								url: that.$serverUrl + '/article/getSonComments',
-								data: {
-									fatherCommentId: that.submitData.fatherCommentId
-								},
-								header: {
-									'content-type': 'application/x-www-form-urlencoded'
-								},
-								success: (res) => {
-									that.reCommentListFromDetail = res.data.data.rows;
-									console.log(that.reCommentListFromDetail);
-								}
-							});
-						},
-
-					})
-				}
-			},
-			getComments: function(a) {		
-				var that = this;
-				uni.request({
-					method: "POST",
-					url: that.$serverUrl + '/article/getFatherComments',
-					data: {
-						articleId: that.articleCard.id,
-					},
-					header: {
-						'content-type': 'application/x-www-form-urlencoded'
-					},
-					success: (res) => {	
-						// console.log(res);
-						that.commentList = res.data.data.rows;
-						// console.log(that.articleCard.id);
-						
-					},
-				});
-			},
-			// getSonComments: function(a) {
-			// 	var that = this;
-			// 	uni.request({
-			// 		method: "POST",
-			// 		url: that.$serverUrl + '/article/getSonComments',
-			// 		data: {
-			// 			fatherCommentId: that.submitData.fatherCommentId
-			// 		},
-			// 		header: {
-			// 			'content-type': 'application/x-www-form-urlencoded'
-			// 		},
-			// 		success: (res) => {
-			// 			that.reCommentList = res.data.data.rows;
-			// 			console.log(that.reCommentList);
-			// 		}
-			// 	});
-			// },
-			controlInput(a){
-				this.writingComment =!this.writingComment;
-
-				if(a!=0&&a!=1) {            
-					//a!=0, !=1， 从子组件传来，包含被回复对象：被回复人ID，被回复评论ID，被回复人昵称
-					this.submitData=a;
-					this.placeholderText='回复'+a.nickname;
-					delete(a.nickname);
-				}else if(a==1) {           
-					//a==1 当前页面调用，直接评论文章
-					this.submitData.toUserId=this.articleCard.userId;
-					this.submitData.articleId=this.articleCard.id;
-					this.submitData.fatherCommentId = null;
-					// console.log(this.submitData);
-					// debugger
-				}else{  
-					//a==0, 关闭输入框，一切恢复默认状态
-					this.submitData = {};
-					this.placeholderText="评论";
-				    }
-			},
-			goToPersonPublic(){
-				var navData = JSON.stringify(this.articleCard.userId); // 这里转换成 字符串
-				uni.navigateTo({
-					url: '/pages/personpublic/personpublic?userId='+navData
-				})
-			}
-		},
-		onLoad(options) {
-			this.articleCard = JSON.parse(options.data);
 		
-			var userInfo = this.getGlobalUserInfo();
-			if (!this.isNull(userInfo)) {
-				this.userInfo = this.getGlobalUserInfo();
-			}
-			this.getComments();
-		},
 		filters: {
 			timeDeal(timediff) {
 				timediff = new Date(timediff);
@@ -210,6 +99,152 @@
 				return timeSpanStr;
 			}
 		},
+		
+		onLoad(options) {
+			this.articleCard = JSON.parse(options.data);
+			console.log(this.articleCard);
+			
+			var userInfo = this.getGlobalUserInfo();
+			if (!this.isNull(userInfo)) {
+				this.userInfo = this.getGlobalUserInfo();
+			}
+			
+			this.getComments();
+		},
+		
+		methods: {
+			/**
+			 * fromUserId 必填
+			 * toUserId 必填
+			 * articleId 必填 // 为了计算文章总评论数
+			 * underCommentId // 显示在该主评论层ID下
+			 * fatherCommentId // 父级评论ID
+			 * comment 必填
+			 * PS: 父级（一级，给文章评论）评论 无 fatherCommentId, underCommentId;
+			 *     子级评论有 fatherCommentId, underCommentId;
+			 */
+			saveComment: function() {
+				this.submitData.comment=this.commentContent;
+				this.submitData.fromUserId=this.userInfo.id;
+				this.submitData.articleId=this.articleCard.id;
+				console.log(this.submitData);
+				var that = this;
+				uni.request({
+					url: that.$serverUrl + '/article/saveComment',
+					method: 'POST',
+					data: this.submitData,
+					success: (res) => {
+						that.writingComment = false;
+						that.commentContent = "";
+						
+						that.getComments();
+					},
+				})
+			},
+			
+			getComments: function() {		
+				var that = this;
+				uni.request({
+					method: "POST",
+					url: that.$serverUrl + '/article/getMainComments',
+					data: {
+						articleId: that.articleCard.id,
+						userId: that.userInfo.id,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {	
+						console.log(res);
+						that.commentList = res.data.data.rows;
+					},
+				});
+			},
+			
+			controlInput(a){
+				if(a!=0&&a!=1){ //a!=0, !=1， 从子组件传来，包含被回复对象：被回复人ID，被回复评论ID，被回复人昵称
+					this.placeholderText='回复 @'+a.nickname+' 的评论';
+					delete(a.nickname);
+					this.submitData=a;
+					if(a.mode =="re-re"){    //mode ="re-re", from grandson RECOMMENT
+						console.log(a.mode);
+						this.writingComment = true ;
+					}
+					this.showInput= true;
+					console.log(this.writingComment);
+				}else if(a==1){ //a==1 当前页面调用，直接评论文章
+					this.submitData.toUserId=this.articleCard.userId;
+					this.showInput = true;
+					this.writingComment = true; 
+					console.log('this is control input in detail. a ==' + a);
+					console.log(this.submitData);
+				}else{ //a==0, 关闭输入框，一切恢复默认状态
+				    console.log('this is control input in detail. a ==0, EXIT');
+					this.submitData = {};
+					this.placeholderText="评论";
+					this.showInput = false;
+					this.writingComment =false;
+				}
+			},
+			
+			swLikeArticle(){
+				if (this.articleCard.isLike){
+					this.unLikeArticle();
+					this.articleCard.likeNum--;
+				}else{
+					this.likeArticle();
+					this.articleCard.likeNum++;
+				}
+				this.articleCard.isLike = !this.articleCard.isLike;
+			},
+			
+			likeArticle(){
+				console.log("点赞文章");
+				var that = this;
+				uni.request({
+					method: "POST",
+					url: that.$serverUrl + '/article/userLikeArticle',
+					data: {
+						userId: that.userInfo.id,
+						articleId: that.articleCard.id,
+						articleCreaterId: that.articleCard.userId,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {	
+						console.log(res);
+					},
+				});
+			},
+			
+			unLikeArticle(){
+				console.log("取消点赞文章");
+				var that = this;
+				uni.request({
+					method: "POST",
+					url: that.$serverUrl + '/article/userUnLikeArticle',
+					data: {
+						userId: that.userInfo.id,
+						articleId: that.articleCard.id,
+						articleCreaterId: that.articleCard.userId,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {	
+						console.log(res);
+					},
+				});
+			},
+			
+			goToPersonPublic(){
+				uni.navigateTo({
+					url: '/pages/personpublic/personpublic?userId=' + this.articleCard.userId,
+				})
+			}
+		},
+		
 	};
 </script>
 <style>	page {
@@ -344,14 +379,17 @@
 	}
 
 	.submitComment {
+		position: fixed;
+		display: block;
+		left:34%;
+		bottom:9px;
 		background: #FFCC30;
 		border-radius: 5px;
-		width: 120px;
+		width: 32%;
 		height: 30px;
 		font-size: 10px;
 		font-weight: bold;
 		color: #FFFFFF;
-		margin: auto;
 		text-align: center;
 		line-height: 30px;
 		margin-top:12px;
@@ -377,7 +415,6 @@
 	}
 
 	.emoji {
-		background: url(../../static/icon/emoji.png);
 		background-repeat: no-repeat;
 		background-position: center;
 		border: none;

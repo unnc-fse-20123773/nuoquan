@@ -50,9 +50,6 @@
 	font-weight: 300;
 }
 .searchResultWrods.data-v-5a44fe13 {
-	color: #888888;
-	font-size: 13px;
-	font-weight: 300;
 	margin-top: 26px;
 	width: calc(750upx-56px);
 	padding: 0 28px;

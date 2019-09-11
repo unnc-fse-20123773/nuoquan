@@ -1,7 +1,7 @@
 <template>
 	<view class="articlecard" id="'+articleCard.id+'" @click="jumpToDetail()">
 		<view class="title">{{ articleCard.articleTitle }}</view>
-		<view class="briefarticleCard">{{ articleCard.articleContent }}</view>
+		<text class="briefarticleCard">{{ articleCard.articleContent }}</text>
 		<view :class="[articleCard.imgList.length == 1 ? 'picturearea-one' : 'picturearea-mul']">
 			<!-- *******这里是文章配图的位置*******-->
 
@@ -36,15 +36,15 @@
 			<view class="tag" v-for="(i, index) in articleCard.tags" v-bind:key="index">{{i}}</view>
 		</view>
 		<view class="menubar">
-			<image :src="articleCard.faceImg" class="touxiang"></image>
+			<image :src="articleCard.faceImg" class="touxiang" @tap="goToPersonPublic(articleCard.userId)"></image>
 			<view class="name">{{ articleCard.nickname }}</view>
 			<view class="time">{{ articleCard.createDate | timeDeal}}</view>
 
 			<view class="icons">
 				<image class="comment" src="../static/icon/comment.png"></image>
-				<view class="icom">{{articleCard.commentNum}}</view>
+				<view class="icon">{{articleCard.commentNum}}</view>
 				<image class="like" src="../static/icon/like.png"></image>
-				<view class="icom">{{articleCard.likeNum}}</view>
+				<view class="icon">{{articleCard.likeNum}}</view>
 			</view>
 		</view>
 	</view>
@@ -58,21 +58,12 @@
 		},
 		data() {
 			return {
-				taglist: [
-					['123', 'background:#40A792'],
-					['13', 'background:#621E81'],
-					['163', 'background:#738598'],
-					['标签', 'background:#F3AE4B'],
-					['13', 'background:#621E81'],
-					['163', 'background:#738598'],
-					['123', 'background:#40A792'],
-					['13', 'background:#621E81']
-				],
-				
+
 				serverUrl: this.$serverUrl,
 				singleImgState: '0',
 				
 				imgList: [],
+				// atags: JSON.(this.articleCard.tags);
 			};
 		},
 		created() {
@@ -121,13 +112,19 @@
 				}else{
 					this.singleImgState = 1;
 				}
-				console.log(e.detail);
+				// console.log(e.detail);
 			},
 			
 			jumpToDetail() {
 				var navData = JSON.stringify(this.articleCard); // 这里转换成 字符串
 				uni.navigateTo({
 					url: '/pages/detail/detail?data=' + navData
+				});
+			},
+			
+			goToPersonPublic(userId){
+				uni.navigateTo({
+					url:'/pages/personpublic/personpublic?userId=' + userId,
 				});
 			}
 		},
@@ -164,6 +161,7 @@
 	}
 	.tags {
 		margin-left: 10px;
+		min-height: 10px;
 	}
 	.tag {
 		display: inline-block;
@@ -176,6 +174,14 @@
 		font-size: 10px;
 		background: #621E81;
 	}
+	
+	.tag-empty{
+		margin-left: 10px;
+		height: 15px;
+		width: auto;
+		background-color: white;
+	}
+	
 	.menubar {
 		position: relative;
 		vertical-align: middle;
@@ -220,7 +226,7 @@
 		height: 11px;
 		padding-right: 5px;
 	}
-	.icom {
+	.icon {
 		display: inline-block;
 		color: #353535;
 		font-size: 10px;

@@ -37,6 +37,15 @@ public class UserArticleComment {
     @Column(name = "comment_num")
     private Integer commentNum;
 
+    @Column(name = "under_comment_id")
+    private String underCommentId;
+
+    /**
+     * 评论消息是否被签收 0: 未签收 1：签收
+     */
+    @Column(name = "sign_flag")
+    private Integer signFlag;
+    
     /**
      * @return id
      */
@@ -179,5 +188,37 @@ public class UserArticleComment {
      */
     public void setCommentNum(Integer commentNum) {
         this.commentNum = commentNum;
+    }
+    
+    /**
+     * @return under_comment_id
+     */
+    public String getUnderCommentId() {
+        return underCommentId;
+    }
+
+    /**
+     * @param underCommentId
+     */
+    public void setUnderCommentId(String underCommentId) {
+        this.underCommentId = underCommentId;
+    }
+    
+    /**
+     * 获取评论消息是否被签收 0: 未签收 1：签收
+     *
+     * @return sign_flag - 评论消息是否被签收 0: 未签收 1：签收
+     */
+    public Integer getSignFlag() {
+        return signFlag;
+    }
+
+    /**
+     * 设置评论消息是否被签收 0: 未签收 1：签收
+     *
+     * @param signFlag 评论消息是否被签收 0: 未签收 1：签收
+     */
+    public void setSignFlag(Integer signFlag) {
+        this.signFlag = signFlag;
     }
 }
