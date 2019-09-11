@@ -12,7 +12,7 @@
 				</view>
 			</view>
 			<view class="tags">
-				<view class="tag" v-for="(i,index) in articleCard.tags" v-bind:key="index">{{i}}</view>
+				<view class="tag" v-for="(i,index) in articleCard.tagList" v-bind:key="index">{{i}}</view>
 			</view>
 			<view class="bottombar">
 				<view style="width:70%;display:inline-block;">

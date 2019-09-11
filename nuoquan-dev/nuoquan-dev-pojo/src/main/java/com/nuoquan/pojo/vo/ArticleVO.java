@@ -27,6 +27,7 @@ public class ArticleVO {
     private String faceImg;
     private String faceImgThumb;
     
+    private List<String> tagList;
     
     /**
      * @return id
@@ -250,5 +251,13 @@ public class ArticleVO {
 
 	public void setIsLike(Boolean isLike) {
 		this.isLike = isLike;
+	}
+
+	public List<String> getTagList() {
+		return tagList;
+	}
+
+	public void setTagList(List<String> tagList) {
+		this.tagList = tagList;
 	}
 }

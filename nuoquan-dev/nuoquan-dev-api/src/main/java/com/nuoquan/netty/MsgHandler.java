@@ -55,9 +55,9 @@ public class MsgHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> 
 			UserChannelRel.put(senderId, currentChannel);
 
 			// 测试
-			for (Channel c : clients) {
-				System.out.println(c.id().asLongText());
-			}
+//			for (Channel c : clients) {
+//				System.out.println(c.id().asLongText());
+//			}
 			UserChannelRel.output();
 		} else if (action == MsgActionEnum.CHAT.type) {
 			// 2.2 聊天类型的消息，把聊天记录保存到数据库（加密/解密），
@@ -86,7 +86,7 @@ public class MsgHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> 
 				}
 			}
 
-			System.out.println("签收消息id：" + msgIdList.toString());
+//			System.out.println("签收消息id：" + msgIdList.toString());
 
 			if (msgIdList != null && !msgIdList.isEmpty() && msgIdList.size() > 0) {
 				// 批量签收
@@ -105,7 +105,7 @@ public class MsgHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> 
 				}
 			}
 
-			System.out.println("签收点赞文章消息id：" + msgIdList.toString());
+//			System.out.println("签收点赞文章消息id：" + msgIdList.toString());
 
 			if (msgIdList != null && !msgIdList.isEmpty() && msgIdList.size() > 0) {
 				// 批量签收
@@ -124,7 +124,7 @@ public class MsgHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> 
 				}
 			}
 
-			System.out.println("签收点赞评论消息id：" + msgIdList.toString());
+//			System.out.println("签收点赞评论消息id：" + msgIdList.toString());
 
 			if (msgIdList != null && !msgIdList.isEmpty() && msgIdList.size() > 0) {
 				// 批量签收
@@ -143,7 +143,7 @@ public class MsgHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> 
 				}
 			}
 
-			System.out.println("签收评论消息id：" + msgIdList.toString());
+//			System.out.println("签收评论消息id：" + msgIdList.toString());
 
 			if (msgIdList != null && !msgIdList.isEmpty() && msgIdList.size() > 0) {
 				// 批量签收
@@ -151,7 +151,7 @@ public class MsgHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> 
 			}
 		} else if (action == MsgActionEnum.KEEPALIVE.type) {
 			// 2.4 心跳类型消息
-			System.out.println("收到来自 channel 为[" + currentChannel + "]的心跳包...");
+//			System.out.println("收到来自 channel 为[" + currentChannel + "]的心跳包...");
 		}
 
 		// 把消息发到所有的客户端

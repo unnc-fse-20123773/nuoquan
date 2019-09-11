@@ -25,7 +25,7 @@ public interface ArticleService {
 	 * @param pageSize
 	 * @return
 	 */
-	public ArticleVO getArticleById(String articleId);
+	public ArticleVO getArticleById(String articleId, String userId);
 	
 	/**
 	 * @des:用户点赞文章
@@ -55,7 +55,7 @@ public interface ArticleService {
 	/**
 	 *  查询阳面文章
 	 */
-	public PagedResult searchYangArticlesContent(Article article, Integer isSaveRecord, Integer page, Integer pageSize);
+	public PagedResult searchYangArticlesContent(Integer isSaveRecord, Integer page, Integer pageSize, Article article, String userId);
 	
 	/**
 	 * 获取热搜词
@@ -120,7 +120,7 @@ public interface ArticleService {
 	 * @param commentId
 	 * @return
 	 */
-	public UserArticleCommentVO getCommentById(String commentId);
+	public UserArticleCommentVO getCommentById(String commentId, String userId);
 
 	/**
 	 * 保存文章图片

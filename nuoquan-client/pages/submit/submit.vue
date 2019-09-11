@@ -163,13 +163,9 @@
 				}
 			},
 			upload: function(e) {
-				
 				var me = this;
-
 				console.log(me.articleTitle);
 				console.log(me.articleContent);
-				
-				me.combineTagToString();
 				
 				if (me.articleTitle == '' || me.articleTitle == null) {
 					uni.showToast({
@@ -189,7 +185,7 @@
 					return;
 				}
 				
-				// me.combineTagToString();
+				me.combineTagToString();
 				
 				var serverUrl = me.$serverUrl;
 				uni.request({

@@ -1,61 +1,29 @@
-<<<<<<< HEAD
-C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\Sid.java
-C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\com\nuoquan\utils\FastDFSClient.java
-C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\com\nuoquan\utils\TimeAgoUtils.java
-C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\utils\Props.java
-C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\DayCode.java
-C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\RandomCodeStrategy.java
-C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\InvalidSystemClock.java
-C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\Code.java
-C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\Id.java
-C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\utils\HttpReq.java
-C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\utils\Utils.java
-C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\com\nuoquan\utils\PagedResult.java
-C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\strategy\FileLock.java
-C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\com\nuoquan\utils\MyMapper.java
-C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\com\nuoquan\enums\ArticleStatusEnums.java
-C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\utils\Ip.java
-C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\strategy\DayPrefixRandomCodeStrategy.java
-C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\strategy\DefaultWorkerIdStrategy.java
-C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\Test.java
-C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\com\nuoquan\utils\JsonUtils.java
-C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\com\nuoquan\utils\UrlUtil.java
-C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\com\nuoquan\utils\MD5Utils.java
-C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\IdWorker.java
-C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\utils\IPv4Utils.java
-C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\com\nuoquan\utils\FileUtils.java
-C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\strategy\DefaultRandomCodeStrategy.java
-C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\utils\Serializes.java
-C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\WorkerIdStrategy.java
-C:\code\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\com\nuoquan\utils\JSONResult.java
-=======
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\strategy\DefaultWorkerIdStrategy.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\IdWorker.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\InvalidSystemClock.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\utils\Serializes.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\utils\IPv4Utils.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\DayCode.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\strategy\DefaultRandomCodeStrategy.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\utils\Props.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\strategy\FileLock.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\com\nuoquan\utils\JSONResult.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\com\nuoquan\utils\TimeAgoUtils.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\com\nuoquan\utils\FastDFSClient.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\com\nuoquan\enums\ArticleStatusEnums.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\RandomCodeStrategy.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\strategy\DayPrefixRandomCodeStrategy.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\com\nuoquan\utils\PagedResult.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\com\nuoquan\utils\FileUtils.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\Sid.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\com\nuoquan\utils\MD5Utils.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\utils\Ip.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\WorkerIdStrategy.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\Code.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\com\nuoquan\utils\UrlUtil.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\utils\Utils.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\com\nuoquan\utils\MyMapper.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\Id.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\Test.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\com\nuoquan\utils\JsonUtils.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-common\src\main\java\org\n3r\idworker\utils\HttpReq.java
->>>>>>> 0191c25402eae5312381d9aeca795436830504f4
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/utils/FastDFSClient.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/utils/Utils.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/utils/Serializes.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/enums/ArticleStatusEnums.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/utils/FileUtils.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/utils/JSONResult.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/utils/MyMapper.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/InvalidSystemClock.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/strategy/FileLock.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/Code.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/strategy/DefaultRandomCodeStrategy.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/utils/PagedResult.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/WorkerIdStrategy.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/Sid.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/DayCode.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/utils/UrlUtil.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/utils/MD5Utils.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/Id.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/utils/IPv4Utils.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/Test.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/utils/JsonUtils.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/RandomCodeStrategy.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/strategy/DefaultWorkerIdStrategy.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/IdWorker.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/utils/Props.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/utils/Ip.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/utils/HttpReq.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/strategy/DayPrefixRandomCodeStrategy.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/utils/TimeAgoUtils.java

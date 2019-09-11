@@ -33,7 +33,7 @@
 			
 		</view>
 		<view class="tags">
-			<view class="tag" v-for="(i, index) in articleCard.tags" v-bind:key="index">{{i}}</view>
+			<view class="tag" v-for="(i, index) in articleCard.tagList" v-bind:key="index">{{i}}</view>
 		</view>
 		<view class="menubar">
 			<image :src="articleCard.faceImg" class="touxiang" @tap="goToPersonPublic(articleCard.userId)"></image>
