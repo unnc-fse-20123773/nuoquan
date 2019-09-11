@@ -212,6 +212,7 @@
 	 */
 	.messageArea {
 		display: flex;
+		margin-top: 30upx;
 		margin-bottom: 90upx;
 		background: #F5F5F5;
 		margin-left: 3%;

@@ -24,8 +24,11 @@ _App.default.mpType = 'app';
 _vue.default.config.productionTip = false;
 
 _vue.default.prototype.$store = _store.default;
-_vue.default.prototype.$serverUrl = "http://127.0.0.1:8080";
-_vue.default.prototype.$wsServerUrl = "ws://127.0.0.1:8088/ws";
+// Vue.prototype.$serverUrl = "http://127.0.0.1:8080"
+// Vue.prototype.$wsServerUrl = "ws://127.0.0.1:8088/ws"
+
+_vue.default.prototype.$serverUrl = "http://172.20.10.10:8080";
+_vue.default.prototype.$wsServerUrl = "ws://172.20.10.10:8088/ws";
 
 // Vue.prototype.$serverUrl = "http://192.168.31.210:8080"
 // Vue.prototype.$wsServerUrl = "ws://192.168.31.210:8088/ws"
