@@ -9,7 +9,7 @@
 
 		<view class="submitMain">
 			<!-- 当失去焦点时，将输入内容存入articleTitle -->
-			<input class="title" @blur="saveAsArticleTitle" placeholder="  标题" />
+			<input class="title" v-model="articleTitle" placeholder="  标题" />
 			<view class="tagsArea">
 				<!-- 展示标签区域 -->
 				<view class="tag" v-if="showTagArea" v-for="i in tagList" :key="i">{{i}}</view>
@@ -23,7 +23,7 @@
 
 				</view>
 			</view>
-			<textarea placeholder="内容" class="content" @blur="saveAsArticleContent"></textarea>
+			<textarea placeholder="内容" class="content" v-model="articleContent"></textarea>
 			<view style="display: flex;justify-content: space-between;color: #353535;font-size: 13px;line-height: 28px;height: 24px;">
 				<view>点击可预览选好的图片</view>
 				<view>{{imageList.length}}/9</view>
@@ -95,16 +95,16 @@
 			this.userInfo = this.getGlobalUserInfo();
 		},
 		methods: {
-			// 将标题存放在articleTitle中
-			saveAsArticleTitle: function(event) {
-				this.articleTitle = event.target.value;
-				// console.log(this.articleTitle);
-			},
-			// 将内容存放在articleContent中
-			saveAsArticleContent: function(event) {
-				this.articleContent = event.target.value;
-				// console.log(this.articleContent);
-			},
+			// // 将标题存放在articleTitle中
+			// saveAsArticleTitle: function(event) {
+			// 	this.articleTitle = event.target.value;
+			// 	// console.log(this.articleTitle);
+			// },
+			// // 将内容存放在articleContent中
+			// saveAsArticleContent: function(event) {
+			// 	this.articleContent = event.target.value;
+			// 	// console.log(this.articleContent);
+			// },
 			addTag: function(res) {
 				this.showInputTagArea = 1;
 				this.showAddTagButton = 0;
@@ -226,7 +226,10 @@
 								});
 							}
 						}
-					}
+					},
+					// fail: (res) => {
+					// 	
+					// },
 				})
 			},
 

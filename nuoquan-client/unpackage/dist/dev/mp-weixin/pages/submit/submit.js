@@ -211,16 +211,16 @@ var sizeType = [
     this.userInfo = this.getGlobalUserInfo();
   },
   methods: {
-    // 将标题存放在articleTitle中
-    saveAsArticleTitle: function saveAsArticleTitle(event) {
-      this.articleTitle = event.target.value;
-      // console.log(this.articleTitle);
-    },
-    // 将内容存放在articleContent中
-    saveAsArticleContent: function saveAsArticleContent(event) {
-      this.articleContent = event.target.value;
-      // console.log(this.articleContent);
-    },
+    // // 将标题存放在articleTitle中
+    // saveAsArticleTitle: function(event) {
+    // 	this.articleTitle = event.target.value;
+    // 	// console.log(this.articleTitle);
+    // },
+    // // 将内容存放在articleContent中
+    // saveAsArticleContent: function(event) {
+    // 	this.articleContent = event.target.value;
+    // 	// console.log(this.articleContent);
+    // },
     addTag: function addTag(res) {
       this.showInputTagArea = 1;
       this.showAddTagButton = 0;
@@ -342,8 +342,11 @@ var sizeType = [
 
             }
           }
-        } });
-
+        }
+        // fail: (res) => {
+        // 	
+        // },
+      });
     }
 
     /* 以下为 Jerrio 测试代码块 */ } };exports.default = _default;
