@@ -89,7 +89,7 @@
 					},
 					success: (res) => {
 						that.showlist = res.data.data.rows;
-						console.log(res)
+						// console.log(res)
 					},
 					fail: (res) => {
 						console.log("index unirequest fail");

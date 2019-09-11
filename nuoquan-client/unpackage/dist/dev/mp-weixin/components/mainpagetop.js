@@ -396,7 +396,9 @@ __webpack_require__.r(__webpack_exports__);
       searchKeyWords: '',
       searchedArticleList: {},
       searching: true,
-      searchHisKeyList: uni.getStorageSync('search_history') };
+      searchHisKeyList: uni.getStorageSync('search_history'),
+
+      userInfo: this.getGlobalUserInfo() };
 
   },
   components: {
@@ -471,10 +473,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
       uni.request({
-        url: this.$serverUrl + '/article/searchArticleYANG?isSaveRecord=' + isSaveRecord,
+        url: that.$serverUrl + '/article/searchArticleYANG?isSaveRecord=' + isSaveRecord,
         method: "POST",
         data: {
-          articleContent: that.searchKeyWords },
+          articleContent: that.searchKeyWords,
+          userId: that.userInfo.id },
 
         success: function success(result) {
           console.log(result.data);

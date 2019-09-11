@@ -8,7 +8,7 @@
 			<text class="detailcontent">{{ articleCard.articleContent }}</text>
 			<view class="detailpics">
 				<view v-for="(item, index) in articleCard.imgList" :key="index">
-					<image :src="serverUrl + item.imagePath"></image>
+					<image :src="serverUrl + item.imagePath" @tap="previewImg(index)"></image>
 				</view>
 			</view>
 			<view class="tags">
@@ -64,7 +64,7 @@
 				submitData:{
 					//这个是从子组件传来的数据，回复评论的评论之类
 				},
-				
+				imgIndex: '',
 				serverUrl: this.$serverUrl,
 
 			};
@@ -102,7 +102,7 @@
 		
 		onLoad(options) {
 			this.articleCard = JSON.parse(options.data);
-			console.log(this.articleCard);
+			// console.log(this.articleCard);
 			
 			var userInfo = this.getGlobalUserInfo();
 			if (!this.isNull(userInfo)) {
@@ -137,11 +137,7 @@
 						that.writingComment = false;
 						that.commentContent = "";
 						
-						if(that.isNull(that.submitData.underCommentId)){
-							that.getComments();
-						}else{
-							uni.$emit("flashSubComment", that.submitData.underCommentId);
-						}
+						that.getComments();
 					},
 				})
 			},
@@ -159,7 +155,7 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: (res) => {	
-						console.log(res);
+						// console.log(res);
 						that.commentList = res.data.data.rows;
 						// console.log(that.articleCard.id);
 						
@@ -248,7 +244,26 @@
 				uni.navigateTo({
 					url: '/pages/personpublic/personpublic?userId=' + this.articleCard.userId,
 				})
-			}
+			},
+			previewImg: function(index) {
+				var imgIndex = index;
+				// console.log(res)
+				// 获取全部图片路径
+				var imgList = this.articleCard.imgList;
+				var arr = [];
+				var path;
+				for (var i=0; i<imgList.length; i++){
+					// console.log(imgList[i].imagePath);
+					path = this.serverUrl + imgList[i].imagePath
+					arr = arr.concat(path);
+				}
+				// console.log(arr);
+				
+				uni.previewImage({
+					current: index,
+					urls:arr,
+				})
+			},
 		},
 		
 	};

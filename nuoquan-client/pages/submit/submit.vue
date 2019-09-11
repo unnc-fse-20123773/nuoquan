@@ -141,14 +141,13 @@
 						this.imageList = this.imageList.concat(res.tempFilePaths);
 
 						console.log(res)
-						// for(var i = 0; i < 9; i++){
-						// 	console.log(this.imageList[i]);
-						// }
 					}
 				})
 			},
 			previewImage: function(e) {
 				var current = e.target.dataset.src
+				// console.log(e)
+				console.log(this.imageList);
 				uni.previewImage({
 					current: current,
 					urls: this.imageList
