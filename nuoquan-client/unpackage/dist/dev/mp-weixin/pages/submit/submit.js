@@ -285,7 +285,7 @@ var sizeType = [
       console.log(me.articleTitle);
       console.log(me.articleContent);
 
-      me.combineTagToString();
+      // me.combineTagToString();
 
       if (me.articleTitle == '' || me.articleTitle == null) {
         uni.showToast({
@@ -305,7 +305,7 @@ var sizeType = [
         return;
       }
 
-      // me.combineTagToString();
+      me.combineTagToString();
 
       var serverUrl = me.$serverUrl;
       uni.request({
