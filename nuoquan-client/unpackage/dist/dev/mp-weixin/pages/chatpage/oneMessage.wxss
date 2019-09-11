@@ -1,10 +1,10 @@
 
-.touxiang.data-v-d203d3ca {
+.touxiang.data-v-285d9fe6 {
 	width: 60rpx;
 	height: 60rpx;
 	border-radius: 60rpx;
 }
-.bottomBar.data-v-d203d3ca {
+.bottomBar.data-v-285d9fe6 {
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -ms-flexbox;
