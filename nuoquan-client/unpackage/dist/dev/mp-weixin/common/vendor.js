@@ -114,8 +114,6 @@ _vue.default.prototype.getListByKey = function (listName) {
 };
 
 
-
-
 /** TODO: 可使用 Map 代替 List 提升查询性能（暂时不知道 map 在 uniapp 中怎么写）
     *	 															by Jerrio
     * 把该用户信息添加到本地缓存的 userlist 中，如果存在则替换
@@ -134,6 +132,7 @@ _vue.default.prototype.setUserInfoToUserList = function (userInfo) {
       var user = userList[i];
       if (user.id == userInfo.id) {
         userList.splice(i, 1, userInfo); // 替换
+        uni.setStorageSync("userList", JSON.stringify(userList));
         return;
       }
     }
@@ -779,10 +778,16 @@ _vue.default.prototype.notification = {
     var list = app.getListByKey(this.LIKEMSG_KEY);
     var start = (page - 1) * size;
     var newList = [];
-    for (var i = 0; i < size; i++) {
-      newList.push(list[start + i]);
+    if (list.length < start) {
+      return null;
+    } else {
+      for (var i = 0; i < size; i++) {
+        if (!app.isNull(list[start + i])) {
+          newList.push(list[start + i]);
+        }
+      }
+      return newList;
     }
-    return newList;
   },
 
   /**
@@ -798,10 +803,16 @@ _vue.default.prototype.notification = {
     var list = app.getListByKey(this.COMMENTMSG_KEY);
     var start = (page - 1) * size;
     var newList = [];
-    for (var i = 0; i < size; i++) {
-      newList.push(list[start + i]);
+    if (list.length < start) {
+      return null;
+    } else {
+      for (var i = 0; i < size; i++) {
+        if (!app.isNull(list[start + i])) {
+          newList.push(list[start + i]);
+        }
+      }
+      return newList;
     }
-    return newList;
   },
 
   /**

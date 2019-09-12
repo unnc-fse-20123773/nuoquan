@@ -385,6 +385,9 @@ var me;var _default =
           if (res.data.status == 200) {
             that.thisUserInfo = res.data.data;
             that.setUserInfoToUserList(res.data.data); //更新缓存
+            console.log(res.data.data);
+            console.log(that.getUserInfoFromUserList(res.data.data.id));
+            console.log(that.getListByKey("userList"));
           }
         } });
 

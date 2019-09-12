@@ -409,7 +409,7 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     searchResultArticle: searchResultArticle },
 
-  onLoad: function onLoad() {var _this = this;
+  created: function created() {var _this = this;
     // 查询热搜词
     var that = this;
     uni.request({
@@ -420,7 +420,6 @@ __webpack_require__.r(__webpack_exports__);
         that.hotList = res.data.data;
         console.log(_this.hotList);
       } });
-
 
   },
 
@@ -438,7 +437,6 @@ __webpack_require__.r(__webpack_exports__);
 
         return;
       }
-
 
       uni.getStorage({
         key: 'search_history',

@@ -54,7 +54,7 @@
 		components: {
 			searchResultArticle,
 		},
-		onLoad: function() {
+		created: function() {
 			// 查询热搜词
 			var that = this;
 			uni.request({
@@ -65,7 +65,6 @@
 					that.hotList = res.data.data;
 					console.log(this.hotList);
 				}
-
 			})
 		},
 		
@@ -83,7 +82,6 @@
 					})
 					return;
 				}
-				
 				
 				uni.getStorage({
 					key:'search_history',

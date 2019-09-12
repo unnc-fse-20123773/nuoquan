@@ -407,11 +407,13 @@ var _default = {
 
                 if (current == 0) {
                   // console.log("点了点赞"); 刷新 list 并设置计数值
+                  this.likePage = 1;
                   this.likeList = this.notification.getLikeMsg(this.likePage);
                   this.$store.commit('setLikeMsgCount', 0);
                 } else {
                   // console.log("点了评论");
-                  this.commentList = this.notification.getCommentMsg(this.likePage);
+                  this.commentPage = 1;
+                  this.commentList = this.notification.getCommentMsg(this.commentPage);
                   this.$store.commit('setCommentMsgCount', 0);
                 }
 
@@ -469,20 +471,34 @@ var _default = {
         title: '加载中' });
 
       if (tabIndex == 0) {// like
-        this.likePage++;
-        var list = this.notification.getLikeMsg(this.likePage);
-        var that = this;
-        list.forEach(function (item) {
-          that.likeList.push(item);
-        });
+        var page = this.likePage + 1;
+        var list = this.notification.getLikeMsg(page);
+        if (list != null) {
+          console.log(list);
+          this.likeList = this.likeList.concat(list);
+          this.likePage++;
+        } else {
+          uni.showToast({
+            title: 'No more',
+            duration: 2000,
+            icon: 'none' });
+
+        }
         uni.hideLoading();
       } else {
-        this.commentPage++;
-        var list = this.notification.getCommentMsg(this.commentPage);
-        var that = this;
-        list.forEach(function (item) {
-          that.commentList.push(item);
-        });
+        var page = this.commentPage + 1;
+        var list = this.notification.getCommentMsg(page);
+        if (list != null) {
+          console.log(list);
+          this.commentList = this.commentList.concat(list);
+          this.commentPage++;
+        } else {
+          uni.showToast({
+            title: 'No more',
+            duration: 2000,
+            icon: 'none' });
+
+        }
         uni.hideLoading();
       }
     },
