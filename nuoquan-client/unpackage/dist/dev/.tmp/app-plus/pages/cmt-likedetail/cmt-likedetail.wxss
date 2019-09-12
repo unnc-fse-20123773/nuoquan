@@ -133,7 +133,7 @@ page {
 	/* 在这里设置底部横条高度和颜色 */
 	width: 60%;
 	height: 6rpx;
-	background: #FFCF3C;
+	background: #00a0e9;
 }
 .swiper-box-list {
 	-webkit-box-flex: 1;
@@ -182,6 +182,12 @@ page {
 	width: 60%;
 	margin-left: 20%;
 	background-color: white;
+}
+.marginHelper3{
+	height: 15rpx;
+	margin-top: 15rpx;
+	width: 100%;
+	background-color: #f3f3f3;
 }
 
 /* --------------------ID 行--------------------- */
@@ -237,14 +243,43 @@ page {
 /* ---------------------------预览行---------------------- */
 .brief-bar-abs {
 	/* 底部边距需要动态设置 */
-	margin-bottom: 15rpx;
 	overflow: hidden;
 	width: 92%;
 	margin-left: 4%;
 	border-radius: 20rpx;
 	background-color: #f8eced;
 }
+.brief-bar-abs-cmtofcmt {
+	/* 底部边距需要动态设置 */
+	overflow: hidden;
+	width: 92%;
+	margin-left: 4%;
+	border-radius: 20rpx;
+	background-color: #e5f3f9;
+}
+.brief-bar-nocolor {
+	/* 底部边距需要动态设置 */
+	overflow: hidden;
+	width: 96%;
+	margin-left: 2%;
+	border-radius: 20rpx;
+}
 .brief-bar-rel {
+	position: relative;
+	width: 94%;
+	margin-left: 3%;
+	margin-top: 15rpx;
+	margin-bottom: 15rpx;
+	height: 100%;
+	font-size: 12px;
+	color: #3d3d3d;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+	overflow: hidden;
+	word-break:break-all;
+}
+.brief-bar-rel-cmtofcmt {
 	position: relative;
 	width: 94%;
 	margin-left: 3%;
@@ -257,11 +292,18 @@ page {
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 3;
 	overflow: hidden;
+	word-break:break-all;
 }
 
 /* -------------------原评论预览行 -----------------*/
-.origin-bar-abs {
+.origin-bar-abs-img {
 	height: 146rpx;
+	width: 92%;
+	margin-left: 4%;
+	border-radius: 20rpx;
+	background-color: #f5f4ed;
+}
+.origin-bar-abs-noimg {
 	width: 92%;
 	margin-left: 4%;
 	border-radius: 20rpx;
@@ -317,9 +359,16 @@ page {
 }
 
 /* 预览块 */
-.origin-briefBox{
+.origin-briefBox-img{
 	max-height: 140rpx;
 	width: 79%;
+	/* margin-left: 4%; */
+}
+.origin-briefBox-noimg{
+	max-height: 140rpx;
+	width: 79%;
+	margin-bottom: 15rpx;
+	margin-left: 3%;
 	/* margin-left: 4%; */
 }
 

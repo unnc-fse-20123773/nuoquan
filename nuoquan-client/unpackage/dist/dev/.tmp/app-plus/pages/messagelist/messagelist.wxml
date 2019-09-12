@@ -1,2 +1,2 @@
 <import src="./messagelist.vue.wxml" />
-    <template is="5e3ff870" data="{{ ...$root['0'], $root }}"/>
+    <template is="fae865b4" data="{{ ...$root['0'], $root }}"/>

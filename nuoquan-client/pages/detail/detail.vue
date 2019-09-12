@@ -136,8 +136,13 @@
 					success: (res) => {
 						that.writingComment = false;
 						that.commentContent = "";
+						this.showInput = false;
 						
-						that.getComments();
+						if(that.isNull(that.submitData.underCommentId)){
+							that.getComments();
+						}else{
+							uni.$emit("flashSubComment", that.submitData.underCommentId);
+						}
 					},
 				})
 			},
@@ -168,6 +173,9 @@
 					this.placeholderText='回复 @'+a.nickname+' 的评论';
 					delete(a.nickname);
 					this.submitData=a;
+					if(a.mode == "re-co"){
+						this.writingComment = true;
+					}
 					if(a.mode =="re-re"){    //mode ="re-re", from grandson RECOMMENT
 						console.log(a.mode);
 						this.writingComment = true ;
