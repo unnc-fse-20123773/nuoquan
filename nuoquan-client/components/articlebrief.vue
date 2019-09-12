@@ -33,7 +33,7 @@
 			
 		</view>
 		<view class="tags">
-			<view class="tag" v-for="(i, index) in articleCard.tagList" v-bind:key="index">{{i}}</view>
+			<view class="tag" :style="{background: tagColorList[index]}" v-for="(i, index) in articleCard.tagList" v-bind:key="index">{{i}}</view>
 		</view>
 		<view class="menubar">
 			<image :src="articleCard.faceImg" class="touxiang" @tap="goToPersonPublic(articleCard.userId)"></image>
@@ -58,12 +58,12 @@
 		},
 		data() {
 			return {
-
 				serverUrl: this.$serverUrl,
 				singleImgState: '0',
 				
 				imgList: [],
-				// atags: JSON.(this.articleCard.tags);
+				
+				tagColorList: [], // 储存每个tag的颜色
 			};
 		},
 		created() {
@@ -75,7 +75,13 @@
 			}else{
 				this.imgList = this.articleCard.imgList;
 			}
-			// console.log(this.articleCard);
+			
+			// 随机生成颜色
+			var tagColors = this.tagColors;
+			for (var i=0; i<this.articleCard.tagList.length; i++){
+				var random = Math.floor(Math.random()*tagColors.length); // 0~tagColors.length-1
+				this.tagColorList.push(tagColors[random]);
+			}
 		},
 		filters: {
 			timeDeal(timediff) {

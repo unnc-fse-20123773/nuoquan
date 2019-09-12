@@ -184,6 +184,11 @@ var _search = _interopRequireDefault(__webpack_require__(/*! ../pages/search/sea
       uni.navigateTo({
         url: '/pages/submit/submit' });
 
+    },
+    goToDetail: function goToDetail(article) {
+      uni.navigateTo({
+        url: '/pages/detail/detail?data=' + JSON.stringify(article) });
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

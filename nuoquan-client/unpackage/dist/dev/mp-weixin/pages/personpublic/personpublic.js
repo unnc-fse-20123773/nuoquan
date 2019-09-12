@@ -384,6 +384,7 @@ var me;var _default =
           // console.log(res)
           if (res.data.status == 200) {
             that.thisUserInfo = res.data.data;
+            that.setUserInfoToUserList(res.data.data); //更新缓存
           }
         } });
 

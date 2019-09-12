@@ -68,7 +68,6 @@
 			this.startY = 0
 			this.btnGroupWidth = 0
 			this.isMoving = false
-			console.log(this.messagesList[0].createDate);
 		},
 		// #ifdef H5
 		mounted() {

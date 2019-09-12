@@ -22,15 +22,15 @@
 			<view class="topicArea">
 				<view class="hot1">
 					<view class="hotNum1" style="font-size: 21px;margin-bottom: 14px;">1</view>
-					<view class="hotContent1" style="font-size: 15px;margin-bottom: 14px;">{{topArticles[0].articleTitle}}</view>
+					<view class="hotContent1" style="font-size: 15px;margin-bottom: 14px;" @tap="goToDetail(topArticles[0])">{{topArticles[0].articleTitle}}</view>
 				</view>
 				<view class="hot2">
 					<view class="hotNum2" style="font-size: 17px;margin-bottom: 12px;">2</view>
-					<view class="hotContent2" style="font-size: 13px;margin-bottom: 12px;">{{topArticles[1].articleTitle}}</view>
+					<view class="hotContent2" style="font-size: 13px;margin-bottom: 12px;" @tap="goToDetail(topArticles[1])">{{topArticles[1].articleTitle}}</view>
 				</view>
 				<view class="hot3">
 					<view class="hotNum3" style="font-size: 15px;">3</view>
-					<view class="hotContent3" style="font-size: 13px;">{{topArticles[2].articleTitle}}</view>
+					<view class="hotContent3" style="font-size: 13px;" @tap="goToDetail(topArticles[2])">{{topArticles[2].articleTitle}}</view>
 				</view>
 			</view>
 		</view>
@@ -74,6 +74,11 @@
 			jumpToSubmit() {
 				uni.navigateTo({
 					url: '/pages/submit/submit'
+				});
+			},
+			goToDetail(article){
+				uni.navigateTo({
+					url: '/pages/detail/detail?data=' + JSON.stringify(article)
 				});
 			}
 		}

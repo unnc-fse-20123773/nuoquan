@@ -177,15 +177,15 @@ __webpack_require__.r(__webpack_exports__);
       showInput: false, ////控制输入框，true时显示输入框
       writingComment: false, //控制输入框，true时自动获取焦点，拉起输入法
       placeholderText: "评论点什么吧......",
-      inputData: {//localData,用于拼接不同情况下的savecomment请求的数据
-      },
+      inputData: {}, //localData,用于拼接不同情况下的savecomment请求的数据
 
       submitData: {
         //这个是从子组件传来的数据，回复评论的评论之类
       },
       imgIndex: '',
-      serverUrl: this.$serverUrl };
+      serverUrl: this.$serverUrl,
 
+      tagColorList: [] };
 
   },
   components: {
@@ -229,6 +229,13 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     this.getComments();
+
+    // 随机生成颜色
+    var tagColors = this.tagColors;
+    for (var i = 0; i < this.articleCard.tagList.length; i++) {
+      var random = Math.floor(Math.random() * tagColors.length); // 0~tagColors.length-1
+      this.tagColorList.push(tagColors[random]);
+    }
   },
 
   methods: {
