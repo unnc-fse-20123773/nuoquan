@@ -13,25 +13,25 @@
 				</view>
 			</view>
 		</view>
-		
+
 		<!-- 历史搜索标题行及区域 -->
 		<view class="SearchHistoryItem" v-show="searching">
 			<view class="SearchHistoryItemTitle">历史搜索:</view>
-			<icon type="clear" @tap="SearchDeleteAll" size="11"></icon>
+			<icon type="clear" @tap="searchDeleteAll" size="11"></icon>
 			<!-- <view v-for="key in searchHisKeyList" :key="key">{{key}}</view> -->
 			<view class="searchList">
 				<view class="item" v-for="(item,index) in searchHisKeyList" :key="index">{{item}}</view>
 			</view>
 		</view>
-		
+
 		<!-- 搜索结果标题行 -->
-        <view class="searchResultWrods column_center">
+		<view class="searchResultWrods column_center">
 			<view style="color: #888888;font-size: 13px;font-weight: 300;">搜索结果:</view>
 			<icon type="clear" style="position: absolute;right:28px;" v-show="!searching" @click="searchCancle(searching)" size="11"></icon>
 		</view>
-		
+
 		<!-- 搜索结果显示区域 -->
-		<view class="searchResult" v-show="!searching">			
+		<view class="searchResult" v-show="!searching">
 			<searchResultArticle v-for="i in searchedArticleList" :key="i.id" v-bind:articleCard="i"></searchResultArticle>
 		</view>
 	</view>
@@ -42,63 +42,68 @@
 	export default {
 		data() {
 			return {
-				hotList: {},
+				hotList: [],
 				searchKeyWords: '',
 				searchedArticleList: {},
 				searching: true,
 				searchHisKeyList: uni.getStorageSync('search_history'),
-				
+
 				userInfo: this.getGlobalUserInfo(),
 			}
 		},
 		components: {
 			searchResultArticle,
 		},
-		created: function() {
+		created() {
 			// 查询热搜词
-			var that = this;
-			uni.request({
-				url: that.$serverUrl + '/article/hot',
-				method: "POST",
-				success: (res) => {
-					console.log(res);
-					that.hotList = res.data.data;
-					console.log(this.hotList);
-				}
-			})
+			this.getHotWords();
 		},
-		
 		methods: {
+			getHotWords: function() {
+				console.log('dasdsdad');
+
+				var that = this;
+				uni.request({
+					url: that.$serverUrl + '/article/hot',
+					method: "POST",
+					success: (res) => {
+						console.log(res);
+						that.hotList = res.data.data;
+						console.log(that.hotList);
+					}
+
+				})
+			},
 			search: function(res) {
 				var that = this;
 				var isSaveRecord = 1;
-				
+
 				// console.log(that.searchKeyWords);
-				if (this.searchKeyWords == '' || this.searchKeyWords == null){
+				if (this.searchKeyWords == '' || this.searchKeyWords == null) {
 					uni.showToast({
 						title: '搜索内容不能为空',
 						duration: 1000,
-						icon:'none',
+						icon: 'none',
 					})
 					return;
 				}
-				
+
 				uni.getStorage({
-					key:'search_history',
-					success(res){
+					key: 'search_history',
+					success(res) {
 						let list = res.data;
-						console.log(list);
-						if(list.length > 10){
-							for(let item of list){
-								if(item == that.searchKeyWords){
+						// console.log(list);
+						if (list.length > 10) {
+							for (let item of list) {
+								if (item == that.searchKeyWords) {
 									return false;
 								}
 							}
 							list.pop();
 							list.unshift(that.searchKeyWords);
 						} else {
-							for(let item of list){
-								if(item == that.searchKeyWords){
+							for (let item of list) {
+								if (item == that.searchKeyWords) {
 									return false;
 								}
 							}
@@ -106,7 +111,7 @@
 						}
 						that.searchHisKeyList = list;
 						uni.setStorage({
-							key:'search_history',
+							key: 'search_history',
 							data: that.searchHisKeyList
 						})
 					},
@@ -114,12 +119,12 @@
 						that.searchHisKeyList = [];
 						that.searchHisKeyList.push(that.searchKeyWords);
 						uni.setStorage({
-							key:'search_history',
+							key: 'search_history',
 							data: that.searchHisKeyList
 						});
 					}
 				});
-				
+
 				uni.request({
 					url: that.$serverUrl + '/article/searchArticleYANG?isSaveRecord=' + isSaveRecord,
 					method: "POST",
@@ -128,36 +133,55 @@
 						userId: that.userInfo.id,
 					},
 					success: function(result) {
-						console.log(result.data);
+						// console.log(result.data);
 						that.searchedArticleList = result.data.data.rows;
-						that.searching=false;
+						that.searching = false;
 					}
 				})
 			},
-			searchCancle: function(searching){
-					this.searching = !searching;
-					console.log(this.searching);
+			searchDeleteAll: function() {
+				var that = this;
+				uni.showModal({
+					title:"提示",
+					content:'确定删除所有历史记录吗?',
+					success: function(res){
+						if (res.confirm){
+							that.searchHisKeyList = [];
+							uni.setStorage({
+								key: 'search_history',
+								data: that.searchHisKeyList,
+							})
+						} else if (res.cancle) {
+							
+						}
+					}
+				})
 			},
-			exitSearch(){
-				this.hotList="",
-				this.searchKeyWords="",
-				this.searchedArticleList="",
-				this.$emit("exitSearchSignal",0)
+			searchCancle: function(searching) {
+				this.searching = !searching;
+				// console.log(this.searching);
+			},
+			exitSearch() {
+				this.hotList = "",
+					this.searchKeyWords = "",
+					this.searchedArticleList = "",
+					this.$emit("exitSearchSignal", 0)
 			},
 		}
 	}
 </script>
 
 <style scoped>
-	.weui-search-bar{
+	.weui-search-bar {
 		display: fixed;
-		top:0;
-		left:0;
+		top: 0;
+		left: 0;
 		width: 100%;
-		height:100%;
+		height: 100%;
 		background: #FFFFFE;
 		z-index: 10;
 	}
+
 	.input-bar {
 		margin-top: 10px;
 		margin-left: 23px;
@@ -191,15 +215,16 @@
 		box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.16);
 	}
 
-	.wxSearchKey, .SearchHistoryItem{
+	.wxSearchKey,
+	.SearchHistoryItem {
 		margin-top: 26px;
 		width: calc(750upx-56px);
 		padding: 0 28px;
 		position: relative;
 	}
 
-	.exSearchTitle,.SearchHistoryItemTitle
-	 {
+	.exSearchTitle,
+	.SearchHistoryItemTitle {
 		color: #888888;
 		font-size: 13px;
 		font-weight: 300;
@@ -211,7 +236,7 @@
 		padding: 0 28px;
 		position: relative;
 	}
-	
+
 	.item {
 		display: inline-block;
 		padding: 0 11px;
@@ -224,10 +249,10 @@
 		font-weight: 300;
 		margin-right: 14px;
 	}
-		
-	.SearchHistoryItem icon{
+
+	.SearchHistoryItem icon {
 		position: absolute;
-		right:28px;
-		top:0;
+		right: 28px;
+		top: 0;
 	}
 </style>

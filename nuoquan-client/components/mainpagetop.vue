@@ -1,17 +1,18 @@
 <template>
-	<view class="mainPageTopAll" style="height:100%;">         <!-- 盛放top功能区，height屏幕高度，宽度0 -->
+	<view class="mainPageTopAll" style="height:100%;">
+		<!-- 盛放top功能区，height屏幕高度，宽度0 -->
 		<view class="bottomLayerOfLeft" v-if="showMainPageLeft" @click="controlShowLeft(0)" @touchmove="controlShowLeft(0)">
 			<mainpageleft :userInfo="userInfo"></mainpageleft>
 		</view>
-		
+
 		<searchpage v-if="showSearch" class="searchPage" @exitSearchSignal="controlShowSearch"></searchpage>
-<!-- 		<image class="back" src="../static/icon/angle-left.png" @tap="controlShowSearch(0)" style="display: inline-block;width: 32px;height: 32px;background: #FDD041;border-radius: 8px;position: fixed;top:10px;left:23px"></image>
- 备用，返回按钮在组件内和组件外两个方案-->		
+		<!-- 		<image class="back" src="../static/icon/angle-left.png" @tap="controlShowSearch(0)" style="display: inline-block;width: 32px;height: 32px;background: #FDD041;border-radius: 8px;position: fixed;top:10px;left:23px"></image>
+ 备用，返回按钮在组件内和组件外两个方案-->
 
 		<view class="mainPageTop" :style="{height: topHeight +'px;'}">
 			<view class="topBar">
 				<image class="topBarTouxiang" :src='userInfo.faceImg' @click="controlShowLeft(1)"></image>
-				<input  class="topBarSearch" placeholder="  搜索"  @click="controlShowSearch(1)"/>
+				<input class="topBarSearch" placeholder="  搜索" @click="controlShowSearch(1)" />
 				<view class="topBarPlus" @click="jumpToSubmit()">
 					<view style="font-size: 20px;color:#FDD041;border-radius: 3px;">+</view>
 				</view>
@@ -47,7 +48,7 @@
 				faceImg: '../static/touxiang.jpg',
 			},
 			topArticles: '',
-			topHeight:"",
+			topHeight: "",
 		},
 		components: {
 			mainpageleft,
@@ -57,7 +58,7 @@
 		data() {
 			return {
 				showMainPageLeft: 0,
-				showSearch:0,
+				showSearch: 0,
 			};
 		},
 
@@ -66,7 +67,7 @@
 				this.showMainPageLeft = a;
 				// console.log(this.showMainPageLeft);
 			},
-			controlShowSearch(a){
+			controlShowSearch(a) {
 				console.log("this is controlShowSearch, receive data will be appied");
 				console.log(a);
 				this.showSearch = a;
@@ -84,13 +85,21 @@
 		}
 	};
 </script>
-<style>	page {
+<style>
+	page {
 		width: 100%;
-	}</style>
+	}
+</style>
 <style scoped>
-.searchPage{
-	height: 100%;width: 100%;position: fixed;top:0;left:0;background: #FFFFFF;z-index:10;
-}
+	.searchPage {
+		height: 100%;
+		width: 100%;
+		position: fixed;
+		top: 0;
+		left: 0;
+		background: #FFFFFF;
+		z-index: 10;
+	}
 
 	.bottomLayerOfLeft {
 
@@ -104,8 +113,8 @@
 		padding-top: 4px;
 		position: fixed;
 		left: 0;
-		top:0;
-        overflow: hidden;
+		top: 0;
+		overflow: hidden;
 		width: 100%;
 		background: url(../static/BG/indexBG2.png), url(../static/BG/indexBG.png);
 		background-size: 100% 100%;
@@ -136,7 +145,7 @@
 		color: #b2b2b2;
 		font-family: MicrosoftYaHei;
 		line-height: 10px;
-		
+
 	}
 
 	.topBarPlus {

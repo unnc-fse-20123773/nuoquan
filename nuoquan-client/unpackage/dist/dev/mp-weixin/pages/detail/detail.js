@@ -299,6 +299,9 @@ __webpack_require__.r(__webpack_exports__);
         this.placeholderText = '回复 @' + a.nickname + ' 的评论';
         delete a.nickname;
         this.submitData = a;
+        if (a.mode == "re-co") {
+          this.writingComment = true;
+        }
         if (a.mode == "re-re") {//mode ="re-re", from grandson RECOMMENT
           console.log(a.mode);
           this.writingComment = true;

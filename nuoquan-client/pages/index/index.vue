@@ -3,7 +3,7 @@
 		<mainpagetop :userInfo='userInfo' :topArticles='topArticles' :topHeight="topHeight" style="position: fixed;z-index: 30;height:100%;"></mainpagetop>
 		
 		<view class="indexSelf" style="height:100%;">
-			<scroll-view class="indexArticleArea" scroll-y="true" @scroll="linkageWithTop">
+			<scroll-view class="indexArticleArea" scroll-y="true" @scroll="linkageWithTop" @scrolltolower="loadMore" @scrolltoupper="refreshArticle">
 				<view style="height:160px;width:100%;"></view>
 				<articlebrief v-for="i in showlist" :key="i.id" v-bind:articleCard="i"></articlebrief>
 				<!-- 用于添加底部空白 by Guetta 9.10 -->
@@ -25,7 +25,7 @@
 			return {
 				title: 'Hello',
 				hottitlelist: ['热门标题111', '热门标题222', '热门标题333'],
-				showlist: '',
+				showlist: [],
 				topArticles: '',
 				topHeight: "160",
 
@@ -38,6 +38,8 @@
 					emailPrefix: 'zy22089',
 					emailSuffix: '@nottingham.edu.cn'
 				},
+				totalPage: 1,
+				currentPage: 1,
 
 			};
 		},
@@ -63,33 +65,48 @@
 			// [测试代码块]
 		},
 		onShow() {
+			var that = this;
 			var userInfo = this.getGlobalUserInfo();
 			if (!this.isNull(userInfo)) {
 				// 设置 userInfo 传给 mainpagetop 组件
 				this.userInfo = this.getGlobalUserInfo();
 			}
 			
-			this.showArticles(); // 显示文章流
+			var page = that.currentPage;
+			this.showArticles(page); // 显示文章流
 			
 			this.getTop3Articles(); // 获取热度榜
 		},
 		methods: {
-			showArticles() {
+			showArticles: function(page) {
 				var that = this;
+				uni.showLoading({
+					title:"加载中..."
+				})
+				// var page = that.currentPage;
 				uni.request({
 					url: that.$serverUrl + '/article/queryAllArticles',
 					method: "POST",
 					data:{
-						page: '',
-						pageSize: '', 
+						page: page,
+						// pageSize: '', 
 						userId: that.userInfo.id,
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: (res) => {
-						that.showlist = res.data.data.rows;
-						// console.log(res)
+						uni.hideLoading();
+						console.log(res);
+						// 判断当前页是不是第一页，如果是第一页，那么设置showList为空
+						if (page == 1) {
+							that.showlist = [];
+						}
+						var newArticleList = res.data.data.rows;
+						var oldArticleList = that.showlist;
+						that.showlist = oldArticleList.concat(newArticleList);
+						that.currentPage = page;
+						that.totalPage = res.data.data.total;
 					},
 					fail: (res) => {
 						console.log("index unirequest fail");
@@ -97,7 +114,30 @@
 					}
 				});
 			},
-			
+			loadMore: function(){
+				var that = this;
+				var currentPage = that.currentPage;
+				console.log(currentPage);
+				var totalPage = that.totalPage;
+				console.log(totalPage);
+				// 判断当前页数和总页数是否相等
+				if (currentPage == totalPage){
+					// that.showArticles(1);
+					uni.showToast({
+						title:"没有更多文章了",
+						icon:"none",
+						duration:1000
+					})
+				} else {
+					var page = currentPage + 1;
+					that.showArticles(page);
+				}
+			},
+			refreshArticle: function(){
+				uni.showNavigationBarLoading();
+				// this.showlist = [];
+				this.showArticles(1);
+			},
 			getTop3Articles(){
 				var that = this;
 				uni.request({
@@ -105,7 +145,6 @@
 					method: "POST",
 					success: (res) => {
 						that.topArticles = res.data.data;
-						// console.log(res)
 					}
 				})
 			},

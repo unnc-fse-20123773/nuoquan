@@ -1,10 +1,10 @@
 
-.touxiang.data-v-7fca1308 {
+.touxiang.data-v-285d9fe6 {
 	width: 60rpx;
 	height: 60rpx;
 	border-radius: 60rpx;
 }
-.bottomBar.data-v-7fca1308 {
+.bottomBar.data-v-285d9fe6 {
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -ms-flexbox;
@@ -146,7 +146,10 @@
 page{
 	height:100%;
 	width:100%;
+	background-color: #F5F5F5;
 }
+
+
 
 
 
@@ -358,20 +361,17 @@ page{
 	 * TODO： 滚动区域高度需固定
 	 * 					by Jerrio
 	 */
-.messageArea.data-v-e2ad6224 {
+.messageArea.data-v-cd242d9a {
 		display: -webkit-box;
 		display: -webkit-flex;
 		display: -ms-flexbox;
 		display: flex;
-		/* flex-flow: column-reverse; */
 		margin-bottom: 90rpx;
-		overflow: hidden;
 		background: #F5F5F5;
-		height: 100%;
 		margin-left: 3%;
 		width: 94%;
 }
-.bottomBar.data-v-e2ad6224 {
+.bottomBar.data-v-cd242d9a {
 		position: fixed;
 		display: -webkit-box;
 		display: -webkit-flex;
@@ -390,7 +390,7 @@ page{
 		        box-shadow: 0px -2px 2px 0px rgba(130, 130, 130, 0.20);
 		background: #FFFFFF;
 }
-.bottomBar textarea.data-v-e2ad6224 {
+.bottomBar textarea.data-v-cd242d9a {
 		display: inline-block;
 		width: 530rpx;
 		padding:0 4rpx;
@@ -400,7 +400,7 @@ page{
 		border: solid 1px #C6C6C6;
 		margin: 20rpx 0 20rpx 14rpx;
 }
-.icons.data-v-e2ad6224 {
+.icons.data-v-cd242d9a {
 		display: -webkit-inline-box;
 		display: -webkit-inline-flex;
 		display: -ms-inline-flexbox;
@@ -417,19 +417,19 @@ page{
 		    -ms-flex-align: center;
 		        align-items: center;
 }
-.icons image.data-v-e2ad6224 {
+.icons image.data-v-cd242d9a {
 		display: block;
 		width: 34rpx;
 		height: 34rpx;
 		vertical-align: middle;
 }
-.icons button.button-hover.data-v-e2ad6224{
+.icons button.button-hover.data-v-cd242d9a{
 	position: relative;
   top: 3rpx;
   -webkit-box-shadow:0px 0px 8px #999 inset;
           box-shadow:0px 0px 8px #999 inset;
 }
-button.data-v-e2ad6224{
+button.data-v-cd242d9a{
 	display: inline-block;
 	margin: 0;
 	padding: 0;
@@ -438,7 +438,13 @@ button.data-v-e2ad6224{
 	vertical-align: middle;
 	background: #FFFFFF;
 }
-button.data-v-e2ad6224::after{
+button.data-v-cd242d9a::after{
 	border:none;
 }
+.marginHelper.data-v-cd242d9a{
+		height: 40rpx;
+		width: 100%;
+		background-color: #f5f5f5;
+}
+	
 

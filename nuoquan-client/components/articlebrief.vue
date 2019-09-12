@@ -2,6 +2,7 @@
 	<view class="articlecard" id="'+articleCard.id+'" @click="jumpToDetail()">
 		<view class="title">{{ articleCard.articleTitle }}</view>
 		<text class="briefarticleCard">{{ articleCard.articleContent }}</text>
+		
 		<view :class="[articleCard.imgList.length == 1 ? 'picturearea-one' : 'picturearea-mul']">
 			<!-- *******这里是文章配图的位置*******-->
 

@@ -149,7 +149,7 @@ __webpack_require__.r(__webpack_exports__);
 {
   data: function data() {
     return {
-      hotList: {},
+      hotList: [],
       searchKeyWords: '',
       searchedArticleList: {},
       searching: true,
@@ -161,21 +161,26 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     searchResultArticle: searchResultArticle },
 
-  created: function created() {var _this = this;
+  created: function created() {
     // 查询热搜词
-    var that = this;
-    uni.request({
-      url: that.$serverUrl + '/article/hot',
-      method: "POST",
-      success: function success(res) {
-        console.log(res);
-        that.hotList = res.data.data;
-        console.log(_this.hotList);
-      } });
-
+    this.getHotWords();
   },
-
   methods: {
+    getHotWords: function getHotWords() {
+      console.log('dasdsdad');
+
+      var that = this;
+      uni.request({
+        url: that.$serverUrl + '/article/hot',
+        method: "POST",
+        success: function success(res) {
+          console.log(res);
+          that.hotList = res.data.data;
+          console.log(that.hotList);
+        } });
+
+
+    },
     search: function search(res) {
       var that = this;
       var isSaveRecord = 1;
@@ -194,7 +199,7 @@ __webpack_require__.r(__webpack_exports__);
         key: 'search_history',
         success: function success(res) {
           var list = res.data;
-          console.log(list);
+          // console.log(list);
           if (list.length > 10) {var _iteratorNormalCompletion = true;var _didIteratorError = false;var _iteratorError = undefined;try {
               for (var _iterator = list[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {var item = _step.value;
                 if (item == that.searchKeyWords) {
@@ -235,15 +240,33 @@ __webpack_require__.r(__webpack_exports__);
           userId: that.userInfo.id },
 
         success: function success(result) {
-          console.log(result.data);
+          // console.log(result.data);
           that.searchedArticleList = result.data.data.rows;
           that.searching = false;
         } });
 
     },
+    searchDeleteAll: function searchDeleteAll() {
+      var that = this;
+      uni.showModal({
+        title: "提示",
+        content: '确定删除所有历史记录吗?',
+        success: function success(res) {
+          if (res.confirm) {
+            that.searchHisKeyList = [];
+            uni.setStorage({
+              key: 'search_history',
+              data: that.searchHisKeyList });
+
+          } else if (res.cancle) {
+
+          }
+        } });
+
+    },
     searchCancle: function searchCancle(searching) {
       this.searching = !searching;
-      console.log(this.searching);
+      // console.log(this.searching);
     },
     exitSearch: function exitSearch() {
       this.hotList = "",

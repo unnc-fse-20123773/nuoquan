@@ -26,7 +26,6 @@ public class ArticleVO {
     private String nickname;
     private String faceImg;
     private String faceImgThumb;
-    
     private List<String> tagList;
     
     /**
