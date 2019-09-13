@@ -168,6 +168,9 @@ __webpack_require__.r(__webpack_exports__);
     // 查询热搜词
     this.getHotWords();
   },
+  // onReachBottom() {
+  // 	this.loadMore();
+  // },
   methods: {
     getHotWords: function getHotWords() {
       console.log('dasdsdad');

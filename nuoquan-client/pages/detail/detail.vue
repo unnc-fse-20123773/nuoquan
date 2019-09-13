@@ -66,6 +66,9 @@
 				},
 				imgIndex: '',
 				serverUrl: this.$serverUrl,
+				
+				totalPage: 1,
+				currentPage: 1,
 
 			};
 		},
@@ -100,16 +103,21 @@
 			}
 		},
 		
+		onReachBottom() {
+			this.loadMore();
+		},
+		
 		onLoad(options) {
-			this.articleCard = JSON.parse(options.data);
-			// console.log(this.articleCard);
+			var that = this;
+			that.articleCard = JSON.parse(options.data);
 			
 			var userInfo = this.getGlobalUserInfo();
-			if (!this.isNull(userInfo)) {
-				this.userInfo = this.getGlobalUserInfo();
+			if (!that.isNull(userInfo)) {
+				that.userInfo = this.getGlobalUserInfo();
 			}
 			
-			this.getComments();
+			var page = that.currentPage;
+			this.getComments(page);
 		},
 		
 		methods: {
@@ -147,27 +155,62 @@
 				})
 			},
 			
-			getComments: function() {		
+			getComments: function(page) {		
 				var that = this;
+				uni.showLoading({
+					title:"加载中..."
+				})
 				uni.request({
 					method: "POST",
 					url: that.$serverUrl + '/article/getMainComments',
 					data: {
 						articleId: that.articleCard.id,
 						userId: that.userInfo.id,
+						page: page,
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: (res) => {	
+						uni.hideLoading();
 						// console.log(res);
-						that.commentList = res.data.data.rows;
+						if (page == 1) {
+							that.commentList = [];
+						}
+
+						var newCommentList = res.data.data.rows;
+						var oldCommentList = that.commentList;
+						that.commentList = oldCommentList.concat(newCommentList);
+						that.currentPage = page;
+						that.totalPage = res.data.data.total;
 						// console.log(that.articleCard.id);
-						
 					},
+					fail: (res) => {
+						
+						console.log("index unirequest fail");
+						console.log(res);
+					}
 				});
 			},
-			
+			loadMore: function(){
+				var that = this;
+				var currentPage = that.currentPage;
+				console.log(currentPage);
+				var totalPage = that.totalPage;
+				console.log(totalPage);
+				// 判断当前页数和总页数是否相等
+				if (currentPage == totalPage){
+					// that.showArticles(1);
+					uni.showToast({
+						title:"没有更多文章了",
+						icon:"none",
+						duration:1000
+					})
+				} else {
+					var page = currentPage + 1;
+					that.getComments(page);
+				}
+			},
 			controlInput(a){
 				if(a!=0&&a!=1){ //a!=0, !=1， 从子组件传来，包含被回复对象：被回复人ID，被回复评论ID，被回复人昵称
 					this.placeholderText='回复 @'+a.nickname+' 的评论';

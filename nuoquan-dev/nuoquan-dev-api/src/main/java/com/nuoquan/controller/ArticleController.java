@@ -183,6 +183,7 @@ public class ArticleController extends BasicController {
 
 	@PostMapping(value = "/hot")
 	public JSONResult hot() throws Exception {
+		
 		return JSONResult.ok(articleService.getHotWords());
 	}
 

@@ -61,6 +61,9 @@
 			// 查询热搜词
 			this.getHotWords();
 		},
+		// onReachBottom() {
+		// 	this.loadMore();
+		// },
 		methods: {
 			getHotWords: function() {
 				console.log('dasdsdad');
