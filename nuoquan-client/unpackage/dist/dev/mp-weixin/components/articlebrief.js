@@ -198,10 +198,13 @@ var _default =
 
     // 随机生成颜色
     var tagColors = this.tagColors;
-    for (var i = 0; i < this.articleCard.tagList.length; i++) {
-      var random = Math.floor(Math.random() * tagColors.length); // 0~tagColors.length-1
-      this.tagColorList.push(tagColors[random]);
+    if (this.articleCard.tagList != null) {
+      for (var i = 0; i < this.articleCard.tagList.length; i++) {
+        var random = Math.floor(Math.random() * tagColors.length); // 0~tagColors.length-1
+        this.tagColorList.push(tagColors[random]);
+      }
     }
+
   },
   filters: {
     timeDeal: function timeDeal(timediff) {

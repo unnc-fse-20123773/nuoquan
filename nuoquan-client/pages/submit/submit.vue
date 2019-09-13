@@ -22,7 +22,7 @@
 
 				</view>
 			</view>
-			<textarea placeholder="内容[最多2048字]" class="content" v-model="articleContent" maxlength=2048></textarea>
+			<textarea placeholder="内容[最多2048字]" class="content" v-model="articleContent" maxlength=2048 show-confirm-bar="false"></textarea>
 			<view style="display: flex;justify-content: space-between;color: #353535;font-size: 13px;line-height: 28px;height: 24px;">
 				<view>点击可预览选好的图片</view>
 				<view>{{imageList.length}}/9</view>
@@ -354,6 +354,7 @@
 		background: #F4F1E9;
 		margin-top: 13px;
 		width: 100%;
+		overflow: scroll;
 	}
 
 	.picturearea {

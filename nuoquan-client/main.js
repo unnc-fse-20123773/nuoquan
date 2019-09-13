@@ -15,11 +15,11 @@ Vue.config.productionTip = false
 Vue.prototype.tagColors = ['#FE5F55','#40A792','#FDD041','#5CA0D3','#621E81','#738598','#F3AE4B']
 
 Vue.prototype.$store = store
-Vue.prototype.$serverUrl = "http://127.0.0.1:8080"
-Vue.prototype.$wsServerUrl = "ws://127.0.0.1:8088/ws"
+// Vue.prototype.$serverUrl = "http://127.0.0.1:8080"
+// Vue.prototype.$wsServerUrl = "ws://127.0.0.1:8088/ws"
 
-// Vue.prototype.$serverUrl = "http://192.168.31.210:8080"
-// Vue.prototype.$wsServerUrl = "ws://192.168.31.210:8088/ws"
+Vue.prototype.$serverUrl = "http://192.168.1.101:8080"
+Vue.prototype.$wsServerUrl = "ws://192.168.1.101:8088/ws"
 
 /**
  * 获取当前用户信息（我）
