@@ -140,13 +140,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 {
   name: 'comment',
   props: {
-    commentDetail: {},
-    reCommentListFromDetail: {
-      type: Array } },
-
+    commentDetail: '' },
 
   components: {
     reComment: reComment },
@@ -155,44 +154,38 @@ __webpack_require__.r(__webpack_exports__);
     return {
       RECOMMENT: false,
       reCommentList: {},
-      isPassingReComment: false };
+      isPassingReComment: false,
+
+      mainComment: this.commentDetail, // 为了动态修改数值，对对象重新赋值，转换组件内部对象
+      userInfo: this.getGlobalUserInfo() };
 
   },
+
+  created: function created() {var _this = this;
+    // console.log(this.commentDetail);
+    // 监听刷新次级评论事件
+    uni.$on('flashSubComment', function (underCommentId) {
+      if (_this.mainComment.id == underCommentId) {
+        _this.getSubComments();
+      };
+    });
+  },
+
   methods: {
-    getComments: function getComments() {
-      var that = this;
-      uni.request({
-        method: "POST",
-        url: that.$serverUrl + '/article/getSonComments',
-        data: {
-          fatherCommentId: that.commentDetail.id },
-
-        header: {
-          'content-type': 'application/x-www-form-urlencoded' },
-
-        success: function success(res) {
-          console.log(res);
-          that.commentList = res.data.data.rows;
-          console.log(that.articleCard.id);
-          debugger;
-
-        } });
-
-
-    },
     showRecommentArea: function showRecommentArea() {
       this.RECOMMENT = !this.RECOMMENT;
       if (this.RECOMMENT) {
-        this.getSonComments();
+        this.getSubComments();
       }
     },
-    getSonComments: function getSonComments(a) {
+    getSubComments: function getSubComments() {
       var that = this;
       uni.request({
         method: "POST",
-        url: that.$serverUrl + '/article/getSonComments',
+        url: that.$serverUrl + '/article/getSubComments',
         data: {
-          fatherCommentId: that.commentDetail.id },
+          underCommentId: that.mainComment.id,
+          userId: that.userInfo.id },
 
         header: {
           'content-type': 'application/x-www-form-urlencoded' },
@@ -200,19 +193,26 @@ __webpack_require__.r(__webpack_exports__);
         success: function success(res) {
           // that.isPassingReComment = false;
           // that.reCommentListFromDetail = '';
-          that.reCommentList = res.data.data.rows;
+          if (res.data.status == 200) {
+            // 强制子组件重新刷新
+            that.reCommentList = '';
+            that.$nextTick(function () {
+              that.reCommentList = res.data.data.rows;
+            });
+            // console.log(res);
+          }
         } });
 
     },
 
     controlInputInComment: function controlInputInComment(a) {
-      debugger;
       if (a == "inComment") {
         var dataOfRecomment = {
           mode: "re-co",
-          toUserId: this.commentDetail.fromUserId,
-          fatherCommentId: this.commentDetail.id,
-          nickname: this.commentDetail.nickname };
+          toUserId: this.mainComment.fromUserId,
+          underCommentId: this.mainComment.id,
+          fatherCommentId: this.mainComment.id,
+          nickname: this.mainComment.nickname };
 
       } else {
         var dataOfRecomment = a;
@@ -220,6 +220,67 @@ __webpack_require__.r(__webpack_exports__);
       console.log("receive control input request, in comment");
       console.log(dataOfRecomment);
       this.$emit('controlInputSignal', dataOfRecomment);
+    },
+
+    /**
+        * 点赞或取消点赞主评论
+        * @param {Object} comment
+        */
+    swLikeMainComment: function swLikeMainComment(comment) {
+      if (comment.isLike) {
+        this.unLikeComment(comment);
+        this.mainComment.likeNum--;
+      } else {
+        this.likeComment(comment);
+        this.mainComment.likeNum++;
+      }
+      this.mainComment.isLike = !this.mainComment.isLike;
+    },
+
+    likeComment: function likeComment(comment) {
+      console.log("点赞评论");
+      var that = this;
+      uni.request({
+        method: "POST",
+        url: that.$serverUrl + '/article/userLikeComment',
+        data: {
+          userId: that.userInfo.id,
+          commentId: comment.id,
+          createrId: comment.fromUserId },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          console.log(res);
+        } });
+
+    },
+
+    unLikeComment: function unLikeComment(comment) {
+      console.log("取消点赞评论");
+      var that = this;
+      uni.request({
+        method: "POST",
+        url: that.$serverUrl + '/article/userUnLikeComment',
+        data: {
+          userId: that.userInfo.id,
+          commentId: comment.id,
+          createrId: comment.fromUserId },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          console.log(res);
+        } });
+
+    },
+
+    goToPersonPublic: function goToPersonPublic(userId) {
+      uni.navigateTo({
+        url: '/pages/personpublic/personpublic?userId=' + userId });
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

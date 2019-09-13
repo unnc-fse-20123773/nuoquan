@@ -3,11 +3,11 @@
 		<view class="title">{{ articleCard.articleTitle }}</view>
 		<view class="briefarticleCard">{{ articleCard.articleContent }}</view>
 		<view class="picturearea">
-			<!-- 这里是文章配图的位置
- -->
+			<!-- 这里是文章配图的位置 -->
+			
 		</view>
 		<view class="tags">
-			<view class="tag" v-for="(i, index) in articleCard.tags" v-bind:key="index">{{ i}}</view>
+			<view class="tag" v-for="(i, index) in articleCard.tagList" v-bind:key="index">{{ i}}</view>
 		</view>
 		<view class="menubar">
 			<image :src="articleCard.faceImg" class="touxiang"></image>

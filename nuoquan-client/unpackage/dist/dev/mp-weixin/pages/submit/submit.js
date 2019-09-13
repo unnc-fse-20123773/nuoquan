@@ -161,7 +161,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -188,6 +187,7 @@ var sizeType = [
       showAddTagButton: 1,
       showTagArea: 0,
       tagList: [],
+      finalTag: '',
       tagIndex: 0,
 
       imageList: [],
@@ -228,7 +228,15 @@ var sizeType = [
         that.tagIndex = that.tagIndex + 1;
         that.showAddTagButton = 1;
         that.showInputTagArea = 0;
+        that.articleTag = '';
       }
+    },
+    combineTagToString: function combineTagToString(res) {
+      var that = this;
+      for (var i = 0; i < that.tagList.length; i++) {
+        that.finalTag = that.finalTag + '#' + that.tagList[i];
+      }
+      console.log(that.finalTag);
     },
     sourceTypeChange: function sourceTypeChange(e) {
       this.sourceTypeIndex = parseInt(e.target.value);
@@ -249,14 +257,13 @@ var sizeType = [
                     _this.imageList = _this.imageList.concat(res.tempFilePaths);
 
                     console.log(res);
-                    // for(var i = 0; i < 9; i++){
-                    // 	console.log(this.imageList[i]);
-                    // }
                   } });case 1:case "end":return _context.stop();}}}, _callee, this);}));function chooseImg() {return _chooseImg.apply(this, arguments);}return chooseImg;}(),
 
 
     previewImage: function previewImage(e) {
       var current = e.target.dataset.src;
+      // console.log(e)
+      console.log(this.imageList);
       uni.previewImage({
         current: current,
         urls: this.imageList });
@@ -270,9 +277,7 @@ var sizeType = [
       }
     },
     upload: function upload(e) {var _this2 = this;
-
       var me = this;
-
       console.log(me.articleTitle);
       console.log(me.articleContent);
 
@@ -294,13 +299,15 @@ var sizeType = [
         return;
       }
 
+      me.combineTagToString();
+
       var serverUrl = me.$serverUrl;
       uni.request({
         url: serverUrl + '/article/uploadArticle',
         method: 'POST',
         data: {
           userId: me.userInfo.id,
-          articleTag: me.articleTag,
+          articleTag: me.finalTag,
           articleTitle: me.articleTitle,
           articleContent: me.articleContent },
 
@@ -309,30 +316,40 @@ var sizeType = [
 
         success: function success(res) {
           // console.log(res.data.data);
-          if (me.imageList.length <= 0) {
-            uni.navigateBack({
-              url: '../index/index' });
+          if (res.data.status == 200) {
+            if (me.imageList.length <= 0) {
+              uni.navigateBack({
+                url: '../index/index' });
 
-          } else {
-            var articleId = res.data.data;
-            for (var i = 0; i < me.imageList.length; i++) {
-              uni.uploadFile({
-                url: _this2.$serverUrl + '/article/uploadArticleImg',
-                filePath: me.imageList[i],
-                name: 'file',
-                formData: {
-                  userId: me.userInfo.id,
-                  articleId: articleId,
-                  order: i },
+            } else {
+              var articleId = res.data.data;
+              for (var i = 0; i < me.imageList.length; i++) {
+                uni.uploadFile({
+                  url: _this2.$serverUrl + '/article/uploadArticleImg',
+                  filePath: me.imageList[i],
+                  name: 'file',
+                  formData: {
+                    userId: me.userInfo.id,
+                    articleId: articleId,
+                    order: i },
 
-                success: function success(uploadFileRes) {
-                  uni.navigateBack({
-                    delta: 1 });
+                  success: function success(uploadFileRes) {
+                    uni.navigateBack({
+                      delta: 1 });
 
-                } });
+                  } });
 
+              }
             }
+          } else {
+            // 上传失败 用户提醒
+            uni.showToast({
+              title: '出现未知错误，上传失败',
+              duration: 2000,
+              icon: 'none' });
+
           }
+
         } });
 
     }

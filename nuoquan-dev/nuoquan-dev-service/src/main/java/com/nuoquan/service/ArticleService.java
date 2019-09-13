@@ -17,7 +17,7 @@ public interface ArticleService {
 	/**
 	 * 分页查询全部文章
 	 */
-	public PagedResult getAllArticles(Integer page, Integer pageSize);
+	public PagedResult getAllArticles(Integer page, Integer pageSize, String userId);
 	
 	/**
 	 * 按 articleId 获取文章
@@ -25,7 +25,7 @@ public interface ArticleService {
 	 * @param pageSize
 	 * @return
 	 */
-	public ArticleVO getArticleById(String articleId);
+	public ArticleVO getArticleById(String articleId, String userId);
 	
 	/**
 	 * @des:用户点赞文章
@@ -55,7 +55,7 @@ public interface ArticleService {
 	/**
 	 *  查询阳面文章
 	 */
-	public PagedResult searchYangArticlesContent(Article article, Integer isSaveRecord, Integer page, Integer pageSize);
+	public PagedResult searchYangArticlesContent(Integer isSaveRecord, Integer page, Integer pageSize, Article article, String userId);
 	
 	/**
 	 * 获取热搜词
@@ -102,24 +102,25 @@ public interface ArticleService {
 	
 	/**
 	 * 留言分页  父评论
-	 * @param articleId
 	 * @param page
 	 * @param pageSize
+	 * @param articleId
+	 * @param userId
 	 * @return
 	 */
-	public PagedResult getAllComments(String articleId, Integer page, Integer pageSize);
+	public PagedResult getMainComments(Integer page, Integer pageSize, String articleId, String userId);
 	
 	/**
 	 * 留言分页 子评论
 	 */
-	public PagedResult getSonComments(String fatherCommentId, Integer page, Integer pageSize);
+	public PagedResult getSonComments(Integer page, Integer pageSize, String underCommentId, String userId);
 	
 	/**
 	 * 根据 commentId 获取评论
 	 * @param commentId
 	 * @return
 	 */
-	public UserArticleCommentVO getCommentById(String commentId);
+	public UserArticleCommentVO getCommentById(String commentId, String userId);
 
 	/**
 	 * 保存文章图片

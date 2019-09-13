@@ -34,6 +34,7 @@ image {
 }
 .tags.data-v-0734f7a0 {
 	margin-left: 10px;
+	min-height: 10px;
 }
 .tag.data-v-0734f7a0 {
 	display: inline-block;
@@ -45,6 +46,12 @@ image {
 	color: #ffffff;
 	font-size: 10px;
 	background: #621E81;
+}
+.tag-empty.data-v-0734f7a0{
+	margin-left: 10px;
+	height: 15px;
+	width: auto;
+	background-color: white;
 }
 .menubar.data-v-0734f7a0 {
 	position: relative;
@@ -177,5 +184,11 @@ image.data-v-123fcddd {
 .arrow.data-v-123fcddd {
 	width: 100rpx;
 	height: 60rpx;
+}
+.marginHelper.data-v-123fcddd{
+	height: 15rpx;
+	margin-top: 15rpx;
+	width: 100%;
+	background-color: #f3f3f3;
 }
 

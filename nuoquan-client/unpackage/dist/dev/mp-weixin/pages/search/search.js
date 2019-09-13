@@ -105,7 +105,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var searchResultArticle = function searchResultArticle() {return __webpack_require__.e(/*! import() | components/searchResultArticle */ "components/searchResultArticle").then(__webpack_require__.bind(null, /*! ../../components/searchResultArticle.vue */ 188));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _methods;function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var searchResultArticle = function searchResultArticle() {return __webpack_require__.e(/*! import() | components/searchResultArticle */ "components/searchResultArticle").then(__webpack_require__.bind(null, /*! ../../components/searchResultArticle.vue */ 188));};var _default =
 
 
 
@@ -149,32 +149,38 @@ __webpack_require__.r(__webpack_exports__);
 {
   data: function data() {
     return {
-      hotList: {},
+      hotList: [],
       searchKeyWords: '',
       searchedArticleList: {},
       searching: true,
-      searchHisKeyList: uni.getStorageSync('search_history') };
+      searchHisKeyList: uni.getStorageSync('search_history'),
+
+      userInfo: this.getGlobalUserInfo() };
 
   },
   components: {
     searchResultArticle: searchResultArticle },
 
-  onLoad: function onLoad() {var _this = this;
+  created: function created() {
     // 查询热搜词
-    var that = this;
-    uni.request({
-      url: that.$serverUrl + '/article/hot',
-      method: "POST",
-      success: function success(res) {
-        console.log(res);
-        that.hotList = res.data.data;
-        console.log(_this.hotList);
-      } });
-
-
+    this.getHotWords();
   },
+  methods: (_methods = {
+    getHotWords: function getHotWords() {
+      console.log('dasdsdad');
 
-  methods: {
+      var that = this;
+      uni.request({
+        url: that.$serverUrl + '/article/hot',
+        method: "POST",
+        success: function success(res) {
+          console.log(res);
+          that.hotList = res.data.data;
+          console.log(that.hotList);
+        } });
+
+
+    },
     search: function search(res) {
       var that = this;
       var isSaveRecord = 1;
@@ -189,12 +195,11 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-
       uni.getStorage({
         key: 'search_history',
         success: function success(res) {
           var list = res.data;
-          console.log(list);
+          // console.log(list);
           if (list.length > 10) {var _iteratorNormalCompletion = true;var _didIteratorError = false;var _iteratorError = undefined;try {
               for (var _iterator = list[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {var item = _step.value;
                 if (item == that.searchKeyWords) {
@@ -228,13 +233,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
       uni.request({
-        url: this.$serverUrl + '/article/searchArticleYANG?isSaveRecord=' + isSaveRecord,
+        url: that.$serverUrl + '/article/searchArticleYANG?isSaveRecord=' + isSaveRecord,
         method: "POST",
         data: {
-          articleContent: that.searchKeyWords },
+          articleContent: that.searchKeyWords,
+          userId: that.userInfo.id },
 
         success: function success(result) {
-          console.log(result.data);
+          // console.log(result.data);
           that.searchedArticleList = result.data.data.rows;
           that.searching = false;
         } });
@@ -244,12 +250,34 @@ __webpack_require__.r(__webpack_exports__);
       this.searching = !searching;
       console.log(this.searching);
     },
-    exitSearch: function exitSearch() {
-      this.hotList = "",
-      this.searchKeyWords = "",
-      this.searchedArticleList = "",
-      this.$emit("exitSearchSignal", 0);
-    } } };exports.default = _default;
+    searchDeleteAll: function searchDeleteAll() {
+      var that = this;
+      uni.showModal({
+        title: "提示",
+        content: '确定删除所有历史记录吗?',
+        success: function success(res) {
+          if (res.confirm) {
+            that.searchHisKeyList = [];
+            uni.setStorage({
+              key: 'search_history',
+              data: that.searchHisKeyList });
+
+          } else if (res.cancle) {
+
+          }
+        } });
+
+    } }, _defineProperty(_methods, "searchCancle",
+  function searchCancle(searching) {
+    this.searching = !searching;
+    // console.log(this.searching);
+  }), _defineProperty(_methods, "exitSearch", function exitSearch()
+  {
+    this.hotList = "",
+    this.searchKeyWords = "",
+    this.searchedArticleList = "",
+    this.$emit("exitSearchSignal", 0);
+  }), _methods) };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

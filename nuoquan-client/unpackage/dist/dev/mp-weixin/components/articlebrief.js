@@ -169,6 +169,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 var _default =
 {
   name: 'aticlebrief',
@@ -177,12 +178,12 @@ var _default =
 
   data: function data() {
     return {
-
       serverUrl: this.$serverUrl,
       singleImgState: '0',
 
-      imgList: []
-      // atags: JSON.(this.articleCard.tags);
+      imgList: [],
+
+      tagColorList: [] // 储存每个tag的颜色
     };
   },
   created: function created() {
@@ -194,7 +195,13 @@ var _default =
     } else {
       this.imgList = this.articleCard.imgList;
     }
-    // console.log(this.articleCard);
+
+    // 随机生成颜色
+    var tagColors = this.tagColors;
+    for (var i = 0; i < this.articleCard.tagList.length; i++) {
+      var random = Math.floor(Math.random() * tagColors.length); // 0~tagColors.length-1
+      this.tagColorList.push(tagColors[random]);
+    }
   },
   filters: {
     timeDeal: function timeDeal(timediff) {
@@ -238,6 +245,12 @@ var _default =
       var navData = JSON.stringify(this.articleCard); // 这里转换成 字符串
       uni.navigateTo({
         url: '/pages/detail/detail?data=' + navData });
+
+    },
+
+    goToPersonPublic: function goToPersonPublic(userId) {
+      uni.navigateTo({
+        url: '/pages/personpublic/personpublic?userId=' + userId });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

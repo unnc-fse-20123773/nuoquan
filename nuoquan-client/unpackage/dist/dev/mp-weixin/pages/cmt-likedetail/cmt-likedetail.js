@@ -308,6 +308,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 // TODO 查询列表分页操作
 var _default = {
@@ -343,10 +347,9 @@ var _default = {
       COMMENTCOMMENT: this.netty.COMMENTCOMMENT, // 评论评论通知
 
       serverUrl: this.$serverUrl,
-
-
       userInfo: '',
-      briefDetail: '这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符' };
+      likePage: 1,
+      commentPage: 1 };
 
   },
 
@@ -365,14 +368,16 @@ var _default = {
     // [测试用代码块]
     var userInfo = this.getGlobalUserInfo();
     this.userInfo = userInfo;
+
+    // 加载点赞评论通知缓存
+    this.likeList = this.notification.getLikeMsg(this.likePage);
+    this.commentList = this.notification.getCommentMsg(this.commentPage);
+    console.log(this.likeList);
+    console.log(this.commentList);
   },
 
   onShow: function onShow() {
-    // 加载点赞评论通知缓存
-    this.likeList = this.notification.getLikeMsg();
-    this.commentList = this.notification.getCommentMsg();
-    console.log(this.likeList);
-    console.log(this.commentList);
+
   },
 
   changeIndicatorDots: function changeIndicatorDots(e) {
@@ -402,11 +407,13 @@ var _default = {
 
                 if (current == 0) {
                   // console.log("点了点赞"); 刷新 list 并设置计数值
-                  this.likeList = this.notification.getLikeMsg();
+                  this.likePage = 1;
+                  this.likeList = this.notification.getLikeMsg(this.likePage);
                   this.$store.commit('setLikeMsgCount', 0);
                 } else {
                   // console.log("点了评论");
-                  this.commentList = this.notification.getCommentMsg();
+                  this.commentPage = 1;
+                  this.commentList = this.notification.getCommentMsg(this.commentPage);
                   this.$store.commit('setCommentMsgCount', 0);
                 }
 
@@ -438,17 +445,11 @@ var _default = {
         }).exec();
       });
     },
-    loadMore: function loadMore(tabIndex) {
-      console.log('正在加载更多数据。。。');
-      this.getDateList(tabIndex);
-    },
 
     upper: function upper(e) {
       console.log(e);
     },
-    lower: function lower(e) {
-      console.log(e);
-    },
+
     scroll: function scroll(e) {
       console.log(e);
       this.old.scrollTop = e.detail.scrollTop;
@@ -462,6 +463,80 @@ var _default = {
       // 	icon: "none",
       // 	title: "回到顶部喽~"
       // })
+    },
+
+    loadMore: function loadMore(tabIndex) {
+      console.log('正在加载更多数据。。。');
+      uni.showLoading({
+        title: '加载中' });
+
+      if (tabIndex == 0) {// like
+        var page = this.likePage + 1;
+        var list = this.notification.getLikeMsg(page);
+        if (list != null) {
+          console.log(list);
+          this.likeList = this.likeList.concat(list);
+          this.likePage++;
+        } else {
+          uni.showToast({
+            title: 'No more',
+            duration: 2000,
+            icon: 'none' });
+
+        }
+        uni.hideLoading();
+      } else {
+        var page = this.commentPage + 1;
+        var list = this.notification.getCommentMsg(page);
+        if (list != null) {
+          console.log(list);
+          this.commentList = this.commentList.concat(list);
+          this.commentPage++;
+        } else {
+          uni.showToast({
+            title: 'No more',
+            duration: 2000,
+            icon: 'none' });
+
+        }
+        uni.hideLoading();
+      }
+    },
+
+    goToPersonPublic: function goToPersonPublic(userId) {
+      uni.navigateTo({
+        url: '/pages/personpublic/personpublic?userId=' + userId });
+
+    },
+
+    goToArticle: function goToArticle(article) {
+      // console.log(article)
+      uni.navigateTo({
+        url: '../detail/detail?data=' + JSON.stringify(article) });
+
+    },
+
+    goToComment: function goToComment(articleId) {
+      var that = this;
+      uni.request({
+        url: that.$serverUrl + '/article/getArticleById',
+        method: "POST",
+        data: {
+          articleId: articleId,
+          userId: that.userInfo.id },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          if (res.data.status == 200) {
+            var article = res.data.data;
+            uni.navigateTo({
+              url: '../detail/detail?data=' + JSON.stringify(article) });
+
+          }
+        } });
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

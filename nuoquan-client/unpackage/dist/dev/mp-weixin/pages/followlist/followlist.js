@@ -379,12 +379,9 @@ var _default = {
           console.log(res);
           if (res.data.status == 200) {
             var data = res.data.data;
-            console.log(data);
+            // console.log(data);
             that.followList = data.followList;
             that.fansList = data.fansList;
-
-            // that.swiperDataList[0] = data.followList;
-            // that.swiperDataList[1] = data.fansList;
           }
         } });
 
@@ -407,8 +404,6 @@ var _default = {
       uni.redirectTo({
         url: '../personpublic/personpublic?userId=' + userId });
 
-
-      console.log(userId);
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

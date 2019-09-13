@@ -210,7 +210,7 @@ name: 'mainpageleft';var _default =
 
     },
 
-    UD: function UD() {
+    showToast: function showToast() {
       uni.showToast({
         // title: '⠀⠀⠀⠀⠀under⠀⠀⠀⠀⠀development',//不是空格，是特殊符号，莫删
         title: '上课不要玩手机',
@@ -223,7 +223,6 @@ name: 'mainpageleft';var _default =
         * @param {Object} currentTab 0: 关注 1: 粉丝
         */
     goToFansFollow: function goToFansFollow(currentTab) {
-      console.log("goToFansFollow...");
       var data = {
         currentTab: currentTab,
         thisUserInfo: this.getGlobalUserInfo() };

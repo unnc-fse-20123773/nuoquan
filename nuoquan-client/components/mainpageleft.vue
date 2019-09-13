@@ -26,7 +26,7 @@
 		<view class="personPageList">
 			<!-- TODO: 最好把 view 都改成 button 并加上样式 
 											  by Jerrio -->
-			<button class="pageLine">
+			<button class="pageLine" @click="showToast()">
 				<image src="../static/icon/write.png"></image>
 				<view>我的发布</view>
 				<!-- <view class="noticeNum">3</view> -->
@@ -37,19 +37,19 @@
 				<view class="noticeNum" v-if="unreadMsgCount>0 && unreadMsgCount<=99"> {{unreadMsgCount}} </view>
 				<view class="noticeNum" v-else-if="unreadMsgCount>99"> 99+ </view>
 			</button>
-			<button class="pageLine" @click="UD()">
+			<button class="pageLine" @click="showToast()">
 				<image src="../static/icon/star.png"></image>
 				<view>我的收藏</view>
 				<!-- <view class="noticeNum">23</view> -->
 
 			</button>
-			<button class="pageLine">
+			<button class="pageLine" @click="showToast()">
 				<image src="../static/icon/report.png"></image>
 				<view>举报投诉</view>
 				<!-- <view class="noticeNum">3</view> -->
 
 			</button>
-			<button class="pageLine" @click="UD()">
+			<button class="pageLine" @click="showToast()">
 				<image src="../static/icon/about.png"></image>
 				<view>关于</view>
 
@@ -103,7 +103,7 @@
 				});
 			},
 			
-			UD() {
+			showToast() {
 				uni.showToast({
 					// title: '⠀⠀⠀⠀⠀under⠀⠀⠀⠀⠀development',//不是空格，是特殊符号，莫删
 					title: '上课不要玩手机',
@@ -116,7 +116,6 @@
 			 * @param {Object} currentTab 0: 关注 1: 粉丝
 			 */
 			goToFansFollow(currentTab) {
-				console.log("goToFansFollow...")
 				var data = {
 					currentTab: currentTab,
 					thisUserInfo: this.getGlobalUserInfo()

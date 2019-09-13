@@ -3,6 +3,7 @@
 	<view style="height:100%;width:100%;background: #F5F5F5;">
 		<scroll-view class="messageArea">
 			<onemessage v-for="(i,index) in chatContent" :key=index :thisMessage='i' :userInfo="userInfo" :friendInfo="friendInfo"></onemessage>
+			<view class="marginHelper"></view>
 		</scroll-view>
 		<view class="bottomBar">
 			<textarea auto-height="true" v-model="textMsg" />
@@ -200,6 +201,7 @@
 	page{
 		height:100%;
 		width:100%;
+		background-color: #F5F5F5;
 	}
 </style>
 
@@ -210,11 +212,8 @@
 	 */
 	.messageArea {
 		display: flex;
-		/* flex-flow: column-reverse; */
 		margin-bottom: 90upx;
-		overflow: hidden;
 		background: #F5F5F5;
-		height: 100%;
 		margin-left: 3%;
 		width: 94%;
 	}
@@ -277,4 +276,11 @@
     button::after{
 	border:none;
     }
+	
+	.marginHelper{
+		height: 40upx;
+		width: 100%;
+		background-color: #f5f5f5;
+	}
+	
 </style>
