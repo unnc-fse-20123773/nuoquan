@@ -117,7 +117,9 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var comment = function comment() {return __webpack_require__.e(/*! import() | components/comment */ "components/comment").then(__webpack_require__.bind(null, /*! ../../components/comment */ 161));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var comment = function comment() {return __webpack_require__.e(/*! import() | components/comment */ "components/comment").then(__webpack_require__.bind(null, /*! ../../components/comment */ 161));};var _default =
+
+
 
 
 
@@ -172,8 +174,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 {
-  data: function data() {var _ref;
-    return _ref = {
+  data: function data() {
+    return {
       serverUrl: this.$serverUrl,
       userInfo: {},
       articleCard: "", //detail的主角，由index传过来的单个文章信息
@@ -187,10 +189,10 @@ __webpack_require__.r(__webpack_exports__);
       submitData: {
         //这个是从子组件传来的数据，回复评论的评论之类
       },
-      imgIndex: '' }, _defineProperty(_ref, "serverUrl",
-    this.$serverUrl), _defineProperty(_ref, "tagColorList",
+      imgIndex: '',
 
-    []), _ref;
+      textAreaAdjust: "",
+      tagColorList: [] };
 
   },
   components: {
@@ -244,16 +246,31 @@ __webpack_require__.r(__webpack_exports__);
   },
 
   methods: {
+    popTextArea: function popTextArea(e) {
+      console.log("展开");
+      console.log(e);
+      console.log(e.detail.height);
+      this.textAreaAdjust = e.detail.height / 3 + 'px';
+
+      // this.textAreaAdjust = '0' ;
+
+    },
+    unpopTextArea: function unpopTextArea(e) {
+      console.log("收起");
+      console.log(e);
+
+      this.textAreaAdjust = "";
+    },
     /**
-              * fromUserId 必填
-              * toUserId 必填
-              * articleId 必填 // 为了计算文章总评论数
-              * underCommentId // 显示在该主评论层ID下
-              * fatherCommentId // 父级评论ID
-              * comment 必填
-              * PS: 父级（一级，给文章评论）评论 无 fatherCommentId, underCommentId;
-              *     子级评论有 fatherCommentId, underCommentId;
-              */
+        * fromUserId 必填
+        * toUserId 必填
+        * articleId 必填 // 为了计算文章总评论数
+        * underCommentId // 显示在该主评论层ID下
+        * fatherCommentId // 父级评论ID
+        * comment 必填
+        * PS: 父级（一级，给文章评论）评论 无 fatherCommentId, underCommentId;
+        *     子级评论有 fatherCommentId, underCommentId;
+        */
     saveComment: function saveComment() {var _this = this;
       this.submitData.comment = this.commentContent;
       this.submitData.fromUserId = this.userInfo.id;

@@ -172,7 +172,7 @@ page {
 		width: 670rpx;
 		padding:11px 40rpx;
 		min-height: 50px;
-		background: #FFFFFF;
+		background: #058ECC;
 }
 .emoji.data-v-0dddf152 {
 		background-repeat: no-repeat;

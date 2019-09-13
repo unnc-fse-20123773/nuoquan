@@ -38,12 +38,14 @@
 			<view class="fengexian" style="height: 1px;width: 100%;background-color: #d6d6d6;margin:auto;"></view>
 			<view class="submitComment" @click="controlInput(1)">发 表 评 论</view>
 
-			<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)">
-				<view class="commentPart" @click.stop="">
+			<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)" >
+				<view class="commentPart" @click.stop="" :style="{bottom: textAreaAdjust }">
 					<view class="emoji"></view>
 					<view class="submit" @click="saveComment()"></view>
 					<textarea class="commentSth" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
-					 confirm-type="send" @confirm="saveComment()" adjust-position="false" v-model="commentContent" @click.stop="" />
+					 confirm-type="send" @confirm="saveComment()" adjust-position="false" v-model="commentContent" @click.stop="" 
+					 :show-confirm-bar="false"
+					  @focus="popTextArea" @blur="unpopTextArea"/>
 					</view>
             </view>
 		</view> 
@@ -69,8 +71,8 @@
 					//这个是从子组件传来的数据，回复评论的评论之类
 				},
 				imgIndex: '',
-				serverUrl: this.$serverUrl,
 				
+				textAreaAdjust:"",
 				tagColorList: [],
 			};
 		},
@@ -125,6 +127,21 @@
 		},
 		
 		methods: {
+			popTextArea(e){
+				console.log("展开");
+				console.log(e);
+				console.log(e.detail.height);
+				this.textAreaAdjust =  e.detail.height/3 + 'px' ;
+			
+				// this.textAreaAdjust = '0' ;
+			
+			},
+			unpopTextArea(e){
+				console.log("收起");
+				console.log(e);
+				
+				this.textAreaAdjust = "";
+			},
 			/**
 			 * fromUserId 必填
 			 * toUserId 必填
@@ -461,7 +478,7 @@
 		width: 670upx;
 		padding:11px 40upx;
 		min-height: 50px;
-		background: #FFFFFF;
+		background: #058ECC;
 	}
 
 	.emoji {
@@ -491,6 +508,5 @@
 		line-height: 20px;
 		font-size: 14px;
 		padding:8px 10px;
-		
 	}
 </style>
