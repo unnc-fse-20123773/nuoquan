@@ -79,9 +79,17 @@
 				uni.request({
 					url: that.$serverUrl + '/article/queryAllArticles',
 					method: "POST",
+					data:{
+						page: '',
+						pageSize: '', 
+						userId: that.userInfo.id,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
 					success: (res) => {
 						that.showlist = res.data.data.rows;
-						// console.log(res)
+						console.log(res)
 					},
 					fail: (res) => {
 						console.log("index unirequest fail");
@@ -97,7 +105,7 @@
 					method: "POST",
 					success: (res) => {
 						that.topArticles = res.data.data;
-						console.log(res)
+						// console.log(res)
 					}
 				})
 			},
@@ -151,6 +159,7 @@
 
 <style scoped>
 	.index {
+		/* 页面高度由内容扩充，最低值为100%（page 定义的）- by Guetta */
 		height:100%;
 		background-color: #f3f3f3;
 	}

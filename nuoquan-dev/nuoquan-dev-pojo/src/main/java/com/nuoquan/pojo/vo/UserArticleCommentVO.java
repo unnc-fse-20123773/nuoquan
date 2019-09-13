@@ -15,11 +15,14 @@ public class UserArticleCommentVO {
     private Integer dislikeNum;
     private Integer commentNum;
     private String underCommentId; // 显示在该条评论下方
+    private Integer signFlag;
 
     private String faceImg;
     private String nickname;
     private String timeAgo;
+    private String toNickname;
     
+    private Boolean isLike; // 该用户是否点赞该评论
     
     /**
      * @return id
@@ -174,4 +177,38 @@ public class UserArticleCommentVO {
     public void setUnderCommentId(String underCommentId) {
         this.underCommentId = underCommentId;
     }
+    
+    /**
+     * 获取评论消息是否被签收 0: 未签收 1：签收
+     *
+     * @return sign_flag - 评论消息是否被签收 0: 未签收 1：签收
+     */
+    public Integer getSignFlag() {
+        return signFlag;
+    }
+
+    /**
+     * 设置评论消息是否被签收 0: 未签收 1：签收
+     *
+     * @param signFlag 评论消息是否被签收 0: 未签收 1：签收
+     */
+    public void setSignFlag(Integer signFlag) {
+        this.signFlag = signFlag;
+    }
+
+	public Boolean getIsLike() {
+		return isLike;
+	}
+
+	public void setIsLike(Boolean isLike) {
+		this.isLike = isLike;
+	}
+
+	public String getToNickname() {
+		return toNickname;
+	}
+
+	public void setToNickname(String toNickname) {
+		this.toNickname = toNickname;
+	}
 }

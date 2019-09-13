@@ -172,6 +172,7 @@ var sizeType = [
       showAddTagButton: 1,
       showTagArea: 0,
       tagList: [],
+      finalTag: '',
       tagIndex: 0,
 
       imageList: [],
@@ -195,16 +196,6 @@ var sizeType = [
     this.userInfo = this.getGlobalUserInfo();
   },
   methods: {
-    // 将标题存放在articleTitle中
-    saveAsArticleTitle: function saveAsArticleTitle(event) {
-      this.articleTitle = event.target.value;
-      // console.log(this.articleTitle);
-    },
-    // 将内容存放在articleContent中
-    saveAsArticleContent: function saveAsArticleContent(event) {
-      this.articleContent = event.target.value;
-      // console.log(this.articleContent);
-    },
     addTag: function addTag(res) {
       this.showInputTagArea = 1;
       this.showAddTagButton = 0;
@@ -222,7 +213,15 @@ var sizeType = [
         that.tagIndex = that.tagIndex + 1;
         that.showAddTagButton = 1;
         that.showInputTagArea = 0;
+        that.articleTag = '';
       }
+    },
+    combineTagToString: function combineTagToString(res) {
+      var that = this;
+      for (var i = 0; i < that.tagList.length; i++) {
+        that.finalTag = that.finalTag + '#' + that.tagList[i];
+      }
+      console.log(that.finalTag);
     },
     sourceTypeChange: function sourceTypeChange(e) {
       this.sourceTypeIndex = parseInt(e.target.value);
@@ -265,7 +264,6 @@ var sizeType = [
     },
     upload: function upload(e) {var _this2 = this;
       var me = this;
-
       console.log(me.articleTitle);
       console.log(me.articleContent);
 
@@ -287,13 +285,15 @@ var sizeType = [
         return;
       }
 
+      me.combineTagToString();
+
       var serverUrl = me.$serverUrl;
       uni.request({
         url: serverUrl + '/article/uploadArticle',
         method: 'POST',
         data: {
           userId: me.userInfo.id,
-          articleTag: me.articleTag,
+          articleTag: me.finalTag,
           articleTitle: me.articleTitle,
           articleContent: me.articleContent },
 
@@ -302,30 +302,40 @@ var sizeType = [
 
         success: function success(res) {
           // console.log(res.data.data);
-          if (me.imageList.length <= 0) {
-            uni.navigateBack({
-              url: '../index/index' });
+          if (res.data.status == 200) {
+            if (me.imageList.length <= 0) {
+              uni.navigateBack({
+                url: '../index/index' });
 
-          } else {
-            var articleId = res.data.data;
-            for (var i = 0; i < me.imageList.length; i++) {
-              uni.uploadFile({
-                url: _this2.$serverUrl + '/article/uploadArticleImg',
-                filePath: me.imageList[i],
-                name: 'file',
-                formData: {
-                  userId: me.userInfo.id,
-                  articleId: articleId,
-                  order: i },
+            } else {
+              var articleId = res.data.data;
+              for (var i = 0; i < me.imageList.length; i++) {
+                uni.uploadFile({
+                  url: _this2.$serverUrl + '/article/uploadArticleImg',
+                  filePath: me.imageList[i],
+                  name: 'file',
+                  formData: {
+                    userId: me.userInfo.id,
+                    articleId: articleId,
+                    order: i },
 
-                success: function success(uploadFileRes) {
-                  uni.navigateBack({
-                    delta: 1 });
+                  success: function success(uploadFileRes) {
+                    uni.navigateBack({
+                      delta: 1 });
 
-                } });
+                  } });
 
+              }
             }
+          } else {
+            // 上传失败 用户提醒
+            uni.showToast({
+              title: '出现未知错误，上传失败',
+              duration: 2000,
+              icon: 'none' });
+
           }
+
         } });
 
     }

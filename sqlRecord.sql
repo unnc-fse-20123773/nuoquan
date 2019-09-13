@@ -1,6 +1,28 @@
 -- +++++++++++++++++++++
 -- +  Database update  +
 -- +++++++++++++++++++++
+-- v19.9.11 @author: Jerrio
+-- 在 my.cnf 文件中加入以下两行代码 vim /usr/local/etc/my.cnf (每个人的不一样，这是我的位置)
+-- init-connect='SET NAMES utf8mb4'
+-- character-set-server=utf8mb4
+ALTER TABLE `nuoquan`.`article` 
+CHARACTER SET = utf8mb4 , COLLATE = DEFAULT ;
+
+ALTER TABLE `nuoquan`.`article` 
+CHANGE COLUMN `article_title` `article_title` VARCHAR(45) CHARACTER SET 'utf8mb4' NOT NULL ,
+CHANGE COLUMN `article_content` `article_content` VARCHAR(255) CHARACTER SET 'utf8mb4' NOT NULL ;
+
+ALTER TABLE `nuoquan`.`user_article_comment` 
+CHANGE COLUMN `comment` `comment` VARCHAR(255) CHARACTER SET 'utf8mb4' NOT NULL ;
+
+ALTER TABLE `nuoquan`.`article` 
+CHANGE COLUMN `article_content` `article_content` TEXT(10240) NOT NULL ;
+
+
+-- v19.9.7 @author: Jerrio
+ALTER TABLE `nuoquan`.`user_article_comment` 
+ADD COLUMN `sign_flag` INT NULL DEFAULT 0 COMMENT '评论消息是否被签收 0: 未签收 1：签收' AFTER `under_comment_id`;
+
 -- v19.9.6 @author: Jerrio
 ALTER TABLE `nuoquan`.`user_article_comment` 
 ADD COLUMN `under_comment_id` VARCHAR(45) NULL DEFAULT NULL AFTER `comment_num`;

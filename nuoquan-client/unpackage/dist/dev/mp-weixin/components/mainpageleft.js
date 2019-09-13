@@ -203,7 +203,7 @@ name: 'mainpageleft';var _default =
 
     },
 
-    UD: function UD() {
+    showToast: function showToast() {
       uni.showToast({
         // title: '⠀⠀⠀⠀⠀under⠀⠀⠀⠀⠀development',//不是空格，是特殊符号，莫删
         title: '上课不要玩手机',

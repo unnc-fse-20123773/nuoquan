@@ -9,6 +9,7 @@ import com.nuoquan.pojo.UserLikeArticle;
 import com.nuoquan.pojo.UserLikeComment;
 import com.nuoquan.pojo.vo.ArticleVO;
 import com.nuoquan.pojo.vo.UserArticleCommentVO;
+import com.nuoquan.pojo.vo.UserLikeVO;
 import com.nuoquan.utils.PagedResult;
 
 public interface ArticleService {
@@ -16,7 +17,7 @@ public interface ArticleService {
 	/**
 	 * 分页查询全部文章
 	 */
-	public PagedResult getAllArticles(Integer page, Integer pageSize);
+	public PagedResult getAllArticles(Integer page, Integer pageSize, String userId);
 	
 	/**
 	 * 按 articleId 获取文章
@@ -24,15 +25,16 @@ public interface ArticleService {
 	 * @param pageSize
 	 * @return
 	 */
-	public ArticleVO getArticleById(String articleId);
+	public ArticleVO getArticleById(String articleId, String userId);
 	
 	/**
 	 * @des:用户点赞文章
 	 * @param userId
 	 * @param articleId
 	 * @param articleCreaterId
+	 * @return id in DB
 	 */
-	public void userLikeArticle(String userId, String articleId, String articleCreaterId);
+	public UserLikeArticle userLikeArticle(String userId, String articleId, String articleCreaterId);
 	
 	/**
 	 * @des: 用户取消点赞文章
@@ -53,7 +55,7 @@ public interface ArticleService {
 	/**
 	 *  查询阳面文章
 	 */
-	public PagedResult searchYangArticlesContent(Article article, Integer isSaveRecord, Integer page, Integer pageSize);
+	public PagedResult searchYangArticlesContent(Integer isSaveRecord, Integer page, Integer pageSize, Article article, String userId);
 	
 	/**
 	 * 获取热搜词
@@ -78,8 +80,9 @@ public interface ArticleService {
 	 * @param userId
 	 * @param commentId
 	 * @param createrId
+	 * @return id in DB
 	 */
-	public void userLikeComment(String userId, String commentId, String createrId);
+	public UserLikeComment userLikeComment(String userId, String commentId, String createrId);
 	
 	/**
 	 * @des: 用户取消点赞评论
@@ -98,20 +101,26 @@ public interface ArticleService {
 	public boolean isUserLikeComment(String userId, String commentId);
 	
 	/**
-	 * 留言分页
-	 * @param articleId
+	 * 留言分页  父评论
 	 * @param page
 	 * @param pageSize
+	 * @param articleId
+	 * @param userId
 	 * @return
 	 */
-	public PagedResult getAllComments(String articleId, Integer page, Integer pageSize);
+	public PagedResult getMainComments(Integer page, Integer pageSize, String articleId, String userId);
+	
+	/**
+	 * 留言分页 子评论
+	 */
+	public PagedResult getSonComments(Integer page, Integer pageSize, String underCommentId, String userId);
 	
 	/**
 	 * 根据 commentId 获取评论
 	 * @param commentId
 	 * @return
 	 */
-	public UserArticleCommentVO getCommentById(String commentId);
+	public UserArticleCommentVO getCommentById(String commentId, String userId);
 
 	/**
 	 * 保存文章图片
@@ -128,4 +137,36 @@ public interface ArticleService {
 	 * @return
 	 */
 	public List<ArticleVO> getTop3ByPopularity();
+	
+	/**
+	 * 批量签收点赞文章消息
+	 * @param msgIdList
+	 */
+	public void updateLikeArticleSigned(List<String> msgIdList);
+	
+	/**
+	 * 批量签收点赞评论消息
+	 * @param msgIdList
+	 */
+	public void updateLikeCommentSigned(List<String> msgIdList);
+	
+	/**
+	 * 批量签收评论消息
+	 * @param msgIdList
+	 */
+	public void updateCommentSigned(List<String> msgIdList);
+	
+	/**
+	 * 按作者id获取未签收的点赞消息
+	 * @param userId
+	 * @return
+	 */
+	public List<UserLikeVO> getUnsignedLikeMsg(String userId);
+	
+	/**
+	 * 按作者id获取未签收的评论消息
+	 * @param userId
+	 * @return
+	 */
+	public List<UserArticleCommentVO> getUnsignedCommentMsg(String userId);
 }

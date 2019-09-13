@@ -1,12 +1,12 @@
 <template>
-	<view class="comment" :id="commentDetail.id">
+	<view class="comment" :id="mainComment.id">
 		<view class="fengexian"></view>
-		<view class="contentarea">{{ commentDetail.comment }}</view>
+		<view class="contentarea" @tap="controlInputInComment('inComment')">{{ mainComment.comment }}</view>
 		<view class="bottombar">
 			<view style="width:70%;display:inline-block;">
-				<image :src="commentDetail.faceImage" class="touxiang"></image>
-				<text class="name">{{ commentDetail.nickname }}</text>
-				<text class="time">{{ commentDetail.timeAgo }}</text>
+				<image :src="mainComment.faceImg" class="touxiang" @tap="goToPersonPublic(mainComment.fromUserId)"></image>
+				<text class="name">{{ mainComment.nickname }}</text>
+				<text class="time">{{ mainComment.timeAgo }}</text>
 			</view>
 			<view class="icons">
 				<!-- 评论按钮 -->
@@ -15,18 +15,20 @@
 
 				<image v-if="RECOMMENT" style="height:23px;width:50px;position:relative;bottom:-5px;padding-right:4px;" src="../../../../static/icon/ReComment.png"
 				 @click="showRecommentArea"></image>
-
+				<!-- <text class="icom">{{mainComment.commentNum}}</text> -->
 				<!-- 点赞按钮 -->
-				<image class="icon" src="../../../static/icon/like.png"></image>
-				<text class="icom">{{ commentDetail.likeNum }}</text>
+				<view @tap="swLikeMainComment(mainComment)">
+					<image class="icon" src="../../../static/icon/like.png"></image>
+					<text class="icom">{{ mainComment.likeNum }}</text>
+				</view>
 			</view>
 		</view>
 
-
 		<view v-show="RECOMMENT" class="reCommentsArea">
 
-			<reComment v-for="(i,index) in reCommentList" v-bind:key="index" :reCommentDetail='i'></reComment>
-			<view class="submitComment" @tap="controlInputInComment()">发 表 评 论</view>
+			<reComment v-for="(i,index) in reCommentList" v-bind:key="index" :reCommentDetail='i' 
+			@controlInputSignal="controlInputInComment" @goToPersonPublic="goToPersonPublic"></reComment>
+			<!-- <view class="submitComment">发 表 评 论</view> -->
 		</view>
 	</view>
 </template>
@@ -36,7 +38,7 @@
 	export default {
 		name: 'comment',
 		props: {
-			commentDetail: {}
+			commentDetail: '',
 		},
 		components: {
 			reComment,
@@ -44,79 +46,127 @@
 		data() {
 			return {
 				RECOMMENT: false,
-				reCommentList: [{
-					faceImage: "https://wx.qlogo.cn/mmopen/vi_32/956oQqnmpuCiaF2ia1LWsPdpj2ZBqGOXgw2ymtQlxEfKDfoHxH1icCfZibtia28ibQqYXbpgZ10wSJvicV2fficctezcJQ/132",
-					comment: "123321",
-					nickname: "回复的妖",
-					timeAge: "12323154214",
-					likeNum: "3",
-				}, {
-					faceImage: "https://wx.qlogo.cn/mmopen/vi_32/956oQqnmpuCiaF2ia1LWsPdpj2ZBqGOXgw2ymtQlxEfKDfoHxH1icCfZibtia28ibQqYXbpgZ10wSJvicV2fficctezcJQ/132",
-
-					comment: "123321",
-					nickname: "回复的妖",
-					timeAge: "12323154214",
-					likeNum: "3",
-				}, {
-					faceImage: "https://wx.qlogo.cn/mmopen/vi_32/956oQqnmpuCiaF2ia1LWsPdpj2ZBqGOXgw2ymtQlxEfKDfoHxH1icCfZibtia28ibQqYXbpgZ10wSJvicV2fficctezcJQ/132",
-
-					comment: "123321",
-					nickname: "回复的妖",
-					timeAge: "12323154214",
-					likeNum: "3",
-				}, {
-					faceImage: "https://wx.qlogo.cn/mmopen/vi_32/956oQqnmpuCiaF2ia1LWsPdpj2ZBqGOXgw2ymtQlxEfKDfoHxH1icCfZibtia28ibQqYXbpgZ10wSJvicV2fficctezcJQ/132",
-
-					comment: "123321",
-					nickname: "回复的妖",
-					timeAge: "12323154214",
-					likeNum: "3",
-				}, {
-					faceImage: "https://wx.qlogo.cn/mmopen/vi_32/956oQqnmpuCiaF2ia1LWsPdpj2ZBqGOXgw2ymtQlxEfKDfoHxH1icCfZibtia28ibQqYXbpgZ10wSJvicV2fficctezcJQ/132",
-
-					comment: "123321",
-					nickname: "回复的妖",
-					timeAge: "12323154214",
-					likeNum: "3",
-				}],
-
+				reCommentList: {},
+				isPassingReComment: false,
+				
+				mainComment: this.commentDetail, // 为了动态修改数值，对对象重新赋值，转换组件内部对象
+				userInfo: this.getGlobalUserInfo(),
 			};
 		},
+		
+		created() {
+			// console.log(this.commentDetail);
+		},
+		
 		methods: {
 			showRecommentArea() {
 				this.RECOMMENT = !this.RECOMMENT
-				if(this.RECOMMENT){
-					this.getComments()
+				if (this.RECOMMENT) {
+					this.getSubComments();
 				}
 			},
-			getComments: function(a) {
+			getSubComments(a) {
 				var that = this;
 				uni.request({
 					method: "POST",
-					url: that.$serverUrl + '/article/getArticleComments',
+					url: that.$serverUrl + '/article/getSubComments',
 					data: {
-						commentId:this.commentDetail.id,
+						underCommentId: that.mainComment.id,
+						userId: that.userInfo.id,
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
-					success: (res) => {	console.log(res);
-					console.log(res);
-						that.commentList = res.data.data.rows;
-						console.log(that.articleCard.id);				
+					success: (res) => {
+						// that.isPassingReComment = false;
+						// that.reCommentListFromDetail = '';
+						if(res.data.status==200){
+							that.reCommentList = res.data.data.rows;
+							console.log(res);
+						}
+					}
+				});
+			},
+
+			controlInputInComment(a) {
+				if (a == "inComment") {
+					var dataOfRecomment = {
+						mode: "re-co",
+						toUserId: this.mainComment.fromUserId,
+						underCommentId: this.mainComment.id,
+						fatherCommentId: this.mainComment.id,
+						nickname: this.mainComment.nickname,
+					}
+				} else {
+					var dataOfRecomment = a;
+				}
+				console.log("receive control input request, in comment");
+				console.log(dataOfRecomment);
+				this.$emit('controlInputSignal', dataOfRecomment);
+			},
+			
+			/**
+			 * 点赞或取消点赞主评论
+			 * @param {Object} comment
+			 */
+			swLikeMainComment(comment){
+				if(comment.isLike){
+					this.unLikeComment(comment);
+					this.mainComment.likeNum--;
+				} else {
+					this.likeComment(comment);
+					this.mainComment.likeNum++;
+				}
+				this.mainComment.isLike = !this.mainComment.isLike;
+			},
+			
+			likeComment(comment){
+				console.log("点赞评论");
+				var that = this;
+				uni.request({
+					method: "POST",
+					url: that.$serverUrl + '/article/userLikeComment',
+					data: {
+						userId: that.userInfo.id,
+						commentId: comment.id,
+						createrId: comment.fromUserId,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {	
+						console.log(res);
 					},
 				});
 			},
-			controlInputInComment() {
-				var dataOfRecomment={
-					toUserId:this.commentDetail.fromUserId,
-					fatherCommentId:this.commentDetail.id,
-					nickname:this.commentDetail.nickname,
-				}
-				this.$emit('controlInputSignal',dataOfRecomment)
+			
+			unLikeComment(comment){
+				console.log("取消点赞评论");
+				var that = this;
+				uni.request({
+					method: "POST",
+					url: that.$serverUrl + '/article/userUnLikeComment',
+					data: {
+						userId: that.userInfo.id,
+						commentId: comment.id,
+						createrId: comment.fromUserId,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {	
+						console.log(res);
+					},
+				});
 			},
+			
+			goToPersonPublic(userId){
+				uni.navigateTo({
+					url:'/pages/personpublic/personpublic?userId=' + userId,
+				});
+			}
 		},
-		
+
 	};
 </script>
 
@@ -188,7 +238,7 @@
 		padding-right: 17px;
 		align-items: flex-end;
 	}
-
+	
 	.submitComment {
 		background: #FFCC30;
 		border-radius: 5px;
@@ -201,6 +251,7 @@
 		text-align: center;
 		line-height: 30px;
 	}
+
 	.reCommentsArea {
 		background: #EEEEEE;
 		width: 400upx;

@@ -1,6 +1,7 @@
 package com.nuoquan.controller;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -17,12 +18,17 @@ import com.nuoquan.enums.MsgActionEnum;
 import com.nuoquan.netty.MsgHandler;
 import com.nuoquan.pojo.Article;
 import com.nuoquan.pojo.ArticleImage;
+import com.nuoquan.pojo.User;
 import com.nuoquan.pojo.UserArticleComment;
-import com.nuoquan.pojo.netty.CommentCard;
+import com.nuoquan.pojo.UserLikeArticle;
+import com.nuoquan.pojo.UserLikeComment;
+import com.nuoquan.pojo.netty.NoticeCard;
 import com.nuoquan.pojo.netty.DataContent;
 import com.nuoquan.pojo.vo.ArticleVO;
 import com.nuoquan.pojo.vo.UserArticleCommentVO;
+import com.nuoquan.pojo.vo.UserLikeVO;
 import com.nuoquan.service.ArticleService;
+import com.nuoquan.service.UserService;
 import com.nuoquan.utils.JSONResult;
 import com.nuoquan.utils.PagedResult;
 
@@ -39,13 +45,21 @@ public class ArticleController extends BasicController {
 
 	@Autowired
 	private ArticleService articleService;
+	
+	@Autowired
+	private UserService userService;
 
 	@Value("${upload.maxFaceImageSize}")
 	private long MAX_FACE_IMAGE_SIZE;
 
 	@ApiOperation(value = "查询全部文章", notes = "查询全部文章的接口")
+	@ApiImplicitParams({
+		// userId 查询用户和文章的点赞关系
+		@ApiImplicitParam(name = "userId", value = "操作者id", required = true, dataType = "String", paramType = "form"),
+		@ApiImplicitParam(name = "page", value = "页数", required = true, dataType = "String", paramType = "form"),
+		@ApiImplicitParam(name = "pageSize", value = "每页大小", required = true, dataType = "String", paramType = "form") })
 	@PostMapping("/queryAllArticles")
-	public JSONResult showAllArticles(Integer page, Integer pageSize) throws Exception {
+	public JSONResult showAllArticles(Integer page, Integer pageSize, String userId) throws Exception {
 
 		if (page == null) {
 			page = 1;
@@ -53,8 +67,7 @@ public class ArticleController extends BasicController {
 		if (pageSize == null) {
 			pageSize = PAGE_SIZE;
 		}
-
-		PagedResult result = articleService.getAllArticles(page, pageSize);
+		PagedResult result = articleService.getAllArticles(page, pageSize, userId);
 
 		return JSONResult.ok(result);
 	}
@@ -69,12 +82,19 @@ public class ArticleController extends BasicController {
 	public JSONResult userLike(String userId, String articleId, String articleCreaterId) throws Exception {
 
 		// 储存到数据库 返回数据库对象
-		articleService.userLikeArticle(userId, articleId, articleCreaterId);
-		// 给作者发推送
+		UserLikeArticle like = articleService.userLikeArticle(userId, articleId, articleCreaterId);
+		// 加上点赞人的信息
+		UserLikeVO likeVO = ConvertLikeToLikeVO(like);
+		User user = userService.queryUserById(likeVO.getUserId());
+		likeVO.setNickname(user.getNickname());
+		likeVO.setFaceImg(user.getFaceImg());
+		likeVO.setFaceImgThumb(user.getFaceImgThumb());
+		
+		// 给目标作者发推送
 		DataContent dataContent = new DataContent();
 		dataContent.setAction(MsgActionEnum.LIKEARTICLE.type);
-		dataContent.setData(articleService.getArticleById(articleId));
-
+		dataContent.setData(new NoticeCard(likeVO, articleService.getArticleById(articleId, userId)));
+		
 		MsgHandler.sendMsgTo(articleCreaterId, dataContent);
 		return JSONResult.ok();
 	}
@@ -89,12 +109,19 @@ public class ArticleController extends BasicController {
 	public JSONResult userLikeComment(String userId, String commentId, String createrId) throws Exception {
 
 		// 储存到数据库 返回数据库对象
-		articleService.userLikeComment(userId, commentId, createrId);
+		UserLikeComment like = articleService.userLikeComment(userId, commentId, createrId);
+		// 加上点赞人的信息
+		UserLikeVO likeVO = ConvertLikeToLikeVO(like);
+		User user = userService.queryUserById(likeVO.getUserId());
+		likeVO.setNickname(user.getNickname());
+		likeVO.setFaceImg(user.getFaceImg());
+		likeVO.setFaceImgThumb(user.getFaceImgThumb());
+		
 		// 给作者发推送
 		DataContent dataContent = new DataContent();
 		dataContent.setAction(MsgActionEnum.LIKECOMMENT.type);
-		dataContent.setData(articleService.getCommentById(commentId));
-
+		dataContent.setData(new NoticeCard(likeVO, articleService.getCommentById(commentId, userId)));
+		
 		MsgHandler.sendMsgTo(createrId, dataContent);
 		return JSONResult.ok();
 	}
@@ -132,14 +159,14 @@ public class ArticleController extends BasicController {
 	 * @throws Exception
 	 */
 	@PostMapping(value = "/searchArticleYANG")
-	public JSONResult searchArticleYang(@RequestBody Article article, Integer isSaveRecord, Integer page)
+	public JSONResult searchArticleYang(@RequestBody Article article, Integer isSaveRecord, Integer page, String userId)
 			throws Exception {
 
 		if (page == null) {
 			page = 1;
 		}
 		
-		PagedResult result = articleService.searchYangArticlesContent(article, isSaveRecord, page, PAGE_SIZE);
+		PagedResult result = articleService.searchYangArticlesContent(isSaveRecord, page, PAGE_SIZE, article, userId);
 		return JSONResult.ok(result);
 	}
 
@@ -224,11 +251,11 @@ public class ArticleController extends BasicController {
 	 * fromUserId 必填
 	 * toUserId 必填
 	 * articleId 必填 // 为了计算文章总评论数
-	 * underCommentId // 显示在该父级评论层ID下
+	 * underCommentId // 显示在该主评论层ID下
 	 * fatherCommentId // 父级评论ID
 	 * comment 必填
-	 * PS: 父级（一级，给文章评论）评论 无 fatherCommentId;
-	 *     子级评论有 fatherCommentId;
+	 * PS: 父级（一级，给文章评论）评论 无 fatherCommentId, underCommentId;
+	 *     子级评论有 fatherCommentId, underCommentId;
 	 */
 	@PostMapping("/saveComment")
 	public JSONResult saveComment(@RequestBody UserArticleComment comment) throws Exception {
@@ -238,16 +265,16 @@ public class ArticleController extends BasicController {
 		// 给作者发推送
 		DataContent dataContent = new DataContent();
 		
-		UserArticleCommentVO commentVO = articleService.getCommentById(commentId);
+		UserArticleCommentVO commentVO = articleService.getCommentById(commentId, null); // 无需查询用户点赞关系
 		if (StringUtils.isBlank(comment.getFatherCommentId())) {
 			// 给文章评论
-			ArticleVO targetArticle = articleService.getArticleById(comment.getArticleId());
-			dataContent.setData(new CommentCard(commentVO, targetArticle));
+			ArticleVO targetArticle = articleService.getArticleById(comment.getArticleId(), null);
+			dataContent.setData(new NoticeCard(commentVO, targetArticle));
 			dataContent.setAction(MsgActionEnum.COMMENTARTICLE.type);
 		}else {
 			// 给评论评论
-			UserArticleCommentVO targetComment = articleService.getCommentById(comment.getFatherCommentId());
-			dataContent.setData(new CommentCard(commentVO, targetComment));
+			UserArticleCommentVO targetComment = articleService.getCommentById(comment.getFatherCommentId(), null);
+			dataContent.setData(new NoticeCard(commentVO, targetComment));
 			dataContent.setAction(MsgActionEnum.COMMENTCOMMENT.type);
 		}
 
@@ -257,11 +284,12 @@ public class ArticleController extends BasicController {
 	}
 
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "articleId", required = true, dataType = "String", paramType = "form"),
 			@ApiImplicitParam(name = "page", required = false, dataType = "Integer", paramType = "form"),
-			@ApiImplicitParam(name = "pageSize", required = false, dataType = "Integer", paramType = "form") })
-	@PostMapping("/getArticleComments")
-	public JSONResult getArticleComments(String articleId, Integer page, Integer pageSize) throws Exception {
+			@ApiImplicitParam(name = "pageSize", required = false, dataType = "Integer", paramType = "form"),
+			@ApiImplicitParam(name = "articleId", required = true, dataType = "String", paramType = "form"),
+			@ApiImplicitParam(name = "userId", required = false, dataType = "String", paramType = "form")})
+	@PostMapping("/getMainComments")
+	public JSONResult getFatherArticleComments(Integer page, Integer pageSize, String articleId, String userId) throws Exception {
 
 		if (StringUtils.isBlank(articleId)) {
 			return JSONResult.errorMsg("articleId can't be null");
@@ -270,13 +298,38 @@ public class ArticleController extends BasicController {
 		if (page == null) {
 			page = 1;
 		}
+		
 		if (pageSize == null) {
 			pageSize = PAGE_SIZE;
 		}
 
-		PagedResult list = articleService.getAllComments(articleId, page, pageSize);
+		PagedResult list = articleService.getMainComments(page, pageSize, articleId, userId);
 
 		return JSONResult.ok(list);
+	}
+	
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "underCommentId", required = true, dataType = "String", paramType = "form"),
+		@ApiImplicitParam(name = "page", required = false, dataType = "Integer", paramType = "form"),
+		@ApiImplicitParam(name = "pageSize", required = false, dataType = "Integer", paramType = "form") })
+	@PostMapping("/getSubComments")
+	public JSONResult getSonArticleComments(Integer page, Integer pageSize, String underCommentId, String userId) throws Exception {
+		
+		if (StringUtils.isBlank(underCommentId)) {
+			return JSONResult.errorMsg("underCommentId can't be null");
+		}
+		
+		if (page == null) {
+			page = 1;
+		}
+		
+		if (pageSize == null) {
+			pageSize = PAGE_SIZE;
+		}
+		
+		PagedResult reCommentList = articleService.getSonComments(page, pageSize, underCommentId, userId);
+		
+		return JSONResult.ok(reCommentList);
 	}
 
 	@ApiOperation(value = "Get the top 3 hot article")
@@ -285,5 +338,68 @@ public class ArticleController extends BasicController {
 
 		List<ArticleVO> list = articleService.getTop3ByPopularity();
 		return JSONResult.ok(list);
+	}
+	
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "userId", required = true, dataType = "String", paramType = "form") })
+	@PostMapping("/getUnsignedLikeMsg")
+	public JSONResult getUnsignedLikeMsg(String userId) {
+		List<UserLikeVO> likeVOs = articleService.getUnsignedLikeMsg(userId);
+		List<DataContent> dataList = new LinkedList<>();
+		for (UserLikeVO like : likeVOs) {
+			DataContent dataContent = new DataContent();
+			if (!StringUtils.isBlank(like.getArticleId())) {
+				//System.out.println("点赞文章");
+				ArticleVO articleVO = articleService.getArticleById(like.getArticleId(), userId);
+				
+				dataContent.setAction(MsgActionEnum.LIKEARTICLE.type);
+				dataContent.setData(new NoticeCard(like, articleVO));
+				
+				dataList.add(dataContent);
+			} else {
+				//System.out.println("点赞评论");
+				UserArticleCommentVO commentVO = articleService.getCommentById(like.getCommentId(), userId);
+				
+				dataContent.setAction(MsgActionEnum.LIKECOMMENT.type);
+				dataContent.setData(new NoticeCard(like, commentVO));
+				
+				dataList.add(dataContent);
+			}
+		}
+		return JSONResult.ok(dataList);
+	}
+	
+	/**
+	 * TODO: 该接口最多返回100个对象...并造成卡顿 解决方法：分页并自动累加页数
+	 * @param userId
+	 * @return
+	 */
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "userId", required = true, dataType = "String", paramType = "form") })
+	@PostMapping("/getUnsignedCommentMsg")
+	public JSONResult getUnsignedCommentMsg(String userId) {
+		List<UserArticleCommentVO> commentVOs = articleService.getUnsignedCommentMsg(userId);
+		List<DataContent> dataList = new LinkedList<>();
+		for (UserArticleCommentVO comment : commentVOs) {
+			DataContent dataContent = new DataContent();
+			if (StringUtils.isBlank(comment.getFatherCommentId())) {
+				//System.out.println("评论文章");
+				ArticleVO targetArticle = articleService.getArticleById(comment.getArticleId(), userId);
+				
+				dataContent.setData(new NoticeCard(comment, targetArticle));
+				dataContent.setAction(MsgActionEnum.COMMENTARTICLE.type);
+				
+				dataList.add(dataContent);
+			} else {
+				//System.out.println("评论评论");
+				UserArticleCommentVO targetComment = articleService.getCommentById(comment.getFatherCommentId(), userId);
+				
+				dataContent.setData(new NoticeCard(comment, targetComment));
+				dataContent.setAction(MsgActionEnum.COMMENTCOMMENT.type);
+				
+				dataList.add(dataContent);
+			}
+		}
+		return JSONResult.ok(dataList);
 	}
 }

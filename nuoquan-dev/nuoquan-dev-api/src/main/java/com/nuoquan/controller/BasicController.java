@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.nuoquan.config.ResourceConfig;
 import com.nuoquan.pojo.User;
+import com.nuoquan.pojo.vo.UserLikeVO;
 import com.nuoquan.pojo.vo.UserVO;
 
 @RestController
@@ -31,6 +32,16 @@ public class BasicController {
 		UserVO userVO = new UserVO();
 		BeanUtils.copyProperties(user, userVO);
 		return userVO;
+	}
+	
+	/**
+	 * @param like can be UserLikeArticle or UserLikeComment
+	 * @return
+	 */
+	public UserLikeVO ConvertLikeToLikeVO (Object like) {
+		UserLikeVO likeVO = new UserLikeVO();
+		BeanUtils.copyProperties(like, likeVO);
+		return likeVO;
 	}
 	
 	public void uploadFile(MultipartFile file, String path) throws Exception {

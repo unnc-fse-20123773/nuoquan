@@ -11,6 +11,7 @@ import com.nuoquan.SpringUtil;
 import com.nuoquan.enums.MsgActionEnum;
 import com.nuoquan.pojo.netty.ChatMessage;
 import com.nuoquan.pojo.netty.DataContent;
+import com.nuoquan.service.ArticleService;
 import com.nuoquan.service.UserService;
 import com.nuoquan.utils.JsonUtils;
 
@@ -35,7 +36,8 @@ public class MsgHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> 
 	// 所以用 SpringUtil 手动获取被 Spring 管理的 bean 对象。
 	// (使用普通的java类调用托管给spring的service)
 	UserService userService = (UserService) SpringUtil.getBean("userServiceImpl");
-
+	ArticleService articleService = (ArticleService) SpringUtil.getBean("articleServiceImpl");
+	
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) throws Exception {
 
@@ -49,16 +51,13 @@ public class MsgHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> 
 		// 2. 判断消息类型
 		if (action == MsgActionEnum.CONNECT.type) {
 			// 2.1 当 websocket 第一次连接时，初始化Channel，把用的Channel和useid关联起来。
-			@SuppressWarnings("unchecked")
-			ChatMessage chatMessage = objectToChatMessage((LinkedHashMap<Object, Object>) dataContent.getData()); // 对象是
-																													// java.util.LinkedHashMap
-			String senderId = chatMessage.getSenderId();
+			String senderId = dataContent.getExtand();
 			UserChannelRel.put(senderId, currentChannel);
 
 			// 测试
-			for (Channel c : clients) {
-				System.out.println(c.id().asLongText());
-			}
+//			for (Channel c : clients) {
+//				System.out.println(c.id().asLongText());
+//			}
 			UserChannelRel.output();
 		} else if (action == MsgActionEnum.CHAT.type) {
 			// 2.2 聊天类型的消息，把聊天记录保存到数据库（加密/解密），
@@ -87,7 +86,7 @@ public class MsgHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> 
 				}
 			}
 
-			System.out.println("签收消息id：" + msgIdList.toString());
+//			System.out.println("签收消息id：" + msgIdList.toString());
 
 			if (msgIdList != null && !msgIdList.isEmpty() && msgIdList.size() > 0) {
 				// 批量签收
@@ -106,11 +105,11 @@ public class MsgHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> 
 				}
 			}
 
-			System.out.println("签收点赞文章消息id：" + msgIdList.toString());
+//			System.out.println("签收点赞文章消息id：" + msgIdList.toString());
 
 			if (msgIdList != null && !msgIdList.isEmpty() && msgIdList.size() > 0) {
 				// 批量签收
-				userService.updateChatSigned(msgIdList);
+				articleService.updateLikeArticleSigned(msgIdList);
 			}
 		} else if (action == MsgActionEnum.LIKECOMMENT_SIGN.type) {
 			// 2.5 签收点赞评论消息类型，修改数据库对应消息的签收状态[已签收]
@@ -125,11 +124,11 @@ public class MsgHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> 
 				}
 			}
 
-			System.out.println("签收消息id：" + msgIdList.toString());
+//			System.out.println("签收点赞评论消息id：" + msgIdList.toString());
 
 			if (msgIdList != null && !msgIdList.isEmpty() && msgIdList.size() > 0) {
 				// 批量签收
-				userService.updateChatSigned(msgIdList);
+				articleService.updateLikeCommentSigned(msgIdList);
 			}
 		} else if (action == MsgActionEnum.COMMENT_SIGN.type) {
 			// 2.6 签收评论消息类型，修改数据库对应消息的签收状态[已签收]
@@ -144,15 +143,15 @@ public class MsgHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> 
 				}
 			}
 
-			System.out.println("签收消息id：" + msgIdList.toString());
+//			System.out.println("签收评论消息id：" + msgIdList.toString());
 
 			if (msgIdList != null && !msgIdList.isEmpty() && msgIdList.size() > 0) {
 				// 批量签收
-				userService.updateChatSigned(msgIdList);
+				articleService.updateCommentSigned(msgIdList);
 			}
 		} else if (action == MsgActionEnum.KEEPALIVE.type) {
 			// 2.4 心跳类型消息
-			System.out.println("收到来自 channel 为[" + currentChannel + "]的心跳包...");
+//			System.out.println("收到来自 channel 为[" + currentChannel + "]的心跳包...");
 		}
 
 		// 把消息发到所有的客户端

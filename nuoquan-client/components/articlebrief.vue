@@ -33,10 +33,10 @@
 			
 		</view>
 		<view class="tags">
-			<view class="tag" v-for="(i, index) in articleCard.tags" v-bind:key="index">{{i}}</view>
+			<view class="tag" v-for="(i, index) in articleCard.tagList" v-bind:key="index">{{i}}</view>
 		</view>
 		<view class="menubar">
-			<image :src="articleCard.faceImg" class="touxiang"></image>
+			<image :src="articleCard.faceImg" class="touxiang" @tap="goToPersonPublic(articleCard.userId)"></image>
 			<view class="name">{{ articleCard.nickname }}</view>
 			<view class="time">{{ articleCard.createDate | timeDeal}}</view>
 
@@ -58,21 +58,12 @@
 		},
 		data() {
 			return {
-				taglist: [
-					['123', 'background:#40A792'],
-					['13', 'background:#621E81'],
-					['163', 'background:#738598'],
-					['标签', 'background:#F3AE4B'],
-					['13', 'background:#621E81'],
-					['163', 'background:#738598'],
-					['123', 'background:#40A792'],
-					['13', 'background:#621E81']
-				],
-				
+
 				serverUrl: this.$serverUrl,
 				singleImgState: '0',
 				
 				imgList: [],
+				// atags: JSON.(this.articleCard.tags);
 			};
 		},
 		created() {
@@ -121,13 +112,19 @@
 				}else{
 					this.singleImgState = 1;
 				}
-				console.log(e.detail);
+				// console.log(e.detail);
 			},
 			
 			jumpToDetail() {
 				var navData = JSON.stringify(this.articleCard); // 这里转换成 字符串
 				uni.navigateTo({
 					url: '/pages/detail/detail?data=' + navData
+				});
+			},
+			
+			goToPersonPublic(userId){
+				uni.navigateTo({
+					url:'/pages/personpublic/personpublic?userId=' + userId,
 				});
 			}
 		},
@@ -161,6 +158,7 @@
 		font-size: 13px;
 		line-height: 15px;
 		margin-bottom: 15px;
+		word-break:break-all;
 	}
 	.tags {
 		margin-left: 10px;

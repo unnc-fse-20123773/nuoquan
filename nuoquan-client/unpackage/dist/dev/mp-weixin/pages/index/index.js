@@ -284,22 +284,13 @@ var _default =
 
   data: function data() {
     return {
-      taglist: [
-      ['123', 'background:#40A792'],
-      ['13', 'background:#621E81'],
-      ['163', 'background:#738598'],
-      ['标签', 'background:#F3AE4B'],
-      ['13', 'background:#621E81'],
-      ['163', 'background:#738598'],
-      ['123', 'background:#40A792'],
-      ['13', 'background:#621E81']],
-
 
       serverUrl: this.$serverUrl,
       singleImgState: '0',
 
-      imgList: [] };
-
+      imgList: []
+      // atags: JSON.(this.articleCard.tags);
+    };
   },
   created: function created() {
     if (this.articleCard.imgList.length > 3) {
@@ -347,13 +338,19 @@ var _default =
       } else {
         this.singleImgState = 1;
       }
-      console.log(e.detail);
+      // console.log(e.detail);
     },
 
     jumpToDetail: function jumpToDetail() {
       var navData = JSON.stringify(this.articleCard); // 这里转换成 字符串
       uni.navigateTo({
         url: '/pages/detail/detail?data=' + navData });
+
+    },
+
+    goToPersonPublic: function goToPersonPublic(userId) {
+      uni.navigateTo({
+        url: '/pages/personpublic/personpublic?userId=' + userId });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
@@ -449,9 +446,17 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
       uni.request({
         url: that.$serverUrl + '/article/queryAllArticles',
         method: "POST",
+        data: {
+          page: '',
+          pageSize: '',
+          userId: that.userInfo.id },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
         success: function success(res) {
           that.showlist = res.data.data.rows;
-          // console.log(res)
+          console.log(res);
         },
         fail: function fail(res) {
           console.log("index unirequest fail");
@@ -467,7 +472,7 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
         method: "POST",
         success: function success(res) {
           that.topArticles = res.data.data;
-          console.log(res);
+          // console.log(res)
         } });
 
     },

@@ -9,7 +9,7 @@
     <result column="article_title" jdbcType="VARCHAR" property="articleTitle" />
     <result column="user_id" jdbcType="VARCHAR" property="userId" />
     <result column="tags" jdbcType="VARCHAR" property="tags" />
-    <result column="article_content" jdbcType="VARCHAR" property="articleContent" />
+    <result column="article_content" jdbcType="LONGVARBINARY" property="articleContent" />
     <result column="like_num" jdbcType="INTEGER" property="likeNum" />
     <result column="dislike_num" jdbcType="INTEGER" property="dislikeNum" />
     <result column="comment_num" jdbcType="INTEGER" property="commentNum" />

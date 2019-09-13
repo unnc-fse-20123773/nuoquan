@@ -1,8 +1,10 @@
 package com.nuoquan.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.n3r.idworker.Sid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,16 +22,17 @@ import com.nuoquan.mapper.UserArticleCommentMapper;
 import com.nuoquan.mapper.UserArticleCommentMapperCustom;
 import com.nuoquan.mapper.UserLikeArticleMapper;
 import com.nuoquan.mapper.UserLikeCommentMapper;
+import com.nuoquan.mapper.UserLikeMapperCustom;
 import com.nuoquan.mapper.UserMapper;
 import com.nuoquan.pojo.Article;
 import com.nuoquan.pojo.ArticleImage;
 import com.nuoquan.pojo.SearchRecord;
 import com.nuoquan.pojo.UserArticleComment;
-import com.nuoquan.pojo.UserFans;
 import com.nuoquan.pojo.UserLikeArticle;
 import com.nuoquan.pojo.UserLikeComment;
 import com.nuoquan.pojo.vo.ArticleVO;
 import com.nuoquan.pojo.vo.UserArticleCommentVO;
+import com.nuoquan.pojo.vo.UserLikeVO;
 import com.nuoquan.utils.PagedResult;
 
 import tk.mybatis.mapper.entity.Example;
@@ -67,18 +70,35 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Autowired
 	private ArticleImageMapper articleImageMapper;
+	
+	@Autowired
+	private UserLikeMapperCustom userLikeMapperCustom;
 
+	@Autowired
+	private UserService userService;
+	
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
-	public PagedResult getAllArticles(Integer page, Integer pageSize) {
+	public PagedResult getAllArticles(Integer page, Integer pageSize, String userId) {
 
 		// 从controller中获取page和pageSize (经实验，PageHelper 只拦截下一次查询)
 		PageHelper.startPage(page, pageSize);
 
 		List<ArticleVO> list = articleMapperCustom.queryAllArticles();
-		// 为每个文章添加图片列表
 		for (ArticleVO a : list) {
+			// 为每个文章添加图片列表
 			a.setImgList(articleImageMapper.getArticleImgs(a.getId()));
+			// 添加和关于用户的点赞关系
+			a.setIsLike(isUserLikeArticle(userId, a.getId()));
+			// 添加标签list
+			String[] tagList = a.getTags().split("#");
+			List<String> finalTagList = new ArrayList<String>();
+			for (String tag : tagList) {
+				if (!StringUtils.isBlank(tag)) {
+					finalTagList.add(tag);
+				}
+			}
+			a.setTagList(finalTagList);
 		}
 		
 		PageInfo<ArticleVO> pageList = new PageInfo<>(list);
@@ -94,15 +114,28 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
-	public ArticleVO getArticleById(String articleId) {
+	public ArticleVO getArticleById(String articleId, String userId) {
 		ArticleVO articleVO = articleMapperCustom.getArticleById(articleId);
-		articleVO.setImgList(articleImageMapper.getArticleImgs(articleId));
+		List<ArticleImage> images = articleImageMapper.getArticleImgs(articleId);
+		if (!images.isEmpty()) {
+			// 添加图片列表
+			articleVO.setImgList(images);
+			// 添加标签列表
+			String[] tagList = articleVO.getTags().split("#");
+			List<String> finalTagList = new ArrayList<String>();
+			for (String tag : tagList) {
+				if (!StringUtils.isBlank(tag)) {
+					finalTagList.add(tag);
+				}
+			}
+			articleVO.setTagList(finalTagList);
+		}
 		return articleVO;
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public void userLikeArticle(String userId, String articleId, String articleCreaterId) {
+	public UserLikeArticle userLikeArticle(String userId, String articleId, String articleCreaterId) {
 
 		// 保存用户和文章的点赞关联关系表
 		String likeId = sid.nextShort();
@@ -114,12 +147,12 @@ public class ArticleServiceImpl implements ArticleService {
 		ula.setCreateDate(new Date());
 
 		userLikeArticleMapper.insertSelective(ula);
-
 		// 文章喜欢数量累加
 		articleMapperCustom.addArticleLikeCount(articleId);
-
 		// 用户受喜欢数量的累加
 		userMapper.addReceiveLikeCount(articleCreaterId);
+		
+		return ula;
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -147,7 +180,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public PagedResult searchYangArticlesContent(Article article, Integer isSaveRecord, Integer page, Integer pageSize) {
+	public PagedResult searchYangArticlesContent(Integer isSaveRecord, Integer page, Integer pageSize, Article article, String userId) {
 		
 		// 保存热搜词
 		String articleContent = article.getArticleContent();
@@ -161,7 +194,23 @@ public class ArticleServiceImpl implements ArticleService {
 
 		PageHelper.startPage(page, pageSize);
 		List<ArticleVO> list = articleMapperCustom.searchArticleContentYang(articleContent);
-
+		for (ArticleVO a : list) {
+			// 为每个文章添加图片列表
+			a.setImgList(articleImageMapper.getArticleImgs(a.getId()));
+			// 添加和关于用户的点赞关系
+			a.setIsLike(isUserLikeArticle(userId, a.getId()));
+			// 添加标签list
+			String[] tagList = a.getTags().split("#");
+			List<String> finalTagList = new ArrayList<String>();
+			for (String tag : tagList) {
+				if (!StringUtils.isBlank(tag)) {
+					finalTagList.add(tag);
+				}
+			}
+			a.setTagList(finalTagList);
+		}
+		
+		
 		PageInfo<ArticleVO> pageList = new PageInfo<>(list);
 
 		PagedResult pagedResult = new PagedResult();
@@ -183,13 +232,11 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public String saveArticle(Article article) {
-
 		String id = sid.nextShort();
 		article.setId(id);
 		articleMapper.insertSelective(article);
 
 		return id;
-
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -202,29 +249,36 @@ public class ArticleServiceImpl implements ArticleService {
 		comment.setLikeNum(0);
 		comment.setCreateDate(new Date());
 		comment.setCommentNum(0);
-		userArticleCommentMapper.insert(comment);
+		userArticleCommentMapper.insertSelective(comment);
+		//文章评论数累加
+		articleMapperCustom.addArticleCommentCount(comment.getArticleId());
+		if (!StringUtils.isBlank(comment.getUnderCommentId())) {
+			//主评论的评论数累加
+			userArticleCommentMapperCustom.addCommentCount(comment.getUnderCommentId());
+		}
+		
 		return id;
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public void userLikeComment(String userId, String commentId, String createrId) {
+	public UserLikeComment userLikeComment(String userId, String commentId, String createrId) {
 		// 保存用户和文章的点赞关联关系表
 		String likeId = sid.nextShort();
 
-		UserLikeComment ula = new UserLikeComment();
-		ula.setId(likeId);
-		ula.setUserId(userId);
-		ula.setCommentId(commentId);
-		ula.setCreateDate(new Date());
-		userLikeCommentMapper.insertSelective(ula);
-
+		UserLikeComment ulc = new UserLikeComment();
+		ulc.setId(likeId);
+		ulc.setUserId(userId);
+		ulc.setCommentId(commentId);
+		ulc.setCreateDate(new Date());
+		
+		userLikeCommentMapper.insertSelective(ulc);
 		// 评论喜欢数量累加
 		userArticleCommentMapperCustom.addCommentLikeCount(commentId);
-
 		// 用户受喜欢数量的累加
 		userMapper.addReceiveLikeCount(createrId);
 
+		return ulc;
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -282,17 +336,46 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
-	public PagedResult getAllComments(String articleId, Integer page, Integer pageSize) {
+	public PagedResult getMainComments(Integer page, Integer pageSize, String articleId, String userId) {
 
 		PageHelper.startPage(page, pageSize);
 
 		List<UserArticleCommentVO> list = userArticleCommentMapperCustom.queryComments(articleId);
-		// 对时间格式进行处理
+		for (UserArticleCommentVO c : list) {
+			// 对时间格式进行处理
+			String timeAgo = TimeAgoUtils.format(c.getCreateDate());
+			c.setTimeAgo(timeAgo);
+			// 查询并设置关于用户的点赞关系
+			c.setIsLike(isUserLikeComment(userId, c.getId()));
+		}
+
+		PageInfo<UserArticleCommentVO> pageList = new PageInfo<>(list);
+
+		PagedResult grid = new PagedResult();
+		grid.setTotal(pageList.getPages());
+		grid.setRows(list);
+		grid.setPage(page);
+		grid.setRecords(pageList.getTotal());
+
+		return grid;
+	}
+	
+	@Transactional(propagation = Propagation.SUPPORTS)
+	@Override
+	public PagedResult getSonComments(Integer page, Integer pageSize, String underCommentId, String userId) {
+		
+		PageHelper.startPage(page, pageSize);
+		List<UserArticleCommentVO> list = userArticleCommentMapperCustom.querySonComments(underCommentId);
+		
 		for (UserArticleCommentVO c : list) {
 			String timeAgo = TimeAgoUtils.format(c.getCreateDate());
 			c.setTimeAgo(timeAgo);
+			// 查询并设置关于用户的点赞关系
+			c.setIsLike(isUserLikeComment(userId, c.getId()));
+			// 设置回复人昵称
+			c.setToNickname(userService.queryUserById(c.getToUserId()).getNickname());
 		}
-
+		
 		PageInfo<UserArticleCommentVO> pageList = new PageInfo<>(list);
 
 		PagedResult grid = new PagedResult();
@@ -306,7 +389,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
-	public UserArticleCommentVO getCommentById(String commentId) {
+	public UserArticleCommentVO getCommentById(String commentId, String userId) {
 		return userArticleCommentMapperCustom.getCommentById(commentId);
 	}
 
@@ -329,6 +412,37 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public List<ArticleVO> getTop3ByPopularity() {
 		return articleMapperCustom.getTop3ByPopularity();
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Override
+	public void updateLikeArticleSigned(List<String> msgIdList) {
+		userLikeArticleMapper.batchUpdateMsgSigned(msgIdList);
+	}
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Override
+	public void updateLikeCommentSigned(List<String> msgIdList) {
+		userLikeCommentMapper.batchUpdateMsgSigned(msgIdList);
+	}
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Override
+	public void updateCommentSigned(List<String> msgIdList) {
+		userArticleCommentMapperCustom.batchUpdateMsgSigned(msgIdList);		
+	}
+
+	@Transactional(propagation = Propagation.SUPPORTS)
+	@Override
+	public List<UserLikeVO> getUnsignedLikeMsg(String userId) {
+		List<UserLikeVO> userLikeVOs = userLikeMapperCustom.getUnsignedLikeMsg(userId);
+		return userLikeVOs;
+	}
+
+	@Override
+	public List<UserArticleCommentVO> getUnsignedCommentMsg(String userId) {
+		List<UserArticleCommentVO> commentVOs = userArticleCommentMapperCustom.getUnsignedCommentMsg(userId);
+		return commentVOs;
 	}
 
 }
