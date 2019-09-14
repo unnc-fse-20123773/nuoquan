@@ -214,17 +214,19 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
           'content-type': 'application/x-www-form-urlencoded' },
 
         success: function success(res) {
-          uni.hideLoading();
-          console.log(res);
-          // 判断当前页是不是第一页，如果是第一页，那么设置showList为空
-          if (page == 1) {
-            that.showlist = [];
-          }
-          var newArticleList = res.data.data.rows;
-          var oldArticleList = that.showlist;
-          that.showlist = oldArticleList.concat(newArticleList);
-          that.currentPage = page;
-          that.totalPage = res.data.data.total;
+          setTimeout(function () {// 延时加载
+            uni.hideLoading();
+            console.log(res);
+            // 判断当前页是不是第一页，如果是第一页，那么设置showList为空
+            if (page == 1) {
+              that.showlist = [];
+            }
+            var newArticleList = res.data.data.rows;
+            var oldArticleList = that.showlist;
+            that.showlist = oldArticleList.concat(newArticleList);
+            that.currentPage = page;
+            that.totalPage = res.data.data.total;
+          }, 300);
         },
         fail: function fail(res) {
           console.log("index unirequest fail");
@@ -255,6 +257,7 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
       uni.showNavigationBarLoading();
       // this.showlist = [];
       this.showArticles(1);
+      uni.hideNavigationBarLoading();
     },
     getTop3Articles: function getTop3Articles() {
       var that = this;
