@@ -222,7 +222,7 @@
 	.name {
 		display: inline-block;
 		font-size: 10px;
-		margin-left: 7px;
+		margin-left: 14upx;
 		color: #888888;
 		padding-bottom: 5px;
 		max-width: 80px;
@@ -231,7 +231,7 @@
 	.time {
 		display: inline-block;
 		font-size: 10px;
-		margin-left: 25px;
+		margin-left: 50upx;
 		color: #888888;
 		max-width: 85px;
 		text-overflow: ellipsis;
@@ -244,6 +244,8 @@
 		text-align: right;
 		display: inline-block;
 		background-image: url(../static/BG/iconsBG.png);
+		background-size: cover;
+		background-repeat: no-repeat;
 		overflow: hidden;
 		border-bottom-right-radius: 8px;
 	}
