@@ -569,19 +569,28 @@ _vue.default.prototype.chat = {
 
   },
 
-  getUserChatHistory: function getUserChatHistory(myId, friendId) {
+  /**
+      * 分页获取聊天历史，从列表尾部开始读取(反取)
+      * @param {Object} myId
+      * @param {Object} friendId
+      * @param {Object} page
+      */
+  getUserChatHistory: function getUserChatHistory(myId, friendId, page) {
     var chatKey = "chat-" + myId + "-" + friendId;
-    var chatHistoryListStr = uni.getStorageSync(chatKey);
-    var chatHistoryList;
-    if (app.isNull(chatHistoryListStr)) {
-      // 为空，赋一个空的list；
-      chatHistoryList = [];
+    var list = app.getListByKey(chatKey).reverse();
+    var size = 20;
+    var start = (page - 1) * size;
+    var newList = [];
+    if (list.length < start) {
+      return null;
     } else {
-      // 不为空
-      chatHistoryList = JSON.parse(chatHistoryListStr);
+      for (var i = 0; i < size; i++) {
+        if (!app.isNull(list[start + i])) {
+          newList.unshift(list[start + i]);
+        }
+      }
+      return newList;
     }
-
-    return chatHistoryList;
   },
 
   /**

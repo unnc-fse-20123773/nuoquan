@@ -474,7 +474,7 @@ var _default = {
         var page = this.likePage + 1;
         var list = this.notification.getLikeMsg(page);
         if (list != null) {
-          console.log(list);
+          // console.log(list)
           this.likeList = this.likeList.concat(list);
           this.likePage++;
         } else {
@@ -489,7 +489,7 @@ var _default = {
         var page = this.commentPage + 1;
         var list = this.notification.getCommentMsg(page);
         if (list != null) {
-          console.log(list);
+          // console.log(list)
           this.commentList = this.commentList.concat(list);
           this.commentPage++;
         } else {
