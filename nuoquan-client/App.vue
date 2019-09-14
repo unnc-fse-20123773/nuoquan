@@ -15,7 +15,7 @@
 
 <style>
 	/*每个页面公共css */
-	@import './common/style/aliicon.css';
+	/* @import './common/style/aliicon.css'; */
 
 	.container {
 		position: relative;

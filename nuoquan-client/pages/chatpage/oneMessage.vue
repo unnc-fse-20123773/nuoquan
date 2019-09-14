@@ -14,7 +14,7 @@
 						{{thisMessage.createDate}}
 					</view>
 					<view class="status-send" v-if="!thisMessage.isRead">
-						...
+						<!-- ... -->
 					</view>
 					<view class="status-send" style="color:#3FC24A" v-if="thisMessage.messageStatus">
 						√
