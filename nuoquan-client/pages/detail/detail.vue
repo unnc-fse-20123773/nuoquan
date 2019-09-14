@@ -5,11 +5,13 @@
 		</view>
 
 		<view class="drtailmain">
-			<text class="detailcontent">{{ articleCard.articleContent }}</text>
+			<view class="detailcontent">{{ articleCard.articleContent }}</view>
 			<view class="detailpics">
-				<view v-for="(item, index) in articleCard.imgList" :key="index">
-					<image :src="serverUrl + item.imagePath" @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
+				<view v-if="articleCard.imgList.length==1" class="1pic" style="width: 100%;max-height: 400upx;">
+					<image v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFit" style="height: 360upx;" @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
 				</view>
+				<image class="detailpic" v-else v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFill" @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
+				<view v-if="articleCard.imgList.length==2||imageList.length==5||imageList.length==8" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
 			</view>
 			<view class="tags">
 				<view class="tag" :style="{background: tagColorList[index]}" v-for="(i,index) in articleCard.tagList" v-bind:key="index">{{i}}</view>
@@ -34,12 +36,14 @@
 			<view class="fengexian" style="height: 1px;width: 100%;background-color: #d6d6d6;margin:auto;"></view>
 			<view class="submitComment" @click="controlInput(1)">发 表 评 论</view>
 
-			<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)">
-				<view class="commentPart" @click.stop="">
+			<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)" >
+				<view class="commentPart" @click.stop="" :style="{bottom: textAreaAdjust }">
 					<view class="emoji"></view>
 					<view class="submit" @click="saveComment()"></view>
 					<textarea class="commentSth" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
-					 confirm-type="send" @confirm="saveComment()" adjust-position="false" v-model="commentContent" @click.stop="" />
+					 adjust-position="false" v-model="commentContent" @click.stop="" 
+					 :show-confirm-bar="false"
+					  @focus="popTextArea" @blur="unpopTextArea"/>
 					</view>
             </view>
 		</view> 
@@ -66,6 +70,7 @@
 				imgIndex: '',
 				serverUrl: this.$serverUrl,
 				
+				textAreaAdjust:"",
 				tagColorList: [],
 				
 				totalPage: 1,
@@ -110,7 +115,7 @@
 		onLoad(options) {
 			var that = this;
 			that.articleCard = JSON.parse(options.data);
-			
+			console.log(that.articleCard)
 			var userInfo = this.getGlobalUserInfo();
 			if (!that.isNull(userInfo)) {
 				that.userInfo = this.getGlobalUserInfo();
@@ -130,6 +135,23 @@
 		},
 		
 		methods: {
+			popTextArea(e){
+				console.log("展开");
+				console.log(e);
+				console.log(e.detail.height);
+				this.textAreaAdjust =  e.detail.height/3 + 'px' ;
+			
+				// this.textAreaAdjust = '0' ;
+			
+			},
+
+			unpopTextArea(e){
+				console.log("收起");
+				console.log(e);
+				
+				this.textAreaAdjust = "";
+			},
+
 			/**
 			 * fromUserId 必填
 			 * toUserId 必填
@@ -193,14 +215,10 @@
 						that.currentPage = page;
 						that.totalPage = res.data.data.total;
 						// console.log(that.articleCard.id);
-					},
-					fail: (res) => {
-						
-						console.log("index unirequest fail");
-						console.log(res);
 					}
 				});
 			},
+
 			loadMore: function(){
 				var that = this;
 				var currentPage = that.currentPage;
@@ -211,7 +229,7 @@
 				if (currentPage == totalPage){
 					// that.showArticles(1);
 					uni.showToast({
-						title:"没有更多文章了",
+						title:"没有更多评论了",
 						icon:"none",
 						duration:1000
 					})
@@ -222,6 +240,7 @@
 					that.getComments(page);
 				}
 			},
+
 			controlInput(a){
 				if(a!=0&&a!=1){ //a!=0, !=1， 从子组件传来，包含被回复对象：被回复人ID，被回复评论ID，被回复人昵称
 					this.placeholderText='回复 @'+a.nickname+' 的评论';
@@ -326,6 +345,7 @@
 					urls:arr,
 				})
 			},
+
 			aboutImg: function(index){
 				var that = this;
 				console.log(this.articleCard.imgList[index].imagePath);
@@ -366,8 +386,6 @@
 				});
 			},
 		},
-		
-		
 	};
 </script>
 <style>	page {
@@ -389,6 +407,9 @@
 		margin: auto;
 		font-weight: 400;
 		padding-top:12px;
+		word-break: break-all;
+		word-wrap: break-word;
+		
 	}
 
 	.drtailmain {
@@ -405,23 +426,30 @@
 
 	.detailcontent {
 		padding-top: 25px;
+		padding-bottom: 15px;
 		font-size: 13px;
-		/* width: 85%;
-		margin: 0px auto 10px; */
 		font-weight: 400;
+		word-break: break-all;
+		word-wrap: break-word;
+		
+		
 	}
 
 	.detailpics {
 		display: flex;
-		justify-content: center;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		flex: 0 0 auto;
 		align-items: center;
 		flex-wrap: wrap;
+		width: 606upx;
+		margin: 0 auto;
 	}
 
 	.detailpic {
-		width: 180upx;
-		height: 180upx;
-		margin: 6px;
+		width: 190upx;
+		height: 190upx;
+		margin: 6px 0;
 	}
 
 	.tags {
@@ -515,8 +543,7 @@
 		color: #FFFFFF;
 		text-align: center;
 		line-height: 30px;
-		margin-top:12px;
-		margin-bottom: 50px;
+		
 	}
 .bottoLayerOfInput{
 	position: fixed;
@@ -534,7 +561,7 @@
 		width: 670upx;
 		padding:11px 40upx;
 		min-height: 50px;
-		background: #FFFFFF;
+		background: #058ECC;
 	}
 
 	.emoji {
@@ -564,6 +591,5 @@
 		line-height: 20px;
 		font-size: 14px;
 		padding:8px 10px;
-		
 	}
 </style>

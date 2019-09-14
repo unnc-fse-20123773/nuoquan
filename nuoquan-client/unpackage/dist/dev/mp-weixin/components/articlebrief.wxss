@@ -19,12 +19,18 @@ image {
 	line-height: 19px;
 	margin: 16px 13px 0 15px;
 	padding-top: 16px;
+	word-wrap: break-word;
+	word-break: break-all;
+	white-space: normal;
 }
 .briefarticleCard.data-v-2881634c {
 	margin: 10px 13px 0 15px;
 	font-size: 13px;
 	line-height: 15px;
 	margin-bottom: 15px;
+	word-wrap: break-word;
+	word-break: break-all;
+	white-space: normal;
 }
 .tags.data-v-2881634c {
 	margin-left: 10px;
@@ -41,7 +47,7 @@ image {
 	font-size: 10px;
 	background: #621E81;
 }
-.tag-empty.data-v-2881634c{
+.tag-empty.data-v-2881634c {
 	margin-left: 10px;
 	height: 15px;
 	width: auto;
@@ -76,7 +82,7 @@ image {
 .icons.data-v-2881634c {
 	position: absolute;
 	right: 0;
-	bottom:0;
+	bottom: 0;
 	width: 206rpx;
 	text-align: right;
 	display: inline-block;

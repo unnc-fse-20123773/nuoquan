@@ -1,12 +1,16 @@
 # Update Log:
 **v19.9.14 更新**
-整合 deyan & guetta
-新增 chatpage 分页
-新增 评论 分页 (deyan)
-新增 主页查看原图 (deyan)
-新增 detail 长按图片保存到本地 (deyan)
-小改 数据库, 详情见 sqlRecord.sql
-删除 多余文件
+1. 整合 deyan & yaoyao
+2. 新增 chatpage 分页
+3. 新增 首页点赞
+4. 新增 评论 分页 (deyan)
+5. 新增 主页查看原图 (deyan)
+6. 新增 detail 长按图片保存到本地 (deyan)
+7. 修复[中等] Bug-100018
+8. 修复[中等] Bug-100019
+9. 修复[严重] Bug-100021
+10. 小改 数据库, 详情见 sqlRecord.sql
+11. 删除 多余文件
 
 **v19.9.12 更新**
 1. 新增 cmt-like 分页加载，极大提升渲染速度

@@ -143,6 +143,12 @@
 				uni.request({
 					url: that.$serverUrl + '/article/getHotTop3',
 					method: "POST",
+					data:{
+						userId: that.userInfo.id,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
 					success: (res) => {
 						that.topArticles = res.data.data;
 					}

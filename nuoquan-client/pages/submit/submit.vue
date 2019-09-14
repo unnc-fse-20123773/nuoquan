@@ -358,6 +358,7 @@
 		background: #F4F1E9;
 		margin-top: 13px;
 		width: 100%;
+		overflow: scroll;
 	}
 
 	.picturearea {

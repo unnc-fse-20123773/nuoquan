@@ -167,6 +167,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
 {
   data: function data() {
     return {
@@ -185,6 +189,7 @@ __webpack_require__.r(__webpack_exports__);
       imgIndex: '',
       serverUrl: this.$serverUrl,
 
+      textAreaAdjust: "",
       tagColorList: [],
 
       totalPage: 1,
@@ -229,7 +234,7 @@ __webpack_require__.r(__webpack_exports__);
   onLoad: function onLoad(options) {
     var that = this;
     that.articleCard = JSON.parse(options.data);
-
+    console.log(that.articleCard);
     var userInfo = this.getGlobalUserInfo();
     if (!that.isNull(userInfo)) {
       that.userInfo = this.getGlobalUserInfo();
@@ -249,16 +254,33 @@ __webpack_require__.r(__webpack_exports__);
   },
 
   methods: {
+    popTextArea: function popTextArea(e) {
+      console.log("展开");
+      console.log(e);
+      console.log(e.detail.height);
+      this.textAreaAdjust = e.detail.height / 3 + 'px';
+
+      // this.textAreaAdjust = '0' ;
+
+    },
+
+    unpopTextArea: function unpopTextArea(e) {
+      console.log("收起");
+      console.log(e);
+
+      this.textAreaAdjust = "";
+    },
+
     /**
-              * fromUserId 必填
-              * toUserId 必填
-              * articleId 必填 // 为了计算文章总评论数
-              * underCommentId // 显示在该主评论层ID下
-              * fatherCommentId // 父级评论ID
-              * comment 必填
-              * PS: 父级（一级，给文章评论）评论 无 fatherCommentId, underCommentId;
-              *     子级评论有 fatherCommentId, underCommentId;
-              */
+        * fromUserId 必填
+        * toUserId 必填
+        * articleId 必填 // 为了计算文章总评论数
+        * underCommentId // 显示在该主评论层ID下
+        * fatherCommentId // 父级评论ID
+        * comment 必填
+        * PS: 父级（一级，给文章评论）评论 无 fatherCommentId, underCommentId;
+        *     子级评论有 fatherCommentId, underCommentId;
+        */
     saveComment: function saveComment() {var _this = this;
       this.submitData.comment = this.commentContent;
       this.submitData.fromUserId = this.userInfo.id;
@@ -312,14 +334,10 @@ __webpack_require__.r(__webpack_exports__);
           that.currentPage = page;
           that.totalPage = res.data.data.total;
           // console.log(that.articleCard.id);
-        },
-        fail: function fail(res) {
-
-          console.log("index unirequest fail");
-          console.log(res);
         } });
 
     },
+
     loadMore: function loadMore() {
       var that = this;
       var currentPage = that.currentPage;
@@ -330,7 +348,7 @@ __webpack_require__.r(__webpack_exports__);
       if (currentPage == totalPage) {
         // that.showArticles(1);
         uni.showToast({
-          title: "没有更多文章了",
+          title: "没有更多评论了",
           icon: "none",
           duration: 1000 });
 
@@ -341,6 +359,7 @@ __webpack_require__.r(__webpack_exports__);
         that.getComments(page);
       }
     },
+
     controlInput: function controlInput(a) {
       if (a != 0 && a != 1) {//a!=0, !=1， 从子组件传来，包含被回复对象：被回复人ID，被回复评论ID，被回复人昵称
         this.placeholderText = '回复 @' + a.nickname + ' 的评论';
@@ -445,6 +464,7 @@ __webpack_require__.r(__webpack_exports__);
         urls: arr });
 
     },
+
     aboutImg: function aboutImg(index) {
       var that = this;
       console.log(this.articleCard.imgList[index].imagePath);

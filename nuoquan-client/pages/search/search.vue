@@ -167,6 +167,10 @@
 					}
 				})
 			},
+			searchCancle: function(searching){
+					this.searching = !searching;
+					console.log(this.searching);
+			},
 			loadMore: function() {
 				var that = this;
 				var currentPage = that.currentPage;

@@ -207,15 +207,15 @@ __webpack_require__.r(__webpack_exports__);
             // console.log(res);
           }
 
-          if (page == 1) {
-            that.reCommentList = [];
-          }
-
-          var newCommentList = res.data.data.rows;
-          var oldCommentList = that.reCommentList;
-          that.reCommentList = oldCommentList.concat(newCommentList);
-          that.currentPage = page;
-          that.totalPage = res.data.data.total;
+          // if (page == 1) {
+          // 	that.reCommentList = [];
+          // }
+          // 
+          // var newCommentList = res.data.data.rows;
+          // var oldCommentList = that.reCommentList;
+          // that.reCommentList = oldCommentList.concat(newCommentList);
+          // that.currentPage = page;
+          // that.totalPage = res.data.data.total;
         } });
 
     },
