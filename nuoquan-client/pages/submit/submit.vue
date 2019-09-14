@@ -12,7 +12,7 @@
 			<input class="title" v-model="articleTitle" placeholder="  标题" />
 			<view class="tagsArea">
 				<!-- 展示标签区域 -->
-				<view class="tag" v-if="showTagArea" v-for="i in tagList" :key="i">{{i}}</view>
+				<view class="tag" v-if="showTagArea" v-for="i in tagList" :key="i" @click="deleteTag(i)">{{i}}</view>
 				<!-- 添加标签区域 -->
 				<view class="addTag">
 					<view v-if="showAddTagButton" @click="addTag">
@@ -112,8 +112,20 @@
 					that.tagIndex = that.tagIndex + 1;
 					that.showAddTagButton = 1;
 					that.showInputTagArea = 0;
-					that.articleTag = '';
+					that.articleTag = '';					
 				}
+			},
+			deleteTag(tag){
+				var that = this ;
+				var i = 0;
+				var newTagListTemp= [];
+				for(i=0;i<that.tagIndex;i++){
+					if(that.tagList[i]!=tag){
+						newTagListTemp.push(that.tagList[i]); 
+					}
+				}
+				that.tagList = newTagListTemp;
+				that.tagIndex = that.tagIndex-1;
 			},
 			combineTagToString: function(res) {
 				var that = this;
@@ -302,6 +314,7 @@
 		position: relative;
 		margin-right: 12px;
 		margin-bottom: 6px;
+		pointer-events: none;
 	}
 
 	.tag::after {
@@ -310,6 +323,7 @@
 		right: 12px;
 		color: #939393;
 		font-size: 13px;
+		pointer-events: auto;
 	}
 
 	.addTag {

@@ -231,6 +231,18 @@ var sizeType = [
         that.articleTag = '';
       }
     },
+    deleteTag: function deleteTag(tag) {
+      var that = this;
+      var i = 0;
+      var newTagListTemp = [];
+      for (i = 0; i < that.tagIndex; i++) {
+        if (that.tagList[i] != tag) {
+          newTagListTemp.push(that.tagList[i]);
+        }
+      }
+      that.tagList = newTagListTemp;
+      that.tagIndex = that.tagIndex - 1;
+    },
     combineTagToString: function combineTagToString(res) {
       var that = this;
       for (var i = 0; i < that.tagList.length; i++) {

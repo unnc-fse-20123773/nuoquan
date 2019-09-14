@@ -53,6 +53,7 @@ page {
 	position: relative;
 	margin-right: 12px;
 	margin-bottom: 6px;
+	pointer-events: none;
 }
 .tag::after {
 	position: absolute;
@@ -60,6 +61,7 @@ page {
 	right: 12px;
 	color: #939393;
 	font-size: 13px;
+	pointer-events: auto;
 }
 .addTag {
 	height: 30px;
