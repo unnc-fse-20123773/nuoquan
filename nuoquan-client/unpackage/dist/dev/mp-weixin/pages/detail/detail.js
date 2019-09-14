@@ -117,7 +117,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var comment = function comment() {return __webpack_require__.e(/*! import() | components/comment */ "components/comment").then(__webpack_require__.bind(null, /*! ../../components/comment */ 161));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var comment = function comment() {return __webpack_require__.e(/*! import() | components/comment */ "components/comment").then(__webpack_require__.bind(null, /*! ../../components/comment */ 161));};var _default =
 
 
 
@@ -172,9 +172,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 {
-  data: function data() {var _ref;
-    return _ref = {
-      serverUrl: this.$serverUrl,
+  data: function data() {
+    return {
       userInfo: {},
       articleCard: "", //detail的主角，由index传过来的单个文章信息
       commentContent: "", //用户准备提交的评论内容
@@ -187,10 +186,10 @@ __webpack_require__.r(__webpack_exports__);
       submitData: {
         //这个是从子组件传来的数据，回复评论的评论之类
       },
-      imgIndex: '' }, _defineProperty(_ref, "serverUrl",
-    this.$serverUrl), _defineProperty(_ref, "tagColorList",
+      imgIndex: '',
+      serverUrl: this.$serverUrl,
 
-    []), _ref;
+      tagColorList: [] };
 
   },
   components: {
@@ -200,7 +199,7 @@ __webpack_require__.r(__webpack_exports__);
   filters: {
     timeDeal: function timeDeal(timediff) {
       timediff = new Date(timediff);
-      var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(), timediff.getSeconds()];
+      var parts = [timediff.getFullYear(), timediff.getMonth() + 1, timediff.getDate(), timediff.getHours(), timediff.getMinutes(), timediff.getSeconds()];
       var oldTime = timediff.getTime();
       var now = new Date();
       var newTime = now.getTime();

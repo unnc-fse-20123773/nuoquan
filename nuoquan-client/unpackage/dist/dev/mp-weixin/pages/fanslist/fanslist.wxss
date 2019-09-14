@@ -54,6 +54,9 @@ page {
 	font-size: 13px;
 	margin-left: 13px;
 	vertical-align: middle;
+	max-width: 80px;
+	-o-text-overflow: ellipsis;
+	   text-overflow: ellipsis;
 }
 .goFocus.data-v-7ab2d312 {
 	border: solid 1px #ECC138;

@@ -72,12 +72,18 @@ image {
 	margin-left: 7px;
 	color: #888888;
 	padding-bottom: 5px;
+	max-width: 80px;
+	-o-text-overflow: ellipsis;
+	   text-overflow: ellipsis;
 }
 .time.data-v-0734f7a0 {
 	display: inline-block;
 	font-size: 10px;
 	margin-left: 25px;
 	color: #888888;
+	max-width: 85px;
+	-o-text-overflow: ellipsis;
+	   text-overflow: ellipsis;
 }
 .icons.data-v-0734f7a0 {
 	position: absolute;

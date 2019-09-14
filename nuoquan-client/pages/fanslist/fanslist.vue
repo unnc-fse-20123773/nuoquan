@@ -140,6 +140,8 @@
 		font-size: 13px;
 		margin-left: 13px;
 		vertical-align: middle;
+		max-width: 80px;
+		text-overflow: ellipsis;
 	}
 	.goFocus {
 		border: solid 1px #ECC138;
