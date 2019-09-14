@@ -147,7 +147,7 @@
 						this.showInput = false;
 						
 						if(that.isNull(that.submitData.underCommentId)){
-							that.getComments();
+							that.getComments(that.currentPage);
 						}else{
 							uni.$emit("flashSubComment", that.submitData.underCommentId);
 						}
@@ -177,7 +177,7 @@
 						if (page == 1) {
 							that.commentList = [];
 						}
-
+						console.log(res);
 						var newCommentList = res.data.data.rows;
 						var oldCommentList = that.commentList;
 						that.commentList = oldCommentList.concat(newCommentList);

@@ -238,7 +238,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
       uni.showLoading({
-        title: "加载中..." });
+        title: "搜索中..." });
 
 
       uni.request({
@@ -251,8 +251,9 @@ __webpack_require__.r(__webpack_exports__);
 
         success: function success(result) {
           uni.hideLoading();
+          console.log(result);
           // console.log(result.data);
-          that.searchedArticleList = result.data.data.rows;
+          // that.searchedArticleList = result.data.data.rows;
           that.searching = false;
 
           // 判断当前页是不是第一页，如果是第一页，那么设置showList为空
