@@ -151,11 +151,14 @@ __webpack_require__.r(__webpack_exports__);
     return {
       hotList: [],
       searchKeyWords: '',
-      searchedArticleList: {},
+      searchedArticleList: [],
       searching: true,
       searchHisKeyList: uni.getStorageSync('search_history'),
 
-      userInfo: this.getGlobalUserInfo() };
+      userInfo: this.getGlobalUserInfo(),
+
+      totalPage: 1,
+      currentPage: 1 };
 
   },
   components: {
@@ -165,6 +168,9 @@ __webpack_require__.r(__webpack_exports__);
     // 查询热搜词
     this.getHotWords();
   },
+  // onReachBottom() {
+  // 	this.loadMore();
+  // },
   methods: {
     getHotWords: function getHotWords() {
       console.log('dasdsdad');
@@ -181,11 +187,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
     },
-    search: function search(res) {
+    search: function search(page) {
       var that = this;
       var isSaveRecord = 1;
-
-      // console.log(that.searchKeyWords);
+      // console.log(page);
       if (this.searchKeyWords == '' || this.searchKeyWords == null) {
         uni.showToast({
           title: '搜索内容不能为空',
@@ -232,19 +237,61 @@ __webpack_require__.r(__webpack_exports__);
         } });
 
 
+      uni.showLoading({
+        title: "搜索中..." });
+
+
       uni.request({
         url: that.$serverUrl + '/article/searchArticleYANG?isSaveRecord=' + isSaveRecord,
         method: "POST",
         data: {
           articleContent: that.searchKeyWords,
-          userId: that.userInfo.id },
+          userId: that.userInfo.id,
+          page: page },
 
         success: function success(result) {
+          uni.hideLoading();
+          console.log(result);
           // console.log(result.data);
-          that.searchedArticleList = result.data.data.rows;
+          // that.searchedArticleList = result.data.data.rows;
           that.searching = false;
+
+          // 判断当前页是不是第一页，如果是第一页，那么设置showList为空
+          if (that.currentPage == 1) {
+            that.searchedArticleList = [];
+          }
+
+          var newArticleList = result.data.data.rows;
+          var oldArticleList = that.searchedArticleList;
+          that.searchedArticleList = oldArticleList.concat(newArticleList);
+          // console.log(result.data.data.page);
+          that.currentPage = page;
+          that.totalPage = result.data.data.total;
+        },
+        fail: function fail(res) {
+          console.log("index unirequest fail");
+          console.log(res);
         } });
 
+    },
+    loadMore: function loadMore() {
+      var that = this;
+      var currentPage = that.currentPage;
+      console.log('currentpage is ' + currentPage);
+      var totalPage = that.totalPage;
+      console.log('totalpage is ' + totalPage);
+      // 判断当前页数和总页数是否相等
+      if (currentPage == totalPage) {
+        // that.showArticles(1);
+        uni.showToast({
+          title: "没有更多文章了",
+          icon: "none",
+          duration: 1000 });
+
+      } else {
+        var page = currentPage + 1;
+        that.search(page);
+      }
     },
     searchDeleteAll: function searchDeleteAll() {
       var that = this;

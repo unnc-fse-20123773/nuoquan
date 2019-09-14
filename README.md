@@ -1,7 +1,11 @@
 # Update Log:
-**v19.9.12 更新**
-
-小改 数据库
+**v19.9.14 更新**
+整合 deyan & guetta
+新增 chatpage 分页
+新增 评论 分页 (deyan)
+新增 主页查看原图 (deyan)
+新增 detail 长按图片保存到本地 (deyan)
+小改 数据库, 详情见 sqlRecord.sql
 删除 多余文件
 
 **v19.9.12 更新**

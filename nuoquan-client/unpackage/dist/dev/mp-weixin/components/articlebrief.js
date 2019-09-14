@@ -170,6 +170,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 var _default =
 {
   name: 'aticlebrief',
@@ -197,10 +198,12 @@ var _default =
     }
 
     // 随机生成颜色
-    var tagColors = this.tagColors;
-    for (var i = 0; i < this.articleCard.tagList.length; i++) {
-      var random = Math.floor(Math.random() * tagColors.length); // 0~tagColors.length-1
-      this.tagColorList.push(tagColors[random]);
+    if (!this.isNull(this.articleCard.tagList)) {
+      var tagColors = this.tagColors;
+      for (var i = 0; i < this.articleCard.tagList.length; i++) {
+        var random = Math.floor(Math.random() * tagColors.length); // 0~tagColors.length-1
+        this.tagColorList.push(tagColors[random]);
+      }
     }
   },
   filters: {
@@ -251,6 +254,25 @@ var _default =
     goToPersonPublic: function goToPersonPublic(userId) {
       uni.navigateTo({
         url: '/pages/personpublic/personpublic?userId=' + userId });
+
+    },
+    previewImage: function previewImage(index) {
+      var imgIndex = index;
+      // console.log(res)
+      // 获取全部图片路径
+      var imgList = this.articleCard.imgList;
+      var arr = [];
+      var path;
+      for (var i = 0; i < imgList.length; i++) {
+        // console.log(imgList[i].imagePath);
+        path = this.serverUrl + imgList[i].imagePath;
+        arr = arr.concat(path);
+      }
+      // console.log(arr);
+
+      uni.previewImage({
+        current: index,
+        urls: arr });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

@@ -8,7 +8,7 @@
 			<text class="detailcontent">{{ articleCard.articleContent }}</text>
 			<view class="detailpics">
 				<view v-for="(item, index) in articleCard.imgList" :key="index">
-					<image :src="serverUrl + item.imagePath" @tap="previewImg(index)"></image>
+					<image :src="serverUrl + item.imagePath" @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
 				</view>
 			</view>
 			<view class="tags">
@@ -67,6 +67,9 @@
 				serverUrl: this.$serverUrl,
 				
 				tagColorList: [],
+				
+				totalPage: 1,
+				currentPage: 1,
 			};
 		},
 		components: {
@@ -100,22 +103,29 @@
 			}
 		},
 		
+		onReachBottom() {
+			this.loadMore();
+		},
+		
 		onLoad(options) {
-			this.articleCard = JSON.parse(options.data);
-			// console.log(this.articleCard);
+			var that = this;
+			that.articleCard = JSON.parse(options.data);
 			
 			var userInfo = this.getGlobalUserInfo();
-			if (!this.isNull(userInfo)) {
-				this.userInfo = this.getGlobalUserInfo();
+			if (!that.isNull(userInfo)) {
+				that.userInfo = this.getGlobalUserInfo();
 			}
 			
-			this.getComments();
+			var page = that.currentPage;
+			this.getComments(page);
 			
 			// 随机生成颜色
-			var tagColors = this.tagColors;
-			for (var i=0; i<this.articleCard.tagList.length; i++){
-				var random = Math.floor(Math.random()*tagColors.length); // 0~tagColors.length-1
-				this.tagColorList.push(tagColors[random]);
+			if(!this.isNull(this.articleCard.tagList)){
+				var tagColors = this.tagColors;
+				for (var i=0; i<this.articleCard.tagList.length; i++){
+					var random = Math.floor(Math.random()*tagColors.length); // 0~tagColors.length-1
+					this.tagColorList.push(tagColors[random]);
+				}
 			}
 		},
 		
@@ -146,7 +156,7 @@
 						this.showInput = false;
 						
 						if(that.isNull(that.submitData.underCommentId)){
-							that.getComments();
+							that.getComments(that.currentPage);
 						}else{
 							uni.$emit("flashSubComment", that.submitData.underCommentId);
 						}
@@ -154,27 +164,64 @@
 				})
 			},
 			
-			getComments: function() {		
+			getComments: function(page) {		
 				var that = this;
+				uni.showLoading({
+					title:"加载中..."
+				})
 				uni.request({
 					method: "POST",
 					url: that.$serverUrl + '/article/getMainComments',
 					data: {
 						articleId: that.articleCard.id,
 						userId: that.userInfo.id,
+						page: page,
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: (res) => {	
+						uni.hideLoading();
 						// console.log(res);
-						that.commentList = res.data.data.rows;
+						if (page == 1) {
+							that.commentList = [];
+						}
+						console.log(res);
+						var newCommentList = res.data.data.rows;
+						var oldCommentList = that.commentList;
+						that.commentList = oldCommentList.concat(newCommentList);
+						that.currentPage = page;
+						that.totalPage = res.data.data.total;
 						// console.log(that.articleCard.id);
-						
 					},
+					fail: (res) => {
+						
+						console.log("index unirequest fail");
+						console.log(res);
+					}
 				});
 			},
-			
+			loadMore: function(){
+				var that = this;
+				var currentPage = that.currentPage;
+				console.log(currentPage);
+				var totalPage = that.totalPage;
+				console.log(totalPage);
+				// 判断当前页数和总页数是否相等
+				if (currentPage == totalPage){
+					// that.showArticles(1);
+					uni.showToast({
+						title:"没有更多文章了",
+						icon:"none",
+						duration:1000
+					})
+				} else if(that.commentList.length < 10){
+					return;
+				} else {
+					var page = currentPage + 1;
+					that.getComments(page);
+				}
+			},
 			controlInput(a){
 				if(a!=0&&a!=1){ //a!=0, !=1， 从子组件传来，包含被回复对象：被回复人ID，被回复评论ID，被回复人昵称
 					this.placeholderText='回复 @'+a.nickname+' 的评论';
@@ -279,7 +326,47 @@
 					urls:arr,
 				})
 			},
+			aboutImg: function(index){
+				var that = this;
+				console.log(this.articleCard.imgList[index].imagePath);
+				uni.showActionSheet({
+					itemList: ['保存图片到本地'],
+					success: function(res) {
+						console.log(res.tapIndex);
+						// 保存图片至本地
+						if(res.tapIndex == 0) {
+							uni.showLoading({
+								title:'下载中...'
+							})
+							uni.downloadFile({
+								url: that.serverUrl + that.articleCard.imgList[index].imagePath,
+								success: function(res) {
+									if(res.statusCode == 200){
+										uni.saveImageToPhotosAlbum({
+											filePath: res.tempFilePath,
+											success: function () {
+												console.log('save success');
+												uni.hideLoading();
+											},
+											fail: function() {
+												console.log('save failed');
+												uni.hideLoading();
+												uni.showToast({
+													title:'保存失败',
+													icon:'none',
+													duration:1000,
+												})
+											}
+										});
+									}
+								}
+							})
+						}
+					}
+				});
+			},
 		},
+		
 		
 	};
 </script>
