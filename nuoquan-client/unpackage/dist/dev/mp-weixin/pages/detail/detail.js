@@ -117,7 +117,10 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var comment = function comment() {return __webpack_require__.e(/*! import() | components/comment */ "components/comment").then(__webpack_require__.bind(null, /*! ../../components/comment */ 151));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var comment = function comment() {return __webpack_require__.e(/*! import() | components/comment */ "components/comment").then(__webpack_require__.bind(null, /*! ../../components/comment */ 161));};var _default =
+
+
+
 
 
 
@@ -189,6 +192,10 @@ __webpack_require__.r(__webpack_exports__);
       imgIndex: '',
       serverUrl: this.$serverUrl,
 
+      totalPage: 1,
+      currentPage: 1,
+
+
       tagColorList: [] };
 
   },
@@ -223,16 +230,22 @@ __webpack_require__.r(__webpack_exports__);
     } },
 
 
+  onReachBottom: function onReachBottom() {
+    this.loadMore();
+  },
+
   onLoad: function onLoad(options) {
-    this.articleCard = JSON.parse(options.data);
-    // console.log(this.articleCard);
+    var that = this;
+    that.articleCard = JSON.parse(options.data);
 
     var userInfo = this.getGlobalUserInfo();
-    if (!this.isNull(userInfo)) {
-      this.userInfo = this.getGlobalUserInfo();
+    if (!that.isNull(userInfo)) {
+      that.userInfo = this.getGlobalUserInfo();
     }
 
-    this.getComments();
+    var page = that.currentPage;
+    this.getComments(page);
+
 
     // 随机生成颜色
     var tagColors = this.tagColors;
@@ -269,7 +282,7 @@ __webpack_require__.r(__webpack_exports__);
           _this.showInput = false;
 
           if (that.isNull(that.submitData.underCommentId)) {
-            that.getComments();
+            that.getComments(that.currentPage);
           } else {
             uni.$emit("flashSubComment", that.submitData.underCommentId);
           }
@@ -277,27 +290,64 @@ __webpack_require__.r(__webpack_exports__);
 
     },
 
-    getComments: function getComments() {
+    getComments: function getComments(page) {
       var that = this;
+      uni.showLoading({
+        title: "加载中..." });
+
       uni.request({
         method: "POST",
         url: that.$serverUrl + '/article/getMainComments',
         data: {
           articleId: that.articleCard.id,
-          userId: that.userInfo.id },
+          userId: that.userInfo.id,
+          page: page },
 
         header: {
           'content-type': 'application/x-www-form-urlencoded' },
 
         success: function success(res) {
+          uni.hideLoading();
           // console.log(res);
-          that.commentList = res.data.data.rows;
+          if (page == 1) {
+            that.commentList = [];
+          }
+          console.log(res);
+          var newCommentList = res.data.data.rows;
+          var oldCommentList = that.commentList;
+          that.commentList = oldCommentList.concat(newCommentList);
+          that.currentPage = page;
+          that.totalPage = res.data.data.total;
           // console.log(that.articleCard.id);
+        },
+        fail: function fail(res) {
 
+          console.log("index unirequest fail");
+          console.log(res);
         } });
 
     },
+    loadMore: function loadMore() {
+      var that = this;
+      var currentPage = that.currentPage;
+      console.log(currentPage);
+      var totalPage = that.totalPage;
+      console.log(totalPage);
+      // 判断当前页数和总页数是否相等
+      if (currentPage == totalPage) {
+        // that.showArticles(1);
+        uni.showToast({
+          title: "没有更多文章了",
+          icon: "none",
+          duration: 1000 });
 
+      } else if (that.commentList.length < 10) {
+        return;
+      } else {
+        var page = currentPage + 1;
+        that.getComments(page);
+      }
+    },
     controlInput: function controlInput(a) {
       if (a != 0 && a != 1) {//a!=0, !=1， 从子组件传来，包含被回复对象：被回复人ID，被回复评论ID，被回复人昵称
         this.placeholderText = '回复 @' + a.nickname + ' 的评论';
@@ -400,6 +450,45 @@ __webpack_require__.r(__webpack_exports__);
       uni.previewImage({
         current: index,
         urls: arr });
+
+    },
+    aboutImg: function aboutImg(index) {
+      var that = this;
+      console.log(this.articleCard.imgList[index].imagePath);
+      uni.showActionSheet({
+        itemList: ['保存图片到本地'],
+        success: function success(res) {
+          console.log(res.tapIndex);
+          // 保存图片至本地
+          if (res.tapIndex == 0) {
+            uni.showLoading({
+              title: '下载中...' });
+
+            uni.downloadFile({
+              url: that.serverUrl + that.articleCard.imgList[index].imagePath,
+              success: function success(res) {
+                if (res.statusCode == 200) {
+                  uni.saveImageToPhotosAlbum({
+                    filePath: res.tempFilePath,
+                    success: function success() {
+                      console.log('save success');
+                      uni.hideLoading();
+                    },
+                    fail: function fail() {
+                      console.log('save failed');
+                      uni.hideLoading();
+                      uni.showToast({
+                        title: '保存失败',
+                        icon: 'none',
+                        duration: 1000 });
+
+                    } });
+
+                }
+              } });
+
+          }
+        } });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

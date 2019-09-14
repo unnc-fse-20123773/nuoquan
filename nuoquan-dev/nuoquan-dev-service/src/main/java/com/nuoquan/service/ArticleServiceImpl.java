@@ -186,7 +186,7 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public PagedResult searchYangArticlesContent(Integer isSaveRecord, Integer page, Integer pageSize, Article article, String userId) {
 		
-		// 保存热搜词
+		// 保存热搜词 
 		String articleContent = article.getArticleContent();
 		if (isSaveRecord != null && isSaveRecord == 1) {
 			SearchRecord record = new SearchRecord();

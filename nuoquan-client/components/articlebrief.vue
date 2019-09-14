@@ -1,8 +1,9 @@
 <template>
-	<view class="articlecard" id="'+articleCard.id+'" @click="jumpToDetail()">
-		<view class="title">{{ articleCard.articleTitle }}</view>
-		<text class="briefarticleCard">{{ articleCard.articleContent }}</text>
-		
+	<view class="articlecard" id="'+articleCard.id+'">
+		<view class="articlecard" @click="jumpToDetail()">
+		<view class="title" @click="jumpToDetail()">{{ articleCard.articleTitle }}</view>
+		<text class="briefarticleCard" @click="jumpToDetail()">{{ articleCard.articleContent }}</text>
+		</view>
 		<view :class="[articleCard.imgList.length == 1 ? 'picturearea-one' : 'picturearea-mul']">
 			<!-- *******这里是文章配图的位置*******-->
 
@@ -19,17 +20,17 @@
 			<view style="width: 100%;max-height: 400upx;" v-if="articleCard.imgList.length == 1">
 				<!-- 高 ＞ 宽 -->
 				<view v-if="singleImgState == 0" style="width: 360upx;">
-					<image mode="aspectFit" style="height: 360upx;" :src="serverUrl + articleCard.imgList[0].imagePath" @load="singleImgeFit" @tap="previewImage"></image>
+					<image mode="aspectFit" style="height: 360upx;" :src="serverUrl + articleCard.imgList[0].imagePath" @load="singleImgeFit" @tap="previewImage(0)"></image>
 				</view>
 				<!-- 宽 > 高 -->
 				<view v-else style="max-height: 400upx;display: flex;">
-					<image mode="aspectFit" style="width: 90%;" :src="serverUrl + articleCard.imgList[0].imagePath" @load="singleImgeFit" @tap="previewImage"></image>
+					<image mode="aspectFit" style="width: 90%;" :src="serverUrl + articleCard.imgList[0].imagePath" @load="singleImgeFit" @tap="previewImage(0)"></image>
 				</view>
 			</view>
 			<!-- 多图显示 -->
 			
 			<view style="width:30%;height: 200upx;margin-left: 2.5%;display: flex;background-color: #D1D1D1;" v-else v-for="(item,index) in imgList" :key="index">
-				<image mode="aspectFit" :src="serverUrl + item.imagePath" @tap="previewImage"></image>				
+				<image mode="aspectFit" :src="serverUrl + item.imagePath" @tap="previewImage(index)"></image>				
 			</view>
 			
 		</view>
@@ -136,6 +137,25 @@
 				uni.navigateTo({
 					url:'/pages/personpublic/personpublic?userId=' + userId,
 				});
+			},
+			previewImage: function(index) {
+				var imgIndex = index;
+				// console.log(res)
+				// 获取全部图片路径
+				var imgList = this.articleCard.imgList;
+				var arr = [];
+				var path;
+				for (var i=0; i<imgList.length; i++){
+					// console.log(imgList[i].imagePath);
+					path = this.serverUrl + imgList[i].imagePath
+					arr = arr.concat(path);
+				}
+				// console.log(arr);
+				
+				uni.previewImage({
+					current: index,
+					urls:arr,
+				})
 			},
 			// previewImage: function(e) {
 			// 	console.log(e);

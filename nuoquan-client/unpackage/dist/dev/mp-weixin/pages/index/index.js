@@ -151,7 +151,7 @@ var _vuex = __webpack_require__(/*! vuex */ 12);function _interopRequireDefault(
 //
 //
 //
-var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! import() | components/mainpagetop */ "components/mainpagetop").then(__webpack_require__.bind(null, /*! ../../components/mainpagetop.vue */ 135));};var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ 144));};var _default = { data: function data() {return { title: 'Hello', hottitlelist: ['热门标题111', '热门标题222', '热门标题333'], showlist: [], topArticles: '', topHeight: "160", userInfo: { // 默认user设置
+var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! import() | components/mainpagetop */ "components/mainpagetop").then(__webpack_require__.bind(null, /*! ../../components/mainpagetop.vue */ 145));};var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ 154));};var _default = { data: function data() {return { title: 'Hello', hottitlelist: ['热门标题111', '热门标题222', '热门标题333'], showlist: [], topArticles: '', topHeight: "160", userInfo: { // 默认user设置
         id: 'test-id123', nickname: 'test-name', faceImg: '', faceImgThumb: '', email: 'zy22089@nottingham.edu.cn',
         emailPrefix: 'zy22089',
         emailSuffix: '@nottingham.edu.cn' },
@@ -474,6 +474,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 var _default =
 {
   name: 'aticlebrief',
@@ -559,7 +560,35 @@ var _default =
       uni.navigateTo({
         url: '/pages/personpublic/personpublic?userId=' + userId });
 
-    } } };exports.default = _default;
+    },
+    previewImage: function previewImage(index) {
+      var imgIndex = index;
+      // console.log(res)
+      // 获取全部图片路径
+      var imgList = this.articleCard.imgList;
+      var arr = [];
+      var path;
+      for (var i = 0; i < imgList.length; i++) {
+        // console.log(imgList[i].imagePath);
+        path = this.serverUrl + imgList[i].imagePath;
+        arr = arr.concat(path);
+      }
+      // console.log(arr);
+
+      uni.previewImage({
+        current: index,
+        urls: arr });
+
+    }
+    // previewImage: function(e) {
+    // 	console.log(e);
+    // 	// var current = e.target.dataset.src
+    // 	// uni.previewImage({
+    // 	// 	current: current,
+    // 	// 	urls: e,
+    // 	// })
+    // },
+  } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

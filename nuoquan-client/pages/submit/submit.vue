@@ -9,7 +9,11 @@
 
 		<view class="submitMain">
 			<!-- 当失去焦点时，将输入内容存入articleTitle -->
-			<input class="title" v-model="articleTitle" placeholder="  标题" />
+			<input class="title" v-model="articleTitle" placeholder="标题" maxlength="20">
+			<view style="display: flex;justify-content: space-between;color: #353535;font-size: 13px;line-height: 28px;height: 24px;">
+				<view>还可以输入</view>
+				<view>{{20 - articleTitle.length}}字</view>
+			</view>
 			<view class="tagsArea">
 				<!-- 展示标签区域 -->
 				<view class="tag" v-if="showTagArea" v-for="i in tagList" :key="i" @click="deleteTag(i)">{{i}}</view>
@@ -22,10 +26,10 @@
 
 				</view>
 			</view>
-			<textarea placeholder="内容[最多2048字]" class="content" v-model="articleContent" maxlength=2048 show-confirm-bar="false"></textarea>
+			<textarea placeholder="内容[最多2048字]" class="content" v-model="articleContent" maxlength=2048 :show-confirm-bar="false"></textarea>
 			<view style="display: flex;justify-content: space-between;color: #353535;font-size: 13px;line-height: 28px;height: 24px;">
-				<view>点击可预览选好的图片</view>
-				<view>{{imageList.length}}/9</view>
+				<view>还可以输入</view>
+				<view>{{140 - articleContent.length}}字</view>
 			</view>
 
 			<view class="picturearea">
@@ -176,7 +180,7 @@
 				var me = this;
 				console.log(me.articleTitle);
 				console.log(me.articleContent);
-				
+
 				if (me.articleTitle == '' || me.articleTitle == null) {
 					uni.showToast({
 						icon: 'none',
@@ -194,9 +198,9 @@
 					});
 					return;
 				}
-				
+
 				me.combineTagToString();
-				
+
 				var serverUrl = me.$serverUrl;
 				uni.request({
 					url: serverUrl + '/article/uploadArticle',
@@ -212,7 +216,7 @@
 					},
 					success: (res) => {
 						// console.log(res.data.data);
-						if (res.data.status == 200){
+						if (res.data.status == 200) {
 							if (me.imageList.length <= 0) {
 								uni.navigateBack({
 									url: '../index/index'
@@ -237,7 +241,7 @@
 									});
 								}
 							}
-						}else{
+						} else {
 							// 上传失败 用户提醒
 							uni.showToast({
 								title: '出现未知错误，上传失败',
@@ -245,7 +249,7 @@
 								icon: 'none',
 							})
 						}
-						
+
 					}
 				})
 			},

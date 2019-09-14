@@ -153,11 +153,14 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       RECOMMENT: false,
-      reCommentList: {},
+      reCommentList: [],
       isPassingReComment: false,
 
       mainComment: this.commentDetail, // 为了动态修改数值，对对象重新赋值，转换组件内部对象
-      userInfo: this.getGlobalUserInfo() };
+      userInfo: this.getGlobalUserInfo(),
+
+      totalPage: 1,
+      currentPage: 1 };
 
   },
 
@@ -166,7 +169,8 @@ __webpack_require__.r(__webpack_exports__);
     // 监听刷新次级评论事件
     uni.$on('flashSubComment', function (underCommentId) {
       if (_this.mainComment.id == underCommentId) {
-        _this.getSubComments();
+        var page = _this.currentPage;
+        _this.getSubComments(page);
       };
     });
   },
@@ -175,17 +179,18 @@ __webpack_require__.r(__webpack_exports__);
     showRecommentArea: function showRecommentArea() {
       this.RECOMMENT = !this.RECOMMENT;
       if (this.RECOMMENT) {
-        this.getSubComments();
+        this.getSubComments(this.currentPage);
       }
     },
-    getSubComments: function getSubComments() {
+    getSubComments: function getSubComments(page) {
       var that = this;
       uni.request({
         method: "POST",
         url: that.$serverUrl + '/article/getSubComments',
         data: {
           underCommentId: that.mainComment.id,
-          userId: that.userInfo.id },
+          userId: that.userInfo.id,
+          page: page },
 
         header: {
           'content-type': 'application/x-www-form-urlencoded' },
@@ -201,10 +206,38 @@ __webpack_require__.r(__webpack_exports__);
             });
             // console.log(res);
           }
+
+          if (page == 1) {
+            that.reCommentList = [];
+          }
+
+          var newCommentList = res.data.data.rows;
+          var oldCommentList = that.reCommentList;
+          that.reCommentList = oldCommentList.concat(newCommentList);
+          that.currentPage = page;
+          that.totalPage = res.data.data.total;
         } });
 
     },
+    loadMore: function loadMore() {
+      var that = this;
+      var currentPage = that.currentPage;
+      console.log(currentPage);
+      var totalPage = that.totalPage;
+      console.log(totalPage);
+      // 判断当前页数和总页数是否相等
+      if (currentPage == totalPage) {
+        // that.showArticles(1);
+        uni.showToast({
+          title: "没有更多评论了",
+          icon: "none",
+          duration: 1000 });
 
+      } else {
+        var page = currentPage + 1;
+        that.getSubComments(page);
+      }
+    },
     controlInputInComment: function controlInputInComment(a) {
       if (a == "inComment") {
         var dataOfRecomment = {
