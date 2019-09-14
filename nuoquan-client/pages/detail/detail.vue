@@ -29,7 +29,7 @@
 					<view class="icom">{{ articleCard.likeNum }}</view>
 				</view>
 			</view>
-
+			
 			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i" @controlInputSignal="controlInput">
 			</commentbox>
 

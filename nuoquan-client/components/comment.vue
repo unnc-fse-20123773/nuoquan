@@ -10,11 +10,11 @@
 			</view>
 			<view class="icons">
 				<!-- 评论按钮 -->
-				<image v-show="!RECOMMENT" class="icon" src="../../../../static/icon/comment.png" style="padding-right: 23px;"
-				 @click="showRecommentArea"></image>
+				<image v-if="!RECOMMENT || mainComment.commentNum == 0" class="icon" src="../../../../static/icon/comment.png" 
+				style="padding-right: 23px;"></image>
 
-				<image v-if="RECOMMENT" style="height:23px;width:50px;position:relative;bottom:-5px;padding-right:4px;" src="../../../../static/icon/ReComment.png"
-				 @click="showRecommentArea"></image>
+				<image v-if="RECOMMENT && mainComment.commentNum" src="../../../../static/icon/ReComment.png" 
+				style="height:23px;width:50px;position:relative;bottom:-5px;padding-right:4px;"></image>
 				<!-- <text class="icom">{{mainComment.commentNum}}</text> -->
 				<!-- 点赞按钮 -->
 				<view @tap="swLikeMainComment(mainComment)">
@@ -24,10 +24,9 @@
 			</view>
 		</view>
 
-		<view v-show="RECOMMENT" class="reCommentsArea">
-
-			<reComment v-for="(item,index) in reCommentList" v-bind:key="index" :reCommentDetail='item' 
-			@controlInputSignal="controlInputInComment" @goToPersonPublic="goToPersonPublic"></reComment>
+		<view v-show="RECOMMENT && mainComment.commentNum > 0" class="reCommentsArea">
+			<reComment v-for="(item,index) in reCommentList" v-bind:key="index" :reCommentDetail='item' @controlInputSignal="controlInputInComment"
+			 @goToPersonPublic="goToPersonPublic"></reComment>
 			<!-- <view class="submitComment">发 表 评 论</view> -->
 		</view>
 	</view>
@@ -45,29 +44,32 @@
 		},
 		data() {
 			return {
-				RECOMMENT: false,
+				RECOMMENT: true,
 				reCommentList: [],
 				isPassingReComment: false,
-				
+
 				mainComment: this.commentDetail, // 为了动态修改数值，对对象重新赋值，转换组件内部对象
 				userInfo: this.getGlobalUserInfo(),
-				
+
 				totalPage: 1,
 				currentPage: 1,
 			};
 		},
-		
+
 		created() {
 			// console.log(this.commentDetail);
+			var page = this.currentPage;
 			// 监听刷新次级评论事件
-			uni.$on('flashSubComment', (underCommentId)=>{
+			uni.$on('flashSubComment', (underCommentId) => {
 				if (this.mainComment.id == underCommentId) {
-					var page = this.currentPage;
 					this.getSubComments(page);
 				};
 			})
+
+			// 获取子评论
+			this.getSubComments(page);
 		},
-		
+
 		methods: {
 			showRecommentArea() {
 				this.RECOMMENT = !this.RECOMMENT
@@ -91,15 +93,15 @@
 					success: (res) => {
 						// that.isPassingReComment = false;
 						// that.reCommentListFromDetail = '';
-						if(res.data.status==200){
+						if (res.data.status == 200) {
 							// 强制子组件重新刷新
 							that.reCommentList = '';
-							that.$nextTick(function(){
+							that.$nextTick(function() {
 								that.reCommentList = res.data.data.rows;
 							});
 							// console.log(res);
 						}
-						
+
 						// if (page == 1) {
 						// 	that.reCommentList = [];
 						// }
@@ -112,19 +114,19 @@
 					}
 				});
 			},
-			loadMore: function(){
+			loadMore: function() {
 				var that = this;
 				var currentPage = that.currentPage;
 				console.log(currentPage);
 				var totalPage = that.totalPage;
 				console.log(totalPage);
 				// 判断当前页数和总页数是否相等
-				if (currentPage == totalPage){
+				if (currentPage == totalPage) {
 					// that.showArticles(1);
 					uni.showToast({
-						title:"没有更多评论了",
-						icon:"none",
-						duration:1000
+						title: "没有更多评论了",
+						icon: "none",
+						duration: 1000
 					})
 				} else {
 					var page = currentPage + 1;
@@ -147,13 +149,13 @@
 				console.log(dataOfRecomment);
 				this.$emit('controlInputSignal', dataOfRecomment);
 			},
-			
+
 			/**
 			 * 点赞或取消点赞主评论
 			 * @param {Object} comment
 			 */
-			swLikeMainComment(comment){
-				if(comment.isLike){
+			swLikeMainComment(comment) {
+				if (comment.isLike) {
 					this.unLikeComment(comment);
 					this.mainComment.likeNum--;
 				} else {
@@ -162,8 +164,8 @@
 				}
 				this.mainComment.isLike = !this.mainComment.isLike;
 			},
-			
-			likeComment(comment){
+
+			likeComment(comment) {
 				console.log("点赞评论");
 				var that = this;
 				uni.request({
@@ -177,13 +179,13 @@
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
-					success: (res) => {	
+					success: (res) => {
 						console.log(res);
 					},
 				});
 			},
-			
-			unLikeComment(comment){
+
+			unLikeComment(comment) {
 				console.log("取消点赞评论");
 				var that = this;
 				uni.request({
@@ -197,15 +199,15 @@
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
-					success: (res) => {	
+					success: (res) => {
 						console.log(res);
 					},
 				});
 			},
-			
-			goToPersonPublic(userId){
+
+			goToPersonPublic(userId) {
 				uni.navigateTo({
-					url:'/pages/personpublic/personpublic?userId=' + userId,
+					url: '/pages/personpublic/personpublic?userId=' + userId,
 				});
 			}
 		},
@@ -281,7 +283,7 @@
 		padding-right: 17px;
 		align-items: flex-end;
 	}
-	
+
 	.submitComment {
 		background: #FFCC30;
 		border-radius: 5px;

@@ -141,7 +141,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 {
   name: 'comment',
   props: {
@@ -152,7 +151,7 @@ __webpack_require__.r(__webpack_exports__);
 
   data: function data() {
     return {
-      RECOMMENT: false,
+      RECOMMENT: true,
       reCommentList: [],
       isPassingReComment: false,
 
@@ -166,13 +165,16 @@ __webpack_require__.r(__webpack_exports__);
 
   created: function created() {var _this = this;
     // console.log(this.commentDetail);
+    var page = this.currentPage;
     // 监听刷新次级评论事件
     uni.$on('flashSubComment', function (underCommentId) {
       if (_this.mainComment.id == underCommentId) {
-        var page = _this.currentPage;
         _this.getSubComments(page);
       };
     });
+
+    // 获取子评论
+    this.getSubComments(page);
   },
 
   methods: {
