@@ -474,6 +474,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 var _default =
 {
   name: 'aticlebrief',
@@ -550,7 +551,35 @@ var _default =
       uni.navigateTo({
         url: '/pages/personpublic/personpublic?userId=' + userId });
 
-    } } };exports.default = _default;
+    },
+    previewImage: function previewImage(index) {
+      var imgIndex = index;
+      // console.log(res)
+      // 获取全部图片路径
+      var imgList = this.articleCard.imgList;
+      var arr = [];
+      var path;
+      for (var i = 0; i < imgList.length; i++) {
+        // console.log(imgList[i].imagePath);
+        path = this.serverUrl + imgList[i].imagePath;
+        arr = arr.concat(path);
+      }
+      // console.log(arr);
+
+      uni.previewImage({
+        current: index,
+        urls: arr });
+
+    }
+    // previewImage: function(e) {
+    // 	console.log(e);
+    // 	// var current = e.target.dataset.src
+    // 	// uni.previewImage({
+    // 	// 	current: current,
+    // 	// 	urls: e,
+    // 	// })
+    // },
+  } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
