@@ -167,6 +167,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
 {
   data: function data() {
     return {
@@ -325,6 +328,8 @@ __webpack_require__.r(__webpack_exports__);
           icon: "none",
           duration: 1000 });
 
+      } else if (that.commentList.length < 10) {
+        return;
       } else {
         var page = currentPage + 1;
         that.getComments(page);
@@ -432,6 +437,45 @@ __webpack_require__.r(__webpack_exports__);
       uni.previewImage({
         current: index,
         urls: arr });
+
+    },
+    aboutImg: function aboutImg(index) {
+      var that = this;
+      console.log(this.articleCard.imgList[index].imagePath);
+      uni.showActionSheet({
+        itemList: ['保存图片到本地'],
+        success: function success(res) {
+          console.log(res.tapIndex);
+          // 保存图片至本地
+          if (res.tapIndex == 0) {
+            uni.showLoading({
+              title: '下载中...' });
+
+            uni.downloadFile({
+              url: that.serverUrl + that.articleCard.imgList[index].imagePath,
+              success: function success(res) {
+                if (res.statusCode == 200) {
+                  uni.saveImageToPhotosAlbum({
+                    filePath: res.tempFilePath,
+                    success: function success() {
+                      console.log('save success');
+                      uni.hideLoading();
+                    },
+                    fail: function fail() {
+                      console.log('save failed');
+                      uni.hideLoading();
+                      uni.showToast({
+                        title: '保存失败',
+                        icon: 'none',
+                        duration: 1000 });
+
+                    } });
+
+                }
+              } });
+
+          }
+        } });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

@@ -1,5 +1,8 @@
 <template>
 	<view style="height:100%;width:100%;">
+		<view class="123">
+			<button @tap="downloadImg()">下载测试</button>
+		</view>
 		<view class="topbar">
 			<view class="detailtitle">{{ articleCard.articleTitle }}</view>
 		</view>
@@ -8,7 +11,7 @@
 			<text class="detailcontent">{{ articleCard.articleContent }}</text>
 			<view class="detailpics">
 				<view v-for="(item, index) in articleCard.imgList" :key="index">
-					<image :src="serverUrl + item.imagePath" @tap="previewImg(index)"></image>
+					<image :src="serverUrl + item.imagePath" @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
 				</view>
 			</view>
 			<view class="tags">
@@ -206,6 +209,8 @@
 						icon:"none",
 						duration:1000
 					})
+				} else if(that.commentList.length < 10){
+					return;
 				} else {
 					var page = currentPage + 1;
 					that.getComments(page);
@@ -315,7 +320,47 @@
 					urls:arr,
 				})
 			},
+			aboutImg: function(index){
+				var that = this;
+				console.log(this.articleCard.imgList[index].imagePath);
+				uni.showActionSheet({
+					itemList: ['保存图片到本地'],
+					success: function(res) {
+						console.log(res.tapIndex);
+						// 保存图片至本地
+						if(res.tapIndex == 0) {
+							uni.showLoading({
+								title:'下载中...'
+							})
+							uni.downloadFile({
+								url: that.serverUrl + that.articleCard.imgList[index].imagePath,
+								success: function(res) {
+									if(res.statusCode == 200){
+										uni.saveImageToPhotosAlbum({
+											filePath: res.tempFilePath,
+											success: function () {
+												console.log('save success');
+												uni.hideLoading();
+											},
+											fail: function() {
+												console.log('save failed');
+												uni.hideLoading();
+												uni.showToast({
+													title:'保存失败',
+													icon:'none',
+													duration:1000,
+												})
+											}
+										});
+									}
+								}
+							})
+						}
+					}
+				});
+			},
 		},
+		
 		
 	};
 </script>
