@@ -1,4 +1,4 @@
-<!-- TODO: 取消添加图片 -->
+<!-- TODO: 取消添加图片, 标签输入不能含有特殊字符，颜色变化 -->
 <template>
 	<viwe>
 		<view style="height:45px;width:100%;">
@@ -20,27 +20,22 @@
 					</view>
 					<input v-if="showInputTagArea" v-model="articleTag" focus="true" placeholder="请输入标签..." @blur="checkInput" />
 
-
 				</view>
 			</view>
-			<textarea placeholder="内容[最多2048字]" class="content" v-model="articleContent" maxlength=2048></textarea>
+			<textarea placeholder="内容[最多2048字]" class="content" v-model="articleContent" maxlength=2048 show-confirm-bar="false"></textarea>
 			<view style="display: flex;justify-content: space-between;color: #353535;font-size: 13px;line-height: 28px;height: 24px;">
 				<view>点击可预览选好的图片</view>
 				<view>{{imageList.length}}/9</view>
 			</view>
 
 			<view class="picturearea">
-
 				<block v-for="(image,index) in imageList" :key="index">
 					<view>
-						<!-- todo 预览图片缩放 -->
-						<image :src="image" :data-src="image" @tap="previewImage"></image>
+						<image :src="image" :data-src="image" @tap="previewImage" mode="aspectFill"></image>
 					</view>
-
 				</block>
 				<view v-show="isAddImage(this.imageList.length)" id="clickToChooseImage" class="addPic" @click="chooseImg">+</view>
 				<view v-if="imageList.length==1||imageList.length==4||imageList.length==7" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
-
 			</view>
 		</view>
 	</viwe>
@@ -142,14 +137,13 @@
 						this.imageList = this.imageList.concat(res.tempFilePaths);
 
 						console.log(res)
-						// for(var i = 0; i < 9; i++){
-						// 	console.log(this.imageList[i]);
-						// }
 					}
 				})
 			},
 			previewImage: function(e) {
 				var current = e.target.dataset.src
+				// console.log(e)
+				console.log(this.imageList);
 				uni.previewImage({
 					current: current,
 					urls: this.imageList
@@ -356,6 +350,7 @@
 		background: #F4F1E9;
 		margin-top: 13px;
 		width: 100%;
+		overflow: scroll;
 	}
 
 	.picturearea {

@@ -166,9 +166,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
 {
   data: function data() {
     return {
+      imgList: [],
+      singleImgState: '0',
+
+      serverUrl: this.$serverUrl,
       userInfo: {},
       articleCard: "", //detail的主角，由index传过来的单个文章信息
       commentContent: "", //用户准备提交的评论内容
@@ -176,15 +187,15 @@ __webpack_require__.r(__webpack_exports__);
       showInput: false, ////控制输入框，true时显示输入框
       writingComment: false, //控制输入框，true时自动获取焦点，拉起输入法
       placeholderText: "评论点什么吧......",
-      inputData: {//localData,用于拼接不同情况下的savecomment请求的数据
-      },
+      inputData: {}, //localData,用于拼接不同情况下的savecomment请求的数据
 
       submitData: {
         //这个是从子组件传来的数据，回复评论的评论之类
       },
+      imgIndex: '',
 
-      serverUrl: this.$serverUrl };
-
+      textAreaAdjust: "",
+      tagColorList: [] };
 
   },
   components: {
@@ -220,7 +231,7 @@ __webpack_require__.r(__webpack_exports__);
 
   onLoad: function onLoad(options) {
     this.articleCard = JSON.parse(options.data);
-    console.log(this.articleCard);
+    // console.log(this.articleCard);
 
     var userInfo = this.getGlobalUserInfo();
     if (!this.isNull(userInfo)) {
@@ -228,20 +239,53 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     this.getComments();
+
+    // 随机生成颜色
+    var tagColors = this.tagColors;
+    for (var i = 0; i < this.articleCard.tagList.length; i++) {
+      var random = Math.floor(Math.random() * tagColors.length); // 0~tagColors.length-1
+      this.tagColorList.push(tagColors[random]);
+    }
   },
 
   methods: {
+    popTextArea: function popTextArea(e) {
+      console.log("展开");
+      console.log(e);
+      console.log(e.detail.height);
+      this.textAreaAdjust = e.detail.height / 3 + 'px';
+
+      // this.textAreaAdjust = '0' ;
+
+    },
+    unpopTextArea: function unpopTextArea(e) {
+      console.log("收起");
+      console.log(e);
+
+      this.textAreaAdjust = "";
+    },
     /**
-              * fromUserId 必填
-              * toUserId 必填
-              * articleId 必填 // 为了计算文章总评论数
-              * underCommentId // 显示在该主评论层ID下
-              * fatherCommentId // 父级评论ID
-              * comment 必填
-              * PS: 父级（一级，给文章评论）评论 无 fatherCommentId, underCommentId;
-              *     子级评论有 fatherCommentId, underCommentId;
-              */
-    saveComment: function saveComment() {
+        * fromUserId 必填
+        * toUserId 必填
+        * articleId 必填 // 为了计算文章总评论数
+        * underCommentId // 显示在该主评论层ID下
+        * fatherCommentId // 父级评论ID
+        * comment 必填
+        * PS: 父级（一级，给文章评论）评论 无 fatherCommentId, underCommentId;
+        *     子级评论有 fatherCommentId, underCommentId;
+        */
+    singleImgeFit: function singleImgeFit(e) {
+      var height = e.detail.height;
+      var width = e.detail.width;
+      if (height >= width) {
+        this.singleImgState = 0;
+      } else {
+        this.singleImgState = 1;
+      }
+      // console.log(e.detail);
+    },
+
+    saveComment: function saveComment() {var _this = this;
       this.submitData.comment = this.commentContent;
       this.submitData.fromUserId = this.userInfo.id;
       this.submitData.articleId = this.articleCard.id;
@@ -254,22 +298,13 @@ __webpack_require__.r(__webpack_exports__);
         success: function success(res) {
           that.writingComment = false;
           that.commentContent = "";
+          _this.showInput = false;
 
-          that.getComments();
-          // uni.request({
-          // 	method: "POST",
-          // 	url: that.$serverUrl + '/article/getSubComments',
-          // 	data: {
-          // 		fatherCommentId: that.submitData.fatherCommentId
-          // 	},
-          // 	header: {
-          // 		'content-type': 'application/x-www-form-urlencoded'
-          // 	},
-          // 	success: (res) => {
-          // 		that.reCommentListFromDetail = res.data.data.rows;
-          // 		console.log(that.reCommentListFromDetail);
-          // 	}
-          // });
+          if (that.isNull(that.submitData.underCommentId)) {
+            that.getComments();
+          } else {
+            uni.$emit("flashSubComment", that.submitData.underCommentId);
+          }
         } });
 
     },
@@ -287,7 +322,7 @@ __webpack_require__.r(__webpack_exports__);
           'content-type': 'application/x-www-form-urlencoded' },
 
         success: function success(res) {
-          console.log(res);
+          // console.log(res);
           that.commentList = res.data.data.rows;
           // console.log(that.articleCard.id);
 
@@ -300,6 +335,9 @@ __webpack_require__.r(__webpack_exports__);
         this.placeholderText = '回复 @' + a.nickname + ' 的评论';
         delete a.nickname;
         this.submitData = a;
+        if (a.mode == "re-co") {
+          this.writingComment = true;
+        }
         if (a.mode == "re-re") {//mode ="re-re", from grandson RECOMMENT
           console.log(a.mode);
           this.writingComment = true;
@@ -375,6 +413,25 @@ __webpack_require__.r(__webpack_exports__);
     goToPersonPublic: function goToPersonPublic() {
       uni.navigateTo({
         url: '/pages/personpublic/personpublic?userId=' + this.articleCard.userId });
+
+    },
+    previewImg: function previewImg(index) {
+      var imgIndex = index;
+      // console.log(res)
+      // 获取全部图片路径
+      var imgList = this.articleCard.imgList;
+      var arr = [];
+      var path;
+      for (var i = 0; i < imgList.length; i++) {
+        // console.log(imgList[i].imagePath);
+        path = this.serverUrl + imgList[i].imagePath;
+        arr = arr.concat(path);
+      }
+      // console.log(arr);
+
+      uni.previewImage({
+        current: index,
+        urls: arr });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))

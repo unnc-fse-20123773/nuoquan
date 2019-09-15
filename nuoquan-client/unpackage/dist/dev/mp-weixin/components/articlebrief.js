@@ -176,12 +176,12 @@ var _default =
 
   data: function data() {
     return {
-
       serverUrl: this.$serverUrl,
       singleImgState: '0',
 
-      imgList: []
-      // atags: JSON.(this.articleCard.tags);
+      imgList: [],
+
+      tagColorList: [] // 储存每个tag的颜色
     };
   },
   created: function created() {
@@ -193,7 +193,16 @@ var _default =
     } else {
       this.imgList = this.articleCard.imgList;
     }
-    // console.log(this.articleCard);
+
+    // 随机生成颜色
+    var tagColors = this.tagColors;
+    if (this.articleCard.tagList != null) {
+      for (var i = 0; i < this.articleCard.tagList.length; i++) {
+        var random = Math.floor(Math.random() * tagColors.length); // 0~tagColors.length-1
+        this.tagColorList.push(tagColors[random]);
+      }
+    }
+
   },
   filters: {
     timeDeal: function timeDeal(timediff) {

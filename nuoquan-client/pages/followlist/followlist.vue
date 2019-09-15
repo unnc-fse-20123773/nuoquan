@@ -272,12 +272,9 @@
 						console.log(res)
 						if (res.data.status == 200) {
 							var data = res.data.data;
-							console.log(data);
+							// console.log(data);
 							that.followList = data.followList;
 							that.fansList = data.fansList;
-
-							// that.swiperDataList[0] = data.followList;
-							// that.swiperDataList[1] = data.fansList;
 						}
 					}
 				});
@@ -300,8 +297,6 @@
 				uni.redirectTo({
 					url: '../personpublic/personpublic?userId=' + userId,
 				});
-				
-				console.log(userId);
 			}
 		}
 	}

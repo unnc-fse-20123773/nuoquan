@@ -18,22 +18,22 @@
 			<view style="width: 100%;max-height: 400upx;" v-if="articleCard.imgList.length == 1">
 				<!-- 高 ＞ 宽 -->
 				<view v-if="singleImgState == 0" style="width: 360upx;">
-					<image mode="aspectFit" style="height: 360upx;" :src="serverUrl + articleCard.imgList[0].imagePath" @load="singleImgeFit"></image>
+					<image mode="aspectFit" style="height: 360upx;" :src="serverUrl + articleCard.imgList[0].imagePath" @load="singleImgeFit" @tap="previewImage"></image>
 				</view>
 				<!-- 宽 > 高 -->
 				<view v-else style="max-height: 400upx;display: flex;">
-					<image mode="aspectFit" style="width: 90%;" :src="serverUrl + articleCard.imgList[0].imagePath" @load="singleImgeFit"></image>
+					<image mode="aspectFit" style="width: 90%;" :src="serverUrl + articleCard.imgList[0].imagePath" @load="singleImgeFit" @tap="previewImage"></image>
 				</view>
 			</view>
 			<!-- 多图显示 -->
 			
 			<view style="width:30%;height: 200upx;margin-left: 2.5%;display: flex;background-color: #D1D1D1;" v-else v-for="(item,index) in imgList" :key="index">
-				<image mode="aspectFit" :src="serverUrl + item.imagePath"></image>				
+				<image mode="aspectFill" :src="serverUrl + item.imagePath" @tap="previewImage"></image>				
 			</view>
 			
 		</view>
 		<view class="tags">
-			<view class="tag" v-for="(i, index) in articleCard.tagList" v-bind:key="index">{{i}}</view>
+			<view class="tag" :style="{background: tagColorList[index]}" v-for="(i, index) in articleCard.tagList" v-bind:key="index">{{i}}</view>
 		</view>
 		<view class="menubar">
 			<image :src="articleCard.faceImg" class="touxiang" @tap="goToPersonPublic(articleCard.userId)"></image>
@@ -58,12 +58,12 @@
 		},
 		data() {
 			return {
-
 				serverUrl: this.$serverUrl,
 				singleImgState: '0',
 				
 				imgList: [],
-				// atags: JSON.(this.articleCard.tags);
+				
+				tagColorList: [], // 储存每个tag的颜色
 			};
 		},
 		created() {
@@ -75,7 +75,16 @@
 			}else{
 				this.imgList = this.articleCard.imgList;
 			}
-			// console.log(this.articleCard);
+			
+			// 随机生成颜色
+			var tagColors = this.tagColors;
+			if(this.articleCard.tagList!=null){
+				for (var i=0; i<this.articleCard.tagList.length; i++){
+				var random = Math.floor(Math.random()*tagColors.length); // 0~tagColors.length-1
+				this.tagColorList.push(tagColors[random]);
+			    }
+			}
+			
 		},
 		filters: {
 			timeDeal(timediff) {
@@ -126,7 +135,15 @@
 				uni.navigateTo({
 					url:'/pages/personpublic/personpublic?userId=' + userId,
 				});
-			}
+			},
+			// previewImage: function(e) {
+			// 	console.log(e);
+			// 	// var current = e.target.dataset.src
+			// 	// uni.previewImage({
+			// 	// 	current: current,
+			// 	// 	urls: e,
+			// 	// })
+			// },
 		},
 	};
 </script>
@@ -152,6 +169,9 @@
 		line-height: 19px;
 		margin: 16px 13px 0 15px;
 		padding-top: 16px;
+		word-wrap:break-word;
+		word-break: break-all;
+		white-space: normal;
 	}
 	.briefarticleCard {
 		margin: 10px 13px 0 15px;
@@ -159,6 +179,7 @@
 		line-height: 15px;
 		margin-bottom: 15px;
 		word-break:break-all;
+		white-space:pre-line;
 	}
 	.tags {
 		margin-left: 10px;

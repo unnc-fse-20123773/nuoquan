@@ -5,14 +5,19 @@
 		</view>
 
 		<view class="drtailmain">
-			<text class="detailcontent">{{ articleCard.articleContent }}</text>
+			<view class="detailcontent">{{ articleCard.articleContent }}</view>
+				
 			<view class="detailpics">
-				<view v-for="(item, index) in articleCard.imgList" :key="index">
-					<image :src="serverUrl + item.imagePath"></image>
+				<!-- 单图显示 -->
+				<view v-if="articleCard.imgList.length==1" class="1pic" style="width: 100%;max-height: 400upx;">
+					<image v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFit" style="height: 360upx;"></image>
 				</view>
+				<!-- 其他数量 -->
+				<image class="detailpic" v-else v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFill"></image>
+				<view v-if="articleCard.imgList.length==2||imageList.length==5||imageList.length==8" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
 			</view>
 			<view class="tags">
-				<view class="tag" v-for="(i,index) in articleCard.tagList" v-bind:key="index">{{i}}</view>
+				<view class="tag" :style="{background: tagColorList[index]}" v-for="(i,index) in articleCard.tagList" v-bind:key="index">{{i}}</view>
 			</view>
 			<view class="bottombar">
 				<view style="width:70%;display:inline-block;">
@@ -28,18 +33,20 @@
 				</view>
 			</view>
 
-			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i" @controlInputSignal="controlInput">
+			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i" @controlInputSignal="controlInput" :reCommentListFromDetail="reCommentListFromDetail">
 			</commentbox>
 
 			<view class="fengexian" style="height: 1px;width: 100%;background-color: #d6d6d6;margin:auto;"></view>
 			<view class="submitComment" @click="controlInput(1)">发 表 评 论</view>
 
-			<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)">
-				<view class="commentPart" @click.stop="">
+			<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)" >
+				<view class="commentPart" @click.stop="" :style="{bottom: textAreaAdjust }">
 					<view class="emoji"></view>
 					<view class="submit" @click="saveComment()"></view>
 					<textarea class="commentSth" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
-					 confirm-type="send" @confirm="saveComment()" adjust-position="false" v-model="commentContent" @click.stop="" />
+					 confirm-type="send" @confirm="saveComment()" adjust-position="false" v-model="commentContent" @click.stop="" 
+					 :show-confirm-bar="false"
+					  @focus="popTextArea" @blur="unpopTextArea"/>
 					</view>
             </view>
 		</view> 
@@ -51,6 +58,10 @@
 	export default {
 		data() {
 			return {
+				imgList: [],
+				singleImgState: '0',
+				
+				serverUrl: this.$serverUrl,
 				userInfo: {},
 				articleCard: "",  //detail的主角，由index传过来的单个文章信息
                 commentContent:"",  //用户准备提交的评论内容
@@ -58,15 +69,15 @@
 				showInput:false,        ////控制输入框，true时显示输入框
 				writingComment:false,  //控制输入框，true时自动获取焦点，拉起输入法
 				placeholderText:"评论点什么吧......",
-				inputData:{  //localData,用于拼接不同情况下的savecomment请求的数据
-					
-					},
+				inputData:{},  //localData,用于拼接不同情况下的savecomment请求的数据
+				
 				submitData:{
 					//这个是从子组件传来的数据，回复评论的评论之类
 				},
+				imgIndex: '',
 				
-				serverUrl: this.$serverUrl,
-
+				textAreaAdjust:"",
+				tagColorList: [],
 			};
 		},
 		components: {
@@ -102,7 +113,7 @@
 		
 		onLoad(options) {
 			this.articleCard = JSON.parse(options.data);
-			console.log(this.articleCard);
+			// console.log(this.articleCard);
 			
 			var userInfo = this.getGlobalUserInfo();
 			if (!this.isNull(userInfo)) {
@@ -110,9 +121,31 @@
 			}
 			
 			this.getComments();
+			
+			// 随机生成颜色
+			var tagColors = this.tagColors;
+			for (var i=0; i<this.articleCard.tagList.length; i++){
+				var random = Math.floor(Math.random()*tagColors.length); // 0~tagColors.length-1
+				this.tagColorList.push(tagColors[random]);
+			}
 		},
 		
 		methods: {
+			popTextArea(e){
+				console.log("展开");
+				console.log(e);
+				console.log(e.detail.height);
+				this.textAreaAdjust =  e.detail.height/3 + 'px' ;
+			
+				// this.textAreaAdjust = '0' ;
+			
+			},
+			unpopTextArea(e){
+				console.log("收起");
+				console.log(e);
+				
+				this.textAreaAdjust = "";
+			},
 			/**
 			 * fromUserId 必填
 			 * toUserId 必填
@@ -123,6 +156,17 @@
 			 * PS: 父级（一级，给文章评论）评论 无 fatherCommentId, underCommentId;
 			 *     子级评论有 fatherCommentId, underCommentId;
 			 */
+			singleImgeFit(e){
+				var height = e.detail.height;
+				var width = e.detail.width;
+				if(height >= width){
+					this.singleImgState = 0;
+				}else{
+					this.singleImgState = 1;
+				}
+				// console.log(e.detail);
+			},
+			
 			saveComment: function() {
 				this.submitData.comment=this.commentContent;
 				this.submitData.fromUserId=this.userInfo.id;
@@ -136,22 +180,13 @@
 					success: (res) => {
 						that.writingComment = false;
 						that.commentContent = "";
+						this.showInput = false;
 						
-						that.getComments();
-						// uni.request({
-						// 	method: "POST",
-						// 	url: that.$serverUrl + '/article/getSubComments',
-						// 	data: {
-						// 		fatherCommentId: that.submitData.fatherCommentId
-						// 	},
-						// 	header: {
-						// 		'content-type': 'application/x-www-form-urlencoded'
-						// 	},
-						// 	success: (res) => {
-						// 		that.reCommentListFromDetail = res.data.data.rows;
-						// 		console.log(that.reCommentListFromDetail);
-						// 	}
-						// });
+						if(that.isNull(that.submitData.underCommentId)){
+							that.getComments();
+						}else{
+							uni.$emit("flashSubComment", that.submitData.underCommentId);
+						}
 					},
 				})
 			},
@@ -169,7 +204,7 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: (res) => {	
-						console.log(res);
+						// console.log(res);
 						that.commentList = res.data.data.rows;
 						// console.log(that.articleCard.id);
 						
@@ -182,6 +217,9 @@
 					this.placeholderText='回复 @'+a.nickname+' 的评论';
 					delete(a.nickname);
 					this.submitData=a;
+					if(a.mode == "re-co"){
+						this.writingComment = true;
+					}
 					if(a.mode =="re-re"){    //mode ="re-re", from grandson RECOMMENT
 						console.log(a.mode);
 						this.writingComment = true ;
@@ -258,7 +296,26 @@
 				uni.navigateTo({
 					url: '/pages/personpublic/personpublic?userId=' + this.articleCard.userId,
 				})
-			}
+			},
+			previewImg: function(index) {
+				var imgIndex = index;
+				// console.log(res)
+				// 获取全部图片路径
+				var imgList = this.articleCard.imgList;
+				var arr = [];
+				var path;
+				for (var i=0; i<imgList.length; i++){
+					// console.log(imgList[i].imagePath);
+					path = this.serverUrl + imgList[i].imagePath
+					arr = arr.concat(path);
+				}
+				// console.log(arr);
+				
+				uni.previewImage({
+					current: index,
+					urls:arr,
+				})
+			},
 		},
 		
 	};
@@ -282,6 +339,9 @@
 		margin: auto;
 		font-weight: 400;
 		padding-top:12px;
+		word-break: break-all;
+		word-wrap: break-word;
+		
 	}
 
 	.drtailmain {
@@ -298,23 +358,51 @@
 
 	.detailcontent {
 		padding-top: 25px;
+		padding-bottom: 15px;
 		font-size: 13px;
 		/* width: 85%;
 		margin: 0px auto 10px; */
+		/* font-weight: 400;
+		word-break:break-all;
+		white-space:pre-line;
+	}
+
+	.picturearea-one {
+		margin: auto;
+		display: flex;
+		width: 94%;
+		margin-left: 3%;
+	}
+	
+	.picturearea-mul {
+		position: relative;
+		margin: auto;
+		display: flex; */
+		/* 在此设置图片区域宽度 */
+		/* width: 94%;
+		margin-left: 3%;
+	} */
+	
 		font-weight: 400;
+		word-break: break-all;
+		word-wrap: break-word;
 	}
 
 	.detailpics {
 		display: flex;
-		justify-content: center;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		flex: 0 0 auto;
 		align-items: center;
 		flex-wrap: wrap;
+		width: 606upx;
+		margin: 0 auto;
 	}
 
 	.detailpic {
-		width: 180upx;
-		height: 180upx;
-		margin: 6px;
+		width: 190upx;
+		height: 190upx;
+		margin: 6px 0;
 	}
 
 	.tags {
@@ -408,8 +496,7 @@
 		color: #FFFFFF;
 		text-align: center;
 		line-height: 30px;
-		margin-top:12px;
-		margin-bottom: 50px;
+		
 	}
 .bottoLayerOfInput{
 	position: fixed;
@@ -427,7 +514,7 @@
 		width: 670upx;
 		padding:11px 40upx;
 		min-height: 50px;
-		background: #FFFFFF;
+		background: #058ECC;
 	}
 
 	.emoji {
@@ -457,6 +544,5 @@
 		line-height: 20px;
 		font-size: 14px;
 		padding:8px 10px;
-		
 	}
 </style>

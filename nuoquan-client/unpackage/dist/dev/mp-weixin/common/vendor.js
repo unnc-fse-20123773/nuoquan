@@ -23,13 +23,19 @@ _App.default.mpType = 'app';
 
 _vue.default.config.productionTip = false;
 
+_vue.default.prototype.tagColors = ['#FE5F55', '#40A792', '#FDD041', '#5CA0D3', '#621E81', '#738598', '#F3AE4B'];
+
 _vue.default.prototype.$store = _store.default;
+
+// Local IP
 _vue.default.prototype.$serverUrl = "http://127.0.0.1:8080";
 _vue.default.prototype.$wsServerUrl = "ws://127.0.0.1:8088/ws";
 
+// My laptop IP
 // Vue.prototype.$serverUrl = "http://172.20.10.10:8080"
 // Vue.prototype.$wsServerUrl = "ws://172.20.10.10:8088/ws"
 
+// Jerrio IP
 // Vue.prototype.$serverUrl = "http://192.168.31.210:8080"
 // Vue.prototype.$wsServerUrl = "ws://192.168.31.210:8088/ws"
 
@@ -115,8 +121,6 @@ _vue.default.prototype.getListByKey = function (listName) {
 };
 
 
-
-
 /** TODO: 可使用 Map 代替 List 提升查询性能（暂时不知道 map 在 uniapp 中怎么写）
     *	 															by Jerrio
     * 把该用户信息添加到本地缓存的 userlist 中，如果存在则替换
@@ -135,6 +139,7 @@ _vue.default.prototype.setUserInfoToUserList = function (userInfo) {
       var user = userList[i];
       if (user.id == userInfo.id) {
         userList.splice(i, 1, userInfo); // 替换
+        uni.setStorageSync("userList", JSON.stringify(userList));
         return;
       }
     }
@@ -775,8 +780,21 @@ _vue.default.prototype.notification = {
     app.addIntoList(dataContent, this.LIKEMSG_KEY);
   },
 
-  getLikeMsg: function getLikeMsg() {
-    return app.getListByKey(this.LIKEMSG_KEY);
+  getLikeMsg: function getLikeMsg(page) {
+    var size = 10;
+    var list = app.getListByKey(this.LIKEMSG_KEY);
+    var start = (page - 1) * size;
+    var newList = [];
+    if (list.length < start) {
+      return null;
+    } else {
+      for (var i = 0; i < size; i++) {
+        if (!app.isNull(list[start + i])) {
+          newList.push(list[start + i]);
+        }
+      }
+      return newList;
+    }
   },
 
   /**
@@ -787,8 +805,21 @@ _vue.default.prototype.notification = {
     app.addIntoList(dataContent, this.COMMENTMSG_KEY);
   },
 
-  getCommentMsg: function getCommentMsg() {
-    return app.getListByKey(this.COMMENTMSG_KEY);
+  getCommentMsg: function getCommentMsg(page) {
+    var size = 10;
+    var list = app.getListByKey(this.COMMENTMSG_KEY);
+    var start = (page - 1) * size;
+    var newList = [];
+    if (list.length < start) {
+      return null;
+    } else {
+      for (var i = 0; i < size; i++) {
+        if (!app.isNull(list[start + i])) {
+          newList.push(list[start + i]);
+        }
+      }
+      return newList;
+    }
   },
 
   /**
@@ -1867,7 +1898,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -8070,7 +8101,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -8091,14 +8122,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -8174,7 +8205,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));

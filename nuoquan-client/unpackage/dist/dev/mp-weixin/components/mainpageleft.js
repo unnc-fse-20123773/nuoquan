@@ -216,7 +216,6 @@ name: 'mainpageleft';var _default =
         * @param {Object} currentTab 0: 关注 1: 粉丝
         */
     goToFansFollow: function goToFansFollow(currentTab) {
-      console.log("goToFansFollow...");
       var data = {
         currentTab: currentTab,
         thisUserInfo: this.getGlobalUserInfo() };

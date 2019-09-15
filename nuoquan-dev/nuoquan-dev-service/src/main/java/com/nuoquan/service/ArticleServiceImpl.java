@@ -91,14 +91,16 @@ public class ArticleServiceImpl implements ArticleService {
 			// 添加和关于用户的点赞关系
 			a.setIsLike(isUserLikeArticle(userId, a.getId()));
 			// 添加标签list
-			String[] tagList = a.getTags().split("#");
-			List<String> finalTagList = new ArrayList<String>();
-			for (String tag : tagList) {
-				if (!StringUtils.isBlank(tag)) {
-					finalTagList.add(tag);
+			if (!StringUtils.isBlank(a.getTags())) {
+				String[] tagList = a.getTags().split("#");
+				List<String> finalTagList = new ArrayList<String>();
+				for (String tag : tagList) {
+					if (!StringUtils.isBlank(tag)) {
+						finalTagList.add(tag);
+					}
 				}
+				a.setTagList(finalTagList);
 			}
-			a.setTagList(finalTagList);
 		}
 		
 		PageInfo<ArticleVO> pageList = new PageInfo<>(list);
@@ -121,14 +123,16 @@ public class ArticleServiceImpl implements ArticleService {
 			// 添加图片列表
 			articleVO.setImgList(images);
 			// 添加标签列表
-			String[] tagList = articleVO.getTags().split("#");
-			List<String> finalTagList = new ArrayList<String>();
-			for (String tag : tagList) {
-				if (!StringUtils.isBlank(tag)) {
-					finalTagList.add(tag);
+			if (!StringUtils.isBlank(articleVO.getTags())) {
+				String[] tagList = articleVO.getTags().split("#");
+				List<String> finalTagList = new ArrayList<String>();
+				for (String tag : tagList) {
+					if (!StringUtils.isBlank(tag)) {
+						finalTagList.add(tag);
+					}
 				}
+				articleVO.setTagList(finalTagList);
 			}
-			articleVO.setTagList(finalTagList);
 		}
 		return articleVO;
 	}

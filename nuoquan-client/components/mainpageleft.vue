@@ -16,12 +16,12 @@
 			<view class="hotNum">
 				-
 			</view>
-			<view class="yourFocus" @tap="goToFansFollow(0)" hover-class="customHover">
+			<button class="yourFocus" @tap="goToFansFollow(0)" hover-class="customHover">
 				{{userInfo.followNum}}
-			</view>
-			<view class="focusYou" @tap="goToFansFollow(1)" hover-class="customHover">
+			</button>
+			<button class="focusYou" @tap="goToFansFollow(1)" hover-class="customHover">
 				{{userInfo.fansNum}}
-			</view>
+			</button>
 		</view>
 		<view class="personPageList">
 			<!-- TODO: 最好把 view 都改成 button 并加上样式 
@@ -116,7 +116,6 @@
 			 * @param {Object} currentTab 0: 关注 1: 粉丝
 			 */
 			goToFansFollow(currentTab) {
-				console.log("goToFansFollow...")
 				var data = {
 					currentTab: currentTab,
 					thisUserInfo: this.getGlobalUserInfo()

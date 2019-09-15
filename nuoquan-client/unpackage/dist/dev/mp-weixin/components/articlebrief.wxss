@@ -19,6 +19,9 @@ image {
 	line-height: 19px;
 	margin: 16px 13px 0 15px;
 	padding-top: 16px;
+	word-wrap:break-word;
+	word-break: break-all;
+	white-space: normal;
 }
 .briefarticleCard.data-v-774fa287 {
 	margin: 10px 13px 0 15px;
@@ -26,6 +29,7 @@ image {
 	line-height: 15px;
 	margin-bottom: 15px;
 	word-break:break-all;
+	white-space:pre-line;
 }
 .tags.data-v-774fa287 {
 	margin-left: 10px;

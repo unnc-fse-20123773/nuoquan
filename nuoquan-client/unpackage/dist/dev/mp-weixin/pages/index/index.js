@@ -284,12 +284,12 @@ var _default =
 
   data: function data() {
     return {
-
       serverUrl: this.$serverUrl,
       singleImgState: '0',
 
-      imgList: []
-      // atags: JSON.(this.articleCard.tags);
+      imgList: [],
+
+      tagColorList: [] // 储存每个tag的颜色
     };
   },
   created: function created() {
@@ -301,7 +301,16 @@ var _default =
     } else {
       this.imgList = this.articleCard.imgList;
     }
-    // console.log(this.articleCard);
+
+    // 随机生成颜色
+    var tagColors = this.tagColors;
+    if (this.articleCard.tagList != null) {
+      for (var i = 0; i < this.articleCard.tagList.length; i++) {
+        var random = Math.floor(Math.random() * tagColors.length); // 0~tagColors.length-1
+        this.tagColorList.push(tagColors[random]);
+      }
+    }
+
   },
   filters: {
     timeDeal: function timeDeal(timediff) {
@@ -381,6 +390,7 @@ var _default =
 
 
 
+
 var _articlebrief = _interopRequireDefault(__webpack_require__(/*! ../../components/articlebrief */ "../../../../../../../../../code/nuoquan/nuoquan-client/components/articlebrief.vue"));
 
 
@@ -400,11 +410,15 @@ var _vuex = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.j
 //
 //
 //
-var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! import() | components/mainpagetop */ "components/mainpagetop").then(__webpack_require__.bind(null, /*! ../../components/mainpagetop.vue */ "../../../../../../../../../code/nuoquan/nuoquan-client/components/mainpagetop.vue"));};var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ "../../../../../../../../../code/nuoquan/nuoquan-client/components/mainpageleft.vue"));};var _default = { data: function data() {return { title: 'Hello', hottitlelist: ['热门标题111', '热门标题222', '热门标题333'], showlist: '', topArticles: '', topHeight: "160", userInfo: { // 默认user设置
-        id: 'test-id123', nickname: 'test-name', faceImg: '', faceImgThumb: '', email: 'zy22089@nottingham.edu.cn',
+//
+var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! import() | components/mainpagetop */ "components/mainpagetop").then(__webpack_require__.bind(null, /*! ../../components/mainpagetop.vue */ "../../../../../../../../../code/nuoquan/nuoquan-client/components/mainpagetop.vue"));};var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ "../../../../../../../../../code/nuoquan/nuoquan-client/components/mainpageleft.vue"));};var _default = { data: function data() {return { title: 'Hello', hottitlelist: ['热门标题111', '热门标题222', '热门标题333'], showlist: [], topArticles: '', topHeight: "160", userInfo: { // 默认user设置
+        id: 'test-id123', nickname: 'test-name', faceImg: '', faceImgThumb: '',
+        email: 'zy22089@nottingham.edu.cn',
         emailPrefix: 'zy22089',
-        emailSuffix: '@nottingham.edu.cn' } };
+        emailSuffix: '@nottingham.edu.cn' },
 
+      totalPage: 1,
+      currentPage: 1 };
 
 
   },
@@ -429,40 +443,81 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
 
     // [测试代码块]
   },
+
   onShow: function onShow() {
+    var that = this;
     var userInfo = this.getGlobalUserInfo();
     if (!this.isNull(userInfo)) {
       // 设置 userInfo 传给 mainpagetop 组件
       this.userInfo = this.getGlobalUserInfo();
     }
 
-    this.showArticles(); // 显示文章流
+    var page = that.currentPage;
+    this.showArticles(page); // 显示文章流
 
     this.getTop3Articles(); // 获取热度榜
   },
   methods: {
-    showArticles: function showArticles() {
+    showArticles: function showArticles(page) {
       var that = this;
+      uni.showLoading({
+        title: "加载中..." });
+
+      // var page = that.currentPage;
       uni.request({
         url: that.$serverUrl + '/article/queryAllArticles',
         method: "POST",
         data: {
-          page: '',
-          pageSize: '',
+          page: page,
+          // pageSize: '', 
           userId: that.userInfo.id },
 
         header: {
           'content-type': 'application/x-www-form-urlencoded' },
 
         success: function success(res) {
-          that.showlist = res.data.data.rows;
+          uni.hideLoading();
           console.log(res);
+          // 判断当前页是不是第一页，如果是第一页，那么设置showList为空
+          if (page == 1) {
+            that.showlist = [];
+          }
+          var newArticleList = res.data.data.rows;
+          var oldArticleList = that.showlist;
+          that.showlist = oldArticleList.concat(newArticleList);
+          that.currentPage = page;
+          that.totalPage = res.data.data.total;
         },
         fail: function fail(res) {
           console.log("index unirequest fail");
           console.log(res);
         } });
 
+    },
+    loadMore: function loadMore() {
+      var that = this;
+      var currentPage = that.currentPage;
+      console.log(currentPage);
+      var totalPage = that.totalPage;
+      console.log(totalPage);
+      // 判断当前页数和总页数是否相等
+      if (currentPage == totalPage) {
+        // that.showArticles(1);
+        uni.showToast({
+          title: "没有更多文章了",
+          icon: "none",
+          duration: 1000 });
+
+      } else {
+        var page = currentPage + 1;
+        that.showArticles(page);
+      }
+    },
+
+    refreshArticle: function refreshArticle() {
+      uni.showNavigationBarLoading();
+      // this.showlist = [];
+      this.showArticles(1);
     },
 
     getTop3Articles: function getTop3Articles() {
@@ -472,7 +527,6 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
         method: "POST",
         success: function success(res) {
           that.topArticles = res.data.data;
-          // console.log(res)
         } });
 
     },

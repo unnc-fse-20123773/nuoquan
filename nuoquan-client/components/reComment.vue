@@ -30,6 +30,12 @@
 				userInfo: this.getGlobalUserInfo(),
 			};
 		},
+		created() {
+			// 监听刷新次级评论事件
+			// uni.$on('flashFinish', ()=>{
+			// 	this.subComment = this.reCommentDetail;
+			// })
+		},
 		methods:{
 			controlInputInRecomment(){
 				var dataOfRecomment={

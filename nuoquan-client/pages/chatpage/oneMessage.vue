@@ -131,8 +131,9 @@
 	.contentText-send {
 		width: 400upx;
 		font-size: 12px;
-		word-break: break-all;
 		color: white;
+		word-break:break-all;
+		white-space:pre-line;
 	}
 </style>
 
@@ -170,6 +171,7 @@
 	.contentText-recieve {
 		width: 400upx;
 		font-size: 12px;
-		word-break: break-all;
+		word-break:break-all;
+		white-space:pre-line;
 	}
 </style>

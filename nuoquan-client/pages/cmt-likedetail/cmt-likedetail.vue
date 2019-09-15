@@ -16,8 +16,8 @@
 			</scroll-view>
 			<swiper :current="currentTab" class="swiper-box-list" duration="300" @change="swiperChange">
 				<swiper-item class="swiper-box" v-for="(swiperData,index1) in swiperDataList" :key="index1">
-					<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-test" @scrolltoupper="upper" @scrolltolower="lower"
-					 @scroll="scroll" enable-back-to-top="true">
+					<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-test" @scrolltoupper="upper" @scrolltolower="loadMore(index1)"
+					 @scroll="scroll" enable-back-to-top="true" >
 						<!-- 卡片部分为文档流格式  -by Guetta-->
 						<!-- 详情卡片 -->
 						<view v-for="(item,index2) in (index1==0 ? likeList : commentList)" :key="index2">
@@ -30,7 +30,7 @@
 									<!-- 相对绝对定位 -->
 									<view class="id-line-rel">
 										<view class="clTouxiang-box">
-											<image class="clTouxiang" :src="item.data.source.faceImg" mode="scaleToFill"></image>
+											<image class="clTouxiang" :src="item.data.source.faceImg" mode="scaleToFill" @tap="goToPersonPublic(likeList[index2].data.source.userId)"></image>
 										</view>
 										<view class="clID-box">
 											<text class="clID-text">{{item.data.source.nickname}}</text>
@@ -43,7 +43,7 @@
 									</view>
 								</view>
 								<!-- 文章预览块 -->
-								<view :class="[item.data.imgList.length > 0 ? 'origin-bar-abs-img' : 'origin-bar-abs-noimg']">
+								<view :class="[item.data.imgList.length > 0 ? 'origin-bar-abs-img' : 'origin-bar-abs-noimg']" @tap="goToArticle(likeList[index2].data.target)">
 									<view class="origin-bar-rel">
 										<view class="origin-imageBox" v-if="item.data.target.imgList.length > 0">
 											<view class="origin-imageMask"></view>
@@ -52,7 +52,6 @@
 													+{{item.data.target.imgList.length}}
 												</view>
 											</view>
-											<!-- 图片好像显示不出来 by Jerrio -->
 											<image class="origin-image" :src="serverUrl + item.data.target.imgList[0].imagePath" mode="scaleToFill"></image>
 										</view>
 										<view :class="[item.data.imgList.length > 0 ? 'origin-briefBox-img' : 'origin-briefBox-noimg']">
@@ -78,7 +77,7 @@
 									<!-- 相对绝对定位 -->
 									<view class="id-line-rel">
 										<view class="clTouxiang-box">
-											<image class="clTouxiang" :src="item.data.source.faceImg" mode="scaleToFill"></image>
+											<image class="clTouxiang" :src="item.data.source.faceImg" mode="scaleToFill" @tap="goToPersonPublic(likeList[index2].data.source.userId)"></image>
 										</view>
 										<view class="clID-box">
 											<text class="clID-text">{{item.data.source.nickname}}</text>
@@ -91,7 +90,7 @@
 									</view>
 								</view>
 								<!-- 点赞预览块 -->
-								<view class="brief-bar-abs">
+								<view class="brief-bar-abs" @tap="goToComment(likeList[index2].data.target.articleId)">
 									<view class="brief-bar-rel">
 										{{item.data.target.comment}}
 									</view>
@@ -110,7 +109,7 @@
 									<!-- 相对绝对定位 -->
 									<view class="id-line-rel">
 										<view class="clTouxiang-box">
-											<image class="clTouxiang" :src="item.data.source.faceImg" mode="scaleToFill"></image>
+											<image class="clTouxiang" :src="item.data.source.faceImg" mode="scaleToFill" @tap="goToPersonPublic(commentList[index2].data.source.fromUserId)"></image>
 										</view>
 										<view class="clID-box">
 											<text class="clID-text">{{item.data.source.nickname}}</text>
@@ -122,31 +121,33 @@
 										</view>
 									</view>
 								</view>
-								<!-- 点赞 or 评论预览块 -->
-								<view class="brief-bar-nocolor">
-									<view class="brief-bar-rel">
-										{{item.data.source.comment}}
-									</view>
-								</view>
-								<!-- 原文章预览块 -->
-								<view :class="[item.data.target.imgList.length > 0 ? 'origin-bar-abs-img' : 'origin-bar-abs-noimg']">
-									<view class="origin-bar-rel">
-										<view class="origin-imageBox" v-if="item.data.target.imgList.length > 0">
-											<view class="origin-imageMask"></view>
-											<view class="origin-imageMasknum super_center">
-												<view class="origin-imageMasknumtext">
-													+{{item.data.target.imgList.length}}
-												</view>
-											</view>
-											<!-- 图片好像显示不出来 by Jerrio -->
-											<image class="origin-image" :src="serverUrl + item.data.target.imgList[0].imagePath" mode="scaleToFill"></image>
+								<view @tap="goToComment(commentList[index2].data.source.articleId)">
+									<!-- 点赞 or 评论预览块 -->
+									<view class="brief-bar-nocolor">
+										<view class="brief-bar-rel">
+											{{item.data.source.comment}}
 										</view>
-										<view :class="[item.data.target.imgList.length > 0 ? 'origin-briefBox-img' : 'origin-briefBox-noimg']">
-											<view class="origin-briefTitlebox">
-												<text class="origin-briefTitle">{{item.data.target.articleTitle}}</text>
+									</view>
+									<!-- 原文章预览块 -->
+									<view :class="[item.data.target.imgList.length > 0 ? 'origin-bar-abs-img' : 'origin-bar-abs-noimg']">
+										<view class="origin-bar-rel">
+											<view class="origin-imageBox" v-if="item.data.target.imgList.length > 0">
+												<view class="origin-imageMask"></view>
+												<view class="origin-imageMasknum super_center">
+													<view class="origin-imageMasknumtext">
+														+{{item.data.target.imgList.length}}
+													</view>
+												</view>
+												<!-- 图片好像显示不出来 by Jerrio -->
+												<image class="origin-image" :src="serverUrl + item.data.target.imgList[0].imagePath" mode="scaleToFill"></image>
 											</view>
-											<view class="origin-briefTextbox">
-												<text class="origin-briefText">{{item.data.target.articleContent}}</text>
+											<view :class="[item.data.target.imgList.length > 0 ? 'origin-briefBox-img' : 'origin-briefBox-noimg']">
+												<view class="origin-briefTitlebox">
+													<text class="origin-briefTitle">{{item.data.target.articleTitle}}</text>
+												</view>
+												<view class="origin-briefTextbox">
+													<text class="origin-briefText">{{item.data.target.articleContent}}</text>
+												</view>
 											</view>
 										</view>
 									</view>
@@ -164,7 +165,7 @@
 									<!-- 相对绝对定位 -->
 									<view class="id-line-rel">
 										<view class="clTouxiang-box">
-											<image class="clTouxiang" :src="item.data.source.faceImg" mode="scaleToFill"></image>
+											<image class="clTouxiang" :src="item.data.source.faceImg" mode="scaleToFill" @tap="goToPersonPublic(commentList[index2].data.source.fromUserId)"></image>
 										</view>
 										<view class="clID-box">
 											<text class="clID-text">{{item.data.source.nickname}}</text>
@@ -176,16 +177,18 @@
 										</view>
 									</view>
 								</view>
-								<!-- 点赞 or 评论预览块 -->
-								<view class="brief-bar-nocolor">
-									<view class="brief-bar-rel">
-										{{item.data.comment.comment}}
+								<view @tap="goToComment(commentList[index2].data.source.articleId)">
+									<!-- 点赞 or 评论预览块 -->
+									<view class="brief-bar-nocolor">
+										<view class="brief-bar-rel">
+											{{item.data.source.comment}}
+										</view>
 									</view>
-								</view>
-								<!-- 原评论预览块 -->
-								<view class="brief-bar-abs-cmtofcmt">
-									<view class="brief-bar-rel-cmtofcmt">
-										{{item.data.target.comment}}
+									<!-- 原评论预览块 -->
+									<view class="brief-bar-abs-cmtofcmt">
+										<view class="brief-bar-rel-cmtofcmt">
+											{{item.data.target.comment}}
+										</view>
 									</view>
 								</view>
 								<!-- 卡片高度未定义，上下边距会失效，用 marginHelper 填充空白 -->
@@ -237,10 +240,9 @@
 				COMMENTCOMMENT: this.netty.COMMENTCOMMENT, // 评论评论通知
 				
 				serverUrl: this.$serverUrl,
-				
-				
 				userInfo: '',
-				briefDetail: '这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符这里有一百字符一百字符'
+				likePage: 1,
+				commentPage: 1,
 			}
 		},
 		
@@ -259,14 +261,16 @@
 			// [测试用代码块]
 			var userInfo = this.getGlobalUserInfo()
 			this.userInfo = userInfo;
+			
+			// 加载点赞评论通知缓存
+			this.likeList = this.notification.getLikeMsg(this.likePage);
+			this.commentList = this.notification.getCommentMsg(this.commentPage);
+			console.log(this.likeList)
+			console.log(this.commentList)
 		},
 		
 		onShow() {
-			// 加载点赞评论通知缓存
-			this.likeList = this.notification.getLikeMsg();
-			this.commentList = this.notification.getCommentMsg();
-			console.log(this.likeList)
-			console.log(this.commentList)
+			
 		},
 		
 		changeIndicatorDots(e) {
@@ -296,11 +300,13 @@
 				} else {
 					if(current==0){
 						// console.log("点了点赞"); 刷新 list 并设置计数值
-						this.likeList = this.notification.getLikeMsg();
+						this.likePage = 1;
+						this.likeList = this.notification.getLikeMsg(this.likePage);
 						this.$store.commit('setLikeMsgCount', 0);
 					}else{
 						// console.log("点了评论");
-						this.commentList = this.notification.getCommentMsg();
+						this.commentPage = 1;
+						this.commentList = this.notification.getCommentMsg(this.commentPage);
 						this.$store.commit('setCommentMsgCount', 0);
 					}
 					
@@ -332,17 +338,11 @@
 					}).exec();
 				})
 			},
-			loadMore: function(tabIndex) {
-				console.log('正在加载更多数据。。。')
-				this.getDateList(tabIndex);
-			},
 
 			upper: function(e) {
 				console.log(e)
 			},
-			lower: function(e) {
-				console.log(e)
-			},
+			
 			scroll: function(e) {
 				console.log(e)
 				this.old.scrollTop = e.detail.scrollTop
@@ -356,6 +356,80 @@
 				// 	icon: "none",
 				// 	title: "回到顶部喽~"
 				// })
+			},
+			
+			loadMore(tabIndex) {
+				console.log('正在加载更多数据。。。');
+				uni.showLoading({
+					title: '加载中'
+				});
+				if(tabIndex == 0){ // like
+					var page = this.likePage + 1;
+					var list = this.notification.getLikeMsg(page);
+					if(list != null){
+						console.log(list)
+						this.likeList = this.likeList.concat(list);
+						this.likePage++;
+					}else{
+						uni.showToast({
+							title: 'No more',
+							duration: 2000,
+							icon: 'none',
+						});
+					}
+					uni.hideLoading();
+				}else{
+					var page = this.commentPage + 1;
+					var list = this.notification.getCommentMsg(page);
+					if(list != null){
+						console.log(list)
+						this.commentList = this.commentList.concat(list);
+						this.commentPage++;
+					}else{
+						uni.showToast({
+							title: 'No more',
+							duration: 2000,
+							icon: 'none',
+						});
+					}
+					uni.hideLoading();
+				}
+			},
+			
+			goToPersonPublic(userId){
+				uni.navigateTo({
+					url:'/pages/personpublic/personpublic?userId=' + userId,
+				});
+			},
+			
+			goToArticle(article){
+				// console.log(article)
+				uni.navigateTo({
+					url:'../detail/detail?data=' + JSON.stringify(article),
+				})
+			},
+			
+			goToComment(articleId){
+				var that = this;
+				uni.request({
+					url: that.$serverUrl + '/article/getArticleById',
+					method: "POST",
+					data:{
+						articleId: articleId,
+						userId: that.userInfo.id,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {
+						if (res.data.status == 200) {
+							var article = res.data.data;
+							uni.navigateTo({
+								url:'../detail/detail?data=' + JSON.stringify(article),
+							})
+						}
+					},
+				});
 			}
 		}
 	}
