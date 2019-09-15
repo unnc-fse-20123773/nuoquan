@@ -1,4 +1,33 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+C:\code\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\enums\MsgSignFlagEnum.java
+C:\code\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\ChatMsg.java
+C:\code\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\UserLikeComment.java
+C:\code\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\User.java
+C:\code\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\netty\ChatMessage.java
+C:\code\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\UserFans.java
+C:\code\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\vo\UserLikeVO.java
+C:\code\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\vo\UserFansVO.java
+C:\code\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\vo\WxRes.java
+C:\code\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\ArticleImage.java
+C:\code\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\UserLikeArticle.java
+C:\code\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\netty\DataContent.java
+C:\code\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\SearchRecord.java
+C:\code\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\UserReport.java
+C:\code\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\netty\NoticeCard.java
+C:\code\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\vo\UserVO.java
+C:\code\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\Administrator.java
+C:\code\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\enums\MsgActionEnum.java
+C:\code\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\UserArticleComment.java
+C:\code\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\vo\ArticleVO.java
+C:\code\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\ArticleTags.java
+C:\code\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\Article.java
+C:\code\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\vo\FansFollow.java
+C:\code\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\vo\UserArticleCommentVO.java
+=======
+<<<<<<< HEAD
+>>>>>>> 72ef0f9cf3eb8098d9f1cf6c8e28f1e62f23f305
 C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\vo\WxRes.java
 C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\UserArticleComment.java
 C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\netty\NoticeCard.java
@@ -50,3 +79,7 @@ C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\ma
 /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/ArticleImage.java
 /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/ChatMsg.java
 >>>>>>> 71e8dcfd9f4404f7f544ea9fc24bed3cfb1a803d
+<<<<<<< HEAD
+=======
+>>>>>>> b8d52a87864521358eb58b270ba1266f7e5e0ce6
+>>>>>>> 72ef0f9cf3eb8098d9f1cf6c8e28f1e62f23f305

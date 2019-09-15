@@ -327,16 +327,20 @@ _vue.default.prototype.mySocket = {
                 // 与该用户在聊天，标记为已读
                 console.log("与该用户在聊天，标记为已读");
                 app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.READ, createDate);
+
+                // 修改 store，发送信号，把消息卡片渲染到对话窗口 和 消息列表
+                var newMessage = new app.chat.ChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);
+                app.$store.commit('setChatMessageCard', newMessage);
+              } else {
+                //不是与该用户聊天，标记为未读
+                console.log("不是与该用户聊天，标记为未读");
+                app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.UNREAD, createDate);
               }
             } else {
-              // 聊天页面未打开或不是与该用户聊天，标记为未读
-              console.log("聊天页面未打开或不是与该用户聊天，标记为未读");
+              // 聊天页面未打开，标记为未读
+              console.log("聊天页面未打开，标记为未读");
               app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.UNREAD, createDate);
             }
-
-            // 修改 store，发送信号，把消息卡片渲染到对话窗口 和 消息列表
-            var newMessage = new app.chat.ChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);
-            app.$store.commit('setChatMessageCard', newMessage);
             break;
           case app.netty.LIKEARTICLE:
             console.log("获取点赞文章");
@@ -3707,6 +3711,23 @@ createPage(_wechatLogin.default);
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
 var _cmtLikedetail = _interopRequireDefault(__webpack_require__(/*! ./pages/cmt-likedetail/cmt-likedetail.vue */ 128));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_cmtLikedetail.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
+
+/***/ }),
+
+/***/ 13:
+/*!*******************************************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Findex%2Findex"} ***!
+  \*******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _index = _interopRequireDefault(__webpack_require__(/*! ./pages/index/index.vue */ 14));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_index.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
 
 /***/ }),
@@ -9657,23 +9678,6 @@ internalMixin(Vue);
 /* harmony default export */ __webpack_exports__["default"] = (Vue);
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../webpack/buildin/global.js */ 3)))
-
-/***/ }),
-
-/***/ 222:
-/*!*******************************************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/main.js?{"page":"pages%2Findex%2Findex"} ***!
-  \*******************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _index = _interopRequireDefault(__webpack_require__(/*! ./pages/index/index.vue */ 14));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_index.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
 
 /***/ }),
 

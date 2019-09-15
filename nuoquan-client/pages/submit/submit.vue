@@ -26,24 +26,20 @@
 
 				</view>
 			</view>
-			<textarea placeholder="内容" class="content" v-model="articleContent" maxlength="140"></textarea>
+			<textarea placeholder="内容" class="content" v-model="articleContent" maxlength="140" :show-confirm-bar="false"></textarea>
 			<view style="display: flex;justify-content: space-between;color: #353535;font-size: 13px;line-height: 28px;height: 24px;">
 				<view>还可以输入</view>
 				<view>{{140 - articleContent.length}}字</view>
 			</view>
 
 			<view class="picturearea">
-
 				<block v-for="(image,index) in imageList" :key="index">
 					<view>
-						<!-- todo 预览图片缩放 -->
-						<image :src="image" :data-src="image" @tap="previewImage"></image>
+						<image :src="image" :data-src="image" @tap="previewImage" mode="aspectFill"></image>
 					</view>
-
 				</block>
 				<view v-show="isAddImage(this.imageList.length)" id="clickToChooseImage" class="addPic" @click="chooseImg">+</view>
 				<view v-if="imageList.length==1||imageList.length==4||imageList.length==7" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
-
 			</view>
 		</view>
 	</viwe>

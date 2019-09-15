@@ -175,6 +175,7 @@ page {
 	width: 100%;
 }
 
+<<<<<<< HEAD
 
 .searchPage.data-v-7a6267b5 {
 		height: 100%;
@@ -193,6 +194,19 @@ page {
 		z-index: 3;
 }
 .mainPageTop.data-v-7a6267b5 {
+=======
+.searchPage.data-v-7a6267b5{
+	height: 100%;width: 100%;position: fixed;top:0;left:0;background: #FFFFFF;z-index:10;
+}
+.bottomLayerOfLeft.data-v-7a6267b5 {
+
+		position: fixed;
+		width: 750rpx;
+		height: 1000px;
+		z-index: 3;
+}
+.mainPageTop.data-v-7a6267b5 {
+>>>>>>> 72ef0f9cf3eb8098d9f1cf6c8e28f1e62f23f305
 		padding-top: 4px;
 		position: fixed;
 		left: 0;
@@ -206,6 +220,7 @@ page {
 		border-bottom-right-radius: 25px;
 		border-bottom-left-radius: 25px;
 }
+<<<<<<< HEAD
 .topBarTouxiang.data-v-7a6267b5 {
 		width: 30px;
 		height: 30px;
@@ -277,6 +292,79 @@ page {
 		max-width: calc(750rpx - 77px);
 		-o-text-overflow: ellipsis;
 		   text-overflow: ellipsis;
+=======
+.topBarTouxiang.data-v-7a6267b5 {
+		width: 30px;
+		height: 30px;
+		border-radius: 30px;
+		display: inline-block;
+		vertical-align: middle;
+		margin-left: 12px;
+}
+.topBarSearch.data-v-7a6267b5 {
+		font-size: 15px;
+		display: inline-block;
+		width: 190px;
+		height: 28px;
+		vertical-align: middle;
+		border-radius: 8px;
+		margin-left: 13px;
+		background: white;
+		letter-spacing: 1px;
+		color: #b2b2b2;
+		font-family: MicrosoftYaHei;
+		line-height: 10px;
+}
+.topBarPlus.data-v-7a6267b5 {
+		font-size: 25px;
+		background: #ffffff;
+		display: inline-block;
+		height: 25px;
+		width: 25px;
+		vertical-align: middle;
+		text-align: center;
+		margin-left: 10px;
+		border-radius: 3px;
+		line-height: 23px;
+}
+.topicTitle.data-v-7a6267b5 {
+		color: #ffffff;
+		margin-left: 29px;
+		font-size: 13px;
+		font-weight: bold;
+		margin-top: 16px;
+		margin-bottom: 10px;
+}
+.hot1.data-v-7a6267b5,
+	.hot2.data-v-7a6267b5,
+	.hot3.data-v-7a6267b5 {
+		height: 17px;
+		line-height: 17px;
+		/* margin-bottom: 10px;
+ */
+		padding-bottom: 10px;
+}
+.hotNum1.data-v-7a6267b5,
+	.hotNum2.data-v-7a6267b5,
+	.hotNum3.data-v-7a6267b5 {
+		color: #ffffff;
+		width: 77px;
+		font-weight: bold;
+		text-align: center;
+		vertical-align: middle;
+		display: inline-block;
+}
+.hotContent1.data-v-7a6267b5,
+	.hotContent2.data-v-7a6267b5,
+	.hotContent3.data-v-7a6267b5 {
+		display: inline-block;
+		vertical-align: middle;
+		color: #ffffff;
+		overflow: hidden;
+		max-width: calc(750rpx - 77px);
+		-o-text-overflow: ellipsis;
+		   text-overflow: ellipsis;
+>>>>>>> 72ef0f9cf3eb8098d9f1cf6c8e28f1e62f23f305
 		white-space: nowrap;
 }
 

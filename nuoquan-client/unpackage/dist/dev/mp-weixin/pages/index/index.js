@@ -182,6 +182,7 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
 
     // [测试代码块]
   },
+
   onShow: function onShow() {
     var that = this;
     var userInfo = this.getGlobalUserInfo();
@@ -488,6 +489,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 var _default =
 {
   name: 'aticlebrief',
@@ -614,14 +616,12 @@ var _default =
         } });
 
     },
-
     jumpToDetail: function jumpToDetail() {
       var navData = JSON.stringify(this.articleCard); // 这里转换成 字符串
       uni.navigateTo({
         url: '/pages/detail/detail?data=' + navData });
 
     },
-
     goToPersonPublic: function goToPersonPublic(userId) {
       uni.navigateTo({
         url: '/pages/personpublic/personpublic?userId=' + userId });
@@ -641,7 +641,6 @@ var _default =
         arr = arr.concat(path);
       }
       // console.log(arr);
-
       uni.previewImage({
         current: index,
         urls: arr });
@@ -750,5 +749,5 @@ __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
 /***/ })
-],[[222,"common/runtime","common/vendor"]]]);
+],[[13,"common/runtime","common/vendor"]]]);
 //# sourceMappingURL=../../../.sourcemap/mp-weixin/pages/index/index.js.map

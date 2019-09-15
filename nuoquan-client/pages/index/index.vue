@@ -1,7 +1,7 @@
 <template>
 	<view class="index">
 		<mainpagetop :userInfo='userInfo' :topArticles='topArticles' :topHeight="topHeight" style="position: fixed;z-index: 30;height:100%;"></mainpagetop>
-		
+
 		<view class="indexSelf" style="height:100%;">
 			<scroll-view class="indexArticleArea" scroll-y="true" @scroll="linkageWithTop" @scrolltolower="loadMore" @scrolltoupper="refreshArticle">
 				<view style="height:160px;width:100%;"></view>
@@ -64,6 +64,7 @@
 			
 			// [测试代码块]
 		},
+		
 		onShow() {
 			var that = this;
 			var userInfo = this.getGlobalUserInfo();
@@ -207,7 +208,7 @@
 <style scoped>
 	.index {
 		/* 页面高度由内容扩充，最低值为100%（page 定义的）- by Guetta */
-		height:100%;
+		height: 100%;
 		background-color: #f3f3f3;
 	}
 
@@ -258,8 +259,8 @@
 		width: 100upx;
 		height: 60upx;
 	}
-	
-	.marginHelper{
+
+	.marginHelper {
 		height: 15upx;
 		margin-top: 15upx;
 		width: 100%;

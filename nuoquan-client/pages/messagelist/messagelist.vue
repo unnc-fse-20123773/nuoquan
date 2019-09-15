@@ -126,8 +126,8 @@
 		watch: {
 			chatMessageCard(newVal, oldVal) { // 重载快照
 				this.loadingChatSnapshot();
-				console.log("newVal:");
-				console.log(newVal);
+				// console.log("newVal:");
+				// console.log(newVal);
 			},
 			
 			likeMsgCount(newVal, oldVal){

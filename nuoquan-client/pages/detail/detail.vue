@@ -6,11 +6,14 @@
 
 		<view class="drtailmain">
 			<view class="detailcontent">{{ articleCard.articleContent }}</view>
+				
 			<view class="detailpics">
+				<!-- 单图显示 -->
 				<view v-if="articleCard.imgList.length==1" class="1pic" style="width: 100%;max-height: 400upx;">
-					<image v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFit" style="height: 360upx;" @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
+					<image v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFit" style="height: 360upx;"></image>
 				</view>
-				<image class="detailpic" v-else v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFill" @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
+				<!-- 其他数量 -->
+				<image class="detailpic" v-else v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFill"></image>
 				<view v-if="articleCard.imgList.length==2||imageList.length==5||imageList.length==8" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
 			</view>
 			<view class="tags">
@@ -29,8 +32,8 @@
 					<view class="icom">{{ articleCard.likeNum }}</view>
 				</view>
 			</view>
-			
-			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i" @controlInputSignal="controlInput">
+
+			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i" @controlInputSignal="controlInput" :reCommentListFromDetail="reCommentListFromDetail">
 			</commentbox>
 
 			<view class="fengexian" style="height: 1px;width: 100%;background-color: #d6d6d6;margin:auto;"></view>
@@ -41,7 +44,7 @@
 					<view class="emoji"></view>
 					<view class="submit" @click="saveComment()"></view>
 					<textarea class="commentSth" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
-					 adjust-position="false" v-model="commentContent" @click.stop="" 
+					 confirm-type="send" @confirm="saveComment()" adjust-position="false" v-model="commentContent" @click.stop="" 
 					 :show-confirm-bar="false"
 					  @focus="popTextArea" @blur="unpopTextArea"/>
 					</view>
@@ -55,13 +58,16 @@
 	export default {
 		data() {
 			return {
+				imgList: [],
+				singleImgState: '0',
+				
 				userInfo: {},
 				articleCard: "",  //detail的主角，由index传过来的单个文章信息
                 commentContent:"",  //用户准备提交的评论内容
 				commentList: {},  //返回值，获取评论列表信息
-				showInput:false,        ////控制输入框，true时显示输入框
+				showInput:false,  //控制输入框，true时显示输入框
 				writingComment:false,  //控制输入框，true时自动获取焦点，拉起输入法
-				placeholderText:"评论点什么吧......",
+				placeholderText:" 评论点什么吧......",
 				inputData:{},  //localData,用于拼接不同情况下的savecomment请求的数据
 				
 				submitData:{
@@ -113,17 +119,15 @@
 		},
 		
 		onLoad(options) {
-			var that = this;
-			that.articleCard = JSON.parse(options.data);
-			console.log(that.articleCard)
+			this.articleCard = JSON.parse(options.data);
+			// console.log(this.articleCard);
 			var userInfo = this.getGlobalUserInfo();
-			if (!that.isNull(userInfo)) {
-				that.userInfo = this.getGlobalUserInfo();
+			if (!this.isNull(userInfo)) {
+				this.userInfo = this.getGlobalUserInfo();
 			}
-			
-			var page = that.currentPage;
+			var page = this.currentPage;
 			this.getComments(page);
-			
+
 			// 随机生成颜色
 			if(!this.isNull(this.articleCard.tagList)){
 				var tagColors = this.tagColors;
@@ -202,19 +206,22 @@
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
-					success: (res) => {	
-						uni.hideLoading();
-						// console.log(res);
-						if (page == 1) {
-							that.commentList = [];
+					success: (res) => {
+						if(res.data.status == 200){
+							if (page == 1) {
+								that.commentList = [];
+							}
+							console.log(res);
+							var newCommentList = res.data.data.rows;
+							var oldCommentList = that.commentList;
+							that.commentList = oldCommentList.concat(newCommentList);
+							that.currentPage = page;
+							that.totalPage = res.data.data.total;
+							// console.log(that.articleCard.id);
+						}else{
+							console.log(res);
 						}
-						console.log(res);
-						var newCommentList = res.data.data.rows;
-						var oldCommentList = that.commentList;
-						that.commentList = oldCommentList.concat(newCommentList);
-						that.currentPage = page;
-						that.totalPage = res.data.data.total;
-						// console.log(that.articleCard.id);
+						uni.hideLoading();
 					}
 				});
 			},
@@ -241,6 +248,17 @@
 				}
 			},
 
+			singleImgeFit(e){
+				var height = e.detail.height;
+				var width = e.detail.width;
+				if(height >= width){
+					this.singleImgState = 0;
+				}else{
+					this.singleImgState = 1;
+				}
+				// console.log(e.detail);
+			},
+			
 			controlInput(a){
 				if(a!=0&&a!=1){ //a!=0, !=1， 从子组件传来，包含被回复对象：被回复人ID，被回复评论ID，被回复人昵称
 					this.placeholderText='回复 @'+a.nickname+' 的评论';
@@ -428,11 +446,32 @@
 		padding-top: 25px;
 		padding-bottom: 15px;
 		font-size: 13px;
+		/* width: 85%;
+		margin: 0px auto 10px; */
+		/* font-weight: 400;
+		word-break:break-all;
+		white-space:pre-line;
+	}
+
+	.picturearea-one {
+		margin: auto;
+		display: flex;
+		width: 94%;
+		margin-left: 3%;
+	}
+	
+	.picturearea-mul {
+		position: relative;
+		margin: auto;
+		display: flex; */
+		/* 在此设置图片区域宽度 */
+		/* width: 94%;
+		margin-left: 3%;
+	} */
+	
 		font-weight: 400;
 		word-break: break-all;
 		word-wrap: break-word;
-		
-		
 	}
 
 	.detailpics {

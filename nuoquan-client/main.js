@@ -316,16 +316,20 @@ Vue.prototype.mySocket = {
 								// 与该用户在聊天，标记为已读
 								console.log("与该用户在聊天，标记为已读");
 								app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.READ, createDate);
+								
+								// 修改 store，发送信号，把消息卡片渲染到对话窗口 和 消息列表
+								var newMessage = new app.chat.ChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);
+								app.$store.commit('setChatMessageCard', newMessage);
+							}else{
+								//不是与该用户聊天，标记为未读
+								console.log("不是与该用户聊天，标记为未读");
+								app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.UNREAD, createDate);
 							}
 						} else {
-							// 聊天页面未打开或不是与该用户聊天，标记为未读
-							console.log("聊天页面未打开或不是与该用户聊天，标记为未读");
+							// 聊天页面未打开，标记为未读
+							console.log("聊天页面未打开，标记为未读");
 							app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.UNREAD, createDate);
 						}
-						
-						// 修改 store，发送信号，把消息卡片渲染到对话窗口 和 消息列表
-						var newMessage = new app.chat.ChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);
-						app.$store.commit('setChatMessageCard', newMessage);
 						break;
 					case app.netty.LIKEARTICLE:
 						console.log("获取点赞文章");

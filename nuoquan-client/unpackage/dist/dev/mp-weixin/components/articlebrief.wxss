@@ -28,9 +28,8 @@ image {
 	font-size: 13px;
 	line-height: 15px;
 	margin-bottom: 15px;
-	word-wrap: break-word;
 	word-break: break-all;
-	white-space: normal;
+	white-space: pre-line;
 }
 .tags.data-v-2881634c {
 	margin-left: 10px;

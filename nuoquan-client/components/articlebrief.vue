@@ -15,7 +15,8 @@
 				</view>
 			</view>
 			<view v-if="articleCard.imgList.length > 3" style="position: absolute;width: 30%;height: 200upx;
-			background-color: #000000;opacity: 0.5;margin-left: 67.5%;z-index: 10;"  @click="jumpToDetail()"></view>
+			background-color: #000000;opacity: 0.5;margin-left: 67.5%;z-index: 10;"
+			 @click="jumpToDetail()"></view>
 
 			<!-- 宽高和 image 保持一致 -->
 			<!-- 单图显示 -->
@@ -35,7 +36,7 @@
 
 			<view style="width:30%;height: 200upx;margin-left: 2.5%;display: flex;background-color: #D1D1D1;" v-else v-for="(item,index) in imgList"
 			 :key="index">
-				<image mode="aspectFit" :src="serverUrl + item.imagePath" @tap="previewImage(index)"></image>
+				<image mode="aspectFill" :src="serverUrl + item.imagePath" @tap="previewImage(index)"></image>
 			</view>
 
 		</view>
@@ -132,19 +133,19 @@
 				}
 				// console.log(e.detail);
 			},
-			
-			swLikeArticle(){
-				if (this.articleCard.isLike){
+
+			swLikeArticle() {
+				if (this.articleCard.isLike) {
 					this.unLikeArticle();
 					this.likeNum--;
-				}else{
+				} else {
 					this.likeArticle();
 					this.likeNum++;
 				}
 				this.articleCard.isLike = !this.articleCard.isLike;
 			},
-			
-			likeArticle(){
+
+			likeArticle() {
 				console.log("点赞文章");
 				var that = this;
 				uni.request({
@@ -158,13 +159,13 @@
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
-					success: (res) => {	
+					success: (res) => {
 						console.log(res);
 					},
 				});
 			},
-			
-			unLikeArticle(){
+
+			unLikeArticle() {
 				console.log("取消点赞文章");
 				var that = this;
 				uni.request({
@@ -178,25 +179,23 @@
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
-					success: (res) => {	
+					success: (res) => {
 						console.log(res);
 					},
 				});
 			},
-
 			jumpToDetail() {
 				var navData = JSON.stringify(this.articleCard); // 这里转换成 字符串
 				uni.navigateTo({
 					url: '/pages/detail/detail?data=' + navData
 				});
 			},
-
 			goToPersonPublic(userId) {
 				uni.navigateTo({
 					url: '/pages/personpublic/personpublic?userId=' + userId,
 				});
 			},
-			
+
 			previewImage: function(index) {
 				var imgIndex = index;
 				// console.log(res)
@@ -210,7 +209,6 @@
 					arr = arr.concat(path);
 				}
 				// console.log(arr);
-
 				uni.previewImage({
 					current: index,
 					urls: arr,
@@ -252,9 +250,8 @@
 		font-size: 13px;
 		line-height: 15px;
 		margin-bottom: 15px;
-		word-wrap: break-word;
 		word-break: break-all;
-		white-space: normal;
+		white-space: pre-line;
 	}
 
 	.tags {
