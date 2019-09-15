@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/comment-detail/comment-detail",
     "pages/index/index",
     "pages/detail/detail",
     "pages/submit/submit",
@@ -24,6 +25,5 @@
     "backgroundColor": "#F8F8F8"
   },
   "permission": {},
-  "usingComponents": {},
-  "sitemapLocation": "sitemap11.json"
+  "usingComponents": {}
 }

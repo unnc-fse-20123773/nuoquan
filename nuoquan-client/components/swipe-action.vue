@@ -377,8 +377,8 @@
 				line-height: 35upx;
 				text-align: center;
 				font-size: 18upx;
-				min-width: 35upx;
-				min-height: 35upx;
+				min-width: 15upx;
+				min-height: 15upx;
 				border-radius: 18upx;
 				color: #fff;
 			}
