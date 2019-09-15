@@ -35,9 +35,10 @@
 			<view class="picturearea">
 
 				<block v-for="(image,index) in imageList" :key="index">
-					<view>
+					<view style="position: relative;">
 						<!-- todo 预览图片缩放 -->
 						<image :src="image" :data-src="image" @tap="previewImage"></image>
+						<view style="width:15px;height: 15px;font-size: 10px;line-height: 10px;border-bottom-left-radius: 3px;background: rgba(166, 169, 168,0.3);color:#FFFFFF;position: absolute;top:6px;right:0;text-align: center;">✕</view>
 					</view>
 
 				</block>
@@ -116,24 +117,24 @@
 					that.tagIndex = that.tagIndex + 1;
 					that.showAddTagButton = 1;
 					that.showInputTagArea = 0;
-					that.articleTag = '';					
+					that.articleTag = '';
 				}
 			},
-			deleteTag(tag){
-				var that = this ;
+			deleteTag(tag) {
+				var that = this;
 				var i = 0;
-				var newTagListTemp= [];
-				for(i=0;i<that.tagIndex;i++){
-					if(that.tagList[i]!=tag){
-						newTagListTemp.push(that.tagList[i]); 
+				var newTagListTemp = [];
+				for (i = 0; i < that.tagIndex; i++) {
+					if (that.tagList[i] != tag) {
+						newTagListTemp.push(that.tagList[i]);
 					}
 				}
 				that.tagList = newTagListTemp;
-				that.tagIndex = that.tagIndex-1;
+				that.tagIndex = that.tagIndex - 1;
 			},
 			combineTagToString: function(res) {
 				var that = this;
-				for(var i = 0; i < that.tagList.length; i++) {
+				for (var i = 0; i < that.tagList.length; i++) {
 					that.finalTag = that.finalTag + '#' + that.tagList[i];
 				}
 				console.log(that.finalTag);

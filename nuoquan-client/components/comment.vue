@@ -10,11 +10,13 @@
 			</view>
 			<view class="icons">
 				<!-- 评论按钮 -->
-				<image v-if="!RECOMMENT || mainComment.commentNum == 0" class="icon" src="../../../../static/icon/comment.png" 
-				style="padding-right: 23px;"></image>
+				<image v-show="!RECOMMENT || mainComment.commentNum == 0" class="icon" src="../../../../static/icon/comment.png"
+				 style="padding-right: 23px;" @click="showRecommentArea"></image>
 
-				<image v-if="RECOMMENT && mainComment.commentNum" src="../../../../static/icon/ReComment.png" 
-				style="height:23px;width:50px;position:relative;bottom:-5px;padding-right:4px;"></image>
+				<image v-if="RECOMMENT && mainComment.commentNum" src="../../../../static/icon/ReComment.png" style="height:23px;width:50px;position:relative;bottom:-5px;padding-right:4px;"
+				 @click="showRecommentArea"></image>
+
+
 				<!-- <text class="icom">{{mainComment.commentNum}}</text> -->
 				<!-- 点赞按钮 -->
 				<view @tap="swLikeMainComment(mainComment)">
@@ -27,6 +29,7 @@
 		<view v-show="RECOMMENT && mainComment.commentNum > 0" class="reCommentsArea">
 			<reComment v-for="(item,index) in reCommentList" v-bind:key="index" :reCommentDetail='item' @controlInputSignal="controlInputInComment"
 			 @goToPersonPublic="goToPersonPublic"></reComment>
+			 <view style="font-size: 10px;color:#007AFF;text-align: right;margin-top:5px;">共{{reCommentNumber}}条评论</view>
 			<!-- <view class="submitComment">发 表 评 论</view> -->
 		</view>
 	</view>
@@ -53,6 +56,7 @@
 
 				totalPage: 1,
 				currentPage: 1,
+				reCommentNumber:"",
 			};
 		},
 
@@ -91,13 +95,16 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: (res) => {
-						// that.isPassingReComment = false;
-						// that.reCommentListFromDetail = '';
 						if (res.data.status == 200) {
 							// 强制子组件重新刷新
 							that.reCommentList = '';
 							that.$nextTick(function() {
-								that.reCommentList = res.data.data.rows;
+								that.reCommentNumber = res.data.data.rows.length;
+								if(res.data.data.rows.length>5){
+								    that.reCommentList = res.data.data.rows.slice(0,5);
+								}else{
+									that.reCommentList = res.data.data.rows;	
+								}	
 							});
 							// console.log(res);
 						}
@@ -261,7 +268,7 @@
 		font-size: 10px;
 		margin-right: 10px;
 		color: #888888;
-			max-width: 85px;
+		max-width: 85px;
 		text-overflow: ellipsis;
 	}
 

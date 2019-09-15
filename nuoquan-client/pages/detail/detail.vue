@@ -8,9 +8,11 @@
 			<view class="detailcontent">{{ articleCard.articleContent }}</view>
 			<view class="detailpics">
 				<view v-if="articleCard.imgList.length==1" class="1pic" style="width: 100%;max-height: 400upx;">
-					<image v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFit" style="height: 360upx;" @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
+					<image v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFit" style="height: 360upx;"
+					 @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
 				</view>
-				<image class="detailpic" v-else v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFill" @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
+				<image class="detailpic" v-else v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath"
+				 mode="aspectFill" @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
 				<view v-if="articleCard.imgList.length==2||imageList.length==5||imageList.length==8" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
 			</view>
 			<view class="tags">
@@ -29,21 +31,23 @@
 					<view class="icom">{{ articleCard.likeNum }}</view>
 				</view>
 			</view>
-			
+
 			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i" @controlInputSignal="controlInput">
 			</commentbox>
 
 			<view class="fengexian" style="height: 1px;width: 100%;background-color: #d6d6d6;margin:auto;"></view>
-			<view class="submitComment" @click="controlInput(1)">发 表 评 论</view>
+			<view style="height:50px;width:750px;background:#FFFFFF;"></view><!--占位，防止发表评论按钮挡住最下边一条评论-->
 
-			<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)" >
+			<view class="bottomLayerOfSubmit">
+				<view class="submitComment" @click="controlInput(1)">发 表 评 论</view>
+			</view>
+			<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)">
 				<view class="commentPart" @click.stop="" :style="{bottom: textAreaAdjust }">
 					<view class="emoji"></view>
 					<view class="submit" @click="saveComment()"></view>
 					<textarea class="commentSth" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
-					 adjust-position="false" v-model="commentContent" @click.stop="" 
-					 :show-confirm-bar="false"
-					  @focus="popTextArea" @blur="unpopTextArea"/>
+					 adjust-position="false" v-model="commentContent" @click.stop="" :show-confirm-bar="false" @focus="popTextArea"
+					 @blur="unpopTextArea" />
 					</view>
             </view>
 		</view> 
@@ -168,22 +172,31 @@
 				this.submitData.articleId=this.articleCard.id;
 				console.log(this.submitData);
 				var that = this;
-				uni.request({
-					url: that.$serverUrl + '/article/saveComment',
-					method: 'POST',
-					data: this.submitData,
-					success: (res) => {
-						that.writingComment = false;
-						that.commentContent = "";
-						this.showInput = false;
-						
-						if(that.isNull(that.submitData.underCommentId)){
-							that.getComments(that.currentPage);
-						}else{
-							uni.$emit("flashSubComment", that.submitData.underCommentId);
-						}
-					},
-				})
+				if(this.commentContent==""){
+					uni.showToast({
+						title: '好像忘写评论了哦~',
+						duration: 1000,
+						icon: 'none',
+					});
+				}else{
+					uni.request({
+						url: that.$serverUrl + '/article/saveComment',
+						method: 'POST',
+						data: this.submitData,
+						success: (res) => {
+							that.writingComment = false;
+							that.commentContent = "";
+							this.showInput = false;
+							
+							if(that.isNull(that.submitData.underCommentId)){
+								that.getComments(that.currentPage);
+							}else{
+								uni.$emit("flashSubComment", that.submitData.underCommentId);
+							}
+						},
+					})
+				}
+
 			},
 			
 			getComments: function(page) {		
@@ -532,12 +545,18 @@
 		padding-right: 8upx;
 
 	}
-
-	.submitComment {
+    .bottomLayerOfSubmit{
+		display: flex;
 		position: fixed;
-		display: block;
-		left:34%;
-		bottom:9px;
+		height: 48px;
+		width:750upx;
+		left:0;
+		bottom: 0;
+		background: #FFFFff;
+		justify-content: center;
+		align-items: center;
+	}
+	.submitComment {
 		background: #FFCC30;
 		border-radius: 5px;
 		width: 32%;
@@ -547,7 +566,16 @@
 		color: #FFFFFF;
 		text-align: center;
 		line-height: 30px;
-		
+	}
+	.submitComment::before{
+		content: "";
+		position: absolute;
+		top:-9px;
+		left: -294%;
+		width:750upx;
+		height:48px;
+		background: #F3FFFF;
+		z-index: -1;
 	}
 .bottoLayerOfInput{
 	position: fixed;
@@ -565,7 +593,7 @@
 		width: 670upx;
 		padding:11px 40upx;
 		min-height: 50px;
-		background: #058ECC;
+		background: #FFFFFF;
 	}
 
 	.emoji {
