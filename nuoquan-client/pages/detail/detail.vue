@@ -113,15 +113,15 @@
 		},
 		
 		onLoad(options) {
-			var that = this;
-			that.articleCard = JSON.parse(options.data);
-			console.log(that.articleCard)
+			// var that = this;
+			this.articleCard = JSON.parse(options.data);
+			console.log(this.articleCard)
 			var userInfo = this.getGlobalUserInfo();
-			if (!that.isNull(userInfo)) {
-				that.userInfo = this.getGlobalUserInfo();
+			if (!this.isNull(userInfo)) {
+				this.userInfo = this.getGlobalUserInfo();
 			}
 			
-			var page = that.currentPage;
+			var page = this.currentPage;
 			this.getComments(page);
 			
 			// 随机生成颜色

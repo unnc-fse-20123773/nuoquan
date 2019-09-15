@@ -164,6 +164,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -363,18 +364,16 @@ var sizeType = [
     deleteTag: function deleteTag(index) {
       console.log(index);
       var targetTag = this.tagList[index];
-      this.tagList.splice(index, 1);
-      console.log(this.tagList.length);
-      this.tagIndex = this.tagList.length;
+      this.tagList = this.tagList.splice(index, 1);
+    },
+    showTaglist: function showTaglist() {
+      console.log('length = ' + this.tagList.length);
+      for (var i = 0; i < this.tagList.length; i++) {
+        console.log('old ' + this.tagList[i]);
+      }
     }
-    // 测试用函数
-    // showTaglist: function(){
-    // 	console.log('length = ' + this.tagList.length);
-    // 	for(var i = 0; i < this.tagList.length; i++){
-    // 		console.log('old ' + this.tagList[i]);
-    // 	}
-    // }
-  } };exports.default = _default;
+
+    /* 以下为 Jerrio 测试代码块 */ } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

@@ -1,22 +1,3 @@
-<<<<<<< HEAD
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-mapper\src\main\java\com\nuoquan\mapper\UserMapperCustom.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-mapper\src\main\java\com\nuoquan\mapper\ArticleImageMapper.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-mapper\src\main\java\com\nuoquan\mapper\UserFansMapper.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-mapper\src\main\java\com\nuoquan\mapper\UserArticleCommentMapper.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-mapper\src\main\java\com\nuoquan\mapper\UserLikeCommentMapper.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-mapper\src\main\java\com\nuoquan\mapper\UserMapper.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-mapper\src\main\java\com\nuoquan\mapper\UserLikeMapperCustom.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-mapper\src\main\java\com\nuoquan\mapper\UserArticleCommentMapperCustom.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-mapper\src\main\java\com\nuoquan\mapper\UserFansMapperCustom.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-mapper\src\main\java\com\nuoquan\mapper\UserLikeArticleMapper.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-mapper\src\main\java\com\nuoquan\mapper\ArticleMapper.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-mapper\src\main\java\com\nuoquan\mapper\AdministratorMapper.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-mapper\src\main\java\com\nuoquan\mapper\SearchRecordMapper.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-mapper\src\main\java\com\nuoquan\mapper\UserReportMapper.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-mapper\src\main\java\com\nuoquan\mapper\ArticleTagsMapper.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-mapper\src\main\java\com\nuoquan\mapper\ChatMsgMapper.java
-C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-mapper\src\main\java\com\nuoquan\mapper\ArticleMapperCustom.java
-=======
 /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/UserReportMapper.java
 /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/UserFansMapper.java
 /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/UserFansMapperCustom.java
@@ -34,4 +15,3 @@ C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-mapper\src\
 /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/UserLikeMapperCustom.java
 /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/UserArticleCommentMapper.java
 /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/UserLikeArticleMapper.java
->>>>>>> 71e8dcfd9f4404f7f544ea9fc24bed3cfb1a803d

@@ -5,13 +5,13 @@ image {
 }
 
 
-.articlecard.data-v-2881634c {
+.articlecard.data-v-fbd78668 {
 	width: 650rpx;
 	border-radius: 8px;
 	margin: 11px auto 0;
 	background-color: #ffffff;
 }
-.title.data-v-2881634c {
+.title.data-v-fbd78668 {
 	margin: 16px 25px 0 25px;
 	font-size: 15px;
 	font: MicrosoftYaHei;
@@ -23,7 +23,7 @@ image {
 	word-break: break-all;
 	white-space: normal;
 }
-.briefarticleCard.data-v-2881634c {
+.briefarticleCard.data-v-fbd78668 {
 	margin: 10px 13px 0 15px;
 	font-size: 13px;
 	line-height: 15px;
@@ -32,11 +32,11 @@ image {
 	word-break: break-all;
 	white-space: normal;
 }
-.tags.data-v-2881634c {
+.tags.data-v-fbd78668 {
 	margin-left: 10px;
 	min-height: 10px;
 }
-.tag.data-v-2881634c {
+.tag.data-v-fbd78668 {
 	display: inline-block;
 	border-radius: 4px;
 	padding-left: 5px;
@@ -47,39 +47,39 @@ image {
 	font-size: 10px;
 	background: #621E81;
 }
-.tag-empty.data-v-2881634c {
+.tag-empty.data-v-fbd78668 {
 	margin-left: 10px;
 	height: 15px;
 	width: auto;
 	background-color: white;
 }
-.menubar.data-v-2881634c {
+.menubar.data-v-fbd78668 {
 	position: relative;
 	vertical-align: middle;
 	margin-left: 15px;
 	border-radius: 8px;
 }
-.touxiang.data-v-2881634c {
+.touxiang.data-v-fbd78668 {
 	border-radius: 30px;
 	width: 20px;
 	height: 20px;
 	margin-right: 5px;
 	vertical-align: middle;
 }
-.name.data-v-2881634c {
+.name.data-v-fbd78668 {
 	display: inline-block;
 	font-size: 10px;
 	margin-left: 7px;
 	color: #888888;
 	padding-bottom: 5px;
 }
-.time.data-v-2881634c {
+.time.data-v-fbd78668 {
 	display: inline-block;
 	font-size: 10px;
 	margin-left: 25px;
 	color: #888888;
 }
-.icons.data-v-2881634c {
+.icons.data-v-fbd78668 {
 	position: absolute;
 	right: 0;
 	bottom: 0;
@@ -90,14 +90,14 @@ image {
 	overflow: hidden;
 	border-bottom-right-radius: 8px;
 }
-.icons image.data-v-2881634c {
+.icons image.data-v-fbd78668 {
 	position: relative;
 	/* G添加相对位置 */
 	width: 11px;
 	height: 11px;
 	padding-right: 5px;
 }
-.icon.data-v-2881634c {
+.icon.data-v-fbd78668 {
 	display: inline-block;
 	color: #353535;
 	font-size: 10px;
@@ -105,7 +105,7 @@ image {
 	text-align: center;
 	vertical-align: middle;
 }
-.picturearea-one.data-v-2881634c {
+.picturearea-one.data-v-fbd78668 {
 	margin: auto;
 	display: -webkit-box;
 	display: -webkit-flex;
@@ -114,7 +114,7 @@ image {
 	width: 94%;
 	margin-left: 3%;
 }
-.picturearea-mul.data-v-2881634c {
+.picturearea-mul.data-v-fbd78668 {
 	position: relative;
 	margin: auto;
 	display: -webkit-box;
@@ -125,7 +125,7 @@ image {
 	width: 94%;
 	margin-left: 3%;
 }
-image.data-v-2881634c {
+image.data-v-fbd78668 {
 	width: 100%;
 	height: 200rpx;
 	margin: auto;
@@ -137,23 +137,23 @@ page {
 }
 
 
-.index.data-v-5ac200f2 {
+.index.data-v-4d1c2b79 {
 	/* 页面高度由内容扩充，最低值为100%（page 定义的）- by Guetta */
 	height:100%;
 	background-color: #f3f3f3;
 }
-.indexArticleArea.data-v-5ac200f2 {
+.indexArticleArea.data-v-4d1c2b79 {
 	height: 100%;
 }
-image.data-v-5ac200f2 {
+image.data-v-4d1c2b79 {
 	width: 60px;
 	height: 60px;
 	display: inline-block;
 }
-.touxiang.data-v-5ac200f2 {
+.touxiang.data-v-4d1c2b79 {
 	border-radius: 30px;
 }
-.search.data-v-5ac200f2 {
+.search.data-v-4d1c2b79 {
 	display: inline-block;
 	width: 70%;
 	-webkit-box-shadow: inset 0 0 20px #ccc;
@@ -161,11 +161,11 @@ image.data-v-5ac200f2 {
 	border-radius: 20rpx;
 	margin-left: 50rpx;
 }
-.hot.data-v-5ac200f2 {
+.hot.data-v-4d1c2b79 {
 	background-color: #e4e4e4;
 	width: 100%;
 }
-.hotitem.data-v-5ac200f2 {
+.hotitem.data-v-4d1c2b79 {
 	margin-bottom: 20px;
 	background: white;
 	height: 27px;
@@ -181,11 +181,11 @@ image.data-v-5ac200f2 {
 	font-weight: normal;
 	font-style: normal;
 }
-.arrow.data-v-5ac200f2 {
+.arrow.data-v-4d1c2b79 {
 	width: 100rpx;
 	height: 60rpx;
 }
-.marginHelper.data-v-5ac200f2{
+.marginHelper.data-v-4d1c2b79{
 	height: 15rpx;
 	margin-top: 15rpx;
 	width: 100%;

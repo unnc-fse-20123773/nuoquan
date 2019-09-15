@@ -6,7 +6,6 @@
 				发 表
 			</view>
 		</view>
-
 		<view class="submitMain">
 			<!-- 当失去焦点时，将输入内容存入articleTitle -->
 			<input class="title" v-model="articleTitle" placeholder="标题" maxlength="20">
@@ -16,7 +15,7 @@
 			</view>
 			<view class="tagsArea">
 				<!-- 展示标签区域 -->
-				<view class="tag" v-if="showTagArea" v-for="i in tagList" :key="i">{{i}}</view>
+				<view class="tag" v-if="showTagArea" v-for="(item,index) in tagList" :key="index" @click="deleteTag(index)">{{item}}</view>
 				<!-- 添加标签区域 -->
 				<view class="addTag">
 					<view v-if="showAddTagButton" @click="addTag">
@@ -99,19 +98,23 @@
 			this.userInfo = this.getGlobalUserInfo();
 		},
 		methods: {
-			addTag: function(res) {
+			addTag: function() {
 				this.showInputTagArea = 1;
 				this.showAddTagButton = 0;
 			},
 			// 检查tagList的数量
 			checkInput: function(res) {
 				var that = this;
-				var tag = res.target.value;
+				var tag = this.articleTag;
+				//console.log(tag)
 				if (this.isNull(tag)) {
 					that.showAddTagButton = 1;
 					that.showInputTagArea = 0;
 				} else {
+					// 显示标签区域 = 1
 					that.showTagArea = 1;
+					
+					//console.log(that.tagIndex);
 					that.tagList[that.tagIndex] = tag;
 					that.tagIndex = that.tagIndex + 1;
 					that.showAddTagButton = 1;
@@ -241,9 +244,20 @@
 					}
 				})
 			},
-
-			/* 以下为 Jerrio 测试代码块 */
-
+			deleteTag: function(index){
+				console.log(index);
+				var targetTag = this.tagList[index];
+				this.tagList.splice(index, 1);
+				console.log(this.tagList.length);
+				this.tagIndex = this.tagList.length;
+			},
+			// 测试用函数
+			// showTaglist: function(){
+			// 	console.log('length = ' + this.tagList.length);
+			// 	for(var i = 0; i < this.tagList.length; i++){
+			// 		console.log('old ' + this.tagList[i]);
+			// 	}
+			// }
 		}
 	};
 </script>
