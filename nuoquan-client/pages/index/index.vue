@@ -137,7 +137,6 @@
 			},
 			refreshArticle: function(){
 				uni.showNavigationBarLoading();
-				// this.showlist = [];
 				this.showArticles(1);
 				uni.hideNavigationBarLoading();
 			},

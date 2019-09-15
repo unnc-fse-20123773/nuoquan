@@ -22,12 +22,12 @@
 			<view style="width: 100%;max-height: 400upx;" v-if="articleCard.imgList.length == 1">
 				<!-- 高 ＞ 宽 -->
 				<view v-if="singleImgState == 0" style="width: 360upx;">
-					<image mode="aspectFit" style="height: 360upx;" :src="serverUrl + articleCard.imgList[0].imagePath" @load="singleImgeFit"
+					<image mode="aspectFill" style="height: 360upx;" :src="serverUrl + articleCard.imgList[0].imagePath" @load="singleImgeFit"
 					 @tap="previewImage(0)"></image>
 				</view>
 				<!-- 宽 > 高 -->
 				<view v-else style="max-height: 400upx;display: flex;">
-					<image mode="aspectFit" style="width: 90%;" :src="serverUrl + articleCard.imgList[0].imagePath" @load="singleImgeFit"
+					<image mode="aspectFill" style="width: 90%;" :src="serverUrl + articleCard.imgList[0].imagePath" @load="singleImgeFit"
 					 @tap="previewImage(0)"></image>
 				</view>
 			</view>

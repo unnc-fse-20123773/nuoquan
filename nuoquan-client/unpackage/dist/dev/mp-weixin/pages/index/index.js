@@ -255,7 +255,6 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
     },
     refreshArticle: function refreshArticle() {
       uni.showNavigationBarLoading();
-      // this.showlist = [];
       this.showArticles(1);
       uni.hideNavigationBarLoading();
     },
