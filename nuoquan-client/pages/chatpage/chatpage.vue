@@ -7,7 +7,7 @@
 			<view class="marginHelper"></view>
 		</scroll-view>
 		<view class="bottomBar">
-			<textarea auto-height="true" v-model="textMsg" show-confirm-bar="false"/>
+			<textarea auto-height="true" v-model="textMsg" :show-confirm-bar="false"/>
 			<view class="icons">
 				<button><image src="../../static/icon/viewLocalPic.png"></image></button>
 				<button><image src="../../static/icon/emoji.png"></image></button>

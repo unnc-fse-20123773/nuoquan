@@ -136,7 +136,7 @@ public interface ArticleService {
 	 * 获取热度值前三的文章
 	 * @return
 	 */
-	public List<ArticleVO> getTop3ByPopularity();
+	public List<ArticleVO> getTop3ByPopularity(String userId);
 	
 	/**
 	 * 批量签收点赞文章消息

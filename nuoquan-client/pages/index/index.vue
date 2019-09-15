@@ -96,17 +96,19 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: (res) => {
-						uni.hideLoading();
-						console.log(res);
-						// 判断当前页是不是第一页，如果是第一页，那么设置showList为空
-						if (page == 1) {
-							that.showlist = [];
-						}
-						var newArticleList = res.data.data.rows;
-						var oldArticleList = that.showlist;
-						that.showlist = oldArticleList.concat(newArticleList);
-						that.currentPage = page;
-						that.totalPage = res.data.data.total;
+						setTimeout(()=>{ // 延时加载
+							uni.hideLoading();
+							console.log(res);
+							// 判断当前页是不是第一页，如果是第一页，那么设置showList为空
+							if (page == 1) {
+								that.showlist = [];
+							}
+							var newArticleList = res.data.data.rows;
+							var oldArticleList = that.showlist;
+							that.showlist = oldArticleList.concat(newArticleList);
+							that.currentPage = page;
+							that.totalPage = res.data.data.total;
+						}, 300);
 					},
 					fail: (res) => {
 						console.log("index unirequest fail");
@@ -137,12 +139,19 @@
 				uni.showNavigationBarLoading();
 				// this.showlist = [];
 				this.showArticles(1);
+				uni.hideNavigationBarLoading();
 			},
 			getTop3Articles(){
 				var that = this;
 				uni.request({
 					url: that.$serverUrl + '/article/getHotTop3',
 					method: "POST",
+					data:{
+						userId: that.userInfo.id,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
 					success: (res) => {
 						that.topArticles = res.data.data;
 					}

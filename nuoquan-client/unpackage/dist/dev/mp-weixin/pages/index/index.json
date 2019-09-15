@@ -1,5 +1,4 @@
 {
-  "navigationBarTitleText": "uni-app",
   "usingComponents": {
     "articlebrief": "/components/articlebrief",
     "mainpagetop": "/components/mainpagetop",
