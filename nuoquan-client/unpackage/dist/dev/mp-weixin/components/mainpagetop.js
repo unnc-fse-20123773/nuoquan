@@ -573,6 +573,18 @@ __webpack_require__.r(__webpack_exports__);
     this.searchKeyWords = "",
     this.searchedArticleList = "",
     this.$emit("exitSearchSignal", 0);
+  }), _defineProperty(_methods, "putHotIntoInput",
+  function putHotIntoInput(index) {
+    // console.log(index);
+    var keywords = this.hotList[index];
+    // console.log(keywords);
+    this.searchKeyWords = keywords;
+  }), _defineProperty(_methods, "putHisIntoInput",
+  function putHisIntoInput(index) {
+    // console.log(index);
+    var keywords = this.searchHisKeyList[index];
+    // console.log(keywords);
+    this.searchKeyWords = keywords;
   }), _methods) };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

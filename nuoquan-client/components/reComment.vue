@@ -144,6 +144,8 @@
 		font-size: 10px;
 		margin-right: 10px;
 		color: #888888;
+		max-width: 85px;
+		text-overflow: ellipsis;
 	}
 	
 	.icons {

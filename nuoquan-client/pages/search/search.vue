@@ -8,7 +8,7 @@
 		<view class="wxSearchKey" v-show="searching">
 			<text class="exSearchTitle">搜索热点:</text>
 			<view class="searchList">
-				<view class="item" v-for="(i,index) in hotList" :key="index">
+				<view class="item" v-for="(i,index) in hotList" :key="index" @click="putHotIntoInput(index)">
 					{{i}}
 				</view>
 			</view>
@@ -20,7 +20,7 @@
 			<icon type="clear" @tap="searchDeleteAll" size="11"></icon>
 			<!-- <view v-for="key in searchHisKeyList" :key="key">{{key}}</view> -->
 			<view class="searchList">
-				<view class="item" v-for="(item,index) in searchHisKeyList" :key="index">{{item}}</view>
+				<view class="item" v-for="(item,index) in searchHisKeyList" :key="index" @click="putHisIntoInput(index)">{{item}}</view>
 			</view>
 		</view>
 
@@ -218,6 +218,18 @@
 					this.searchedArticleList = "",
 					this.$emit("exitSearchSignal", 0)
 			},
+			putHotIntoInput: function(index){
+				// console.log(index);
+				var keywords = this.hotList[index];
+				// console.log(keywords);
+				this.searchKeyWords = keywords;
+			},
+			putHisIntoInput: function(index){
+				// console.log(index);
+				var keywords = this.searchHisKeyList[index];
+				// console.log(keywords);
+				this.searchKeyWords = keywords;
+			}
 		}
 	}
 </script>

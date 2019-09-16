@@ -26,11 +26,8 @@ _vue.default.config.productionTip = false;
 _vue.default.prototype.tagColors = ['#FE5F55', '#40A792', '#FDD041', '#5CA0D3', '#621E81', '#738598', '#F3AE4B'];
 
 _vue.default.prototype.$store = _store.default;
-// Vue.prototype.$serverUrl = "http://127.0.0.1:8080"
-// Vue.prototype.$wsServerUrl = "ws://127.0.0.1:8088/ws"
-
-_vue.default.prototype.$serverUrl = "http://192.168.1.104:8080";
-_vue.default.prototype.$wsServerUrl = "ws://192.168.1.104:8088/ws";
+_vue.default.prototype.$serverUrl = "http://127.0.0.1:8080";
+_vue.default.prototype.$wsServerUrl = "ws://127.0.0.1:8088/ws";
 
 // Vue.prototype.$serverUrl = "http://192.168.31.210:8080"
 // Vue.prototype.$wsServerUrl = "ws://192.168.31.210:8088/ws"
@@ -38,6 +35,7 @@ _vue.default.prototype.$wsServerUrl = "ws://192.168.1.104:8088/ws";
 // 服务器地址
 // Vue.prototype.$serverUrl = "http://129.28.130.27:8080/nottinghome"
 // Vue.prototype.$wsServerUrl = "ws://129.28.130.27:8088/ws"
+// 
 /**
  * 获取当前用户信息（我）
  * @param {Object} user
@@ -333,16 +331,20 @@ _vue.default.prototype.mySocket = {
                 // 与该用户在聊天，标记为已读
                 console.log("与该用户在聊天，标记为已读");
                 app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.READ, createDate);
+
+                // 修改 store，发送信号，把消息卡片渲染到对话窗口 和 消息列表
+                var newMessage = new app.chat.ChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);
+                app.$store.commit('setChatMessageCard', newMessage);
+              } else {
+                //不是与该用户聊天，标记为未读
+                console.log("不是与该用户聊天，标记为未读");
+                app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.UNREAD, createDate);
               }
             } else {
-              // 聊天页面未打开或不是与该用户聊天，标记为未读
-              console.log("聊天页面未打开或不是与该用户聊天，标记为未读");
+              // 聊天页面未打开，标记为未读
+              console.log("聊天页面未打开，标记为未读");
               app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.UNREAD, createDate);
             }
-
-            // 修改 store，发送信号，把消息卡片渲染到对话窗口 和 消息列表
-            var newMessage = new app.chat.ChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);
-            app.$store.commit('setChatMessageCard', newMessage);
             break;
           case app.netty.LIKEARTICLE:
             console.log("获取点赞文章");
