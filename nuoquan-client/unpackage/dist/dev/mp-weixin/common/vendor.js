@@ -26,18 +26,18 @@ _vue.default.config.productionTip = false;
 _vue.default.prototype.tagColors = ['#FE5F55', '#40A792', '#FDD041', '#5CA0D3', '#621E81', '#738598', '#F3AE4B'];
 
 _vue.default.prototype.$store = _store.default;
+//Tencent IP
+// Vue.prototype.$serverUrl = "http://129.28.130.27:8080/nottinghome"
+// Vue.prototype.$wsServerUrl = "ws://129.28.130.27:8088/ws"
 
 // Local IP
 _vue.default.prototype.$serverUrl = "http://127.0.0.1:8080";
 _vue.default.prototype.$wsServerUrl = "ws://127.0.0.1:8088/ws";
 
-// My laptop IP
-// Vue.prototype.$serverUrl = "http://172.20.10.10:8080"
-// Vue.prototype.$wsServerUrl = "ws://172.20.10.10:8088/ws"
-
 // Jerrio IP
 // Vue.prototype.$serverUrl = "http://192.168.31.210:8080"
 // Vue.prototype.$wsServerUrl = "ws://192.168.31.210:8088/ws"
+
 
 /**
  * 获取当前用户信息（我）
@@ -334,16 +334,20 @@ _vue.default.prototype.mySocket = {
                 // 与该用户在聊天，标记为已读
                 console.log("与该用户在聊天，标记为已读");
                 app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.READ, createDate);
+
+                // 修改 store，发送信号，把消息卡片渲染到对话窗口 和 消息列表
+                var newMessage = new app.chat.ChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);
+                app.$store.commit('setChatMessageCard', newMessage);
+              } else {
+                //不是与该用户聊天，标记为未读
+                console.log("不是与该用户聊天，标记为未读");
+                app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.UNREAD, createDate);
               }
             } else {
-              // 聊天页面未打开或不是与该用户聊天，标记为未读
-              console.log("聊天页面未打开或不是与该用户聊天，标记为未读");
+              // 聊天页面未打开，标记为未读
+              console.log("聊天页面未打开，标记为未读");
               app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.UNREAD, createDate);
             }
-
-            // 修改 store，发送信号，把消息卡片渲染到对话窗口 和 消息列表
-            var newMessage = new app.chat.ChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);
-            app.$store.commit('setChatMessageCard', newMessage);
             break;
           case app.netty.LIKEARTICLE:
             console.log("获取点赞文章");
@@ -576,19 +580,28 @@ _vue.default.prototype.chat = {
 
   },
 
-  getUserChatHistory: function getUserChatHistory(myId, friendId) {
+  /**
+      * 分页获取聊天历史，从列表尾部开始读取(反取)
+      * @param {Object} myId
+      * @param {Object} friendId
+      * @param {Object} page
+      */
+  getUserChatHistory: function getUserChatHistory(myId, friendId, page) {
     var chatKey = "chat-" + myId + "-" + friendId;
-    var chatHistoryListStr = uni.getStorageSync(chatKey);
-    var chatHistoryList;
-    if (app.isNull(chatHistoryListStr)) {
-      // 为空，赋一个空的list；
-      chatHistoryList = [];
+    var list = app.getListByKey(chatKey).reverse();
+    var size = 20;
+    var start = (page - 1) * size;
+    var newList = [];
+    if (list.length < start) {
+      return null;
     } else {
-      // 不为空
-      chatHistoryList = JSON.parse(chatHistoryListStr);
+      for (var i = 0; i < size; i++) {
+        if (!app.isNull(list[start + i])) {
+          newList.unshift(list[start + i]);
+        }
+      }
+      return newList;
     }
-
-    return chatHistoryList;
   },
 
   /**
@@ -1096,23 +1109,6 @@ createPage(_commentDetail.default);
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
 var _detail = _interopRequireDefault(__webpack_require__(/*! ./pages/detail/detail.vue */ "../../../../../../../../../code/nuoquan/nuoquan-client/pages/detail/detail.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_detail.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
-
-/***/ }),
-
-/***/ "../../../../../../../../../code/nuoquan/nuoquan-client/main.js?{\"page\":\"pages%2Ffanslist%2Ffanslist\"}":
-/*!*************************************************************************************!*\
-  !*** C:/code/nuoquan/nuoquan-client/main.js?{"page":"pages%2Ffanslist%2Ffanslist"} ***!
-  \*************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "../../../../../../../../../code/nuoquan/nuoquan-client/pages.json");
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _fanslist = _interopRequireDefault(__webpack_require__(/*! ./pages/fanslist/fanslist.vue */ "../../../../../../../../../code/nuoquan/nuoquan-client/pages/fanslist/fanslist.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_fanslist.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),

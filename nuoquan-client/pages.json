@@ -1,16 +1,14 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-		    "path" : "pages/comment-detail/comment-detail",
-		    "style" : {}
+			"path": "pages/index/index",
+			"style": {}
 		},
 		{
-			"path": "pages/index/index",
-			"style": {
-				"navigationBarTitleText": "uni-app"
-			}
+			"path": "pages/comment-detail/comment-detail",
+			"style": {}
 		},
-		 {
+		{
 			"path": "pages/detail/detail",
 			"style": {}
 		}, {
@@ -38,10 +36,6 @@
 			"style": {}
 		},
 		{
-			"path": "pages/fanslist/fanslist",
-			"style": {}
-		},
-		{
 			"path": "pages/black-index/black-index",
 			"style": {}
 		},
@@ -63,17 +57,17 @@
 			"style": {}
 		},
 		{
-		    "path" : "pages/cmt-likedetail/cmt-likedetail",
-		    "style" : {},
-			"window" : {
+			"path": "pages/cmt-likedetail/cmt-likedetail",
+			"style": {},
+			"window": {
 				"navigationBarBackgroundColor": "#ffffff"
 			}
 		}
-        
-    ],
+
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
+		"navigationBarTitleText": "NottingHome",
 		"navigationBarBackgroundColor": "#fdd041",
 		"backgroundColor": "#F8F8F8"
 	},
@@ -133,7 +127,7 @@
 				"path": "pages/detail/detail", //启动页面，必选
 				"query": "" //启动参数，在页面的onLoad函数里面得到
 
-			},{
+			}, {
 				"name": "search", //模式名称
 				"path": "pages/search/search", //启动页面，必选
 				"query": "" //启动参数，在页面的onLoad函数里面得到

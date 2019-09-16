@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/comment-detail/comment-detail",
     "pages/index/index",
+    "pages/comment-detail/comment-detail",
     "pages/detail/detail",
     "pages/submit/submit",
     "pages/chatpage/chatpage",
@@ -9,7 +9,6 @@
     "pages/profile/profile",
     "pages/personpublic/personpublic",
     "pages/search/search",
-    "pages/fanslist/fanslist",
     "pages/black-index/black-index",
     "pages/signin/signin",
     "components/articlebrief",
@@ -20,7 +19,7 @@
   "subPackages": [],
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-app",
+    "navigationBarTitleText": "NottingHome",
     "navigationBarBackgroundColor": "#fdd041",
     "backgroundColor": "#F8F8F8"
   },
