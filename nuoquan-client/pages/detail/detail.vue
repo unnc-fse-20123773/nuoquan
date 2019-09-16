@@ -6,7 +6,6 @@
 
 		<view class="drtailmain">
 			<view class="detailcontent">{{ articleCard.articleContent }}</view>
-<<<<<<< HEAD
 			<view class="detailpics">
 				<view v-if="articleCard.imgList.length==1" class="1pic" style="width: 100%;max-height: 400upx;">
 					<image v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFit" style="height: 360upx;"
@@ -15,17 +14,6 @@
 				<image class="detailpic" v-else v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath"
 				 mode="aspectFill" @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
 				<view v-if="articleCard.imgList.length==2||imageList.length==5||imageList.length==8" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
-=======
-				
-			<view class="detailpics">
-				<!-- 单图显示 -->
-				<view v-if="articleCard.imgList.length==1" class="1pic" style="width: 100%;max-height: 400upx;">
-					<image v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFit" style="height: 360upx;" @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
-				</view>
-				<!-- 其他数量 -->
-				<image class="detailpic" v-else v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFill" @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
-				<view v-if="articleCard.imgList.length==2||imageList.length==5||imageList.length==8" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
->>>>>>> master
 			</view>
 			<view class="tags">
 				<view class="tag" :style="{background: tagColorList[index]}" v-for="(i,index) in articleCard.tagList" v-bind:key="index">{{i}}</view>
@@ -70,29 +58,6 @@
 	import comment from '../../components/comment';
 	export default {
 		data() {
-<<<<<<< HEAD
-			return {
-				userInfo: {},
-				articleCard: "",  //detail的主角，由index传过来的单个文章信息
-                commentContent:"",  //用户准备提交的评论内容
-				commentList: {},  //返回值，获取评论列表信息
-				showInput:false,        ////控制输入框，true时显示输入框
-				writingComment:false,  //控制输入框，true时自动获取焦点，拉起输入法
-				placeholderText:"评论点什么吧......",
-				inputData:{},  //localData,用于拼接不同情况下的savecomment请求的数据
-				
-				submitData:{
-					//这个是从子组件传来的数据，回复评论的评论之类
-				},
-				imgIndex: '',
-				serverUrl: this.$serverUrl,
-				
-				textAreaAdjust:"",
-				tagColorList: [],
-				
-				totalPage: 1,
-				currentPage: 1,
-=======
 			return {
 				imgList: [],
 				singleImgState: '0',
@@ -117,7 +82,6 @@
 				
 				totalPage: 1,
 				currentPage: 1,
->>>>>>> master
 			};
 		},
 		components: {
@@ -156,26 +120,6 @@
 		},
 		
 		onLoad(options) {
-<<<<<<< HEAD
-			var that = this;
-			that.articleCard = JSON.parse(options.data);
-			console.log(that.articleCard)
-			var userInfo = this.getGlobalUserInfo();
-			if (!that.isNull(userInfo)) {
-				that.userInfo = this.getGlobalUserInfo();
-			}
-			
-			var page = that.currentPage;
-			this.getComments(page);
-			
-			// 随机生成颜色
-			if(!this.isNull(this.articleCard.tagList)){
-				var tagColors = this.tagColors;
-				for (var i=0; i<this.articleCard.tagList.length; i++){
-					var random = Math.floor(Math.random()*tagColors.length); // 0~tagColors.length-1
-					this.tagColorList.push(tagColors[random]);
-				}
-=======
 			this.articleCard = JSON.parse(options.data);
 			// console.log(this.articleCard);
 			var userInfo = this.getGlobalUserInfo();
@@ -192,7 +136,6 @@
 					var random = Math.floor(Math.random()*tagColors.length); // 0~tagColors.length-1
 					this.tagColorList.push(tagColors[random]);
 				}
->>>>>>> master
 			}
 		},
 		
@@ -229,7 +172,6 @@
 				this.submitData.fromUserId=this.userInfo.id;
 				this.submitData.articleId=this.articleCard.id;
 				console.log(this.submitData);
-<<<<<<< HEAD
 				var that = this;
 				if(this.commentContent==""){
 					uni.showToast({
@@ -256,33 +198,6 @@
 					})
 				}
 
-=======
-				var that = this;
-				uni.request({
-					url: that.$serverUrl + '/article/saveComment',
-					method: 'POST',
-					data: this.submitData,
-					success: (res) => {
-						that.writingComment = false;
-						that.commentContent = "";
-						this.showInput = false;
-						
-						if (res.data.status == 200) {
-							// 强制子组件重新刷新
-							that.commentList = '';
-							that.$nextTick(function() {
-								that.getComments(1);
-							});
-							// console.log(res);
-							// if(that.isNull(that.submitData.underCommentId)){
-							// 	that.getComments(that.currentPage);
-							// }else{
-							// 	uni.$emit("flashSubComment", that.submitData.underCommentId);
-							// }
-						}
-					},
-				})
->>>>>>> master
 			},
 			
 			getComments: function(page) {		
@@ -342,9 +257,6 @@
 					that.getComments(page);
 				}
 			},
-<<<<<<< HEAD
-
-=======
 
 			singleImgeFit(e){
 				var height = e.detail.height;
@@ -357,7 +269,6 @@
 				// console.log(e.detail);
 			},
 			
->>>>>>> master
 			controlInput(a){
 				if(a!=0&&a!=1){ //a!=0, !=1， 从子组件传来，包含被回复对象：被回复人ID，被回复评论ID，被回复人昵称
 					this.placeholderText='回复 @'+a.nickname+' 的评论';
@@ -546,13 +457,6 @@
 		padding-top: 25px;
 		padding-bottom: 15px;
 		font-size: 13px;
-<<<<<<< HEAD
-		font-weight: 400;
-		word-break: break-all;
-		word-wrap: break-word;
-		
-		
-=======
 		/* width: 85%;
 		margin: 0px auto 10px; */
 		/* font-weight: 400;
@@ -579,7 +483,6 @@
 		font-weight: 400;
 		word-break: break-all;
 		word-wrap: break-word;
->>>>>>> master
 	}
 
 	.detailpics {
