@@ -118,13 +118,14 @@
 					that.articleTag = '';
 				}
 			},
+			
 			combineTagToString: function(res) {
 				var that = this;
 				for (var i = 0; i < that.tagList.length; i++) {
 					that.finalTag = that.finalTag + '#' + that.tagList[i];
 				}
-				console.log(that.finalTag);
 			},
+
 			sourceTypeChange: function(e) {
 				this.sourceTypeIndex = parseInt(e.target.value)
 			},
@@ -316,6 +317,7 @@
 		position: relative;
 		margin-right: 12px;
 		margin-bottom: 6px;
+		pointer-events: none;
 	}
 
 	.tag::after {
@@ -324,6 +326,7 @@
 		right: 12px;
 		color: #939393;
 		font-size: 13px;
+		pointer-events: auto;
 	}
 
 	.addTag {

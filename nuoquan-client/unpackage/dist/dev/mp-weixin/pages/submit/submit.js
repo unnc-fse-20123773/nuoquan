@@ -234,13 +234,14 @@ var sizeType = [
         that.articleTag = '';
       }
     },
+
     combineTagToString: function combineTagToString(res) {
       var that = this;
       for (var i = 0; i < that.tagList.length; i++) {
         that.finalTag = that.finalTag + '#' + that.tagList[i];
       }
-      console.log(that.finalTag);
     },
+
     sourceTypeChange: function sourceTypeChange(e) {
       this.sourceTypeIndex = parseInt(e.target.value);
     },

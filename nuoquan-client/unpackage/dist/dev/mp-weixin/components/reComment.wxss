@@ -32,6 +32,9 @@
 	font-size: 10px;
 	margin-right: 10px;
 	color: #888888;
+	max-width: 85px;
+	-o-text-overflow: ellipsis;
+	   text-overflow: ellipsis;
 }
 .icons {
 	-webkit-box-pack: end;

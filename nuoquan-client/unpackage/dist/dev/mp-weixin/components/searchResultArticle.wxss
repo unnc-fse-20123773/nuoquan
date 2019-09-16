@@ -57,6 +57,9 @@ image {
 	margin-left: 7px;
 	color: #888888;
 	padding-bottom: 5px;
+	max-width: 85px;
+	-o-text-overflow: ellipsis;
+	   text-overflow: ellipsis;
 }
 .time.data-v-4ca5e5aa {
 	position: absolute;
@@ -66,6 +69,9 @@ image {
 	font-size: 10px;
 	margin-left: 25px;
 	color: #888888;
+	max-width: 80px;
+	-o-text-overflow: ellipsis;
+	   text-overflow: ellipsis;
 }
 .picturearea.data-v-4ca5e5aa {
 	margin: auto;

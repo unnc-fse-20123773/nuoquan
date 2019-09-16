@@ -499,6 +499,7 @@
 		margin-left: 2upx;
 		width: 48upx;
 		height: 76upx;
+		
 	}
 
 	.msglist-time {

@@ -7,7 +7,7 @@
 				<image class="touxiang" :src='userInfo.faceImg' @tap="goToProfile"></image>
 			</view>
 			<view class="topRight">
-				<view style="font-size: 13px;margin-bottom:9px;width:100%;vertical-align: bottom;">{{userInfo.nickname}}</view>
+				<view style="font-size: 13px;margin-bottom:9px;width:100%;vertical-align: bottom;overflow:hidden; text-overflow: ellipsis;max-height: 20px;white-space: nowrap;">{{userInfo.nickname}}</view>
 				<view style="font-size:8px ;font-weight: bold;margin-bottom:3px;width:100%;vertical-align: bottom;">{{userInfo.emailPrefix}}</view>
 				<view style="color:#B2B2B2;font-size: 6px;width:80px;position: relative;left: 10px;width:100%;vertical-align: bottom;">{{userInfo.emailSuffix}}</view>
 			</view>
@@ -156,7 +156,7 @@
 		left: 0;
 		top: 0;
 		box-shadow: 1px 0px 5px #a6a6a6;
-		border-bottom-right-radius: 80px;
+		border-bottom-right-radius: 25px;
 	}
 
 	.topInfoArea {

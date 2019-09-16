@@ -90,7 +90,7 @@
 		filters: {
 			timeDeal(timediff) {
 				timediff = new Date(timediff);
-				var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(),timediff.getSeconds()];
+				var parts = [timediff.getFullYear(), timediff.getMonth()+1, timediff.getDate(), timediff.getHours(), timediff.getMinutes(),timediff.getSeconds()];
 				var oldTime = timediff.getTime();
 				var now = new Date();
 				var newTime = now.getTime();
@@ -549,6 +549,8 @@
 		margin-left: 7px;
 		color: #888888;
 		padding-bottom: 5px;
+		max-width: 80px;
+		text-overflow: ellipsis;
 	}
 
 	.time {
@@ -556,6 +558,8 @@
 		font-size: 10px;
 		margin-left: 25px;
 		color: #888888;
+		max-width: 85px;
+		text-overflow: ellipsis;
 	}
 
 

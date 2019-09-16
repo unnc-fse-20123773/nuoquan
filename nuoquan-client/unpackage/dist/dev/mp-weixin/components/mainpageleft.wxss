@@ -32,7 +32,7 @@ to {
 		top: 0;
 		-webkit-box-shadow: 1px 0px 5px #a6a6a6;
 		        box-shadow: 1px 0px 5px #a6a6a6;
-		border-bottom-right-radius: 80px;
+		border-bottom-right-radius: 25px;
 }
 .topInfoArea.data-v-4391a936 {
 		height: 60px;
