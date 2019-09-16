@@ -300,10 +300,18 @@ __webpack_require__.r(__webpack_exports__);
           that.commentContent = "";
           _this.showInput = false;
 
-          if (that.isNull(that.submitData.underCommentId)) {
-            that.getComments(that.currentPage);
-          } else {
-            uni.$emit("flashSubComment", that.submitData.underCommentId);
+          if (res.data.status == 200) {
+            // 强制子组件重新刷新
+            that.commentList = '';
+            that.$nextTick(function () {
+              that.getComments(1);
+            });
+            // console.log(res);
+            // if(that.isNull(that.submitData.underCommentId)){
+            // 	that.getComments(that.currentPage);
+            // }else{
+            // 	uni.$emit("flashSubComment", that.submitData.underCommentId);
+            // }
           }
         } });
 
@@ -463,6 +471,7 @@ __webpack_require__.r(__webpack_exports__);
         url: '/pages/personpublic/personpublic?userId=' + this.articleCard.userId });
 
     },
+
     previewImg: function previewImg(index) {
       var imgIndex = index;
       // console.log(res)

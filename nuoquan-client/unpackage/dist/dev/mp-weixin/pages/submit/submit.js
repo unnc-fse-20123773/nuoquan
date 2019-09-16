@@ -160,7 +160,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -211,19 +210,23 @@ var sizeType = [
     this.userInfo = this.getGlobalUserInfo();
   },
   methods: {
-    addTag: function addTag(res) {
+    addTag: function addTag() {
       this.showInputTagArea = 1;
       this.showAddTagButton = 0;
     },
     // 检查tagList的数量
     checkInput: function checkInput(res) {
       var that = this;
-      var tag = res.target.value;
+      var tag = this.articleTag;
+      //console.log(tag)
       if (this.isNull(tag)) {
         that.showAddTagButton = 1;
         that.showInputTagArea = 0;
       } else {
+        // 显示标签区域 = 1
         that.showTagArea = 1;
+
+        //console.log(that.tagIndex);
         that.tagList[that.tagIndex] = tag;
         that.tagIndex = that.tagIndex + 1;
         that.showAddTagButton = 1;
@@ -352,9 +355,22 @@ var sizeType = [
 
         } });
 
+    },
+    deleteTag: function deleteTag(index) {
+      console.log(index);
+      var targetTag = this.tagList[index];
+      this.tagList.splice(index, 1);
+      console.log(this.tagList.length);
+      this.tagIndex = this.tagList.length;
     }
-
-    /* 以下为 Jerrio 测试代码块 */ } };exports.default = _default;
+    // 测试用函数
+    // showTaglist: function(){
+    // 	console.log('length = ' + this.tagList.length);
+    // 	for(var i = 0; i < this.tagList.length; i++){
+    // 		console.log('old ' + this.tagList[i]);
+    // 	}
+    // }
+  } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

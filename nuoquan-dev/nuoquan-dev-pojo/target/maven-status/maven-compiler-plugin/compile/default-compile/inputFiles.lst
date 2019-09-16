@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/User.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/Administrator.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/ArticleImage.java
@@ -22,3 +23,29 @@
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/vo/UserVO.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/vo/FansFollow.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/vo/UserFansVO.java
+=======
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/vo/UserArticleCommentVO.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/netty/DataContent.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/UserArticleComment.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/UserFans.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/enums/MsgSignFlagEnum.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/enums/MsgActionEnum.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/Administrator.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/UserLikeArticle.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/SearchRecord.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/UserLikeComment.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/vo/UserVO.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/User.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/UserReport.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/vo/UserLikeVO.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/netty/ChatMessage.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/vo/UserFansVO.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/Article.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/ArticleTags.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/vo/ArticleVO.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/vo/WxRes.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/vo/FansFollow.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/netty/NoticeCard.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/ArticleImage.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/ChatMsg.java
+>>>>>>> 7299880bd5e38e78f46da95b6ac0da365846542a

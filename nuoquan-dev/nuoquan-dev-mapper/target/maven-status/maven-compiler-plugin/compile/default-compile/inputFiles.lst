@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/ArticleImageMapper.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/ChatMsgMapper.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/UserMapper.java
@@ -15,3 +16,22 @@
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/ArticleMapper.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/ArticleTagsMapper.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/UserLikeCommentMapper.java
+=======
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/UserReportMapper.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/UserFansMapper.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/UserFansMapperCustom.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/AdministratorMapper.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/UserMapper.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/UserArticleCommentMapperCustom.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/ArticleImageMapper.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/ArticleTagsMapper.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/ArticleMapper.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/UserMapperCustom.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/SearchRecordMapper.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/ChatMsgMapper.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/UserLikeCommentMapper.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/ArticleMapperCustom.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/UserLikeMapperCustom.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/UserArticleCommentMapper.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-mapper/src/main/java/com/nuoquan/mapper/UserLikeArticleMapper.java
+>>>>>>> 7299880bd5e38e78f46da95b6ac0da365846542a

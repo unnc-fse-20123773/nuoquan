@@ -10,10 +10,10 @@
 			<view class="detailpics">
 				<!-- 单图显示 -->
 				<view v-if="articleCard.imgList.length==1" class="1pic" style="width: 100%;max-height: 400upx;">
-					<image v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFit" style="height: 360upx;"></image>
+					<image v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFit" style="height: 360upx;" @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
 				</view>
 				<!-- 其他数量 -->
-				<image class="detailpic" v-else v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFill"></image>
+				<image class="detailpic" v-else v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFill" @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
 				<view v-if="articleCard.imgList.length==2||imageList.length==5||imageList.length==8" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
 			</view>
 			<view class="tags">
@@ -32,8 +32,8 @@
 					<view class="icom">{{ articleCard.likeNum }}</view>
 				</view>
 			</view>
-
-			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i" @controlInputSignal="controlInput" :reCommentListFromDetail="reCommentListFromDetail">
+			
+			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i" @controlInputSignal="controlInput">
 			</commentbox>
 
 			<view class="fengexian" style="height: 1px;width: 100%;background-color: #d6d6d6;margin:auto;"></view>
@@ -44,7 +44,7 @@
 					<view class="emoji"></view>
 					<view class="submit" @click="saveComment()"></view>
 					<textarea class="commentSth" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
-					 confirm-type="send" @confirm="saveComment()" adjust-position="false" v-model="commentContent" @click.stop="" 
+					 adjust-position="false" v-model="commentContent" @click.stop="" 
 					 :show-confirm-bar="false"
 					  @focus="popTextArea" @blur="unpopTextArea"/>
 					</view>
@@ -181,10 +181,18 @@
 						that.commentContent = "";
 						this.showInput = false;
 						
-						if(that.isNull(that.submitData.underCommentId)){
-							that.getComments(that.currentPage);
-						}else{
-							uni.$emit("flashSubComment", that.submitData.underCommentId);
+						if (res.data.status == 200) {
+							// 强制子组件重新刷新
+							that.commentList = '';
+							that.$nextTick(function() {
+								that.getComments(1);
+							});
+							// console.log(res);
+							// if(that.isNull(that.submitData.underCommentId)){
+							// 	that.getComments(that.currentPage);
+							// }else{
+							// 	uni.$emit("flashSubComment", that.submitData.underCommentId);
+							// }
 						}
 					},
 				})
@@ -344,6 +352,7 @@
 					url: '/pages/personpublic/personpublic?userId=' + this.articleCard.userId,
 				})
 			},
+			
 			previewImg: function(index) {
 				var imgIndex = index;
 				// console.log(res)

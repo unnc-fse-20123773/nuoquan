@@ -1,4 +1,9 @@
 # Update Log:
+**v19.9.16 更新**
+1. 整合 deyan
+2. 新增 sumbit 删除标签 (deyan && yaoyao)
+3. 新增 服务器相关包及配置
+
 **v19.9.15 更新**
 1. 整合 guetta
 2. 修复 文章换行（guetta）
