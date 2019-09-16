@@ -1,22 +1,38 @@
 
+<<<<<<< HEAD
 .comment.data-v-e8f832ba {
+=======
+.comment.data-v-6b97edec {
+>>>>>>> guetta-new
 		/* 	background-color:gray;
  */
 		border-radius: 20px;
 		width: 100%;
 		margin: auto;
 }
+<<<<<<< HEAD
 .fengexian.data-v-e8f832ba {
+=======
+.fengexian.data-v-6b97edec {
+>>>>>>> guetta-new
 		height: 1px;
 		width: 100%;
 		background-color: #d6d6d6;
 }
+<<<<<<< HEAD
 .contentarea.data-v-e8f832ba {
+=======
+.contentarea.data-v-6b97edec {
+>>>>>>> guetta-new
 		padding-top: 14px;
 		background: white;
 		font-size: 16px;
 }
+<<<<<<< HEAD
 .bottombar.data-v-e8f832ba {
+=======
+.bottombar.data-v-6b97edec {
+>>>>>>> guetta-new
 		position: relative;
 		border-radius: 20px;
 		height: 25px;
@@ -31,7 +47,11 @@
 		        justify-content: space-between;
 		padding-bottom: 5px;
 }
+<<<<<<< HEAD
 .touxiang.data-v-e8f832ba {
+=======
+.touxiang.data-v-6b97edec {
+>>>>>>> guetta-new
 		width: 20px;
 		height: 20px;
 		border-radius: 20px;
@@ -39,8 +59,13 @@
 		vertical-align: middle;
 		margin-right: 5px;
 }
+<<<<<<< HEAD
 .time.data-v-e8f832ba,
 	.name.data-v-e8f832ba {
+=======
+.time.data-v-6b97edec,
+	.name.data-v-6b97edec {
+>>>>>>> guetta-new
 		font-size: 10px;
 		margin-right: 10px;
 		color: #888888;
@@ -48,7 +73,11 @@
 		-o-text-overflow: ellipsis;
 		   text-overflow: ellipsis;
 }
+<<<<<<< HEAD
 .icons.data-v-e8f832ba {
+=======
+.icons.data-v-6b97edec {
+>>>>>>> guetta-new
 		-webkit-box-pack: end;
 		-webkit-justify-content: flex-end;
 		    -ms-flex-pack: end;
@@ -64,20 +93,32 @@
 		width: 30%;
 		font-size: 10px;
 }
+<<<<<<< HEAD
 .icon.data-v-e8f832ba {
+=======
+.icon.data-v-6b97edec {
+>>>>>>> guetta-new
 		width: 12px;
 		height: 12px;
 		font-size: 2px;
 		padding-right: 4px;
 }
+<<<<<<< HEAD
 .icom.data-v-e8f832ba {
+=======
+.icom.data-v-6b97edec {
+>>>>>>> guetta-new
 		padding-right: 17px;
 		-webkit-box-align: end;
 		-webkit-align-items: flex-end;
 		    -ms-flex-align: end;
 		        align-items: flex-end;
 }
+<<<<<<< HEAD
 .submitComment.data-v-e8f832ba {
+=======
+.submitComment.data-v-6b97edec {
+>>>>>>> guetta-new
 		background: #FFCC30;
 		border-radius: 5px;
 		width: 120px;
@@ -89,7 +130,11 @@
 		text-align: center;
 		line-height: 30px;
 }
+<<<<<<< HEAD
 .reCommentsArea.data-v-e8f832ba {
+=======
+.reCommentsArea.data-v-6b97edec {
+>>>>>>> guetta-new
 		background: #EEEEEE;
 		width: 500rpx;
 		padding: 14px 25rpx 11px;

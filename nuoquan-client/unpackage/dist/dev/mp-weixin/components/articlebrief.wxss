@@ -5,13 +5,21 @@ image {
 }
 
 
+<<<<<<< HEAD
 .articlecard.data-v-0734f7a0 {
+=======
+.articlecard.data-v-774fa287 {
+>>>>>>> guetta-new
 	width: 650rpx;
 	border-radius: 8px;
 	margin: 11px auto 0;
 	background-color: #ffffff;
 }
+<<<<<<< HEAD
 .title.data-v-0734f7a0 {
+=======
+.title.data-v-774fa287 {
+>>>>>>> guetta-new
 	margin: 16px 25px 0 25px;
 	font-size: 15px;
 	font: MicrosoftYaHei;
@@ -23,7 +31,11 @@ image {
 	word-break: break-all;
 	white-space: normal;
 }
+<<<<<<< HEAD
 .briefarticleCard.data-v-0734f7a0 {
+=======
+.briefarticleCard.data-v-774fa287 {
+>>>>>>> guetta-new
 	margin: 10px 13px 0 15px;
 	font-size: 13px;
 	line-height: 15px;
@@ -31,11 +43,19 @@ image {
 	word-break: break-all;
 	white-space: pre-line;
 }
+<<<<<<< HEAD
 .tags.data-v-0734f7a0 {
 	margin-left: 10px;
 	min-height: 10px;
 }
 .tag.data-v-0734f7a0 {
+=======
+.tags.data-v-774fa287 {
+	margin-left: 10px;
+	min-height: 10px;
+}
+.tag.data-v-774fa287 {
+>>>>>>> guetta-new
 	display: inline-block;
 	border-radius: 4px;
 	padding-left: 5px;
@@ -46,39 +66,63 @@ image {
 	font-size: 10px;
 	background: #621E81;
 }
+<<<<<<< HEAD
 .tag-empty.data-v-0734f7a0 {
+=======
+.tag-empty.data-v-774fa287 {
+>>>>>>> guetta-new
 	margin-left: 10px;
 	height: 15px;
 	width: auto;
 	background-color: white;
 }
+<<<<<<< HEAD
 .menubar.data-v-0734f7a0 {
+=======
+.menubar.data-v-774fa287 {
+>>>>>>> guetta-new
 	position: relative;
 	vertical-align: middle;
 	margin-left: 15px;
 	border-radius: 8px;
 }
+<<<<<<< HEAD
 .touxiang.data-v-0734f7a0 {
+=======
+.touxiang.data-v-774fa287 {
+>>>>>>> guetta-new
 	border-radius: 30px;
 	width: 20px;
 	height: 20px;
 	margin-right: 5px;
 	vertical-align: middle;
 }
+<<<<<<< HEAD
 .name.data-v-0734f7a0 {
+=======
+.name.data-v-774fa287 {
+>>>>>>> guetta-new
 	display: inline-block;
 	font-size: 10px;
 	margin-left: 7px;
 	color: #888888;
 	padding-bottom: 5px;
 }
+<<<<<<< HEAD
 .time.data-v-0734f7a0 {
+=======
+.time.data-v-774fa287 {
+>>>>>>> guetta-new
 	display: inline-block;
 	font-size: 10px;
 	margin-left: 25px;
 	color: #888888;
 }
+<<<<<<< HEAD
 .icons.data-v-0734f7a0 {
+=======
+.icons.data-v-774fa287 {
+>>>>>>> guetta-new
 	position: absolute;
 	right: 0;
 	bottom: 0;
@@ -89,14 +133,22 @@ image {
 	overflow: hidden;
 	border-bottom-right-radius: 8px;
 }
+<<<<<<< HEAD
 .icons image.data-v-0734f7a0 {
+=======
+.icons image.data-v-774fa287 {
+>>>>>>> guetta-new
 	position: relative;
 	/* G添加相对位置 */
 	width: 11px;
 	height: 11px;
 	padding-right: 5px;
 }
+<<<<<<< HEAD
 .icon.data-v-0734f7a0 {
+=======
+.icon.data-v-774fa287 {
+>>>>>>> guetta-new
 	display: inline-block;
 	color: #353535;
 	font-size: 10px;
@@ -104,7 +156,11 @@ image {
 	text-align: center;
 	vertical-align: middle;
 }
+<<<<<<< HEAD
 .picturearea-one.data-v-0734f7a0 {
+=======
+.picturearea-one.data-v-774fa287 {
+>>>>>>> guetta-new
 	margin: auto;
 	display: -webkit-box;
 	display: -webkit-flex;
@@ -113,7 +169,11 @@ image {
 	width: 94%;
 	margin-left: 3%;
 }
+<<<<<<< HEAD
 .picturearea-mul.data-v-0734f7a0 {
+=======
+.picturearea-mul.data-v-774fa287 {
+>>>>>>> guetta-new
 	position: relative;
 	margin: auto;
 	display: -webkit-box;
@@ -124,7 +184,11 @@ image {
 	width: 94%;
 	margin-left: 3%;
 }
+<<<<<<< HEAD
 image.data-v-0734f7a0 {
+=======
+image.data-v-774fa287 {
+>>>>>>> guetta-new
 	width: 100%;
 	height: 200rpx;
 	margin: auto;

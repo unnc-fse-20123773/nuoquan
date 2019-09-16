@@ -46,8 +46,9 @@
 					<view class="emoji"></view>
 					<view class="submit" @click="saveComment()"></view>
 					<textarea class="commentSth" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
-					 adjust-position="false" v-model="commentContent" @click.stop="" :show-confirm-bar="false" @focus="popTextArea"
-					 @blur="unpopTextArea" />
+					 adjust-position="false" v-model="commentContent" @click.stop="" 
+					 :show-confirm-bar="false"
+					  @focus="popTextArea" @blur="unpopTextArea" />
 					</view>
             </view>
 		</view> 

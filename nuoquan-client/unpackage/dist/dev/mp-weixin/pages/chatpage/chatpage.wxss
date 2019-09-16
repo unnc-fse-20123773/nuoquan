@@ -238,7 +238,11 @@ page{
 	 * TODO： 滚动区域高度需固定
 	 * 					by Jerrio
 	 */
+<<<<<<< HEAD
 .messageArea.data-v-13bf3097 {
+=======
+.messageArea.data-v-e2ad6224 {
+>>>>>>> guetta-new
 		display: -webkit-box;
 		display: -webkit-flex;
 		display: -ms-flexbox;
@@ -250,6 +254,7 @@ page{
 		height: 94%;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 .data-v-13bf3097::-webkit-scrollbar {
 		width: 0;
 		height: 0;
@@ -259,6 +264,9 @@ page{
 =======
 .bottomBar.data-v-0318fac1 {
 >>>>>>> master
+=======
+.bottomBar.data-v-e2ad6224 {
+>>>>>>> guetta-new
 		position: fixed;
 		display: -webkit-box;
 		display: -webkit-flex;
@@ -277,7 +285,11 @@ page{
 		        box-shadow: 0px -2px 2px 0px rgba(130, 130, 130, 0.20);
 		background: #FFFFFF;
 }
+<<<<<<< HEAD
 .bottomBar textarea.data-v-13bf3097 {
+=======
+.bottomBar textarea.data-v-e2ad6224 {
+>>>>>>> guetta-new
 		display: inline-block;
 		width: 530rpx;
 		padding:0 4rpx;
@@ -287,7 +299,11 @@ page{
 		border: solid 1px #C6C6C6;
 		margin: 20rpx 0 20rpx 14rpx;
 }
+<<<<<<< HEAD
 .icons.data-v-13bf3097 {
+=======
+.icons.data-v-e2ad6224 {
+>>>>>>> guetta-new
 		display: -webkit-inline-box;
 		display: -webkit-inline-flex;
 		display: -ms-inline-flexbox;
@@ -304,12 +320,17 @@ page{
 		    -ms-flex-align: center;
 		        align-items: center;
 }
+<<<<<<< HEAD
 .icons image.data-v-13bf3097 {
+=======
+.icons image.data-v-e2ad6224 {
+>>>>>>> guetta-new
 		display: block;
 		width: 34rpx;
 		height: 34rpx;
 		vertical-align: middle;
 }
+<<<<<<< HEAD
 <<<<<<< HEAD
 .icons button.button-hover.data-v-13bf3097{
 	position: relative;
@@ -330,12 +351,15 @@ button.data-v-13bf3097::after{
 	border:none;
 =======
 .icons button.button-hover.data-v-0318fac1{
+=======
+.icons button.button-hover.data-v-e2ad6224{
+>>>>>>> guetta-new
 		position: relative;
 		top: 3rpx;
 		-webkit-box-shadow:0px 0px 8px #999 inset;
 		        box-shadow:0px 0px 8px #999 inset;
 }
-button.data-v-0318fac1{
+button.data-v-e2ad6224{
 		display: inline-block;
 		margin: 0;
 		padding: 0;
@@ -344,11 +368,15 @@ button.data-v-0318fac1{
 		vertical-align: middle;
 		background: #FFFFFF;
 }
-button.data-v-0318fac1::after{
+button.data-v-e2ad6224::after{
 		border:none;
 >>>>>>> master
 }
+<<<<<<< HEAD
 .marginHelper.data-v-13bf3097{
+=======
+.marginHelper.data-v-e2ad6224{
+>>>>>>> guetta-new
 		height: 40rpx;
 		width: 100%;
 		background-color: #f5f5f5;
