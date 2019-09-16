@@ -32,11 +32,12 @@
 				</view>
 			</view>
 
-			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i">
+			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i" @controlInputSignal="controlInput">
 			</commentbox>
 
 			<view class="fengexian" style="height: 1px;width: 100%;background-color: #d6d6d6;margin:auto;"></view>
-			<view style="height:50px;width:750px;background:#FFFFFF;"></view><!--占位，防止发表评论按钮挡住最下边一条评论-->
+			<view style="height:50px;width:750px;background:#FFFFFF;"></view>
+			<!--占位，防止发表评论按钮挡住最下边一条评论-->
 
 			<view class="bottomLayerOfSubmit">
 				<view class="submitComment" @click="controlInput(1)">发 表 评 论</view>
@@ -46,9 +47,8 @@
 					<view class="emoji"></view>
 					<view class="submit" @click="saveComment()"></view>
 					<textarea class="commentSth" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
-					 adjust-position="false" v-model="commentContent" @click.stop="" 
-					 :show-confirm-bar="false"
-					  @focus="popTextArea" @blur="unpopTextArea" />
+					 adjust-position="false" v-model="commentContent" @click.stop="" :show-confirm-bar="false" @focus="popTextArea"
+					 @blur="unpopTextArea" />
 					</view>
             </view>
 		</view> 
@@ -270,8 +270,14 @@
 				// console.log(e.detail);
 			},
 			
-			controlInput(a){				 
-				 if(a==1){ //a==1 当前页面调用，直接评论文章
+			controlInput(a){
+				if(a!=0&&a!=1){
+					this.placeholderText='回复 @'+a.nickname+' 的评论';
+					delete(a.nickname);				
+					this.submitData=a;
+					this.writingComment = true;
+					this.showInput= true;
+				}else if(a==1){ //a==1 当前页面调用，直接评论文章
 					this.submitData.toUserId=this.articleCard.userId;
 					this.showInput = true;
 					this.writingComment = true; 

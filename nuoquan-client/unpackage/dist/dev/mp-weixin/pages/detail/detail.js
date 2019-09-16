@@ -390,7 +390,13 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     controlInput: function controlInput(a) {
-      if (a == 1) {//a==1 当前页面调用，直接评论文章
+      if (a != 0 && a != 1) {
+        this.placeholderText = '回复 @' + a.nickname + ' 的评论';
+        delete a.nickname;
+        this.submitData = a;
+        this.writingComment = true;
+        this.showInput = true;
+      } else if (a == 1) {//a==1 当前页面调用，直接评论文章
         this.submitData.toUserId = this.articleCard.userId;
         this.showInput = true;
         this.writingComment = true;

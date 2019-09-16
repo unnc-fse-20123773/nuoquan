@@ -143,7 +143,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 {
   name: 'comment',
   props: {
@@ -246,6 +245,17 @@ __webpack_require__.r(__webpack_exports__);
         var page = currentPage + 1;
         that.getSubComments(page);
       }
+    },
+    controlInputInComment: function controlInputInComment() {
+      var dataOfRecomment = {
+        toUserId: this.mainComment.fromUserId,
+        underCommentId: this.mainComment.id,
+        fatherCommentId: this.mainComment.id,
+        nickname: this.mainComment.nickname };
+
+      console.log("receive control input request, in comment");
+      console.log(dataOfRecomment);
+      this.$emit('controlInputSignal', dataOfRecomment);
     },
 
 

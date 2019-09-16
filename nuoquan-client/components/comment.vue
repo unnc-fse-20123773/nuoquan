@@ -1,7 +1,7 @@
 <template>
 	<view class="comment" :id="mainComment.id">
 		<view class="fengexian"></view>
-		<view class="contentarea" @tap="controlInputInComment('inComment')">{{ mainComment.comment }}</view>
+		<view class="contentarea" @tap="controlInputInComment()">{{ mainComment.comment }}</view>
 		<view class="bottombar">
 			<view style="width:70%;display:inline-block;">
 				<image :src="mainComment.faceImg" class="touxiang" @tap="goToPersonPublic(mainComment.fromUserId)"></image>
@@ -27,9 +27,8 @@
 		</view>
 
 		<view v-show="RECOMMENT && mainComment.commentNum > 0" class="reCommentsArea">
-			<reComment v-for="(item,index) in reCommentList" v-bind:key="index" :reCommentDetail='item'
-			 @goToPersonPublic="goToPersonPublic"></reComment>
-			 <view style="font-size: 10px;color:#007AFF;text-align: right;margin-top:5px;">共{{reCommentNumber}}条评论</view>
+			<reComment v-for="(item,index) in reCommentList" v-bind:key="index" :reCommentDetail='item' @goToPersonPublic="goToPersonPublic"></reComment>
+			<view style="font-size: 10px;color:#007AFF;text-align: right;margin-top:5px;">共{{reCommentNumber}}条评论</view>
 			<!-- <view class="submitComment">发 表 评 论</view> -->
 		</view>
 	</view>
@@ -56,7 +55,7 @@
 
 				totalPage: 1,
 				currentPage: 1,
-				reCommentNumber:"",
+				reCommentNumber: "",
 			};
 		},
 
@@ -100,11 +99,11 @@
 							that.reCommentList = '';
 							that.$nextTick(function() {
 								that.reCommentNumber = res.data.data.rows.length;
-								if(res.data.data.rows.length>5){
-								    that.reCommentList = res.data.data.rows.slice(0,5);
-								}else{
-									that.reCommentList = res.data.data.rows;	
-								}	
+								if (res.data.data.rows.length > 5) {
+									that.reCommentList = res.data.data.rows.slice(0, 5);
+								} else {
+									that.reCommentList = res.data.data.rows;
+								}
 							});
 							// console.log(res);
 						}
@@ -140,7 +139,18 @@
 					that.getSubComments(page);
 				}
 			},
-			
+			controlInputInComment() {
+					var dataOfRecomment = {
+						toUserId: this.mainComment.fromUserId,
+						underCommentId: this.mainComment.id,
+						fatherCommentId: this.mainComment.id,
+						nickname: this.mainComment.nickname,
+					};
+				console.log("receive control input request, in comment");
+				console.log(dataOfRecomment);
+				this.$emit('controlInputSignal', dataOfRecomment);
+			},
+
 
 			/**
 			 * 点赞或取消点赞主评论

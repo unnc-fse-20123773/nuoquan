@@ -144,21 +144,21 @@ var _default =
     // })
   },
   methods: {
-    controlInputInRecomment: function controlInputInRecomment() {
-      var dataOfRecomment = {
-        mode: "re-re",
-        toUserId: this.reCommentDetail.fromUserId,
-        fatherCommentId: this.reCommentDetail.id,
-        underCommentId: this.reCommentDetail.underCommentId,
-        nickname: this.reCommentDetail.nickname };
-
-      this.$emit('controlInputSignal', dataOfRecomment);
-    },
+    // controlInputInRecomment(){
+    // 	var dataOfRecomment={
+    // 		mode:"re-re",
+    // 		toUserId:this.reCommentDetail.fromUserId,
+    // 		fatherCommentId:this.reCommentDetail.id,
+    // 		underCommentId:this.reCommentDetail.underCommentId,
+    // 		nickname:this.reCommentDetail.nickname,
+    // 	}
+    // 	this.$emit('controlInputSignal',dataOfRecomment)
+    // },
 
     /**
-        * 点赞或取消点赞二级评论
-        * @param {Object} comment
-        */
+     * 点赞或取消点赞二级评论
+     * @param {Object} comment
+     */
     swLikeSubComment: function swLikeSubComment() {
       if (this.subComment.isLike) {
         this.unLikeComment(this.subComment);
