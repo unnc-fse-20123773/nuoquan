@@ -244,14 +244,32 @@
 		word-break: break-all;
 		white-space: normal;
 	}
-
+	
+	
+	
 	.briefarticleCard {
+		max-height: 500upx;
 		margin: 10px 13px 0 15px;
 		font-size: 13px;
 		line-height: 15px;
 		margin-bottom: 15px;
 		word-break: break-all;
 		white-space: pre-line;
+		text-overflow: ellipsis;
+		/**文字隐藏后添加省略号*/
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 15;
+		overflow: hidden;
+	}
+	
+	.briefarticleCard-text{
+		font-size: 13px;
+		color: #3D3D3D;
+		white-space: pre-line;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		/**文字隐藏后添加省略号*/
 	}
 
 	.tags {

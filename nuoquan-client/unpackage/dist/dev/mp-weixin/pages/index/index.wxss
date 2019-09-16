@@ -24,12 +24,29 @@ image {
 	white-space: normal;
 }
 .briefarticleCard.data-v-774fa287 {
+	max-height: 500rpx;
 	margin: 10px 13px 0 15px;
 	font-size: 13px;
 	line-height: 15px;
 	margin-bottom: 15px;
 	word-break: break-all;
 	white-space: pre-line;
+	-o-text-overflow: ellipsis;
+	   text-overflow: ellipsis;
+	/**文字隐藏后添加省略号*/
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 15;
+	overflow: hidden;
+}
+.briefarticleCard-text.data-v-774fa287{
+	font-size: 13px;
+	color: #3D3D3D;
+	white-space: pre-line;
+	overflow: hidden;
+	-o-text-overflow: ellipsis;
+	   text-overflow: ellipsis;
+	/**文字隐藏后添加省略号*/
 }
 .tags.data-v-774fa287 {
 	margin-left: 10px;
