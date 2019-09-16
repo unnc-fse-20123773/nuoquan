@@ -1,4 +1,10 @@
 # Update Log:
+**v19.9.15 更新**
+1. 整合 guetta
+2. 修复 文章换行（guetta）
+3. 优化 主页文章图片方块显示（guetta）
+4. 修复[严重] Bug-100022
+
 **v19.9.14 更新**
 1. 整合 deyan & yaoyao
 2. 新增 chatpage 分页
