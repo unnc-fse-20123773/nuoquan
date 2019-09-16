@@ -179,23 +179,26 @@ __webpack_require__.r(__webpack_exports__);
       imgList: [],
       singleImgState: '0',
 
-      serverUrl: this.$serverUrl,
       userInfo: {},
       articleCard: "", //detail的主角，由index传过来的单个文章信息
       commentContent: "", //用户准备提交的评论内容
       commentList: {}, //返回值，获取评论列表信息
-      showInput: false, ////控制输入框，true时显示输入框
+      showInput: false, //控制输入框，true时显示输入框
       writingComment: false, //控制输入框，true时自动获取焦点，拉起输入法
-      placeholderText: "评论点什么吧......",
+      placeholderText: " 评论点什么吧......",
       inputData: {}, //localData,用于拼接不同情况下的savecomment请求的数据
 
       submitData: {
         //这个是从子组件传来的数据，回复评论的评论之类
       },
       imgIndex: '',
+      serverUrl: this.$serverUrl,
 
       textAreaAdjust: "",
-      tagColorList: [] };
+      tagColorList: [],
+
+      totalPage: 1,
+      currentPage: 1 };
 
   },
   components: {
@@ -205,7 +208,7 @@ __webpack_require__.r(__webpack_exports__);
   filters: {
     timeDeal: function timeDeal(timediff) {
       timediff = new Date(timediff);
-      var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(), timediff.getSeconds()];
+      var parts = [timediff.getFullYear(), timediff.getMonth() + 1, timediff.getDate(), timediff.getHours(), timediff.getMinutes(), timediff.getSeconds()];
       var oldTime = timediff.getTime();
       var now = new Date();
       var newTime = now.getTime();
@@ -229,22 +232,27 @@ __webpack_require__.r(__webpack_exports__);
     } },
 
 
+  onReachBottom: function onReachBottom() {
+    this.loadMore();
+  },
+
   onLoad: function onLoad(options) {
     this.articleCard = JSON.parse(options.data);
     // console.log(this.articleCard);
-
     var userInfo = this.getGlobalUserInfo();
     if (!this.isNull(userInfo)) {
       this.userInfo = this.getGlobalUserInfo();
     }
-
-    this.getComments();
+    var page = this.currentPage;
+    this.getComments(page);
 
     // 随机生成颜色
-    var tagColors = this.tagColors;
-    for (var i = 0; i < this.articleCard.tagList.length; i++) {
-      var random = Math.floor(Math.random() * tagColors.length); // 0~tagColors.length-1
-      this.tagColorList.push(tagColors[random]);
+    if (!this.isNull(this.articleCard.tagList)) {
+      var tagColors = this.tagColors;
+      for (var i = 0; i < this.articleCard.tagList.length; i++) {
+        var random = Math.floor(Math.random() * tagColors.length); // 0~tagColors.length-1
+        this.tagColorList.push(tagColors[random]);
+      }
     }
   },
 
@@ -258,12 +266,14 @@ __webpack_require__.r(__webpack_exports__);
       // this.textAreaAdjust = '0' ;
 
     },
+
     unpopTextArea: function unpopTextArea(e) {
       console.log("收起");
       console.log(e);
 
       this.textAreaAdjust = "";
     },
+
     /**
         * fromUserId 必填
         * toUserId 必填
@@ -274,17 +284,6 @@ __webpack_require__.r(__webpack_exports__);
         * PS: 父级（一级，给文章评论）评论 无 fatherCommentId, underCommentId;
         *     子级评论有 fatherCommentId, underCommentId;
         */
-    singleImgeFit: function singleImgeFit(e) {
-      var height = e.detail.height;
-      var width = e.detail.width;
-      if (height >= width) {
-        this.singleImgState = 0;
-      } else {
-        this.singleImgState = 1;
-      }
-      // console.log(e.detail);
-    },
-
     saveComment: function saveComment() {var _this = this;
       this.submitData.comment = this.commentContent;
       this.submitData.fromUserId = this.userInfo.id;
@@ -300,34 +299,90 @@ __webpack_require__.r(__webpack_exports__);
           that.commentContent = "";
           _this.showInput = false;
 
-          if (that.isNull(that.submitData.underCommentId)) {
-            that.getComments();
-          } else {
-            uni.$emit("flashSubComment", that.submitData.underCommentId);
+          if (res.data.status == 200) {
+            // 强制子组件重新刷新
+            that.commentList = '';
+            that.$nextTick(function () {
+              that.getComments(1);
+            });
+            // console.log(res);
+            // if(that.isNull(that.submitData.underCommentId)){
+            // 	that.getComments(that.currentPage);
+            // }else{
+            // 	uni.$emit("flashSubComment", that.submitData.underCommentId);
+            // }
           }
         } });
 
     },
 
-    getComments: function getComments() {
+    getComments: function getComments(page) {
       var that = this;
+      uni.showLoading({
+        title: "加载中..." });
+
       uni.request({
         method: "POST",
         url: that.$serverUrl + '/article/getMainComments',
         data: {
           articleId: that.articleCard.id,
-          userId: that.userInfo.id },
+          userId: that.userInfo.id,
+          page: page },
 
         header: {
           'content-type': 'application/x-www-form-urlencoded' },
 
         success: function success(res) {
-          // console.log(res);
-          that.commentList = res.data.data.rows;
-          // console.log(that.articleCard.id);
-
+          if (res.data.status == 200) {
+            if (page == 1) {
+              that.commentList = [];
+            }
+            console.log(res);
+            var newCommentList = res.data.data.rows;
+            var oldCommentList = that.commentList;
+            that.commentList = oldCommentList.concat(newCommentList);
+            that.currentPage = page;
+            that.totalPage = res.data.data.total;
+            // console.log(that.articleCard.id);
+          } else {
+            console.log(res);
+          }
+          uni.hideLoading();
         } });
 
+    },
+
+    loadMore: function loadMore() {
+      var that = this;
+      var currentPage = that.currentPage;
+      console.log(currentPage);
+      var totalPage = that.totalPage;
+      console.log(totalPage);
+      // 判断当前页数和总页数是否相等
+      if (currentPage == totalPage) {
+        // that.showArticles(1);
+        uni.showToast({
+          title: "没有更多评论了",
+          icon: "none",
+          duration: 1000 });
+
+      } else if (that.commentList.length < 10) {
+        return;
+      } else {
+        var page = currentPage + 1;
+        that.getComments(page);
+      }
+    },
+
+    singleImgeFit: function singleImgeFit(e) {
+      var height = e.detail.height;
+      var width = e.detail.width;
+      if (height >= width) {
+        this.singleImgState = 0;
+      } else {
+        this.singleImgState = 1;
+      }
+      // console.log(e.detail);
     },
 
     controlInput: function controlInput(a) {
@@ -415,6 +470,7 @@ __webpack_require__.r(__webpack_exports__);
         url: '/pages/personpublic/personpublic?userId=' + this.articleCard.userId });
 
     },
+
     previewImg: function previewImg(index) {
       var imgIndex = index;
       // console.log(res)
@@ -432,6 +488,46 @@ __webpack_require__.r(__webpack_exports__);
       uni.previewImage({
         current: index,
         urls: arr });
+
+    },
+
+    aboutImg: function aboutImg(index) {
+      var that = this;
+      console.log(this.articleCard.imgList[index].imagePath);
+      uni.showActionSheet({
+        itemList: ['保存图片到本地'],
+        success: function success(res) {
+          console.log(res.tapIndex);
+          // 保存图片至本地
+          if (res.tapIndex == 0) {
+            uni.showLoading({
+              title: '下载中...' });
+
+            uni.downloadFile({
+              url: that.serverUrl + that.articleCard.imgList[index].imagePath,
+              success: function success(res) {
+                if (res.statusCode == 200) {
+                  uni.saveImageToPhotosAlbum({
+                    filePath: res.tempFilePath,
+                    success: function success() {
+                      console.log('save success');
+                      uni.hideLoading();
+                    },
+                    fail: function fail() {
+                      console.log('save failed');
+                      uni.hideLoading();
+                      uni.showToast({
+                        title: '保存失败',
+                        icon: 'none',
+                        duration: 1000 });
+
+                    } });
+
+                }
+              } });
+
+          }
+        } });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))

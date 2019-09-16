@@ -226,8 +226,8 @@ var socketOpen = false;var _default =
   watch: {
     chatMessageCard: function chatMessageCard(newVal, oldVal) {// 重载快照
       this.loadingChatSnapshot();
-      console.log("newVal:");
-      console.log(newVal);
+      // console.log("newVal:");
+      // console.log(newVal);
     },
 
     likeMsgCount: function likeMsgCount(newVal, oldVal) {

@@ -6,13 +6,16 @@
 				发 表
 			</view>
 		</view>
-
 		<view class="submitMain">
 			<!-- 当失去焦点时，将输入内容存入articleTitle -->
-			<input class="title" v-model="articleTitle" placeholder="  标题" />
+			<input class="title" v-model="articleTitle" placeholder="标题" maxlength="20">
+			<view style="display: flex;justify-content: space-between;color: #353535;font-size: 13px;line-height: 28px;height: 24px;">
+				<view>还可以输入</view>
+				<view>{{20 - articleTitle.length}}字</view>
+			</view>
 			<view class="tagsArea">
 				<!-- 展示标签区域 -->
-				<view class="tag" v-if="showTagArea" v-for="i in tagList" :key="i">{{i}}</view>
+				<view class="tag" v-if="showTagArea" v-for="(item,index) in tagList" :key="index" @click="deleteTag(index)">{{item}}</view>
 				<!-- 添加标签区域 -->
 				<view class="addTag">
 					<view v-if="showAddTagButton" @click="addTag">
@@ -22,10 +25,10 @@
 
 				</view>
 			</view>
-			<textarea placeholder="内容[最多2048字]" class="content" v-model="articleContent" maxlength=2048 show-confirm-bar="false"></textarea>
+			<textarea placeholder="内容" class="content" v-model="articleContent" maxlength="140" :show-confirm-bar="false"></textarea>
 			<view style="display: flex;justify-content: space-between;color: #353535;font-size: 13px;line-height: 28px;height: 24px;">
-				<view>点击可预览选好的图片</view>
-				<view>{{imageList.length}}/9</view>
+				<view>还可以输入</view>
+				<view>{{140 - articleContent.length}}字</view>
 			</view>
 
 			<view class="picturearea">
@@ -91,19 +94,23 @@
 			this.userInfo = this.getGlobalUserInfo();
 		},
 		methods: {
-			addTag: function(res) {
+			addTag: function() {
 				this.showInputTagArea = 1;
 				this.showAddTagButton = 0;
 			},
 			// 检查tagList的数量
 			checkInput: function(res) {
 				var that = this;
-				var tag = res.target.value;
+				var tag = this.articleTag;
+				//console.log(tag)
 				if (this.isNull(tag)) {
 					that.showAddTagButton = 1;
 					that.showInputTagArea = 0;
 				} else {
+					// 显示标签区域 = 1
 					that.showTagArea = 1;
+					
+					//console.log(that.tagIndex);
 					that.tagList[that.tagIndex] = tag;
 					that.tagIndex = that.tagIndex + 1;
 					that.showAddTagButton = 1;
@@ -111,13 +118,14 @@
 					that.articleTag = '';
 				}
 			},
+			
 			combineTagToString: function(res) {
 				var that = this;
-				for(var i = 0; i < that.tagList.length; i++) {
+				for (var i = 0; i < that.tagList.length; i++) {
 					that.finalTag = that.finalTag + '#' + that.tagList[i];
 				}
-				console.log(that.finalTag);
 			},
+
 			sourceTypeChange: function(e) {
 				this.sourceTypeIndex = parseInt(e.target.value)
 			},
@@ -160,7 +168,7 @@
 				var me = this;
 				console.log(me.articleTitle);
 				console.log(me.articleContent);
-				
+
 				if (me.articleTitle == '' || me.articleTitle == null) {
 					uni.showToast({
 						icon: 'none',
@@ -178,9 +186,9 @@
 					});
 					return;
 				}
-				
+
 				me.combineTagToString();
-				
+
 				var serverUrl = me.$serverUrl;
 				uni.request({
 					url: serverUrl + '/article/uploadArticle',
@@ -196,7 +204,7 @@
 					},
 					success: (res) => {
 						// console.log(res.data.data);
-						if (res.data.status == 200){
+						if (res.data.status == 200) {
 							if (me.imageList.length <= 0) {
 								uni.navigateBack({
 									url: '../index/index'
@@ -221,7 +229,7 @@
 									});
 								}
 							}
-						}else{
+						} else {
 							// 上传失败 用户提醒
 							uni.showToast({
 								title: '出现未知错误，上传失败',
@@ -229,13 +237,24 @@
 								icon: 'none',
 							})
 						}
-						
+
 					}
 				})
 			},
-
-			/* 以下为 Jerrio 测试代码块 */
-
+			deleteTag: function(index){
+				console.log(index);
+				var targetTag = this.tagList[index];
+				this.tagList.splice(index, 1);
+				console.log(this.tagList.length);
+				this.tagIndex = this.tagList.length;
+			},
+			// 测试用函数
+			// showTaglist: function(){
+			// 	console.log('length = ' + this.tagList.length);
+			// 	for(var i = 0; i < this.tagList.length; i++){
+			// 		console.log('old ' + this.tagList[i]);
+			// 	}
+			// }
 		}
 	};
 </script>
@@ -298,6 +317,7 @@
 		position: relative;
 		margin-right: 12px;
 		margin-bottom: 6px;
+		pointer-events: none;
 	}
 
 	.tag::after {
@@ -306,6 +326,7 @@
 		right: 12px;
 		color: #939393;
 		font-size: 13px;
+		pointer-events: auto;
 	}
 
 	.addTag {

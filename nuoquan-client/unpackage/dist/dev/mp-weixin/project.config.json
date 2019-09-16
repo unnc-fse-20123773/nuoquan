@@ -100,6 +100,12 @@
           "query": "",
           "id": 11,
           "pathName": "pages/search/search"
+        },
+        {
+          "name": "cmtdetail",
+          "query": "",
+          "id": 12,
+          "pathName": "pages/comment-detail/comment-detail"
         }
       ]
     }

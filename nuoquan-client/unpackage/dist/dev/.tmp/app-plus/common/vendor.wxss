@@ -212,12 +212,16 @@ image.data-v-52534b0e {
 }
 
 
+<<<<<<< HEAD
+.weui-search-bar.data-v-5a44fe13 {
+=======
 .weui-search-bar.data-v-5a44fe13{
+>>>>>>> 72ef0f9cf3eb8098d9f1cf6c8e28f1e62f23f305
 	display: fixed;
-	top:0;
-	left:0;
+	top: 0;
+	left: 0;
 	width: 100%;
-	height:100%;
+	height: 100%;
 	background: #FFFFFE;
 	z-index: 10;
 }
@@ -250,14 +254,24 @@ image.data-v-52534b0e {
 	-webkit-box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.16);
 	        box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.16);
 }
+<<<<<<< HEAD
+.wxSearchKey.data-v-5a44fe13,
+.SearchHistoryItem.data-v-5a44fe13 {
+=======
 .wxSearchKey.data-v-5a44fe13, .SearchHistoryItem.data-v-5a44fe13{
+>>>>>>> 72ef0f9cf3eb8098d9f1cf6c8e28f1e62f23f305
 	margin-top: 26px;
 	width: calc(750upx-56px);
 	padding: 0 28px;
 	position: relative;
 }
+<<<<<<< HEAD
+.exSearchTitle.data-v-5a44fe13,
+.SearchHistoryItemTitle.data-v-5a44fe13 {
+=======
 .exSearchTitle.data-v-5a44fe13,.SearchHistoryItemTitle.data-v-5a44fe13
  {
+>>>>>>> 72ef0f9cf3eb8098d9f1cf6c8e28f1e62f23f305
 	color: #888888;
 	font-size: 13px;
 	font-weight: 300;
@@ -280,9 +294,13 @@ image.data-v-52534b0e {
 	font-weight: 300;
 	margin-right: 14px;
 }
+<<<<<<< HEAD
+.SearchHistoryItem icon.data-v-5a44fe13 {
+=======
 .SearchHistoryItem icon.data-v-5a44fe13{
+>>>>>>> 72ef0f9cf3eb8098d9f1cf6c8e28f1e62f23f305
 	position: absolute;
-	right:28px;
-	top:0;
+	right: 28px;
+	top: 0;
 }
 

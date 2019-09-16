@@ -1,5 +1,11 @@
+<import src="/components/comment.vue.wxml" />
 <import src="/components/mainpagetop.vue.wxml" />
 <import src="/components/articlebrief.vue.wxml" />
+<<<<<<< HEAD
+<import src="/components/mypicker.vue.wxml" />
+<import src="/pages/chatpage/oneMessage.vue.wxml" />
+=======
+>>>>>>> 72ef0f9cf3eb8098d9f1cf6c8e28f1e62f23f305
 <import src="/components/searchResultArticle.vue.wxml" />
 <import src="/pages/chatpage/oneMessage.vue.wxml" />
 <import src="/components/comment.vue.wxml" />

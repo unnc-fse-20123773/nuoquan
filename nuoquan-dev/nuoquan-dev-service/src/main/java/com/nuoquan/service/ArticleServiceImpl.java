@@ -186,7 +186,7 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public PagedResult searchYangArticlesContent(Integer isSaveRecord, Integer page, Integer pageSize, Article article, String userId) {
 		
-		// 保存热搜词
+		// 保存热搜词 
 		String articleContent = article.getArticleContent();
 		if (isSaveRecord != null && isSaveRecord == 1) {
 			SearchRecord record = new SearchRecord();
@@ -414,8 +414,26 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
-	public List<ArticleVO> getTop3ByPopularity() {
-		return articleMapperCustom.getTop3ByPopularity();
+	public List<ArticleVO> getTop3ByPopularity(String userId) {
+		List<ArticleVO> list =  articleMapperCustom.getTop3ByPopularity();
+		for (ArticleVO a : list) {
+			// 为每个文章添加图片列表
+			a.setImgList(articleImageMapper.getArticleImgs(a.getId()));
+			// 添加和关于用户的点赞关系
+			a.setIsLike(isUserLikeArticle(userId, a.getId()));
+			// 添加标签list
+			if (!StringUtils.isBlank(a.getTags())) {
+				String[] tagList = a.getTags().split("#");
+				List<String> finalTagList = new ArrayList<String>();
+				for (String tag : tagList) {
+					if (!StringUtils.isBlank(tag)) {
+						finalTagList.add(tag);
+					}
+				}
+				a.setTagList(finalTagList);
+			}
+		}
+		return list;
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED)

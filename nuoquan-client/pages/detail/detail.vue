@@ -10,10 +10,10 @@
 			<view class="detailpics">
 				<!-- 单图显示 -->
 				<view v-if="articleCard.imgList.length==1" class="1pic" style="width: 100%;max-height: 400upx;">
-					<image v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFit" style="height: 360upx;"></image>
+					<image v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFit" style="height: 360upx;" @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
 				</view>
 				<!-- 其他数量 -->
-				<image class="detailpic" v-else v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFill"></image>
+				<image class="detailpic" v-else v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFill" @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
 				<view v-if="articleCard.imgList.length==2||imageList.length==5||imageList.length==8" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
 			</view>
 			<view class="tags">
@@ -32,8 +32,8 @@
 					<view class="icom">{{ articleCard.likeNum }}</view>
 				</view>
 			</view>
-
-			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i" @controlInputSignal="controlInput" :reCommentListFromDetail="reCommentListFromDetail">
+			
+			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i" @controlInputSignal="controlInput">
 			</commentbox>
 
 			<view class="fengexian" style="height: 1px;width: 100%;background-color: #d6d6d6;margin:auto;"></view>
@@ -44,7 +44,7 @@
 					<view class="emoji"></view>
 					<view class="submit" @click="saveComment()"></view>
 					<textarea class="commentSth" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
-					 confirm-type="send" @confirm="saveComment()" adjust-position="false" v-model="commentContent" @click.stop="" 
+					 adjust-position="false" v-model="commentContent" @click.stop="" 
 					 :show-confirm-bar="false"
 					  @focus="popTextArea" @blur="unpopTextArea" />
 					</view>
@@ -61,23 +61,26 @@
 				imgList: [],
 				singleImgState: '0',
 				
-				serverUrl: this.$serverUrl,
 				userInfo: {},
 				articleCard: "",  //detail的主角，由index传过来的单个文章信息
                 commentContent:"",  //用户准备提交的评论内容
 				commentList: {},  //返回值，获取评论列表信息
-				showInput:false,        ////控制输入框，true时显示输入框
+				showInput:false,  //控制输入框，true时显示输入框
 				writingComment:false,  //控制输入框，true时自动获取焦点，拉起输入法
-				placeholderText:"评论点什么吧......",
+				placeholderText:" 评论点什么吧......",
 				inputData:{},  //localData,用于拼接不同情况下的savecomment请求的数据
 				
 				submitData:{
 					//这个是从子组件传来的数据，回复评论的评论之类
 				},
 				imgIndex: '',
+				serverUrl: this.$serverUrl,
 				
 				textAreaAdjust:"",
 				tagColorList: [],
+				
+				totalPage: 1,
+				currentPage: 1,
 			};
 		},
 		components: {
@@ -87,7 +90,7 @@
 		filters: {
 			timeDeal(timediff) {
 				timediff = new Date(timediff);
-				var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(),timediff.getSeconds()];
+				var parts = [timediff.getFullYear(), timediff.getMonth()+1, timediff.getDate(), timediff.getHours(), timediff.getMinutes(),timediff.getSeconds()];
 				var oldTime = timediff.getTime();
 				var now = new Date();
 				var newTime = now.getTime();
@@ -111,22 +114,27 @@
 			}
 		},
 		
+		onReachBottom() {
+			this.loadMore();
+		},
+		
 		onLoad(options) {
 			this.articleCard = JSON.parse(options.data);
 			// console.log(this.articleCard);
-			
 			var userInfo = this.getGlobalUserInfo();
 			if (!this.isNull(userInfo)) {
 				this.userInfo = this.getGlobalUserInfo();
 			}
-			
-			this.getComments();
-			
+			var page = this.currentPage;
+			this.getComments(page);
+
 			// 随机生成颜色
-			var tagColors = this.tagColors;
-			for (var i=0; i<this.articleCard.tagList.length; i++){
-				var random = Math.floor(Math.random()*tagColors.length); // 0~tagColors.length-1
-				this.tagColorList.push(tagColors[random]);
+			if(!this.isNull(this.articleCard.tagList)){
+				var tagColors = this.tagColors;
+				for (var i=0; i<this.articleCard.tagList.length; i++){
+					var random = Math.floor(Math.random()*tagColors.length); // 0~tagColors.length-1
+					this.tagColorList.push(tagColors[random]);
+				}
 			}
 		},
 		
@@ -140,12 +148,14 @@
 				// this.textAreaAdjust = '0' ;
 			
 			},
+
 			unpopTextArea(e){
 				console.log("收起");
 				console.log(e);
 				
 				this.textAreaAdjust = "";
 			},
+
 			/**
 			 * fromUserId 必填
 			 * toUserId 必填
@@ -156,17 +166,6 @@
 			 * PS: 父级（一级，给文章评论）评论 无 fatherCommentId, underCommentId;
 			 *     子级评论有 fatherCommentId, underCommentId;
 			 */
-			singleImgeFit(e){
-				var height = e.detail.height;
-				var width = e.detail.width;
-				if(height >= width){
-					this.singleImgState = 0;
-				}else{
-					this.singleImgState = 1;
-				}
-				// console.log(e.detail);
-			},
-			
 			saveComment: function() {
 				this.submitData.comment=this.commentContent;
 				this.submitData.fromUserId=this.userInfo.id;
@@ -182,34 +181,90 @@
 						that.commentContent = "";
 						this.showInput = false;
 						
-						if(that.isNull(that.submitData.underCommentId)){
-							that.getComments();
-						}else{
-							uni.$emit("flashSubComment", that.submitData.underCommentId);
+						if (res.data.status == 200) {
+							// 强制子组件重新刷新
+							that.commentList = '';
+							that.$nextTick(function() {
+								that.getComments(1);
+							});
+							// console.log(res);
+							// if(that.isNull(that.submitData.underCommentId)){
+							// 	that.getComments(that.currentPage);
+							// }else{
+							// 	uni.$emit("flashSubComment", that.submitData.underCommentId);
+							// }
 						}
 					},
 				})
 			},
 			
-			getComments: function() {		
+			getComments: function(page) {		
 				var that = this;
+				uni.showLoading({
+					title:"加载中..."
+				})
 				uni.request({
 					method: "POST",
 					url: that.$serverUrl + '/article/getMainComments',
 					data: {
 						articleId: that.articleCard.id,
 						userId: that.userInfo.id,
+						page: page,
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
-					success: (res) => {	
-						// console.log(res);
-						that.commentList = res.data.data.rows;
-						// console.log(that.articleCard.id);
-						
-					},
+					success: (res) => {
+						if(res.data.status == 200){
+							if (page == 1) {
+								that.commentList = [];
+							}
+							console.log(res);
+							var newCommentList = res.data.data.rows;
+							var oldCommentList = that.commentList;
+							that.commentList = oldCommentList.concat(newCommentList);
+							that.currentPage = page;
+							that.totalPage = res.data.data.total;
+							// console.log(that.articleCard.id);
+						}else{
+							console.log(res);
+						}
+						uni.hideLoading();
+					}
 				});
+			},
+
+			loadMore: function(){
+				var that = this;
+				var currentPage = that.currentPage;
+				console.log(currentPage);
+				var totalPage = that.totalPage;
+				console.log(totalPage);
+				// 判断当前页数和总页数是否相等
+				if (currentPage == totalPage){
+					// that.showArticles(1);
+					uni.showToast({
+						title:"没有更多评论了",
+						icon:"none",
+						duration:1000
+					})
+				} else if(that.commentList.length < 10){
+					return;
+				} else {
+					var page = currentPage + 1;
+					that.getComments(page);
+				}
+			},
+
+			singleImgeFit(e){
+				var height = e.detail.height;
+				var width = e.detail.width;
+				if(height >= width){
+					this.singleImgState = 0;
+				}else{
+					this.singleImgState = 1;
+				}
+				// console.log(e.detail);
 			},
 			
 			controlInput(a){
@@ -297,6 +352,7 @@
 					url: '/pages/personpublic/personpublic?userId=' + this.articleCard.userId,
 				})
 			},
+			
 			previewImg: function(index) {
 				var imgIndex = index;
 				// console.log(res)
@@ -316,8 +372,47 @@
 					urls:arr,
 				})
 			},
+
+			aboutImg: function(index){
+				var that = this;
+				console.log(this.articleCard.imgList[index].imagePath);
+				uni.showActionSheet({
+					itemList: ['保存图片到本地'],
+					success: function(res) {
+						console.log(res.tapIndex);
+						// 保存图片至本地
+						if(res.tapIndex == 0) {
+							uni.showLoading({
+								title:'下载中...'
+							})
+							uni.downloadFile({
+								url: that.serverUrl + that.articleCard.imgList[index].imagePath,
+								success: function(res) {
+									if(res.statusCode == 200){
+										uni.saveImageToPhotosAlbum({
+											filePath: res.tempFilePath,
+											success: function () {
+												console.log('save success');
+												uni.hideLoading();
+											},
+											fail: function() {
+												console.log('save failed');
+												uni.hideLoading();
+												uni.showToast({
+													title:'保存失败',
+													icon:'none',
+													duration:1000,
+												})
+											}
+										});
+									}
+								}
+							})
+						}
+					}
+				});
+			},
 		},
-		
 	};
 </script>
 <style>	page {
@@ -454,6 +549,8 @@
 		margin-left: 7px;
 		color: #888888;
 		padding-bottom: 5px;
+		max-width: 80px;
+		text-overflow: ellipsis;
 	}
 
 	.time {
@@ -461,6 +558,8 @@
 		font-size: 10px;
 		margin-left: 25px;
 		color: #888888;
+		max-width: 85px;
+		text-overflow: ellipsis;
 	}
 
 

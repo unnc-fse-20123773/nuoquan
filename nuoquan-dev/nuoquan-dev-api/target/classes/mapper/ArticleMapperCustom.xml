@@ -92,7 +92,12 @@ select * from (
 ) as d on c.id=d.article_id -->
   	
   <select id="getTop3ByPopularity" resultMap="BaseResultMap">
-  	SELECT * FROM nuoquan.article order by popularity desc limit 0,3;
+  	select a.*, u.nickname as nickname, u.face_img, u.face_img_thumb from nuoquan.article a
+   	left join nuoquan.user u on u.id = a.user_id
+  	where
+  		1 = 1
+  		and a.status = 1 
+  	order by popularity desc limit 0,3;
   </select>
   
   <select id="getArticleById" resultMap="BaseResultMap">

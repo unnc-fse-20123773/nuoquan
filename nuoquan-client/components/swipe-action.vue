@@ -367,6 +367,8 @@
 				font-size: 18upx;
 				height: 60upx;
 				line-height: 60upx;
+				max-width: 85px;
+				text-overflow: ellipsis;
 			}
 
 			.mark {

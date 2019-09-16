@@ -345,9 +345,9 @@ public class ArticleController extends BasicController {
 
 	@ApiOperation(value = "Get the top 3 hot article")
 	@PostMapping("/getHotTop3")
-	public JSONResult getHotTop3() throws Exception {
+	public JSONResult getHotTop3(String userId) throws Exception {
 
-		List<ArticleVO> list = articleService.getTop3ByPopularity();
+		List<ArticleVO> list = articleService.getTop3ByPopularity(userId);
 		return JSONResult.ok(list);
 	}
 	
