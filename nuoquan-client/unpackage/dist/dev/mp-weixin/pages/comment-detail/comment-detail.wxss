@@ -1,0 +1,154 @@
+
+page {
+	width: 100%;
+	background-color: #F3F3F3;
+}
+.commentBox {
+	width: 100%;
+	min-height: 200rpx;
+	background-color: white;
+}
+.son-commentBox {
+	width: 100%;
+	min-height: 200rpx;
+}
+
+/* ID 行 */
+.cmtdetail-IDline {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	height: 50px;
+	width: 100%;
+}
+.cmtdetail-IDrel {
+	height: 100%;
+	width: 100%;
+	position: relative;
+}
+.cmtdetail-profilePic {
+	position: absolute;
+	top: 8px;
+	left: 10px;
+	width: 42px;
+	height: 42px;
+	border: 1px solid red;
+	border-radius: 200px;
+}
+.son-cmtdetail-profilePic {
+	position: absolute;
+	top: 8px;
+	left: 16px;
+	width: 36px;
+	height: 36px;
+	border: 1px solid red;
+	border-radius: 200px;
+}
+.profilePic {
+	width: 42px;
+	height: 42px;
+	border-radius: 200px;
+}
+.son-profilePic {
+	width: 36px;
+	height: 36px;
+	border-radius: 200px;
+}
+.cmtdetail-middle {
+	position: absolute;
+	top: 10px;
+	left: 62px;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	    -ms-flex-direction: column;
+	        flex-direction: column;
+	width: 60%;
+	height: 42px;
+}
+.cmtdetail-IDtext {
+	width: 100%;
+	height: 50%;
+	color: #3d3d3d;
+	font-size: 15px;
+}
+.cmtdetail-time {
+	width: 100%;
+	height: 50%;
+	color: #888888;
+	font-size: 12px;
+}
+.cmtdetail-right {
+	position: absolute;
+	right: 10px;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	min-width: 24%;
+	height: 100%;
+}
+.cmtdetail-rightrel {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+.likeIcon {
+	position: absolute;
+	left: 5%;
+	width: 18px;
+	height: 18px;
+	top: 8px;
+}
+.likeNum {
+	position: absolute;
+	top: 10px;
+	left: 26%;
+	font-size: 12px;
+	color: #888888;
+}
+.son-likeIcon{
+	position: absolute;
+	right: 40%;
+	width: 18px;
+	height: 18px;
+	top: 8px;
+}
+.son-likeNum{
+	position: absolute;
+	top: 10px;
+	right: 9%;
+	font-size: 12px;
+	color: #888888;
+}
+.commentIcon {
+	position: absolute;
+	right: 5%;
+	width: 18px;
+	height: 18px;
+	top: 8px;
+}
+.cmtdetail-contentBox {
+	width: 74%;
+	margin-left: 62px;
+	margin-top: 10px;
+	min-height: 20px;
+	color: #3D3D3D;
+	font-size: 15px;
+	font-weight: 500;
+}
+.cmtdetail-loadmore {
+	margin-left: 62px;
+	height: 30px;
+	width: 80%;
+}
+.loadmore-text {
+	color: #888888;
+	font-size: 12px;
+}
+

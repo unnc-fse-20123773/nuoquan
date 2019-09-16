@@ -44,9 +44,6 @@
 		font-size: 10px;
 		margin-right: 10px;
 		color: #888888;
-			max-width: 85px;
-		-o-text-overflow: ellipsis;
-		   text-overflow: ellipsis;
 }
 .icons.data-v-51ea2b8e {
 		-webkit-box-pack: end;

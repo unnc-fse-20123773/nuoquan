@@ -160,6 +160,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -230,9 +232,9 @@ var sizeType = [
         that.tagList[that.tagIndex] = tag;
         that.tagIndex = that.tagIndex + 1;
         that.showAddTagButton = 1;
-        that.showInputTagArea = 0;
-        that.articleTag = '';
+
       }
+
     },
 
     combineTagToString: function combineTagToString(res) {

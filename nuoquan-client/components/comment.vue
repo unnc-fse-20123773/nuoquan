@@ -26,7 +26,8 @@
 
 		<view v-show="RECOMMENT && mainComment.commentNum > 0" class="reCommentsArea">
 			<reComment v-for="(item,index) in reCommentList" v-bind:key="index" :reCommentDetail='item' @controlInputSignal="controlInputInComment"
-			 @goToPersonPublic="goToPersonPublic"></reComment>
+			 @goToPersonPublic="goToPersonPublic" @tap="goToCommentDetail(mainComment)"></reComment>
+			<view style="font-size: 10px;color:#007AFF;text-align: right;margin-top:5px;">共{{mainComment.commentNum}}条评论</view>
 			<!-- <view class="submitComment">发 表 评 论</view> -->
 		</view>
 	</view>
@@ -209,6 +210,12 @@
 				uni.navigateTo({
 					url: '/pages/personpublic/personpublic?userId=' + userId,
 				});
+			},
+			
+			goToCommentDetail(mainComment){
+				uni.navigateTo({
+					url: '/pages/comment-detail/comment-detail?data=' + JSON.stringify(mainComment),
+				})
 			}
 		},
 
@@ -261,8 +268,6 @@
 		font-size: 10px;
 		margin-right: 10px;
 		color: #888888;
-			max-width: 85px;
-		text-overflow: ellipsis;
 	}
 
 	.icons {
