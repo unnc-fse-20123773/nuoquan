@@ -64,8 +64,8 @@
 		watch: {
 			// 监听收到的消息
 			chatMessageCard(newVal, oldVal) {
-				console.log("newVal:");
-				console.log(newVal);
+				// console.log("newVal:");
+				// console.log(newVal);
 				// 渲染到窗口
 				this.chatContent.push(newVal);
 				this.scrollToBottom();
@@ -233,16 +233,12 @@
 	 */
 	.messageArea {
 		display: flex;
+		margin-top: 30upx;
 		margin-bottom: 90upx;
 		background: #F5F5F5;
 		width: 100%;
 		height: 94%;
 	}
-	::-webkit-scrollbar {
-		width: 0;
-		height: 0;
-		background-color: transparent;
-	} 
 	
 	.bottomBar {
 		position: fixed;
@@ -285,22 +281,21 @@
 		vertical-align: middle;
 	}
 	.icons button.button-hover{
-	position: relative;
-  top: 3rpx;
-  box-shadow:0px 0px 8px #999 inset; 
-  
+		position: relative;
+		top: 3rpx;
+		box-shadow:0px 0px 8px #999 inset; 
     }
 	button{
-	display: inline-block;
-	margin: 0;
-	padding: 0;
-	width: 34upx;
-	height: 34upx;
-	vertical-align: middle;
-	background: #FFFFFF;
+		display: inline-block;
+		margin: 0;
+		padding: 0;
+		width: 34upx;
+		height: 34upx;
+		vertical-align: middle;
+		background: #FFFFFF;
 	}
     button::after{
-	border:none;
+		border:none;
     }
 	
 	.marginHelper{

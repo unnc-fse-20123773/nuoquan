@@ -173,8 +173,8 @@ var chatHistory;var _default =
   watch: {
     // 监听收到的消息
     chatMessageCard: function chatMessageCard(newVal, oldVal) {
-      console.log("newVal:");
-      console.log(newVal);
+      // console.log("newVal:");
+      // console.log(newVal);
       // 渲染到窗口
       this.chatContent.push(newVal);
       this.scrollToBottom();

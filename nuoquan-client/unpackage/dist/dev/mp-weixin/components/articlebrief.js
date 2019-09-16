@@ -176,6 +176,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 var _default =
 {
   name: 'aticlebrief',
@@ -302,14 +303,12 @@ var _default =
         } });
 
     },
-
     jumpToDetail: function jumpToDetail() {
       var navData = JSON.stringify(this.articleCard); // 这里转换成 字符串
       uni.navigateTo({
         url: '/pages/detail/detail?data=' + navData });
 
     },
-
     goToPersonPublic: function goToPersonPublic(userId) {
       uni.navigateTo({
         url: '/pages/personpublic/personpublic?userId=' + userId });
@@ -329,7 +328,6 @@ var _default =
         arr = arr.concat(path);
       }
       // console.log(arr);
-
       uni.previewImage({
         current: index,
         urls: arr });

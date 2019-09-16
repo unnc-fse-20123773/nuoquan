@@ -34,6 +34,29 @@ page {
 		padding-top: 25px;
 		padding-bottom: 15px;
 		font-size: 13px;
+		/* width: 85%;
+		margin: 0px auto 10px; */
+		/* font-weight: 400;
+		word-break:break-all;
+		white-space:pre-line;
+	}
+
+	.picturearea-one {
+		margin: auto;
+		display: flex;
+		width: 94%;
+		margin-left: 3%;
+	}
+	
+	.picturearea-mul {
+		position: relative;
+		margin: auto;
+		display: flex; */
+		/* 在此设置图片区域宽度 */
+		/* width: 94%;
+		margin-left: 3%;
+	} */
+	
 		font-weight: 400;
 		word-break: break-all;
 		word-wrap: break-word;

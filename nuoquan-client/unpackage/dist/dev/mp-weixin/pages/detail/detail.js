@@ -118,7 +118,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var comment = function comment() {return __webpack_require__.e(/*! import() | components/comment */ "components/comment").then(__webpack_require__.bind(null, /*! ../../components/comment */ 151));};var _default =
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 
 
 
@@ -178,13 +181,16 @@ __webpack_require__.r(__webpack_exports__);
 {
   data: function data() {
     return {
+      imgList: [],
+      singleImgState: '0',
+
       userInfo: {},
       articleCard: "", //detail的主角，由index传过来的单个文章信息
       commentContent: "", //用户准备提交的评论内容
       commentList: {}, //返回值，获取评论列表信息
-      showInput: false, ////控制输入框，true时显示输入框
+      showInput: false, //控制输入框，true时显示输入框
       writingComment: false, //控制输入框，true时自动获取焦点，拉起输入法
-      placeholderText: "评论点什么吧......",
+      placeholderText: " 评论点什么吧......",
       inputData: {}, //localData,用于拼接不同情况下的savecomment请求的数据
 
       submitData: {
@@ -236,15 +242,13 @@ __webpack_require__.r(__webpack_exports__);
   },
 
   onLoad: function onLoad(options) {
-    var that = this;
-    that.articleCard = JSON.parse(options.data);
-    console.log(that.articleCard);
+    this.articleCard = JSON.parse(options.data);
+    // console.log(this.articleCard);
     var userInfo = this.getGlobalUserInfo();
-    if (!that.isNull(userInfo)) {
-      that.userInfo = this.getGlobalUserInfo();
+    if (!this.isNull(userInfo)) {
+      this.userInfo = this.getGlobalUserInfo();
     }
-
-    var page = that.currentPage;
+    var page = this.currentPage;
     this.getComments(page);
 
     // 随机生成颜色
@@ -291,6 +295,7 @@ __webpack_require__.r(__webpack_exports__);
       this.submitData.articleId = this.articleCard.id;
       console.log(this.submitData);
       var that = this;
+<<<<<<< HEAD
       if (this.commentContent == "") {
         uni.showToast({
           title: '好像忘写评论了哦~',
@@ -315,6 +320,31 @@ __webpack_require__.r(__webpack_exports__);
           } });
 
       }
+=======
+      uni.request({
+        url: that.$serverUrl + '/article/saveComment',
+        method: 'POST',
+        data: this.submitData,
+        success: function success(res) {
+          that.writingComment = false;
+          that.commentContent = "";
+          _this.showInput = false;
+
+          if (res.data.status == 200) {
+            // 强制子组件重新刷新
+            that.commentList = '';
+            that.$nextTick(function () {
+              that.getComments(1);
+            });
+            // console.log(res);
+            // if(that.isNull(that.submitData.underCommentId)){
+            // 	that.getComments(that.currentPage);
+            // }else{
+            // 	uni.$emit("flashSubComment", that.submitData.underCommentId);
+            // }
+          }
+        } });
+>>>>>>> master
 
     },
 
@@ -335,18 +365,21 @@ __webpack_require__.r(__webpack_exports__);
           'content-type': 'application/x-www-form-urlencoded' },
 
         success: function success(res) {
-          uni.hideLoading();
-          // console.log(res);
-          if (page == 1) {
-            that.commentList = [];
+          if (res.data.status == 200) {
+            if (page == 1) {
+              that.commentList = [];
+            }
+            console.log(res);
+            var newCommentList = res.data.data.rows;
+            var oldCommentList = that.commentList;
+            that.commentList = oldCommentList.concat(newCommentList);
+            that.currentPage = page;
+            that.totalPage = res.data.data.total;
+            // console.log(that.articleCard.id);
+          } else {
+            console.log(res);
           }
-          console.log(res);
-          var newCommentList = res.data.data.rows;
-          var oldCommentList = that.commentList;
-          that.commentList = oldCommentList.concat(newCommentList);
-          that.currentPage = page;
-          that.totalPage = res.data.data.total;
-          // console.log(that.articleCard.id);
+          uni.hideLoading();
         } });
 
     },
@@ -371,6 +404,17 @@ __webpack_require__.r(__webpack_exports__);
         var page = currentPage + 1;
         that.getComments(page);
       }
+    },
+
+    singleImgeFit: function singleImgeFit(e) {
+      var height = e.detail.height;
+      var width = e.detail.width;
+      if (height >= width) {
+        this.singleImgState = 0;
+      } else {
+        this.singleImgState = 1;
+      }
+      // console.log(e.detail);
     },
 
     controlInput: function controlInput(a) {
@@ -458,6 +502,7 @@ __webpack_require__.r(__webpack_exports__);
         url: '/pages/personpublic/personpublic?userId=' + this.articleCard.userId });
 
     },
+
     previewImg: function previewImg(index) {
       var imgIndex = index;
       // console.log(res)

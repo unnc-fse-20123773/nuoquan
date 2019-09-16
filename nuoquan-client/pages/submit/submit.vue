@@ -6,7 +6,6 @@
 				发 表
 			</view>
 		</view>
-
 		<view class="submitMain">
 			<!-- 当失去焦点时，将输入内容存入articleTitle -->
 			<input class="title" v-model="articleTitle" placeholder="标题" maxlength="20">
@@ -16,7 +15,7 @@
 			</view>
 			<view class="tagsArea">
 				<!-- 展示标签区域 -->
-				<view class="tag" v-if="showTagArea" v-for="i in tagList" :key="i" @click="deleteTag(i)">{{i}}</view>
+				<view class="tag" v-if="showTagArea" v-for="(item,index) in tagList" :key="index" @click="deleteTag(index)">{{item}}</view>
 				<!-- 添加标签区域 -->
 				<view class="addTag">
 					<view v-if="showAddTagButton" @click="addTag">
@@ -26,25 +25,22 @@
 
 				</view>
 			</view>
-			<textarea placeholder="内容[最多2048字]" class="content" v-model="articleContent" maxlength=2048 :show-confirm-bar="false"></textarea>
+			<textarea placeholder="内容" class="content" v-model="articleContent" maxlength="140" :show-confirm-bar="false"></textarea>
 			<view style="display: flex;justify-content: space-between;color: #353535;font-size: 13px;line-height: 28px;height: 24px;">
 				<view>还可以输入</view>
 				<view>{{140 - articleContent.length}}字</view>
 			</view>
 
 			<view class="picturearea">
-
 				<block v-for="(image,index) in imageList" :key="index">
 					<view style="position: relative;">
 						<!-- todo 预览图片缩放 -->
 						<image :src="image" :data-src="image" @tap="previewImage"></image>
 						<view style="width:15px;height: 15px;font-size: 10px;line-height: 10px;border-bottom-left-radius: 3px;background: rgba(166, 169, 168,0.3);color:#FFFFFF;position: absolute;top:6px;right:0;text-align: center;">✕</view>
 					</view>
-
 				</block>
 				<view v-show="isAddImage(this.imageList.length)" id="clickToChooseImage" class="addPic" @click="chooseImg">+</view>
 				<view v-if="imageList.length==1||imageList.length==4||imageList.length==7" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
-
 			</view>
 		</view>
 	</viwe>
@@ -100,45 +96,38 @@
 			this.userInfo = this.getGlobalUserInfo();
 		},
 		methods: {
-			addTag: function(res) {
+			addTag: function() {
 				this.showInputTagArea = 1;
 				this.showAddTagButton = 0;
 			},
 			// 检查tagList的数量
 			checkInput: function(res) {
 				var that = this;
-				var tag = res.target.value;
+				var tag = this.articleTag;
+				//console.log(tag)
 				if (this.isNull(tag)) {
 					that.showAddTagButton = 1;
 					that.showInputTagArea = 0;
 				} else {
+					// 显示标签区域 = 1
 					that.showTagArea = 1;
+					
+					//console.log(that.tagIndex);
 					that.tagList[that.tagIndex] = tag;
 					that.tagIndex = that.tagIndex + 1;
 					that.showAddTagButton = 1;
-					that.showInputTagArea = 0;
-					that.articleTag = '';
+
 				}
+
 			},
-			deleteTag(tag) {
-				var that = this;
-				var i = 0;
-				var newTagListTemp = [];
-				for (i = 0; i < that.tagIndex; i++) {
-					if (that.tagList[i] != tag) {
-						newTagListTemp.push(that.tagList[i]);
-					}
-				}
-				that.tagList = newTagListTemp;
-				that.tagIndex = that.tagIndex - 1;
-			},
+			
 			combineTagToString: function(res) {
 				var that = this;
 				for (var i = 0; i < that.tagList.length; i++) {
 					that.finalTag = that.finalTag + '#' + that.tagList[i];
 				}
-				console.log(that.finalTag);
 			},
+
 			sourceTypeChange: function(e) {
 				this.sourceTypeIndex = parseInt(e.target.value)
 			},
@@ -254,9 +243,20 @@
 					}
 				})
 			},
-
-			/* 以下为 Jerrio 测试代码块 */
-
+			deleteTag: function(index){
+				console.log(index);
+				var targetTag = this.tagList[index];
+				this.tagList.splice(index, 1);
+				console.log(this.tagList.length);
+				this.tagIndex = this.tagList.length;
+			},
+			// 测试用函数
+			// showTaglist: function(){
+			// 	console.log('length = ' + this.tagList.length);
+			// 	for(var i = 0; i < this.tagList.length; i++){
+			// 		console.log('old ' + this.tagList[i]);
+			// 	}
+			// }
 		}
 	};
 </script>
