@@ -32,7 +32,7 @@
 				</view>
 			</view>
 
-			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i" @controlInputSignal="controlInput">
+			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i">
 			</commentbox>
 
 			<view class="fengexian" style="height: 1px;width: 100%;background-color: #d6d6d6;margin:auto;"></view>
@@ -270,26 +270,11 @@
 				// console.log(e.detail);
 			},
 			
-			controlInput(a){
-				if(a!=0&&a!=1){ //a!=0, !=1， 从子组件传来，包含被回复对象：被回复人ID，被回复评论ID，被回复人昵称
-					this.placeholderText='回复 @'+a.nickname+' 的评论';
-					delete(a.nickname);
-					this.submitData=a;
-					if(a.mode == "re-co"){
-						this.writingComment = true;
-					}
-					if(a.mode =="re-re"){    //mode ="re-re", from grandson RECOMMENT
-						console.log(a.mode);
-						this.writingComment = true ;
-					}
-					this.showInput= true;
-					console.log(this.writingComment);
-				}else if(a==1){ //a==1 当前页面调用，直接评论文章
+			controlInput(a){				 
+				 if(a==1){ //a==1 当前页面调用，直接评论文章
 					this.submitData.toUserId=this.articleCard.userId;
 					this.showInput = true;
 					this.writingComment = true; 
-					console.log('this is control input in detail. a ==' + a);
-					console.log(this.submitData);
 				}else{ //a==0, 关闭输入框，一切恢复默认状态
 				    console.log('this is control input in detail. a ==0, EXIT');
 					this.submitData = {};

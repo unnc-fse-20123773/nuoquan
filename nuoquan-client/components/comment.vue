@@ -27,7 +27,7 @@
 		</view>
 
 		<view v-show="RECOMMENT && mainComment.commentNum > 0" class="reCommentsArea">
-			<reComment v-for="(item,index) in reCommentList" v-bind:key="index" :reCommentDetail='item' @controlInputSignal="controlInputInComment"
+			<reComment v-for="(item,index) in reCommentList" v-bind:key="index" :reCommentDetail='item'
 			 @goToPersonPublic="goToPersonPublic"></reComment>
 			 <view style="font-size: 10px;color:#007AFF;text-align: right;margin-top:5px;">共{{reCommentNumber}}条评论</view>
 			<!-- <view class="submitComment">发 表 评 论</view> -->
@@ -140,22 +140,7 @@
 					that.getSubComments(page);
 				}
 			},
-			controlInputInComment(a) {
-				if (a == "inComment") {
-					var dataOfRecomment = {
-						mode: "re-co",
-						toUserId: this.mainComment.fromUserId,
-						underCommentId: this.mainComment.id,
-						fatherCommentId: this.mainComment.id,
-						nickname: this.mainComment.nickname,
-					}
-				} else {
-					var dataOfRecomment = a;
-				}
-				console.log("receive control input request, in comment");
-				console.log(dataOfRecomment);
-				this.$emit('controlInputSignal', dataOfRecomment);
-			},
+			
 
 			/**
 			 * 点赞或取消点赞主评论

@@ -5,21 +5,13 @@ image {
 }
 
 
-<<<<<<< HEAD
 .articlecard.data-v-56ccba95 {
-=======
-.articlecard.data-v-516b1c5e {
->>>>>>> guetta-new
 	width: 750rpx;
 	border-radius: 8px;
 	margin: 0 auto ;
 	background-color: #ffffff;
 }
-<<<<<<< HEAD
 .title.data-v-56ccba95 {
-=======
-.title.data-v-516b1c5e {
->>>>>>> guetta-new
 	margin: 0px 25px 0 25px;
 	font-size: 15px;
 	font: MicrosoftYaHei;
@@ -27,27 +19,16 @@ image {
 	line-height: 19px;
 	padding-top: 10px;
 }
-<<<<<<< HEAD
 .briefarticleCard.data-v-56ccba95 {
-=======
-.briefarticleCard.data-v-516b1c5e {
->>>>>>> guetta-new
 	margin: 10px 25px 15px;
 	font-size: 13px;
 	line-height: 15px;
 	margin-bottom: 15px;
 }
-<<<<<<< HEAD
 .tags.data-v-56ccba95 {
 	margin-left: 10px;
 }
 .tag.data-v-56ccba95 {
-=======
-.tags.data-v-516b1c5e {
-	margin-left: 10px;
-}
-.tag.data-v-516b1c5e {
->>>>>>> guetta-new
 	display: inline-block;
 	border-radius: 4px;
 	padding-left: 5px;
@@ -58,31 +39,19 @@ image {
 	font-size: 10px;
 	background: #621E81;
 }
-<<<<<<< HEAD
 .menubar.data-v-56ccba95 {
-=======
-.menubar.data-v-516b1c5e {
->>>>>>> guetta-new
 	position: relative;
 	vertical-align: middle;
 	margin:0 25px;
 }
-<<<<<<< HEAD
 .touxiang.data-v-56ccba95 {
-=======
-.touxiang.data-v-516b1c5e {
->>>>>>> guetta-new
 	border-radius: 30px;
 	width: 20px;
 	height: 20px;
 	margin-right: 5px;
 	vertical-align: middle;
 }
-<<<<<<< HEAD
 .name.data-v-56ccba95 {
-=======
-.name.data-v-516b1c5e {
->>>>>>> guetta-new
 	display: inline-block;
 	font-size: 10px;
 	margin-left: 7px;
@@ -92,11 +61,7 @@ image {
 	-o-text-overflow: ellipsis;
 	   text-overflow: ellipsis;
 }
-<<<<<<< HEAD
 .time.data-v-56ccba95 {
-=======
-.time.data-v-516b1c5e {
->>>>>>> guetta-new
 	position: absolute;
 	right: 0;
 	bottom: 5px;
@@ -108,11 +73,7 @@ image {
 	-o-text-overflow: ellipsis;
 	   text-overflow: ellipsis;
 }
-<<<<<<< HEAD
 .picturearea.data-v-56ccba95 {
-=======
-.picturearea.data-v-516b1c5e {
->>>>>>> guetta-new
 	margin: auto;
 	display: -webkit-box;
 	display: -webkit-flex;
@@ -123,11 +84,7 @@ image {
 	    -ms-flex-pack: center;
 	        justify-content: center;
 }
-<<<<<<< HEAD
 image.data-v-56ccba95 {
-=======
-image.data-v-516b1c5e {
->>>>>>> guetta-new
 	width: 30%;
 	height: 200rpx;
 	margin: auto;

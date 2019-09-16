@@ -25,7 +25,7 @@
 					</view>
 				</view>
 			</view>
-			<view class="cmtdetail-contentBox" id="contentBox">
+			<view class="cmtdetail-contentBox" id="contentBox" @click="controlInput(1)">
 				这里没有一百字。这里没有一百字。这里没有一百字。这里没有一百字。这里没有一百字。
 			</view>
 			<view class="cmtdetail-loadmore column_center">
@@ -37,35 +37,10 @@
 		</view>
 		<!-- 子评论区域 -->
 		<view style="width: 100%;">
-			<view class="son-commentBox">
-				<view class="cmtdetail-IDline">
-					<view class="cmtdetail-IDrel">
-						<view class="son-cmtdetail-profilePic">
-							<image src="../../static/icon/about.png" mode="aspectFill" class="son-profilePic"></image>
-						</view>
-						<view class="cmtdetail-middle">
-							<view class="cmtdetail-IDtext">
-								IDIDIDIDIID
-							</view>
-							<view class="cmtdetail-time">
-								2019.9.15 23:59
-							</view>
-						</view>
-						<view class="cmtdetail-right">
-							<view class="cmtdetail-rightrel">
-								<image src="../../static/icon/like.png" mode="aspectFill" class="son-likeIcon"></image>
-								<!-- 此处点赞数量最长5位数，如超出样式出错 -->
-								<text class="son-likeNum">1223</text>
-							</view>
-						</view>
-					</view>
-				</view>
-				<view class="cmtdetail-contentBox" id="contentBox">
-					这里没有一百字。这里没有一百字。这里没有一百字。这里没有一百字。这里没有一百字。
-				</view>
-				<view style="height: 2px;width: 74%;margin-left: 62px;background-color: #E4E4E4;margin-top: 10px;"></view>
-			</view>
+                     <!--移到了sonCommentBox组件，考虑评论之间的点赞方程容易混淆，做了组件，就互不影响了-->
+					 <sonCommentBox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i" @controlInputSignal="controlInput"></sonCommentBox>
 		</view>
+		
 		<!-- 输入框 -->
 		<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)">
 			<view class="commentPart" @click.stop="" :style="{bottom: textAreaAdjust }">
@@ -80,6 +55,7 @@
 </template>
 
 <script>
+	import sonCommentBox from './sonCommentBox'
 	export default {
 		data() {
 			// 我抄了一小部分代码过来，还没改 -Guetta
@@ -89,11 +65,13 @@
 			// (●'◡'●)
 			// 页面有点丑（高仿微博），回头让仅仅优化一下
 			return {
+				mainComment:"",    //用于接受跳转传过来的underCommentId,然后申请获取sonComment  yaoyao 9.16 
 				userInfo: '',
 				commentContent:"",  //用户准备提交的评论内容
-				commentList: {},  //返回值，获取评论列表信息
+				commentList: {},  //返回值，获取评论列表信息,循环展示的东西，sonComment
 				showInput:false,  //控制输入框，true时显示输入框
 				writingComment:false,  //控制输入框，true时自动获取焦点，拉起输入法
+				submitData:{},
 			}
 		},
 
@@ -104,21 +82,53 @@
 			var userInfo = this.getGlobalUserInfo()
 			this.userInfo = userInfo;
 			console.log(this.userInfo);
+			
+			//接收传过来的主角评论ID
+			this.mainComment = JSON.parse(options.data);
 		},
 		methods: {
+			getSubComments(page) {
+				var that = this;
+				uni.request({
+					method: "POST",
+					url: that.$serverUrl + '/article/getSubComments',
+					data: {
+						underCommentId: that.mainComment.id,
+						userId: that.userInfo.id,
+						page: page
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {
+						if (res.data.status == 200) {
+							// 强制子组件重新刷新
+							that.reCommentList = '';
+							that.$nextTick(function() {
+									that.reCommentList = res.data.data.rows;	
+							});
+							// console.log(res);
+						}
+			
+						// if (page == 1) {
+						// 	that.reCommentList = [];
+						// }
+						// 
+						// var newCommentList = res.data.data.rows;
+						// var oldCommentList = that.reCommentList;
+						// that.reCommentList = oldCommentList.concat(newCommentList);
+						// that.currentPage = page;
+						// that.totalPage = res.data.data.total;
+					}
+				});
+			},
 			controlInput(a){
 				if(a!=0&&a!=1){ //a!=0, !=1， 从子组件传来，包含被回复对象：被回复人ID，被回复评论ID，被回复人昵称
 					this.placeholderText='回复 @'+a.nickname+' 的评论';
 					delete(a.nickname);
 					this.submitData=a;
-					if(a.mode == "re-co"){
-						this.writingComment = true;
-					}
-					if(a.mode =="re-re"){    //mode ="re-re", from grandson RECOMMENT
-						console.log(a.mode);
-						this.writingComment = true ;
-					}
 					this.showInput= true;
+					this.writingComment = true ;
 					console.log(this.writingComment);
 				}else if(a==1){ //a==1 当前页面调用，直接评论文章
 					this.submitData.toUserId=this.articleCard.userId;
