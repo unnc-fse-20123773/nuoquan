@@ -138,7 +138,7 @@
 				uni.setNavigationBarTitle({
 					title: this.thisUserInfo.nickname + "的主页"
 				});
-			}, 100);
+			}, 200);
 
 			// [测试代码块]
 			// this.mySocket.init()
