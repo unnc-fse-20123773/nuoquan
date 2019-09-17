@@ -222,7 +222,7 @@ var me;var _default =
     this.duration = e.target.value;
   },
 
-  onLoad: function onLoad(opt) {
+  onLoad: function onLoad(opt) {var _this = this;
     var userId = opt.userId;
 
     me = this.getGlobalUserInfo();
@@ -240,11 +240,12 @@ var me;var _default =
     // 获取这个人的信息, TODO: 更新本地用户信息缓存
     this.queryUserWithFollow(userId);
 
-    this.$nextTick(function () {
+    setTimeout(function () {
+      console.log(_this.thisUserInfo);
       uni.setNavigationBarTitle({
-        title: this.thisUserInfo.nickname + "的主页" });
+        title: _this.thisUserInfo.nickname + "的主页" });
 
-    });
+    }, 100);
 
     // [测试代码块]
     // this.mySocket.init()

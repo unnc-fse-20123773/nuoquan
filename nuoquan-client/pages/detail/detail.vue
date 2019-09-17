@@ -6,14 +6,13 @@
 
 		<view class="drtailmain">
 			<view class="detailcontent">{{ articleCard.articleContent }}</view>
-				
 			<view class="detailpics">
-				<!-- 单图显示 -->
 				<view v-if="articleCard.imgList.length==1" class="1pic" style="width: 100%;max-height: 400upx;">
-					<image v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFit" style="height: 360upx;" @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
+					<image v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFit" style="height: 360upx;"
+					 @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
 				</view>
-				<!-- 其他数量 -->
-				<image class="detailpic" v-else v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFill" @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
+				<image class="detailpic" v-else v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath"
+				 mode="aspectFill" @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
 				<view v-if="articleCard.imgList.length==2||imageList.length==5||imageList.length==8" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
 			</view>
 			<view class="tags">
@@ -32,21 +31,24 @@
 					<view class="icom">{{ articleCard.likeNum }}</view>
 				</view>
 			</view>
-			
+
 			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i" @controlInputSignal="controlInput">
 			</commentbox>
 
 			<view class="fengexian" style="height: 1px;width: 100%;background-color: #d6d6d6;margin:auto;"></view>
-			<view class="submitComment" @click="controlInput(1)">发 表 评 论</view>
+			<view style="height:50px;width:750px;background:#FFFFFF;"></view>
+			<!--占位，防止发表评论按钮挡住最下边一条评论-->
 
-			<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)" >
+			<view class="bottomLayerOfSubmit">
+				<view class="submitComment" @click="controlInput(1)">发 表 评 论</view>
+			</view>
+			<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)">
 				<view class="commentPart" @click.stop="" :style="{bottom: textAreaAdjust }">
 					<view class="emoji"></view>
 					<view class="submit" @click="saveComment()"></view>
 					<textarea class="commentSth" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
-					 adjust-position="false" v-model="commentContent" @click.stop="" 
-					 :show-confirm-bar="false"
-					  @focus="popTextArea" @blur="unpopTextArea"/>
+					 adjust-position="false" v-model="commentContent" @click.stop="" :show-confirm-bar="false" @focus="popTextArea"
+					 @blur="unpopTextArea" />
 					</view>
             </view>
 		</view> 
@@ -67,7 +69,7 @@
 				commentList: {},  //返回值，获取评论列表信息
 				showInput:false,  //控制输入框，true时显示输入框
 				writingComment:false,  //控制输入框，true时自动获取焦点，拉起输入法
-				placeholderText:" 评论点什么吧......",
+				placeholderText: "评论点什么吧......",
 				inputData:{},  //localData,用于拼接不同情况下的savecomment请求的数据
 				
 				submitData:{
@@ -172,30 +174,30 @@
 				this.submitData.articleId=this.articleCard.id;
 				console.log(this.submitData);
 				var that = this;
-				uni.request({
-					url: that.$serverUrl + '/article/saveComment',
-					method: 'POST',
-					data: this.submitData,
-					success: (res) => {
-						that.writingComment = false;
-						that.commentContent = "";
-						this.showInput = false;
-						
-						if (res.data.status == 200) {
+				if(this.commentContent==""){
+					uni.showToast({
+						title: '好像忘写评论了哦~',
+						duration: 1000,
+						icon: 'none',
+					});
+				}else{
+					uni.request({
+						url: that.$serverUrl + '/article/saveComment',
+						method: 'POST',
+						data: this.submitData,
+						success: (res) => {
+							that.writingComment = false;
+							that.commentContent = "";
+							that.showInput = false;
+							
 							// 强制子组件重新刷新
 							that.commentList = '';
 							that.$nextTick(function() {
 								that.getComments(1);
 							});
-							// console.log(res);
-							// if(that.isNull(that.submitData.underCommentId)){
-							// 	that.getComments(that.currentPage);
-							// }else{
-							// 	uni.$emit("flashSubComment", that.submitData.underCommentId);
-							// }
-						}
-					},
-				})
+						},
+					})
+				}
 			},
 			
 			getComments: function(page) {		
@@ -241,15 +243,15 @@
 				var totalPage = that.totalPage;
 				console.log(totalPage);
 				// 判断当前页数和总页数是否相等
-				if (currentPage == totalPage){
+				if (that.commentList.length < 10){
+					return;
+				} else if(currentPage == totalPage){
 					// that.showArticles(1);
 					uni.showToast({
 						title:"没有更多评论了",
 						icon:"none",
 						duration:1000
 					})
-				} else if(that.commentList.length < 10){
-					return;
 				} else {
 					var page = currentPage + 1;
 					that.getComments(page);
@@ -268,25 +270,16 @@
 			},
 			
 			controlInput(a){
-				if(a!=0&&a!=1){ //a!=0, !=1， 从子组件传来，包含被回复对象：被回复人ID，被回复评论ID，被回复人昵称
+				if(a!=0&&a!=1){
 					this.placeholderText='回复 @'+a.nickname+' 的评论';
-					delete(a.nickname);
+					delete(a.nickname);				
 					this.submitData=a;
-					if(a.mode == "re-co"){
-						this.writingComment = true;
-					}
-					if(a.mode =="re-re"){    //mode ="re-re", from grandson RECOMMENT
-						console.log(a.mode);
-						this.writingComment = true ;
-					}
+					this.writingComment = true;
 					this.showInput= true;
-					console.log(this.writingComment);
 				}else if(a==1){ //a==1 当前页面调用，直接评论文章
 					this.submitData.toUserId=this.articleCard.userId;
 					this.showInput = true;
 					this.writingComment = true; 
-					console.log('this is control input in detail. a ==' + a);
-					console.log(this.submitData);
 				}else{ //a==0, 关闭输入框，一切恢复默认状态
 				    console.log('this is control input in detail. a ==0, EXIT');
 					this.submitData = {};
@@ -580,12 +573,19 @@
 		padding-right: 8upx;
 
 	}
-
-	.submitComment {
+	/* 底部栏 */
+    .bottomLayerOfSubmit{
+		display: flex;
 		position: fixed;
-		display: block;
-		left:34%;
-		bottom:9px;
+		height: 48px;
+		width:750upx;
+		left:0;
+		bottom: 0;
+		background: #FFFFff;
+		justify-content: center;
+		align-items: center;
+	}
+	.submitComment {
 		background: #FFCC30;
 		border-radius: 5px;
 		width: 32%;
@@ -595,16 +595,27 @@
 		color: #FFFFFF;
 		text-align: center;
 		line-height: 30px;
-		
 	}
-.bottoLayerOfInput{
-	position: fixed;
-	width: 750upx;
-	height: 1000px;
-	top:0;
-	left:0;
-	z-index: 3;
-}
+	.submitComment::before{
+		content: "";
+		position: absolute;
+		top:-9px;
+		left: -294%;
+		width:750upx;
+		height:48px;
+		background: #F3FFFF;
+		z-index: -1;
+	}
+	
+	/* 以下五条为底部输入框样式 */
+	.bottoLayerOfInput{
+		position: fixed;
+		width: 750upx;
+		height: 1000px;
+		top:0;
+		left:0;
+		z-index: 3;
+	}
 	.commentPart {
 		box-shadow: 0px 1px 5px 0px rgba(139, 139, 139, 0.32);
 		position:fixed;
@@ -613,7 +624,7 @@
 		width: 670upx;
 		padding:11px 40upx;
 		min-height: 50px;
-		background: #058ECC;
+		background: #FFFFFF;
 	}
 
 	.emoji {
@@ -626,16 +637,16 @@
 		margin-bottom: 7px;
 		display: inline-block;
 	}
-.submit{
-	display: inline-block;
-	width: 21px;
-	height:21px;
-	background: url(../../static/icon/arrow-right.png);
-	background-size: 14px 14px;
-	background-repeat: no-repeat;
-	background-position:center;
-	float:right;
-}
+	.submit{
+		display: inline-block;
+		width: 21px;
+		height:21px;
+		background: url(../../static/icon/arrow-right.png);
+		background-size: 14px 14px;
+		background-repeat: no-repeat;
+		background-position:center;
+		float:right;
+	}
 	.commentSth {
 		width: calc(670upx - 20px);
 		border: solid 1px #FCC041;

@@ -117,7 +117,9 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var comment = function comment() {return __webpack_require__.e(/*! import() | components/comment */ "components/comment").then(__webpack_require__.bind(null, /*! ../../components/comment */ 151));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var comment = function comment() {return __webpack_require__.e(/*! import() | components/comment */ "components/comment").then(__webpack_require__.bind(null, /*! ../../components/comment */ 159));};var _default =
+
+
 
 
 
@@ -186,7 +188,7 @@ __webpack_require__.r(__webpack_exports__);
       commentList: {}, //返回值，获取评论列表信息
       showInput: false, //控制输入框，true时显示输入框
       writingComment: false, //控制输入框，true时自动获取焦点，拉起输入法
-      placeholderText: " 评论点什么吧......",
+      placeholderText: "评论点什么吧......",
       inputData: {}, //localData,用于拼接不同情况下的savecomment请求的数据
 
       submitData: {
@@ -285,36 +287,36 @@ __webpack_require__.r(__webpack_exports__);
         * PS: 父级（一级，给文章评论）评论 无 fatherCommentId, underCommentId;
         *     子级评论有 fatherCommentId, underCommentId;
         */
-    saveComment: function saveComment() {var _this = this;
+    saveComment: function saveComment() {
       this.submitData.comment = this.commentContent;
       this.submitData.fromUserId = this.userInfo.id;
       this.submitData.articleId = this.articleCard.id;
       console.log(this.submitData);
       var that = this;
-      uni.request({
-        url: that.$serverUrl + '/article/saveComment',
-        method: 'POST',
-        data: this.submitData,
-        success: function success(res) {
-          that.writingComment = false;
-          that.commentContent = "";
-          _this.showInput = false;
+      if (this.commentContent == "") {
+        uni.showToast({
+          title: '好像忘写评论了哦~',
+          duration: 1000,
+          icon: 'none' });
 
-          if (res.data.status == 200) {
+      } else {
+        uni.request({
+          url: that.$serverUrl + '/article/saveComment',
+          method: 'POST',
+          data: this.submitData,
+          success: function success(res) {
+            that.writingComment = false;
+            that.commentContent = "";
+            that.showInput = false;
+
             // 强制子组件重新刷新
             that.commentList = '';
             that.$nextTick(function () {
               that.getComments(1);
             });
-            // console.log(res);
-            // if(that.isNull(that.submitData.underCommentId)){
-            // 	that.getComments(that.currentPage);
-            // }else{
-            // 	uni.$emit("flashSubComment", that.submitData.underCommentId);
-            // }
-          }
-        } });
+          } });
 
+      }
     },
 
     getComments: function getComments(page) {
@@ -360,15 +362,15 @@ __webpack_require__.r(__webpack_exports__);
       var totalPage = that.totalPage;
       console.log(totalPage);
       // 判断当前页数和总页数是否相等
-      if (currentPage == totalPage) {
+      if (that.commentList.length < 10) {
+        return;
+      } else if (currentPage == totalPage) {
         // that.showArticles(1);
         uni.showToast({
           title: "没有更多评论了",
           icon: "none",
           duration: 1000 });
 
-      } else if (that.commentList.length < 10) {
-        return;
       } else {
         var page = currentPage + 1;
         that.getComments(page);
@@ -387,25 +389,16 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     controlInput: function controlInput(a) {
-      if (a != 0 && a != 1) {//a!=0, !=1， 从子组件传来，包含被回复对象：被回复人ID，被回复评论ID，被回复人昵称
+      if (a != 0 && a != 1) {
         this.placeholderText = '回复 @' + a.nickname + ' 的评论';
         delete a.nickname;
         this.submitData = a;
-        if (a.mode == "re-co") {
-          this.writingComment = true;
-        }
-        if (a.mode == "re-re") {//mode ="re-re", from grandson RECOMMENT
-          console.log(a.mode);
-          this.writingComment = true;
-        }
+        this.writingComment = true;
         this.showInput = true;
-        console.log(this.writingComment);
       } else if (a == 1) {//a==1 当前页面调用，直接评论文章
         this.submitData.toUserId = this.articleCard.userId;
         this.showInput = true;
         this.writingComment = true;
-        console.log('this is control input in detail. a ==' + a);
-        console.log(this.submitData);
       } else {//a==0, 关闭输入框，一切恢复默认状态
         console.log('this is control input in detail. a ==0, EXIT');
         this.submitData = {};

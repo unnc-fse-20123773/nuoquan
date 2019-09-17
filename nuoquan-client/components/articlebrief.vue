@@ -251,7 +251,11 @@
 		line-height: 15px;
 		margin-bottom: 15px;
 		word-break: break-all;
+		word-wrap: break-word;
 		white-space: pre-line;
+		max-height: 60px;
+		text-overflow: ellipsis;
+		overflow: hidden;
 	}
 
 	.tags {
