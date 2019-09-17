@@ -21,7 +21,8 @@
 					<view v-if="showAddTagButton" @click="addTag">
 						+ 添加标签
 					</view>
-					<input v-if="showInputTagArea" v-model="articleTag" focus="true" placeholder="请输入标签..." @blur="checkInput" />
+					<!-- TODO: 字数未区分中英文，下一个版本要加 -->
+					<input v-if="showInputTagArea" v-model="articleTag" focus="true" placeholder="请输入标签..." @blur="checkInput" maxlength="10"/>
 
 				</view>
 			</view>
@@ -35,7 +36,7 @@
 				<block v-for="(image,index) in imageList" :key="index">
 					<view style="position: relative;">
 						<!-- todo 预览图片缩放 -->
-						<image :src="image" :data-src="image" @tap="previewImage"></image>
+						<image :src="image" :data-src="image" @tap="previewImage" mode="aspectFill"></image>
 						<view style="width:15px;height: 15px;font-size: 10px;line-height: 10px;border-bottom-left-radius: 3px;background: rgba(166, 169, 168,0.3);color:#FFFFFF;position: absolute;top:6px;right:0;text-align: center;">✕</view>
 					</view>
 				</block>
@@ -116,7 +117,8 @@
 					that.tagList[that.tagIndex] = tag;
 					that.tagIndex = that.tagIndex + 1;
 					that.showAddTagButton = 1;
-
+					that.showInputTagArea = 0;
+					that.articleTag = '';
 				}
 
 			},
@@ -320,15 +322,20 @@
 		margin-right: 12px;
 		margin-bottom: 6px;
 		pointer-events: none;
+		/* 用于解决空格换行问题 */
+		white-space: nowrap;
 	}
 
 	.tag::after {
 		position: absolute;
 		content: "✕";
-		right: 12px;
+		right: 10px;
+		margin-left: 4px;
 		color: #939393;
 		font-size: 13px;
 		pointer-events: auto;
+		/* 用于解决空格换行问题 */
+		white-space: nowrap;
 	}
 
 	.addTag {

@@ -100,13 +100,22 @@
 		padding-top: 10px;
 	}
 	.briefarticleCard {
+		max-height: 500upx;
 		margin: 10px 25px 15px;
 		font-size: 13px;
 		line-height: 15px;
 		margin-bottom: 15px;
+		word-break: break-all;
+		white-space: pre-line;
+		text-overflow: ellipsis;
+		/**文字隐藏后添加省略号*/
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 15;
+		overflow: hidden;
 	}
 	.tags {
-		margin-left: 10px;
+		margin-left: 21px;
 	}
 	.tag {
 		display: inline-block;

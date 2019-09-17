@@ -20,13 +20,23 @@ image {
 	padding-top: 10px;
 }
 .briefarticleCard.data-v-4ca5e5aa {
+	max-height: 500rpx;
 	margin: 10px 25px 15px;
 	font-size: 13px;
 	line-height: 15px;
 	margin-bottom: 15px;
+	word-break: break-all;
+	white-space: pre-line;
+	-o-text-overflow: ellipsis;
+	   text-overflow: ellipsis;
+	/**文字隐藏后添加省略号*/
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 15;
+	overflow: hidden;
 }
 .tags.data-v-4ca5e5aa {
-	margin-left: 10px;
+	margin-left: 21px;
 }
 .tag.data-v-4ca5e5aa {
 	display: inline-block;

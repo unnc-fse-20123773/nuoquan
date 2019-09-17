@@ -33,8 +33,7 @@
 	-webkit-flex-direction: row-reverse;
 	    -ms-flex-direction: row-reverse;
 	        flex-direction: row-reverse;
-	width: 100%;
-	margin-right: 30rpx;
+	margin-right: 20rpx;
 }
 .send .content {
 	display: -webkit-inline-box;
@@ -99,7 +98,7 @@
 	-webkit-flex-direction: row;
 	    -ms-flex-direction: row;
 	        flex-direction: row;
-	margin-right: 30rpx;
+	margin-left: 20rpx;
 }
 .recieve .content {
 	display: -webkit-inline-box;

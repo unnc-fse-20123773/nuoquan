@@ -3,14 +3,18 @@
 		<view class="topbar">
 			<view class="detailtitle">{{ articleCard.articleTitle }}</view>
 		</view>
-
-		<view class="drtailmain">
+		<!-- 9.16 by Guetta -->
+		<!-- drtailmain 修改拼写错误为 detailmain，并修改高度为 90% 以保证页面不会错误滚动 -->
+		<view class="detailmain">
 			<view class="detailcontent">{{ articleCard.articleContent }}</view>
+
 			<view class="detailpics">
+				<!-- 单图显示 -->
 				<view v-if="articleCard.imgList.length==1" class="1pic" style="width: 100%;max-height: 400upx;">
 					<image v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFit" style="height: 360upx;"
 					 @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
 				</view>
+				<!-- 其他数量 -->
 				<image class="detailpic" v-else v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath"
 				 mode="aspectFill" @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
 				<view v-if="articleCard.imgList.length==2||imageList.length==5||imageList.length==8" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
@@ -18,11 +22,12 @@
 			<view class="tags">
 				<view class="tag" :style="{background: tagColorList[index]}" v-for="(i,index) in articleCard.tagList" v-bind:key="index">{{i}}</view>
 			</view>
+			
+			<!-- ID 行 -->
 			<view class="bottombar">
 				<view style="width:70%;display:inline-block;">
 					<image :src="articleCard.faceImg" class="touxiang" @click="goToPersonPublic()"></image>
 					<view class="name">{{ articleCard.nickname }}</view>
-
 					<view class="time">{{ articleCard.createDate | timeDeal}}</view>
 				</view>
 				<view class="icons" @tap="swLikeArticle()">
@@ -31,17 +36,20 @@
 					<view class="icom">{{ articleCard.likeNum }}</view>
 				</view>
 			</view>
-
+			<view style="width: 100%;height: 12px;display: flex;" class="column_center">
+				<view style="width:14%;color: #888888;font-size: 10px;">
+					最新评论
+				</view>
+				<view class="fengexian" style="height: 1px;width: 86%;background-color: RGB(253, 217, 108);"></view>
+			</view>
 			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i" @controlInputSignal="controlInput">
 			</commentbox>
-
-			<view class="fengexian" style="height: 1px;width: 100%;background-color: #d6d6d6;margin:auto;"></view>
-			<view style="height:50px;width:750px;background:#FFFFFF;"></view>
-			<!--占位，防止发表评论按钮挡住最下边一条评论-->
-
+			<!-- 用于推出评论下方空白 -->
+			<view name="marginHelper" style="height: 88upx;width: 100%;background-color: white;"></view>			
 			<view class="bottomLayerOfSubmit">
 				<view class="submitComment" @click="controlInput(1)">发 表 评 论</view>
 			</view>
+			
 			<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)">
 				<view class="commentPart" @click.stop="" :style="{bottom: textAreaAdjust }">
 					<view class="emoji"></view>
@@ -416,29 +424,30 @@
 <style scoped>
 
 	.topbar {
-		
-		background-color: RGB(253, 217, 108);padding-bottom: 60px;
+		background-color: RGB(253, 217, 108);
+		padding-bottom: 60px;
 	}
 
 	.detailtitle {
 		width: 85%;
 		color: #f5f5f5;
-		font-size: 14px;
+		font-size: 16px;
 		margin: auto;
-		font-weight: 400;
+		font-weight: 550;
 		padding-top:12px;
 		word-break: break-all;
 		word-wrap: break-word;
 		
 	}
 
-	.drtailmain {
+	.detailmain {
 		border-top-left-radius: 20px;
 		border-top-right-radius: 20px;
 		margin-top: -20px;
 		background: white;
 		box-shadow: 0 -1px 8px grey;
-		height: 100%;
+		/* 高度90%才可以保证页面不会无故滚动 */
+		height: 90%;
 		width: 85%;
 		padding: 0 7.5%;
 		overflow: scroll;
@@ -447,15 +456,15 @@
 	.detailcontent {
 		padding-top: 25px;
 		padding-bottom: 15px;
-		font-size: 13px;
-		/* width: 85%;
+		font-size: 16px;
+/* 		width: 85%;
 		margin: 0px auto 10px; */
 		/* font-weight: 400;
 		word-break:break-all;
 		white-space:pre-line;
 	}
 
-	.picturearea-one {
+/*	.picturearea-one {
 		margin: auto;
 		display: flex;
 		width: 94%;
@@ -474,6 +483,7 @@
 		font-weight: 400;
 		word-break: break-all;
 		word-wrap: break-word;
+		white-space:pre-line;
 	}
 
 	.detailpics {
@@ -497,7 +507,7 @@
 		max-height: 20px;
 		line-height: 15px;
 		width: 85%;
-		margin: auto;
+		margin-left: -5px;
 	}
 
 	.tag {
@@ -557,22 +567,29 @@
 
 
 	.icons {
+		position: relative;
 		justify-content: flex-end;
 		display: inline-flex;
 		align-items: center;
 		width: 30%;
 		font-size: 10px;
-
 	}
 
 	.icon {
-		width: 11px;
-		height: 11px;
+		position: absolute;
+		right: 53upx;
+		width: 12px;
+		height: 12px;
 		font-size: 2px;
 		padding-left: 45upx;
-		padding-right: 8upx;
-
+		/* padding-right: 8upx; */
 	}
+	
+	.icom{
+		position: absolute;
+		right: 33upx;
+	}
+	
 	/* 底部栏 */
     .bottomLayerOfSubmit{
 		display: flex;
@@ -624,7 +641,7 @@
 		width: 670upx;
 		padding:11px 40upx;
 		min-height: 50px;
-		background: #FFFFFF;
+		background: white;
 	}
 
 	.emoji {
@@ -637,16 +654,16 @@
 		margin-bottom: 7px;
 		display: inline-block;
 	}
-	.submit{
-		display: inline-block;
-		width: 21px;
-		height:21px;
-		background: url(../../static/icon/arrow-right.png);
-		background-size: 14px 14px;
-		background-repeat: no-repeat;
-		background-position:center;
-		float:right;
-	}
+.submit{
+	display: inline-block;
+	width: 21px;
+	height:21px;
+	background: url(../../static/icon/arrow-right.png);
+	background-size: 14px 14px;
+	background-repeat: no-repeat;
+	background-position:center;
+	float:right;
+}
 	.commentSth {
 		width: calc(670upx - 20px);
 		border: solid 1px #FCC041;
@@ -654,5 +671,6 @@
 		line-height: 20px;
 		font-size: 14px;
 		padding:8px 10px;
+		max-height: 95px;
 	}
 </style>

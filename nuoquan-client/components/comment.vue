@@ -1,6 +1,5 @@
 <template>
 	<view class="comment" :id="mainComment.id">
-		<view class="fengexian"></view>
 		<view class="contentarea" @tap="controlInputInComment('inComment')">{{ mainComment.comment }}</view>
 		<view class="bottombar">
 			<view style="width:70%;display:inline-block;">
@@ -32,6 +31,7 @@
 			<view style="font-size: 10px;color:#007AFF;text-align: right;margin-top:5px;" @tap="goToCommentDetail(mainComment)">共{{mainComment.commentNum}}条评论</view>
 			<!-- <view class="submitComment">发 表 评 论</view> -->
 		</view>
+		<view class="fengexian1"></view>
 	</view>
 </template>
 
@@ -221,7 +221,7 @@
 		margin: auto;
 	}
 
-	.fengexian {
+	.fengexian1 {
 		height: 1px;
 		width: 100%;
 		background-color: #d6d6d6;
@@ -231,6 +231,7 @@
 		padding-top: 14px;
 		background: white;
 		font-size: 16px;
+		color: #3D3D3D;
 	}
 
 	.bottombar {
@@ -256,11 +257,13 @@
 	.time,
 	.name {
 		font-size: 10px;
+		margin-left: 7px;
 		margin-right: 10px;
 		color: #888888;
 	}
 
 	.icons {
+		position: relative;
 		justify-content: flex-end;
 		display: inline-flex;
 		align-items: flex-end;

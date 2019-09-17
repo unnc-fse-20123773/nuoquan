@@ -296,7 +296,13 @@
 		font-size: 13px;
 		font-weight: 300;
 	}
-
+	
+	.searchResult{
+		width: 100%;
+		height: 100%;
+	}
+	
+	
 	.searchResultWrods {
 		margin-top: 26px;
 		width: calc(750upx-56px);
@@ -321,10 +327,5 @@
 		position: absolute;
 		right: 28px;
 		top: 0;
-	}
-	
-	.searchResult {
-		width: 100%;
-		height: 100%;
 	}
 </style>
