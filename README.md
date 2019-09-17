@@ -1,10 +1,11 @@
 # Update Log:
-**v19.9.16 更新**
-1. 整合 deyan
+**v19.9.17 更新**
+1. 整合 deyan & yaoyao
 2. 新增 sumbit 删除标签 (deyan && yaoyao)
 3. 新增 服务器相关包及配置
 4. 新增 搜索页面点击文本到输入框（deyan）
-5. 
+5. 新增 comment-detail 评论点赞功能和分页
+6. 新增 detail -> comment-detail 跳转
 
 **v19.9.15 更新**
 1. 整合 guetta
