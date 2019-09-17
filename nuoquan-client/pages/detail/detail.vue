@@ -613,14 +613,16 @@
 		line-height: 30px;
 		
 	}
-.bottoLayerOfInput{
-	position: fixed;
-	width: 750upx;
-	height: 1000px;
-	top:0;
-	left:0;
-	z-index: 3;
-}
+	
+	.bottoLayerOfInput{
+		position: fixed;
+		width: 750upx;
+		height: 1000px;
+		top:0;
+		left:0;
+		z-index: 3;
+	}
+	
 	.commentPart {
 		box-shadow: 0px 1px 5px 0px rgba(139, 139, 139, 0.32);
 		position:fixed;
@@ -629,7 +631,7 @@
 		width: 670upx;
 		padding:11px 40upx;
 		min-height: 50px;
-		background: #058ECC;
+		background: white;
 	}
 
 	.emoji {
@@ -659,5 +661,6 @@
 		line-height: 20px;
 		font-size: 14px;
 		padding:8px 10px;
+		max-height: 95px;
 	}
 </style>

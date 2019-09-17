@@ -21,7 +21,7 @@
 					<view v-if="showAddTagButton" @click="addTag">
 						+ 添加标签
 					</view>
-					<input v-if="showInputTagArea" v-model="articleTag" focus="true" placeholder="请输入标签..." @blur="checkInput" />
+					<input v-if="showInputTagArea" v-model="articleTag" focus="true" placeholder="请输入标签..." @blur="checkInput" maxlength="10"/>
 
 				</view>
 			</view>
@@ -318,15 +318,20 @@
 		margin-right: 12px;
 		margin-bottom: 6px;
 		pointer-events: none;
+		/* 用于解决空格换行问题 */
+		white-space: nowrap;
 	}
 
 	.tag::after {
 		position: absolute;
 		content: "✕";
-		right: 12px;
+		right: 10px;
+		margin-left: 4px;
 		color: #939393;
 		font-size: 13px;
 		pointer-events: auto;
+		/* 用于解决空格换行问题 */
+		white-space: nowrap;
 	}
 
 	.addTag {

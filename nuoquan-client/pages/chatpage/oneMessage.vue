@@ -91,8 +91,7 @@
 	.send {
 		display: flex;
 		flex-direction: row-reverse;
-		width: 100%;
-		margin-right: 30upx;
+		margin-right: 20upx;
 	}
 
 	.send .content {
@@ -141,7 +140,7 @@
 	.recieve {
 		display: flex;
 		flex-direction: row;
-		margin-right: 30upx;
+		margin-left: 20upx;
 	}
 
 	.recieve .content {
