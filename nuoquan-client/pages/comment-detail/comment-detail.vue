@@ -42,6 +42,8 @@
 			<!--移到了sonCommentBox组件，考虑评论之间的点赞方程容易混淆，做了组件，就互不影响了-->
 			<sonCommentBox v-for="i in commentList" :key="i.id" :reCommentDetail="i" @controlInputSignal="controlInput"
 			@swLikeComment="swLikeComment"></sonCommentBox>
+			<!-- 占位块 -->
+			<view style="width: 100%; height: 40px;"></view> 
 		</view>
 		
 		<view class="bottomLayerOfSubmit">
@@ -82,6 +84,9 @@
 				writingComment:false,  //控制输入框，true时自动获取焦点，拉起输入法
 				submitData:{},
 				placeholderText: '评论点什么吧......',
+				
+				totalPage: 1,
+				currentPage: 1,
 			}
 		},
 
@@ -98,6 +103,11 @@
 			// 获取次评论
 			this.getSubComments(1);
 		},
+		
+		onReachBottom() {
+			this.loadMore();
+		},
+		
 		methods: {
 			getSubComments(page) {
 				var that = this;
@@ -114,24 +124,43 @@
 					},
 					success: (res) => {
 						if (res.data.status == 200) {
-							that.commentList = "";
-							that.$nextTick(function(){
-								that.commentList =  res.data.data.rows;	
-							});
+							if (page == 1) {
+								that.commentList = [];
+							}
+							var newCommentList = res.data.data.rows;
+							var oldCommentList = that.commentList;
+							that.commentList = oldCommentList.concat(newCommentList);
+							that.currentPage = page;
+							that.totalPage = res.data.data.total;
+							
+							// that.commentList = "";
+							// that.$nextTick(function(){
+							// 	that.commentList =  res.data.data.rows;	
+							// });
 							// console.log(that.commentList);
 						}
-			
-						// if (page == 1) {
-						// 	that.reCommentList = [];
-						// }
-						// 
-						// var newCommentList = res.data.data.rows;
-						// var oldCommentList = that.reCommentList;
-						// that.reCommentList = oldCommentList.concat(newCommentList);
-						// that.currentPage = page;
-						// that.totalPage = res.data.data.total;
 					}
 				});
+			},
+			
+			loadMore: function() {
+				var that = this;
+				var currentPage = that.currentPage;
+				console.log(currentPage);
+				var totalPage = that.totalPage;
+				console.log(totalPage);
+				// 判断当前页数和总页数是否相等
+				if (currentPage == totalPage) {
+					// that.showArticles(1);
+					uni.showToast({
+						title: "没有更多评论了",
+						icon: "none",
+						duration: 1000
+					})
+				} else {
+					var page = currentPage + 1;
+					that.getSubComments(page);
+				}
 			},
 			
 			controlInput(a){
@@ -188,6 +217,10 @@
 						method: 'POST',
 						data: this.submitData,
 						success: (res) => {
+							that.writingComment = false;
+							that.commentContent = "";
+							that.showInput = false;
+							
 							// 强制子组件重新刷新
 							that.commentList = '';
 							that.$nextTick(function() {

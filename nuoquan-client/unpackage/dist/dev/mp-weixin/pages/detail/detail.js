@@ -305,6 +305,10 @@ __webpack_require__.r(__webpack_exports__);
           method: 'POST',
           data: this.submitData,
           success: function success(res) {
+            that.writingComment = false;
+            that.commentContent = "";
+            that.showInput = false;
+
             // 强制子组件重新刷新
             that.commentList = '';
             that.$nextTick(function () {

@@ -142,6 +142,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 {
   name: 'comment',
   props: {
@@ -227,25 +229,7 @@ __webpack_require__.r(__webpack_exports__);
         } });
 
     },
-    loadMore: function loadMore() {
-      var that = this;
-      var currentPage = that.currentPage;
-      console.log(currentPage);
-      var totalPage = that.totalPage;
-      console.log(totalPage);
-      // 判断当前页数和总页数是否相等
-      if (currentPage == totalPage) {
-        // that.showArticles(1);
-        uni.showToast({
-          title: "没有更多评论了",
-          icon: "none",
-          duration: 1000 });
 
-      } else {
-        var page = currentPage + 1;
-        that.getSubComments(page);
-      }
-    },
     controlInputInComment: function controlInputInComment(a) {
       if (a == "inComment") {
         var dataOfRecomment = {
