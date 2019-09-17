@@ -26,7 +26,7 @@
 
 		<view v-show="RECOMMENT && mainComment.commentNum > 0" class="reCommentsArea">
 			<reComment v-for="(item,index) in reCommentList" v-bind:key="index" :reCommentDetail='item' @controlInputSignal="controlInputInComment"
-			 @goToPersonPublic="goToPersonPublic" @tap="goToCommentDetail(mainComment)"></reComment>
+			 @goToPersonPublic="goToPersonPublic" @goToCommentDetail="goToCommentDetail(mainComment)"></reComment>
 			<view style="font-size: 10px;color:#007AFF;text-align: right;margin-top:5px;">共{{mainComment.commentNum}}条评论</view>
 			<!-- <view class="submitComment">发 表 评 论</view> -->
 		</view>
@@ -98,7 +98,12 @@
 							// 强制子组件重新刷新
 							that.reCommentList = '';
 							that.$nextTick(function() {
-								that.reCommentList = res.data.data.rows;
+								const showCommentNum = 2;
+								if(res.data.data.rows.length>showCommentNum){
+									that.reCommentList = res.data.data.rows.slice(0,showCommentNum);
+								}else{
+									that.reCommentList = res.data.data.rows;	
+								}
 							});
 							// console.log(res);
 						}
@@ -158,12 +163,13 @@
 			swLikeMainComment(comment) {
 				if (comment.isLike) {
 					this.unLikeComment(comment);
-					this.mainComment.likeNum--;
+					comment.likeNum--;
 				} else {
 					this.likeComment(comment);
-					this.mainComment.likeNum++;
+					comment.likeNum++;
 				}
-				this.mainComment.isLike = !this.mainComment.isLike;
+				comment.isLike = !comment.isLike;
+				// console.log(this.mainComment.isLike);
 			},
 
 			likeComment(comment) {

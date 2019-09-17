@@ -32,11 +32,12 @@
 				</view>
 			</view>
 
-			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i">
+			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i" @controlInputSignal="controlInput">
 			</commentbox>
 
 			<view class="fengexian" style="height: 1px;width: 100%;background-color: #d6d6d6;margin:auto;"></view>
-			<view style="height:50px;width:750px;background:#FFFFFF;"></view><!--占位，防止发表评论按钮挡住最下边一条评论-->
+			<view style="height:50px;width:750px;background:#FFFFFF;"></view>
+			<!--占位，防止发表评论按钮挡住最下边一条评论-->
 
 			<view class="bottomLayerOfSubmit">
 				<view class="submitComment" @click="controlInput(1)">发 表 评 论</view>
@@ -46,9 +47,8 @@
 					<view class="emoji"></view>
 					<view class="submit" @click="saveComment()"></view>
 					<textarea class="commentSth" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
-					 adjust-position="false" v-model="commentContent" @click.stop="" 
-					 :show-confirm-bar="false"
-					  @focus="popTextArea" @blur="unpopTextArea" />
+					 adjust-position="false" v-model="commentContent" @click.stop="" :show-confirm-bar="false" @focus="popTextArea"
+					 @blur="unpopTextArea" />
 					</view>
             </view>
 		</view> 
@@ -69,7 +69,7 @@
 				commentList: {},  //返回值，获取评论列表信息
 				showInput:false,  //控制输入框，true时显示输入框
 				writingComment:false,  //控制输入框，true时自动获取焦点，拉起输入法
-				placeholderText:" 评论点什么吧......",
+				placeholderText: "评论点什么吧......",
 				inputData:{},  //localData,用于拼接不同情况下的savecomment请求的数据
 				
 				submitData:{
@@ -186,19 +186,14 @@
 						method: 'POST',
 						data: this.submitData,
 						success: (res) => {
-							that.writingComment = false;
-							that.commentContent = "";
-							this.showInput = false;
-							
-							if(that.isNull(that.submitData.underCommentId)){
-								that.getComments(that.currentPage);
-							}else{
-								uni.$emit("flashSubComment", that.submitData.underCommentId);
-							}
+							// 强制子组件重新刷新
+							that.commentList = '';
+							that.$nextTick(function() {
+								that.getComments(1);
+							});
 						},
 					})
 				}
-
 			},
 			
 			getComments: function(page) {		
@@ -270,8 +265,14 @@
 				// console.log(e.detail);
 			},
 			
-			controlInput(a){				 
-				 if(a==1){ //a==1 当前页面调用，直接评论文章
+			controlInput(a){
+				if(a!=0&&a!=1){
+					this.placeholderText='回复 @'+a.nickname+' 的评论';
+					delete(a.nickname);				
+					this.submitData=a;
+					this.writingComment = true;
+					this.showInput= true;
+				}else if(a==1){ //a==1 当前页面调用，直接评论文章
 					this.submitData.toUserId=this.articleCard.userId;
 					this.showInput = true;
 					this.writingComment = true; 
@@ -568,6 +569,7 @@
 		padding-right: 8upx;
 
 	}
+	/* 底部栏 */
     .bottomLayerOfSubmit{
 		display: flex;
 		position: fixed;
@@ -600,14 +602,16 @@
 		background: #F3FFFF;
 		z-index: -1;
 	}
-.bottoLayerOfInput{
-	position: fixed;
-	width: 750upx;
-	height: 1000px;
-	top:0;
-	left:0;
-	z-index: 3;
-}
+	
+	/* 以下五条为底部输入框样式 */
+	.bottoLayerOfInput{
+		position: fixed;
+		width: 750upx;
+		height: 1000px;
+		top:0;
+		left:0;
+		z-index: 3;
+	}
 	.commentPart {
 		box-shadow: 0px 1px 5px 0px rgba(139, 139, 139, 0.32);
 		position:fixed;
@@ -629,16 +633,16 @@
 		margin-bottom: 7px;
 		display: inline-block;
 	}
-.submit{
-	display: inline-block;
-	width: 21px;
-	height:21px;
-	background: url(../../static/icon/arrow-right.png);
-	background-size: 14px 14px;
-	background-repeat: no-repeat;
-	background-position:center;
-	float:right;
-}
+	.submit{
+		display: inline-block;
+		width: 21px;
+		height:21px;
+		background: url(../../static/icon/arrow-right.png);
+		background-size: 14px 14px;
+		background-repeat: no-repeat;
+		background-position:center;
+		float:right;
+	}
 	.commentSth {
 		width: calc(670upx - 20px);
 		border: solid 1px #FCC041;

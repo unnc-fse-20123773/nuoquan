@@ -205,7 +205,12 @@ __webpack_require__.r(__webpack_exports__);
             // 强制子组件重新刷新
             that.reCommentList = '';
             that.$nextTick(function () {
-              that.reCommentList = res.data.data.rows;
+              var showCommentNum = 2;
+              if (res.data.data.rows.length > showCommentNum) {
+                that.reCommentList = res.data.data.rows.slice(0, showCommentNum);
+              } else {
+                that.reCommentList = res.data.data.rows;
+              }
             });
             // console.log(res);
           }
@@ -265,12 +270,13 @@ __webpack_require__.r(__webpack_exports__);
     swLikeMainComment: function swLikeMainComment(comment) {
       if (comment.isLike) {
         this.unLikeComment(comment);
-        this.mainComment.likeNum--;
+        comment.likeNum--;
       } else {
         this.likeComment(comment);
-        this.mainComment.likeNum++;
+        comment.likeNum++;
       }
-      this.mainComment.isLike = !this.mainComment.isLike;
+      comment.isLike = !comment.isLike;
+      // console.log(this.mainComment.isLike);
     },
 
     likeComment: function likeComment(comment) {

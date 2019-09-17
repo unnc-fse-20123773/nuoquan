@@ -1,6 +1,6 @@
 <template>
 	<view class="reComment">
-		<view class="contentarea" @tap="controlInputInRecomment()">回复@{{subComment.toNickname}}: {{subComment.comment}}</view>
+		<view class="contentarea" @tap="goToCommentDetail()">回复@{{subComment.toNickname}}: {{subComment.comment}}</view>
 		<view class="bottombar">
 			<view style="width:70%;display:inline-block;">
 				<image :src="subComment.faceImg" class="touxiang" @tap="goToPersonPublic"></image>
@@ -37,16 +37,16 @@
 			// })
 		},
 		methods:{
-			controlInputInRecomment(){
-				var dataOfRecomment={
-					mode:"re-re",
-					toUserId:this.reCommentDetail.fromUserId,
-					fatherCommentId:this.reCommentDetail.id,
-					underCommentId:this.reCommentDetail.underCommentId,
-					nickname:this.reCommentDetail.nickname,
-				}
-				this.$emit('controlInputSignal',dataOfRecomment)
-			},
+			// controlInputInRecomment(){
+			// 	var dataOfRecomment={
+			// 		mode:"re-re",
+			// 		toUserId:this.reCommentDetail.fromUserId,
+			// 		fatherCommentId:this.reCommentDetail.id,
+			// 		underCommentId:this.reCommentDetail.underCommentId,
+			// 		nickname:this.reCommentDetail.nickname,
+			// 	}
+			// 	this.$emit('controlInputSignal',dataOfRecomment)
+			// },
 			
 			/**
 			 * 点赞或取消点赞二级评论
@@ -106,6 +106,10 @@
 			
 			goToPersonPublic(){
 				this.$emit("goToPersonPublic", this.subComment.fromUserId);
+			},
+			
+			goToCommentDetail(){
+				this.$emit("goToCommentDetail");
 			}
 		}
 	}
