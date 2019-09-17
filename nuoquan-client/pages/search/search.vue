@@ -31,9 +31,9 @@
 		</view>
 
 		<!-- 搜索结果显示区域 -->
-		<view class="searchResult" v-show="!searching">
+		<scroll-view class="searchResult" v-show="!searching" scroll-y="true">
 			<searchResultArticle v-for="i in searchedArticleList" :key="i.id" v-bind:articleCard="i"></searchResultArticle>
-		</view>
+		</scroll-view>
 	</view>
 </template>
 
@@ -280,7 +280,13 @@
 		font-size: 13px;
 		font-weight: 300;
 	}
-
+	
+	.searchResult{
+		width: 100%;
+		height: 100%;
+	}
+	
+	
 	.searchResultWrods {
 		margin-top: 26px;
 		width: calc(750upx-56px);

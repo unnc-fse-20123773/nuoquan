@@ -248,6 +248,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 var _search = _interopRequireDefault(__webpack_require__(/*! ../pages/search/search */ "../../../../../../../../../code/nuoquan/nuoquan-client/pages/search/search.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ "../../../../../../../../../code/nuoquan/nuoquan-client/components/mainpageleft.vue"));};var _default =
 {
   props: {

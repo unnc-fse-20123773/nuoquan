@@ -253,6 +253,7 @@
 		font-size: 13px;
 		line-height: 15px;
 		margin-bottom: 15px;
+		/* 保证文章正常显示 */
 		word-break: break-all;
 		white-space: pre-line;
 		text-overflow: ellipsis;

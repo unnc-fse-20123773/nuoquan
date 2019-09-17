@@ -50,6 +50,10 @@
 	font-size: 13px;
 	font-weight: 300;
 }
+.searchResult.data-v-f1130d64{
+	width: 100%;
+	height: 100%;
+}
 .searchResultWrods.data-v-f1130d64 {
 	margin-top: 26px;
 	width: calc(750upx-56px);
@@ -178,7 +182,8 @@ page {
 		vertical-align: middle;
 		color: #ffffff;
 		overflow: hidden;
-		max-width: calc(750rpx - 77px);
+		/* max-width: calc(750upx - 77px); */
+		max-width: calc(700rpx - 77px);
 		-o-text-overflow: ellipsis;
 		   text-overflow: ellipsis;
 		white-space: nowrap;

@@ -6,8 +6,10 @@
 		</view>
 
 		<searchpage v-if="showSearch" class="searchPage" @exitSearchSignal="controlShowSearch"></searchpage>
-		<!-- 		<image class="back" src="../static/icon/angle-left.png" @tap="controlShowSearch(0)" style="display: inline-block;width: 32px;height: 32px;background: #FDD041;border-radius: 8px;position: fixed;top:10px;left:23px"></image>
- 备用，返回按钮在组件内和组件外两个方案-->
+		<!-- 		<image class="back" src="../static/icon/angle-left.png" 
+		@tap="controlShowSearch(0)" style="display: inline-block;width: 32px;
+		height: 32px;background: #FDD041;border-radius: 8px;position: fixed;
+		top:10px;left:23px"></image>	备用，返回按钮在组件内和组件外两个方案		-->
 
 		<view class="mainPageTop" :style="{height: topHeight +'px;'}">
 			<view class="topBar">
@@ -198,7 +200,8 @@
 		vertical-align: middle;
 		color: #ffffff;
 		overflow: hidden;
-		max-width: calc(750upx - 77px);
+		/* max-width: calc(750upx - 77px); */
+		max-width: calc(700upx - 77px);
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
