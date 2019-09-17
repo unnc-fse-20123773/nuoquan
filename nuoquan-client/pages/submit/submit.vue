@@ -37,7 +37,7 @@
 					<view style="position: relative;">
 						<!-- todo 预览图片缩放 -->
 						<image :src="image" :data-src="image" @tap="previewImage" mode="aspectFill"></image>
-						<view style="width:15px;height: 15px;font-size: 10px;line-height: 10px;border-bottom-left-radius: 3px;background: rgba(166, 169, 168,0.3);color:#FFFFFF;position: absolute;top:6px;right:0;text-align: center;">✕</view>
+						<view style="width:15px;height: 15px;font-size: 10px;line-height: 10px;border-bottom-left-radius: 3px;background: rgba(166, 169, 168,0.3);color:#FFFFFF;position: absolute;top:6px;right:0;text-align: center;" @click="deleteImg(index)">✕</view>
 					</view>
 				</block>
 				<view v-show="isAddImage(this.imageList.length)" id="clickToChooseImage" class="addPic" @click="chooseImg">+</view>
@@ -252,13 +252,11 @@
 				console.log(this.tagList.length);
 				this.tagIndex = this.tagList.length;
 			},
-			// 测试用函数
-			// showTaglist: function(){
-			// 	console.log('length = ' + this.tagList.length);
-			// 	for(var i = 0; i < this.tagList.length; i++){
-			// 		console.log('old ' + this.tagList[i]);
-			// 	}
-			// }
+			deleteImg: function(index){
+				// console.log(index);
+				// console.log(this.imageList[index]);
+				this.imageList.splice(index, 1);
+			},
 		}
 	};
 </script>
