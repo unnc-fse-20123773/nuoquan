@@ -169,6 +169,7 @@ public class ArticleController extends BasicController {
 	 * @return
 	 * @throws Exception
 	 */
+	@ApiOperation(value = "按文章内容搜索")
 	@PostMapping(value = "/searchArticleYANG")
 	public JSONResult searchArticleYang(@RequestBody Article article, Integer isSaveRecord, Integer page, String userId)
 			throws Exception {

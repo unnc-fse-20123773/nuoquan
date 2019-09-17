@@ -31,9 +31,9 @@
 		</view>
 
 		<!-- 搜索结果显示区域 -->
-		<view class="searchResult" v-show="!searching">
+		<scroll-view class="searchResult" v-show="!searching" scroll-y="true" @scrolltolower="loadMore()">
 			<searchResultArticle v-for="i in searchedArticleList" :key="i.id" v-bind:articleCard="i"></searchResultArticle>
-		</view>
+		</scroll-view>
 	</view>
 </template>
 
@@ -135,11 +135,12 @@
 				})
 
 				uni.request({
-					url: that.$serverUrl + '/article/searchArticleYANG?isSaveRecord=' + isSaveRecord,
+					url: that.$serverUrl + '/article/searchArticleYANG',
 					method: "POST",
 					data: {
 						articleContent: that.searchKeyWords,
 						userId: that.userInfo.id,
+						isSaveRecord: isSaveRecord,
 						page: page,
 					},
 					success: function(result) {
@@ -147,19 +148,22 @@
 						console.log(result);
 						// console.log(result.data);
 						// that.searchedArticleList = result.data.data.rows;
+						
 						that.searching = false;
-
-						// 判断当前页是不是第一页，如果是第一页，那么设置showList为空
-						if (that.currentPage == 1) {
-							that.searchedArticleList = [];
+						if(result.data.status == 200){
+							// 判断当前页是不是第一页，如果是第一页，那么设置showList为空
+							if (that.currentPage == 1) {
+								that.searchedArticleList = [];
+							}
+							
+							var newArticleList = result.data.data.rows;
+							var oldArticleList = that.searchedArticleList;
+							that.searchedArticleList = oldArticleList.concat(newArticleList);
+							// console.log(result.data.data.page);
+							that.currentPage = page;
+							that.totalPage = result.data.data.total;
 						}
-
-						var newArticleList = result.data.data.rows;
-						var oldArticleList = that.searchedArticleList;
-						that.searchedArticleList = oldArticleList.concat(newArticleList);
-						// console.log(result.data.data.page);
-						that.currentPage = page;
-						that.totalPage = result.data.data.total;
+						
 					},
 					fail: (res) => {
 						console.log("index unirequest fail");
@@ -317,5 +321,10 @@
 		position: absolute;
 		right: 28px;
 		top: 0;
+	}
+	
+	.searchResult {
+		width: 100%;
+		height: 100%;
 	}
 </style>

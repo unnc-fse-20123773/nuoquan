@@ -491,11 +491,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
       uni.request({
-        url: that.$serverUrl + '/article/searchArticleYANG?isSaveRecord=' + isSaveRecord,
+        url: that.$serverUrl + '/article/searchArticleYANG',
         method: "POST",
         data: {
           articleContent: that.searchKeyWords,
           userId: that.userInfo.id,
+          isSaveRecord: isSaveRecord,
           page: page },
 
         success: function success(result) {
@@ -503,19 +504,22 @@ __webpack_require__.r(__webpack_exports__);
           console.log(result);
           // console.log(result.data);
           // that.searchedArticleList = result.data.data.rows;
-          that.searching = false;
 
-          // 判断当前页是不是第一页，如果是第一页，那么设置showList为空
-          if (that.currentPage == 1) {
-            that.searchedArticleList = [];
+          that.searching = false;
+          if (result.data.status == 200) {
+            // 判断当前页是不是第一页，如果是第一页，那么设置showList为空
+            if (that.currentPage == 1) {
+              that.searchedArticleList = [];
+            }
+
+            var newArticleList = result.data.data.rows;
+            var oldArticleList = that.searchedArticleList;
+            that.searchedArticleList = oldArticleList.concat(newArticleList);
+            // console.log(result.data.data.page);
+            that.currentPage = page;
+            that.totalPage = result.data.data.total;
           }
 
-          var newArticleList = result.data.data.rows;
-          var oldArticleList = that.searchedArticleList;
-          that.searchedArticleList = oldArticleList.concat(newArticleList);
-          // console.log(result.data.data.page);
-          that.currentPage = page;
-          that.totalPage = result.data.data.total;
         },
         fail: function fail(res) {
           console.log("index unirequest fail");
