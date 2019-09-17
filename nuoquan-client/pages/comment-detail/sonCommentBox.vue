@@ -64,7 +64,11 @@
 			
 			swLikeComment(){
 				this.$emit('swLikeComment',this.commentDetail);
-			}
+			},
+			
+			goToPersonPublic(){
+				this.$emit("goToPersonPublic", this.commentDetail.fromUserId);
+			},
 		},
 		
 		

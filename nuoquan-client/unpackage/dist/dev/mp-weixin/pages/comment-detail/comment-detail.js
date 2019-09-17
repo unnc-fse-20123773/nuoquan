@@ -387,6 +387,12 @@ __webpack_require__.r(__webpack_exports__);
           console.log(res);
         } });
 
+    },
+
+    goToPersonPublic: function goToPersonPublic() {
+      uni.navigateTo({
+        url: '/pages/personpublic/personpublic?userId=' + this.mainComment.fromUserId });
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

@@ -5,7 +5,7 @@
 			<view class="cmtdetail-IDline">
 				<view class="cmtdetail-IDrel">
 					<view class="cmtdetail-profilePic">
-						<image :src="mainComment.faceImg" mode="aspectFill" class="profilePic"></image>
+						<image :src="mainComment.faceImg" mode="aspectFill" class="profilePic" @tap="goToPersonPublic"></image>
 					</view>
 					<view class="cmtdetail-middle">
 						<view class="cmtdetail-IDtext">
@@ -41,7 +41,7 @@
 		<view style="width: 100%;">
 			<!--移到了sonCommentBox组件，考虑评论之间的点赞方程容易混淆，做了组件，就互不影响了-->
 			<sonCommentBox v-for="i in commentList" :key="i.id" :reCommentDetail="i" @controlInputSignal="controlInput"
-			@swLikeComment="swLikeComment"></sonCommentBox>
+			@swLikeComment="swLikeComment" @goToPersonPublic="goToPersonPublic"></sonCommentBox>
 			<!-- 占位块 -->
 			<view style="width: 100%; height: 40px;"></view> 
 		</view>
@@ -280,6 +280,12 @@
 						console.log(res);
 					},
 				});
+			},
+			
+			goToPersonPublic(){
+				uni.navigateTo({
+					url: '/pages/personpublic/personpublic?userId=' + this.mainComment.fromUserId,
+				})
 			},
 		}
 	}

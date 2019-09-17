@@ -169,6 +169,10 @@ var _default =
 
     swLikeComment: function swLikeComment() {
       this.$emit('swLikeComment', this.commentDetail);
+    },
+
+    goToPersonPublic: function goToPersonPublic() {
+      this.$emit("goToPersonPublic", this.commentDetail.fromUserId);
     } } };exports.default = _default;
 
 /***/ })
