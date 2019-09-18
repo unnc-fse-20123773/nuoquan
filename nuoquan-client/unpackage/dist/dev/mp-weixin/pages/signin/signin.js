@@ -105,7 +105,10 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+//
+//
+//
 //
 //
 //
@@ -127,7 +130,59 @@ var _default =
   data: function data() {
     return {};
   },
-  methods: {} };exports.default = _default;
+  methods: {
+    /**
+              * 微信小程序登陆
+              */
+    getUserInfo: function getUserInfo() {var _this = this;
+      var that = this;
+      uni.login({
+        success: function success(res_login) {
+          // console.log('-------res_login，获取code-------')
+          // console.log(res_login);
+          uni.getUserInfo({
+            success: function success(info) {
+              // console.log('-------获取sessionKey、openid(unionid)-------')
+              // console.log(info);
+              // 后端获取openid 并设置用户信息
+              uni.request({
+                url: that.$serverUrl + '/user/getWxUserInfo',
+                method: "POST",
+                data: {
+                  encryptedData: info.encryptedData,
+                  iv: info.iv,
+                  code: res_login.code,
+
+                  nickname: info.userInfo.nickName,
+                  faceImg: info.userInfo.avatarUrl },
+
+                header: {
+                  'content-type': 'application/x-www-form-urlencoded' },
+
+                success: function success(res) {
+                  // console.log(res)
+                  if (res.data.status == 200) {
+                    // 3.获取返回的用户信息
+                    var finalUser = res.data.data;
+                    // 4.分割邮箱地址, 重构 user
+                    finalUser = _this.myUser(finalUser);
+                    // 5.写入缓存
+                    _this.setGlobalUserInfo(finalUser);
+                    console.log(finalUser);
+
+                    // 6.返回
+                    uni.navigateBack({
+                      delta: 1 });
+
+                  }
+                } });
+
+            } });
+
+        } });
+
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

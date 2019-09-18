@@ -171,7 +171,7 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
     var userInfo = this.getGlobalUserInfo();
     if (this.isNull(userInfo)) {
       uni.navigateTo({
-        url: "../wechatLogin/wechatLogin" });
+        url: "../signin/signin" });
 
       return;
     }
