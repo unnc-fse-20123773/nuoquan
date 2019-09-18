@@ -1,6 +1,7 @@
 *TODO：*
 - 点赞开灯效果 (guetta)
 - detail 图片显示优化（单图，四图，其他）(yaoyao)
+- 登录页面修改
 
 # Update Log: #
 **v19.9.18 更新**
