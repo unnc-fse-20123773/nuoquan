@@ -257,8 +257,46 @@ public class UserController extends BasicController {
 			user.setId(wxRes.getOpenid());
 			user.setNickname(nickname);
 			user.setFaceImg(faceImg);
-			UserVO userVO= (UserVO) updateUser(user).getData();
-			
+			UserVO userVO= wxLogin(user);
+			if (userVO == null) {
+				return JSONResult.errorMsg("该账号为空");
+			}
 			return JSONResult.ok(userVO);
+	}
+	
+	/**
+	 * 把微信 login 业务从 updateUser 里剥离出来
+	 * @param userData
+	 * @return
+	 * @throws Exception
+	 */
+	public UserVO wxLogin(@RequestBody User userData) throws Exception {
+		// 1. 判断用户名不为空
+		if (StringUtils.isEmpty(userData.getId())) {
+			return null;
+		}
+		User user = new User();
+		// 2. 判断用户名是否存在
+		boolean isIdExist = userService.checkIdIsExist(userData.getId());
+		// 3. 注册信息
+		if (!isIdExist) {
+			// 只添加用户id（openId）头像和昵称
+			user.setId(userData.getId());
+			user.setNickname(userData.getNickname());
+			user.setFaceImg(userData.getFaceImg());
+			user.setFaceImgThumb(userData.getFaceImgThumb());
+			user.setPassword("ChangeMe");
+			user.setFollowNum(0);
+			user.setFansNum(0);
+			user.setCreateDate(new Date());
+			user = userService.saveUserDirectly(user);
+		} else {
+			// 3.1 查询信息
+			user = userService.queryUserById(userData.getId());
+		}
+		// 将 user 对象转换为 userVO 输出，userVO 中不返回密码，且可加上其他属性。
+		UserVO userVO = ConvertUserToUserVO(user);
+
+		return userVO;
 	}
 }

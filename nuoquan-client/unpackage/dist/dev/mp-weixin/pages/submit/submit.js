@@ -367,15 +367,12 @@ var sizeType = [
       this.tagList.splice(index, 1);
       console.log(this.tagList.length);
       this.tagIndex = this.tagList.length;
-    }
-    // 测试用函数
-    // showTaglist: function(){
-    // 	console.log('length = ' + this.tagList.length);
-    // 	for(var i = 0; i < this.tagList.length; i++){
-    // 		console.log('old ' + this.tagList[i]);
-    // 	}
-    // }
-  } };exports.default = _default;
+    },
+    deleteImg: function deleteImg(index) {
+      // console.log(index);
+      // console.log(this.imageList[index]);
+      this.imageList.splice(index, 1);
+    } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
