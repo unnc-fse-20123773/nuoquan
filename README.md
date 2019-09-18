@@ -12,9 +12,10 @@
 10. 优化 detail 评论分割线 (guetta)
 11. 添加 detail marginHelper 块 (guetta)
 12. 优化 detail 页面字体大小、粗细，高精度还原设计稿 (guetta)
+13. 修复 已知bug
 
 *TODO：*
-- 点赞开灯效果
+- 点赞开灯效果 
 - submit 删除已选图片
 - detail 图片显示优化（单图，四图，其他）
 

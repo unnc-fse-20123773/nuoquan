@@ -81,7 +81,6 @@
 										}
 									}
 								});
-								// that.setUser(info.userInfo);
 							}
 						});
 					}

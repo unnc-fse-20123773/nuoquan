@@ -175,8 +175,6 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
 
       return;
     }
-    // 更新用户信息缓存... 查询用户信息，并分割邮箱更新到缓存
-    this.queryUserInfo(userInfo.id);
 
     this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
 
@@ -195,6 +193,9 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
     this.showArticles(page); // 显示文章流
 
     this.getTop3Articles(); // 获取热度榜
+
+    // 更新用户信息缓存... 查询用户信息，并分割邮箱更新到缓存
+    this.queryUserInfo(userInfo.id);
   },
   methods: {
     showArticles: function showArticles(page) {
