@@ -1,8 +1,10 @@
 [TOC]
+
 README
 ======
 Current Verion: `v1.01`
-****
+
+======
 *TODO：*
 - 点赞开灯效果 (guetta)
 - ~~submit 删除图片 (deyan)~~
