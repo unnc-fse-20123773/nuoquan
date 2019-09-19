@@ -1,8 +1,7 @@
 README
 ======
 Current Verion: `v1.01`
- ======
-
+******
 *TODO：*
 - 点赞开灯效果 (guetta)
 - ~~submit 删除图片 (deyan)~~
@@ -11,8 +10,7 @@ Current Verion: `v1.01`
 - submit 背景图 (yaoyao)
 - Bug-100024 (yaoyao)
 
-## Recent Update: ##
-[详情](./updateLog.md)
+## Recent Update: ## [详情](./updateLog.md)
 **v19.9.20 更新**
 1. 修复[严重] Bug-100025
 2. 修复 index 数据加载顺序错误，导致加载错误信息
