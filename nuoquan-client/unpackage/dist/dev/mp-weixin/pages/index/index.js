@@ -468,6 +468,7 @@ var _default =
 
 
 
+
 var _articlebrief = _interopRequireDefault(__webpack_require__(/*! ../../components/articlebrief */ "../../../../../../../../../code/nuoquan/nuoquan-client/components/articlebrief.vue"));
 
 
@@ -487,9 +488,10 @@ var _vuex = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.j
 //
 //
 //
-var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! import() | components/mainpagetop */ "components/mainpagetop").then(__webpack_require__.bind(null, /*! ../../components/mainpagetop.vue */ "../../../../../../../../../code/nuoquan/nuoquan-client/components/mainpagetop.vue"));};var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ "../../../../../../../../../code/nuoquan/nuoquan-client/components/mainpageleft.vue"));};var _default = { data: function data() {return { title: 'Hello', hottitlelist: ['热门标题111', '热门标题222', '热门标题333'], showlist: [], topArticles: '', topHeight: "160", userInfo: { // 默认user设置
-        id: 'test-id123', nickname: 'test-name', faceImg: '', faceImgThumb: '', email: 'zy22089@nottingham.edu.cn',
-        emailPrefix: 'zy22089',
+//
+var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! import() | components/mainpagetop */ "components/mainpagetop").then(__webpack_require__.bind(null, /*! ../../components/mainpagetop.vue */ "../../../../../../../../../code/nuoquan/nuoquan-client/components/mainpagetop.vue"));};var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ "../../../../../../../../../code/nuoquan/nuoquan-client/components/mainpageleft.vue"));};var loadArticleFlag = false; // 为加载文章加锁
+var _default = { data: function data() {return { title: 'Hello', hottitlelist: ['热门标题111', '热门标题222', '热门标题333'], showlist: [], topArticles: '', topHeight: "160", userInfo: { // 默认user设置
+        id: 'test-id123', nickname: 'test-name', faceImg: '', faceImgThumb: '', email: 'zy22089@nottingham.edu.cn', emailPrefix: 'zy22089',
         emailSuffix: '@nottingham.edu.cn' },
 
       totalPage: 1,
@@ -503,42 +505,54 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
     mainpageleft: mainpageleft },
 
 
-  onLoad: function onLoad() {
+  onLoad: function onLoad() {var _this = this;
     var userInfo = this.getGlobalUserInfo();
     if (this.isNull(userInfo)) {
       uni.navigateTo({
-        url: "../wechatLogin/wechatLogin" });
+        url: "../signin/signin" });
 
       return;
     }
-    // 更新用户信息缓存... 查询用户信息，并分割邮箱更新到缓存
-    this.queryUserInfo(userInfo.id);
 
     this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
 
+    var page = this.currentPage;
+    console.log("currentPage=" + page);
+    this.showArticles(page); // 显示文章流
+
+    uni.$on("flash", function () {
+      _this.refreshArticle();
+    });
     // [测试代码块]
   },
 
   onShow: function onShow() {
-    var that = this;
-    var userInfo = this.getGlobalUserInfo();
+    var userInfo = this.getGlobalUserInfo(); // 查看用户是否登录
     if (!this.isNull(userInfo)) {
       // 设置 userInfo 传给 mainpagetop 组件
-      this.userInfo = this.getGlobalUserInfo();
+      // 更新用户信息缓存... 查询用户信息，并分割邮箱更新到缓存
+      this.queryUserInfo(userInfo.id);
     }
-
-    var page = that.currentPage;
-    this.showArticles(page); // 显示文章流
 
     this.getTop3Articles(); // 获取热度榜
   },
+
+  // onPullDownRefresh() {
+  // 	console.log("监听到下拉动作")
+  // },
+
   methods: {
+
     showArticles: function showArticles(page) {
-      var that = this;
+      if (loadArticleFlag) {
+        return;
+      }
+      loadArticleFlag = true;
+
       uni.showLoading({
         title: "加载中..." });
 
-      // var page = that.currentPage;
+      var that = this;
       uni.request({
         url: that.$serverUrl + '/article/queryAllArticles',
         method: "POST",
@@ -553,6 +567,8 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
         success: function success(res) {
           setTimeout(function () {// 延时加载
             uni.hideLoading();
+            loadArticleFlag = false;
+
             console.log(res);
             // 判断当前页是不是第一页，如果是第一页，那么设置showList为空
             if (page == 1) {
@@ -566,11 +582,15 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
           }, 300);
         },
         fail: function fail(res) {
+          uni.hideLoading();
+          loadArticleFlag = false;
+
           console.log("index unirequest fail");
           console.log(res);
         } });
 
     },
+
     loadMore: function loadMore() {
       var that = this;
       var currentPage = that.currentPage;
@@ -615,7 +635,7 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
     /**
         * 查询用户信息，并分割邮箱更新到缓存
         */
-    queryUserInfo: function queryUserInfo(userId) {var _this = this;
+    queryUserInfo: function queryUserInfo(userId) {var _this2 = this;
       var that = this;
       uni.request({
         url: that.$serverUrl + '/user/queryUser',
@@ -629,9 +649,9 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
         success: function success(res) {
           if (res.data.status == 200) {
             var user = res.data.data;
-            var finalUser = _this.myUser(user); // 分割邮箱地址, 重构 user
-            _this.setGlobalUserInfo(finalUser); // 把用户信息写入缓存
-            _this.userInfo = finalUser; // 更新页面用户数据
+            var finalUser = _this2.myUser(user); // 分割邮箱地址, 重构 user
+            _this2.setGlobalUserInfo(finalUser); // 把用户信息写入缓存
+            _this2.userInfo = finalUser; // 更新页面用户数据
             // console.log(this.userInfo);
           }
         } });
@@ -640,7 +660,7 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
 
     linkageWithTop: function linkageWithTop(e) {
       var y = e.detail.scrollTop;
-      console.log(y);
+      // console.log(y);
       if (this.topHeight >= 36) {
         if (160 - y >= 36) {
           this.topHeight = 160 - y;

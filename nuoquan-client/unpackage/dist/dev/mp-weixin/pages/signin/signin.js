@@ -115,10 +115,32 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
-    return {};
+    return {
+      introduction_text1: 'Nottinghome1111是XXXXXXXXXXX',
+      introduction_text2: 'Nottinghome是XXXXXXXXXXX哈哈哈哈哈哈哈哈哈',
+      introduction_text3: 'Nottinghome是XXXXXXXXXXX我看看长啥样' };
+
   },
   methods: {} };exports.default = _default;
 

@@ -37,7 +37,7 @@
 					<view style="position: relative;">
 						<!-- todo 预览图片缩放 -->
 						<image :src="image" :data-src="image" @tap="previewImage" mode="aspectFill"></image>
-						<view style="width:15px;height: 15px;font-size: 10px;line-height: 10px;border-bottom-left-radius: 3px;background: rgba(166, 169, 168,0.3);color:#FFFFFF;position: absolute;top:6px;right:0;text-align: center;">✕</view>
+						<view style="width:15px;height: 15px;font-size: 10px;line-height: 10px;border-bottom-left-radius: 3px;background: rgba(166, 169, 168,0.3);color:#FFFFFF;position: absolute;top:6px;right:0;text-align: center;" @click="deleteImg(index)">✕</view>
 					</view>
 				</block>
 				<view v-show="isAddImage(this.imageList.length)" id="clickToChooseImage" class="addPic" @click="chooseImg">+</view>
@@ -61,6 +61,8 @@
 		['original'],
 		['compressed', 'original']
 	]
+	
+	var uploadFlag = false; // 标志文章正在上传，为 true 时 block 该方法
 	export default {
 		data() {
 			return {
@@ -79,7 +81,7 @@
 				imageList: [],
 				sourceTypeIndex: 2,
 				sourceType: ['拍照', '相册', '拍照或相册'],
-				sizeTypeIndex: 2,
+				sizeTypeIndex: 0,
 				sizeType: ['压缩', '原图', '压缩或原图'],
 				countIndex: 8,
 				count: [1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -87,11 +89,11 @@
 		},
 		onUnload() {
 			this.imageList = [],
-				this.sourceTypeIndex = 2,
-				this.sourceType = ['拍照', '相册', '拍照或相册'],
-				this.sizeTypeIndex = 2,
-				this.sizeType = ['压缩', '原图', '压缩或原图'],
-				this.countIndex = 8;
+			this.sourceTypeIndex = 2,
+			this.sourceType = ['拍照', '相册', '拍照或相册'],
+			this.sizeTypeIndex = 0,
+			this.sizeType = ['压缩', '原图', '压缩或原图'],
+			this.countIndex = 8;
 		},
 		onLoad() {
 			this.userInfo = this.getGlobalUserInfo();
@@ -170,9 +172,6 @@
 			},
 			upload: function(e) {
 				var me = this;
-				console.log(me.articleTitle);
-				console.log(me.articleContent);
-
 				if (me.articleTitle == '' || me.articleTitle == null) {
 					uni.showToast({
 						icon: 'none',
@@ -181,7 +180,7 @@
 					});
 					return;
 				}
-
+				
 				if (me.articleContent == '' || me.articleContent == null) {
 					uni.showToast({
 						icon: 'none',
@@ -190,60 +189,78 @@
 					});
 					return;
 				}
-
-				me.combineTagToString();
-
-				var serverUrl = me.$serverUrl;
-				uni.request({
-					url: serverUrl + '/article/uploadArticle',
-					method: 'POST',
-					data: {
-						userId: me.userInfo.id,
-						articleTag: me.finalTag,
-						articleTitle: me.articleTitle,
-						articleContent: me.articleContent
-					},
-					header: {
-						'content-type': 'application/x-www-form-urlencoded'
-					},
-					success: (res) => {
-						// console.log(res.data.data);
-						if (res.data.status == 200) {
-							if (me.imageList.length <= 0) {
+				
+				if (uploadFlag){
+					console.log("正在上传...")
+					return;
+				}
+				uploadFlag = true;
+				setTimeout(()=>{
+					me.combineTagToString();
+					
+					var serverUrl = me.$serverUrl;
+					uni.request({
+						url: serverUrl + '/article/uploadArticle',
+						method: 'POST',
+						data: {
+							userId: me.userInfo.id,
+							articleTag: me.finalTag,
+							articleTitle: me.articleTitle,
+							articleContent: me.articleContent
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded'
+						},
+						success: (res) => {
+							// console.log(res.data.data);
+							if (res.data.status == 200) {
+								if (me.imageList.length > 0) {
+									const articleId = res.data.data;
+									for (var i = 0; i < me.imageList.length; i++) {
+										uni.uploadFile({
+											url: this.$serverUrl + '/article/uploadArticleImg',
+											filePath: me.imageList[i],
+											name: 'file',
+											formData: {
+												userId: me.userInfo.id,
+												articleId: articleId,
+												order: i
+											},
+											success: (uploadFileRes) => {
+												// uploadFlag = false;
+												// uni.navigateBack({
+												// 	delta: 1
+												// })
+											}
+										});
+									}
+								}
+								
+								uploadFlag = false;
+								uni.$emit("flash"); // 给 index 发送刷新信号
 								uni.navigateBack({
-									url: '../index/index'
+									delta: 1
+								})
+								uni.showToast({
+									title: '上传成功',
+									duration: 2000,
+									icon: 'success',
 								})
 							} else {
-								const articleId = res.data.data;
-								for (var i = 0; i < me.imageList.length; i++) {
-									uni.uploadFile({
-										url: this.$serverUrl + '/article/uploadArticleImg',
-										filePath: me.imageList[i],
-										name: 'file',
-										formData: {
-											userId: me.userInfo.id,
-											articleId: articleId,
-											order: i
-										},
-										success: (uploadFileRes) => {
-											uni.navigateBack({
-												delta: 1
-											})
-										}
-									});
-								}
+								// 上传失败 用户提醒
+								uploadFlag = false;
+								uni.showToast({
+									title: '出现未知错误，上传失败',
+									duration: 2000,
+									icon: 'none',
+								})
 							}
-						} else {
-							// 上传失败 用户提醒
-							uni.showToast({
-								title: '出现未知错误，上传失败',
-								duration: 2000,
-								icon: 'none',
-							})
+						},
+						fail: (res) => {
+							uploadFlag = false;
 						}
-
-					}
-				})
+					})
+				}, 100) //延时执行等待上锁
 			},
 			deleteTag: function(index){
 				console.log(index);
@@ -252,13 +269,11 @@
 				console.log(this.tagList.length);
 				this.tagIndex = this.tagList.length;
 			},
-			// 测试用函数
-			// showTaglist: function(){
-			// 	console.log('length = ' + this.tagList.length);
-			// 	for(var i = 0; i < this.tagList.length; i++){
-			// 		console.log('old ' + this.tagList[i]);
-			// 	}
-			// }
+			deleteImg: function(index){
+				// console.log(index);
+				// console.log(this.imageList[index]);
+				this.imageList.splice(index, 1);
+			},
 		}
 	};
 </script>
