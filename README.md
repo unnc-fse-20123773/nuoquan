@@ -1,5 +1,3 @@
-[TOC]
-
 README
 ======
 Current Verion: `v1.01`
