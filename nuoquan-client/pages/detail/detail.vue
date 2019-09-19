@@ -137,6 +137,12 @@
 			this.loadMore();
 		},
 		
+		onUnload() {
+			// 更新本文章信息给上级页面（主页）
+			uni.$emit("updateArticle", this.articleCard);
+			console.log("返回")
+		},
+		
 		onLoad(options) {
 			this.articleCard = JSON.parse(options.data);
 			// console.log(this.articleCard);
@@ -215,6 +221,7 @@
 						},
 					})
 				}
+				this.articleCard.commentNum++; // 文章评论数累加
 			},
 			
 			getComments: function(page) {		

@@ -256,6 +256,12 @@ __webpack_require__.r(__webpack_exports__);
     this.loadMore();
   },
 
+  onUnload: function onUnload() {
+    // 更新本文章信息给上级页面（主页）
+    uni.$emit("updateArticle", this.articleCard);
+    console.log("返回");
+  },
+
   onLoad: function onLoad(options) {
     this.articleCard = JSON.parse(options.data);
     // console.log(this.articleCard);
@@ -334,6 +340,7 @@ __webpack_require__.r(__webpack_exports__);
           } });
 
       }
+      this.articleCard.commentNum++; // 文章评论数累加
     },
 
     getComments: function getComments(page) {

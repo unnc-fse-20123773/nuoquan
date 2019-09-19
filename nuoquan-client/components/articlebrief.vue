@@ -1,34 +1,34 @@
 <template>
 	<view class="articlecard">
 		<view @click="jumpToDetail()">
-			<view class="title">{{ articleCard.articleTitle }}</view>
-			<view class="briefarticleCard">{{ articleCard.articleContent }}</view>
+			<view class="title">{{ thisArticle.articleTitle }}</view>
+			<view class="briefarticleCard">{{ thisArticle.articleContent }}</view>
 		</view>
-		<view :class="[articleCard.imgList.length == 1 ? 'picturearea-one' : 'picturearea-mul']">
+		<view :class="[thisArticle.imgList.length == 1 ? 'picturearea-one' : 'picturearea-mul']">
 			<!-- *******这里是文章配图的位置*******-->
 
 			<!-- 下面两个 view 分别为蒙版背景层和数字层，都是由 margin-left = 67.5% 精准推至第三张图位置上的 -->
-			<view v-if="articleCard.imgList.length > 3" style="margin-left: 67.5%;position: absolute;width: 30%;height: 200upx;"
+			<view v-if="thisArticle.imgList.length > 3" style="margin-left: 67.5%;position: absolute;width: 30%;height: 200upx;"
 			 class="super_center" @click="jumpToDetail()">
 				<view style="color: white;font-weight: 600;font-size: 24px;z-index: 20;">
-					+{{articleCard.imgList.length-3}}
+					+{{thisArticle.imgList.length-3}}
 				</view>
 			</view>
-			<view v-if="articleCard.imgList.length > 3" style="position: absolute;width: 30%;height: 200upx;
+			<view v-if="thisArticle.imgList.length > 3" style="position: absolute;width: 30%;height: 200upx;
 			background-color: #000000;opacity: 0.5;margin-left: 67.5%;z-index: 10;"
 			 @click="jumpToDetail()"></view>
 
 			<!-- 宽高和 image 保持一致 -->
 			<!-- 单图显示 -->
-			<view style="width: 100%;max-height: 400upx;" v-if="articleCard.imgList.length == 1">
+			<view style="width: 100%;max-height: 400upx;" v-if="thisArticle.imgList.length == 1">
 				<!-- 高 ＞ 宽 -->
 				<view v-if="singleImgState == 0" style="width: 360upx;">
-					<image mode="aspectFill" style="height: 360upx;" :src="serverUrl + articleCard.imgList[0].imagePath" @load="singleImgeFit"
+					<image mode="aspectFill" style="height: 360upx;" :src="serverUrl + thisArticle.imgList[0].imagePath" @load="singleImgeFit"
 					 @tap="previewImage(0)"></image>
 				</view>
 				<!-- 宽 > 高 -->
 				<view v-else style="max-height: 400upx;display: flex;">
-					<image mode="aspectFill" style="width: 90%;" :src="serverUrl + articleCard.imgList[0].imagePath" @load="singleImgeFit"
+					<image mode="aspectFill" style="width: 90%;" :src="serverUrl + thisArticle.imgList[0].imagePath" @load="singleImgeFit"
 					 @tap="previewImage(0)"></image>
 				</view>
 			</view>
@@ -41,18 +41,18 @@
 
 		</view>
 		<view class="tags" @click="jumpToDetail()">
-			<view class="tag" :style="{background: tagColorList[index]}" v-for="(i, index) in articleCard.tagList" v-bind:key="index">{{i}}</view>
+			<view class="tag" :style="{background: tagColorList[index]}" v-for="(i, index) in thisArticle.tagList" v-bind:key="index">{{i}}</view>
 		</view>
 		<view class="menubar">
-			<image :src="articleCard.faceImg" class="touxiang" @tap="goToPersonPublic(articleCard.userId)"></image>
-			<view class="name">{{ articleCard.nickname }}</view>
-			<view class="time">{{ articleCard.createDate | timeDeal}}</view>
+			<image :src="thisArticle.faceImg" class="touxiang" @tap="goToPersonPublic(thisArticle.userId)"></image>
+			<view class="name">{{ thisArticle.nickname }}</view>
+			<view class="time">{{ thisArticle.createDate | timeDeal}}</view>
 
 			<view class="icons">
 				<image class="comment" src="../static/icon/comment.png" @click="jumpToDetail()"></image>
-				<view class="icon" @click="jumpToDetail()">{{articleCard.commentNum}}</view>
+				<view class="icon" @click="jumpToDetail()">{{thisArticle.commentNum}}</view>
 				<image class="like" src="../static/icon/like.png" @tap="swLikeArticle"></image>
-				<view class="icon" @tap="swLikeArticle">{{likeNum}}</view>
+				<view class="icon" @tap="swLikeArticle">{{thisArticle.likeNum}}</view>
 			</view>
 		</view>
 	</view>
@@ -71,29 +71,38 @@
 				singleImgState: '0',
 
 				imgList: [],
-				likeNum: this.articleCard.likeNum, // 转为局部变量
+				thisArticle: this.articleCard, // 转为局部变量
 				tagColorList: [], // 储存每个tag的颜色
 			};
 		},
+		
 		created() {
-			if (this.articleCard.imgList.length > 3) {
+			if (this.thisArticle.imgList.length > 3) {
 				// 只取前三
 				for (var i = 0; i < 3; i++) {
-					this.imgList.push(this.articleCard.imgList[i]);
+					this.imgList.push(this.thisArticle.imgList[i]);
 				}
 			} else {
-				this.imgList = this.articleCard.imgList;
+				this.imgList = this.thisArticle.imgList;
 			}
 
 			// 随机生成颜色
-			if (!this.isNull(this.articleCard.tagList)) {
+			if (!this.isNull(this.thisArticle.tagList)) {
 				var tagColors = this.tagColors;
-				for (var i = 0; i < this.articleCard.tagList.length; i++) {
+				for (var i = 0; i < this.thisArticle.tagList.length; i++) {
 					var random = Math.floor(Math.random() * tagColors.length); // 0~tagColors.length-1
 					this.tagColorList.push(tagColors[random]);
 				}
 			}
+			
+			uni.$on("updateArticle", (article) => { // from detail
+				if(article.id == this.thisArticle.id){
+					console.log("get")
+					this.thisArticle = article; // 调用计算属性
+				}
+			})
 		},
+		
 		filters: {
 			timeDeal(timediff) {
 				timediff = new Date(timediff);
@@ -135,14 +144,14 @@
 			},
 
 			swLikeArticle() {
-				if (this.articleCard.isLike) {
+				if (this.thisArticle.isLike) {
 					this.unLikeArticle();
-					this.likeNum--;
+					this.thisArticle.likeNum--;
 				} else {
 					this.likeArticle();
-					this.likeNum++;
+					this.thisArticle.likeNum++;
 				}
-				this.articleCard.isLike = !this.articleCard.isLike;
+				this.thisArticle.isLike = !this.thisArticle.isLike;
 			},
 
 			likeArticle() {
@@ -153,8 +162,8 @@
 					url: that.$serverUrl + '/article/userLikeArticle',
 					data: {
 						userId: that.userInfo.id,
-						articleId: that.articleCard.id,
-						articleCreaterId: that.articleCard.userId,
+						articleId: that.thisArticle.id,
+						articleCreaterId: that.thisArticle.userId,
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
@@ -173,8 +182,8 @@
 					url: that.$serverUrl + '/article/userUnLikeArticle',
 					data: {
 						userId: that.userInfo.id,
-						articleId: that.articleCard.id,
-						articleCreaterId: that.articleCard.userId,
+						articleId: that.thisArticle.id,
+						articleCreaterId: that.thisArticle.userId,
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
@@ -185,7 +194,7 @@
 				});
 			},
 			jumpToDetail() {
-				var navData = JSON.stringify(this.articleCard); // 这里转换成 字符串
+				var navData = JSON.stringify(this.thisArticle); // 这里转换成 字符串
 				uni.navigateTo({
 					url: '/pages/detail/detail?data=' + navData
 				});
@@ -200,7 +209,7 @@
 				var imgIndex = index;
 				// console.log(res)
 				// 获取全部图片路径
-				var imgList = this.articleCard.imgList;
+				var imgList = this.thisArticle.imgList;
 				var arr = [];
 				var path;
 				for (var i = 0; i < imgList.length; i++) {
