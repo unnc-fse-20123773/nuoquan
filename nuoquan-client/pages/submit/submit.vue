@@ -61,6 +61,8 @@
 		['original'],
 		['compressed', 'original']
 	]
+	
+	var uploadFlag = false; // 标志文章正在上传，为 true 时 block 该方法
 	export default {
 		data() {
 			return {
@@ -79,7 +81,7 @@
 				imageList: [],
 				sourceTypeIndex: 2,
 				sourceType: ['拍照', '相册', '拍照或相册'],
-				sizeTypeIndex: 2,
+				sizeTypeIndex: 0,
 				sizeType: ['压缩', '原图', '压缩或原图'],
 				countIndex: 8,
 				count: [1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -87,11 +89,11 @@
 		},
 		onUnload() {
 			this.imageList = [],
-				this.sourceTypeIndex = 2,
-				this.sourceType = ['拍照', '相册', '拍照或相册'],
-				this.sizeTypeIndex = 2,
-				this.sizeType = ['压缩', '原图', '压缩或原图'],
-				this.countIndex = 8;
+			this.sourceTypeIndex = 2,
+			this.sourceType = ['拍照', '相册', '拍照或相册'],
+			this.sizeTypeIndex = 0,
+			this.sizeType = ['压缩', '原图', '压缩或原图'],
+			this.countIndex = 8;
 		},
 		onLoad() {
 			this.userInfo = this.getGlobalUserInfo();
@@ -169,81 +171,91 @@
 				}
 			},
 			upload: function(e) {
-				var me = this;
-				console.log(me.articleTitle);
-				console.log(me.articleContent);
-
-				if (me.articleTitle == '' || me.articleTitle == null) {
-					uni.showToast({
-						icon: 'none',
-						title: '文章标题不能为空～',
-						duration: 1000
-					});
+				if (uploadFlag){
+					console.log("正在上传...")
 					return;
 				}
-
-				if (me.articleContent == '' || me.articleContent == null) {
-					uni.showToast({
-						icon: 'none',
-						title: '文章内容不能为空～',
-						duration: 1000
-					});
-					return;
-				}
-
-				me.combineTagToString();
-
-				var serverUrl = me.$serverUrl;
-				uni.request({
-					url: serverUrl + '/article/uploadArticle',
-					method: 'POST',
-					data: {
-						userId: me.userInfo.id,
-						articleTag: me.finalTag,
-						articleTitle: me.articleTitle,
-						articleContent: me.articleContent
-					},
-					header: {
-						'content-type': 'application/x-www-form-urlencoded'
-					},
-					success: (res) => {
-						// console.log(res.data.data);
-						if (res.data.status == 200) {
-							if (me.imageList.length <= 0) {
-								uni.navigateBack({
-									url: '../index/index'
-								})
-							} else {
-								const articleId = res.data.data;
-								for (var i = 0; i < me.imageList.length; i++) {
-									uni.uploadFile({
-										url: this.$serverUrl + '/article/uploadArticleImg',
-										filePath: me.imageList[i],
-										name: 'file',
-										formData: {
-											userId: me.userInfo.id,
-											articleId: articleId,
-											order: i
-										},
-										success: (uploadFileRes) => {
-											uni.navigateBack({
-												delta: 1
-											})
-										}
-									});
-								}
-							}
-						} else {
-							// 上传失败 用户提醒
-							uni.showToast({
-								title: '出现未知错误，上传失败',
-								duration: 2000,
-								icon: 'none',
-							})
-						}
-
+				uploadFlag = true;
+				
+				setTimeout(()=>{
+					var me = this;
+					if (me.articleTitle == '' || me.articleTitle == null) {
+						uni.showToast({
+							icon: 'none',
+							title: '文章标题不能为空～',
+							duration: 1000
+						});
+						return;
 					}
-				})
+					
+					if (me.articleContent == '' || me.articleContent == null) {
+						uni.showToast({
+							icon: 'none',
+							title: '文章内容不能为空～',
+							duration: 1000
+						});
+						return;
+					}
+					
+					me.combineTagToString();
+					
+					var serverUrl = me.$serverUrl;
+					uni.request({
+						url: serverUrl + '/article/uploadArticle',
+						method: 'POST',
+						data: {
+							userId: me.userInfo.id,
+							articleTag: me.finalTag,
+							articleTitle: me.articleTitle,
+							articleContent: me.articleContent
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded'
+						},
+						success: (res) => {
+							// console.log(res.data.data);
+							if (res.data.status == 200) {
+								if (me.imageList.length <= 0) {
+									uploadFlag = false;
+									uni.navigateBack({
+										delta: 1
+									})
+								} else {
+									const articleId = res.data.data;
+									for (var i = 0; i < me.imageList.length; i++) {
+										uni.uploadFile({
+											url: this.$serverUrl + '/article/uploadArticleImg',
+											filePath: me.imageList[i],
+											name: 'file',
+											formData: {
+												userId: me.userInfo.id,
+												articleId: articleId,
+												order: i
+											},
+											success: (uploadFileRes) => {
+												uploadFlag = false;
+												uni.navigateBack({
+													delta: 1
+												})
+											}
+										});
+									}
+								}
+							} else {
+								// 上传失败 用户提醒
+								uploadFlag = false;
+								uni.showToast({
+									title: '出现未知错误，上传失败',
+									duration: 2000,
+									icon: 'none',
+								})
+							}
+						},
+						fail: (res) => {
+							uploadFlag = false;
+						}
+					})
+				}, 100) //延时执行等待上锁
 			},
 			deleteTag: function(index){
 				console.log(index);

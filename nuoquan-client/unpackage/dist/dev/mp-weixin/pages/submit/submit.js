@@ -175,9 +175,11 @@ var sourceType = [
 var sizeType = [
 ['compressed'],
 ['original'],
-['compressed', 'original']];var _default =
+['compressed', 'original']];
 
-{
+
+var uploadFlag = false; // 标志文章正在上传，为 true 时 block 该方法
+var _default = {
   data: function data() {
     return {
       userInfo: '',
@@ -195,7 +197,7 @@ var sizeType = [
       imageList: [],
       sourceTypeIndex: 2,
       sourceType: ['拍照', '相册', '拍照或相册'],
-      sizeTypeIndex: 2,
+      sizeTypeIndex: 0,
       sizeType: ['压缩', '原图', '压缩或原图'],
       countIndex: 8,
       count: [1, 2, 3, 4, 5, 6, 7, 8, 9] };
@@ -205,7 +207,7 @@ var sizeType = [
     this.imageList = [],
     this.sourceTypeIndex = 2,
     this.sourceType = ['拍照', '相册', '拍照或相册'],
-    this.sizeTypeIndex = 2,
+    this.sizeTypeIndex = 0,
     this.sizeType = ['压缩', '原图', '压缩或原图'],
     this.countIndex = 8;
   },
@@ -285,81 +287,91 @@ var sizeType = [
       }
     },
     upload: function upload(e) {var _this2 = this;
-      var me = this;
-      console.log(me.articleTitle);
-      console.log(me.articleContent);
-
-      if (me.articleTitle == '' || me.articleTitle == null) {
-        uni.showToast({
-          icon: 'none',
-          title: '文章标题不能为空～',
-          duration: 1000 });
-
+      if (uploadFlag) {
+        console.log("正在上传...");
         return;
       }
+      uploadFlag = true;
 
-      if (me.articleContent == '' || me.articleContent == null) {
-        uni.showToast({
-          icon: 'none',
-          title: '文章内容不能为空～',
-          duration: 1000 });
+      setTimeout(function () {
+        var me = _this2;
+        if (me.articleTitle == '' || me.articleTitle == null) {
+          uni.showToast({
+            icon: 'none',
+            title: '文章标题不能为空～',
+            duration: 1000 });
 
-        return;
-      }
+          return;
+        }
 
-      me.combineTagToString();
+        if (me.articleContent == '' || me.articleContent == null) {
+          uni.showToast({
+            icon: 'none',
+            title: '文章内容不能为空～',
+            duration: 1000 });
 
-      var serverUrl = me.$serverUrl;
-      uni.request({
-        url: serverUrl + '/article/uploadArticle',
-        method: 'POST',
-        data: {
-          userId: me.userInfo.id,
-          articleTag: me.finalTag,
-          articleTitle: me.articleTitle,
-          articleContent: me.articleContent },
+          return;
+        }
 
-        header: {
-          'content-type': 'application/x-www-form-urlencoded' },
+        me.combineTagToString();
 
-        success: function success(res) {
-          // console.log(res.data.data);
-          if (res.data.status == 200) {
-            if (me.imageList.length <= 0) {
-              uni.navigateBack({
-                url: '../index/index' });
+        var serverUrl = me.$serverUrl;
+        uni.request({
+          url: serverUrl + '/article/uploadArticle',
+          method: 'POST',
+          data: {
+            userId: me.userInfo.id,
+            articleTag: me.finalTag,
+            articleTitle: me.articleTitle,
+            articleContent: me.articleContent },
 
-            } else {
-              var articleId = res.data.data;
-              for (var i = 0; i < me.imageList.length; i++) {
-                uni.uploadFile({
-                  url: _this2.$serverUrl + '/article/uploadArticleImg',
-                  filePath: me.imageList[i],
-                  name: 'file',
-                  formData: {
-                    userId: me.userInfo.id,
-                    articleId: articleId,
-                    order: i },
+          header: {
+            'content-type': 'application/x-www-form-urlencoded' },
 
-                  success: function success(uploadFileRes) {
-                    uni.navigateBack({
-                      delta: 1 });
+          success: function success(res) {
+            // console.log(res.data.data);
+            if (res.data.status == 200) {
+              if (me.imageList.length <= 0) {
+                uploadFlag = false;
+                uni.navigateBack({
+                  delta: 1 });
 
-                  } });
+              } else {
+                var articleId = res.data.data;
+                for (var i = 0; i < me.imageList.length; i++) {
+                  uni.uploadFile({
+                    url: _this2.$serverUrl + '/article/uploadArticleImg',
+                    filePath: me.imageList[i],
+                    name: 'file',
+                    formData: {
+                      userId: me.userInfo.id,
+                      articleId: articleId,
+                      order: i },
 
+                    success: function success(uploadFileRes) {
+                      uploadFlag = false;
+                      uni.navigateBack({
+                        delta: 1 });
+
+                    } });
+
+                }
               }
+            } else {
+              // 上传失败 用户提醒
+              uploadFlag = false;
+              uni.showToast({
+                title: '出现未知错误，上传失败',
+                duration: 2000,
+                icon: 'none' });
+
             }
-          } else {
-            // 上传失败 用户提醒
-            uni.showToast({
-              title: '出现未知错误，上传失败',
-              duration: 2000,
-              icon: 'none' });
+          },
+          fail: function fail(res) {
+            uploadFlag = false;
+          } });
 
-          }
-
-        } });
-
+      }, 100); //延时执行等待上锁
     },
     deleteTag: function deleteTag(index) {
       console.log(index);

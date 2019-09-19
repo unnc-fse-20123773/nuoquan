@@ -3,7 +3,8 @@
 		<mainpagetop :userInfo='userInfo' :topArticles='topArticles' :topHeight="topHeight" style="position: fixed;z-index: 30;height:100%;"></mainpagetop>
 
 		<view class="indexSelf" style="height:100%;">
-			<scroll-view class="indexArticleArea" scroll-y="true" @scroll="linkageWithTop" @scrolltolower="loadMore" @scrolltoupper="refreshArticle">
+			<scroll-view class="indexArticleArea" scroll-y="true" @scroll="linkageWithTop" @scrolltolower="loadMore" 
+			@scrolltoupper="refreshArticle" upper-threshold=5>
 				<view style="height:160px;width:100%;"></view>
 				<articlebrief v-for="i in showlist" :key="i.id" v-bind:articleCard="i"></articlebrief>
 				<!-- 用于添加底部空白 by Guetta 9.10 -->
@@ -76,6 +77,10 @@
 			
 			this.getTop3Articles(); // 获取热度榜
 		},
+		
+		// onPullDownRefresh() {
+		// 	console.log("监听到下拉动作")
+		// },
 		
 		methods: {
 			
