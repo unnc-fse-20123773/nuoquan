@@ -26,11 +26,11 @@ _vue.default.config.productionTip = false;
 _vue.default.prototype.tagColors = ['#FE5F55', '#40A792', '#FDD041', '#5CA0D3', '#621E81', '#738598', '#F3AE4B'];
 
 _vue.default.prototype.$store = _store.default;
-_vue.default.prototype.$serverUrl = "http://127.0.0.1:8080";
-_vue.default.prototype.$wsServerUrl = "ws://127.0.0.1:8088/ws";
+// Vue.prototype.$serverUrl = "http://127.0.0.1:8080"
+// Vue.prototype.$wsServerUrl = "ws://127.0.0.1:8088/ws"
 
-// Vue.prototype.$serverUrl = "http://192.168.31.210:8080"
-// Vue.prototype.$wsServerUrl = "ws://192.168.31.210:8088/ws"
+_vue.default.prototype.$serverUrl = "http://192.168.1.101:8080";
+_vue.default.prototype.$wsServerUrl = "ws://192.168.1.101:8088/ws";
 
 // 服务器地址
 // Vue.prototype.$serverUrl = "http://129.28.130.27:8080/nottinghome"
