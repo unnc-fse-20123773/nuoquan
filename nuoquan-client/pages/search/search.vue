@@ -2,7 +2,7 @@
 	<view class="weui-search-bar">
 		<view class="input-bar">
 			<image class="back" src="../../static/icon/angle-left.png" @tap="exitSearch"></image>
-			<input type="text" v-model="searchKeyWords" focus placeholder="  搜索" confirm-type="search" @confirm="search(1)" />
+			<input type="text" v-model="searchKeyWords" focus placeholder="⠀⠀搜索" placeholder-style="color: #b2b2b2;" confirm-type="search" @confirm="search(1)" />
 		</view>
 
 		<view class="wxSearchKey" v-show="searching">
@@ -171,10 +171,6 @@
 					}
 				})
 			},
-			searchCancle: function(searching){
-					this.searching = !searching;
-					console.log(this.searching);
-			},
 			loadMore: function() {
 				var that = this;
 				var currentPage = that.currentPage;
@@ -250,15 +246,15 @@
 	}
 
 	.input-bar {
-		margin-top: 10px;
-		margin-left: 23px;
-		height: 32px;
+		margin-top: 4px;
+		margin-left: 12px;
+		height: 30px;
 	}
 
 	.back {
 		display: inline-block;
-		width: 32px;
-		height: 32px;
+		width: 30px;
+		height: 30px;
 		background: #FDD041;
 		border-radius: 8px;
 
@@ -272,14 +268,12 @@
 		height: 28px;
 		border-radius: 8px;
 		margin-left: 13px;
-		padding-left: 2px;
-		padding-bottom: 2px;
 		background: white;
 		letter-spacing: 1px;
 		color: #b2b2b2;
 		font-family: MicrosoftYaHei;
-		line-height: 10px;
-		box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.16);
+		line-height: 28px;
+		box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.16);		
 	}
 
 	.wxSearchKey,
