@@ -125,10 +125,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
-    return {};
+    return {
+      introduction_text1: 'Nottinghome1111是XXXXXXXXXXX',
+      introduction_text2: 'Nottinghome是XXXXXXXXXXX哈哈哈哈哈哈哈哈哈',
+      introduction_text3: 'Nottinghome是XXXXXXXXXXX我看看长啥样' };
+
   },
   methods: {
     /**
@@ -170,7 +189,8 @@ var _default =
                     _this.setGlobalUserInfo(finalUser);
                     console.log(finalUser);
 
-                    // 6.返回
+                    // 6.返回 发出重载事件
+                    uni.$emit("reloadIndex");
                     uni.navigateBack({
                       delta: 1 });
 

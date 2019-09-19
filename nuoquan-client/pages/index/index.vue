@@ -56,6 +56,9 @@
 		onLoad() {
 			var userInfo = this.getGlobalUserInfo();
 			if (this.isNull(userInfo)) {
+				uni.$once("reloadIndex",()=>{
+					this.showArticles(1);
+				})
 				uni.navigateTo({
 					url: "../signin/signin"
 				})
@@ -67,7 +70,6 @@
 			this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
 
 			var page = this.currentPage;
-			console.log("currentPage=" + page);
 			this.showArticles(page); // 显示文章流
 
 			uni.$on("flash", () => { // from submit

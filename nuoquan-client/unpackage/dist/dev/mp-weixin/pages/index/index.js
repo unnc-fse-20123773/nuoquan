@@ -174,6 +174,9 @@ var _default = { data: function data() {return { title: 'Hello', hottitlelist: [
   onLoad: function onLoad() {var _this = this;
     var userInfo = this.getGlobalUserInfo();
     if (this.isNull(userInfo)) {
+      uni.$once("reloadIndex", function () {
+        _this.showArticles(1);
+      });
       uni.navigateTo({
         url: "../signin/signin" });
 
@@ -185,7 +188,6 @@ var _default = { data: function data() {return { title: 'Hello', hottitlelist: [
     this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
 
     var page = this.currentPage;
-    console.log("currentPage=" + page);
     this.showArticles(page); // 显示文章流
 
     uni.$on("flash", function () {// from submit

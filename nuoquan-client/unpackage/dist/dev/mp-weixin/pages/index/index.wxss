@@ -122,6 +122,10 @@ image {
 	text-align: center;
 	vertical-align: middle;
 }
+.comment.data-v-2881634c{
+}
+.like.data-v-2881634c{
+}
 .picturearea-one.data-v-2881634c {
 	margin: auto;
 	display: -webkit-box;

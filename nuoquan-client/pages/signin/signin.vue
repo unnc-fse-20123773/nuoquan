@@ -1,27 +1,46 @@
 <template>
-	<view class="signinpage">
-		<view class="spacearea"></view>
-		<image src="../../static/touxiang.jpg" class="touxiang"></image>
-		<image class="fengexian" src="../../static/icon/signinline.png"></image>
-		<view class="mailbox">
-			<input class="prefix" />
-			<text class="suffix">@nottingham.edu.cn</text>
+	<view id="signin-container">
+		<!-- Logo 框 -->
+		<view id="icon" class="super_center">
+				<view class="icon-logoBox super_center">
+					<image src="../../static/icon/logo_app.png" mode="aspectFill" class="icon-logo"></image>
+				</view>
 		</view>
-		<view class="verifycode">
-			<input class="code" />
-			<button>发送验证码</button>
+		<!-- 简介 -->
+		<view id="introduction" class="super_center">
+			<view class="introduction-contentBox super_center">
+				<scroll-view scroll-y="true" class="introduction-content">
+					<!-- 此处待完工 -Guetta -->
+					<text>
+					{{introduction_text1}}
+					{{introduction_text2}}
+					{{introduction_text3}}
+					</text>
+					<!-- ! -->
+				</scroll-view>
+			</view>
+		</view>
+		<view id="confirm" class="super_center">
+			<view class="confirm-rel">
+			<button class="confirm-button super_center" hover-class="button-hover" open-type="getUserInfo" @getuserinfo="getUserInfo" >
+				<view style="color: white;font-weight: 550;letter-spacing: 3px;font-family: Microsoft YaHei;">确认绑定</view>
+			</button>
+			<view class="conform-bgBox"></view>
+			</view>
 		</view>
 		
-		<!-- 登录button，弹出微信授权界面 -->
-		<button class="binding" open-type="getUserInfo" @getuserinfo="getUserInfo" withCredentials="true">微信登陆</button>
-		
+		<image src="../../static/BG/signin_bottom.png" mode="scaleToFill" class="bottom-picBox"></image>
 	</view>
 </template>
 
 <script>
 export default {
 	data() {
-		return {};
+		return {
+			introduction_text1 : 'Nottinghome1111是XXXXXXXXXXX',
+			introduction_text2: 'Nottinghome是XXXXXXXXXXX哈哈哈哈哈哈哈哈哈',
+			introduction_text3 : 'Nottinghome是XXXXXXXXXXX我看看长啥样',
+		};
 	},
 	methods: {
 		/**
@@ -63,7 +82,8 @@ export default {
 										this.setGlobalUserInfo(finalUser);
 										console.log(finalUser);
 		
-										// 6.返回
+										// 6.返回 发出重载事件
+										uni.$emit("reloadIndex");
 										uni.navigateBack({
 											delta: 1
 										});
@@ -80,55 +100,103 @@ export default {
 </script>
 
 <style>
-.signinpage {
-	width: 100%;
-	margin: auto;
-}
-.spacearea {
-	height: 150px;
-	display: block;
-	width: 750upx;
-}
-.touxiang {
-	height: 100px;
-	width: 100px;
-	border-radius: 50px;
-	display: block;
-	margin: auto;
-}
-.fengexian {
-	margin-top: 50px;
-	height: 50px;
-}
-.mailbox {
-	display: block;
-	margin: auto;
-	width:210px;
-}
-.prefix {
-	width: 60px;
-	display: inline-block;
-}
-.suffix {
-	font-size: 12px;
-	color: #d6d6d6;
-	display: inline-block;
-	width:150px;
-}
-.verifycode {
-	display: block;
-	margin: auto;
-	width:120px;
-	font-size: 14px;
-}
-.code{
-	display: inline-block;
-	width:80px;
-}
-.verifycode button{
-	width:120px;
-	font-size: 14px;
+	page{
+		width: 100%;
+		height: 100%;
+	}
 	
-	background: RGB(253, 217, 108);
-}
+	button::after{ 
+		border: none;
+		outline:none;
+		}
+	/* 按百分比分配父组件区域 */
+	/* 如更改样式需重新计算百分比分配 */
+	#signin-container{
+		width: 100%;
+		height: 100%;
+		position: relative;
+	}
+	
+	#icon{
+		position: absolute;
+		top: 4%;
+		width: 100%;
+		height: 16%;
+	}
+	
+	.icon-logoBox{
+		height: 80px;
+		width: 80px;
+		box-shadow: 0px 0px 10px 1px #CCCCCC;
+		border-radius: 30upx;
+	}
+	
+	.icon-logo{
+		height: 70px;
+		width: 70px;
+	}
+	
+	#introduction{
+		position: absolute;
+		top: 20%;
+		width: 100%;
+		height: 40%;
+	}
+	
+	.introduction-contentBox{
+		width: 70%;
+		height: 90%;
+		background-color: #EEEEEE;
+		opacity: 0.5;
+		border-radius: 30upx;
+	}
+	
+	.introduction-content{
+		width: 90%;
+		height: 90%;
+		background-color: #09BB07;
+	}
+	
+	#confirm{
+		position: absolute;
+		top: 62%;
+		width: 100%;
+		height: 10%;
+	}
+	
+	.confirm-rel{
+		position: relative;
+		width: 100%;
+		height: 100%;
+	}
+	
+	.confirm-button{
+		position: absolute;
+		top: 24%;
+		left: 26%;
+		width: 48%;
+		height: 52%;
+		border-radius: 10upx;
+		background-color: #FFCD2E;
+		z-index: 20;
+	}
+	
+	.conform-bgBox{
+		position: absolute;
+		top: 24%;
+		left: 26%;
+		width: 48%;
+		height: 52%;
+		background-color: #ffcd2e;
+		border-radius: 10upx;
+		z-index: 10;
+	}
+	
+	.bottom-picBox{
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		height: 26%;
+	}
+
 </style>

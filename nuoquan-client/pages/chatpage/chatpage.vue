@@ -262,7 +262,7 @@
 		border-radius: 24upx;
 		border: solid 1px #C6C6C6;
 		margin: 20upx 0 20upx 14upx;
-		
+		font-size: 13px;
 	}
 
 	.icons {
