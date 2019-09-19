@@ -287,32 +287,31 @@ var _default = {
       }
     },
     upload: function upload(e) {var _this2 = this;
+      var me = this;
+      if (me.articleTitle == '' || me.articleTitle == null) {
+        uni.showToast({
+          icon: 'none',
+          title: '文章标题不能为空～',
+          duration: 1000 });
+
+        return;
+      }
+
+      if (me.articleContent == '' || me.articleContent == null) {
+        uni.showToast({
+          icon: 'none',
+          title: '文章内容不能为空～',
+          duration: 1000 });
+
+        return;
+      }
+
       if (uploadFlag) {
         console.log("正在上传...");
         return;
       }
       uploadFlag = true;
-
       setTimeout(function () {
-        var me = _this2;
-        if (me.articleTitle == '' || me.articleTitle == null) {
-          uni.showToast({
-            icon: 'none',
-            title: '文章标题不能为空～',
-            duration: 1000 });
-
-          return;
-        }
-
-        if (me.articleContent == '' || me.articleContent == null) {
-          uni.showToast({
-            icon: 'none',
-            title: '文章内容不能为空～',
-            duration: 1000 });
-
-          return;
-        }
-
         me.combineTagToString();
 
         var serverUrl = me.$serverUrl;
@@ -331,12 +330,7 @@ var _default = {
           success: function success(res) {
             // console.log(res.data.data);
             if (res.data.status == 200) {
-              if (me.imageList.length <= 0) {
-                uploadFlag = false;
-                uni.navigateBack({
-                  delta: 1 });
-
-              } else {
+              if (me.imageList.length > 0) {
                 var articleId = res.data.data;
                 for (var i = 0; i < me.imageList.length; i++) {
                   uni.uploadFile({
@@ -349,14 +343,25 @@ var _default = {
                       order: i },
 
                     success: function success(uploadFileRes) {
-                      uploadFlag = false;
-                      uni.navigateBack({
-                        delta: 1 });
-
+                      // uploadFlag = false;
+                      // uni.navigateBack({
+                      // 	delta: 1
+                      // })
                     } });
 
                 }
               }
+
+              uploadFlag = false;
+              uni.$emit("flash"); // 给 index 发送刷新信号
+              uni.navigateBack({
+                delta: 1 });
+
+              uni.showToast({
+                title: '上传成功',
+                duration: 2000,
+                icon: 'success' });
+
             } else {
               // 上传失败 用户提醒
               uploadFlag = false;

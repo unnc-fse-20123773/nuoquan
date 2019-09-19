@@ -7,7 +7,8 @@
 		{
 			"path": "pages/detail/detail",
 			"style": {}
-		}, {
+		}, 
+		{
 			"path": "pages/submit/submit",
 			"style": {}
 		},

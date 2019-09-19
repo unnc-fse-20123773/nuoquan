@@ -169,7 +169,7 @@ var _default = { data: function data() {return { title: 'Hello', hottitlelist: [
     mainpageleft: mainpageleft },
 
 
-  onLoad: function onLoad() {var _this = this;
+  onLoad: function onLoad() {
     var userInfo = this.getGlobalUserInfo();
     if (this.isNull(userInfo)) {
       uni.navigateTo({
@@ -183,10 +183,6 @@ var _default = { data: function data() {return { title: 'Hello', hottitlelist: [
     var page = this.currentPage;
     console.log("currentPage=" + page);
     this.showArticles(page); // 显示文章流
-
-    uni.$on("flash", function () {
-      _this.refreshArticle();
-    });
     // [测试代码块]
   },
 
@@ -299,7 +295,7 @@ var _default = { data: function data() {return { title: 'Hello', hottitlelist: [
     /**
         * 查询用户信息，并分割邮箱更新到缓存
         */
-    queryUserInfo: function queryUserInfo(userId) {var _this2 = this;
+    queryUserInfo: function queryUserInfo(userId) {var _this = this;
       var that = this;
       uni.request({
         url: that.$serverUrl + '/user/queryUser',
@@ -313,9 +309,9 @@ var _default = { data: function data() {return { title: 'Hello', hottitlelist: [
         success: function success(res) {
           if (res.data.status == 200) {
             var user = res.data.data;
-            var finalUser = _this2.myUser(user); // 分割邮箱地址, 重构 user
-            _this2.setGlobalUserInfo(finalUser); // 把用户信息写入缓存
-            _this2.userInfo = finalUser; // 更新页面用户数据
+            var finalUser = _this.myUser(user); // 分割邮箱地址, 重构 user
+            _this.setGlobalUserInfo(finalUser); // 把用户信息写入缓存
+            _this.userInfo = finalUser; // 更新页面用户数据
             // console.log(this.userInfo);
           }
         } });
