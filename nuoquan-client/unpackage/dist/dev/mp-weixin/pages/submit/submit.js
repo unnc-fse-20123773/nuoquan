@@ -144,6 +144,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -217,6 +220,7 @@ var sizeType = [
         that.showInputTagArea = 0;
         that.articleTag = '';
       }
+
     },
 
     combineTagToString: function combineTagToString(res) {

@@ -134,6 +134,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
 {
   name: 'comment',
   props: {
@@ -197,7 +200,12 @@ __webpack_require__.r(__webpack_exports__);
             // 强制子组件重新刷新
             that.reCommentList = '';
             that.$nextTick(function () {
-              that.reCommentList = res.data.data.rows;
+              var showCommentNum = 2;
+              if (res.data.data.rows.length > showCommentNum) {
+                that.reCommentList = res.data.data.rows.slice(0, showCommentNum);
+              } else {
+                that.reCommentList = res.data.data.rows;
+              }
             });
             // console.log(res);
           }
@@ -214,25 +222,7 @@ __webpack_require__.r(__webpack_exports__);
         } });
 
     },
-    loadMore: function loadMore() {
-      var that = this;
-      var currentPage = that.currentPage;
-      console.log(currentPage);
-      var totalPage = that.totalPage;
-      console.log(totalPage);
-      // 判断当前页数和总页数是否相等
-      if (currentPage == totalPage) {
-        // that.showArticles(1);
-        uni.showToast({
-          title: "没有更多评论了",
-          icon: "none",
-          duration: 1000 });
 
-      } else {
-        var page = currentPage + 1;
-        that.getSubComments(page);
-      }
-    },
     controlInputInComment: function controlInputInComment(a) {
       if (a == "inComment") {
         var dataOfRecomment = {
@@ -257,12 +247,13 @@ __webpack_require__.r(__webpack_exports__);
     swLikeMainComment: function swLikeMainComment(comment) {
       if (comment.isLike) {
         this.unLikeComment(comment);
-        this.mainComment.likeNum--;
+        comment.likeNum--;
       } else {
         this.likeComment(comment);
-        this.mainComment.likeNum++;
+        comment.likeNum++;
       }
-      this.mainComment.isLike = !this.mainComment.isLike;
+      comment.isLike = !comment.isLike;
+      // console.log(this.mainComment.isLike);
     },
 
     likeComment: function likeComment(comment) {
@@ -308,6 +299,12 @@ __webpack_require__.r(__webpack_exports__);
     goToPersonPublic: function goToPersonPublic(userId) {
       uni.navigateTo({
         url: '/pages/personpublic/personpublic?userId=' + userId });
+
+    },
+
+    goToCommentDetail: function goToCommentDetail(mainComment) {
+      uni.navigateTo({
+        url: '/pages/comment-detail/comment-detail?data=' + JSON.stringify(mainComment) });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))

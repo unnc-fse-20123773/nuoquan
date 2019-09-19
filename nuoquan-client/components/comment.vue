@@ -8,12 +8,14 @@
 				<text class="time">{{ mainComment.timeAgo }}</text>
 			</view>
 			<view class="icons">
-				<!-- 评论按钮 -->
-				<image v-if="!RECOMMENT || mainComment.commentNum == 0" class="icon" src="../../../../static/icon/comment.png" 
-				style="padding-right: 23px;"></image>
+				<view @tap="goToCommentDetail(mainComment)">
+					<!-- 评论按钮 -->
+					<image v-if="!RECOMMENT || mainComment.commentNum == 0" class="icon" src="../../../../static/icon/comment.png" 
+					style="padding-right: 23px;"></image>
 
-				<image v-if="RECOMMENT && mainComment.commentNum" src="../../../../static/icon/ReComment.png" 
-				style="height:23px;width:50px;position:relative;bottom:-5px;padding-right:4px;"></image>
+					<image v-if="RECOMMENT && mainComment.commentNum" src="../../../../static/icon/ReComment.png" 
+					style="height:23px;width:50px;position:relative;bottom:-5px;padding-right:4px;"></image>
+				</view>
 				<!-- <text class="icom">{{mainComment.commentNum}}</text> -->
 				<!-- 点赞按钮 -->
 				<view @tap="swLikeMainComment(mainComment)">
@@ -25,7 +27,8 @@
 
 		<view v-show="RECOMMENT && mainComment.commentNum > 0" class="reCommentsArea">
 			<reComment v-for="(item,index) in reCommentList" v-bind:key="index" :reCommentDetail='item' @controlInputSignal="controlInputInComment"
-			 @goToPersonPublic="goToPersonPublic"></reComment>
+			 @goToPersonPublic="goToPersonPublic" @goToCommentDetail="goToCommentDetail(mainComment)"></reComment>
+			<view style="font-size: 10px;color:#007AFF;text-align: right;margin-top:5px;" @tap="goToCommentDetail(mainComment)">共{{mainComment.commentNum}}条评论</view>
 			<!-- <view class="submitComment">发 表 评 论</view> -->
 		</view>
 		<view class="fengexian1"></view>
@@ -97,7 +100,12 @@
 							// 强制子组件重新刷新
 							that.reCommentList = '';
 							that.$nextTick(function() {
-								that.reCommentList = res.data.data.rows;
+								const showCommentNum = 2;
+								if(res.data.data.rows.length>showCommentNum){
+									that.reCommentList = res.data.data.rows.slice(0,showCommentNum);
+								}else{
+									that.reCommentList = res.data.data.rows;	
+								}
 							});
 							// console.log(res);
 						}
@@ -114,25 +122,7 @@
 					}
 				});
 			},
-			loadMore: function() {
-				var that = this;
-				var currentPage = that.currentPage;
-				console.log(currentPage);
-				var totalPage = that.totalPage;
-				console.log(totalPage);
-				// 判断当前页数和总页数是否相等
-				if (currentPage == totalPage) {
-					// that.showArticles(1);
-					uni.showToast({
-						title: "没有更多评论了",
-						icon: "none",
-						duration: 1000
-					})
-				} else {
-					var page = currentPage + 1;
-					that.getSubComments(page);
-				}
-			},
+			
 			controlInputInComment(a) {
 				if (a == "inComment") {
 					var dataOfRecomment = {
@@ -157,12 +147,13 @@
 			swLikeMainComment(comment) {
 				if (comment.isLike) {
 					this.unLikeComment(comment);
-					this.mainComment.likeNum--;
+					comment.likeNum--;
 				} else {
 					this.likeComment(comment);
-					this.mainComment.likeNum++;
+					comment.likeNum++;
 				}
-				this.mainComment.isLike = !this.mainComment.isLike;
+				comment.isLike = !comment.isLike;
+				// console.log(this.mainComment.isLike);
 			},
 
 			likeComment(comment) {
@@ -209,6 +200,12 @@
 				uni.navigateTo({
 					url: '/pages/personpublic/personpublic?userId=' + userId,
 				});
+			},
+			
+			goToCommentDetail(mainComment){
+				uni.navigateTo({
+					url: '/pages/comment-detail/comment-detail?data=' + JSON.stringify(mainComment),
+				})
 			}
 		},
 
@@ -263,8 +260,6 @@
 		margin-left: 7px;
 		margin-right: 10px;
 		color: #888888;
-			max-width: 85px;
-		text-overflow: ellipsis;
 	}
 
 	.icons {

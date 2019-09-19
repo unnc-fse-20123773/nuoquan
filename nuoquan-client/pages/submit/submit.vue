@@ -21,6 +21,7 @@
 					<view v-if="showAddTagButton" @click="addTag">
 						+ 添加标签
 					</view>
+					<!-- TODO: 字数未区分中英文，下一个版本要加 -->
 					<input v-if="showInputTagArea" v-model="articleTag" focus="true" placeholder="请输入标签..." @blur="checkInput" maxlength="10"/>
 
 				</view>
@@ -33,8 +34,10 @@
 
 			<view class="picturearea">
 				<block v-for="(image,index) in imageList" :key="index">
-					<view>
+					<view style="position: relative;">
+						<!-- todo 预览图片缩放 -->
 						<image :src="image" :data-src="image" @tap="previewImage" mode="aspectFill"></image>
+						<view style="width:15px;height: 15px;font-size: 10px;line-height: 10px;border-bottom-left-radius: 3px;background: rgba(166, 169, 168,0.3);color:#FFFFFF;position: absolute;top:6px;right:0;text-align: center;">✕</view>
 					</view>
 				</block>
 				<view v-show="isAddImage(this.imageList.length)" id="clickToChooseImage" class="addPic" @click="chooseImg">+</view>
@@ -117,6 +120,7 @@
 					that.showInputTagArea = 0;
 					that.articleTag = '';
 				}
+
 			},
 			
 			combineTagToString: function(res) {

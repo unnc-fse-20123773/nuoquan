@@ -8,7 +8,7 @@
 		<view class="wxSearchKey" v-show="searching">
 			<text class="exSearchTitle">搜索热点:</text>
 			<view class="searchList">
-				<view class="item" v-for="(i,index) in hotList" :key="index">
+				<view class="item" v-for="(i,index) in hotList" :key="index" @click="putHotIntoInput(index)">
 					{{i}}
 				</view>
 			</view>
@@ -20,7 +20,7 @@
 			<icon type="clear" @tap="searchDeleteAll" size="11"></icon>
 			<!-- <view v-for="key in searchHisKeyList" :key="key">{{key}}</view> -->
 			<view class="searchList">
-				<view class="item" v-for="(item,index) in searchHisKeyList" :key="index">{{item}}</view>
+				<view class="item" v-for="(item,index) in searchHisKeyList" :key="index" @click="putHisIntoInput(index)">{{item}}</view>
 			</view>
 		</view>
 
@@ -31,7 +31,7 @@
 		</view>
 
 		<!-- 搜索结果显示区域 -->
-		<scroll-view class="searchResult" v-show="!searching" scroll-y="true">
+		<scroll-view class="searchResult" v-show="!searching" scroll-y="true" @scrolltolower="loadMore()">
 			<searchResultArticle v-for="i in searchedArticleList" :key="i.id" v-bind:articleCard="i"></searchResultArticle>
 		</scroll-view>
 	</view>
@@ -135,11 +135,12 @@
 				})
 
 				uni.request({
-					url: that.$serverUrl + '/article/searchArticleYANG?isSaveRecord=' + isSaveRecord,
+					url: that.$serverUrl + '/article/searchArticleYANG',
 					method: "POST",
 					data: {
 						articleContent: that.searchKeyWords,
 						userId: that.userInfo.id,
+						isSaveRecord: isSaveRecord,
 						page: page,
 					},
 					success: function(result) {
@@ -147,19 +148,22 @@
 						console.log(result);
 						// console.log(result.data);
 						// that.searchedArticleList = result.data.data.rows;
+						
 						that.searching = false;
-
-						// 判断当前页是不是第一页，如果是第一页，那么设置showList为空
-						if (that.currentPage == 1) {
-							that.searchedArticleList = [];
+						if(result.data.status == 200){
+							// 判断当前页是不是第一页，如果是第一页，那么设置showList为空
+							if (that.currentPage == 1) {
+								that.searchedArticleList = [];
+							}
+							
+							var newArticleList = result.data.data.rows;
+							var oldArticleList = that.searchedArticleList;
+							that.searchedArticleList = oldArticleList.concat(newArticleList);
+							// console.log(result.data.data.page);
+							that.currentPage = page;
+							that.totalPage = result.data.data.total;
 						}
-
-						var newArticleList = result.data.data.rows;
-						var oldArticleList = that.searchedArticleList;
-						that.searchedArticleList = oldArticleList.concat(newArticleList);
-						// console.log(result.data.data.page);
-						that.currentPage = page;
-						that.totalPage = result.data.data.total;
+						
 					},
 					fail: (res) => {
 						console.log("index unirequest fail");
@@ -218,6 +222,18 @@
 					this.searchedArticleList = "",
 					this.$emit("exitSearchSignal", 0)
 			},
+			putHotIntoInput: function(index){
+				// console.log(index);
+				var keywords = this.hotList[index];
+				// console.log(keywords);
+				this.searchKeyWords = keywords;
+			},
+			putHisIntoInput: function(index){
+				// console.log(index);
+				var keywords = this.searchHisKeyList[index];
+				// console.log(keywords);
+				this.searchKeyWords = keywords;
+			}
 		}
 	}
 </script>

@@ -137,21 +137,21 @@ var _default =
     // })
   },
   methods: {
-    controlInputInRecomment: function controlInputInRecomment() {
-      var dataOfRecomment = {
-        mode: "re-re",
-        toUserId: this.reCommentDetail.fromUserId,
-        fatherCommentId: this.reCommentDetail.id,
-        underCommentId: this.reCommentDetail.underCommentId,
-        nickname: this.reCommentDetail.nickname };
-
-      this.$emit('controlInputSignal', dataOfRecomment);
-    },
+    // controlInputInRecomment(){
+    // 	var dataOfRecomment={
+    // 		mode:"re-re",
+    // 		toUserId:this.reCommentDetail.fromUserId,
+    // 		fatherCommentId:this.reCommentDetail.id,
+    // 		underCommentId:this.reCommentDetail.underCommentId,
+    // 		nickname:this.reCommentDetail.nickname,
+    // 	}
+    // 	this.$emit('controlInputSignal',dataOfRecomment)
+    // },
 
     /**
-        * 点赞或取消点赞二级评论
-        * @param {Object} comment
-        */
+     * 点赞或取消点赞二级评论
+     * @param {Object} comment
+     */
     swLikeSubComment: function swLikeSubComment() {
       if (this.subComment.isLike) {
         this.unLikeComment(this.subComment);
@@ -206,6 +206,10 @@ var _default =
 
     goToPersonPublic: function goToPersonPublic() {
       this.$emit("goToPersonPublic", this.subComment.fromUserId);
+    },
+
+    goToCommentDetail: function goToCommentDetail() {
+      this.$emit("goToCommentDetail");
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

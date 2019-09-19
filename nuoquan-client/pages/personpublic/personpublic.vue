@@ -133,11 +133,12 @@
 			// 获取这个人的信息, TODO: 更新本地用户信息缓存
 			this.queryUserWithFollow(userId);
 
-			this.$nextTick(function() {
+			setTimeout(()=>{
+				console.log(this.thisUserInfo)
 				uni.setNavigationBarTitle({
 					title: this.thisUserInfo.nickname + "的主页"
 				});
-			})
+			}, 200);
 
 			// [测试代码块]
 			// this.mySocket.init()

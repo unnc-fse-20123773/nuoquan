@@ -1,8 +1,22 @@
 # Update Log:
-**v19.9.16 更新**
-1. 整合 deyan
+**v19.9.17 更新**
+1. 整合 deyan & yaoyao
 2. 新增 sumbit 删除标签 (deyan && yaoyao)
 3. 新增 服务器相关包及配置
+4. 新增 搜索页面点击文本到输入框（deyan）
+5. 新增 comment-detail 评论点赞功能和分页，点击头像跳转
+6. 新增 detail -> comment-detail 跳转
+7. 修复 detail tag 显示问题 (guetta)
+8. 修复 detail 页面可滚动问题 (guetta)
+9. 添加 articlebrief 限高 500upx，文字限长 15 行 (guetta)
+10. 优化 detail 评论分割线 (guetta)
+11. 添加 detail marginHelper 块 (guetta)
+12. 优化 detail 页面字体大小、粗细，高精度还原设计稿 (guetta)
+
+*TODO：*
+- 点赞开灯效果
+- submit 删除已选图片
+- detail 图片显示优化（单图，四图，其他）
 
 **v19.9.15 更新**
 1. 整合 guetta

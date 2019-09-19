@@ -346,7 +346,7 @@
 		height: 11px;
 		padding-right: 5px;
 	}
-
+	
 	.icon {
 		display: inline-block;
 		color: #353535;
@@ -355,7 +355,15 @@
 		text-align: center;
 		vertical-align: middle;
 	}
-
+	
+	.comment{
+		
+	}
+	
+	.like{
+		
+	}
+	
 	.picturearea-one {
 		margin: auto;
 		display: flex;
