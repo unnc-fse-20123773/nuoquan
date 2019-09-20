@@ -3,11 +3,11 @@ README
 Current Verion: `v1.01`
 ******
 ## *TODO：* ##
-- 点赞开灯效果 (guetta)
+- ~~点赞开灯效果 (yaoyao)~~
 - ~~submit 删除图片 (deyan)~~
 - ~~detail 图片显示优化（单图，四图，其他）(yaoyao)~~
 - 登录页面修改 (guetta & ~~jerrio~~)
-- submit 背景图 (yaoyao)
+- ~~submit 背景图 (yaoyao)~~
 - ~~Bug-100024 (yaoyao)~~
 - login 用户协议 (guetta & jerrio) DDL: 9.20-2pm
 
