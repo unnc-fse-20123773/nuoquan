@@ -1,7 +1,7 @@
 <!-- TODO: 取消添加图片, 标签输入不能含有特殊字符，颜色变化 -->
 <template>
 	<viwe>
-		<view style="height:45px;width:100%;">
+		<view style="height:45px;width:100%;background: url(../../static/BG/submitBG.png);background-repeat: no-repeat;background-position-y: -5px;background-size: 750upx 80px;">
 			<view class="submit" @click="upload">
 				发 表
 			</view>
@@ -22,7 +22,8 @@
 						+ 添加标签
 					</view>
 					<!-- TODO: 字数未区分中英文，下一个版本要加 -->
-					<input v-if="showInputTagArea" v-model="articleTag" focus="true" placeholder="请输入标签..." @blur="checkInput" maxlength="10"/>
+					<input v-if="showInputTagArea" v-model="articleTag" focus="true" placeholder="请输入标签..." @blur="checkInput"
+					 maxlength="10" />
 
 				</view>
 			</view>
@@ -37,7 +38,8 @@
 					<view style="position: relative;">
 						<!-- todo 预览图片缩放 -->
 						<image :src="image" :data-src="image" @tap="previewImage" mode="aspectFill"></image>
-						<view style="width:15px;height: 15px;font-size: 10px;line-height: 10px;border-bottom-left-radius: 3px;background: rgba(166, 169, 168,0.3);color:#FFFFFF;position: absolute;top:6px;right:0;text-align: center;" @click="deleteImg(index)">✕</view>
+						<view style="width:15px;height: 15px;font-size: 10px;line-height: 10px;border-bottom-left-radius: 3px;background: rgba(166, 169, 168,0.3);color:#FFFFFF;position: absolute;top:6px;right:0;text-align: center;"
+						 @click="deleteImg(index)">✕</view>
 					</view>
 				</block>
 				<view v-show="isAddImage(this.imageList.length)" id="clickToChooseImage" class="addPic" @click="chooseImg">+</view>
@@ -61,7 +63,7 @@
 		['original'],
 		['compressed', 'original']
 	]
-	
+
 	var uploadFlag = false; // 标志文章正在上传，为 true 时 block 该方法
 	export default {
 		data() {
@@ -89,11 +91,11 @@
 		},
 		onUnload() {
 			this.imageList = [],
-			this.sourceTypeIndex = 2,
-			this.sourceType = ['拍照', '相册', '拍照或相册'],
-			this.sizeTypeIndex = 0,
-			this.sizeType = ['压缩', '原图', '压缩或原图'],
-			this.countIndex = 8;
+				this.sourceTypeIndex = 2,
+				this.sourceType = ['拍照', '相册', '拍照或相册'],
+				this.sizeTypeIndex = 0,
+				this.sizeType = ['压缩', '原图', '压缩或原图'],
+				this.countIndex = 8;
 		},
 		onLoad() {
 			this.userInfo = this.getGlobalUserInfo();
@@ -114,7 +116,7 @@
 				} else {
 					// 显示标签区域 = 1
 					that.showTagArea = 1;
-					
+
 					//console.log(that.tagIndex);
 					that.tagList[that.tagIndex] = tag;
 					that.tagIndex = that.tagIndex + 1;
@@ -124,7 +126,7 @@
 				}
 
 			},
-			
+
 			combineTagToString: function(res) {
 				var that = this;
 				for (var i = 0; i < that.tagList.length; i++) {
@@ -180,7 +182,7 @@
 					});
 					return;
 				}
-				
+
 				if (me.articleContent == '' || me.articleContent == null) {
 					uni.showToast({
 						icon: 'none',
@@ -189,15 +191,15 @@
 					});
 					return;
 				}
-				
-				if (uploadFlag){
+
+				if (uploadFlag) {
 					console.log("正在上传...")
 					return;
 				}
 				uploadFlag = true;
-				setTimeout(()=>{
+				setTimeout(() => {
 					me.combineTagToString();
-					
+
 					var serverUrl = me.$serverUrl;
 					uni.request({
 						url: serverUrl + '/article/uploadArticle',
@@ -235,7 +237,7 @@
 										});
 									}
 								}
-								
+
 								uploadFlag = false;
 								uni.$emit("flash"); // 给 index 发送刷新信号
 								uni.navigateBack({
@@ -262,14 +264,14 @@
 					})
 				}, 100) //延时执行等待上锁
 			},
-			deleteTag: function(index){
+			deleteTag: function(index) {
 				console.log(index);
 				var targetTag = this.tagList[index];
 				this.tagList.splice(index, 1);
 				console.log(this.tagList.length);
 				this.tagIndex = this.tagList.length;
 			},
-			deleteImg: function(index){
+			deleteImg: function(index) {
 				// console.log(index);
 				// console.log(this.imageList[index]);
 				this.imageList.splice(index, 1);
