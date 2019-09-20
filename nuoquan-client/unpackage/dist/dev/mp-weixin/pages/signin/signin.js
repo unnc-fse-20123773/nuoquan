@@ -140,24 +140,151 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
     return {
-      introduction_text1: 'Nottinghome1111是XXXXXXXXXXX',
-      introduction_text2: 'Nottinghome是XXXXXXXXXXX哈哈哈哈哈哈哈哈哈',
-      introduction_text3: 'Nottinghome是XXXXXXXXXXX我看看长啥样' };
+      status: false };
 
   },
-  onBackPress: function onBackPress(e) {
-    // return true 表示禁止默认返回
-    console.log("监听到返回");
-    return false;
-  },
   methods: {
+    onBackPress: function onBackPress(e) {
+      // return true 表示禁止默认返回
+      console.log("监听到返回");
+      return false;
+    },
+
     /**
-              * 微信小程序登陆
-              */
+        * 微信小程序登陆
+        */
     getUserInfo: function getUserInfo() {var _this = this;
       var that = this;
       uni.login({
@@ -195,9 +322,9 @@ var _default =
                     console.log(finalUser);
 
                     // 6.返回 发出重载事件
-                    uni.$emit("reloadIndex");
-                    uni.navigateBack({
-                      delta: 1 });
+                    // uni.$emit("reloadIndex");
+                    uni.redirectTo({
+                      url: "../index/index" });
 
                   }
                 } });
@@ -206,6 +333,10 @@ var _default =
 
         } });
 
+    },
+
+    changestatus: function changestatus() {
+      this.status = !this.status;
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
