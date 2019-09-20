@@ -3,7 +3,7 @@ README
 Current Verion: `v1.01`
 ******
 ## *TODO：* ##
-- 点赞开灯效果 (guetta & jinjin)
+- 点赞开灯效果优化 (guetta & jinjin)
 - index 黄色异形适配长整型 (yaoyao)
 
 ## [Recent Update](./updateLog.md): ##
