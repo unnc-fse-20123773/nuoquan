@@ -356,7 +356,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var searchResultArticle = function searchResultArticle() {return __webpack_require__.e(/*! import() | components/searchResultArticle */ "components/searchResultArticle").then(__webpack_require__.bind(null, /*! ../../components/searchResultArticle.vue */ 186));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var searchResultArticle = function searchResultArticle() {return __webpack_require__.e(/*! import() | components/searchResultArticle */ "components/searchResultArticle").then(__webpack_require__.bind(null, /*! ../../components/searchResultArticle.vue */ 186));};
 
 
 
@@ -397,7 +397,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-{
+
+var isSearching = false; //搜索锁
+var _default = {
   data: function data() {
     return {
       hotList: [],
@@ -419,13 +421,11 @@ __webpack_require__.r(__webpack_exports__);
     // 查询热搜词
     this.getHotWords();
   },
-  // onReachBottom() {
-  // 	this.loadMore();
-  // },
+  destroyed: function destroyed() {// 组件退出隐藏加载
+    uni.hideLoading();
+  },
   methods: {
     getHotWords: function getHotWords() {
-      console.log('dasdsdad');
-
       var that = this;
       uni.request({
         url: that.$serverUrl + '/article/hot',
@@ -439,6 +439,11 @@ __webpack_require__.r(__webpack_exports__);
 
     },
     search: function search(page) {
+      if (isSearching) {
+        return;
+      }
+      isSearching = true;
+
       var that = this;
       var isSaveRecord = 1;
       // console.log(page);
@@ -492,6 +497,16 @@ __webpack_require__.r(__webpack_exports__);
         title: "搜索中..." });
 
 
+      setTimeout(function () {
+        isSearching = false; // 解锁
+        uni.hideLoading();
+        uni.showToast({
+          title: "网络未知错误",
+          icon: "none",
+          duration: 1000 });
+
+      }, 5000); // 延时5s timeout
+
       uni.request({
         url: that.$serverUrl + '/article/searchArticleYANG',
         method: "POST",
@@ -502,10 +517,8 @@ __webpack_require__.r(__webpack_exports__);
           page: page },
 
         success: function success(result) {
+          isSearching = false; // 解锁
           uni.hideLoading();
-          console.log(result);
-          // console.log(result.data);
-          // that.searchedArticleList = result.data.data.rows;
 
           that.searching = false;
           if (result.data.status == 200) {
@@ -529,6 +542,7 @@ __webpack_require__.r(__webpack_exports__);
         } });
 
     },
+
     loadMore: function loadMore() {
       var that = this;
       var currentPage = that.currentPage;
@@ -548,6 +562,7 @@ __webpack_require__.r(__webpack_exports__);
         that.search(page);
       }
     },
+
     searchDeleteAll: function searchDeleteAll() {
       var that = this;
       uni.showModal({

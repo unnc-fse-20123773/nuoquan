@@ -39,6 +39,8 @@
 
 <script>
 	import searchResultArticle from '../../components/searchResultArticle.vue';
+	
+	var isSearching = false; //搜索锁
 	export default {
 		data() {
 			return {
@@ -61,13 +63,11 @@
 			// 查询热搜词
 			this.getHotWords();
 		},
-		// onReachBottom() {
-		// 	this.loadMore();
-		// },
+		destroyed() { // 组件退出隐藏加载
+			uni.hideLoading();
+		},
 		methods: {
 			getHotWords: function() {
-				console.log('dasdsdad');
-
 				var that = this;
 				uni.request({
 					url: that.$serverUrl + '/article/hot',
@@ -81,6 +81,11 @@
 				})
 			},
 			search: function(page) {
+				if(isSearching){
+					return;
+				}
+				isSearching = true;
+				
 				var that = this;
 				var isSaveRecord = 1;
 				// console.log(page);
@@ -133,6 +138,16 @@
 				uni.showLoading({
 					title: "搜索中..."
 				})
+				
+				setTimeout(()=>{
+					isSearching = false // 解锁
+					uni.hideLoading();
+					uni.showToast({
+						title: "网络未知错误",
+						icon: "none",
+						duration: 1000
+					})
+				}, 5000); // 延时5s timeout
 
 				uni.request({
 					url: that.$serverUrl + '/article/searchArticleYANG',
@@ -144,10 +159,8 @@
 						page: page,
 					},
 					success: function(result) {
+						isSearching = false // 解锁
 						uni.hideLoading();
-						console.log(result);
-						// console.log(result.data);
-						// that.searchedArticleList = result.data.data.rows;
 						
 						that.searching = false;
 						if(result.data.status == 200){
@@ -171,6 +184,7 @@
 					}
 				})
 			},
+			
 			loadMore: function() {
 				var that = this;
 				var currentPage = that.currentPage;
@@ -190,6 +204,7 @@
 					that.search(page);
 				}
 			},
+			
 			searchDeleteAll: function() {
 				var that = this;
 				uni.showModal({

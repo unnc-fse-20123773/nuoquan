@@ -16,6 +16,7 @@ Current Verion: `v1.01`
 6. 修复[中等] Bug-100024 & search 优化 (yaoyao)
 7. 新增 点赞后效果 (yaoyao)
 8. 升级 服务器配置
+9. 新增 search 显示loading timeout
 
 **v19.9.19 更新**
 1. 新增 上传锁，上传图压缩
