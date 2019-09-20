@@ -30,7 +30,6 @@
 		-webkit-justify-content: space-between;
 		    -ms-flex-pack: justify;
 		        justify-content: space-between;
-		padding-bottom: 5px;
 }
 .touxiang.data-v-e8f832ba {
 		width: 20px;
@@ -69,6 +68,7 @@
 		height: 12px;
 		font-size: 2px;
 		padding-right: 4px;
+		vertical-align: middle;
 }
 .icom.data-v-e8f832ba {
 		padding-right: 17px;
@@ -76,6 +76,10 @@
 		-webkit-align-items: flex-end;
 		    -ms-flex-align: end;
 		        align-items: flex-end;
+		vertical-align: middle;
+}
+.liked.data-v-e8f832ba{
+		color: #FDD041;
 }
 .submitComment.data-v-e8f832ba {
 		background: #FFCC30;

@@ -112,6 +112,9 @@ page {
 	font-size: 12px;
 	color: #888888;
 }
+.liked{
+	color: #FDD041;
+}
 .son-likeIcon{
 	position: absolute;
 	right: 40%;

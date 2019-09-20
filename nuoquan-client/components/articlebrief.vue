@@ -51,8 +51,9 @@
 			<view class="icons">
 				<image class="comment" src="../static/icon/comment.png" @click="jumpToDetail()"></image>
 				<view class="icon" @click="jumpToDetail()">{{thisArticle.commentNum}}</view>
-				<image class="like" src="../static/icon/like.png" @tap="swLikeArticle"></image>
-				<view class="icon" @tap="swLikeArticle">{{thisArticle.likeNum}}</view>
+				<image v-if="!thisArticle.isLike" class="like" src="../static/icon/like.png" @tap="swLikeArticle"></image>
+				<image v-if="thisArticle.isLike" class="like" src="../static/icon/liked.png" @tap="swLikeArticle"></image>
+				<view class="icon"  @tap="swLikeArticle">{{thisArticle.likeNum}}</view>
 			</view>
 		</view>
 	</view>
@@ -364,14 +365,7 @@
 		text-align: center;
 		vertical-align: middle;
 	}
-	
-	.comment{
-		
-	}
-	
-	.like{
-		
-	}
+
 	
 	.picturearea-one {
 		margin: auto;

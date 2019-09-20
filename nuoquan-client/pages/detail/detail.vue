@@ -40,9 +40,9 @@
 					<view class="time">{{ articleCard.createDate | timeDeal}}</view>
 				</view>
 				<view class="icons" @tap="swLikeArticle()">
-					<!-- 点赞MM按钮 TODO: 增加点赞后样式-->
-					<image class="icon" src="../../static/icon/like.png"></image>
-					<view class="icom">{{ articleCard.likeNum }}</view>
+					<image v-if="!articleCard.isLike" class="icon" src="../../static/icon/like.png"></image>
+					<image v-if="articleCard.isLike" class="icon" src="../../static/icon/liked.png"></image>
+					<view class="icom" :class="{'liked':articleCard.isLike}">{{ articleCard.likeNum }}</view>
 				</view>
 			</view>
 			<view style="width: 100%;height: 12px;display: flex;" class="column_center">
@@ -54,7 +54,7 @@
 			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i" @controlInputSignal="controlInput">
 			</commentbox>
 			<!-- 用于推出评论下方空白 -->
-			<view name="marginHelper" style="height: 88upx;width: 100%;background-color: white;"></view>
+			<view name="marginHelper" style="height: 50px;width: 100%;background-color: white;"></view>
 			<view class="bottomLayerOfSubmit">
 				<view class="submitComment" @click="controlInput(1)">发 表 评 论</view>
 			</view>
@@ -604,7 +604,9 @@
 		padding-left: 45upx;
 		/* padding-right: 8upx; */
 	}
-	
+	.liked{
+		color: #FDD041;
+	}
 	.icom{
 		position: absolute;
 		right: 33upx;

@@ -178,6 +178,9 @@ page {
 		padding-left: 45rpx;
 		/* padding-right: 8upx; */
 }
+.liked.data-v-0dddf152{
+		color: #FDD041;
+}
 .icom.data-v-0dddf152{
 		position: absolute;
 		right: 33rpx;

@@ -9,24 +9,25 @@
 			</view>
 			<view class="icons" @tap="swLikeSubComment()">
 				<!-- 点赞按钮 -->
-				<image class="icon" src="../../../static/icon/like.png"></image>
-				<text class="icom">{{ subComment.likeNum }}</text>
+				<image v-if='!subComment.isLike' class="icon" src="../../../static/icon/like.png"></image>
+				<image v-if='subComment.isLike' class="icon" src="../../../static/icon/liked.png"></image>
+				<text class="icom" :class="{'liked':subComment.isLike}">{{ subComment.likeNum }}</text>
 			</view>
 		</view>
 		<view style="border-top:1px solid #DCDCDC"></view>
-	
+
 	</view>
 </template>
 
 <script>
 	export default {
-		props:{
+		props: {
 			reCommentDetail: {},
 		},
 		data() {
 			return {
 				subComment: this.reCommentDetail, // 为了动态修改数值，对对象重新赋值，转换组件内部对象
-				
+
 				userInfo: this.getGlobalUserInfo(),
 			};
 		},
@@ -36,7 +37,7 @@
 			// 	this.subComment = this.reCommentDetail;
 			// })
 		},
-		methods:{
+		methods: {
 			// controlInputInRecomment(){
 			// 	var dataOfRecomment={
 			// 		mode:"re-re",
@@ -47,13 +48,13 @@
 			// 	}
 			// 	this.$emit('controlInputSignal',dataOfRecomment)
 			// },
-			
+
 			/**
 			 * 点赞或取消点赞二级评论
 			 * @param {Object} comment
 			 */
-			swLikeSubComment(){
-				if(this.subComment.isLike){
+			swLikeSubComment() {
+				if (this.subComment.isLike) {
 					this.unLikeComment(this.subComment);
 					this.subComment.likeNum--;
 					console.log(this.subComment.likeNum);
@@ -63,8 +64,8 @@
 				}
 				this.subComment.isLike = !this.subComment.isLike;
 			},
-			
-			likeComment(comment){
+
+			likeComment(comment) {
 				console.log("点赞评论");
 				var that = this;
 				uni.request({
@@ -78,13 +79,13 @@
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
-					success: (res) => {	
+					success: (res) => {
 						console.log(res);
 					},
 				});
 			},
-			
-			unLikeComment(comment){
+
+			unLikeComment(comment) {
 				console.log("取消点赞评论");
 				var that = this;
 				uni.request({
@@ -98,17 +99,17 @@
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
-					success: (res) => {	
+					success: (res) => {
 						console.log(res);
 					},
 				});
 			},
-			
-			goToPersonPublic(){
+
+			goToPersonPublic() {
 				this.$emit("goToPersonPublic", this.subComment.fromUserId);
 			},
-			
-			goToCommentDetail(){
+
+			goToCommentDetail() {
 				this.$emit("goToCommentDetail");
 			}
 		}
@@ -116,13 +117,12 @@
 </script>
 
 <style>
-	
 	.contentarea {
 		padding-top: 9px;
-		
+
 		font-size: 10px;
 	}
-	
+
 	.bottombar {
 		position: relative;
 		border-radius: 20px;
@@ -131,9 +131,9 @@
 		display: flex;
 		justify-content: space-between;
 		padding-bottom: 5px;
-	
+
 	}
-	
+
 	.touxiang {
 		width: 20px;
 		height: 20px;
@@ -142,7 +142,7 @@
 		vertical-align: middle;
 		margin-right: 5px;
 	}
-	
+
 	.time,
 	.name {
 		font-size: 10px;
@@ -151,26 +151,29 @@
 		max-width: 85px;
 		text-overflow: ellipsis;
 	}
-	
+
 	.icons {
 		justify-content: flex-end;
 		display: inline-flex;
 		align-items: flex-end;
 		width: 30%;
 		font-size: 10px;
-	
+
 	}
-	
+
 	.icon {
 		width: 12px;
 		height: 12px;
 		font-size: 2px;
 		padding-right: 4px;
 	}
-	
+
 	.icom {
 		align-items: flex-end;
 		padding-right: 5px;
 	}
-	
+
+	.liked {
+		color: #FDD041;
+	}
 </style>

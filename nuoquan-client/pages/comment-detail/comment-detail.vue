@@ -18,9 +18,10 @@
 					<view class="cmtdetail-right">
 						<view class="cmtdetail-rightrel">
 							<view @tap="swLikeComment(mainComment)">
-								<image src="../../static/icon/like.png" mode="aspectFill" class="likeIcon"></image>
+								<image v-if="!mainComment.isLike" src="../../static/icon/like.png" mode="aspectFill" class="likeIcon"></image>
+								<image v-if="mainComment.isLike" src="../../static/icon/liked.png" mode="aspectFill" class="likeIcon"></image>
 								<!-- 此处点赞数量最长5位数，如超出样式出错 -->
-								<text class="likeNum">{{mainComment.likeNum}}</text>
+								<text class="likeNum" :class="{'liked':mainComment.isLike}">{{mainComment.likeNum}}</text>
 							</view>
 							<image src="../../static/icon/message.png" mode="aspectFill" class="commentIcon"></image>
 						</view>
@@ -406,7 +407,9 @@
 		font-size: 12px;
 		color: #888888;
 	}
-	
+	.liked{
+		color: #FDD041;
+	}
 	.son-likeIcon{
 		position: absolute;
 		right: 40%;
