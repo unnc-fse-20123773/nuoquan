@@ -347,7 +347,7 @@
 		background-image: url(../static/BG/iconsBG.png);
 		overflow: hidden;
 		border-bottom-right-radius: 8px;
-		background-size:cover
+		background-size: cover;
 	}
 
 	.icons image {

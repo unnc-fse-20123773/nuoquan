@@ -149,6 +149,11 @@ var _default =
       introduction_text3: 'Nottinghome是XXXXXXXXXXX我看看长啥样' };
 
   },
+  onBackPress: function onBackPress(e) {
+    // return true 表示禁止默认返回
+    console.log("监听到返回");
+    return false;
+  },
   methods: {
     /**
               * 微信小程序登陆
