@@ -189,29 +189,38 @@ var _default =
       singleImgState: '0',
 
       imgList: [],
-      likeNum: this.articleCard.likeNum, // 转为局部变量
+      thisArticle: this.articleCard, // 转为局部变量
       tagColorList: [] // 储存每个tag的颜色
     };
   },
-  created: function created() {
-    if (this.articleCard.imgList.length > 3) {
+
+  created: function created() {var _this = this;
+    if (this.thisArticle.imgList.length > 3) {
       // 只取前三
       for (var i = 0; i < 3; i++) {
-        this.imgList.push(this.articleCard.imgList[i]);
+        this.imgList.push(this.thisArticle.imgList[i]);
       }
     } else {
-      this.imgList = this.articleCard.imgList;
+      this.imgList = this.thisArticle.imgList;
     }
 
     // 随机生成颜色
-    if (!this.isNull(this.articleCard.tagList)) {
+    if (!this.isNull(this.thisArticle.tagList)) {
       var tagColors = this.tagColors;
-      for (var i = 0; i < this.articleCard.tagList.length; i++) {
+      for (var i = 0; i < this.thisArticle.tagList.length; i++) {
         var random = Math.floor(Math.random() * tagColors.length); // 0~tagColors.length-1
         this.tagColorList.push(tagColors[random]);
       }
     }
+
+    uni.$on("updateArticle", function (article) {// from detail
+      if (article.id == _this.thisArticle.id) {
+        console.log("get");
+        _this.thisArticle = article; // 调用计算属性
+      }
+    });
   },
+
   filters: {
     timeDeal: function timeDeal(timediff) {
       timediff = new Date(timediff);
@@ -253,14 +262,14 @@ var _default =
     },
 
     swLikeArticle: function swLikeArticle() {
-      if (this.articleCard.isLike) {
+      if (this.thisArticle.isLike) {
         this.unLikeArticle();
-        this.likeNum--;
+        this.thisArticle.likeNum--;
       } else {
         this.likeArticle();
-        this.likeNum++;
+        this.thisArticle.likeNum++;
       }
-      this.articleCard.isLike = !this.articleCard.isLike;
+      this.thisArticle.isLike = !this.thisArticle.isLike;
     },
 
     likeArticle: function likeArticle() {
@@ -271,8 +280,8 @@ var _default =
         url: that.$serverUrl + '/article/userLikeArticle',
         data: {
           userId: that.userInfo.id,
-          articleId: that.articleCard.id,
-          articleCreaterId: that.articleCard.userId },
+          articleId: that.thisArticle.id,
+          articleCreaterId: that.thisArticle.userId },
 
         header: {
           'content-type': 'application/x-www-form-urlencoded' },
@@ -291,8 +300,8 @@ var _default =
         url: that.$serverUrl + '/article/userUnLikeArticle',
         data: {
           userId: that.userInfo.id,
-          articleId: that.articleCard.id,
-          articleCreaterId: that.articleCard.userId },
+          articleId: that.thisArticle.id,
+          articleCreaterId: that.thisArticle.userId },
 
         header: {
           'content-type': 'application/x-www-form-urlencoded' },
@@ -303,7 +312,7 @@ var _default =
 
     },
     jumpToDetail: function jumpToDetail() {
-      var navData = JSON.stringify(this.articleCard); // 这里转换成 字符串
+      var navData = JSON.stringify(this.thisArticle); // 这里转换成 字符串
       uni.navigateTo({
         url: '/pages/detail/detail?data=' + navData });
 
@@ -318,7 +327,7 @@ var _default =
       var imgIndex = index;
       // console.log(res)
       // 获取全部图片路径
-      var imgList = this.articleCard.imgList;
+      var imgList = this.thisArticle.imgList;
       var arr = [];
       var path;
       for (var i = 0; i < imgList.length; i++) {
@@ -373,7 +382,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var f0 = _vm._f("timeDeal")(_vm.articleCard.createDate)
+  var f0 = _vm._f("timeDeal")(_vm.thisArticle.createDate)
 
   _vm.$mp.data = Object.assign(
     {},

@@ -89,6 +89,7 @@
 		height: 40%;
 	}
 
+
 	.introduction-contentBox {
 		width: 70%;
 		height: 90%;

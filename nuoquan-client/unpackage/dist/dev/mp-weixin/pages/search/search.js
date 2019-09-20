@@ -98,7 +98,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _methods;function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var searchResultArticle = function searchResultArticle() {return __webpack_require__.e(/*! import() | components/searchResultArticle */ "components/searchResultArticle").then(__webpack_require__.bind(null, /*! ../../components/searchResultArticle.vue */ "../../../../../../../../../code/nuoquan/nuoquan-client/components/searchResultArticle.vue"));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var searchResultArticle = function searchResultArticle() {return __webpack_require__.e(/*! import() | components/searchResultArticle */ "components/searchResultArticle").then(__webpack_require__.bind(null, /*! ../../components/searchResultArticle.vue */ "../../../../../../../../../code/nuoquan/nuoquan-client/components/searchResultArticle.vue"));};var _default =
 
 
 
@@ -164,7 +164,7 @@ __webpack_require__.r(__webpack_exports__);
   // onReachBottom() {
   // 	this.loadMore();
   // },
-  methods: (_methods = {
+  methods: {
     getHotWords: function getHotWords() {
       console.log('dasdsdad');
 
@@ -271,10 +271,6 @@ __webpack_require__.r(__webpack_exports__);
         } });
 
     },
-    searchCancle: function searchCancle(searching) {
-      this.searching = !searching;
-      console.log(this.searching);
-    },
     loadMore: function loadMore() {
       var that = this;
       var currentPage = that.currentPage;
@@ -311,29 +307,29 @@ __webpack_require__.r(__webpack_exports__);
           }
         } });
 
-    } }, _defineProperty(_methods, "searchCancle",
-  function searchCancle(searching) {
-    this.searching = !searching;
-    // console.log(this.searching);
-  }), _defineProperty(_methods, "exitSearch", function exitSearch()
-  {
-    this.hotList = "",
-    this.searchKeyWords = "",
-    this.searchedArticleList = "",
-    this.$emit("exitSearchSignal", 0);
-  }), _defineProperty(_methods, "putHotIntoInput",
-  function putHotIntoInput(index) {
-    // console.log(index);
-    var keywords = this.hotList[index];
-    // console.log(keywords);
-    this.searchKeyWords = keywords;
-  }), _defineProperty(_methods, "putHisIntoInput",
-  function putHisIntoInput(index) {
-    // console.log(index);
-    var keywords = this.searchHisKeyList[index];
-    // console.log(keywords);
-    this.searchKeyWords = keywords;
-  }), _methods) };exports.default = _default;
+    },
+    searchCancle: function searchCancle(searching) {
+      this.searching = !searching;
+      // console.log(this.searching);
+    },
+    exitSearch: function exitSearch() {
+      this.hotList = "",
+      this.searchKeyWords = "",
+      this.searchedArticleList = "",
+      this.$emit("exitSearchSignal", 0);
+    },
+    putHotIntoInput: function putHotIntoInput(index) {
+      // console.log(index);
+      var keywords = this.hotList[index];
+      // console.log(keywords);
+      this.searchKeyWords = keywords;
+    },
+    putHisIntoInput: function putHisIntoInput(index) {
+      // console.log(index);
+      var keywords = this.searchHisKeyList[index];
+      // console.log(keywords);
+      this.searchKeyWords = keywords;
+    } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
