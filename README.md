@@ -3,13 +3,8 @@ README
 Current Verion: `v1.01`
 ******
 ## *TODO：* ##
-- ~~点赞开灯效果 (yaoyao)~~
-- ~~submit 删除图片 (deyan)~~
-- ~~detail 图片显示优化（单图，四图，其他）(yaoyao)~~
-- 登录页面修改 (guetta & ~~jerrio~~)
-- ~~submit 背景图 (yaoyao)~~
-- ~~Bug-100024 (yaoyao)~~
-- login 用户协议 (guetta & jerrio) DDL: 9.20-2pm
+- 点赞开灯效果 (guetta & jinjin)
+- index 黄色异形适配长整型 (yaoyao)
 
 ## [Recent Update](./updateLog.md): ##
 **v19.9.20 更新**
@@ -20,6 +15,7 @@ Current Verion: `v1.01`
 5. 新增 signin 初步构建 (jerrio & guetta)
 6. 修复[中等] Bug-100024 & search 优化 (yaoyao)
 7. 新增 点赞后效果 (yaoyao)
+8. 升级 服务器配置
 
 **v19.9.19 更新**
 1. 新增 上传锁，上传图压缩
