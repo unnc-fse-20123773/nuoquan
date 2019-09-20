@@ -19,6 +19,7 @@ Current Verion: `v1.01`
 4. 整合 yaoyao & guetta
 5. 新增 signin 初步构建 (jerrio & guetta)
 6. 修复[中等] Bug-100024 & search 优化 (yaoyao)
+7. 新增 点赞后效果 (yaoyao)
 
 **v19.9.19 更新**
 1. 新增 上传锁，上传图压缩
