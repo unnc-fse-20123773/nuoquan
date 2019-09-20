@@ -2,122 +2,125 @@
 	<view id="signin-container">
 		<!-- Logo 框 -->
 		<view id="icon" class="super_center">
-				<view class="icon-logoBox super_center">
-					<image src="../../static/icon/logo_app.png" mode="aspectFill" class="icon-logo"></image>
-				</view>
+			<view class="icon-logoBox super_center">
+				<image src="../../static/icon/logo_app.png" mode="aspectFill" class="icon-logo"></image>
+			</view>
 		</view>
 		<!-- 简介 -->
 		<view id="introduction" class="super_center">
 			<view class="introduction-contentBox super_center">
 				<scroll-view scroll-y="true" class="introduction-content">
 					<!-- 此处待完工 -Guetta -->
-					<text>
-					{{introduction_text1}}
-					{{introduction_text2}}
-					{{introduction_text3}}
-					</text>
+					<view class="introduction-text">{{introduction_text1}}</view>
+					<view class="introduction-text">{{introduction_text2}}</view>
+					<view class="introduction-text">{{introduction_text3}}</view>
 					<!-- ! -->
 				</scroll-view>
 			</view>
 		</view>
 		<view id="confirm" class="super_center">
 			<view class="confirm-rel">
-			<button class="confirm-button super_center" hover-class="button-hover">
-				<view style="color: white;font-weight: 550;letter-spacing: 3px;font-family: Microsoft YaHei;">确认绑定</view>
-			</button>
-			<view class="conform-bgBox"></view>
+				<button class="confirm-button super_center" hover-class="button-hover">
+					<view style="color: white;font-weight: 550;letter-spacing: 3px;font-family: Microsoft YaHei;">确认绑定</view>
+				</button>
+				<view class="conform-bgBox"></view>
 			</view>
 		</view>
-		
+
 		<image src="../../static/BG/signin_bottom.png" mode="scaleToFill" class="bottom-picBox"></image>
 	</view>
 </template>
 
 <script>
-export default {
-	data() {
-		return {
-			introduction_text1 : 'Nottinghome1111是XXXXXXXXXXX',
-			introduction_text2: 'Nottinghome是XXXXXXXXXXX哈哈哈哈哈哈哈哈哈',
-			introduction_text3 : 'Nottinghome是XXXXXXXXXXX我看看长啥样',
-		};
-	},
-	methods: {}
-};
+	export default {
+		data() {
+			return {
+				introduction_text1: 'Nottinghome1111是XXXXXXXXXXX',
+				introduction_text2: 'Nottinghome是XXXXXXXXXXX哈哈哈哈哈哈哈哈哈',
+				introduction_text3: 'Nottinghome是XXXXXXXXXXX我看看长啥样',
+			};
+		},
+		methods: {}
+	};
 </script>
 
 <style>
-	page{
+	page {
 		width: 100%;
 		height: 100%;
 	}
-	
-	button::after{ 
+
+	button::after {
 		border: none;
-		outline:none;
-		}
+		outline: none;
+	}
+
 	/* 按百分比分配父组件区域 */
 	/* 如更改样式需重新计算百分比分配 */
-	#signin-container{
+	#signin-container {
 		width: 100%;
 		height: 100%;
 		position: relative;
 	}
-	
-	#icon{
+
+	#icon {
 		position: absolute;
 		top: 4%;
 		width: 100%;
 		height: 16%;
 	}
-	
-	.icon-logoBox{
+
+	.icon-logoBox {
 		height: 80px;
 		width: 80px;
 		box-shadow: 0px 0px 10px 1px #CCCCCC;
 		border-radius: 30upx;
 	}
-	
-	.icon-logo{
+
+	.icon-logo {
 		height: 70px;
 		width: 70px;
 	}
-	
-	#introduction{
+
+	#introduction {
 		position: absolute;
 		top: 20%;
 		width: 100%;
 		height: 40%;
 	}
-	
-	.introduction-contentBox{
+
+	.introduction-contentBox {
 		width: 70%;
 		height: 90%;
 		background-color: #EEEEEE;
 		opacity: 0.5;
 		border-radius: 30upx;
 	}
-	
-	.introduction-content{
+
+	.introduction-content {
 		width: 90%;
 		height: 90%;
 		background-color: #09BB07;
 	}
 	
-	#confirm{
+	.introduction-content .introduction-text{
+		width: 100%;
+	}
+
+	#confirm {
 		position: absolute;
 		top: 62%;
 		width: 100%;
 		height: 10%;
 	}
-	
-	.confirm-rel{
+
+	.confirm-rel {
 		position: relative;
 		width: 100%;
 		height: 100%;
 	}
-	
-	.confirm-button{
+
+	.confirm-button {
 		position: absolute;
 		top: 24%;
 		left: 26%;
@@ -127,8 +130,8 @@ export default {
 		background-color: #FFCD2E;
 		z-index: 20;
 	}
-	
-	.conform-bgBox{
+
+	.conform-bgBox {
 		position: absolute;
 		top: 24%;
 		left: 26%;
@@ -138,12 +141,11 @@ export default {
 		border-radius: 10upx;
 		z-index: 10;
 	}
-	
-	.bottom-picBox{
+
+	.bottom-picBox {
 		position: absolute;
 		bottom: 0;
 		width: 100%;
 		height: 26%;
 	}
-
 </style>
