@@ -1,3 +1,4 @@
+<!-- 开发测试用界面 -->
 <template>
 	<view>
 		<button type="primary" open-type="getUserInfo" @getuserinfo="getUserInfo" withCredentials="true">微信登陆授权</button>
@@ -81,7 +82,6 @@
 										}
 									}
 								});
-								// that.setUser(info.userInfo);
 							}
 						});
 					}

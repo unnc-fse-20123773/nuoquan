@@ -11,7 +11,10 @@
 			<input class="code" />
 			<button>发送验证码</button>
 		</view>
-		<view class="binding">确认绑定</view>
+		
+		<!-- 登录button，弹出微信授权界面 -->
+		<button class="binding" open-type="getUserInfo" @getuserinfo="getUserInfo" withCredentials="true">微信登陆</button>
+		
 	</view>
 </template>
 
@@ -20,7 +23,59 @@ export default {
 	data() {
 		return {};
 	},
-	methods: {}
+	methods: {
+		/**
+		 * 微信小程序登陆
+		 */
+		getUserInfo() {
+			var that = this;
+			uni.login({
+				success: res_login => {
+					// console.log('-------res_login，获取code-------')
+					// console.log(res_login);
+					uni.getUserInfo({
+						success: info => {
+							// console.log('-------获取sessionKey、openid(unionid)-------')
+							// console.log(info);
+							// 后端获取openid 并设置用户信息
+							uni.request({
+								url: that.$serverUrl + '/user/getWxUserInfo',
+								method: "POST",
+								data: {
+									encryptedData: info.encryptedData,
+									iv: info.iv,
+									code: res_login.code,
+		
+									nickname: info.userInfo.nickName,
+									faceImg: info.userInfo.avatarUrl
+								},
+								header: {
+									'content-type': 'application/x-www-form-urlencoded'
+								},
+								success: (res) => {
+									// console.log(res)
+									if (res.data.status == 200) {
+										// 3.获取返回的用户信息
+										var finalUser = res.data.data;
+										// 4.分割邮箱地址, 重构 user
+										finalUser = this.myUser(finalUser);
+										// 5.写入缓存
+										this.setGlobalUserInfo(finalUser);
+										console.log(finalUser);
+		
+										// 6.返回
+										uni.navigateBack({
+											delta: 1
+										});
+									}
+								}
+							});
+						}
+					});
+				}
+			});
+		},
+	}
 };
 </script>
 

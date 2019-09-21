@@ -171,24 +171,22 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
     var userInfo = this.getGlobalUserInfo();
     if (this.isNull(userInfo)) {
       uni.navigateTo({
-        url: "../wechatLogin/wechatLogin" });
+        url: "../signin/signin" });
 
       return;
     }
-    // 更新用户信息缓存... 查询用户信息，并分割邮箱更新到缓存
-    this.queryUserInfo(userInfo.id);
 
     this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
-
     // [测试代码块]
   },
 
   onShow: function onShow() {
     var that = this;
-    var userInfo = this.getGlobalUserInfo();
+    var userInfo = this.getGlobalUserInfo(); // 查看用户是否登录
     if (!this.isNull(userInfo)) {
       // 设置 userInfo 传给 mainpagetop 组件
-      this.userInfo = this.getGlobalUserInfo();
+      // 更新用户信息缓存... 查询用户信息，并分割邮箱更新到缓存
+      this.queryUserInfo(userInfo.id);
     }
 
     var page = that.currentPage;
@@ -196,7 +194,9 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
 
     this.getTop3Articles(); // 获取热度榜
   },
+
   methods: {
+
     showArticles: function showArticles(page) {
       var that = this;
       uni.showLoading({
@@ -235,6 +235,7 @@ var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! impor
         } });
 
     },
+
     loadMore: function loadMore() {
       var that = this;
       var currentPage = that.currentPage;

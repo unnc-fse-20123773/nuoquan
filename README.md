@@ -1,4 +1,15 @@
-# Update Log:
+*TODO：*
+- 点赞开灯效果 (guetta)
+- ~~submit 删除图片 (deyan)~~
+- detail 图片显示优化（单图，四图，其他）(yaoyao)
+- 登录页面修改 (guetta & ~~jerrio~~)
+
+# Update Log: #
+**v19.9.18 更新**
+1. 整合 deyan
+2. 修复[严重] Bug-100022
+3. 新增 submit 删除图片 (deyan && yaoyao)
+
 **v19.9.17 更新**
 1. 整合 deyan & yaoyao
 2. 新增 sumbit 删除标签 (deyan && yaoyao)
@@ -12,11 +23,7 @@
 10. 优化 detail 评论分割线 (guetta)
 11. 添加 detail marginHelper 块 (guetta)
 12. 优化 detail 页面字体大小、粗细，高精度还原设计稿 (guetta)
-
-*TODO：*
-- 点赞开灯效果
-- submit 删除已选图片
-- detail 图片显示优化（单图，四图，其他）
+13. 修复 已知bug
 
 **v19.9.15 更新**
 1. 整合 guetta
