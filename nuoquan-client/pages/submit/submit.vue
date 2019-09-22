@@ -197,6 +197,9 @@
 					return;
 				}
 				uploadFlag = true;
+				uni.showLoading({
+					title: "正在上传..."
+				})
 				setTimeout(() => {
 					me.combineTagToString();
 
@@ -218,6 +221,7 @@
 							if (res.data.status == 200) {
 								if (me.imageList.length > 0) {
 									const articleId = res.data.data;
+									var resCount = 0
 									for (var i = 0; i < me.imageList.length; i++) {
 										uni.uploadFile({
 											url: this.$serverUrl + '/article/uploadArticleImg',
@@ -229,41 +233,52 @@
 												order: i
 											},
 											success: (uploadFileRes) => {
-												// uploadFlag = false;
-												// uni.navigateBack({
-												// 	delta: 1
-												// })
+												resCount++;
+												if(resCount == me.imageList.length){
+													me.uploadSuccess();
+												}
 											}
 										});
 									}
+								}else{
+									me.uploadSuccess();
 								}
-
-								uploadFlag = false;
-								uni.$emit("flash"); // 给 index 发送刷新信号
-								uni.navigateBack({
-									delta: 1
-								})
-								uni.showToast({
-									title: '上传成功',
-									duration: 2000,
-									icon: 'success',
-								})
 							} else {
-								// 上传失败 用户提醒
-								uploadFlag = false;
-								uni.showToast({
-									title: '出现未知错误，上传失败',
-									duration: 2000,
-									icon: 'none',
-								})
+								me.uploadFail();
 							}
 						},
 						fail: (res) => {
-							uploadFlag = false;
+							me.uploadFail();
 						}
 					})
 				}, 100) //延时执行等待上锁
 			},
+			
+			uploadSuccess(){
+				uploadFlag = false;
+				uni.hideLoading();
+				uni.$emit("flash"); // 给 index 发送刷新信号
+				uni.navigateBack({
+					delta: 1
+				})
+				uni.showToast({
+					title: '上传成功',
+					duration: 2000,
+					icon: 'success',
+				})
+			},
+			
+			uploadFail(){
+				// 上传失败 用户提醒
+				uploadFlag = false;
+				uni.hideLoading();
+				uni.showToast({
+					title: '出现未知错误，上传失败',
+					duration: 2000,
+					icon: 'none',
+				})
+			},
+			
 			deleteTag: function(index) {
 				console.log(index);
 				var targetTag = this.tagList[index];
