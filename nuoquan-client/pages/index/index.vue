@@ -56,9 +56,6 @@
 		onLoad() {
 			var userInfo = this.getGlobalUserInfo();
 			if (this.isNull(userInfo)) {
-				// uni.$once("reloadIndex",()=>{
-				// 	this.showArticles(1);
-				// })
 				uni.redirectTo({
 					url: "../signin/signin"
 				})
