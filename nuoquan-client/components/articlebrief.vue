@@ -22,13 +22,15 @@
 			<!-- 单图显示 -->
 			<view style="width: 100%;max-height: 400upx;" v-if="thisArticle.imgList.length == 1">
 				<!-- 高 ＞ 宽 -->
-				<view v-if="singleImgState == 0" style="width: 360upx;">
-					<image mode="aspectFill" style="height: 360upx;" :src="serverUrl + thisArticle.imgList[0].imagePath" @load="singleImgeFit"
-					 @tap="previewImage(0)"></image>
+				<view v-if="singleImgState == 0">
+					<!-- :style在编译到微信小程序时，不会将'upx'编译为'rpx'，故 width 失效 -Guetta -->
+					<image mode="aspectFit" :style="{'height': (singleImgHeight)+'rpx','width': (singleImgWidth)+'rpx'}" :src="serverUrl + thisArticle.imgList[0].imagePath" @load="singleImgeFit"
+					 @tap="previewImage(0)"></image> 
 				</view>
+
 				<!-- 宽 > 高 -->
-				<view v-else style="max-height: 400upx;display: flex;">
-					<image mode="aspectFill" style="width: 90%;" :src="serverUrl + thisArticle.imgList[0].imagePath" @load="singleImgeFit"
+				<view v-else style="width: 100%;">
+					<image mode="aspectFit" style="margin-left: 10upx;" :style="{'height': (singleImgHeight)+'rpx','width': (singleImgWidth)+'rpx'}" :src="serverUrl + thisArticle.imgList[0].imagePath" @load="singleImgeFit"
 					 @tap="previewImage(0)"></image>
 				</view>
 			</view>
@@ -36,7 +38,7 @@
 
 			<view style="width:30%;height: 200upx;margin-left: 2.5%;display: flex;background-color: #D1D1D1;" v-else v-for="(item,index) in imgList"
 			 :key="index">
-				<image mode="aspectFill" :src="serverUrl + item.imagePath" @tap="previewImage(index)"></image>
+				<image mode="aspectFill" style="height: 200upx" :src="serverUrl + item.imagePath" @tap="previewImage(index)"></image>
 			</view>
 
 		</view>
@@ -69,8 +71,10 @@
 			return {
 				serverUrl: this.$serverUrl,
 				userInfo: this.getGlobalUserInfo(),
-				singleImgState: '0',
-
+				// singleImgState: '0',
+				singleImgHeight: 0,
+				singleImgWidth: 0,
+				heightWidthRate: 0,
 				imgList: [],
 				thisArticle: this.articleCard, // 转为局部变量
 				tagColorList: [], // 储存每个tag的颜色
@@ -136,14 +140,32 @@
 			singleImgeFit(e) {
 				var height = e.detail.height;
 				var width = e.detail.width;
+				var rate;
 				if (height >= width) {
 					this.singleImgState = 0;
+					this.singleImgHeight = 400;
+					rate = width/height;
+					this.heightWidthRate = rate;
+					this.singleImgWidth = 400*rate;
+					console.log(this.singleImgState);
+					console.log(rate);
+					console.log(this.singleImgHeight);
+					console.log(this.singleImgWidth);
 				} else {
 					this.singleImgState = 1;
+					this.singleImgWidth = 400;
+					rate = height/width;
+					this.heightWidthRate = rate;
+					this.singleImgHeight = 400*rate;
+					console.log(this.singleImgState);
+					console.log(rate);
+					console.log(this.singleImgHeight);
+					console.log(this.singleImgWidth);
 				}
 				// console.log(e.detail);
 			},
-
+			
+			
 			swLikeArticle() {
 				if (this.thisArticle.isLike) {
 					this.unLikeArticle();
@@ -232,7 +254,12 @@
 	image {
 		border: none;
 		outline: none;
+		max-height: 360upx;
+		margin: auto;
 	}
+		/* image {
+		
+	} */
 </style>
 <style scoped>
 	.articlecard {
@@ -369,7 +396,7 @@
 
 	
 	.picturearea-one {
-		margin: auto;
+		/* margin: auto; */
 		display: flex;
 		width: 94%;
 		margin-left: 3%;
@@ -384,9 +411,5 @@
 		margin-left: 3%;
 	}
 
-	image {
-		width: 100%;
-		height: 200upx;
-		margin: auto;
-	}
+
 </style>

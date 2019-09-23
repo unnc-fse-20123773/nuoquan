@@ -7,6 +7,10 @@ Current Verion: `v1.01`
 - index 黄色异形适配长整型 (yaoyao)
 
 ## [Recent Update](./updateLog.md): ##
+**v19.9.24 更新**
+1. 修复[严重] Bug-100027
+2. 修复[严重] Bug-100029
+
 **v19.9.22 更新**
 1. 修复[严重] Bug-100028
 
@@ -20,12 +24,3 @@ Current Verion: `v1.01`
 7. 新增 点赞后效果 (yaoyao)
 8. 升级 服务器配置
 9. 新增 search 显示loading timeout
-
-**v19.9.19 更新**
-1. 新增 上传锁，上传图压缩
-2. 优化 index 触顶刷新体验
-3. 整合 yaoyao
-4. 优化 detail 单四多图显示 (yaoyao)
-5. 优化 index 文章加载，sumbit->index 跳转体验
-6. 修复 index 崩溃问题，原因：跳转 detail 后返回页面加载冗余
-7. 修正 拆分 updateUser 接口业务
