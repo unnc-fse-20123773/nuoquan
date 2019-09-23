@@ -1,9 +1,13 @@
 package com.nuoquan.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
+import java.util.stream.IntStream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nuoquan.utils.FastDFSClient;
+import com.nuoquan.email.EmailTool;
 import com.nuoquan.mapper.UserMapper;
 import com.nuoquan.pojo.ChatMsg;
 import com.nuoquan.pojo.User;
@@ -42,6 +47,9 @@ public class UserController extends BasicController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private EmailTool emailTool;
 	
 	/**
 	 * Description 上传文件到 fdfs 文件服务器 的实例方法
@@ -237,8 +245,8 @@ public class UserController extends BasicController {
 	public String appSecret;
 	@Value("${WXConst.wxGetOpenIdUrl}")
 	public String wxGetOpenIdUrl;
-	
-	@RequestMapping("/getWxUserInfo")
+	@ApiOperation(value = "get Wechat UserInfo")
+	@PostMapping("/getWxUserInfo")
 	public JSONResult getWxUserInfo(String code,String iv,String encryptedData, String nickname, String faceImg) throws Exception {
 			
 			// 获取openid
@@ -298,5 +306,41 @@ public class UserController extends BasicController {
 		UserVO userVO = ConvertUserToUserVO(user);
 
 		return userVO;
+	}
+	
+	@ApiOperation(value = "Get the identifying code by email")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "userId", required = true, dataType = "String", paramType = "form"), 
+			@ApiImplicitParam(name = "email", required = true, dataType = "String", paramType = "form")})
+	@PostMapping("/getCode")
+	public JSONResult getCode(String userId, String email) throws Exception {
+
+		if (StringUtils.isBlank(userId)) {
+			return JSONResult.errorMsg("User id can not be null.");
+		}
+		// 生成验证码
+		int length = 6; // 位数
+		String code = "";
+		
+		Random random = new Random();
+		for (int i = 0 ; i<length; i++) {
+			code+=random.nextInt(10);
+		}
+		System.out.println(code);
+		redis.set(USER_EMAIL_CODE + ":" + userId, code, 1000 * 60 * 30); // 过期时间单位为毫秒
+//		emailTool.sendCodeToMail(email, code);
+		
+		return JSONResult.ok();
+	}
+	
+	@ApiOperation(value = "Confirm identifying code")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "userId", required = true, dataType = "String", paramType = "form"), 
+			@ApiImplicitParam(name = "code", required = true, dataType = "String", paramType = "form")})
+	@PostMapping("/confirmCode")
+	public JSONResult confirmCode(String userId, String code) throws Exception {
+
+
+		return JSONResult.ok();
 	}
 }

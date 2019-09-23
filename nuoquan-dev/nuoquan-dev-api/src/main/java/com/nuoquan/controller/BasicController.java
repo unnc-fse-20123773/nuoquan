@@ -15,9 +15,13 @@ import com.nuoquan.config.ResourceConfig;
 import com.nuoquan.pojo.User;
 import com.nuoquan.pojo.vo.UserLikeVO;
 import com.nuoquan.pojo.vo.UserVO;
+import com.nuoquan.utils.RedisOperator;
 
 @RestController
 public class BasicController {
+
+	@Autowired
+	public RedisOperator redis;
 	
 	@Value("${fdfs.groupName}")
 	public String fdfsGroupName;
@@ -27,6 +31,8 @@ public class BasicController {
 	
 	// 每页分页的记录数
 	public static final Integer PAGE_SIZE = 10;
+	
+	public static final String USER_EMAIL_CODE = "user-email-code"; //Final 均大写
 	
 	public UserVO ConvertUserToUserVO (User user) {
 		UserVO userVO = new UserVO();
