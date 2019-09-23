@@ -345,6 +345,9 @@
 		text-align: right;
 		display: inline-block;
 		background-image: url(../static/BG/iconsBG.png);
+		background-size: cover;
+		background-repeat: no-repeat;
+		
 		overflow: hidden;
 		border-bottom-right-radius: 8px;
 	}
