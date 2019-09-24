@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nuoquan.utils.FastDFSClient;
+import com.github.pagehelper.util.StringUtil;
 import com.nuoquan.email.EmailTool;
 import com.nuoquan.mapper.UserMapper;
 import com.nuoquan.pojo.ChatMsg;
@@ -326,9 +327,11 @@ public class UserController extends BasicController {
 		for (int i = 0 ; i<length; i++) {
 			code+=random.nextInt(10);
 		}
-		System.out.println(code);
-		redis.set(USER_EMAIL_CODE + ":" + userId, code, 1000 * 60 * 30); // 过期时间单位为毫秒
-//		emailTool.sendCodeToMail(email, code);
+//		System.out.println(code);
+		// 存入 redis
+		redis.set(USER_EMAIL_CODE + ":" + userId, code, 60 * 10); // 过期时间单位为秒 10分钟过期
+		// 发送验证码邮件模板
+		emailTool.sendCodeToMail(email, code);
 		
 		return JSONResult.ok();
 	}
@@ -340,7 +343,14 @@ public class UserController extends BasicController {
 	@PostMapping("/confirmCode")
 	public JSONResult confirmCode(String userId, String code) throws Exception {
 
-
-		return JSONResult.ok();
+		String rightCode = redis.get(USER_EMAIL_CODE + ":" + userId);
+		if (StringUtils.isBlank(rightCode)) {
+			return JSONResult.errorMsg("The code for this user is blank.");
+		}else {
+			if (code.equals(rightCode)) {
+				return JSONResult.ok();
+			}
+		}
+		return JSONResult.errorMsg("Wrong code.");
 	}
 }

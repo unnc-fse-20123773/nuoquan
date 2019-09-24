@@ -70,9 +70,9 @@ public class EmailTool {
 			StringBuffer content = new StringBuffer();
 			
 			content.append("<p>亲爱的 Unncer：</p>")
-				.append("<p>欢迎你加入 Nottinghome 大家庭。</p>")
-				.append("<p>祝：生活愉快，学习顺利<br>Jumbox 开发组敬上</br></p>")
-				.append("<b><p>["+ code +"]</p></b>");
+				.append("<p>欢迎你加入 Nottinghome 大家庭，下面是你的验证码：</p>")
+				.append("<p><b>["+ code +"]</b> 有效期十分钟</p>")
+				.append("<p>祝：生活愉快，学习顺利，<br>Jumbox 开发组敬上。</br></p>");
 			helper.setText(content.toString(), true);
 		     
 		    javaMailSender.send(message);
