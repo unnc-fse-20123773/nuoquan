@@ -104,7 +104,7 @@
 /******/
 /******/
 /******/ 		// mini-css-extract-plugin CSS loading
-/******/ 		var cssChunks = {"components/mainpageleft":1,"components/mainpagetop":1,"components/comment":1,"pages/chatpage/oneMessage":1,"components/mypicker":1,"components/searchResultArticle":1,"pages/black-index/black-articlebrief":1,"pages/black-index/black-popup":1,"components/swipe-action":1,"components/reComment":1,"pages/black-index/black-comment":1};
+/******/ 		var cssChunks = {"components/mainpageleft":1,"components/mainpagetop":1,"components/comment":1,"pages/chatpage/oneMessage":1,"components/mypicker":1,"components/searchResultArticle":1,"pages/black-index/black-articlebrief":1,"pages/black-index/black-popup":1,"components/swipe-action":1,"pages/comment-detail/sonCommentBox":1,"components/reComment":1,"pages/black-index/black-comment":1};
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {

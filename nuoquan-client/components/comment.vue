@@ -16,11 +16,11 @@
 					<image v-if="RECOMMENT && mainComment.commentNum" src="../../../../static/icon/ReComment.png" 
 					style="height:23px;width:50px;position:relative;bottom:-5px;padding-right:4px;"></image>
 				</view>
-				<!-- <text class="icom">{{mainComment.commentNum}}</text> -->
 				<!-- 点赞按钮 -->
 				<view @tap="swLikeMainComment(mainComment)">
-					<image class="icon" src="../../../static/icon/like.png"></image>
-					<text class="icom">{{ mainComment.likeNum }}</text>
+					<image v-if="!mainComment.isLike" class="icon" src="../../../static/icon/like.png"></image>
+					<image v-if="mainComment.isLike" class="icon" src="../../../static/icon/liked.png"></image>
+					<text class="icom" :class="{'liked':mainComment.isLike}">{{ mainComment.likeNum }}</text>
 				</view>
 			</view>
 		</view>
@@ -241,8 +241,6 @@
 		margin-top: 10px;
 		display: flex;
 		justify-content: space-between;
-		padding-bottom: 5px;
-
 	}
 
 	.touxiang {
@@ -277,13 +275,17 @@
 		height: 12px;
 		font-size: 2px;
 		padding-right: 4px;
+		vertical-align: middle;
 	}
 
 	.icom {
 		padding-right: 17px;
 		align-items: flex-end;
+		vertical-align: middle;
 	}
-
+	.liked{
+		color: #FDD041;
+	}
 	.submitComment {
 		background: #FFCC30;
 		border-radius: 5px;

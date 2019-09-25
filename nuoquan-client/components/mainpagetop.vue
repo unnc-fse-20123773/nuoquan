@@ -14,7 +14,7 @@
 		<view class="mainPageTop" :style="{height: topHeight +'px;'}">
 			<view class="topBar">
 				<image class="topBarTouxiang" :src='userInfo.faceImg' @click="controlShowLeft(1)"></image>
-				<input class="topBarSearch" placeholder="  搜索" @click="controlShowSearch(1)" />
+				<view class="topBarSearch" @click="controlShowSearch(1)" >⠀⠀搜索</view>
 				<view class="topBarPlus" @click="jumpToSubmit()">
 					<view style="font-size: 20px;color:#FDD041;border-radius: 3px;">+</view>
 				</view>
@@ -146,7 +146,7 @@
 		letter-spacing: 1px;
 		color: #b2b2b2;
 		font-family: MicrosoftYaHei;
-		line-height: 10px;
+		line-height: 30px;
 
 	}
 

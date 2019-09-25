@@ -8,21 +8,30 @@
 		<view class="detailmain">
 			<view class="detailcontent">{{ articleCard.articleContent }}</view>
 
-			<view class="detailpics">
+			<view >
 				<!-- 单图显示 -->
-				<view v-if="articleCard.imgList.length==1" class="1pic" style="width: 100%;max-height: 400upx;">
-					<image v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFit" style="height: 360upx;"
-					 @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
+				<view v-if="articleCard.imgList.length==1" class="detailpics 1pic" style="width: 100%;max-height: 400upx;display: flex;">
+					<image v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFill"
+					 style="height: 360upx;max-width:180px;display: inline-block;" @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
 				</view>
 				<!-- 其他数量 -->
-				<image class="detailpic" v-else v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath"
-				 mode="aspectFill" @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
-				<view v-if="articleCard.imgList.length==2||imageList.length==5||imageList.length==8" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
+				<view v-else-if="articleCard.imgList.length==4" class="detailpics" style="max-width: 400upx;margin-left: 0;">
+					<image class="detailpic" v-for="(i,index) in articleCard.imgList" :key="index"
+					 :src="serverUrl + i.imagePath" mode="aspectFill" @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
+				</view>
+
+				<view v-else class="detailpics">
+					<image class="detailpic" v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFill"
+					 @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
+					 <view v-if="articleCard.imgList.length==2||imageList.length==5||imageList.length==8" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
+					 
+				</view>
+
 			</view>
 			<view class="tags">
 				<view class="tag" :style="{background: tagColorList[index]}" v-for="(i,index) in articleCard.tagList" v-bind:key="index">{{i}}</view>
 			</view>
-			
+
 			<!-- ID 行 -->
 			<view class="bottombar">
 				<view style="width:70%;display:inline-block;">
@@ -31,9 +40,9 @@
 					<view class="time">{{ articleCard.createDate | timeDeal}}</view>
 				</view>
 				<view class="icons" @tap="swLikeArticle()">
-					<!-- 点赞MM按钮 TODO: 增加点赞后样式-->
-					<image class="icon" src="../../static/icon/like.png"></image>
-					<view class="icom">{{ articleCard.likeNum }}</view>
+					<image v-if="!articleCard.isLike" class="icon" src="../../static/icon/like.png"></image>
+					<image v-if="articleCard.isLike" class="icon" src="../../static/icon/liked.png"></image>
+					<view class="icom" :class="{'liked':articleCard.isLike}">{{ articleCard.likeNum }}</view>
 				</view>
 			</view>
 			<view style="width: 100%;height: 12px;display: flex;" class="column_center">
@@ -45,11 +54,11 @@
 			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i" @controlInputSignal="controlInput">
 			</commentbox>
 			<!-- 用于推出评论下方空白 -->
-			<view name="marginHelper" style="height: 88upx;width: 100%;background-color: white;"></view>			
+			<view name="marginHelper" style="height: 50px;width: 100%;background-color: white;"></view>
 			<view class="bottomLayerOfSubmit">
 				<view class="submitComment" @click="controlInput(1)">发 表 评 论</view>
 			</view>
-			
+
 			<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)">
 				<view class="commentPart" @click.stop="" :style="{bottom: textAreaAdjust }">
 					<view class="emoji"></view>
@@ -126,6 +135,12 @@
 		
 		onReachBottom() {
 			this.loadMore();
+		},
+		
+		onUnload() {
+			// 更新本文章信息给上级页面（主页）
+			uni.$emit("updateArticle", this.articleCard);
+			console.log("返回")
 		},
 		
 		onLoad(options) {
@@ -206,6 +221,7 @@
 						},
 					})
 				}
+				this.articleCard.commentNum++; // 文章评论数累加
 			},
 			
 			getComments: function(page) {		
@@ -424,8 +440,12 @@
 <style scoped>
 
 	.topbar {
-		background-color: RGB(253, 217, 108);
-		padding-bottom: 60px;
+		background: url(../../static/BG/detailBG.png);
+		background-repeat: no-repeat;
+		background-position-y: -5px;
+		background-size: cover;
+		padding-bottom: 45px;
+		padding-top: 15px;
 	}
 
 	.detailtitle {
@@ -493,7 +513,7 @@
 		flex: 0 0 auto;
 		align-items: center;
 		flex-wrap: wrap;
-		width: 606upx;
+		width: 100%;
 		margin: 0 auto;
 	}
 
@@ -584,7 +604,9 @@
 		padding-left: 45upx;
 		/* padding-right: 8upx; */
 	}
-	
+	.liked{
+		color: #FDD041;
+	}
 	.icom{
 		position: absolute;
 		right: 33upx;

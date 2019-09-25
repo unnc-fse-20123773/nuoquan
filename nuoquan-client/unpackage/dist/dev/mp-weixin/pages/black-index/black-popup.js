@@ -105,7 +105,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var blackcomment = function blackcomment() {return __webpack_require__.e(/*! import() | pages/black-index/black-comment */ "pages/black-index/black-comment").then(__webpack_require__.bind(null, /*! ./black-comment */ 228));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var blackcomment = function blackcomment() {return __webpack_require__.e(/*! import() | pages/black-index/black-comment */ "pages/black-index/black-comment").then(__webpack_require__.bind(null, /*! ./black-comment */ 230));};var _default =
 
 
 

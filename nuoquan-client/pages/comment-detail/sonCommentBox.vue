@@ -16,9 +16,10 @@
 					</view>
 					<view class="cmtdetail-right">
 						<view class="cmtdetail-rightrel" @tap="swLikeComment()">
-							<image src="../../static/icon/like.png" mode="aspectFill" class="son-likeIcon"></image>
+							<image v-if="!commentDetail.isLike" src="../../static/icon/like.png" mode="aspectFill" class="son-likeIcon"></image>
+							<image v-else src="../../static/icon/liked.png" mode="aspectFill" class="son-likeIcon"></image>
 							<!-- 此处点赞数量最长5位数，如超出样式出错 -->
-							<text class="son-likeNum">{{commentDetail.likeNum}}</text>
+							<text class="son-likeNum" :class="{'liked':commentDetail.isLike}">{{commentDetail.likeNum}}</text>
 						</view>
 					</view>
 				</view>
@@ -78,4 +79,7 @@
 </script>
 
 <style>
+	.liked{
+		color: #FDD041;
+	}
 </style>

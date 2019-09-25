@@ -1,7 +1,7 @@
 
 .contentarea {
 	padding-top: 9px;
-	
+
 	font-size: 10px;
 }
 .bottombar {
@@ -65,5 +65,7 @@
 	        align-items: flex-end;
 	padding-right: 5px;
 }
-
+.liked {
+	color: #FDD041;
+}
 

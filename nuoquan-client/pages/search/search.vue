@@ -2,7 +2,7 @@
 	<view class="weui-search-bar">
 		<view class="input-bar">
 			<image class="back" src="../../static/icon/angle-left.png" @tap="exitSearch"></image>
-			<input type="text" v-model="searchKeyWords" focus placeholder="  搜索" confirm-type="search" @confirm="search(1)" />
+			<input type="text" v-model="searchKeyWords" focus placeholder="⠀⠀搜索" placeholder-style="color: #b2b2b2;" confirm-type="search" @confirm="search(1)" />
 		</view>
 
 		<view class="wxSearchKey" v-show="searching">
@@ -39,6 +39,8 @@
 
 <script>
 	import searchResultArticle from '../../components/searchResultArticle.vue';
+	
+	var isSearching = false; //搜索锁
 	export default {
 		data() {
 			return {
@@ -61,13 +63,11 @@
 			// 查询热搜词
 			this.getHotWords();
 		},
-		// onReachBottom() {
-		// 	this.loadMore();
-		// },
+		destroyed() { // 组件退出隐藏加载
+			uni.hideLoading();
+		},
 		methods: {
 			getHotWords: function() {
-				console.log('dasdsdad');
-
 				var that = this;
 				uni.request({
 					url: that.$serverUrl + '/article/hot',
@@ -81,6 +81,11 @@
 				})
 			},
 			search: function(page) {
+				if(isSearching){
+					return;
+				}
+				isSearching = true;
+				
 				var that = this;
 				var isSaveRecord = 1;
 				// console.log(page);
@@ -133,6 +138,16 @@
 				uni.showLoading({
 					title: "搜索中..."
 				})
+				
+				setTimeout(()=>{
+					isSearching = false // 解锁
+					uni.hideLoading();
+					uni.showToast({
+						title: "网络未知错误",
+						icon: "none",
+						duration: 1000
+					})
+				}, 5000); // 延时5s timeout
 
 				uni.request({
 					url: that.$serverUrl + '/article/searchArticleYANG',
@@ -144,10 +159,8 @@
 						page: page,
 					},
 					success: function(result) {
+						isSearching = false // 解锁
 						uni.hideLoading();
-						console.log(result);
-						// console.log(result.data);
-						// that.searchedArticleList = result.data.data.rows;
 						
 						that.searching = false;
 						if(result.data.status == 200){
@@ -171,10 +184,7 @@
 					}
 				})
 			},
-			searchCancle: function(searching){
-					this.searching = !searching;
-					console.log(this.searching);
-			},
+			
 			loadMore: function() {
 				var that = this;
 				var currentPage = that.currentPage;
@@ -194,6 +204,7 @@
 					that.search(page);
 				}
 			},
+			
 			searchDeleteAll: function() {
 				var that = this;
 				uni.showModal({
@@ -250,15 +261,15 @@
 	}
 
 	.input-bar {
-		margin-top: 10px;
-		margin-left: 23px;
-		height: 32px;
+		margin-top: 4px;
+		margin-left: 12px;
+		height: 30px;
 	}
 
 	.back {
 		display: inline-block;
-		width: 32px;
-		height: 32px;
+		width: 30px;
+		height: 30px;
 		background: #FDD041;
 		border-radius: 8px;
 
@@ -272,14 +283,12 @@
 		height: 28px;
 		border-radius: 8px;
 		margin-left: 13px;
-		padding-left: 2px;
-		padding-bottom: 2px;
 		background: white;
 		letter-spacing: 1px;
 		color: #b2b2b2;
 		font-family: MicrosoftYaHei;
-		line-height: 10px;
-		box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.16);
+		line-height: 28px;
+		box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.16);		
 	}
 
 	.wxSearchKey,

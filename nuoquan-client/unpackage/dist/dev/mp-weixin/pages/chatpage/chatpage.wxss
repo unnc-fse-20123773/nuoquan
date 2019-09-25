@@ -277,6 +277,7 @@ page{
 		border-radius: 24rpx;
 		border: solid 1px #C6C6C6;
 		margin: 20rpx 0 20rpx 14rpx;
+		font-size: 13px;
 }
 .icons.data-v-cd242d9a {
 		display: -webkit-inline-box;

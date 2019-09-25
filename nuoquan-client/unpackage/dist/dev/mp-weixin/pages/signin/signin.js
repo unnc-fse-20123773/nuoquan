@@ -125,15 +125,166 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
-    return {};
+    return {
+      status: false };
+
   },
   methods: {
+    onBackPress: function onBackPress(e) {
+      // return true 表示禁止默认返回
+      console.log("监听到返回");
+      return false;
+    },
+
     /**
-              * 微信小程序登陆
-              */
+        * 微信小程序登陆
+        */
     getUserInfo: function getUserInfo() {var _this = this;
       var that = this;
       uni.login({
@@ -170,9 +321,10 @@ var _default =
                     _this.setGlobalUserInfo(finalUser);
                     console.log(finalUser);
 
-                    // 6.返回
-                    uni.navigateBack({
-                      delta: 1 });
+                    // 6.返回 发出重载事件
+                    // uni.$emit("reloadIndex");
+                    uni.redirectTo({
+                      url: "../index/index" });
 
                   }
                 } });
@@ -181,6 +333,10 @@ var _default =
 
         } });
 
+    },
+
+    changestatus: function changestatus() {
+      this.status = !this.status;
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
