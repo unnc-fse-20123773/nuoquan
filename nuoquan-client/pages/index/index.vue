@@ -3,8 +3,8 @@
 		<mainpagetop :userInfo='userInfo' :topArticles='topArticles' :topHeight="topHeight" style="position: fixed;z-index: 30;height:100%;"></mainpagetop>
 
 		<view class="indexSelf" style="height:100%;">
-			<scroll-view class="indexArticleArea" scroll-y="true" @scroll="linkageWithTop" @scrolltolower="loadMore"
-			 @scrolltoupper="refreshArticle" upper-threshold=5>
+			<scroll-view @scroll="linkageWithTop" class="indexArticleArea" scroll-y="true" @scrolltolower="loadMore"
+			 @scrolltoupper="refreshArticle" upper-threshold=5 >
 				<view style="height:160px;width:100%;"></view>
 				<articlebrief v-for="i in showlist" :key="i.id" v-bind:articleCard="i"></articlebrief>
 				<!-- 用于添加底部空白 by Guetta 9.10 -->
@@ -24,6 +24,7 @@
 	} from 'vuex';
 
 	var loadArticleFlag = false; // 为加载文章加锁
+	var timer = null; // 为头部做定时器收起
 	export default {
 		data() {
 			return {
@@ -31,8 +32,8 @@
 				hottitlelist: ['热门标题111', '热门标题222', '热门标题333'],
 				showlist: [],
 				topArticles: '',
-				topHeight: "160",
-
+				topHeight: 160,
+				
 				userInfo: { // 默认user设置
 					id: 'test-id123',
 					nickname: 'test-name',
@@ -44,7 +45,10 @@
 				},
 				totalPage: 1,
 				currentPage: 1,
-
+				scrollTop: 0,
+				old: {
+                scrollTop: 0
+				}
 			};
 		},
 		components: {
@@ -212,16 +216,32 @@
 				});
 			},
 
-			linkageWithTop(e) {
-				var y = e.detail.scrollTop;
-				// console.log(y);
-				if (this.topHeight >= 36) {
-					if (160 - y >= 36) {
-						this.topHeight = 160 - y;
-					} else {
-						this.topHeight = 36;
+			 linkageWithTop(e) {
+				var y = e.detail.scrollTop; //获取 scrollTop
+				// console.log( y + "scrollTop" )
+				// console.log(timer + "//  timer");
+				var that = this;
+				clearInterval(timer); //清空 timer
+				if( y >= 100 && that.topHeight !== 40 ){
+					timer = setInterval(function(){ //设置计时器
+						if(that.topHeight == 40){	//在 topHeight 为 40 时清空计时器
+							clearInterval(timer);	
+						}else{
+						that.topHeight = that.topHeight - 20;
+						// console.log(that.topHeight +"//  topHeight收起");
+						}
+					},15)
+				}else{
+					if( y < 100 && that.topHeight !== 160 || y == 0){
+					timer = setInterval(function(){	//设置计时器
+						if(that.topHeight == 160){	//在 topHeight 为 160 时清空计时器
+							clearInterval(timer);
+						}else{
+						that.topHeight = that.topHeight + 20;
+						// console.log(that.topHeight + "//  topHeight展开");
+						}
+					},15)
 					}
-
 				}
 			},
 		}

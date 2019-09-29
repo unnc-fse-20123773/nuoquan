@@ -11,7 +11,7 @@
 		height: 32px;background: #FDD041;border-radius: 8px;position: fixed;
 		top:10px;left:23px"></image>	备用，返回按钮在组件内和组件外两个方案		-->
 
-		<view class="mainPageTop" :style="{height: topHeight +'px;'}">
+		<view class="mainPageTop" style="max-height: 160px;" :style="{height: topHeight +'px;'}">
 			<view class="topBar">
 				<image class="topBarTouxiang" :src='userInfo.faceImg' @click="controlShowLeft(1)"></image>
 				<view class="topBarSearch" @click="controlShowSearch(1)" >⠀⠀搜索</view>
@@ -50,7 +50,7 @@
 				faceImg: '../static/touxiang.jpg',
 			},
 			topArticles: '',
-			topHeight: "",
+			topHeight: 160,
 		},
 		components: {
 			mainpageleft,
@@ -120,7 +120,7 @@
 		width: 100%;
 		background: url(../static/BG/indexBG2.png), url(../static/BG/indexBG.png);
 		background-size: 100% 100%;
-		box-shadow: 0 -2px 10px #000000;
+		box-shadow: 0px 0px 10px 1px #C0C0C0;
 		border-bottom-right-radius: 25px;
 		border-bottom-left-radius: 25px;
 	}
