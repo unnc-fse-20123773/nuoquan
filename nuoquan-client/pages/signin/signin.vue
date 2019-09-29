@@ -137,7 +137,7 @@
 					<!-- end -->
 				</scroll-view>
 				<view class="introduction-bottom-sign">
-					<checkbox-group  @change="changestatus">
+					<checkbox-group @change="changestatus">
 						<label>
 							<checkbox class="wx-sign-checkbox" value="cb" :checked="status" style="transform: scale(0.5);" /><text style="font-size: 14px;font-weight: 550;color: #3d3d3d;">我已阅读并同意遵守《用户协议》</text>
 						</label>
@@ -150,7 +150,8 @@
 				<button v-if=" status == false " class="confirm-button-before super_center" hover-class="button-hover">
 					<view style="color: white;font-weight: 550;letter-spacing: 3px;font-family: Microsoft YaHei;">微信绑定</view>
 				</button>
-				<button v-else class="confirm-button-checked super_center" hover-class="button-hover" open-type="getUserInfo" @getuserinfo="getUserInfo">
+				<button v-else class="confirm-button-checked super_center" hover-class="button-hover" open-type="getUserInfo"
+				 @getuserinfo="getUserInfo">
 					<view style="color: white;font-weight: 550;letter-spacing: 3px;font-family: Microsoft YaHei;">微信绑定</view>
 				</button>
 				<view class="conform-bgBox"></view>
@@ -162,6 +163,7 @@
 </template>
 
 <script>
+	var isLoding = false;
 	export default {
 		data() {
 			return {
@@ -173,62 +175,92 @@
 				// return true 表示禁止默认返回
 				console.log("监听到返回")
 				return false
-			}, 
+			},
 			
 			/**
 			 * 微信小程序登陆
 			 */
-			getUserInfo() {
+			getUserInfo(e) {
+				// console.log("getting UserInfo...")
+				// console.log(e);
+				
+				// 加锁
+				if (isLoding) {
+					return;
+				}
+				isLoding = true;
+
+				uni.showLoading({
+					title: '载入中...',
+				});
+				setTimeout(() => {
+					if (isLoding) {
+						isLoding = false // 解锁
+						uni.hideLoading();
+						uni.showToast({
+							title: "网络未知错误",
+							icon: "none",
+							duration: 1000
+						})
+					}
+				}, 5000); // 延时5s timeout
+				
+				var info = e.detail;
 				var that = this;
 				uni.login({
 					success: res_login => {
 						// console.log('-------res_login，获取code-------')
 						// console.log(res_login);
-						uni.getUserInfo({
-							success: info => {
-								// console.log('-------获取sessionKey、openid(unionid)-------')
-								// console.log(info);
-								// 后端获取openid 并设置用户信息
-								uni.request({
-									url: that.$serverUrl + '/user/getWxUserInfo',
-									method: "POST",
-									data: {
-										encryptedData: info.encryptedData,
-										iv: info.iv,
-										code: res_login.code,
+						// 后端获取openid 并设置用户信息
+						uni.request({
+							url: that.$serverUrl + '/user/getWxUserInfo',
+							method: "POST",
+							data: {
+								encryptedData: info.encryptedData,
+								iv: info.iv,
+								code: res_login.code,
 
-										nickname: info.userInfo.nickName,
-										faceImg: info.userInfo.avatarUrl
-									},
-									header: {
-										'content-type': 'application/x-www-form-urlencoded'
-									},
-									success: (res) => {
-										// console.log(res)
-										if (res.data.status == 200) {
-											// 3.获取返回的用户信息
-											var finalUser = res.data.data;
-											// 4.分割邮箱地址, 重构 user
-											finalUser = this.myUser(finalUser);
-											// 5.写入缓存
-											this.setGlobalUserInfo(finalUser);
-											console.log(finalUser);
+								nickname: info.userInfo.nickName,
+								faceImg: info.userInfo.avatarUrl
+							},
+							header: {
+								'content-type': 'application/x-www-form-urlencoded'
+							},
+							success: (res) => {
+								// console.log(res)
+								if (res.data.status == 200) {
+									// 3.获取返回的用户信息
+									var finalUser = res.data.data;
+									// 4.分割邮箱地址, 重构 user
+									finalUser = this.myUser(finalUser);
+									// 5.写入缓存
+									this.setGlobalUserInfo(finalUser);
+									console.log(finalUser);
 
-											// 6.返回 发出重载事件
-											// uni.$emit("reloadIndex");
-											uni.redirectTo({
-												url: "../index/index"
-											});
-										}
-									}
-								});
+									// 6.到主页
+									isLoding = false;
+									uni.hideLoading();
+									uni.redirectTo({
+										url: "../index/index"
+									});
+								}
 							}
 						});
+					}, // end of login success
+					fail: (res) => {
+						isLoding = false;
+						uni.hideLoading();
+						uni.showToast({
+							title: "login fail",
+							icon: "none",
+							duration: 1000
+						})
 					}
+					
 				});
 			},
-			
-			changestatus(){
+
+			changestatus() {
 				this.status = !this.status;
 			},
 		}
@@ -245,11 +277,11 @@
 		border: none;
 		outline: none;
 	}
-	
-	.wx-sign-checkbox{
+
+	.wx-sign-checkbox {
 		margin-left: 3%;
 	}
-	
+
 	/* 按百分比分配父组件区域 */
 	/* 如更改样式需重新计算百分比分配 */
 	#signin-container {
@@ -300,8 +332,8 @@
 		width: 90%;
 		height: 86%;
 	}
-	
-	.introduction-bottom-sign{
+
+	.introduction-bottom-sign {
 		position: absolute;
 		bottom: 0%;
 		height: 10%;

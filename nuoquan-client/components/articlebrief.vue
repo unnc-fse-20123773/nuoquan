@@ -147,20 +147,20 @@
 					rate = width/height;
 					this.heightWidthRate = rate;
 					this.singleImgWidth = 400*rate;
-					console.log(this.singleImgState);
-					console.log(rate);
-					console.log(this.singleImgHeight);
-					console.log(this.singleImgWidth);
+					// console.log(this.singleImgState);
+					// console.log(rate);
+					// console.log(this.singleImgHeight);
+					// console.log(this.singleImgWidth);
 				} else {
 					this.singleImgState = 1;
 					this.singleImgWidth = 400;
 					rate = height/width;
 					this.heightWidthRate = rate;
 					this.singleImgHeight = 400*rate;
-					console.log(this.singleImgState);
-					console.log(rate);
-					console.log(this.singleImgHeight);
-					console.log(this.singleImgWidth);
+					// console.log(this.singleImgState);
+					// console.log(rate);
+					// console.log(this.singleImgHeight);
+					// console.log(this.singleImgWidth);
 				}
 				// console.log(e.detail);
 			},
