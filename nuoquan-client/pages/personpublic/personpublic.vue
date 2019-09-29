@@ -18,7 +18,7 @@
 
 			<view v-if="!myPublic" style="width: 36%;display: flex;position: fixed;right: 10upx;top: 148upx;">
 				<view class="messageButton super_center" @tap="goToChatPage">
-					<image src="../../static/icon/comments/comments%20%20fed148.png"
+					<image src="../../static/icon/comments_pub.png"
 				 mode="scaleToFill" style="width: 24px;height: 24px;"></image>
 				</view>
 				<view class="guanzhuButton-Box">
@@ -31,8 +31,6 @@
 						<text class="guanzhuButton-text">关注</text>
 					</button>
 				</view>
-				<!-- TODO: 加完发私信的按钮格式乱了...要改一下
-													by Jerrio-->
 			</view>
 		</view>
 

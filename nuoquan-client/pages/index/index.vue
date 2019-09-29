@@ -216,7 +216,7 @@
 				});
 			},
 
-			 linkageWithTop(e) {
+			 linkageWithTop: async function(e) {
 				var y = e.detail.scrollTop; //获取 scrollTop
 				// console.log( y + "scrollTop" )
 				// console.log(timer + "//  timer");
@@ -227,20 +227,20 @@
 						if(that.topHeight == 40){	//在 topHeight 为 40 时清空计时器
 							clearInterval(timer);	
 						}else{
-						that.topHeight = that.topHeight - 20;
+						that.topHeight = that.topHeight - 10;
 						// console.log(that.topHeight +"//  topHeight收起");
 						}
-					},15)
+					},10)
 				}else{
 					if( y < 100 && that.topHeight !== 160 || y == 0){
 					timer = setInterval(function(){	//设置计时器
 						if(that.topHeight == 160){	//在 topHeight 为 160 时清空计时器
 							clearInterval(timer);
 						}else{
-						that.topHeight = that.topHeight + 20;
+						that.topHeight = that.topHeight + 10;
 						// console.log(that.topHeight + "//  topHeight展开");
 						}
-					},15)
+					},10)
 					}
 				}
 			},
