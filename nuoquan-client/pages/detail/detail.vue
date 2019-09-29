@@ -46,10 +46,10 @@
 				</view>
 			</view>
 			<view style="width: 100%;height: 12px;display: flex;" class="column_center">
-				<view style="width:14%;color: #888888;font-size: 10px;">
+				<view style="width:20%;color: #888888;font-size: 15px;">
 					最新评论
 				</view>
-				<view class="fengexian" style="height: 1px;width: 86%;background-color: RGB(253, 217, 108);"></view>
+				<view class="fengexian" style="height: 1px;width: 80%;background-color: RGB(253, 217, 108);"></view>
 			</view>
 			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i" @controlInputSignal="controlInput">
 			</commentbox>
@@ -451,7 +451,7 @@
 	.detailtitle {
 		width: 85%;
 		color: #f5f5f5;
-		font-size: 16px;
+		font-size: 20px;
 		margin: auto;
 		font-weight: 550;
 		padding-top:12px;
@@ -465,7 +465,7 @@
 		border-top-right-radius: 20px;
 		margin-top: -20px;
 		background: white;
-		box-shadow: 0 -1px 8px grey;
+		box-shadow: 0px 0px 10px 1px #c0c0c0;
 		/* 高度90%才可以保证页面不会无故滚动 */
 		height: 90%;
 		width: 85%;
@@ -476,7 +476,8 @@
 	.detailcontent {
 		padding-top: 25px;
 		padding-bottom: 15px;
-		font-size: 16px;
+		font-size: 17px;
+		font-family: Source Han Sans CN;
 /* 		width: 85%;
 		margin: 0px auto 10px; */
 		/* font-weight: 400;

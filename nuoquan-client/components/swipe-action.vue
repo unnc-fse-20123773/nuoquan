@@ -10,7 +10,7 @@
 				margin-top: 12upx;
 				height: 120upx;
 				background-color: white;"
-				 @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd" @touchcancel="touchEnd" 
+				@touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd" @touchcancel="touchEnd" 
 				 :style="{'transform':messageIndex == i ? transformX : 'translateX(0px)',
 				 '-webkit-transform':messageIndex == i ? transformX : 'translateX(0px)',
 				 'box-shadow': it.isRead == UNREAD ? '0upx 0upx 12upx 1upx #D1D1D1':''}" 

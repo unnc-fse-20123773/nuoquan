@@ -159,7 +159,7 @@ var _search = _interopRequireDefault(__webpack_require__(/*! ../pages/search/sea
       faceImg: '../static/touxiang.jpg' },
 
     topArticles: '',
-    topHeight: "" },
+    topHeight: '' },
 
   components: {
     mainpageleft: mainpageleft,
