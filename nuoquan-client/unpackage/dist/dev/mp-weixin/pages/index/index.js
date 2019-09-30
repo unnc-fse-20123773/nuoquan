@@ -174,9 +174,6 @@ var _default = { data: function data() {return { title: 'Hello', hottitlelist: [
   onLoad: function onLoad() {var _this = this;
     var userInfo = this.getGlobalUserInfo();
     if (this.isNull(userInfo)) {
-      // uni.$once("reloadIndex",()=>{
-      // 	this.showArticles(1);
-      // })
       uni.redirectTo({
         url: "../signin/signin" });
 
@@ -522,6 +519,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 var _default =
 {
   name: 'aticlebrief',
@@ -532,8 +531,10 @@ var _default =
     return {
       serverUrl: this.$serverUrl,
       userInfo: this.getGlobalUserInfo(),
-      singleImgState: '0',
-
+      // singleImgState: '0',
+      singleImgHeight: 0,
+      singleImgWidth: 0,
+      heightWidthRate: 0,
       imgList: [],
       thisArticle: this.articleCard, // 转为局部变量
       tagColorList: [] // 储存每个tag的颜色
@@ -599,13 +600,31 @@ var _default =
     singleImgeFit: function singleImgeFit(e) {
       var height = e.detail.height;
       var width = e.detail.width;
+      var rate;
       if (height >= width) {
         this.singleImgState = 0;
+        this.singleImgHeight = 400;
+        rate = width / height;
+        this.heightWidthRate = rate;
+        this.singleImgWidth = 400 * rate;
+        console.log(this.singleImgState);
+        console.log(rate);
+        console.log(this.singleImgHeight);
+        console.log(this.singleImgWidth);
       } else {
         this.singleImgState = 1;
+        this.singleImgWidth = 400;
+        rate = height / width;
+        this.heightWidthRate = rate;
+        this.singleImgHeight = 400 * rate;
+        console.log(this.singleImgState);
+        console.log(rate);
+        console.log(this.singleImgHeight);
+        console.log(this.singleImgWidth);
       }
       // console.log(e.detail);
     },
+
 
     swLikeArticle: function swLikeArticle() {
       if (this.thisArticle.isLike) {

@@ -21,7 +21,7 @@ Vue.prototype.$store = store
 
 // Vue.prototype.$serverUrl = "http://192.168.1.101:8080"
 // Vue.prototype.$wsServerUrl = "ws://192.168.1.101:8088/ws"
-
+// 
 // 服务器地址
 Vue.prototype.$serverUrl = "http://129.28.130.27:8080/nottinghome"
 Vue.prototype.$wsServerUrl = "ws://129.28.130.27:8088/ws"

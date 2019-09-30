@@ -2,7 +2,12 @@
 image {
 	border: none;
 	outline: none;
+	max-height: 360rpx;
+	margin: auto;
 }
+	/* image {
+	
+} */
 
 
 .articlecard.data-v-fbd78668 {
@@ -124,7 +129,7 @@ image {
 	vertical-align: middle;
 }
 .picturearea-one.data-v-fbd78668 {
-	margin: auto;
+	/* margin: auto; */
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -ms-flexbox;
@@ -143,11 +148,8 @@ image {
 	width: 94%;
 	margin-left: 3%;
 }
-image.data-v-fbd78668 {
-	width: 100%;
-	height: 200rpx;
-	margin: auto;
-}
+
+
 
 
 page {

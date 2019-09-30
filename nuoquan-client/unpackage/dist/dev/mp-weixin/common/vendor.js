@@ -32,7 +32,7 @@ _vue.default.prototype.$store = _store.default;
 
 // Vue.prototype.$serverUrl = "http://192.168.1.101:8080"
 // Vue.prototype.$wsServerUrl = "ws://192.168.1.101:8088/ws"
-
+// 
 // 服务器地址
 _vue.default.prototype.$serverUrl = "http://129.28.130.27:8080/nottinghome";
 _vue.default.prototype.$wsServerUrl = "ws://129.28.130.27:8088/ws";
