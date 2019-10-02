@@ -18,7 +18,7 @@ Vue.prototype.tagColors = ['#FE5F55','#40A792','#FDD041','#5CA0D3','#621E81','#7
 Vue.prototype.$store = store
 
 // Vue.prototype.$serverUrl = "http://127.0.0.1:8080"
-Vue.prototype.$wsServerUrl = "wss://127.0.0.1:8088/ws"
+// Vue.prototype.$wsServerUrl = "wss://127.0.0.1:8088/ws"
 
 // 服务器地址
 // Vue.prototype.$serverUrl = "http://129.28.130.27:8080/nottinghome"
@@ -26,7 +26,7 @@ Vue.prototype.$wsServerUrl = "wss://127.0.0.1:8088/ws"
 
 // 安全服务器地址
 Vue.prototype.$serverUrl = "https://www.checkchack.cn:8443/nottinghome"
-// Vue.prototype.$wsServerUrl = "wss://www.checkchack.cn:8088/ws"
+Vue.prototype.$wsServerUrl = "wss://www.checkchack.cn:8088/ws"
 
 /**
  * 获取当前用户信息（我）
