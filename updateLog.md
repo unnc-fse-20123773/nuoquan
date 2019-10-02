@@ -1,4 +1,8 @@
 # Update Log: #
+**v19.10.2 更新**
+1. 新增 服务器ssl证书
+2. 新增 https & wss 安全访问 (如需后台本地调试，请修改 netty.WSServerInitializer 第22行配置)
+
 **v19.9.30 更新**
 1. 优化 登陆代码
 2. 修正 毕业年份下限
