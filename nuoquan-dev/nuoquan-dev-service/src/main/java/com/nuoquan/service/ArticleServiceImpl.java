@@ -122,6 +122,8 @@ public class ArticleServiceImpl implements ArticleService {
 		if (!images.isEmpty()) {
 			// 添加图片列表
 			articleVO.setImgList(images);
+			// 添加和关于用户的点赞关系
+			articleVO.setIsLike(isUserLikeArticle(userId, articleVO.getId()));
 			// 添加标签列表
 			if (!StringUtils.isBlank(articleVO.getTags())) {
 				String[] tagList = articleVO.getTags().split("#");
