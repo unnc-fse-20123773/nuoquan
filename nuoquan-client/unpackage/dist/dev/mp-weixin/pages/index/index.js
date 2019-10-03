@@ -345,7 +345,7 @@ var _default = { data: function data() {return { title: 'Hello', hottitlelist: [
           if (that.topHeight == 40) {//在 topHeight 为 40 时清空计时器
             clearInterval(timer);
           } else {
-            that.topHeight = that.topHeight - 20;
+            that.topHeight = that.topHeight - 5;
             // console.log(that.topHeight +"//  topHeight收起");
           }
         }, 15);
@@ -355,10 +355,10 @@ var _default = { data: function data() {return { title: 'Hello', hottitlelist: [
             if (that.topHeight == 160) {//在 topHeight 为 160 时清空计时器
               clearInterval(timer);
             } else {
-              that.topHeight = that.topHeight + 20;
+              that.topHeight = that.topHeight + 5;
               // console.log(that.topHeight + "//  topHeight展开");
             }
-          }, 15);
+          }, 5);
         }
       }
     } } };exports.default = _default;
