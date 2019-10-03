@@ -31,11 +31,11 @@
 			<view class="cmtdetail-contentBox" id="contentBox" @click="controlInput(1)">
 				{{mainComment.comment}}
 			</view>
-			<view class="cmtdetail-loadmore column_center">
+			<!-- <view class="cmtdetail-loadmore column_center">
 				<view class="loadmore-text">
 					查看全部
 				</view>
-			</view>
+			</view> -->
 			<view style="height: 2px;width: 74%;margin-left: 62px;background-color: #E4E4E4;margin-top: 10px;"></view>
 		</view>
 		<!-- 子评论区域 -->
@@ -328,7 +328,6 @@
 		left: 10px;
 		width: 42px;
 		height: 42px;
-		border: 1px solid red;
 		border-radius: 200px;
 	}
 

@@ -5,7 +5,7 @@
 	},
 	"setting": {
 		"urlCheck": false,
-		"postcss": false,
+		"postcss": true,
 		"minified": true,
 		"es6": true
 	},

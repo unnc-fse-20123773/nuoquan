@@ -12,9 +12,9 @@
 		top:10px;left:23px"></image>	备用，返回按钮在组件内和组件外两个方案		-->
 
 		<view class="mainPageTop" style="max-height: 160px;" :style="{height: topHeight +'px;'}">
-			<view class="topBar">
+			<view class="topBar" style="width: 100%;">
 				<image class="topBarTouxiang" :src='userInfo.faceImg' @click="controlShowLeft(1)"></image>
-				<view class="topBarSearch" @click="controlShowSearch(1)" >⠀⠀搜索</view>
+				<view class="topBarSearch" @click="controlShowSearch(1)" >⠀搜索</view>
 				<view class="topBarPlus" @click="jumpToSubmit()">
 					<view style="font-size: 20px;color:#FDD041;border-radius: 3px;">+</view>
 				</view>
@@ -50,7 +50,7 @@
 				faceImg: '../static/touxiang.jpg',
 			},
 			topArticles: '',
-			topHeight: 160,
+			topHeight: '',
 		},
 		components: {
 			mainpageleft,
@@ -137,7 +137,7 @@
 	.topBarSearch {
 		font-size: 15px;
 		display: inline-block;
-		width: 190px;
+		width: 70%;
 		height: 28px;
 		vertical-align: middle;
 		border-radius: 8px;

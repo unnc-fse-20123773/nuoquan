@@ -708,6 +708,10 @@ var _default = {
                 // console.log(timer + "//  timer");
                 that = this;
                 clearInterval(timer); //清空 timer
+                if (that.topHeight > 160) {
+                  that.topHeight = 160; //保证高度值正确
+                }
+
                 if (y >= 100 && that.topHeight !== 40) {
                   timer = setInterval(function () {//设置计时器
                     if (that.topHeight == 40) {//在 topHeight 为 40 时清空计时器
@@ -716,7 +720,7 @@ var _default = {
                       that.topHeight = that.topHeight - 10;
                       // console.log(that.topHeight +"//  topHeight收起");
                     }
-                  }, 10);
+                  }, 1);
                 } else {
                   if (y < 100 && that.topHeight !== 160 || y == 0) {
                     timer = setInterval(function () {//设置计时器
@@ -726,9 +730,9 @@ var _default = {
                         that.topHeight = that.topHeight + 10;
                         // console.log(that.topHeight + "//  topHeight展开");
                       }
-                    }, 10);
+                    }, 1);
                   }
-                }case 4:case "end":return _context.stop();}}}, _callee, this);}));function linkageWithTop(_x) {return _linkageWithTop.apply(this, arguments);}return linkageWithTop;}() } };exports.default = _default;
+                }case 5:case "end":return _context.stop();}}}, _callee, this);}));function linkageWithTop(_x) {return _linkageWithTop.apply(this, arguments);}return linkageWithTop;}() } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),

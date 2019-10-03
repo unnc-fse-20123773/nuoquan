@@ -222,6 +222,10 @@
 				// console.log(timer + "//  timer");
 				var that = this;
 				clearInterval(timer); //清空 timer
+				if(that.topHeight > 160){ 
+					that.topHeight = 160;  //保证高度值正确
+				}
+				
 				if( y >= 100 && that.topHeight !== 40 ){
 					timer = setInterval(function(){ //设置计时器
 						if(that.topHeight == 40){	//在 topHeight 为 40 时清空计时器
@@ -230,7 +234,7 @@
 						that.topHeight = that.topHeight - 10;
 						// console.log(that.topHeight +"//  topHeight收起");
 						}
-					},10)
+					},1)
 				}else{
 					if( y < 100 && that.topHeight !== 160 || y == 0){
 					timer = setInterval(function(){	//设置计时器
@@ -240,7 +244,7 @@
 						that.topHeight = that.topHeight + 10;
 						// console.log(that.topHeight + "//  topHeight展开");
 						}
-					},10)
+					},1)
 					}
 				}
 			},

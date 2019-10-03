@@ -213,7 +213,7 @@ var me;var _default =
     this.duration = e.target.value;
   },
 
-  onLoad: function onLoad(opt) {var _this = this;
+  onLoad: function onLoad(opt) {
     var userId = opt.userId;
 
     me = this.getGlobalUserInfo();
@@ -230,13 +230,6 @@ var me;var _default =
 
     // 获取这个人的信息, TODO: 更新本地用户信息缓存
     this.queryUserWithFollow(userId);
-
-    setTimeout(function () {
-      console.log(_this.thisUserInfo);
-      uni.setNavigationBarTitle({
-        title: _this.thisUserInfo.nickname + "的主页" });
-
-    }, 200);
 
     // [测试代码块]
     // this.mySocket.init()
@@ -377,9 +370,14 @@ var me;var _default =
           if (res.data.status == 200) {
             that.thisUserInfo = res.data.data;
             that.setUserInfoToUserList(res.data.data); //更新缓存
-            console.log(res.data.data);
-            console.log(that.getUserInfoFromUserList(res.data.data.id));
-            console.log(that.getListByKey("userList"));
+            // console.log(res.data.data)
+            // console.log(that.getUserInfoFromUserList(res.data.data.id))
+            // console.log(that.getListByKey("userList"))
+
+            // 设置title
+            uni.setNavigationBarTitle({
+              title: that.thisUserInfo.nickname + "的主页" });
+
           }
         } });
 

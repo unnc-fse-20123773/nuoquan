@@ -117,7 +117,7 @@
 			const years = [];
 			const thisYear = date.getFullYear();
 
-			for (let i = thisYear; i <= thisYear + 4; i++) {
+			for (let i = 2004; i <= thisYear + 4; i++) {
 				years.push(i);
 			};
 
@@ -582,7 +582,7 @@
 		right: -12upx;
 		width: 48%;
 		/* 在此更改按钮高度 */
-		height: 16%;
+		height: 30px; /* 保证内容剧中 */
 		display: flex;
 		justify-content: space-between;
 	}
@@ -626,7 +626,7 @@
 		right: -14upx;
 		width: 24%;
 		/* 在此更改按钮高度 */
-		height: 16%;
+		height: 30px; /* 保证内容剧中 */
 		display: flex;
 		justify-content: space-between;
 	}

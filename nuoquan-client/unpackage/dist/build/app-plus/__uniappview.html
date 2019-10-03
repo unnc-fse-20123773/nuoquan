@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+    <head>
+        <meta charset="UTF-8" />
+        <script>
+            var coverSupport = 'CSS' in window && typeof CSS.supports === 'function' && (CSS.supports('top: env(a)') ||
+                CSS.supports('top: constant(a)'))
+            document.write(
+                '<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0' +
+                (coverSupport ? ', viewport-fit=cover' : '') + '" />')
+        </script>
+        <title>View</title>
+        <style>
+            * {
+                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            input[type="search"i]::-webkit-search-cancel-button {
+                display: none;
+            }
+        </style>
+        <script>
+            var __wxConfig = {"debug":false,"appname":"nuoquan","entryPagePath":"pages/index/index.html","page":{"pages/index/index.html":{"window":{"usingComponents":{}}},"pages/detail/detail.html":{"window":{"usingComponents":{}}},"pages/submit/submit.html":{"window":{"usingComponents":{}}},"pages/chatpage/chatpage.html":{"window":{"usingComponents":{}}},"pages/followlist/followlist.html":{"window":{"usingComponents":{}}},"pages/profile/profile.html":{"window":{"usingComponents":{}}},"pages/personpublic/personpublic.html":{"window":{"usingComponents":{}}},"pages/search/search.html":{"window":{"usingComponents":{}}},"pages/black-index/black-index.html":{"window":{"usingComponents":{}}},"pages/signin/signin.html":{"window":{"usingComponents":{}}},"components/articlebrief.html":{"window":{"usingComponents":{}}},"pages/messagelist/messagelist.html":{"window":{"usingComponents":{}}},"pages/wechatLogin/wechatLogin.html":{"window":{"usingComponents":{}}},"pages/cmt-likedetail/cmt-likedetail.html":{"window":{"usingComponents":{}}},"pages/comment-detail/comment-detail.html":{"window":{"usingComponents":{}}}},"global":{"window":{"navigationBarTextStyle":"black","navigationBarTitleText":"Nottinghome","navigationBarBackgroundColor":"#fdd041","backgroundColor":"#F8F8F8"}},"tabBar":{"color":"","selectedColor":"","backgroundColor":"","borderStyle":"black","list":[],"position":"bottom"},"networkTimeout":{"request":60000,"connectSocket":60000,"uploadFile":60000,"downloadFile":60000},"platform":"devtools","pages":["pages/index/index","pages/detail/detail","pages/submit/submit","pages/chatpage/chatpage","pages/followlist/followlist","pages/profile/profile","pages/personpublic/personpublic","pages/search/search","pages/black-index/black-index","pages/signin/signin","components/articlebrief","pages/messagelist/messagelist","pages/wechatLogin/wechatLogin","pages/cmt-likedetail/cmt-likedetail","pages/comment-detail/comment-detail"],"subPackages":[],"usingComponents":{},"nvueCompiler":"weex","splashscreen":{"alwaysShowBeforeRender":true,"autoclose":false},"compilerVersion":"2.1.0"}
+        </script>
+        <script>
+            var __id__ = '';
+            window.__dispatchGenerateFunc__ = function(page) {
+                __id__ = page;
+                document.title = page;
+                // window.history.pushState('', '', page);
+                var wxss = page.replace('.html', '.wxss')
+                if (
+                    typeof __wxAppCode__ !== 'undefined' &&
+                    __wxAppCode__.hasOwnProperty(wxss)
+                ) {
+                    var setCssToHead = __wxAppCode__[wxss]
+                    typeof setCssToHead === 'function' && setCssToHead()
+                    document.dispatchEvent(new CustomEvent("generateFuncReady", {
+                        detail: {
+                            generateFunc: $gwx(page.replace('.html', '.wxml'))
+                        }
+                    }));
+                } else {
+                    plus.webview.currentWebview().setJsFile('_www/' + page.replace('.html', '.js'));
+                }
+            };
+        </script>
+        <script src="__uniappes6.js"></script>
+        <script src="uniapp://ready"></script>
+    </head>
+
+    <body>
+        <div></div>
+    </body>
+
+</html>

@@ -10,6 +10,7 @@
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/Code.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/strategy/DefaultRandomCodeStrategy.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/utils/PagedResult.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/utils/RedisOperator.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/WorkerIdStrategy.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/Sid.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/DayCode.java

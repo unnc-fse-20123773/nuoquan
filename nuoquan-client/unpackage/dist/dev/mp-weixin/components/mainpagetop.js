@@ -258,7 +258,7 @@ var _search = _interopRequireDefault(__webpack_require__(/*! ../pages/search/sea
       faceImg: '../static/touxiang.jpg' },
 
     topArticles: '',
-    topHeight: 160 },
+    topHeight: '' },
 
   components: {
     mainpageleft: mainpageleft,
@@ -305,6 +305,7 @@ var _search = _interopRequireDefault(__webpack_require__(/*! ../pages/search/sea
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var searchResultArticle = function searchResultArticle() {return __webpack_require__.e(/*! import() | components/searchResultArticle */ "components/searchResultArticle").then(__webpack_require__.bind(null, /*! ../../components/searchResultArticle.vue */ "../../../../../../../../../code/nuoquan/nuoquan-client/components/searchResultArticle.vue"));};
+
 
 
 
@@ -446,13 +447,15 @@ var _default = {
 
 
       setTimeout(function () {
-        isSearching = false; // 解锁
-        uni.hideLoading();
-        uni.showToast({
-          title: "网络未知错误",
-          icon: "none",
-          duration: 1000 });
+        if (isSearching) {
+          isSearching = false; // 解锁
+          uni.hideLoading();
+          uni.showToast({
+            title: "网络未知错误",
+            icon: "none",
+            duration: 1000 });
 
+        }
       }, 5000); // 延时5s timeout
 
       uni.request({

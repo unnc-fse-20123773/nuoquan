@@ -1,0 +1,2 @@
+<import src="./wechatLogin.vue.wxml" />
+    <template is="538c18ec" data="{{ ...$root['0'], $root }}"/>
