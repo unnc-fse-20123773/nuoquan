@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix="com.jumbox")
 @PropertySource(value="classpath:resource-dev.properties")
+//@PropertySource(value="classpath:resource-prod.properties")
 public class ResourceConfig {
 	
 	private String fileSpace;

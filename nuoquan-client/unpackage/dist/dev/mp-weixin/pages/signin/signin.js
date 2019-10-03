@@ -268,7 +268,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-var _default =
+//
+
+var isLoding = false;var _default =
 {
   data: function data() {
     return {
@@ -285,53 +287,83 @@ var _default =
     /**
         * 微信小程序登陆
         */
-    getUserInfo: function getUserInfo() {var _this = this;
+    getUserInfo: function getUserInfo(e) {var _this = this;
+      // console.log("getting UserInfo...")
+      // console.log(e);
+
+      // 加锁
+      if (isLoding) {
+        return;
+      }
+      isLoding = true;
+
+      uni.showLoading({
+        title: '载入中...' });
+
+      setTimeout(function () {
+        if (isLoding) {
+          isLoding = false; // 解锁
+          uni.hideLoading();
+          uni.showToast({
+            title: "网络未知错误",
+            icon: "none",
+            duration: 1000 });
+
+        }
+      }, 5000); // 延时5s timeout
+
+      var info = e.detail;
       var that = this;
       uni.login({
         success: function success(res_login) {
           // console.log('-------res_login，获取code-------')
           // console.log(res_login);
-          uni.getUserInfo({
-            success: function success(info) {
-              // console.log('-------获取sessionKey、openid(unionid)-------')
-              // console.log(info);
-              // 后端获取openid 并设置用户信息
-              uni.request({
-                url: that.$serverUrl + '/user/getWxUserInfo',
-                method: "POST",
-                data: {
-                  encryptedData: info.encryptedData,
-                  iv: info.iv,
-                  code: res_login.code,
+          // 后端获取openid 并设置用户信息
+          uni.request({
+            url: that.$serverUrl + '/user/getWxUserInfo',
+            method: "POST",
+            data: {
+              encryptedData: info.encryptedData,
+              iv: info.iv,
+              code: res_login.code,
 
-                  nickname: info.userInfo.nickName,
-                  faceImg: info.userInfo.avatarUrl },
+              nickname: info.userInfo.nickName,
+              faceImg: info.userInfo.avatarUrl },
 
-                header: {
-                  'content-type': 'application/x-www-form-urlencoded' },
+            header: {
+              'content-type': 'application/x-www-form-urlencoded' },
 
-                success: function success(res) {
-                  // console.log(res)
-                  if (res.data.status == 200) {
-                    // 3.获取返回的用户信息
-                    var finalUser = res.data.data;
-                    // 4.分割邮箱地址, 重构 user
-                    finalUser = _this.myUser(finalUser);
-                    // 5.写入缓存
-                    _this.setGlobalUserInfo(finalUser);
-                    console.log(finalUser);
+            success: function success(res) {
+              // console.log(res)
+              if (res.data.status == 200) {
+                // 3.获取返回的用户信息
+                var finalUser = res.data.data;
+                // 4.分割邮箱地址, 重构 user
+                finalUser = _this.myUser(finalUser);
+                // 5.写入缓存
+                _this.setGlobalUserInfo(finalUser);
+                console.log(finalUser);
 
-                    // 6.返回 发出重载事件
-                    // uni.$emit("reloadIndex");
-                    uni.redirectTo({
-                      url: "../index/index" });
+                // 6.到主页
+                isLoding = false;
+                uni.hideLoading();
+                uni.redirectTo({
+                  url: "../index/index" });
 
-                  }
-                } });
-
+              }
             } });
 
+        }, // end of login success
+        fail: function fail(res) {
+          isLoding = false;
+          uni.hideLoading();
+          uni.showToast({
+            title: "login fail",
+            icon: "none",
+            duration: 1000 });
+
         } });
+
 
     },
 

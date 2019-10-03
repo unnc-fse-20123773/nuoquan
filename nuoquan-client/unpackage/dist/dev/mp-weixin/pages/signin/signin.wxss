@@ -7,7 +7,7 @@ button::after {
 	border: none;
 	outline: none;
 }
-.wx-sign-checkbox{
+.wx-sign-checkbox {
 	margin-left: 3%;
 }
 
@@ -57,7 +57,7 @@ button::after {
 	width: 90%;
 	height: 86%;
 }
-.introduction-bottom-sign{
+.introduction-bottom-sign {
 	position: absolute;
 	bottom: 0%;
 	height: 10%;

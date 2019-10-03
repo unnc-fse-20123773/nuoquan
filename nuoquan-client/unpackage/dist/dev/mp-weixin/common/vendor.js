@@ -37,10 +37,14 @@ _vue.default.prototype.$store = _store.default;
 _vue.default.prototype.$serverUrl = "http://129.28.130.27:8080/nottinghome";
 _vue.default.prototype.$wsServerUrl = "ws://129.28.130.27:8088/ws";
 
+// 安全服务器地址
+// Vue.prototype.$serverUrl = "https://129.28.130.27:8080/nottinghome"
+// Vue.prototype.$wsServerUrl = "wss://129.28.130.27:8088/ws"
+
 /**
-                                                                     * 获取当前用户信息（我）
-                                                                     * @param {Object} user
-                                                                     */
+ * 获取当前用户信息（我）
+ * @param {Object} user
+ */
 _vue.default.prototype.setGlobalUserInfo = function (user) {
   uni.setStorageSync('userInfo', user);
 };

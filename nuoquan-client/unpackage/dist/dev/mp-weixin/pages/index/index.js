@@ -154,14 +154,18 @@ var _vuex = __webpack_require__(/*! vuex */ 12);function _interopRequireDefault(
 //
 //
 var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! import() | components/mainpagetop */ "components/mainpagetop").then(__webpack_require__.bind(null, /*! ../../components/mainpagetop.vue */ 143));};var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ 152));};var loadArticleFlag = false; // 为加载文章加锁
-var _default = { data: function data() {return { title: 'Hello', hottitlelist: ['热门标题111', '热门标题222', '热门标题333'], showlist: [], topArticles: '', topHeight: "160", userInfo: { // 默认user设置
+var timer = null; // 为头部做定时器收起
+var _default = { data: function data() {return { title: 'Hello', hottitlelist: ['热门标题111', '热门标题222', '热门标题333'], showlist: [], topArticles: '', topHeight: 160, userInfo: { // 默认user设置
         id: 'test-id123', nickname: 'test-name', faceImg: '', faceImgThumb: '',
         email: 'zy22089@nottingham.edu.cn',
         emailPrefix: 'zy22089',
         emailSuffix: '@nottingham.edu.cn' },
 
       totalPage: 1,
-      currentPage: 1 };
+      currentPage: 1,
+      scrollTop: 0,
+      old: {
+        scrollTop: 0 } };
 
 
   },
@@ -331,15 +335,31 @@ var _default = { data: function data() {return { title: 'Hello', hottitlelist: [
     },
 
     linkageWithTop: function linkageWithTop(e) {
-      var y = e.detail.scrollTop;
-      // console.log(y);
-      if (this.topHeight >= 36) {
-        if (160 - y >= 36) {
-          this.topHeight = 160 - y;
-        } else {
-          this.topHeight = 36;
+      var y = e.detail.scrollTop; //获取 scrollTop
+      // console.log( y + "scrollTop" )
+      // console.log(timer + "//  timer");
+      var that = this;
+      clearInterval(timer); //清空 timer
+      if (y >= 100 && that.topHeight !== 40) {
+        timer = setInterval(function () {//设置计时器
+          if (that.topHeight == 40) {//在 topHeight 为 40 时清空计时器
+            clearInterval(timer);
+          } else {
+            that.topHeight = that.topHeight - 20;
+            // console.log(that.topHeight +"//  topHeight收起");
+          }
+        }, 15);
+      } else {
+        if (y < 100 && that.topHeight !== 160 || y == 0) {
+          timer = setInterval(function () {//设置计时器
+            if (that.topHeight == 160) {//在 topHeight 为 160 时清空计时器
+              clearInterval(timer);
+            } else {
+              that.topHeight = that.topHeight + 20;
+              // console.log(that.topHeight + "//  topHeight展开");
+            }
+          }, 15);
         }
-
       }
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
@@ -607,20 +627,20 @@ var _default =
         rate = width / height;
         this.heightWidthRate = rate;
         this.singleImgWidth = 400 * rate;
-        console.log(this.singleImgState);
-        console.log(rate);
-        console.log(this.singleImgHeight);
-        console.log(this.singleImgWidth);
+        // console.log(this.singleImgState);
+        // console.log(rate);
+        // console.log(this.singleImgHeight);
+        // console.log(this.singleImgWidth);
       } else {
         this.singleImgState = 1;
         this.singleImgWidth = 400;
         rate = height / width;
         this.heightWidthRate = rate;
         this.singleImgHeight = 400 * rate;
-        console.log(this.singleImgState);
-        console.log(rate);
-        console.log(this.singleImgHeight);
-        console.log(this.singleImgWidth);
+        // console.log(this.singleImgState);
+        // console.log(rate);
+        // console.log(this.singleImgHeight);
+        // console.log(this.singleImgWidth);
       }
       // console.log(e.detail);
     },

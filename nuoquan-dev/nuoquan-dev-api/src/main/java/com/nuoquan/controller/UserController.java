@@ -268,7 +268,7 @@ public class UserController extends BasicController {
 			user.setFaceImg(faceImg);
 			UserVO userVO= wxLogin(user);
 			if (userVO == null) {
-				return JSONResult.errorMsg("该账号为空");
+				return JSONResult.errorMsg("空用户");
 			}
 			return JSONResult.ok(userVO);
 	}

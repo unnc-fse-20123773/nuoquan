@@ -26,6 +26,10 @@ Vue.prototype.$store = store
 Vue.prototype.$serverUrl = "http://129.28.130.27:8080/nottinghome"
 Vue.prototype.$wsServerUrl = "ws://129.28.130.27:8088/ws"
 
+// 安全服务器地址
+// Vue.prototype.$serverUrl = "https://129.28.130.27:8080/nottinghome"
+// Vue.prototype.$wsServerUrl = "wss://129.28.130.27:8088/ws"
+
 /**
  * 获取当前用户信息（我）
  * @param {Object} user

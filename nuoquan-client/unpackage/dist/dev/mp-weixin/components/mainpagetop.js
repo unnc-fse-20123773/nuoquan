@@ -159,7 +159,7 @@ var _search = _interopRequireDefault(__webpack_require__(/*! ../pages/search/sea
       faceImg: '../static/touxiang.jpg' },
 
     topArticles: '',
-    topHeight: "" },
+    topHeight: '' },
 
   components: {
     mainpageleft: mainpageleft,
@@ -498,13 +498,15 @@ var _default = {
 
 
       setTimeout(function () {
-        isSearching = false; // 解锁
-        uni.hideLoading();
-        uni.showToast({
-          title: "网络未知错误",
-          icon: "none",
-          duration: 1000 });
+        if (isSearching) {
+          isSearching = false; // 解锁
+          uni.hideLoading();
+          uni.showToast({
+            title: "网络未知错误",
+            icon: "none",
+            duration: 1000 });
 
+        }
       }, 5000); // 延时5s timeout
 
       uni.request({

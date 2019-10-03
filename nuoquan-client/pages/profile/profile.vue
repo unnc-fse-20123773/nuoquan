@@ -117,7 +117,7 @@
 			const years = [];
 			const thisYear = date.getFullYear();
 
-			for (let i = thisYear; i <= thisYear + 4; i++) {
+			for (let i = 2004; i <= thisYear + 4; i++) {
 				years.push(i);
 			};
 
