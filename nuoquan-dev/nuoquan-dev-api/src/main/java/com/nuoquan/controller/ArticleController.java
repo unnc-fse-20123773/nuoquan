@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.nuoquan.enums.ArticleStatusEnums;
 import com.nuoquan.enums.MsgActionEnum;
+import com.nuoquan.enums.StatusEnum;
 import com.nuoquan.netty.MsgHandler;
 import com.nuoquan.pojo.Article;
 import com.nuoquan.pojo.ArticleImage;
@@ -29,6 +30,7 @@ import com.nuoquan.pojo.vo.UserArticleCommentVO;
 import com.nuoquan.pojo.vo.UserLikeVO;
 import com.nuoquan.service.ArticleService;
 import com.nuoquan.service.UserService;
+import com.nuoquan.service.WeChatService;
 import com.nuoquan.utils.JSONResult;
 import com.nuoquan.utils.PagedResult;
 
@@ -48,6 +50,9 @@ public class ArticleController extends BasicController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private WeChatService weChatService;
 
 	@Value("${upload.maxFaceImageSize}")
 	private long MAX_FACE_IMAGE_SIZE;
@@ -201,19 +206,32 @@ public class ArticleController extends BasicController {
 		if (StringUtils.isBlank(userId) || StringUtils.isEmpty(userId)) {
 			return JSONResult.errorMsg("Id can't be null");
 		}
-
+		boolean isLegal = false;
 		// 保存文章信息到数据库
 		Article article = new Article();
 		article.setArticleTitle(articleTitle);
 		article.setArticleContent(articleContent);
 		article.setUserId(userId);
 		article.setTags(articleTag);
-		article.setStatus(ArticleStatusEnums.SUCCESS.value);
 		article.setCreateDate(new Date());
+		// 检测内容是否非法
+		if (weChatService.msgSecCheck(articleTitle) 
+			&& weChatService.msgSecCheck(articleTag)
+			&& weChatService.msgSecCheck(articleContent)) {
+			// 合法
+			isLegal = true;
+			article.setStatus(StatusEnum.READABLE.type);
+		}else {
+			// 非法
+			article.setStatus(StatusEnum.UNREADABLE.type);
+		}
+		String articleId = articleService.saveArticle(article); // 存入数据库
 		
-		String articleId = articleService.saveArticle(article);
-		
-		return JSONResult.ok(articleId);
+		if (isLegal) {
+			return JSONResult.ok(articleId);
+		}else {
+			return JSONResult.errorMap(articleId);
+		}
 	}
 	
 	/**
