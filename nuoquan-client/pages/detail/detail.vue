@@ -41,7 +41,7 @@
 				</view>
 				<view class="icons" @tap="swLikeArticle()">
 					<image v-if="!articleCard.isLike" class="icon" src="../../static/icon/like.png"></image>
-					<image v-if="articleCard.isLike" class="icon" src="../../static/icon/liked.png"></image>
+					<image v-if="articleCard.isLike" class="icon" src="../../static/icon/liked-red.png"></image>
 					<view class="icom" :class="{'liked':articleCard.isLike}">{{ articleCard.likeNum }}</view>
 				</view>
 			</view>
@@ -138,8 +138,7 @@
 		},
 		
 		onUnload() {
-			// 更新本文章信息给上级页面（主页）
-			uni.$emit("updateArticle", this.articleCard);
+			
 			console.log("返回")
 		},
 		
@@ -218,10 +217,14 @@
 							that.$nextTick(function() {
 								that.getComments(1);
 							});
+							
+							this.articleCard.commentNum++; // 文章评论数累加
+							// 更新本文章信息给上级页面（主页）
+							uni.$emit("updateArticle", this.articleCard.id);
+							
 						},
 					})
 				}
-				this.articleCard.commentNum++; // 文章评论数累加
 			},
 			
 			getComments: function(page) {		
@@ -516,6 +519,7 @@
 		flex-wrap: wrap;
 		width: 100%;
 		margin: 0 auto;
+		margin-bottom: 9px;
 	}
 
 	.detailpic {

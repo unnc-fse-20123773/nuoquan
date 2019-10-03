@@ -260,7 +260,7 @@ page{
 		    -ms-flex-align: center;
 		        align-items: center;
 		bottom: 0;
-		min-height: 6%;
+		min-height: 48px;
 		width: 100%;
 		margin: 0;
 		padding: 0;
@@ -270,13 +270,14 @@ page{
 }
 .bottomBar textarea.data-v-e2ad6224 {
 		display: inline-block;
-		width: 530rpx;
-		padding:0 4rpx;
+		height: 16px;
+		width: 522rpx;
+		padding:0 8rpx;
 		min-height: 50rpx;
 		max-height: 95px;
 		border-radius: 24rpx;
 		border: solid 1px #C6C6C6;
-		margin: 20rpx 0 20rpx 14rpx;
+		margin: 22px 0 22px 14rpx;
 		font-size: 13px;
 }
 .icons.data-v-e2ad6224 {

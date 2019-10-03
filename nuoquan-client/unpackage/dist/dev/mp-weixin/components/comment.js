@@ -165,6 +165,7 @@ __webpack_require__.r(__webpack_exports__);
     // 监听刷新次级评论事件
     uni.$on('flashSubComment', function (underCommentId) {
       if (_this.mainComment.id == underCommentId) {
+        _this.mainComment.commentNum++;
         _this.getSubComments(page);
       };
     });

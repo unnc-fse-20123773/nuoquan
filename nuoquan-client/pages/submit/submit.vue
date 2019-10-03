@@ -331,6 +331,7 @@
 		border-radius: 5px;
 		background: #F4F1E9;
 		margin-top: 19px;
+		padding: 0 4px;
 	}
 
 	.tagsArea {
@@ -413,6 +414,7 @@
 		margin-top: 13px;
 		width: 100%;
 		overflow: scroll;
+		padding: 4px;
 	}
 
 	.picturearea {

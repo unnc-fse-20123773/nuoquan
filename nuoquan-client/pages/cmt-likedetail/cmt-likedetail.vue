@@ -43,7 +43,7 @@
 									</view>
 								</view>
 								<!-- 文章预览块 -->
-								<view :class="[item.data.imgList.length > 0 ? 'origin-bar-abs-img' : 'origin-bar-abs-noimg']" @tap="goToArticle(likeList[index2].data.target)">
+								<view :class="[item.data.imgList.length > 0 ? 'origin-bar-abs-img' : 'origin-bar-abs-noimg']" @tap="goToArticle(likeList[index2].data.target.id)">
 									<view class="origin-bar-rel">
 										<view class="origin-imageBox" v-if="item.data.target.imgList.length > 0">
 											<view class="origin-imageMask"></view>
@@ -402,11 +402,29 @@
 				});
 			},
 			
-			goToArticle(article){
+			goToArticle(articleId){
 				// console.log(article)
-				uni.navigateTo({
-					url:'../detail/detail?data=' + JSON.stringify(article),
-				})
+				var that = this;
+				uni.request({
+					url: that.$serverUrl + '/article/getArticleById',
+					method: "POST",
+					data:{
+						articleId: articleId,
+						userId: that.userInfo.id,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {
+						if (res.data.status == 200) {
+							var article = res.data.data;
+							console.log(article)
+							uni.navigateTo({
+								url:'../detail/detail?data=' + JSON.stringify(article),
+							})
+						}
+					},
+				});
 			},
 			
 			goToComment(articleId){

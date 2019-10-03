@@ -11,7 +11,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 @Component
 public class WSServer {
 	
-	private static class SingletonWSSever {
+	private static class SingletonWSSever { // 单例
 		static final WSServer instance = new WSServer();
 	}
 	

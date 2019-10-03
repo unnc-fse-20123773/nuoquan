@@ -122,6 +122,8 @@ public class ArticleServiceImpl implements ArticleService {
 		if (!images.isEmpty()) {
 			// 添加图片列表
 			articleVO.setImgList(images);
+			// 添加和关于用户的点赞关系
+			articleVO.setIsLike(isUserLikeArticle(userId, articleVO.getId()));
 			// 添加标签列表
 			if (!StringUtils.isBlank(articleVO.getTags())) {
 				String[] tagList = articleVO.getTags().split("#");
@@ -233,14 +235,29 @@ public class ArticleServiceImpl implements ArticleService {
 		return searchRecordMapper.getHotWords();
 	}
 
-	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
+	@Override
 	public String saveArticle(Article article) {
 		String id = sid.nextShort();
 		article.setId(id);
 		articleMapper.insertSelective(article);
 
 		return id;
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Override
+	public void deleteArticle(String articleId) {
+		// 1. 删除文章图片数据库路径
+		// 1.1 删除实际图片
+		// 2. 删除文章评论
+		// 2.1 删除文章评论的点赞
+		// 3. 删除文章的点赞
+		// 4. 删除文章
+		Example example4 = new Example(Article.class);
+		Criteria criteria = example4.createCriteria();
+		criteria.andEqualTo("id", articleId);
+		userLikeCommentMapper.deleteByExample(example4);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)

@@ -91,6 +91,7 @@ page {
 		flex-wrap: wrap;
 		width: 100%;
 		margin: 0 auto;
+		margin-bottom: 9px;
 }
 .detailpic.data-v-1b7de92e {
 		width: 190rpx;

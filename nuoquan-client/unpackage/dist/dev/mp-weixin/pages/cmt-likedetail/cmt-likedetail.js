@@ -502,10 +502,28 @@ var _default = {
 
     },
 
-    goToArticle: function goToArticle(article) {
+    goToArticle: function goToArticle(articleId) {
       // console.log(article)
-      uni.navigateTo({
-        url: '../detail/detail?data=' + JSON.stringify(article) });
+      var that = this;
+      uni.request({
+        url: that.$serverUrl + '/article/getArticleById',
+        method: "POST",
+        data: {
+          articleId: articleId,
+          userId: that.userInfo.id },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          if (res.data.status == 200) {
+            var article = res.data.data;
+            console.log(article);
+            uni.navigateTo({
+              url: '../detail/detail?data=' + JSON.stringify(article) });
+
+          }
+        } });
 
     },
 

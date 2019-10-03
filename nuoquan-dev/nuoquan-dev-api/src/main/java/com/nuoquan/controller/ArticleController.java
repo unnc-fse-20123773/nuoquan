@@ -259,6 +259,12 @@ public class ArticleController extends BasicController {
 		return JSONResult.ok();
 	}
 
+	@PostMapping(value="/deleteArticle")
+	public JSONResult deleteArticle(String articleId) throws Exception {
+		articleService.deleteArticle(articleId);
+		return JSONResult.ok();
+	}
+	
 	/**
 	 * fromUserId 必填
 	 * toUserId 必填
