@@ -257,8 +257,7 @@ __webpack_require__.r(__webpack_exports__);
   },
 
   onUnload: function onUnload() {
-    // 更新本文章信息给上级页面（主页）
-    uni.$emit("updateArticle", this.articleCard);
+
     console.log("返回");
   },
 
@@ -310,7 +309,7 @@ __webpack_require__.r(__webpack_exports__);
         * PS: 父级（一级，给文章评论）评论 无 fatherCommentId, underCommentId;
         *     子级评论有 fatherCommentId, underCommentId;
         */
-    saveComment: function saveComment() {
+    saveComment: function saveComment() {var _this = this;
       this.submitData.comment = this.commentContent;
       this.submitData.fromUserId = this.userInfo.id;
       this.submitData.articleId = this.articleCard.id;
@@ -337,10 +336,14 @@ __webpack_require__.r(__webpack_exports__);
             that.$nextTick(function () {
               that.getComments(1);
             });
+
+            _this.articleCard.commentNum++; // 文章评论数累加
+            // 更新本文章信息给上级页面（主页）
+            uni.$emit("updateArticle", _this.articleCard.id);
+
           } });
 
       }
-      this.articleCard.commentNum++; // 文章评论数累加
     },
 
     getComments: function getComments(page) {

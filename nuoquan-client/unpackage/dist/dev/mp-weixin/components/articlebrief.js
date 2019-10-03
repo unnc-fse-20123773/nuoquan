@@ -219,10 +219,10 @@ var _default =
       }
     }
 
-    uni.$on("updateArticle", function (article) {// from detail
-      if (article.id == _this.thisArticle.id) {
+    uni.$on("updateArticle", function (articleID) {// from detail
+      if (articleID == _this.thisArticle.id) {
         console.log("get");
-        _this.thisArticle = article; // 调用计算属性
+        _this.thisArticle.commentNum++;
       }
     });
   },

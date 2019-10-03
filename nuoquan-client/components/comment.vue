@@ -64,8 +64,8 @@
 			var page = this.currentPage;
 			// 监听刷新次级评论事件
 			uni.$on('flashSubComment', (underCommentId) => {
-				debugger;
 				if (this.mainComment.id == underCommentId) {
+					this.mainComment.commentNum++;
 					this.getSubComments(page);
 				};
 			})

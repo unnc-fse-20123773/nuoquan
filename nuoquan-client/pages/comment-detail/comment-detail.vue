@@ -108,7 +108,7 @@
 		onReachBottom() {
 			this.loadMore();
 		},
-		
+
 		methods: {
 			getSubComments(page) {
 				var that = this;
@@ -227,8 +227,8 @@
 							that.$nextTick(function() {
 								that.getSubComments(1);
 							});
-							that.$emit('flashSubComment',that.mainComment.id);
-							debugger;
+							uni.$emit('flashSubComment',this.mainComment.id);
+							uni.$emit('updateArticle',this.mainComment.articleId);
 						},
 					})
 				}

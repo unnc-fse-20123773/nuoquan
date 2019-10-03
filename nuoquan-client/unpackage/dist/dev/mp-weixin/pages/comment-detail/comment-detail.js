@@ -105,7 +105,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var sonCommentBox = function sonCommentBox() {return __webpack_require__.e(/*! import() | pages/comment-detail/sonCommentBox */ "pages/comment-detail/sonCommentBox").then(__webpack_require__.bind(null, /*! ./sonCommentBox.vue */ 216));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var sonCommentBox = function sonCommentBox() {return __webpack_require__.e(/*! import() | pages/comment-detail/sonCommentBox */ "pages/comment-detail/sonCommentBox").then(__webpack_require__.bind(null, /*! ./sonCommentBox.vue */ 266));};var _default =
 
 
 
@@ -307,7 +307,7 @@ __webpack_require__.r(__webpack_exports__);
         * PS: 父级（一级，给文章评论）评论 无 fatherCommentId, underCommentId;
         *     子级评论有 fatherCommentId, underCommentId;
         */
-    saveComment: function saveComment() {
+    saveComment: function saveComment() {var _this = this;
       this.submitData.comment = this.commentContent;
       this.submitData.fromUserId = this.userInfo.id;
       this.submitData.articleId = this.mainComment.articleId;
@@ -334,8 +334,8 @@ __webpack_require__.r(__webpack_exports__);
             that.$nextTick(function () {
               that.getSubComments(1);
             });
-            that.$emit('flashSubComment', that.mainComment.id);
-            debugger;
+            uni.$emit('flashSubComment', _this.mainComment.id);
+            uni.$emit('updateArticle', _this.mainComment.articleId);
           } });
 
       }

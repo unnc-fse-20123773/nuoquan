@@ -100,10 +100,10 @@
 				}
 			}
 			
-			uni.$on("updateArticle", (article) => { // from detail
-				if(article.id == this.thisArticle.id){
+			uni.$on("updateArticle", (articleID) => { // from detail
+				if(articleID == this.thisArticle.id){
 					console.log("get")
-					this.thisArticle = article; // 调用计算属性
+					this.thisArticle.commentNum ++ ;
 				}
 			})
 		},

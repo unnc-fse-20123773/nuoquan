@@ -138,8 +138,7 @@
 		},
 		
 		onUnload() {
-			// 更新本文章信息给上级页面（主页）
-			uni.$emit("updateArticle", this.articleCard);
+			
 			console.log("返回")
 		},
 		
@@ -218,10 +217,14 @@
 							that.$nextTick(function() {
 								that.getComments(1);
 							});
+							
+							this.articleCard.commentNum++; // 文章评论数累加
+							// 更新本文章信息给上级页面（主页）
+							uni.$emit("updateArticle", this.articleCard.id);
+							
 						},
 					})
 				}
-				this.articleCard.commentNum++; // 文章评论数累加
 			},
 			
 			getComments: function(page) {		
