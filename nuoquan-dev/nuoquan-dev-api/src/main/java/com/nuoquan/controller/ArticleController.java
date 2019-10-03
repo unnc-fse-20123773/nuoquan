@@ -222,7 +222,7 @@ public class ArticleController extends BasicController {
 			isLegal = true;
 			article.setStatus(StatusEnum.READABLE.type);
 		}else {
-			// 非法
+			// 非法，尽管非法也保存到数据库
 			article.setStatus(StatusEnum.UNREADABLE.type);
 		}
 		String articleId = articleService.saveArticle(article); // 存入数据库
@@ -277,7 +277,6 @@ public class ArticleController extends BasicController {
 		return JSONResult.ok();
 	}
 
-	
 	@ApiOperation(value = "删除文章")
 	@ApiImplicitParams({
 			// uniapp使用formData时，paramType要改成form
@@ -328,7 +327,6 @@ public class ArticleController extends BasicController {
 		return JSONResult.ok();
 	}
 	
-	
 	/**
 	 * fromUserId 必填
 	 * toUserId 必填
@@ -341,28 +339,34 @@ public class ArticleController extends BasicController {
 	 */
 	@PostMapping("/saveComment")
 	public JSONResult saveComment(@RequestBody UserArticleComment comment) throws Exception {
-		// 存入数据库
-		String commentId = articleService.saveComment(comment);
+		// 内容安全检测
+		if (weChatService.msgSecCheck(comment.getComment()) ) {
+			// 存入数据库
+			String commentId = articleService.saveComment(comment);
 
-		// 给作者发推送
-		DataContent dataContent = new DataContent();
-		
-		UserArticleCommentVO commentVO = articleService.getCommentById(commentId, null); // 无需查询用户点赞关系
-		if (StringUtils.isBlank(comment.getFatherCommentId())) {
-			// 给文章评论
-			ArticleVO targetArticle = articleService.getArticleById(comment.getArticleId(), null);
-			dataContent.setData(new NoticeCard(commentVO, targetArticle));
-			dataContent.setAction(MsgActionEnum.COMMENTARTICLE.type);
+			// 给作者发推送
+			DataContent dataContent = new DataContent();
+			
+			UserArticleCommentVO commentVO = articleService.getCommentById(commentId, null); // 无需查询用户点赞关系
+			if (StringUtils.isBlank(comment.getFatherCommentId())) {
+				// 给文章评论
+				ArticleVO targetArticle = articleService.getArticleById(comment.getArticleId(), null);
+				dataContent.setData(new NoticeCard(commentVO, targetArticle));
+				dataContent.setAction(MsgActionEnum.COMMENTARTICLE.type);
+			}else {
+				// 给评论评论
+				UserArticleCommentVO targetComment = articleService.getCommentById(comment.getFatherCommentId(), null);
+				dataContent.setData(new NoticeCard(commentVO, targetComment));
+				dataContent.setAction(MsgActionEnum.COMMENTCOMMENT.type);
+			}
+
+			MsgHandler.sendMsgTo(comment.getToUserId(), dataContent);
+
+			return JSONResult.ok();
 		}else {
-			// 给评论评论
-			UserArticleCommentVO targetComment = articleService.getCommentById(comment.getFatherCommentId(), null);
-			dataContent.setData(new NoticeCard(commentVO, targetComment));
-			dataContent.setAction(MsgActionEnum.COMMENTCOMMENT.type);
+			return JSONResult.errorMsg("内容不合法");
 		}
-
-		MsgHandler.sendMsgTo(comment.getToUserId(), dataContent);
-
-		return JSONResult.ok();
+		
 	}
 
 	@ApiImplicitParams({

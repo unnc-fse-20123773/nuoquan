@@ -117,7 +117,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var comment = function comment() {return __webpack_require__.e(/*! import() | components/comment */ "components/comment").then(__webpack_require__.bind(null, /*! ../../components/comment */ 159));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var comment = function comment() {return __webpack_require__.e(/*! import() | components/comment */ "components/comment").then(__webpack_require__.bind(null, /*! ../../components/comment */ 159));};
 
 
 
@@ -193,6 +193,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+var uploadFlag = false;var _default =
 {
   data: function data() {
     return {
@@ -311,6 +313,15 @@ __webpack_require__.r(__webpack_exports__);
         *     子级评论有 fatherCommentId, underCommentId;
         */
     saveComment: function saveComment() {
+      if (uploadFlag) {
+        console.log("正在上传...");
+        return;
+      }
+      uploadFlag = true;
+      uni.showLoading({
+        title: "正在上传..." });
+
+
       this.submitData.comment = this.commentContent;
       this.submitData.fromUserId = this.userInfo.id;
       this.submitData.articleId = this.articleCard.id;
@@ -328,19 +339,39 @@ __webpack_require__.r(__webpack_exports__);
           method: 'POST',
           data: this.submitData,
           success: function success(res) {
-            that.writingComment = false;
-            that.commentContent = "";
-            that.showInput = false;
+            if (res.data.status == 200) {
+              uni.hideLoading();
+              uploadFlag = false;
 
-            // 强制子组件重新刷新
-            that.commentList = '';
-            that.$nextTick(function () {
-              that.getComments(1);
-            });
+              that.writingComment = false;
+              that.commentContent = "";
+              that.showInput = false;
+
+              // 强制子组件重新刷新
+              that.commentList = '';
+              that.$nextTick(function () {
+                that.getComments(1);
+              });
+
+              that.articleCard.commentNum++; // 文章评论数累加
+            } else if (res.data.status == 500) {
+              that.contentIllegal();
+            }
+
           } });
 
       }
-      this.articleCard.commentNum++; // 文章评论数累加
+    },
+
+    contentIllegal: function contentIllegal() {
+      // 内容非法 用户提醒
+      uploadFlag = false;
+      uni.hideLoading();
+      uni.showToast({
+        title: '⠀⠀⠀⠀内容涉嫌违规，⠀⠀⠀⠀请联系管理员。',
+        duration: 2000,
+        icon: 'none' });
+
     },
 
     getComments: function getComments(page) {
