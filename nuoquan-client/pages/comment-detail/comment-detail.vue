@@ -227,6 +227,8 @@
 							that.$nextTick(function() {
 								that.getSubComments(1);
 							});
+							that.$emit('flashSubComment',that.mainComment.id);
+							debugger;
 						},
 					})
 				}
