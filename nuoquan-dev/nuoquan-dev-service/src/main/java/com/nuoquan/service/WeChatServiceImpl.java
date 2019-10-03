@@ -91,11 +91,12 @@ public class WeChatServiceImpl implements WeChatService {
 				this.content = content;
 			}
         }
-        
+        if (StringUtils.isBlank(content)) {
+			return true;
+		}
         // 获取AccessToken
         String accessToken = getWeChatAccessToken();
-
-        System.out.println(accessToken);
+//        System.out.println(accessToken);
         
         String requestUrl = "https://api.weixin.qq.com/wxa/msg_sec_check?access_token="+accessToken;
         
@@ -111,6 +112,7 @@ public class WeChatServiceImpl implements WeChatService {
         if (checkRes.getErrcode().equals(0)) {
         	return true; //合法
 		}else {
+	        System.out.println(content + ", " + jsonRes);
 			return false; //非法
 		}
     }

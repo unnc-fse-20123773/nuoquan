@@ -175,4 +175,12 @@ public interface ArticleService {
 	 * @return
 	 */
 	public List<UserArticleCommentVO> getUnsignedCommentMsg(String userId);
+	
+	public void banArticle(String articleId);
+	
+	public void passArticle(String articleId);
+	
+	public void banComment(String commentId);
+	
+	public void passComment(String commentId);
 }

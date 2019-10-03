@@ -46,6 +46,9 @@ public class UserArticleComment {
     @Column(name = "sign_flag")
     private Integer signFlag;
     
+    @Column(name = "status")
+    private Integer status;
+    
     /**
      * @return id
      */
@@ -221,4 +224,12 @@ public class UserArticleComment {
     public void setSignFlag(Integer signFlag) {
         this.signFlag = signFlag;
     }
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 }
