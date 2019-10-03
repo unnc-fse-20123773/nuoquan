@@ -1,6 +1,12 @@
 -- +++++++++++++++++++++
 -- +  Database update  +
 -- +++++++++++++++++++++
+
+-- v19.10.3 @author: Deyan
+ALTER TABLE `nuoquan`.`user_article_comment` 
+ADD COLUMN `status` INT(11) NOT NULL DEFAULT '1' AFTER `sign_flag`;
+
+
 -- v19.9.13 @author: Jerrio
 ALTER TABLE `nuoquan`.`chat_msg` 
 CHANGE COLUMN `msg` `msg` VARCHAR(255) CHARACTER SET 'utf8mb4' NOT NULL ;

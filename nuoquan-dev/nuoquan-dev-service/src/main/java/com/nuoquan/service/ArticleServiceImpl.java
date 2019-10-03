@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.nuoquan.utils.TimeAgoUtils;
+import com.sun.mail.imap.protocol.Status;
+import com.nuoquan.enums.StatusEnum;
 import com.nuoquan.mapper.ArticleImageMapper;
 import com.nuoquan.mapper.ArticleMapper;
 import com.nuoquan.mapper.ArticleMapperCustom;
@@ -122,6 +124,8 @@ public class ArticleServiceImpl implements ArticleService {
 		if (!images.isEmpty()) {
 			// 添加图片列表
 			articleVO.setImgList(images);
+			// 添加和关于用户的点赞关系
+			articleVO.setIsLike(isUserLikeArticle(userId, articleVO.getId()));
 			// 添加标签列表
 			if (!StringUtils.isBlank(articleVO.getTags())) {
 				String[] tagList = articleVO.getTags().split("#");
@@ -233,14 +237,67 @@ public class ArticleServiceImpl implements ArticleService {
 		return searchRecordMapper.getHotWords();
 	}
 
-	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
+	@Override
 	public String saveArticle(Article article) {
 		String id = sid.nextShort();
 		article.setId(id);
 		articleMapper.insertSelective(article);
 
 		return id;
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Override
+	public void deleteArticle(String articleId) {
+		// 1. 删除文章图片数据库路径 
+		// 1.1 删除实际图片
+		// 2. 删除文章评论
+		// 2.1 删除文章评论的点赞
+		// 3. 删除文章的点赞
+		// 4. 删除文章
+		
+		// 删除文章图片
+		// 删除数据库中的路径
+		Example exampleDelImg = new Example(ArticleImage.class);
+		Criteria criteria1 = exampleDelImg.createCriteria();
+		criteria1.andEqualTo("articleId", articleId);
+		articleImageMapper.deleteByExample(exampleDelImg);
+
+		System.out.println(articleId);
+		
+		// 删除文章评论的点赞
+		// 先在userArticleComment里找到articleId对应的评论id, 该id为userLikeComment中的commentId
+		Example exampleToFindCommentId = new Example(UserArticleComment.class);
+		Criteria criteriaToFindCommentId = exampleToFindCommentId.createCriteria();
+		criteriaToFindCommentId.andEqualTo("articleId", articleId);
+		List<UserArticleComment> list = userArticleCommentMapper.selectByExample(exampleToFindCommentId);
+		for (UserArticleComment c : list) {
+			// 得到commentId
+			String commentId = c.getId();
+			// 在userLikeComment中查询
+			Example exampleToDelCommentLikeExample = new Example(UserLikeComment.class);
+			Criteria criteria = exampleToDelCommentLikeExample.createCriteria();
+			criteria.andEqualTo("commentId", commentId);
+			userLikeCommentMapper.deleteByExample(exampleToDelCommentLikeExample);
+		}
+		// 删除目标文章所有评论
+		// Example exampleDelComment = new Example(UserArticleComment.class);
+		// Criteria criteria2 = exampleDelComment.createCriteria();
+		// criteria2.andEqualTo("articleId", articleId);
+		userArticleCommentMapper.deleteByExample(exampleToFindCommentId);
+		
+		// 删除文章的点赞
+		Example exampleDelArticleLike = new Example(UserLikeArticle.class);
+		Criteria criteria4 = exampleDelArticleLike.createCriteria();
+		criteria4.andEqualTo("articleId", articleId);
+		userLikeArticleMapper.deleteByExample(exampleDelArticleLike);
+			
+		// 删除文章
+		Example exampleDelArticle = new Example(Article.class);
+		Criteria criteria3 = exampleDelArticle.createCriteria();
+		criteria3.andEqualTo("id", articleId);
+		articleMapper.deleteByExample(exampleDelArticle);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -465,6 +522,48 @@ public class ArticleServiceImpl implements ArticleService {
 	public List<UserArticleCommentVO> getUnsignedCommentMsg(String userId) {
 		List<UserArticleCommentVO> commentVOs = userArticleCommentMapperCustom.getUnsignedCommentMsg(userId);
 		return commentVOs;
+	}
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Override
+	public void banArticle(String articleId) {
+		Example example = new Example(Article.class);
+		Criteria criteria = example.createCriteria();
+		criteria.andEqualTo("id", articleId);
+		Article a = new Article();
+		a.setStatus(StatusEnum.UNREADABLE.type);
+		articleMapper.updateByExampleSelective(a, example);
+	}
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Override
+	public void passArticle(String articleId) {
+		Example example = new Example(Article.class);
+		Criteria criteria = example.createCriteria();
+		criteria.andEqualTo("id", articleId);
+		Article a = new Article();
+		a.setStatus(StatusEnum.READABLE.type);
+		articleMapper.updateByExampleSelective(a, example);
+	}
+
+	@Override
+	public void banComment(String commentId) {
+		Example example = new Example(UserArticleComment.class);
+		Criteria criteria = example.createCriteria();
+		criteria.andEqualTo("id", commentId);
+		UserArticleComment commentHelper = new UserArticleComment();
+		commentHelper.setStatus(StatusEnum.UNREADABLE.type);
+		userArticleCommentMapper.updateByExampleSelective(commentHelper, example);
+	}
+
+	@Override
+	public void passComment(String commentId) {
+		Example example = new Example(UserArticleComment.class);
+		Criteria criteria = example.createCriteria();
+		criteria.andEqualTo("id", commentId);
+		UserArticleComment commentHelper = new UserArticleComment();
+		commentHelper.setStatus(StatusEnum.READABLE.type);
+		userArticleCommentMapper.updateByExampleSelective(commentHelper, example);	
 	}
 
 }

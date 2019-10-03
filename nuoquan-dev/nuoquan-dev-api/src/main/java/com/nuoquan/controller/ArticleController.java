@@ -259,6 +259,58 @@ public class ArticleController extends BasicController {
 		return JSONResult.ok();
 	}
 
+	
+	@ApiOperation(value = "删除文章")
+	@ApiImplicitParams({
+			// uniapp使用formData时，paramType要改成form
+			@ApiImplicitParam(name = "articleId", value = "文章id", required = true, dataType = "String", paramType = "form") })
+	@PostMapping(value="/deleteArticle")
+	public JSONResult deleteArticle(String articleId) throws Exception {
+		articleService.deleteArticle(articleId);
+		return JSONResult.ok();
+	}
+	
+	@ApiOperation(value = "更改文章状态为ban")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "articleId", value = "文章id", required = true, dataType = "String", paramType = "form")
+	})
+	@PostMapping(value="/banArticle")
+	public JSONResult banArticle(String articleId) throws Exception {
+		articleService.banArticle(articleId);
+		return JSONResult.ok();
+	}
+	
+	@ApiOperation(value = "更改文章状态为pass")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "articleId", value = "文章id", required = true, dataType = "String", paramType = "form")
+	})
+	@PostMapping(value="/passArticle")
+	public JSONResult passArticle(String articleId) throws Exception {
+		articleService.passArticle(articleId);
+		return JSONResult.ok();
+	}
+	
+	@ApiOperation(value = "更改评论状态为ban")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "commentId", value = "评论id", required = true, dataType = "String", paramType = "form")
+	})
+	@PostMapping(value="/banComment")
+	public JSONResult banComment(String commentId) throws Exception {
+		articleService.banComment(commentId);
+		return JSONResult.ok();
+	}
+	
+	@ApiOperation(value = "更改评论状态为pass")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "commentId", value = "评论id", required = true, dataType = "String", paramType = "form")
+	})
+	@PostMapping(value="/passComment")
+	public JSONResult passComment(String commentId) throws Exception {
+		articleService.passComment(commentId);
+		return JSONResult.ok();
+	}
+	
+	
 	/**
 	 * fromUserId 必填
 	 * toUserId 必填

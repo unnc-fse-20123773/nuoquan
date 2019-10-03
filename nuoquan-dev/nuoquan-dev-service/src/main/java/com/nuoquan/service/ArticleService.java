@@ -69,6 +69,12 @@ public interface ArticleService {
 	public String saveArticle(Article article);
 	
 	/**
+	 * 删除文章
+	 * @param articleId
+	 */
+	public void deleteArticle(String articleId);
+	
+	/**
 	 * 上传评论到数据库
 	 * @param comment
 	 * @return commentId
@@ -169,4 +175,12 @@ public interface ArticleService {
 	 * @return
 	 */
 	public List<UserArticleCommentVO> getUnsignedCommentMsg(String userId);
+	
+	public void banArticle(String articleId);
+	
+	public void passArticle(String articleId);
+	
+	public void banComment(String commentId);
+	
+	public void passComment(String commentId);
 }
