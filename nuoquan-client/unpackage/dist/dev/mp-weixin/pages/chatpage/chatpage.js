@@ -331,7 +331,9 @@ var chatHistory;var _default =
     scrollToBottom: function scrollToBottom() {
       // 将页面滚动到底部，
       console.log(this.chatContent);
-      this.scrollToView = this.chatContent[this.chatContent.length - 1].id;
+      if (this.chatContent.length > 0) {
+        this.scrollToView = this.chatContent[this.chatContent.length - 1].id;
+      }
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

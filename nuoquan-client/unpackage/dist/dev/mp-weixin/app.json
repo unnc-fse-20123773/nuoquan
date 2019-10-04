@@ -14,7 +14,9 @@
     "pages/messagelist/messagelist",
     "pages/wechatLogin/wechatLogin",
     "pages/cmt-likedetail/cmt-likedetail",
-    "pages/comment-detail/comment-detail"
+    "pages/comment-detail/comment-detail",
+    "pages/test/test",
+    "pages/userDeal/userDeal"
   ],
   "subPackages": [],
   "window": {
@@ -24,6 +26,5 @@
     "backgroundColor": "#F8F8F8"
   },
   "permission": {},
-  "usingComponents": {},
-  "sitemapLocation": "sitemap53.json"
+  "usingComponents": {}
 }

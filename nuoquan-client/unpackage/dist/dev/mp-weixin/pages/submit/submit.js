@@ -272,6 +272,8 @@ var _default = {
         return true;
       }
     },
+
+    // TODO：图片上传需加上大小限制，后台限制10M
     upload: function upload(e) {var _this2 = this;
       var me = this;
       if (me.articleTitle == '' || me.articleTitle == null) {
@@ -317,7 +319,8 @@ var _default = {
             'content-type': 'application/x-www-form-urlencoded' },
 
           success: function success(res) {
-            // console.log(res.data.data);
+            // console.log(res);
+            me.finalTag = ""; // 清空组装tag
             if (res.data.status == 200) {
               if (me.imageList.length > 0) {
                 var articleId = res.data.data;
@@ -343,6 +346,8 @@ var _default = {
               } else {
                 me.uploadSuccess();
               }
+            } else if (res.data.status == 501) {
+              me.contentIllegal();
             } else {
               me.uploadFail();
             }
@@ -362,7 +367,7 @@ var _default = {
         delta: 1 });
 
       uni.showToast({
-        title: '上传成功',
+        title: '已提交审核',
         duration: 2000,
         icon: 'success' });
 
@@ -374,6 +379,17 @@ var _default = {
       uni.hideLoading();
       uni.showToast({
         title: '出现未知错误，上传失败',
+        duration: 2000,
+        icon: 'none' });
+
+    },
+
+    contentIllegal: function contentIllegal() {
+      // 内容非法 用户提醒
+      uploadFlag = false;
+      uni.hideLoading();
+      uni.showToast({
+        title: '内容涉嫌违规，请联系管理员。',
         duration: 2000,
         icon: 'none' });
 

@@ -520,15 +520,7 @@ var _default = {
       topArticles: '',
       topHeight: 160,
 
-      userInfo: { // 默认user设置
-        id: 'test-id123',
-        nickname: 'test-name',
-        faceImg: '',
-        faceImgThumb: '',
-        email: 'zy22089@nottingham.edu.cn',
-        emailPrefix: 'zy22089',
-        emailSuffix: '@nottingham.edu.cn' },
-
+      userInfo: '',
       totalPage: 1,
       currentPage: 1,
       scrollTop: 0,
@@ -551,7 +543,7 @@ var _default = {
 
       return;
     } else {
-      this.userInfo = userInfo; // 刷去默认值
+      this.userInfo = userInfo; // 刷去默认值(若有)
     }
 
     this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉

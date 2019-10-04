@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.nuoquan.enums.ArticleStatusEnums;
 import com.nuoquan.enums.MsgActionEnum;
+import com.nuoquan.enums.StatusEnum;
 import com.nuoquan.netty.MsgHandler;
 import com.nuoquan.pojo.Article;
 import com.nuoquan.pojo.ArticleImage;
@@ -29,6 +30,7 @@ import com.nuoquan.pojo.vo.UserArticleCommentVO;
 import com.nuoquan.pojo.vo.UserLikeVO;
 import com.nuoquan.service.ArticleService;
 import com.nuoquan.service.UserService;
+import com.nuoquan.service.WeChatService;
 import com.nuoquan.utils.JSONResult;
 import com.nuoquan.utils.PagedResult;
 
@@ -48,6 +50,9 @@ public class ArticleController extends BasicController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private WeChatService weChatService;
 
 	@Value("${upload.maxFaceImageSize}")
 	private long MAX_FACE_IMAGE_SIZE;
@@ -201,19 +206,32 @@ public class ArticleController extends BasicController {
 		if (StringUtils.isBlank(userId) || StringUtils.isEmpty(userId)) {
 			return JSONResult.errorMsg("Id can't be null");
 		}
-
+		boolean isLegal = false;
 		// 保存文章信息到数据库
 		Article article = new Article();
 		article.setArticleTitle(articleTitle);
 		article.setArticleContent(articleContent);
 		article.setUserId(userId);
 		article.setTags(articleTag);
-		article.setStatus(ArticleStatusEnums.SUCCESS.value);
 		article.setCreateDate(new Date());
+		// 检测内容是否非法
+		if (weChatService.msgSecCheck(articleTitle) 
+			&& weChatService.msgSecCheck(articleTag)
+			&& weChatService.msgSecCheck(articleContent)) {
+			// 合法
+			isLegal = true;
+			article.setStatus(StatusEnum.READABLE.type);
+		}else {
+			// 非法，尽管非法也保存到数据库
+			article.setStatus(StatusEnum.UNREADABLE.type);
+		}
+		String articleId = articleService.saveArticle(article); // 存入数据库
 		
-		String articleId = articleService.saveArticle(article);
-		
-		return JSONResult.ok(articleId);
+		if (isLegal) {
+			return JSONResult.ok(articleId);
+		}else {
+			return JSONResult.errorMap(articleId);
+		}
 	}
 	
 	/**
@@ -259,9 +277,53 @@ public class ArticleController extends BasicController {
 		return JSONResult.ok();
 	}
 
+	@ApiOperation(value = "删除文章")
+	@ApiImplicitParams({
+			// uniapp使用formData时，paramType要改成form
+			@ApiImplicitParam(name = "articleId", value = "文章id", required = true, dataType = "String", paramType = "form") })
 	@PostMapping(value="/deleteArticle")
 	public JSONResult deleteArticle(String articleId) throws Exception {
 		articleService.deleteArticle(articleId);
+		return JSONResult.ok();
+	}
+	
+	@ApiOperation(value = "更改文章状态为ban")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "articleId", value = "文章id", required = true, dataType = "String", paramType = "form")
+	})
+	@PostMapping(value="/banArticle")
+	public JSONResult banArticle(String articleId) throws Exception {
+		articleService.banArticle(articleId);
+		return JSONResult.ok();
+	}
+	
+	@ApiOperation(value = "更改文章状态为pass")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "articleId", value = "文章id", required = true, dataType = "String", paramType = "form")
+	})
+	@PostMapping(value="/passArticle")
+	public JSONResult passArticle(String articleId) throws Exception {
+		articleService.passArticle(articleId);
+		return JSONResult.ok();
+	}
+	
+	@ApiOperation(value = "更改评论状态为ban")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "commentId", value = "评论id", required = true, dataType = "String", paramType = "form")
+	})
+	@PostMapping(value="/banComment")
+	public JSONResult banComment(String commentId) throws Exception {
+		articleService.banComment(commentId);
+		return JSONResult.ok();
+	}
+	
+	@ApiOperation(value = "更改评论状态为pass")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "commentId", value = "评论id", required = true, dataType = "String", paramType = "form")
+	})
+	@PostMapping(value="/passComment")
+	public JSONResult passComment(String commentId) throws Exception {
+		articleService.passComment(commentId);
 		return JSONResult.ok();
 	}
 	
@@ -277,28 +339,34 @@ public class ArticleController extends BasicController {
 	 */
 	@PostMapping("/saveComment")
 	public JSONResult saveComment(@RequestBody UserArticleComment comment) throws Exception {
-		// 存入数据库
-		String commentId = articleService.saveComment(comment);
+		// 内容安全检测
+		if (weChatService.msgSecCheck(comment.getComment()) ) {
+			// 存入数据库
+			String commentId = articleService.saveComment(comment);
 
-		// 给作者发推送
-		DataContent dataContent = new DataContent();
-		
-		UserArticleCommentVO commentVO = articleService.getCommentById(commentId, null); // 无需查询用户点赞关系
-		if (StringUtils.isBlank(comment.getFatherCommentId())) {
-			// 给文章评论
-			ArticleVO targetArticle = articleService.getArticleById(comment.getArticleId(), null);
-			dataContent.setData(new NoticeCard(commentVO, targetArticle));
-			dataContent.setAction(MsgActionEnum.COMMENTARTICLE.type);
+			// 给作者发推送
+			DataContent dataContent = new DataContent();
+			
+			UserArticleCommentVO commentVO = articleService.getCommentById(commentId, null); // 无需查询用户点赞关系
+			if (StringUtils.isBlank(comment.getFatherCommentId())) {
+				// 给文章评论
+				ArticleVO targetArticle = articleService.getArticleById(comment.getArticleId(), null);
+				dataContent.setData(new NoticeCard(commentVO, targetArticle));
+				dataContent.setAction(MsgActionEnum.COMMENTARTICLE.type);
+			}else {
+				// 给评论评论
+				UserArticleCommentVO targetComment = articleService.getCommentById(comment.getFatherCommentId(), null);
+				dataContent.setData(new NoticeCard(commentVO, targetComment));
+				dataContent.setAction(MsgActionEnum.COMMENTCOMMENT.type);
+			}
+
+			MsgHandler.sendMsgTo(comment.getToUserId(), dataContent);
+
+			return JSONResult.ok();
 		}else {
-			// 给评论评论
-			UserArticleCommentVO targetComment = articleService.getCommentById(comment.getFatherCommentId(), null);
-			dataContent.setData(new NoticeCard(commentVO, targetComment));
-			dataContent.setAction(MsgActionEnum.COMMENTCOMMENT.type);
+			return JSONResult.errorMsg("内容不合法");
 		}
-
-		MsgHandler.sendMsgTo(comment.getToUserId(), dataContent);
-
-		return JSONResult.ok();
+		
 	}
 
 	@ApiImplicitParams({

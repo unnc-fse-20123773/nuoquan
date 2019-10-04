@@ -213,7 +213,9 @@
 			scrollToBottom(){
 				// 将页面滚动到底部，
 				console.log(this.chatContent)
-				this.scrollToView = this.chatContent[this.chatContent.length-1].id;
+				if(this.chatContent.length>0){
+					this.scrollToView = this.chatContent[this.chatContent.length-1].id;
+				}
 			}
 		}
 	}

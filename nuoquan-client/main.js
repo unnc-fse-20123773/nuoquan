@@ -771,9 +771,9 @@ Vue.prototype.chat = {
 /**
  * 点赞评论通知
  */
-Vue.prototype.notification={
-	LIKEMSG_KEY : "likeMsg",
-	COMMENTMSG_KEY : "commentMsg",
+Vue.prototype.notification={	
+	LIKEMSG_KEY : "likeMsg" + app.getGlobalUserInfo().id,
+	COMMENTMSG_KEY : "commentMsg" + app.getGlobalUserInfo().id,
 	/**
 	 * 把点赞通知存入缓存
 	 * @param {Object} dataContent

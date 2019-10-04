@@ -202,72 +202,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
-var isLoding = false;var _default =
+var isLoding = false;
+var timer = null;
+var timer_ = null;
+//邮箱验证
+var util = __webpack_require__(/*! ../../common/util.js */ "../../../../../../../../../code/nuoquan/nuoquan-client/common/util.js");
+var email; //输入的email值
+var captcha; //输入的captcha值
+var whCaptcha = function whCaptcha() {return __webpack_require__.e(/*! import() | components/wh-captcha/wh-captcha */ "components/wh-captcha/wh-captcha").then(__webpack_require__.bind(null, /*! ../../components/wh-captcha/wh-captcha.vue */ "../../../../../../../../../code/nuoquan/nuoquan-client/components/wh-captcha/wh-captcha.vue"));};var _default =
 {
+  components: {
+    whCaptcha: whCaptcha },
+
   data: function data() {
     return {
-      status: false };
+      status: false,
+      swiperLeft: 0,
+      swiperLineWidth: 0,
+      captchaLength: 6 };
 
   },
   methods: {
@@ -277,10 +230,106 @@ var isLoding = false;var _default =
       return false;
     },
 
+    onEmailInput: function onEmailInput(event) {
+      email = event.target.value;
+    },
+
+    onCaptchaInput: function onCaptchaInput(event) {
+      captcha = event.target.value;
+    },
+
+    /**
+        * true: 不匹配, false: 匹配
+        */
+    checkUNNCEmail: function checkUNNCEmail(str) {
+      return !RegExp(/^\w+([-+.]\w+)*@nottingham\.edu\.cn+$/).test(str);
+    },
+
+    getCaptcha: function getCaptcha() {
+      if (email) {
+        // 检测邮箱
+        if (util.regEmail(email) || this.checkUNNCEmail(email)) {
+          uni.showToast({
+            title: '非 UNNC 邮箱地址！',
+            icon: 'none' });
+
+        } else {
+          if (this.$refs.captcha.canSend()) {
+            console.log("获取验证码 email=" + email);
+            this.$refs.captcha.begin();
+
+            var that = this;
+            uni.request({
+              url: that.$serverUrl + '/user/getCode',
+              method: "POST",
+              data: {
+                userId: that.getGlobalUserInfo().id,
+                email: email },
+
+              header: {
+                'content-type': 'application/x-www-form-urlencoded' },
+
+              success: function success(res) {
+                console.log(res);
+              } });
+
+          }
+        }
+      } else {
+        uni.showToast({
+          title: 'Email不能为空',
+          icon: 'none' });
+
+      }
+    },
+
+    confirmCode: function confirmCode() {var _this = this;
+      if (captcha) {
+        var that = this;
+        uni.request({
+          url: that.$serverUrl + '/user/confirmCode',
+          method: "POST",
+          data: {
+            userId: that.getGlobalUserInfo().id,
+            code: captcha },
+
+          header: {
+            'content-type': 'application/x-www-form-urlencoded' },
+
+          success: function success(res) {
+            if (res.data.status == 200) {
+              console.log("验证邮箱成功，下一步");
+              // 进度条运动
+              clearInterval(timer_); //清空定时器，防止重复操作
+              var that = _this;
+              timer_ = setInterval(function () {
+                if (that.swiperLineWidth >= 100) {
+                  clearInterval(timer_);
+                } else {
+                  that.swiperLineWidth = that.swiperLineWidth + 2;
+                  console.log(that.swiperLineWidth);
+                }
+              }, 20);
+              uni.redirectTo({
+                url: "../index/index" });
+
+            } else {
+              console.log("验证失败 " + res.data.msg);
+            }
+          } });
+
+      } else {
+        uni.showToast({
+          title: '验证码为空',
+          icon: 'none' });
+
+      }
+    },
+
     /**
         * 微信小程序登陆
         */
-    getUserInfo: function getUserInfo(e) {var _this = this;
+    getUserInfo: function getUserInfo(e) {var _this2 = this;
       // console.log("getting UserInfo...")
       // console.log(e);
 
@@ -332,17 +381,39 @@ var isLoding = false;var _default =
                 // 3.获取返回的用户信息
                 var finalUser = res.data.data;
                 // 4.分割邮箱地址, 重构 user
-                finalUser = _this.myUser(finalUser);
+                finalUser = _this2.myUser(finalUser);
                 // 5.写入缓存
-                _this.setGlobalUserInfo(finalUser);
+                _this2.setGlobalUserInfo(finalUser);
                 console.log(finalUser);
+                // 转场动画
+                // 需计算转场时间以保证进度条和块内容运动一致
+                // 当前运动时间为 500 ms
 
-                // 6.到主页
+                // 块运动
+                clearInterval(timer); //清空定时器，防止重复操作
+                var that = _this2;
+                timer = setInterval(function () {
+                  if (that.swiperLeft <= -100) {
+                    clearInterval(timer);
+                  } else {
+                    that.swiperLeft = that.swiperLeft - 2;
+                    console.log(that.swiperLeft);
+                  }
+                }, 10);
+                // 进度条运动
+                clearInterval(timer_); //清空定时器，防止重复操作
+                var that = _this2;
+                timer_ = setInterval(function () {
+                  if (that.swiperLineWidth >= 50) {
+                    clearInterval(timer_);
+                  } else {
+                    that.swiperLineWidth = that.swiperLineWidth + 2;
+                    console.log(that.swiperLineWidth);
+                  }
+                }, 20);
+
                 isLoding = false;
                 uni.hideLoading();
-                uni.redirectTo({
-                  url: "../index/index" });
-
               }
             } });
 
@@ -362,6 +433,12 @@ var isLoding = false;var _default =
 
     changestatus: function changestatus() {
       this.status = !this.status;
+    },
+
+    toUserDeal: function toUserDeal() {
+      uni.navigateTo({
+        url: "../userDeal/userDeal" });
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

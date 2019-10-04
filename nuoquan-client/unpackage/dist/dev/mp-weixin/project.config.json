@@ -24,90 +24,100 @@
 			"current": -1,
 			"list": []
 		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
 		"game": {
 			"current": -1,
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 13,
 			"list": [
 				{
-					"name": "index",
-					"query": "",
 					"id": 0,
-					"pathName": "pages/index/index"
+					"name": "index",
+					"pathName": "pages/index/index",
+					"query": ""
 				},
 				{
-					"name": "signin",
-					"query": "",
 					"id": 1,
-					"pathName": "pages/signin/signin"
+					"name": "signin",
+					"pathName": "pages/signin/signin",
+					"query": ""
 				},
 				{
-					"name": "submit",
-					"query": "",
 					"id": 2,
-					"pathName": "pages/submit/submit"
+					"name": "submit",
+					"pathName": "pages/submit/submit",
+					"query": ""
 				},
 				{
-					"name": "chatpage",
-					"query": "",
 					"id": 3,
-					"pathName": "pages/chatpage/chatpage"
+					"name": "chatpage",
+					"pathName": "pages/chatpage/chatpage",
+					"query": ""
 				},
 				{
-					"name": "fanslist",
-					"query": "",
 					"id": 4,
-					"pathName": "pages/fanslist/fanslist"
-				},
-				{
 					"name": "followlist",
-					"query": "",
+					"pathName": "pages/followlist/followlist",
+					"query": ""
+				},
+				{
 					"id": 5,
-					"pathName": "pages/followlist/followlist"
-				},
-				{
 					"name": "messagelist",
-					"query": "",
+					"pathName": "pages/messagelist/messagelist",
+					"query": ""
+				},
+				{
 					"id": 6,
-					"pathName": "pages/messagelist/messagelist"
-				},
-				{
 					"name": "profile",
-					"query": "",
+					"pathName": "pages/profile/profile",
+					"query": ""
+				},
+				{
 					"id": 7,
-					"pathName": "pages/profile/profile"
-				},
-				{
 					"name": "personpublic",
-					"query": "userId=test-id123",
+					"pathName": "pages/personpublic/personpublic",
+					"query": "userId=test-id123"
+				},
+				{
 					"id": 8,
-					"pathName": "pages/personpublic/personpublic"
-				},
-				{
 					"name": "wechatLogin",
-					"query": "",
+					"pathName": "pages/wechatLogin/wechatLogin",
+					"query": ""
+				},
+				{
 					"id": 9,
-					"pathName": "pages/wechatLogin/wechatLogin"
-				},
-				{
 					"name": "detail",
-					"query": "",
+					"pathName": "pages/detail/detail",
+					"query": ""
+				},
+				{
 					"id": 10,
-					"pathName": "pages/detail/detail"
-				},
-				{
 					"name": "search",
-					"query": "",
-					"id": 11,
-					"pathName": "pages/search/search"
+					"pathName": "pages/search/search",
+					"query": ""
 				},
 				{
+					"id": 11,
 					"name": "cmtdetail",
-					"query": "",
+					"pathName": "pages/comment-detail/comment-detail",
+					"query": ""
+				},
+				{
 					"id": 12,
-					"pathName": "pages/comment-detail/comment-detail"
+					"name": "test",
+					"pathName": "pages/test/test",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "userDeal",
+					"pathName": "pages/userDeal/userDeal",
+					"scene": null
 				}
 			]
 		}

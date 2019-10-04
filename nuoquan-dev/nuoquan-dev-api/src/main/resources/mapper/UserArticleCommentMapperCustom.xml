@@ -17,6 +17,7 @@
     <result column="comment_num" property="commentNum" jdbcType="INTEGER" />
     <result column="under_comment_id" property="underCommentId" jdbcType="VARCHAR" />
     <result column="sign_flag" property="signFlag" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
     
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
     <result column="face_img" jdbcType="VARCHAR" property="faceImg" />
