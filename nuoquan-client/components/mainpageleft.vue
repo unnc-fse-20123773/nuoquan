@@ -13,9 +13,9 @@
 			</view>
 		</view>
 		<view class="personData">
-			<view class="hotNum">
+			<!-- <view class="hotNum">
 				-
-			</view>
+			</view> -->
 			<button class="yourFocus" @tap="goToFansFollow(0)" hover-class="customHover">
 				{{userInfo.followNum}}
 			</button>
@@ -267,7 +267,7 @@
 	background: #F4F5F6;
 }
 	.personPageList {
-		margin-top: 40px;
+		margin-top: 56px;
 	}
 
 	.pageLine {

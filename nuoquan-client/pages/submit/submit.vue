@@ -289,7 +289,7 @@
 				uploadFlag = false;
 				uni.hideLoading();
 				uni.showToast({
-					title: '⠀⠀⠀⠀内容涉嫌违规，⠀⠀⠀⠀请联系管理员。',
+					title: '内容涉嫌违规，请联系管理员。',
 					duration: 2000,
 					icon: 'none',
 				})
@@ -347,6 +347,7 @@
 		border-radius: 5px;
 		background: #F4F1E9;
 		margin-top: 19px;
+		padding: 0 4px;
 	}
 
 	.tagsArea {
@@ -429,6 +430,7 @@
 		margin-top: 13px;
 		width: 100%;
 		overflow: scroll;
+		padding: 4px;
 	}
 
 	.picturearea {

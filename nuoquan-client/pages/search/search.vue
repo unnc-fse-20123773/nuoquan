@@ -2,7 +2,8 @@
 	<view class="weui-search-bar">
 		<view class="input-bar">
 			<image class="back" src="../../static/icon/angle-left.png" @tap="exitSearch"></image>
-			<input type="text" v-model="searchKeyWords" focus placeholder="⠀⠀搜索" placeholder-style="color: #b2b2b2;" confirm-type="search" @confirm="search(1)" />
+			<view class="input-background"></view>
+			<input type="text" v-model="searchKeyWords" focus placeholder="搜索" placeholder-style="color: #b2b2b2;" confirm-type="search" @confirm="search(1)" />
 		</view>
 
 		<view class="wxSearchKey" v-show="searching">
@@ -266,6 +267,8 @@
 		margin-top: 4px;
 		margin-left: 12px;
 		height: 30px;
+		width: 100%;
+		position: relative;
 	}
 
 	.back {
@@ -274,23 +277,37 @@
 		height: 30px;
 		background: #FDD041;
 		border-radius: 8px;
-
+		position: absolute;
+		left: 0;
 	}
 
-
-	.input-bar input {
-		font-size: 15px;
+	.input-background{
+		position: absolute;
+		left: 30px;
 		display: inline-block;
-		width: 190px;
+		width: 70%;
 		height: 28px;
 		border-radius: 8px;
 		margin-left: 13px;
 		background: white;
+		line-height: 28px;
+		box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.16);	
+		z-index: 10;
+	}
+
+	.input-bar input {
+		position: absolute;
+		left: 40px;
+		font-size: 15px;
+		display: inline-block;
+		width: 66%;
+		height: 28px;
+		margin-left: 13px;
 		letter-spacing: 1px;
 		color: #b2b2b2;
 		font-family: MicrosoftYaHei;
 		line-height: 28px;
-		box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.16);		
+		z-index: 20;
 	}
 
 	.wxSearchKey,
@@ -332,6 +349,11 @@
 		font-size: 13px;
 		font-weight: 300;
 		margin-right: 14px;
+		/* 限制字数 */
+		max-width: 48%;
+		white-space:nowrap;
+		overflow:hidden;
+		text-overflow:ellipsis;
 	}
 
 	.SearchHistoryItem icon {

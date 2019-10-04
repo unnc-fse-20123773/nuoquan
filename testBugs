@@ -29,7 +29,11 @@
 【已修复】[严重] Bug-100029：后台文章热度 timediff 方法值溢出
 [中等] Bug-100030：chatpage 输入框焦点错位
 [中等] Bug-100031：submit 标题和正文框字体贴边，需要加间距
-
+[严重] Bug-100032：search 特殊字符处理，风险来源：SQL注入。
+					搜索文本测试案例： 'has' sql risk
+					后台关键报错信息：	... where 1 = 1 
+								and a.article_content like '%'has' sql risk%'
+								and a.status = 1 ...
 
 调试手册：
 	点赞/评论消息列表：

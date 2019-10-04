@@ -54,7 +54,7 @@
 				<image class="comment" src="../static/icon/comment.png" @click="jumpToDetail()"></image>
 				<view class="icon" @click="jumpToDetail()">{{thisArticle.commentNum}}</view>
 				<image v-if="!thisArticle.isLike" class="like" src="../static/icon/like.png" @tap="swLikeArticle"></image>
-				<image v-if="thisArticle.isLike" class="like" src="../static/icon/liked.png" @tap="swLikeArticle"></image>
+				<image v-if="thisArticle.isLike" class="like" src="../static/icon/liked-red.png" @tap="swLikeArticle"></image>
 				<view class="icon"  @tap="swLikeArticle">{{thisArticle.likeNum}}</view>
 			</view>
 		</view>
@@ -100,10 +100,10 @@
 				}
 			}
 			
-			uni.$on("updateArticle", (article) => { // from detail
-				if(article.id == this.thisArticle.id){
+			uni.$on("updateArticle", (articleID) => { // from detail
+				if(articleID == this.thisArticle.id){
 					console.log("get")
-					this.thisArticle = article; // 调用计算属性
+					this.thisArticle.commentNum ++ ;
 				}
 			})
 		},
@@ -372,6 +372,9 @@
 		text-align: right;
 		display: inline-block;
 		background-image: url(../static/BG/iconsBG.png);
+		background-size: cover;
+		background-repeat: no-repeat;
+		
 		overflow: hidden;
 		border-bottom-right-radius: 8px;
 		background-size: cover;

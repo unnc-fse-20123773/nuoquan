@@ -41,7 +41,7 @@
 				</view>
 				<view class="icons" @tap="swLikeArticle()">
 					<image v-if="!articleCard.isLike" class="icon" src="../../static/icon/like.png"></image>
-					<image v-if="articleCard.isLike" class="icon" src="../../static/icon/liked.png"></image>
+					<image v-if="articleCard.isLike" class="icon" src="../../static/icon/liked-red.png"></image>
 					<view class="icom" :class="{'liked':articleCard.isLike}">{{ articleCard.likeNum }}</view>
 				</view>
 			</view>
@@ -249,7 +249,7 @@
 				uploadFlag = false;
 				uni.hideLoading();
 				uni.showToast({
-					title: '⠀⠀⠀⠀内容涉嫌违规，⠀⠀⠀⠀请联系管理员。',
+					title: '内容涉嫌违规，请联系管理员。',
 					duration: 2000,
 					icon: 'none',
 				})
@@ -547,6 +547,7 @@
 		flex-wrap: wrap;
 		width: 100%;
 		margin: 0 auto;
+		margin-bottom: 9px;
 	}
 
 	.detailpic {

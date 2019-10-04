@@ -254,7 +254,7 @@ page {
 	right: -12rpx;
 	width: 48%;
 	/* 在此更改按钮高度 */
-	height: 16%;
+	height: 30px; /* 保证内容剧中 */
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -ms-flexbox;
@@ -305,7 +305,7 @@ page {
 	right: -14rpx;
 	width: 24%;
 	/* 在此更改按钮高度 */
-	height: 16%;
+	height: 30px; /* 保证内容剧中 */
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -ms-flexbox;

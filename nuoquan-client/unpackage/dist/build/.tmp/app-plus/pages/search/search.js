@@ -1,0 +1,1 @@
+(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["pages/search/search"],{"1f82":function(e,a,o){"use strict";o("5ad9");var n=u(o("b0ce")),c=u(o("1a96"));function u(e){return e&&e.__esModule?e:{default:e}}Page((0,n.default)(c.default))}},[["1f82","common/runtime","common/vendor"]]]);
