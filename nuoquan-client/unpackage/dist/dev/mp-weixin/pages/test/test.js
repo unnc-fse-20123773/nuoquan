@@ -135,7 +135,8 @@ var _default = {
 
   data: function data() {
     return {
-      captchaLength: 6 };
+      captchaLength: 6,
+      title: "获取验证码" };
 
   },
   onLoad: function onLoad() {
@@ -169,6 +170,7 @@ var _default = {
           if (this.$refs.captcha.canSend()) {
             console.log("获取验证码 email=" + email);
             this.$refs.captcha.begin();
+            this.title = "重新发送";
 
             var that = this;
             uni.request({

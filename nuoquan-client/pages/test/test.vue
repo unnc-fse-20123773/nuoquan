@@ -5,8 +5,8 @@
 			<input class="uni-input" style="background-color: #F0AD4E;" type="text" placeholder="验证码" @input="onCaptchaInput" :maxlength="captchaLength"/>
 			<wh-captcha
 				ref="captcha"
-				:secord="30"
-				title="获取验证码"
+				:secord="60"
+				:title="title"
 				waitTitle="稍等(SECORD)秒"
 				normalClass="captcha-normal"
 				disabledClass="captcha-disabled"
@@ -31,6 +31,7 @@
 		data() {
 			return {
 				captchaLength: 6,
+				title: "获取验证码"
 			}
 		},
 		onLoad() {
@@ -64,6 +65,7 @@
 						if(this.$refs.captcha.canSend()){
 							console.log("获取验证码 email=" + email);
 							this.$refs.captcha.begin();
+							this.title="重新发送"
 							
 							var that =this;
 							uni.request({
