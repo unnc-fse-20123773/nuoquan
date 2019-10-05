@@ -62,12 +62,7 @@
 		{
 			"path": "pages/comment-detail/comment-detail",
 			"style": {}
-		},
-		{
-			"path": "pages/test/test",
-			"style": {}
 		}
-
 	    ,{
             "path" : "pages/userDeal/userDeal",
             "style" : {}

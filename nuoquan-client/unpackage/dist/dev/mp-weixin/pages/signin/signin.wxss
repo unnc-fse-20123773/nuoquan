@@ -75,6 +75,8 @@ button::after {
 	-webkit-box-shadow: 0px 0px 5px 1px #C0C0C0;
 	        box-shadow: 0px 0px 5px 1px #C0C0C0;
 	margin-top: 15px;
+	font-size: 15px;
+	color: #888888;
 }
 .introduction-contentBox {
 	position: relative;

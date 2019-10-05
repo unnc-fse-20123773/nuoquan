@@ -1368,23 +1368,6 @@ createPage(_submit.default);
 
 /***/ }),
 
-/***/ "../../../../../../../../../code/nuoquan/nuoquan-client/main.js?{\"page\":\"pages%2Ftest%2Ftest\"}":
-/*!*****************************************************************************!*\
-  !*** C:/code/nuoquan/nuoquan-client/main.js?{"page":"pages%2Ftest%2Ftest"} ***!
-  \*****************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "../../../../../../../../../code/nuoquan/nuoquan-client/pages.json");
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _test = _interopRequireDefault(__webpack_require__(/*! ./pages/test/test.vue */ "../../../../../../../../../code/nuoquan/nuoquan-client/pages/test/test.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_test.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
-
-/***/ }),
-
 /***/ "../../../../../../../../../code/nuoquan/nuoquan-client/main.js?{\"page\":\"pages%2FuserDeal%2FuserDeal\"}":
 /*!*************************************************************************************!*\
   !*** C:/code/nuoquan/nuoquan-client/main.js?{"page":"pages%2FuserDeal%2FuserDeal"} ***!

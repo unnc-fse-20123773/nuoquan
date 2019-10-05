@@ -15,7 +15,6 @@
     "pages/wechatLogin/wechatLogin",
     "pages/cmt-likedetail/cmt-likedetail",
     "pages/comment-detail/comment-detail",
-    "pages/test/test",
     "pages/userDeal/userDeal"
   ],
   "subPackages": [],

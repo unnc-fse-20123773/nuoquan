@@ -257,6 +257,7 @@ var whCaptcha = function whCaptcha() {return __webpack_require__.e(/*! import() 
           if (this.$refs.captcha.canSend()) {
             console.log("获取验证码 email=" + email);
             this.$refs.captcha.begin();
+            this.title = "重新发送";
 
             var that = this;
             uni.request({
@@ -307,7 +308,7 @@ var whCaptcha = function whCaptcha() {return __webpack_require__.e(/*! import() 
                   clearInterval(timer_);
                 } else {
                   that.swiperLineWidth = that.swiperLineWidth + 2;
-                  console.log(that.swiperLineWidth);
+                  // console.log(that.swiperLineWidth);
                 }
               }, 20);
               uni.redirectTo({
@@ -397,7 +398,7 @@ var whCaptcha = function whCaptcha() {return __webpack_require__.e(/*! import() 
                     clearInterval(timer);
                   } else {
                     that.swiperLeft = that.swiperLeft - 2;
-                    console.log(that.swiperLeft);
+                    // console.log(that.swiperLeft);
                   }
                 }, 10);
                 // 进度条运动
@@ -408,7 +409,7 @@ var whCaptcha = function whCaptcha() {return __webpack_require__.e(/*! import() 
                     clearInterval(timer_);
                   } else {
                     that.swiperLineWidth = that.swiperLineWidth + 2;
-                    console.log(that.swiperLineWidth);
+                    // console.log(that.swiperLineWidth);
                   }
                 }, 20);
 

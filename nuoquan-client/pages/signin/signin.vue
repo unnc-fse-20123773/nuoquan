@@ -133,32 +133,33 @@
 			onEmailInput(event) {
 				email = event.target.value;
 			},
-
+			
 			onCaptchaInput(event) {
 				captcha = event.target.value;
 			},
-
+			
 			/**
 			 * true: 不匹配, false: 匹配
 			 */
-			checkUNNCEmail(str) {
+			checkUNNCEmail(str){
 				return !RegExp(/^\w+([-+.]\w+)*@nottingham\.edu\.cn+$/).test(str);
 			},
-
-			getCaptcha() {
-				if (email) {
+			
+			getCaptcha(){
+				if(email){
 					// 检测邮箱
-					if (util.regEmail(email) || this.checkUNNCEmail(email)) {
+					if(util.regEmail(email) || this.checkUNNCEmail(email)){
 						uni.showToast({
 							title: '非 UNNC 邮箱地址！',
 							icon: 'none'
 						});
-					} else {
-						if (this.$refs.captcha.canSend()) {
+					}else{
+						if(this.$refs.captcha.canSend()){
 							console.log("获取验证码 email=" + email);
 							this.$refs.captcha.begin();
-
-							var that = this;
+							this.title="重新发送"
+							
+							var that =this;
 							uni.request({
 								url: that.$serverUrl + '/user/getCode',
 								method: "POST",
@@ -175,16 +176,16 @@
 							});
 						}
 					}
-				} else {
+				}else{
 					uni.showToast({
 						title: 'Email不能为空',
 						icon: 'none'
 					});
 				}
 			},
-
-			confirmCode() {
-				if (captcha) {
+			
+			confirmCode(){
+				if(captcha){
 					var that = this;
 					uni.request({
 						url: that.$serverUrl + '/user/confirmCode',
@@ -197,7 +198,7 @@
 							'content-type': 'application/x-www-form-urlencoded'
 						},
 						success: (res) => {
-							if (res.data.status == 200) {
+							if(res.data.status == 200){
 								console.log("验证邮箱成功，下一步");
 								// 进度条运动
 								clearInterval(timer_); //清空定时器，防止重复操作
@@ -207,18 +208,18 @@
 										clearInterval(timer_);
 									} else {
 										that.swiperLineWidth = that.swiperLineWidth + 2;
-										console.log(that.swiperLineWidth);
+										// console.log(that.swiperLineWidth);
 									}
 								}, 20)
 								uni.redirectTo({
 									url: "../index/index"
 								});
-							} else {
-								console.log("验证失败 " + res.data.msg);
+							}else{
+								console.log("验证失败 "+res.data.msg);
 							}
 						},
 					});
-				} else {
+				}else{
 					uni.showToast({
 						title: '验证码为空',
 						icon: 'none'
@@ -297,7 +298,7 @@
 											clearInterval(timer);
 										} else {
 											that.swiperLeft = that.swiperLeft - 2;
-											console.log(that.swiperLeft);
+											// console.log(that.swiperLeft);
 										}
 									}, 10)
 									// 进度条运动
@@ -308,7 +309,7 @@
 											clearInterval(timer_);
 										} else {
 											that.swiperLineWidth = that.swiperLineWidth + 2;
-											console.log(that.swiperLineWidth);
+											// console.log(that.swiperLineWidth);
 										}
 									}, 20)
 
@@ -407,6 +408,8 @@
 		background-color: white;
 		box-shadow: 0px 0px 5px 1px #C0C0C0;
 		margin-top: 15px;
+		font-size: 15px;
+		color: #888888;
 	}
 
 	.introduction-contentBox {

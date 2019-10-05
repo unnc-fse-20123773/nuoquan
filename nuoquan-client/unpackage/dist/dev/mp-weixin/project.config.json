@@ -24,100 +24,90 @@
 			"current": -1,
 			"list": []
 		},
-		"plugin": {
-			"current": -1,
-			"list": []
-		},
 		"game": {
 			"current": -1,
 			"list": []
 		},
 		"miniprogram": {
-			"current": 13,
+			"current": 0,
 			"list": [
 				{
-					"id": 0,
 					"name": "index",
-					"pathName": "pages/index/index",
-					"query": ""
+					"query": "",
+					"id": 0,
+					"pathName": "pages/index/index"
 				},
 				{
-					"id": 1,
 					"name": "signin",
-					"pathName": "pages/signin/signin",
-					"query": ""
+					"query": "",
+					"id": 1,
+					"pathName": "pages/signin/signin"
 				},
 				{
-					"id": 2,
 					"name": "submit",
-					"pathName": "pages/submit/submit",
-					"query": ""
+					"query": "",
+					"id": 2,
+					"pathName": "pages/submit/submit"
 				},
 				{
-					"id": 3,
 					"name": "chatpage",
-					"pathName": "pages/chatpage/chatpage",
-					"query": ""
+					"query": "",
+					"id": 3,
+					"pathName": "pages/chatpage/chatpage"
 				},
 				{
-					"id": 4,
 					"name": "followlist",
-					"pathName": "pages/followlist/followlist",
-					"query": ""
+					"query": "",
+					"id": 4,
+					"pathName": "pages/followlist/followlist"
 				},
 				{
-					"id": 5,
 					"name": "messagelist",
-					"pathName": "pages/messagelist/messagelist",
-					"query": ""
+					"query": "",
+					"id": 5,
+					"pathName": "pages/messagelist/messagelist"
 				},
 				{
-					"id": 6,
 					"name": "profile",
-					"pathName": "pages/profile/profile",
-					"query": ""
+					"query": "",
+					"id": 6,
+					"pathName": "pages/profile/profile"
 				},
 				{
-					"id": 7,
 					"name": "personpublic",
-					"pathName": "pages/personpublic/personpublic",
-					"query": "userId=test-id123"
+					"query": "userId=test-id123",
+					"id": 7,
+					"pathName": "pages/personpublic/personpublic"
 				},
 				{
-					"id": 8,
 					"name": "wechatLogin",
-					"pathName": "pages/wechatLogin/wechatLogin",
-					"query": ""
+					"query": "",
+					"id": 8,
+					"pathName": "pages/wechatLogin/wechatLogin"
 				},
 				{
-					"id": 9,
 					"name": "detail",
-					"pathName": "pages/detail/detail",
-					"query": ""
+					"query": "",
+					"id": 9,
+					"pathName": "pages/detail/detail"
 				},
 				{
-					"id": 10,
 					"name": "search",
-					"pathName": "pages/search/search",
-					"query": ""
+					"query": "",
+					"id": 10,
+					"pathName": "pages/search/search"
 				},
 				{
-					"id": 11,
 					"name": "cmtdetail",
-					"pathName": "pages/comment-detail/comment-detail",
-					"query": ""
+					"query": "",
+					"id": 11,
+					"pathName": "pages/comment-detail/comment-detail"
 				},
 				{
-					"id": 12,
 					"name": "test",
-					"pathName": "pages/test/test",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "userDeal",
-					"pathName": "pages/userDeal/userDeal",
-					"scene": null
+					"query": "",
+					"id": 12,
+					"pathName": "pages/test/test"
 				}
 			]
 		}
