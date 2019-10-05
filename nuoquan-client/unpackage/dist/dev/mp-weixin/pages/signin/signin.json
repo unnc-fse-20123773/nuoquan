@@ -1,5 +1,6 @@
 {
   "usingComponents": {
-    "wh-captcha": "/components/wh-captcha/wh-captcha"
+    "wh-captcha": "/components/wh-captcha/wh-captcha",
+    "uni-steps": "/components/uni-steps/uni-steps"
   }
 }

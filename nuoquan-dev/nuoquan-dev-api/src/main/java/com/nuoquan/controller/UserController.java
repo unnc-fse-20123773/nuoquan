@@ -329,7 +329,7 @@ public class UserController extends BasicController {
 		}
 //		System.out.println(code);
 		// 存入 redis
-		redis.set(USER_EMAIL_CODE + ":" + userId, code, 60 * 10); // 过期时间单位为秒 10分钟过期
+		redis.set(USER_EMAIL_CODE + ":" + userId, email + code, 60 * 10); // 过期时间单位为秒 10分钟过期
 		// 发送验证码邮件模板
 		emailTool.sendCodeToMail(email, code);
 		
@@ -341,14 +341,20 @@ public class UserController extends BasicController {
 			@ApiImplicitParam(name = "userId", required = true, dataType = "String", paramType = "form"), 
 			@ApiImplicitParam(name = "code", required = true, dataType = "String", paramType = "form")})
 	@PostMapping("/confirmCode")
-	public JSONResult confirmCode(String userId, String code) throws Exception {
+	public JSONResult confirmCode(String userId, String email, String code) throws Exception {
 
 		String rightCode = redis.get(USER_EMAIL_CODE + ":" + userId);
 		if (StringUtils.isBlank(rightCode)) {
 			return JSONResult.errorMsg("The code for this user is blank.");
 		}else {
-			if (code.equals(rightCode)) {
-				return JSONResult.ok();
+			String finalCode = email + code;
+			if (finalCode.equals(rightCode)) {
+				// 认证成功，修改用户邮箱
+				User user = new User();
+				user.setId(userId);
+				user.setEmail(email);
+				UserVO userVO = ConvertUserToUserVO(userService.updateUserInfo(user));
+				return JSONResult.ok(userVO);
 			}
 		}
 		return JSONResult.errorMsg("Wrong code.");
