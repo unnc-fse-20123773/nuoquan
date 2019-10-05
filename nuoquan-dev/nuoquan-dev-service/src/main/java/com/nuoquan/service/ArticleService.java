@@ -34,7 +34,7 @@ public interface ArticleService {
 	 * @param articleCreaterId
 	 * @return id in DB
 	 */
-	public UserLikeArticle userLikeArticle(String userId, String articleId, String articleCreaterId);
+	public UserLikeArticle userLikeArticle(String userId, String articleId, String articleCreaterId, Integer signFlag);
 	
 	/**
 	 * @des: 用户取消点赞文章
@@ -88,7 +88,7 @@ public interface ArticleService {
 	 * @param createrId
 	 * @return id in DB
 	 */
-	public UserLikeComment userLikeComment(String userId, String commentId, String createrId);
+	public UserLikeComment userLikeComment(String userId, String commentId, String createrId, Integer signFlag);
 	
 	/**
 	 * @des: 用户取消点赞评论

@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.nuoquan.enums.ArticleStatusEnums;
 import com.nuoquan.enums.MsgActionEnum;
+import com.nuoquan.enums.MsgSignFlagEnum;
 import com.nuoquan.enums.StatusEnum;
 import com.nuoquan.netty.MsgHandler;
 import com.nuoquan.pojo.Article;
@@ -95,23 +96,29 @@ public class ArticleController extends BasicController {
 			@ApiImplicitParam(name = "articleId", value = "文章id", required = true, dataType = "String", paramType = "form"),
 			@ApiImplicitParam(name = "articleCreaterId", value = "文章作者id", required = true, dataType = "String", paramType = "form") })
 	@PostMapping(value = "/userLikeArticle")
-	public JSONResult userLike(String userId, String articleId, String articleCreaterId) throws Exception {
-
-		// 储存到数据库 返回数据库对象
-		UserLikeArticle like = articleService.userLikeArticle(userId, articleId, articleCreaterId);
-		// 加上点赞人的信息
-		UserLikeVO likeVO = ConvertLikeToLikeVO(like);
-		User user = userService.queryUserById(likeVO.getUserId());
-		likeVO.setNickname(user.getNickname());
-		likeVO.setFaceImg(user.getFaceImg());
-		likeVO.setFaceImgThumb(user.getFaceImgThumb());
+	public JSONResult userLikeArticle(String userId, String articleId, String articleCreaterId) throws Exception {
 		
-		// 给目标作者发推送
-		DataContent dataContent = new DataContent();
-		dataContent.setAction(MsgActionEnum.LIKEARTICLE.type);
-		dataContent.setData(new NoticeCard(likeVO, articleService.getArticleById(articleId, userId)));
+		if (userId.equals(articleCreaterId)) {
+			// 点赞自己，标记已签收存入数据
+			articleService.userLikeArticle(userId, articleId, articleCreaterId, MsgSignFlagEnum.SIGNED.type);
+		}else {
+			// 标记未签收，储存到数据库 返回数据库对象
+			UserLikeArticle like = articleService.userLikeArticle(userId, articleId, articleCreaterId, MsgSignFlagEnum.UNSIGN.type);
+			// 加上点赞人的信息
+			UserLikeVO likeVO = ConvertLikeToLikeVO(like);
+			User user = userService.queryUserById(likeVO.getUserId());
+			likeVO.setNickname(user.getNickname());
+			likeVO.setFaceImg(user.getFaceImg());
+			likeVO.setFaceImgThumb(user.getFaceImgThumb());
+			
+			// 给目标作者发推送
+			DataContent dataContent = new DataContent();
+			dataContent.setAction(MsgActionEnum.LIKEARTICLE.type);
+			dataContent.setData(new NoticeCard(likeVO, articleService.getArticleById(articleId, userId)));
+			
+			MsgHandler.sendMsgTo(articleCreaterId, dataContent);
+		}
 		
-		MsgHandler.sendMsgTo(articleCreaterId, dataContent);
 		return JSONResult.ok();
 	}
 
@@ -123,22 +130,28 @@ public class ArticleController extends BasicController {
 			@ApiImplicitParam(name = "createrId", value = "作者id", required = true, dataType = "String", paramType = "form") })
 	@PostMapping(value = "/userLikeComment")
 	public JSONResult userLikeComment(String userId, String commentId, String createrId) throws Exception {
-
-		// 储存到数据库 返回数据库对象
-		UserLikeComment like = articleService.userLikeComment(userId, commentId, createrId);
-		// 加上点赞人的信息
-		UserLikeVO likeVO = ConvertLikeToLikeVO(like);
-		User user = userService.queryUserById(likeVO.getUserId());
-		likeVO.setNickname(user.getNickname());
-		likeVO.setFaceImg(user.getFaceImg());
-		likeVO.setFaceImgThumb(user.getFaceImgThumb());
-		
-		// 给作者发推送
-		DataContent dataContent = new DataContent();
-		dataContent.setAction(MsgActionEnum.LIKECOMMENT.type);
-		dataContent.setData(new NoticeCard(likeVO, articleService.getCommentById(commentId, userId)));
-		
-		MsgHandler.sendMsgTo(createrId, dataContent);
+	
+		if (userId.equals(createrId)) {
+			// 点赞自己，标记已签收存入数据
+			articleService.userLikeComment(userId, commentId, createrId, MsgSignFlagEnum.SIGNED.type);
+		} else {
+			// 标记未签收，储存到数据库 返回数据库对象
+			UserLikeComment like = articleService.userLikeComment(userId, commentId, createrId, MsgSignFlagEnum.UNSIGN.type);
+			// 加上点赞人的信息
+			UserLikeVO likeVO = ConvertLikeToLikeVO(like);
+			User user = userService.queryUserById(likeVO.getUserId());
+			likeVO.setNickname(user.getNickname());
+			likeVO.setFaceImg(user.getFaceImg());
+			likeVO.setFaceImgThumb(user.getFaceImgThumb());
+			
+			// 给作者发推送
+			DataContent dataContent = new DataContent();
+			dataContent.setAction(MsgActionEnum.LIKECOMMENT.type);
+			dataContent.setData(new NoticeCard(likeVO, articleService.getCommentById(commentId, userId)));
+			
+			MsgHandler.sendMsgTo(createrId, dataContent);
+		}
+	
 		return JSONResult.ok();
 	}
 
@@ -341,26 +354,35 @@ public class ArticleController extends BasicController {
 	public JSONResult saveComment(@RequestBody UserArticleComment comment) throws Exception {
 		// 内容安全检测
 		if (weChatService.msgSecCheck(comment.getComment()) ) {
-			// 存入数据库
-			String commentId = articleService.saveComment(comment);
-
-			// 给作者发推送
-			DataContent dataContent = new DataContent();
 			
-			UserArticleCommentVO commentVO = articleService.getCommentById(commentId, null); // 无需查询用户点赞关系
-			if (StringUtils.isBlank(comment.getFatherCommentId())) {
-				// 给文章评论
-				ArticleVO targetArticle = articleService.getArticleById(comment.getArticleId(), null);
-				dataContent.setData(new NoticeCard(commentVO, targetArticle));
-				dataContent.setAction(MsgActionEnum.COMMENTARTICLE.type);
-			}else {
-				// 给评论评论
-				UserArticleCommentVO targetComment = articleService.getCommentById(comment.getFatherCommentId(), null);
-				dataContent.setData(new NoticeCard(commentVO, targetComment));
-				dataContent.setAction(MsgActionEnum.COMMENTCOMMENT.type);
-			}
+			if(comment.getToUserId().equals(comment.getFromUserId())) {
+				// 给自己评论，设为已签收存入数据库
+				comment.setSignFlag(MsgSignFlagEnum.SIGNED.type);
+				articleService.saveComment(comment);
 
-			MsgHandler.sendMsgTo(comment.getToUserId(), dataContent);
+			}else {
+				// 给他人评论，设为未签收存入数据库
+				comment.setSignFlag(MsgSignFlagEnum.UNSIGN.type);
+				String commentId = articleService.saveComment(comment);
+
+				// 给作者发推送
+				DataContent dataContent = new DataContent();
+				
+				UserArticleCommentVO commentVO = articleService.getCommentById(commentId, null); // 无需查询用户点赞关系
+				if (StringUtils.isBlank(comment.getFatherCommentId())) {
+					// 给文章评论
+					ArticleVO targetArticle = articleService.getArticleById(comment.getArticleId(), null);
+					dataContent.setData(new NoticeCard(commentVO, targetArticle));
+					dataContent.setAction(MsgActionEnum.COMMENTARTICLE.type);
+				}else {
+					// 给评论评论
+					UserArticleCommentVO targetComment = articleService.getCommentById(comment.getFatherCommentId(), null);
+					dataContent.setData(new NoticeCard(commentVO, targetComment));
+					dataContent.setAction(MsgActionEnum.COMMENTCOMMENT.type);
+				}
+				
+				MsgHandler.sendMsgTo(comment.getToUserId(), dataContent);
+			}
 
 			return JSONResult.ok();
 		}else {

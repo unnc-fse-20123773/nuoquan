@@ -143,7 +143,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public UserLikeArticle userLikeArticle(String userId, String articleId, String articleCreaterId) {
+	public UserLikeArticle userLikeArticle(String userId, String articleId, String articleCreaterId, Integer signFlag) {
 
 		// 保存用户和文章的点赞关联关系表
 		String likeId = sid.nextShort();
@@ -152,6 +152,7 @@ public class ArticleServiceImpl implements ArticleService {
 		ula.setId(likeId);
 		ula.setUserId(userId);
 		ula.setArticleId(articleId);
+		ula.setSignFlag(signFlag);
 		ula.setCreateDate(new Date());
 
 		userLikeArticleMapper.insertSelective(ula);
@@ -323,7 +324,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public UserLikeComment userLikeComment(String userId, String commentId, String createrId) {
+	public UserLikeComment userLikeComment(String userId, String commentId, String createrId, Integer signFlag) {
 		// 保存用户和文章的点赞关联关系表
 		String likeId = sid.nextShort();
 
@@ -331,6 +332,7 @@ public class ArticleServiceImpl implements ArticleService {
 		ulc.setId(likeId);
 		ulc.setUserId(userId);
 		ulc.setCommentId(commentId);
+		ulc.setSignFlag(signFlag);
 		ulc.setCreateDate(new Date());
 		
 		userLikeCommentMapper.insertSelective(ulc);

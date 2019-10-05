@@ -70,22 +70,29 @@
 				 @getuserinfo="getUserInfo">
 					<view style="color: white;font-weight: 550;letter-spacing: 3px;font-family: Microsoft YaHei;">微信绑定</view>
 				</button>
-				<view class="conform-bgBox"></view>
 			</view>
 			<!-- 邮箱认证 -->
-			<view class="confirm-rel" v-else v-if="swiperLeft == -100">
+			<view class="confirm-rel" v-else-if="swiperLeft == -100">
 				<view v-if="!auth">
-					<button class="" hover-class="button-hover" @click="lastStep(true)">
-						<view style="color: white;font-weight: 550;letter-spacing: 3px;font-family: Microsoft YaHei;">上一步</view>
+					<!-- 上一步 button -->
+					<button class="backAngle" hover-class="button-hover" @click="lastStep(true)">
+						<view class="back">
+							<image style="width: 40px;height: 40px;position: absolute;left: -14px;" src="../../static/icon/angle-left.png"></image>
+						</view>
 					</button>
+					<!-- 邮箱认证 button -->
 					<button class="confirm-button-checked super_center" hover-class="button-hover" @click="confirmCode">
 						<view style="color: white;font-weight: 550;letter-spacing: 3px;font-family: Microsoft YaHei;">邮箱认证</view>
 					</button>
 				</view>
 				<view v-else>
-					<button class="" hover-class="button-hover" @click="cancleAuth">
-						<view style="color: white;font-weight: 550;letter-spacing: 3px;font-family: Microsoft YaHei;">上一步</view>
+					<!-- 上一步 button -->
+					<button class="backAngle" hover-class="button-hover" @click="cancleAuth">
+						<view class="back">
+							<image style="width: 40px;height: 40px;position: absolute;left: -14px;" src="../../static/icon/angle-left.png"></image>
+						</view>
 					</button>
+					<!-- 确认登陆 button -->
 					<button class="confirm-button-checked super_center" hover-class="button-hover" @click="login">
 						<view style="color: white;font-weight: 550;letter-spacing: 3px;font-family: Microsoft YaHei;">确认登陆</view>
 					</button>
@@ -103,7 +110,7 @@
 		<!-- 进度条 fixed -->
 		<view style="position: fixed; width: 48%;left: 26%;top: 64%;height: 5px;background-color: #C0C0C0;z-index: 30;">
 			<view style="position: relative;width: 100%;height: 100%;">
-				<view style="position: absolute;left: 0;height: 5px;background-color: #FCC041;z-index: 40;" :style="{width: swiperLineWidth + '%;'}">
+				<view style="position: absolute;left: 0;height: 5px;background-color: #FFCD2E;z-index: 40;" :style="{width: swiperLineWidth + '%;'}">
 				</view>
 			</view>
 		</view>
@@ -143,12 +150,12 @@
 		},
 		data() {
 			return {
-				agreement: false,	// 是否同意用户协议
+				agreement: false, // 是否同意用户协议
 				auth: false,
-				
-				swiperLeft: 0,		// 块滑动
-				swiperLineWidth: 0,	// 进度条滑动
-				captchaLength: 6,	// 验证码长度
+
+				swiperLeft: 0, // 块滑动
+				swiperLineWidth: 0, // 进度条滑动
+				captchaLength: 6, // 验证码长度
 
 				active: 0,
 				activeList: [{
@@ -158,44 +165,44 @@
 				}, {
 					title: '登陆'
 				}],
-				
+
 				userInfo: '',
 			};
 		},
-		
+
 		onBackPress(e) {
 			// return true 表示禁止默认返回
 			console.log("监听到返回")
 			return false
 		},
-		
+
 		methods: {
 			changeAgreement() {
 				this.agreement = !this.agreement;
 			},
-			
-			changeAuth(){
+
+			changeAuth() {
 				this.auth = !this.auth;
 			},
-			
-			cancleAuth(){
+
+			cancleAuth() {
 				this.auth = false;
 				this.lastStep(false);
 			},
-			
+
 			/**
 			 * 微信小程序登陆
 			 */
 			getUserInfo(e) {
 				// console.log("getting UserInfo...")
 				// console.log(e);
-			
+
 				// 加锁
 				if (isLoding) {
 					return;
 				}
 				isLoding = true;
-			
+
 				uni.showLoading({
 					title: '载入中...',
 				});
@@ -210,7 +217,7 @@
 						})
 					}
 				}, 5000); // 延时5s timeout
-			
+
 				var info = e.detail;
 				var that = this;
 				uni.login({
@@ -225,7 +232,7 @@
 								encryptedData: info.encryptedData,
 								iv: info.iv,
 								code: res_login.code,
-			
+
 								nickname: info.userInfo.nickName,
 								faceImg: info.userInfo.avatarUrl
 							},
@@ -238,10 +245,10 @@
 									console.log("暂存用户信息");
 									that.userInfo = res.data.data;
 									console.log(this.userInfo);
-									
+
 									isLoding = false;
 									uni.hideLoading();
-			
+
 									// 下一步
 									that.nextStep(true);
 								}
@@ -257,10 +264,10 @@
 							duration: 1000
 						})
 					}
-			
+
 				});
 			},
-			
+
 			onEmailInput(event) {
 				email = event.target.value;
 			},
@@ -337,14 +344,14 @@
 								// 4.分割邮箱地址, 重构 user
 								this.userInfo = this.myUser(finalUser);
 								console.log(this.userInfo);
-								
+
 								uni.showToast({
 									title: '认证成功',
 									icon: 'none'
 								});
 								this.changeAuth();
 								this.nextStep(false);
-								
+
 							} else {
 								console.log("验证失败 " + res.data.msg);
 								uni.showToast({
@@ -353,7 +360,7 @@
 								});
 							}
 						},
-						complete: () =>{
+						complete: () => {
 							uni.hideLoading();
 						}
 					});
@@ -364,24 +371,24 @@
 					});
 				}
 			},
-			
-			login(){
+
+			login() {
 				this.nextStep(false);
 				uni.showLoading({
 					title: "正在登陆..."
 				});
-				
+
 				// 5.写入缓存
 				this.setGlobalUserInfo(this.userInfo);
-				
-				setTimeout(()=>{
+
+				setTimeout(() => {
 					uni.hideLoading();
 					uni.redirectTo({
 						url: "../index/index"
 					});
-				},1000)
+				}, 1000)
 			},
-			
+
 			/**
 			 * 转场动画,需计算转场时间以保证进度条和块内容运动一致，
 			 * 当前运动时间为 500 ms
@@ -568,7 +575,7 @@
 		top: 24%;
 		left: 26%;
 		width: 48%;
-		height: 52%;
+		height: 40px;
 		border-radius: 10upx;
 		background-color: #CCCCCC;
 		z-index: 20;
@@ -579,7 +586,7 @@
 		top: 24%;
 		left: 26%;
 		width: 48%;
-		height: 52%;
+		height: 40px;
 		border-radius: 10upx;
 		background-color: #FFCD2E;
 		z-index: 20;
@@ -590,7 +597,7 @@
 		top: 24%;
 		left: 26%;
 		width: 48%;
-		height: 52%;
+		height: 42px;
 		background-color: #ffcd2e;
 		border-radius: 10upx;
 		z-index: 10;
@@ -603,9 +610,24 @@
 		height: 26%;
 	}
 
-	.example-body {
-		border-top: 1px #f5f5f5 solid;
-		padding: 30upx;
-		background: #fff
+	.backAngle {
+		position: absolute;
+		top: 24%;
+		left: 15%;
+		width: 40px;
+		height: 40px;
+		border-radius: 10upx;
+		background-color: #FFCD2E;
+		z-index: 20;
+		background: #FDD041;
+	}
+
+	.back {
+		width: 40px;
+		height: 40px;
+		background-color: #FFCD2E;
+		z-index: 20;
+		background: #FDD041;
+		position: relative;
 	}
 </style>
