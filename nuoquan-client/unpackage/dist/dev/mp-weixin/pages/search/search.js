@@ -246,7 +246,6 @@ var _default = {
       uni.showLoading({
         title: "搜索中..." });
 
-
       setTimeout(function () {
         if (isSearching) {
           isSearching = false; // 解锁

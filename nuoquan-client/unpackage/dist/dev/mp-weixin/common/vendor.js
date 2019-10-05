@@ -28,21 +28,21 @@ _vue.default.prototype.tagColors = ['#FE5F55', '#40A792', '#FDD041', '#5CA0D3', 
 
 _vue.default.prototype.$store = _store.default;
 
-_vue.default.prototype.$serverUrl = "http://127.0.0.1:8080";
-_vue.default.prototype.$wsServerUrl = "wss://127.0.0.1:8088/ws";
+// Vue.prototype.$serverUrl = "http://127.0.0.1:8080"
+// Vue.prototype.$wsServerUrl = "wss://127.0.0.1:8088/ws"
 
 // 服务器地址
 // Vue.prototype.$serverUrl = "http://129.28.130.27:8080/nottinghome"
 // Vue.prototype.$wsServerUrl = "ws://129.28.130.27:8088/ws"
 
 // 安全服务器地址
-// Vue.prototype.$serverUrl = "https://www.checkchack.cn:8443/nottinghome"
-// Vue.prototype.$wsServerUrl = "wss://www.checkchack.cn:8088/ws"
+_vue.default.prototype.$serverUrl = "https://www.checkchack.cn:8443/nottinghome";
+_vue.default.prototype.$wsServerUrl = "wss://www.checkchack.cn:8088/ws";
 
 /**
- * 获取当前用户信息（我）
- * @param {Object} user
- */
+                                                                          * 获取当前用户信息（我）
+                                                                          * @param {Object} user
+                                                                          */
 _vue.default.prototype.setGlobalUserInfo = function (user) {
   uni.setStorageSync('userInfo', user);
 };
@@ -2700,6 +2700,125 @@ var store = new _vuex.default.Store({
 
 store;exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 110:
+/*!*****************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/common/util.js ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+function formatTime(time) {
+  if (typeof time !== 'number' || time < 0) {
+    return time;
+  }
+
+  var hour = parseInt(time / 3600);
+  time = time % 3600;
+  var minute = parseInt(time / 60);
+  time = time % 60;
+  var second = time;
+
+  return [hour, minute, second].map(function (n) {
+    n = n.toString();
+    return n[1] ? n : '0' + n;
+  }).join(':');
+}
+
+function formatLocation(longitude, latitude) {
+  if (typeof longitude === 'string' && typeof latitude === 'string') {
+    longitude = parseFloat(longitude);
+    latitude = parseFloat(latitude);
+  }
+
+  longitude = longitude.toFixed(2);
+  latitude = latitude.toFixed(2);
+
+  return {
+    longitude: longitude.toString().split('.'),
+    latitude: latitude.toString().split('.') };
+
+}
+var dateUtils = {
+  UNITS: {
+    '年': 31557600000,
+    '月': 2629800000,
+    '天': 86400000,
+    '小时': 3600000,
+    '分钟': 60000,
+    '秒': 1000 },
+
+  humanize: function humanize(milliseconds) {
+    var humanize = '';
+    for (var key in this.UNITS) {
+      if (milliseconds >= this.UNITS[key]) {
+        humanize = Math.floor(milliseconds / this.UNITS[key]) + key + '前';
+        break;
+      }
+    }
+    return humanize || '刚刚';
+  },
+  format: function format(dateStr) {
+    var date = this.parse(dateStr);
+    var diff = Date.now() - date.getTime();
+    if (diff < this.UNITS['天']) {
+      return this.humanize(diff);
+    }
+    var _format = function _format(number) {
+      return number < 10 ? '0' + number : number;
+    };
+    return date.getFullYear() + '/' + _format(date.getMonth() + 1) + '/' + _format(date.getDay()) + '-' +
+    _format(date.getHours()) + ':' + _format(date.getMinutes());
+  },
+  parse: function parse(str) {//将"yyyy-mm-dd HH:MM:ss"格式的字符串，转化为一个Date对象
+    var a = str.split(/[^0-9]/);
+    return new Date(a[0], a[1] - 1, a[2], a[3], a[4], a[5]);
+  } };
+
+
+
+//工具包
+//正则匹配
+//匹配帐号
+var regUid = function regUid(str) {
+  return !RegExp(/^\w{6,12}$/).test(str);
+};
+
+var regName = function regName(str) {
+  return !RegExp(/^[\u4e00-\u9fa5]{2,5}$/).test(str);
+};
+
+//匹配身份证
+var regIDC = function regIDC(str) {
+  return !RegExp(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/).test(str);
+};
+//匹配手机号
+var regPhone = function regPhone(str) {
+  return !RegExp(/^1[34578]\d{9}$/).test(str);
+};
+//匹配验证码
+var regCheckNum = function regCheckNum(str) {
+  return !RegExp(/^\d{4}$/).test(str);
+};
+
+//匹配邮箱格式 true: 不匹配，false: 匹配
+var regEmail = function regEmail(str) {
+  return !RegExp(/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/).test(str);
+};
+
+module.exports = {
+  formatTime: formatTime,
+  formatLocation: formatLocation,
+  dateUtils: dateUtils,
+  regUid: regUid,
+  regPhone: regPhone,
+  regName: regName,
+  regIDC: regIDC,
+  regEmail: regEmail,
+  regCheckNum: regCheckNum };
 
 /***/ }),
 
@@ -10511,125 +10630,6 @@ if (hadRuntime) {
   })() || Function("return this")()
 );
 
-
-/***/ }),
-
-/***/ 283:
-/*!*****************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/common/util.js ***!
-  \*****************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-function formatTime(time) {
-  if (typeof time !== 'number' || time < 0) {
-    return time;
-  }
-
-  var hour = parseInt(time / 3600);
-  time = time % 3600;
-  var minute = parseInt(time / 60);
-  time = time % 60;
-  var second = time;
-
-  return [hour, minute, second].map(function (n) {
-    n = n.toString();
-    return n[1] ? n : '0' + n;
-  }).join(':');
-}
-
-function formatLocation(longitude, latitude) {
-  if (typeof longitude === 'string' && typeof latitude === 'string') {
-    longitude = parseFloat(longitude);
-    latitude = parseFloat(latitude);
-  }
-
-  longitude = longitude.toFixed(2);
-  latitude = latitude.toFixed(2);
-
-  return {
-    longitude: longitude.toString().split('.'),
-    latitude: latitude.toString().split('.') };
-
-}
-var dateUtils = {
-  UNITS: {
-    '年': 31557600000,
-    '月': 2629800000,
-    '天': 86400000,
-    '小时': 3600000,
-    '分钟': 60000,
-    '秒': 1000 },
-
-  humanize: function humanize(milliseconds) {
-    var humanize = '';
-    for (var key in this.UNITS) {
-      if (milliseconds >= this.UNITS[key]) {
-        humanize = Math.floor(milliseconds / this.UNITS[key]) + key + '前';
-        break;
-      }
-    }
-    return humanize || '刚刚';
-  },
-  format: function format(dateStr) {
-    var date = this.parse(dateStr);
-    var diff = Date.now() - date.getTime();
-    if (diff < this.UNITS['天']) {
-      return this.humanize(diff);
-    }
-    var _format = function _format(number) {
-      return number < 10 ? '0' + number : number;
-    };
-    return date.getFullYear() + '/' + _format(date.getMonth() + 1) + '/' + _format(date.getDay()) + '-' +
-    _format(date.getHours()) + ':' + _format(date.getMinutes());
-  },
-  parse: function parse(str) {//将"yyyy-mm-dd HH:MM:ss"格式的字符串，转化为一个Date对象
-    var a = str.split(/[^0-9]/);
-    return new Date(a[0], a[1] - 1, a[2], a[3], a[4], a[5]);
-  } };
-
-
-
-//工具包
-//正则匹配
-//匹配帐号
-var regUid = function regUid(str) {
-  return !RegExp(/^\w{6,12}$/).test(str);
-};
-
-var regName = function regName(str) {
-  return !RegExp(/^[\u4e00-\u9fa5]{2,5}$/).test(str);
-};
-
-//匹配身份证
-var regIDC = function regIDC(str) {
-  return !RegExp(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/).test(str);
-};
-//匹配手机号
-var regPhone = function regPhone(str) {
-  return !RegExp(/^1[34578]\d{9}$/).test(str);
-};
-//匹配验证码
-var regCheckNum = function regCheckNum(str) {
-  return !RegExp(/^\d{4}$/).test(str);
-};
-
-//匹配邮箱格式 true: 不匹配，false: 匹配
-var regEmail = function regEmail(str) {
-  return !RegExp(/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/).test(str);
-};
-
-module.exports = {
-  formatTime: formatTime,
-  formatLocation: formatLocation,
-  dateUtils: dateUtils,
-  regUid: regUid,
-  regPhone: regPhone,
-  regName: regName,
-  regIDC: regIDC,
-  regEmail: regEmail,
-  regCheckNum: regCheckNum };
 
 /***/ }),
 

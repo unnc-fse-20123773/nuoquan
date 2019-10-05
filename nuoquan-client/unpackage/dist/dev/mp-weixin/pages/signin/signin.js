@@ -105,7 +105,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var whCaptcha = function whCaptcha() {return __webpack_require__.e(/*! import() | components/wh-captcha/wh-captcha */ "components/wh-captcha/wh-captcha").then(__webpack_require__.bind(null, /*! ../../components/wh-captcha/wh-captcha.vue */ 284));};var uniSteps = function uniSteps() {return __webpack_require__.e(/*! import() | components/uni-steps/uni-steps */ "components/uni-steps/uni-steps").then(__webpack_require__.bind(null, /*! @/components/uni-steps/uni-steps.vue */ 289));};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var whCaptcha = function whCaptcha() {return __webpack_require__.e(/*! import() | components/wh-captcha/wh-captcha */ "components/wh-captcha/wh-captcha").then(__webpack_require__.bind(null, /*! ../../components/wh-captcha/wh-captcha.vue */ 218));};var uniSteps = function uniSteps() {return __webpack_require__.e(/*! import() | components/uni-steps/uni-steps */ "components/uni-steps/uni-steps").then(__webpack_require__.bind(null, /*! @/components/uni-steps/uni-steps.vue */ 223));};
 
 
 
@@ -240,7 +240,7 @@ var isLoding = false;
 var timer = null;
 var timer_ = null;
 //邮箱验证
-var util = __webpack_require__(/*! ../../common/util.js */ 283);
+var util = __webpack_require__(/*! ../../common/util.js */ 110);
 var email; //输入的email值
 var captcha; //输入的captcha值
 var _default = {

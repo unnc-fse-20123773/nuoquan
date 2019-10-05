@@ -102,6 +102,18 @@
 				uni.showLoading({
 					title: "加载中..."
 				})
+				setTimeout(()=>{
+					if(loadArticleFlag){
+						loadArticleFlag = false // 解锁
+						uni.hideLoading();
+						uni.showToast({
+							title: "网络未知错误",
+							icon: "none",
+							duration: 1000
+						})
+					}
+				}, 5000); // 延时5s timeout
+				
 				var that = this;
 				uni.request({
 					url: that.$serverUrl + '/article/queryAllArticles',
