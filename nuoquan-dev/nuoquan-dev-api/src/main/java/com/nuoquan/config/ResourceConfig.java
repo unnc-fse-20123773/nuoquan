@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 //使用 @Configuration 调用get方法时是null值，不知道为什么，改成@Component就解决了。。。
 @Component
 @ConfigurationProperties(prefix="com.jumbox")
-@PropertySource(value="classpath:resource-dev.properties")
+@PropertySource(value="classpath:resource-prod.properties")
 public class ResourceConfig {
 	
 	private String fileSpace;

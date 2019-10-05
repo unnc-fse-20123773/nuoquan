@@ -418,6 +418,9 @@ var _default = {
 
     confirmCode: function confirmCode() {var _this2 = this;
       if (captcha) {
+        uni.showLoading({
+          title: "请等待" });
+
         uni.request({
           url: this.$serverUrl + '/user/confirmCode',
           method: "POST",
@@ -451,6 +454,9 @@ var _default = {
                 icon: 'none' });
 
             }
+          },
+          complete: function complete() {
+            uni.hideLoading();
           } });
 
       } else {

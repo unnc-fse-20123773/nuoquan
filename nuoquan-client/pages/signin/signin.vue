@@ -311,6 +311,9 @@
 
 			confirmCode() {
 				if (captcha) {
+					uni.showLoading({
+						title: "请等待"
+					})
 					uni.request({
 						url: this.$serverUrl + '/user/confirmCode',
 						method: "POST",
@@ -345,6 +348,9 @@
 								});
 							}
 						},
+						complete: () =>{
+							uni.hideLoading();
+						}
 					});
 				} else {
 					uni.showToast({
