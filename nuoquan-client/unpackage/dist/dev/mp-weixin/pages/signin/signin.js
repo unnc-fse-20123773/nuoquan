@@ -231,6 +231,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
 var isLoding = false;
 var timer = null;
 var timer_ = null;
@@ -425,7 +430,7 @@ var _default = {
           url: this.$serverUrl + '/user/confirmCode',
           method: "POST",
           data: {
-            userId: this.getGlobalUserInfo().id,
+            userId: this.userInfo.id,
             code: captcha,
             email: email },
 

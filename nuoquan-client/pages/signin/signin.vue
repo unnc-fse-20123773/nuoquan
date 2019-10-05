@@ -51,8 +51,13 @@
 					 @input="onEmailInput" :disabled="auth"/>
 					<input class="email-input" type="text" placeholder=" 验证码" placeholder-style="color: #C0C0C0;font-size:15px;"
 					 @input="onCaptchaInput" :maxlength="captchaLength" :disabled="auth"/>
-					<wh-captcha style="font-size: 15px;margin-top: 15px;" ref="captcha" :secord="30" title="获取验证码" waitTitle="稍等(SECORD)秒"
-					 normalClass="captcha-normal" disabledClass="captcha-disabled" @click="getCaptcha"></wh-captcha>
+					<wh-captcha style="font-size: 15px;margin-top: 15px;" 
+					ref="captcha" 
+					:secord="60" 
+					title="获取验证码" 
+					waitTitle="稍等(SECORD)秒"
+					normalClass="captcha-normal" 
+					disabledClass="captcha-disabled" @click="getCaptcha"></wh-captcha>
 				</view>
 			</view>
 		</view>
@@ -318,7 +323,7 @@
 						url: this.$serverUrl + '/user/confirmCode',
 						method: "POST",
 						data: {
-							userId: this.getGlobalUserInfo().id,
+							userId: this.userInfo.id,
 							code: captcha,
 							email: email,
 						},
