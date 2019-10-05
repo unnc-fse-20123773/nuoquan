@@ -34,7 +34,7 @@ public interface ArticleMapperCustom extends MyMapper<Article> {
 	 * @param articleContent
 	 * @return
 	 */
-	public List<ArticleVO> searchArticleContentYang(@Param("articleContent") String articleContent);
+	public List<ArticleVO> searchArticleContentYang(@Param("searchKeywords") String searchKeywords);
 	
 	/**
 	 * 为文章增加 num 的浏览量

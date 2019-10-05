@@ -224,6 +224,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
 var isLoding = false;
 var timer = null;
 var timer_ = null;
@@ -411,11 +416,14 @@ var _default = {
 
     confirmCode: function confirmCode() {var _this2 = this;
       if (captcha) {
+        uni.showLoading({
+          title: "请等待" });
+
         uni.request({
           url: this.$serverUrl + '/user/confirmCode',
           method: "POST",
           data: {
-            userId: this.getGlobalUserInfo().id,
+            userId: this.userInfo.id,
             code: captcha,
             email: email },
 
@@ -444,6 +452,9 @@ var _default = {
                 icon: 'none' });
 
             }
+          },
+          complete: function complete() {
+            uni.hideLoading();
           } });
 
       } else {
