@@ -55,6 +55,7 @@
 			</commentbox>
 			<!-- 用于推出评论下方空白 -->
 			<view name="marginHelper" style="height: 50px;width: 100%;background-color: white;"></view>
+<!-- 			发表评论按钮 -->
 			<view class="bottomLayerOfSubmit">
 				<view class="submitComment" @click="controlInput(1)">发 表 评 论</view>
 			</view>

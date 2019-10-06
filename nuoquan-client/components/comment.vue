@@ -14,7 +14,7 @@
 					style="padding-right: 23px;"></image>
 
 					<image v-if="RECOMMENT && mainComment.commentNum" src="../../../../static/icon/ReComment.png" 
-					style="height:23px;width:50px;position:relative;bottom:-5px;padding-right:4px;"></image>
+					style="height:23px;width:50px;position:relative;bottom:-10px;padding-right:4px;"></image>
 				</view>
 				<!-- 点赞按钮 -->
 				<view @tap="swLikeMainComment(mainComment)">
@@ -301,6 +301,7 @@
 	}
 
 	.reCommentsArea {
+		margin-top: 5px;
 		background: #EEEEEE;
 		width: 500upx;
 		padding: 14px 25upx 11px;
