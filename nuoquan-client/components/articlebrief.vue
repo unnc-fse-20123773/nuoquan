@@ -100,10 +100,10 @@
 				}
 			}
 			
-			uni.$on("updateArticle", (articleID) => { // from detail
-				if(articleID == this.thisArticle.id){
+			uni.$on("updateArticle", (article) => { // from detail
+				if(article.id == this.thisArticle.id){
 					console.log("get")
-					this.thisArticle.commentNum ++ ;
+					this.thisArticle = article ;
 				}
 			})
 		},
