@@ -145,20 +145,18 @@ var _default =
 
   data: function data() {
     return {
-      taglist: [
-      ['123', 'background:#40A792'],
-      ['13', 'background:#621E81'],
-      ['163', 'background:#738598'],
-      ['标签', 'background:#F3AE4B'],
-      ['13', 'background:#621E81'],
-      ['163', 'background:#738598'],
-      ['123', 'background:#40A792'],
-      ['13', 'background:#621E81']] };
-
+      tagColorList: [] };
 
   },
   created: function created() {
-    // console.log(this.articleCard);
+    // 随机生成颜色
+    if (!this.isNull(this.articleCard.tagList)) {
+      var tagColors = this.tagColors;
+      for (var i = 0; i < this.articleCard.tagList.length; i++) {
+        var random = Math.floor(Math.random() * tagColors.length);
+        this.tagColorList.push(tagColors[random]);
+      }
+    }
   },
   filters: {
     timeDeal: function timeDeal(timediff) {

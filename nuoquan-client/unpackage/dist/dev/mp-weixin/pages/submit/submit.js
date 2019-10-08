@@ -162,6 +162,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -199,8 +202,7 @@ var _default = {
       sizeTypeIndex: 0,
       sizeType: ['压缩', '原图', '压缩或原图'],
       countIndex: 8,
-      count: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-      residualInputLength: 140 };
+      count: [1, 2, 3, 4, 5, 6, 7, 8, 9] };
 
   },
   onUnload: function onUnload() {

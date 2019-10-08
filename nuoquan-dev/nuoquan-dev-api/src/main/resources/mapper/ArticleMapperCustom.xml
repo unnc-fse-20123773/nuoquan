@@ -51,11 +51,12 @@
    	left join nuoquan.user u on u.id = a.user_id
   	where
   		1 = 1
-  		<if test=" searchKeywords != null and searchKeywords != '' ">
-  			and a.article_content like '%${searchKeywords}%'
+  		and
+  		(<if test=" searchKeywords != null and searchKeywords != '' ">
+  			 a.article_content like '%${searchKeywords}%'
   			 or a.article_title like '%${searchKeywords}%'
   			 or a.tags like '%${searchKeywords}%'
-  		</if>
+  		</if>)
   		and a.status = 1
   		<!-- and a.is_anonymous = 0 -->
   	order by a.create_date desc
