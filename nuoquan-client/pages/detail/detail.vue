@@ -34,19 +34,26 @@
 
 			<!-- ID 行 -->
 			<view class="bottombar">
-				<view style="width:70%;display:inline-block;">
+				<!-- 蒙层,用于优化体验 -->
+				<view style="position: absolute;z-index: 20;height: 100%;width: 80upx;right: 0;" @tap="swLikeArticle()"></view>
+				<!-- 蒙层结束 -->
+				<view class="id">
 					<image :src="articleCard.faceImg" class="touxiang" @click="goToPersonPublic()"></image>
 					<view class="name">{{ articleCard.nickname }}</view>
-					<view class="time">{{ articleCard.createDate | timeDeal}}</view>
+				</view>
+				<view class="time super_center">
+					<view class="time_text">{{ articleCard.createDate | timeDeal}}</view>
 				</view>
 				<view class="icons" @tap="swLikeArticle()">
-					<image v-if="!articleCard.isLike" class="icon" src="../../static/icon/like.png"></image>
-					<image v-if="articleCard.isLike" class="icon" src="../../static/icon/liked-red.png"></image>
-					<view class="icom" :class="{'liked':articleCard.isLike}">{{ articleCard.likeNum }}</view>
+					<view style="position: relative;width: 100%;height: 100%;">
+						<image v-if="!articleCard.isLike" class="icon" src="../../static/icon/like.png"></image>
+						<image v-if="articleCard.isLike" class="icon" src="../../static/icon/liked-red.png"></image>
+						<view class="icom" :class="{'liked':articleCard.isLike}">{{ articleCard.likeNum }}</view>
+					</view>
 				</view>
 			</view>
 			<view style="width: 100%;height: 12px;display: flex;" class="column_center">
-				<view style="width:20%;color: #888888;font-size: 15px;">
+				<view style="width:20%;color: RGB(253, 217, 108);font-size: 15px;">
 					最新评论
 				</view>
 				<view class="fengexian" style="height: 1px;width: 80%;background-color: RGB(253, 217, 108);"></view>
@@ -588,6 +595,7 @@
 		border-radius: 20px;
 		margin-top: 20px;
 		padding-bottom: 5px;
+		height: 30px;
 	}
 
 	.touxiang {
@@ -596,12 +604,18 @@
 		height: 20px;
 		margin-right: 5px;
 		vertical-align: middle;
-
 	}
-
+	
+	.id{
+		position: absolute;
+		left: 0;
+		width:42%;
+		display:inline-block;
+	}
+	
 	.name {
 		display: inline-block;
-		font-size: 10px;
+		font-size: 15px;
 		margin-left: 7px;
 		color: #888888;
 		padding-bottom: 5px;
@@ -610,39 +624,52 @@
 	}
 
 	.time {
-		display: inline-block;
-		font-size: 10px;
-		margin-left: 25px;
-		color: #888888;
+		position: absolute;
+		left: 42%;
+		height: 30px;
 		max-width: 85px;
+	}
+
+	.time_text{
+		font-size: 15px;
+		color: #888888;
 		text-overflow: ellipsis;
 	}
 
-
 	.icons {
-		position: relative;
-		justify-content: flex-end;
-		display: inline-flex;
-		align-items: center;
+		position: absolute;
+		right: 0;
 		width: 30%;
 		font-size: 10px;
+		height: 30px;
+		z-index: 10;
 	}
 
 	.icon {
 		position: absolute;
-		right: 53upx;
+		right: 26%;
+		top: 9px;
 		width: 12px;
 		height: 12px;
 		font-size: 2px;
-		padding-left: 45upx;
+		z-index: 10;
 		/* padding-right: 8upx; */
 	}
 	.liked{
+		position: absolute;
+		right: 20upx;
+		height: 12px;
+		top: 9px;
 		color: #FDD041;
+		z-index: 10;
 	}
 	.icom{
 		position: absolute;
-		right: 33upx;
+		right: 20upx;
+		height: 15px;
+		font-size: 15px;
+		top: 5px;
+		z-index: 10;
 	}
 	
 	/* 底部栏 */

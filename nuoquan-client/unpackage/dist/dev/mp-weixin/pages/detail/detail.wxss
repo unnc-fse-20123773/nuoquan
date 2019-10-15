@@ -127,6 +127,7 @@ page {
 		border-radius: 20px;
 		margin-top: 20px;
 		padding-bottom: 5px;
+		height: 30px;
 }
 .touxiang.data-v-1b7de92e {
 		border-radius: 30px;
@@ -135,9 +136,15 @@ page {
 		margin-right: 5px;
 		vertical-align: middle;
 }
+.id.data-v-1b7de92e{
+		position: absolute;
+		left: 0;
+		width:42%;
+		display:inline-block;
+}
 .name.data-v-1b7de92e {
 		display: inline-block;
-		font-size: 10px;
+		font-size: 15px;
 		margin-left: 7px;
 		color: #888888;
 		padding-bottom: 5px;
@@ -146,46 +153,50 @@ page {
 		   text-overflow: ellipsis;
 }
 .time.data-v-1b7de92e {
-		display: inline-block;
-		font-size: 10px;
-		margin-left: 25px;
-		color: #888888;
+		position: absolute;
+		left: 42%;
+		height: 30px;
 		max-width: 85px;
+}
+.time_text.data-v-1b7de92e{
+		font-size: 15px;
+		color: #888888;
 		-o-text-overflow: ellipsis;
 		   text-overflow: ellipsis;
 }
 .icons.data-v-1b7de92e {
-		position: relative;
-		-webkit-box-pack: end;
-		-webkit-justify-content: flex-end;
-		    -ms-flex-pack: end;
-		        justify-content: flex-end;
-		display: -webkit-inline-box;
-		display: -webkit-inline-flex;
-		display: -ms-inline-flexbox;
-		display: inline-flex;
-		-webkit-box-align: center;
-		-webkit-align-items: center;
-		    -ms-flex-align: center;
-		        align-items: center;
+		position: absolute;
+		right: 0;
 		width: 30%;
 		font-size: 10px;
+		height: 30px;
+		z-index: 10;
 }
 .icon.data-v-1b7de92e {
 		position: absolute;
-		right: 53rpx;
+		right: 26%;
+		top: 9px;
 		width: 12px;
 		height: 12px;
 		font-size: 2px;
-		padding-left: 45rpx;
+		z-index: 10;
 		/* padding-right: 8upx; */
 }
 .liked.data-v-1b7de92e{
+		position: absolute;
+		right: 20rpx;
+		height: 12px;
+		top: 9px;
 		color: #FDD041;
+		z-index: 10;
 }
 .icom.data-v-1b7de92e{
 		position: absolute;
-		right: 33rpx;
+		right: 20rpx;
+		height: 15px;
+		font-size: 15px;
+		top: 5px;
+		z-index: 10;
 }
 
 	/* 底部栏 */

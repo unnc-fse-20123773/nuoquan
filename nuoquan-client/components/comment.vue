@@ -1,18 +1,25 @@
 <template>
 	<view class="comment" :id="mainComment.id">
 		<view class="contentarea" @tap="controlInputInComment('inComment')">{{ mainComment.comment }}</view>
+		<!-- ID 行 -->
 		<view class="bottombar">
-			<view style="width:70%;display:inline-block;">
+			<!-- 蒙层,用于优化体验 -->
+			<view style="position: absolute;z-index: 20;height: 100%;width: 80upx;right: 0;" @tap="swLikeMainComment(mainComment)"></view>
+			<view style="position: absolute;z-index: 20;height: 100%;width: 80upx;right: 80upx;" @tap="goToCommentDetail(mainComment)"></view>
+			<!-- 蒙层结束 -->
+			<view class="id">
 				<image :src="mainComment.faceImg" class="touxiang" @tap="goToPersonPublic(mainComment.fromUserId)"></image>
 				<text class="name">{{ mainComment.nickname }}</text>
-				<text class="time">{{ mainComment.timeAgo }}</text>
+			</view>
+			<view class="time super_center">
+				<text class="time_text">{{ mainComment.timeAgo }}</text>
 			</view>
 			<view class="icons">
 				<view @tap="goToCommentDetail(mainComment)">
 					<!-- 评论按钮 -->
 					<image v-if="!RECOMMENT || mainComment.commentNum == 0" class="icon" src="../../../../static/icon/comment.png" 
-					style="padding-right: 23px;"></image>
-
+					style="padding-right: 30px;"></image>
+					
 					<image v-if="RECOMMENT && mainComment.commentNum" src="../../../../static/icon/ReComment.png" 
 					style="height:23px;width:50px;position:relative;bottom:-5px;padding-right:4px;"></image>
 				</view>
@@ -236,57 +243,95 @@
 	}
 
 	.bottombar {
-		position: relative;
+		/* position: relative;
 		border-radius: 20px;
 		height: 25px;
 		margin-top: 10px;
 		display: flex;
-		justify-content: space-between;
+		justify-content: space-between; */
+		position: relative;
+		border-radius: 20px;
+		margin-top: 20px;
+		padding-bottom: 5px;
+		height: 30px;
 	}
 
 	.touxiang {
+		border-radius: 30px;
 		width: 20px;
 		height: 20px;
-		border-radius: 20px;
-		display: inline-block;
-		vertical-align: middle;
 		margin-right: 5px;
+		vertical-align: middle;
 	}
 
-	.time,
-	.name {
-		font-size: 10px;
-		margin-left: 7px;
-		margin-right: 10px;
+	.id{
+		position: absolute;
+		left: 0;
+		width:42%;
+		display:inline-block;
+	}
+
+	.time {
+		position: absolute;
+		left: 42%;
+		height: 30px;
+		max-width: 85px;
+	}
+
+	.time_text{
+		font-size: 15px;
 		color: #888888;
+		text-overflow: ellipsis;
+	}
+	
+	.name {
+		display: inline-block;
+		font-size: 15px;
+		margin-left: 7px;
+		color: #888888;
+		padding-bottom: 5px;
+		max-width: 80px;
+		text-overflow: ellipsis;
 	}
 
 	.icons {
-		position: relative;
-		justify-content: flex-end;
-		display: inline-flex;
-		align-items: flex-end;
+		position: absolute;
+		right: 0;
 		width: 30%;
 		font-size: 10px;
-
+		height: 30px;
+		z-index: 10;
 	}
 
 	.icon {
+		position: absolute;
+		right: 26%;
+		top: 9px;
 		width: 12px;
 		height: 12px;
 		font-size: 2px;
-		padding-right: 4px;
-		vertical-align: middle;
+		z-index: 10;
+		/* padding-right: 8upx; */
 	}
-
-	.icom {
-		padding-right: 17px;
-		align-items: flex-end;
-		vertical-align: middle;
-	}
+	
 	.liked{
+		position: absolute;
+		right: 20upx;
+		height: 12px;
+		top: 9px;
 		color: #FDD041;
+		z-index: 10;
 	}
+	
+	.icom{
+		position: absolute;
+		right: 20upx;
+		height: 15px;
+		font-size: 15px;
+		top: 5px;
+		z-index: 10;
+	}
+	
 	.submitComment {
 		background: #FFCC30;
 		border-radius: 5px;
