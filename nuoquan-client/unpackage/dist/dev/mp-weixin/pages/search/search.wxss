@@ -1,9 +1,5 @@
 
-<<<<<<< HEAD
 .weui-search-bar.data-v-65099777 {
-=======
-.weui-search-bar.data-v-f1130d64 {
->>>>>>> guetta-new
 	display: fixed;
 	top: 0;
 	left: 0;
@@ -12,22 +8,14 @@
 	background: #FFFFFE;
 	z-index: 10;
 }
-<<<<<<< HEAD
 .input-bar.data-v-65099777 {
-=======
-.input-bar.data-v-f1130d64 {
->>>>>>> guetta-new
 	margin-top: 4px;
 	margin-left: 12px;
 	height: 30px;
 	width: 100%;
 	position: relative;
 }
-<<<<<<< HEAD
 .back.data-v-65099777 {
-=======
-.back.data-v-f1130d64 {
->>>>>>> guetta-new
 	display: inline-block;
 	width: 30px;
 	height: 30px;
@@ -36,11 +24,7 @@
 	position: absolute;
 	left: 0;
 }
-<<<<<<< HEAD
 .input-background.data-v-65099777{
-=======
-.input-background.data-v-f1130d64{
->>>>>>> guetta-new
 	position: absolute;
 	left: 30px;
 	display: inline-block;
@@ -54,11 +38,7 @@
 	        box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.16);	
 	z-index: 10;
 }
-<<<<<<< HEAD
 .input-bar input.data-v-65099777 {
-=======
-.input-bar input.data-v-f1130d64 {
->>>>>>> guetta-new
 	position: absolute;
 	left: 40px;
 	font-size: 15px;
@@ -72,52 +52,30 @@
 	line-height: 28px;
 	z-index: 20;
 }
-<<<<<<< HEAD
 .wxSearchKey.data-v-65099777,
 .SearchHistoryItem.data-v-65099777 {
-=======
-.wxSearchKey.data-v-f1130d64,
-.SearchHistoryItem.data-v-f1130d64 {
->>>>>>> guetta-new
 	margin-top: 26px;
 	width: calc(750upx-56px);
 	padding: 0 28px;
 	position: relative;
 }
-<<<<<<< HEAD
 .exSearchTitle.data-v-65099777,
 .SearchHistoryItemTitle.data-v-65099777 {
-=======
-.exSearchTitle.data-v-f1130d64,
-.SearchHistoryItemTitle.data-v-f1130d64 {
->>>>>>> guetta-new
 	color: #888888;
 	font-size: 13px;
 	font-weight: 300;
 }
-<<<<<<< HEAD
 .searchResult.data-v-65099777{
 	width: 100%;
 	height: 100%;
 }
 .searchResultWrods.data-v-65099777 {
-=======
-.searchResult.data-v-f1130d64{
-	width: 100%;
-	height: 100%;
-}
-.searchResultWrods.data-v-f1130d64 {
->>>>>>> guetta-new
 	margin-top: 26px;
 	width: calc(750upx-56px);
 	padding: 0 28px;
 	position: relative;
 }
-<<<<<<< HEAD
 .item.data-v-65099777 {
-=======
-.item.data-v-f1130d64 {
->>>>>>> guetta-new
 	display: inline-block;
 	padding: 0 11px;
 	background: #FFE9A2;
@@ -135,11 +93,7 @@
 	-o-text-overflow:ellipsis;
 	   text-overflow:ellipsis;
 }
-<<<<<<< HEAD
 .SearchHistoryItem icon.data-v-65099777 {
-=======
-.SearchHistoryItem icon.data-v-f1130d64 {
->>>>>>> guetta-new
 	position: absolute;
 	right: 28px;
 	top: 0;

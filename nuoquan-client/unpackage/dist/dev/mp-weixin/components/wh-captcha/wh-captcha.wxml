@@ -1,5 +1,1 @@
-<<<<<<< HEAD
 <view data-event-opts="{{[['tap',[['clickAction',['$event']]]]]}}" class="{{['data-v-745f29f3',state==='normal'?normalClass:disabledClass]}}" bindtap="__e">{{''+(state==='normal'?title:$root.g0)}}</view>
-=======
-<view data-event-opts="{{[['tap',[['clickAction',['$event']]]]]}}" class="{{['data-v-40ec3d7c',state==='normal'?normalClass:disabledClass]}}" bindtap="__e">{{''+(state==='normal'?title:$root.g0)}}</view>
->>>>>>> guetta-new

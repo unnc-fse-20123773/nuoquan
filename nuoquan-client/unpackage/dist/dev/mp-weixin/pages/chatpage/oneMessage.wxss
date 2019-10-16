@@ -1,18 +1,10 @@
 
-<<<<<<< HEAD
 .touxiang.data-v-16ee2e71 {
-=======
-.touxiang.data-v-7fca1308 {
->>>>>>> guetta-new
 	width: 60rpx;
 	height: 60rpx;
 	border-radius: 60rpx;
 }
-<<<<<<< HEAD
 .bottomBar.data-v-16ee2e71 {
-=======
-.bottomBar.data-v-7fca1308 {
->>>>>>> guetta-new
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -ms-flexbox;
