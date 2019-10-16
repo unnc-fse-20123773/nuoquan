@@ -1,22 +1,35 @@
 
+<<<<<<< HEAD
 .comment.data-v-e8f832ba {
+=======
+.comment.data-v-6b97edec {
+>>>>>>> guetta-new
 		/* 	background-color:gray;
  */
 		border-radius: 20px;
 		width: 100%;
 		margin: auto;
 }
+<<<<<<< HEAD
 .fengexian1.data-v-e8f832ba {
+=======
+.fengexian1.data-v-6b97edec {
+>>>>>>> guetta-new
 		height: 1px;
 		width: 100%;
 		background-color: #d6d6d6;
 }
+<<<<<<< HEAD
 .contentarea.data-v-e8f832ba {
+=======
+.contentarea.data-v-6b97edec {
+>>>>>>> guetta-new
 		padding-top: 14px;
 		background: white;
 		font-size: 16px;
 		color: #3D3D3D;
 }
+<<<<<<< HEAD
 .bottombar.data-v-e8f832ba {
 		position: relative;
 		border-radius: 20px;
@@ -32,13 +45,29 @@
 		        justify-content: space-between;
 }
 .touxiang.data-v-e8f832ba {
+=======
+.bottombar.data-v-6b97edec {
+		position: relative;
+		border-radius: 20px;
+		margin-top: 20px;
+		padding-bottom: 5px;
+		height: 30px;
+}
+.touxiang.data-v-6b97edec {
+		position: absolute;
+		left: 0;
+		height: 30px;
+		width: 10%;
+}
+.touxiang_pic.data-v-6b97edec {
+		border-radius: 300px;
+>>>>>>> guetta-new
 		width: 20px;
 		height: 20px;
-		border-radius: 20px;
-		display: inline-block;
-		vertical-align: middle;
 		margin-right: 5px;
+		vertical-align: middle;
 }
+<<<<<<< HEAD
 .time.data-v-e8f832ba,
 	.name.data-v-e8f832ba {
 		font-size: 10px;
@@ -47,29 +76,67 @@
 		color: #888888;
 }
 .icons.data-v-e8f832ba {
-		position: relative;
-		-webkit-box-pack: end;
-		-webkit-justify-content: flex-end;
-		    -ms-flex-pack: end;
-		        justify-content: flex-end;
-		display: -webkit-inline-box;
-		display: -webkit-inline-flex;
-		display: -ms-inline-flexbox;
-		display: inline-flex;
-		-webkit-box-align: end;
-		-webkit-align-items: flex-end;
-		    -ms-flex-align: end;
-		        align-items: flex-end;
-		width: 30%;
-		font-size: 10px;
+=======
+.text_line.data-v-6b97edec {
+		position: absolute;
+		left: 10%;
+		height: 30px;
+		width: 90%;
 }
+.text_line_rel.data-v-6b97edec {
+>>>>>>> guetta-new
+		position: relative;
+}
+.name.data-v-6b97edec {
+		position: absolute;
+		left: 0;
+		height: 30px;
+		width: 38%;
+}
+.name_text.data-v-6b97edec {
+		font-size: 15px;
+		color: #888888;
+		-o-text-overflow: ellipsis;
+		   text-overflow: ellipsis;
+		max-width: 80px;
+}
+.time.data-v-6b97edec {
+		position: absolute;
+		left: 38%;
+		height: 30px;
+		max-width: 85px;
+}
+.time_text.data-v-6b97edec {
+		margin-top: 3px;
+		font-size: 12px;
+		color: #888888;
+		-o-text-overflow: ellipsis;
+		   text-overflow: ellipsis;
+}
+.icons.data-v-6b97edec {
+		position: absolute;
+		right: -8%;
+		width: 36%;
+		font-size: 10px;
+		height: 30px;
+		z-index: 10;
+}
+<<<<<<< HEAD
 .icon.data-v-e8f832ba {
 		width: 12px;
 		height: 12px;
+=======
+.icon.data-v-6b97edec {
+		position: absolute;
+		right: 56%;
+		width: 15px;
+		height: 15px;
+>>>>>>> guetta-new
 		font-size: 2px;
-		padding-right: 4px;
-		vertical-align: middle;
+		z-index: 10;
+		/* padding-right: 8upx; */
 }
+<<<<<<< HEAD
 .icom.data-v-e8f832ba {
 		padding-right: 17px;
 		-webkit-box-align: end;
@@ -82,6 +149,30 @@
 		color: #FDD041;
 }
 .submitComment.data-v-e8f832ba {
+=======
+.icon_cmt.data-v-6b97edec{
+		position: absolute;
+		left: 4rpx;
+		width: 15px;
+		height: 15px;
+		font-size: 2px;
+		z-index: 10;
+}
+.liked.data-v-6b97edec {
+		position: absolute;
+		right: 56%;
+		color: #fe5f55;
+		z-index: 10;
+		font-size: 15px;
+}
+.icom.data-v-6b97edec {
+		position: absolute;
+		right: 88rpx;
+		font-size: 15px;
+		z-index: 10;
+}
+.submitComment.data-v-6b97edec {
+>>>>>>> guetta-new
 		background: #FFCC30;
 		border-radius: 5px;
 		width: 120px;
@@ -93,8 +184,12 @@
 		text-align: center;
 		line-height: 30px;
 }
+<<<<<<< HEAD
 .reCommentsArea.data-v-e8f832ba {
 		margin-top: 5px;
+=======
+.reCommentsArea.data-v-6b97edec {
+>>>>>>> guetta-new
 		background: #EEEEEE;
 		width: 500rpx;
 		padding: 14px 25rpx 11px;

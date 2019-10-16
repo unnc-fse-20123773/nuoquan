@@ -8,7 +8,7 @@
 		<view class="detailmain">
 			<view class="detailcontent">{{ articleCard.articleContent }}</view>
 
-			<view >
+			<view>
 				<!-- 单图显示 -->
 				<view v-if="articleCard.imgList.length==1" class="detailpics 1pic" style="width: 100%;max-height: 400upx;display: flex;">
 					<image v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFill"
@@ -16,15 +16,15 @@
 				</view>
 				<!-- 其他数量 -->
 				<view v-else-if="articleCard.imgList.length==4" class="detailpics" style="max-width: 400upx;margin-left: 0;">
-					<image class="detailpic" v-for="(i,index) in articleCard.imgList" :key="index"
-					 :src="serverUrl + i.imagePath" mode="aspectFill" @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
+					<image class="detailpic" v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFill"
+					 @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
 				</view>
 
 				<view v-else class="detailpics">
 					<image class="detailpic" v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFill"
 					 @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
-					 <view v-if="articleCard.imgList.length==2||imageList.length==5||imageList.length==8" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
-					 
+					<view v-if="articleCard.imgList.length==2||imageList.length==5||imageList.length==8" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
+
 				</view>
 
 			</view>
@@ -34,19 +34,33 @@
 
 			<!-- ID 行 -->
 			<view class="bottombar">
-				<view style="width:70%;display:inline-block;">
-					<image :src="articleCard.faceImg" class="touxiang" @click="goToPersonPublic()"></image>
-					<view class="name">{{ articleCard.nickname }}</view>
-					<view class="time">{{ articleCard.createDate | timeDeal}}</view>
+				<!-- 蒙层,用于优化体验 -->
+				<view style="position: absolute;z-index: 20;height: 100%;width: 90upx;right: 16upx;" @tap="swLikeArticle()"></view>
+				<!-- 蒙层结束 -->
+				<view class="touxiang column_center">
+					<image :src="articleCard.faceImg" class="touxiang_pic" @click="goToPersonPublic()"></image>
 				</view>
-				<view class="icons" @tap="swLikeArticle()">
-					<image v-if="!articleCard.isLike" class="icon" src="../../static/icon/like.png"></image>
-					<image v-if="articleCard.isLike" class="icon" src="../../static/icon/liked-red.png"></image>
-					<view class="icom" :class="{'liked':articleCard.isLike}">{{ articleCard.likeNum }}</view>
+				<view class="text_line">
+					<view class="text_line_rel">
+						<view class="name column_center">
+							<view class="name_text">{{ articleCard.nickname }}</view>
+						</view>
+						<view class="time column_center">
+							<view class="time_text">{{ articleCard.createDate | timeDeal}}</view>
+						</view>
+						<view class="icons column_center" @tap="swLikeArticle()">
+							<view class="column_center" style="position: relative;width: 100%;height: 100%;">
+								<image v-if="!articleCard.isLike" class="icon" src="../../static/icon/like.png"></image>
+								<image v-if="articleCard.isLike" class="icon" src="../../static/icon/liked-red.png"></image>
+								<view class="icom" :class="{'liked':articleCard.isLike}">{{ articleCard.likeNum }}</view>
+							</view>
+						</view>
+					</view>
 				</view>
 			</view>
+
 			<view style="width: 100%;height: 12px;display: flex;" class="column_center">
-				<view style="width:20%;color: #888888;font-size: 15px;">
+				<view style="width:20%;color: RGB(253, 217, 108);font-size: 15px;">
 					最新评论
 				</view>
 				<view class="fengexian" style="height: 1px;width: 80%;background-color: RGB(253, 217, 108);"></view>
@@ -589,61 +603,95 @@
 		border-radius: 20px;
 		margin-top: 20px;
 		padding-bottom: 5px;
+		height: 30px;
 	}
-
-	.touxiang {
-		border-radius: 30px;
+	
+	.touxiang{
+		position: absolute;
+		left: 0;
+		height: 30px;
+		width: 10%;
+	}
+	
+	.touxiang_pic {
+		border-radius: 300px;
 		width: 20px;
 		height: 20px;
 		margin-right: 5px;
 		vertical-align: middle;
-
 	}
-
+	
+	
+	.text_line{
+		position: absolute;
+		left: 10%;
+		height: 30px;
+		width: 90%;
+	}
+	
+	.text_line_rel{
+		position: relative;
+	}
+	
 	.name {
-		display: inline-block;
-		font-size: 10px;
-		margin-left: 7px;
+		position: absolute;
+		left: 0;
+		height: 30px;
+		width: 38%;
+	}
+	
+	.name_text{
+		font-size: 15px;
 		color: #888888;
-		padding-bottom: 5px;
-		max-width: 80px;
 		text-overflow: ellipsis;
+		max-width: 80px;
 	}
 
 	.time {
-		display: inline-block;
-		font-size: 10px;
-		margin-left: 25px;
-		color: #888888;
+		position: absolute;
+		left: 38%;
+		height: 30px;
 		max-width: 85px;
+	}
+
+	.time_text{
+		margin-top: 3px;
+		font-size: 12px;
+		color: #888888;
 		text-overflow: ellipsis;
 	}
 
-
 	.icons {
-		position: relative;
-		justify-content: flex-end;
-		display: inline-flex;
-		align-items: center;
-		width: 30%;
+		position: absolute;
+		right: -8%;
+		width: 36%;
 		font-size: 10px;
+		height: 30px;
+		z-index: 10;
 	}
 
 	.icon {
 		position: absolute;
-		right: 53upx;
-		width: 12px;
-		height: 12px;
+		right: 56%;
+		width: 15px;
+		height: 15px;
 		font-size: 2px;
-		padding-left: 45upx;
+		z-index: 10;
 		/* padding-right: 8upx; */
 	}
+	
 	.liked{
-		color: #FDD041;
+		position: absolute;
+		right: 56%;
+		color: #fe5f55;
+		z-index: 10;
 	}
+	
 	.icom{
 		position: absolute;
-		right: 33upx;
+		right: 88upx;
+		font-size: 15px;
+		z-index: 10;
 	}
 	
 	/* 底部栏 */
@@ -687,7 +735,7 @@
 		height: 1000px;
 		top:0;
 		left:0;
-		z-index: 3;
+		z-index: 999;
 	}
 	.commentPart {
 		box-shadow: 0px 1px 5px 0px rgba(139, 139, 139, 0.32);
