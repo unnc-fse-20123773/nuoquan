@@ -329,10 +329,10 @@ var _default =
       }
     }
 
-    uni.$on("updateArticle", function (articleID) {// from detail
-      if (articleID == _this.thisArticle.id) {
+    uni.$on("updateArticle", function (article) {// from detail
+      if (article.id == _this.thisArticle.id) {
         console.log("get");
-        _this.thisArticle.commentNum++;
+        _this.thisArticle = article;
       }
     });
   },
@@ -590,6 +590,18 @@ var _default = {
 
       uni.showLoading({
         title: "加载中..." });
+
+      setTimeout(function () {
+        if (loadArticleFlag) {
+          loadArticleFlag = false; // 解锁
+          uni.hideLoading();
+          uni.showToast({
+            title: "网络未知错误",
+            icon: "none",
+            duration: 1000 });
+
+        }
+      }, 5000); // 延时5s timeout
 
       var that = this;
       uni.request({
