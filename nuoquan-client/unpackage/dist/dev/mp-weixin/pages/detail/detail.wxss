@@ -9,8 +9,7 @@ page {
 		background-repeat: no-repeat;
 		background-position-y: -5px;
 		background-size: cover;
-		padding-bottom: 45px;
-		padding-top: 15px;
+		height: 16%;
 }
 .detailtitle.data-v-1b7de92e {
 		width: 85%;
@@ -18,7 +17,7 @@ page {
 		font-size: 20px;
 		margin: auto;
 		font-weight: 550;
-		padding-top:12px;
+		padding-bottom:22px;
 		word-break: break-all;
 		word-wrap: break-word;
 }
@@ -27,10 +26,9 @@ page {
 		border-top-right-radius: 20px;
 		margin-top: -20px;
 		background: white;
-		-webkit-box-shadow: 0px 0px 10px 1px #c0c0c0;
-		        box-shadow: 0px 0px 10px 1px #c0c0c0;
+		/* box-shadow: 0px 0px 10px 1px #c0c0c0; */
 		/* 高度90%才可以保证页面不会无故滚动 */
-		height: 90%;
+		height: 84%;
 		width: 85%;
 		padding: 0 7.5%;
 		overflow: scroll;
@@ -158,7 +156,7 @@ page {
 		width: 38%;
 }
 .name_text.data-v-1b7de92e{
-		font-size: 15px;
+		font-size: 13px;
 		color: #888888;
 		-o-text-overflow: ellipsis;
 		   text-overflow: ellipsis;
@@ -171,7 +169,7 @@ page {
 		max-width: 85px;
 }
 .time_text.data-v-1b7de92e{
-		margin-top: 3px;
+		margin-top: 1px;
 		font-size: 12px;
 		color: #888888;
 		-o-text-overflow: ellipsis;
@@ -187,7 +185,7 @@ page {
 }
 .icon.data-v-1b7de92e {
 		position: absolute;
-		right: 56%;
+		right: 46%;
 		width: 15px;
 		height: 15px;
 		font-size: 2px;
@@ -202,8 +200,8 @@ page {
 }
 .icom.data-v-1b7de92e{
 		position: absolute;
-		right: 88rpx;
-		font-size: 15px;
+		right: 74rpx;
+		font-size: 13px;
 		z-index: 10;
 }
 
@@ -213,9 +211,9 @@ page {
 		display: -webkit-flex;
 		display: -ms-flexbox;
 		display: flex;
-		position: fixed;
+		position: absolute;
 		height: 48px;
-		width:750rpx;
+		width: 750rpx;
 		left:0;
 		bottom: 0;
 		background: #FFFFff;
@@ -227,6 +225,7 @@ page {
 		-webkit-align-items: center;
 		    -ms-flex-align: center;
 		        align-items: center;
+		z-index: 30;
 }
 .submitComment.data-v-1b7de92e {
 		background: #FFCC30;
@@ -252,18 +251,19 @@ page {
 
 	/* 以下五条为底部输入框样式 */
 .bottoLayerOfInput.data-v-1b7de92e{
-		position: fixed;
+		position: absolute;
 		width: 750rpx;
 		height: 1000px;
-		top:0;
+		bottom:0;
 		left:0;
-		z-index: 999;
+		z-index: 40;
 }
 .commentPart.data-v-1b7de92e {
 		-webkit-box-shadow: 0px 1px 5px 0px rgba(139, 139, 139, 0.32);
 		        box-shadow: 0px 1px 5px 0px rgba(139, 139, 139, 0.32);
-		position:fixed;
+		position:absolute;
 		bottom: 0;
+		z-index: 999;
 		left: 0;
 		width: 670rpx;
 		padding:11px 40rpx;

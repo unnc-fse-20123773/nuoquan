@@ -41,7 +41,6 @@ page {
 	left: 16px;
 	width: 36px;
 	height: 36px;
-	border: 1px solid red;
 	border-radius: 200px;
 }
 .profilePic {

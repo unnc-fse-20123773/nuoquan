@@ -1,6 +1,6 @@
 <template>
-	<view style="height:100%;width:100%;">
-		<view class="topbar">
+	<view style="position: relative;height:100%;width:100%;">
+		<view class="topbar column_center">
 			<view class="detailtitle">{{ articleCard.articleTitle }}</view>
 		</view>
 		<!-- 9.16 by Guetta -->
@@ -79,7 +79,7 @@
 					<view class="submit" @click="saveComment()"></view>
 					<textarea class="commentSth" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
 					 adjust-position="false" v-model="commentContent" @click.stop="" :show-confirm-bar="false" @focus="popTextArea"
-					 @blur="unpopTextArea" />
+					 @blur="unpopTextArea" cursor-spacing='-76' />
 					</view>
             </view>
 		</view> 
@@ -489,8 +489,7 @@
 		background-repeat: no-repeat;
 		background-position-y: -5px;
 		background-size: cover;
-		padding-bottom: 45px;
-		padding-top: 15px;
+		height: 16%;
 	}
 
 	.detailtitle {
@@ -499,7 +498,7 @@
 		font-size: 20px;
 		margin: auto;
 		font-weight: 550;
-		padding-top:12px;
+		padding-bottom:22px;
 		word-break: break-all;
 		word-wrap: break-word;
 		
@@ -510,9 +509,9 @@
 		border-top-right-radius: 20px;
 		margin-top: -20px;
 		background: white;
-		box-shadow: 0px 0px 10px 1px #c0c0c0;
+		/* box-shadow: 0px 0px 10px 1px #c0c0c0; */
 		/* 高度90%才可以保证页面不会无故滚动 */
-		height: 90%;
+		height: 84%;
 		width: 85%;
 		padding: 0 7.5%;
 		overflow: scroll;
@@ -640,7 +639,7 @@
 	}
 	
 	.name_text{
-		font-size: 15px;
+		font-size: 13px;
 		color: #888888;
 		text-overflow: ellipsis;
 		max-width: 80px;
@@ -654,7 +653,7 @@
 	}
 
 	.time_text{
-		margin-top: 3px;
+		margin-top: 1px;
 		font-size: 12px;
 		color: #888888;
 		text-overflow: ellipsis;
@@ -671,7 +670,7 @@
 
 	.icon {
 		position: absolute;
-		right: 56%;
+		right: 46%;
 		width: 15px;
 		height: 15px;
 		font-size: 2px;
@@ -688,22 +687,23 @@
 	
 	.icom{
 		position: absolute;
-		right: 88upx;
-		font-size: 15px;
+		right: 74upx;
+		font-size: 13px;
 		z-index: 10;
 	}
 	
 	/* 底部栏 */
     .bottomLayerOfSubmit{
 		display: flex;
-		position: fixed;
+		position: absolute;
 		height: 48px;
-		width:750upx;
+		width: 750upx;
 		left:0;
 		bottom: 0;
 		background: #FFFFff;
 		justify-content: center;
 		align-items: center;
+		z-index: 30;
 	}
 	.submitComment {
 		background: #FFCC30;
@@ -729,17 +729,18 @@
 	
 	/* 以下五条为底部输入框样式 */
 	.bottoLayerOfInput{
-		position: fixed;
+		position: absolute;
 		width: 750upx;
 		height: 1000px;
-		top:0;
+		bottom:0;
 		left:0;
-		z-index: 999;
+		z-index: 40;
 	}
 	.commentPart {
 		box-shadow: 0px 1px 5px 0px rgba(139, 139, 139, 0.32);
-		position:fixed;
+		position:absolute;
 		bottom: 0;
+		z-index: 999;
 		left: 0;
 		width: 670upx;
 		padding:11px 40upx;
