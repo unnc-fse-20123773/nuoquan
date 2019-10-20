@@ -22,7 +22,7 @@
 						<view class="column_center" style="position: relative;height: 100%;" @tap="goToCommentDetail(mainComment)">
 							<!-- 评论按钮 -->
 							<image v-if="!RECOMMENT || mainComment.commentNum == 0" class="icon_cmt" src="../../../../static/icon/comment.png"></image>
-							<image v-if="RECOMMENT && mainComment.commentNum" class="icon_cmt" src="../../../../static/icon/ReComment.png"></image>
+							<image v-if="RECOMMENT && mainComment.commentNum" class="icon_recmt" src="../../../../static/icon/ReComment.png"></image>
 						</view>
 						<!-- 点赞按钮 -->
 						<view class="column_center" style="position: relative;width: 100%;height: 100%;" @tap="swLikeMainComment(mainComment)">
@@ -249,7 +249,6 @@
 		position: relative;
 		border-radius: 20px;
 		margin-top: 20px;
-		padding-bottom: 5px;
 		height: 30px;
 	}
 
@@ -288,7 +287,7 @@
 	}
 
 	.name_text {
-		font-size: 15px;
+		font-size: 13px;
 		color: #888888;
 		text-overflow: ellipsis;
 		max-width: 80px;
@@ -302,7 +301,7 @@
 	}
 
 	.time_text {
-		margin-top: 3px;
+		margin-top: 1px;
 		font-size: 12px;
 		color: #888888;
 		text-overflow: ellipsis;
@@ -319,7 +318,7 @@
 
 	.icon {
 		position: absolute;
-		right: 56%;
+		right: 46%;
 		width: 15px;
 		height: 15px;
 		font-size: 2px;
@@ -335,6 +334,16 @@
 		font-size: 2px;
 		z-index: 10;		
 	}
+
+	.icon_recmt{
+		position: absolute;
+		left: -20px;
+		width: 60px;
+		height: 25px;
+		font-size: 2px;
+		z-index: 10;
+		top: 4px;
+	}
 	
 	.liked {
 		position: absolute;
@@ -346,8 +355,8 @@
 
 	.icom {
 		position: absolute;
-		right: 88upx;
-		font-size: 15px;
+		right: 74upx;
+		font-size: 13px;
 		z-index: 10;
 	}
 
@@ -373,5 +382,6 @@
 		border-radius: 10px;
 		margin-left: 87.5upx;
 		margin-bottom: 10px;
+		margin-top:-2px ;
 	}
 </style>

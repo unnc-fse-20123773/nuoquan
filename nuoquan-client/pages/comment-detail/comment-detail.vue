@@ -56,7 +56,7 @@
 				<view class="emoji"></view>
 				<view class="submit" @click="saveComment()"></view>
 				<textarea class="commentSth" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
-				 adjust-position="false" v-model="commentContent" @click.stop="" :show-confirm-bar="false"/>
+				 adjust-position="false" v-model="commentContent" @click.stop="" :show-confirm-bar="false"  cursor-spacing='-76'/>
 			</view>
 		</view>
 	</view>
@@ -339,7 +339,6 @@
 		left: 16px;
 		width: 36px;
 		height: 36px;
-		border: 1px solid red;
 		border-radius: 200px;
 	}
 

@@ -21,7 +21,6 @@
 		position: relative;
 		border-radius: 20px;
 		margin-top: 20px;
-		padding-bottom: 5px;
 		height: 30px;
 }
 .touxiang.data-v-e8f832ba {
@@ -52,8 +51,13 @@
 		height: 30px;
 		width: 38%;
 }
+<<<<<<< HEAD
 .name_text.data-v-e8f832ba {
 		font-size: 15px;
+=======
+.name_text.data-v-6b97edec {
+		font-size: 13px;
+>>>>>>> guetta-new
 		color: #888888;
 		-o-text-overflow: ellipsis;
 		   text-overflow: ellipsis;
@@ -65,8 +69,13 @@
 		height: 30px;
 		max-width: 85px;
 }
+<<<<<<< HEAD
 .time_text.data-v-e8f832ba {
 		margin-top: 3px;
+=======
+.time_text.data-v-6b97edec {
+		margin-top: 1px;
+>>>>>>> guetta-new
 		font-size: 12px;
 		color: #888888;
 		-o-text-overflow: ellipsis;
@@ -82,7 +91,7 @@
 }
 .icon.data-v-e8f832ba {
 		position: absolute;
-		right: 56%;
+		right: 46%;
 		width: 15px;
 		height: 15px;
 		font-size: 2px;
@@ -97,7 +106,20 @@
 		font-size: 2px;
 		z-index: 10;
 }
+<<<<<<< HEAD
 .liked.data-v-e8f832ba {
+=======
+.icon_recmt.data-v-6b97edec{
+		position: absolute;
+		left: -20px;
+		width: 60px;
+		height: 25px;
+		font-size: 2px;
+		z-index: 10;
+		top: 4px;
+}
+.liked.data-v-6b97edec {
+>>>>>>> guetta-new
 		position: absolute;
 		right: 56%;
 		color: #fe5f55;
@@ -106,8 +128,8 @@
 }
 .icom.data-v-e8f832ba {
 		position: absolute;
-		right: 88rpx;
-		font-size: 15px;
+		right: 74rpx;
+		font-size: 13px;
 		z-index: 10;
 }
 .submitComment.data-v-e8f832ba {
@@ -130,5 +152,6 @@
 		border-radius: 10px;
 		margin-left: 87.5rpx;
 		margin-bottom: 10px;
+		margin-top:-2px ;
 }
 

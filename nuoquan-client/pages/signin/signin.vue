@@ -62,6 +62,7 @@
 			</view>
 		</view>
 		<view id="confirm" class="super_center">
+			<!-- 微信绑定 -->
 			<view class="confirm-rel" v-if="swiperLeft == 0">
 				<button v-if="agreement == false" class="confirm-button-before super_center" hover-class="button-hover">
 					<view style="color: white;font-weight: 550;letter-spacing: 3px;font-family: Microsoft YaHei;">微信绑定</view>
@@ -550,7 +551,8 @@
 		position: absolute;
 		bottom: 0%;
 		height: 10%;
-		width: 100%;
+		right: -50%;
+		width: 200%;
 		/* background-color: #000000; */
 		/* opacity: 0.8; */
 		border-bottom-right-radius: 30upx;
@@ -573,8 +575,8 @@
 	.confirm-button-before {
 		position: absolute;
 		top: 24%;
-		left: 26%;
-		width: 48%;
+		left: 30%;
+		width: 40%;
 		height: 40px;
 		border-radius: 10upx;
 		background-color: #CCCCCC;
@@ -584,8 +586,8 @@
 	.confirm-button-checked {
 		position: absolute;
 		top: 24%;
-		left: 26%;
-		width: 48%;
+		left: 30%;
+		width: 40%;
 		height: 40px;
 		border-radius: 10upx;
 		background-color: #FFCD2E;
