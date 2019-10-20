@@ -102,7 +102,7 @@ image {
 		font-size: 13px;
 		color: #888888;
 		position: absolute;
-		bottom: 0;
+		bottom:3.75px;
 		left:30px;
 		width:80px;
 		height:17.5px;
@@ -117,9 +117,10 @@ image {
 		color: #888888;
 		position: absolute;
 		left:calc(50% - 24px);
-		bottom: 0;
+		bottom: 1.75px;
 		width:48px;
 		height:17.5px;
+		text-align: center;
 }
 .icons.data-v-0734f7a0 {
 		position: absolute;
@@ -143,11 +144,11 @@ image {
 		width: 16px;
 		height: 17.5px;
 		vertical-align: bottom;
-		bottom:1px;
+		bottom:2px;
 }
 .icon.data-v-0734f7a0 {
 		position: absolute;
-		bottom:0;
+		bottom:2.75px;
 		display: inline-block;
 		color: #353535;
 		font-size: 13px;

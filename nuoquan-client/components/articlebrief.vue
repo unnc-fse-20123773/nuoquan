@@ -56,8 +56,8 @@
 			<view class="icons">
 				<image class="comment" src="../static/icon/comment.png" style="right: 65px;"></image>
 				<view class="icon" style="right:49px;">{{thisArticle.commentNum}}</view>
-				<image v-if="!thisArticle.isLike" class="like" src="../static/icon/like.png" style="right:22px;"></image>
-				<image v-if="thisArticle.isLike" class="like" src="../static/icon/liked-red.png" style="right:22px;"></image>
+				<image v-if="!thisArticle.isLike" class="like" src="../static/icon/like.png" style="right:22px;bottom:3.75px;"></image>
+				<image v-if="thisArticle.isLike" class="like" src="../static/icon/liked-red.png" style="right:22px;bottom:3.75px;"></image>
 				<view class="icon" style="right:6px;">{{thisArticle.likeNum}}</view>
 			</view>
 		</view>
@@ -367,7 +367,7 @@
 		font-size: 13px;
 		color: #888888;
 		position: absolute;
-		bottom: 0;
+		bottom:3.75px;
 		left:30px;
 		width:80px;
 		height:17.5px;
@@ -383,9 +383,10 @@
 		color: #888888;
 		position: absolute;
 		left:calc(50% - 24px);
-		bottom: 0;
+		bottom: 1.75px;
 		width:48px;
 		height:17.5px;
+		text-align: center;
 	}
 
 	.icons {
@@ -412,12 +413,12 @@
 		width: 16px;
 		height: 17.5px;
 		vertical-align: bottom;
-		bottom:1px;
+		bottom:2px;
 	}
 	
 	.icon {
 		position: absolute;
-		bottom:0;
+		bottom:2.75px;
 		display: inline-block;
 		color: #353535;
 		font-size: 13px;
