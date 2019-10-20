@@ -54,11 +54,11 @@
 			<view class="time">{{ thisArticle.createDate | timeDeal}}</view>
 
 			<view class="icons">
-				<image class="comment" src="../static/icon/comment.png" style="top:1px;"></image>
-				<view class="icon" >{{thisArticle.commentNum}}</view>
-				<image v-if="!thisArticle.isLike" class="like" src="../static/icon/like.png" ></image>
-				<image v-if="thisArticle.isLike" class="like" src="../static/icon/liked-red.png" ></image>
-				<view class="icon"  >{{thisArticle.likeNum}}</view>
+				<image class="comment" src="../static/icon/comment.png" style="right: 65px;"></image>
+				<view class="icon" style="right:49px;">{{thisArticle.commentNum}}</view>
+				<image v-if="!thisArticle.isLike" class="like" src="../static/icon/like.png" style="right:22px;"></image>
+				<image v-if="thisArticle.isLike" class="like" src="../static/icon/liked-red.png" style="right:22px;"></image>
+				<view class="icon" style="right:6px;">{{thisArticle.likeNum}}</view>
 			</view>
 		</view>
 	</view>
@@ -379,12 +379,12 @@
 
 	.time {
 		display: inline-block;
-		font-size: 13px;
+		font-size: 12px;
 		color: #888888;
 		position: absolute;
-		left:115px;
+		left:calc(50% - 24px);
 		bottom: 0;
-		width:47px;
+		width:48px;
 		height:17.5px;
 	}
 
@@ -394,37 +394,38 @@
 		bottom: 0;
 		z-index: 10;
 		width: 100px;
-		height:20px;
-		line-height: 17.5px;
+		height:25px;
 		text-align: right;
+		vertical-align: bottom;
 		display: inline-block;
 		background-image: url(../static/BG/iconsBG.png);
-		background-size: cover;
+		background-size:cover;
 		background-repeat: no-repeat;
 		overflow: hidden;
 		border-bottom-right-radius: 8px;
-		background-size: cover;
+
 	}
 
 	.icons image {
-		position: relative;
+		position: absolute;
 		/* G添加相对位置 */
 		width: 16px;
-		height: 17px;
-		padding-right: 2px;
-		vertical-align: middle;
+		height: 17.5px;
+		vertical-align: bottom;
+		bottom:1px;
 	}
 	
 	.icon {
+		position: absolute;
+		bottom:0;
 		display: inline-block;
 		color: #353535;
 		font-size: 13px;
-		padding-right: 6px;
 		text-align: center;
-		vertical-align: middle;
 		width:16px;
 		height:17.5px;
 		text-align: center;
+		vertical-align: bottom;
 	}
 
 	

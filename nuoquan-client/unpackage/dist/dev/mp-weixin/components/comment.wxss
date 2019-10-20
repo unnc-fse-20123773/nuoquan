@@ -51,13 +51,8 @@
 		height: 30px;
 		width: 38%;
 }
-<<<<<<< HEAD
 .name_text.data-v-e8f832ba {
-		font-size: 15px;
-=======
-.name_text.data-v-6b97edec {
 		font-size: 13px;
->>>>>>> guetta-new
 		color: #888888;
 		-o-text-overflow: ellipsis;
 		   text-overflow: ellipsis;
@@ -69,13 +64,8 @@
 		height: 30px;
 		max-width: 85px;
 }
-<<<<<<< HEAD
 .time_text.data-v-e8f832ba {
-		margin-top: 3px;
-=======
-.time_text.data-v-6b97edec {
 		margin-top: 1px;
->>>>>>> guetta-new
 		font-size: 12px;
 		color: #888888;
 		-o-text-overflow: ellipsis;
@@ -106,10 +96,7 @@
 		font-size: 2px;
 		z-index: 10;
 }
-<<<<<<< HEAD
-.liked.data-v-e8f832ba {
-=======
-.icon_recmt.data-v-6b97edec{
+.icon_recmt.data-v-e8f832ba{
 		position: absolute;
 		left: -20px;
 		width: 60px;
@@ -118,8 +105,7 @@
 		z-index: 10;
 		top: 4px;
 }
-.liked.data-v-6b97edec {
->>>>>>> guetta-new
+.liked.data-v-e8f832ba {
 		position: absolute;
 		right: 56%;
 		color: #fe5f55;

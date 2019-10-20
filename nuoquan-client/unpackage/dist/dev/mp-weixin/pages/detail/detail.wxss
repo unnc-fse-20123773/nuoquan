@@ -155,13 +155,8 @@ page {
 		height: 30px;
 		width: 38%;
 }
-<<<<<<< HEAD
 .name_text.data-v-0dddf152{
-		font-size: 15px;
-=======
-.name_text.data-v-1b7de92e{
 		font-size: 13px;
->>>>>>> guetta-new
 		color: #888888;
 		-o-text-overflow: ellipsis;
 		   text-overflow: ellipsis;
@@ -173,13 +168,8 @@ page {
 		height: 30px;
 		max-width: 85px;
 }
-<<<<<<< HEAD
 .time_text.data-v-0dddf152{
-		margin-top: 3px;
-=======
-.time_text.data-v-1b7de92e{
 		margin-top: 1px;
->>>>>>> guetta-new
 		font-size: 12px;
 		color: #888888;
 		-o-text-overflow: ellipsis;
@@ -260,13 +250,8 @@ page {
 }
 
 	/* 以下五条为底部输入框样式 */
-<<<<<<< HEAD
 .bottoLayerOfInput.data-v-0dddf152{
-		position: fixed;
-=======
-.bottoLayerOfInput.data-v-1b7de92e{
 		position: absolute;
->>>>>>> guetta-new
 		width: 750rpx;
 		height: 1000px;
 		bottom:0;
