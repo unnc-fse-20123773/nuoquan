@@ -11,9 +11,7 @@ button::after {
 	margin-left: 3%;
 	height: 100%;
 }
-
 /* 按百分比分配父组件区域 */
-
 /* 如更改样式需重新计算百分比分配 */
 #signin-container {
 	width: 100%;
@@ -94,7 +92,8 @@ button::after {
 	position: absolute;
 	bottom: 0%;
 	height: 10%;
-	width: 100%;
+	left: -104%;
+	width: 300%;
 	/* background-color: #000000; */
 	/* opacity: 0.8; */
 	border-bottom-right-radius: 30rpx;

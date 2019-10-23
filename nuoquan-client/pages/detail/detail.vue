@@ -147,7 +147,7 @@
 		
 		onLoad(options) {
 			this.articleCard = JSON.parse(options.data);
-			// console.log(this.articleCard);
+			console.log(this.articleCard);
 			var userInfo = this.getGlobalUserInfo();
 			if (!this.isNull(userInfo)) {
 				this.userInfo = this.getGlobalUserInfo();

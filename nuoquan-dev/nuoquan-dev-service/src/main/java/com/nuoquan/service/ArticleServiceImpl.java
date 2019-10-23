@@ -548,6 +548,7 @@ public class ArticleServiceImpl implements ArticleService {
 		articleMapper.updateByExampleSelective(a, example);
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public void banComment(String commentId) {
 		Example example = new Example(UserArticleComment.class);
@@ -558,6 +559,7 @@ public class ArticleServiceImpl implements ArticleService {
 		userArticleCommentMapper.updateByExampleSelective(commentHelper, example);
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public void passComment(String commentId) {
 		Example example = new Example(UserArticleComment.class);

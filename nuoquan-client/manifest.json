@@ -91,7 +91,7 @@
             "urlCheck" : true,
             "postcss" : true,
             "minified" : true,
-            "es6" : true
+            "es6" : false
         },
         "usingComponents" : true,
         "permission" : {}

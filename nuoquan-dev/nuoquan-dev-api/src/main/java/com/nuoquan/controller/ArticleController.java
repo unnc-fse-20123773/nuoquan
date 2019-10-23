@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.nuoquan.enums.ArticleStatusEnums;
 import com.nuoquan.enums.MsgActionEnum;
 import com.nuoquan.enums.MsgSignFlagEnum;
 import com.nuoquan.enums.StatusEnum;
