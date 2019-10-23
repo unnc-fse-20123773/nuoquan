@@ -36,7 +36,6 @@
 			"path": "pages/black-index/black-index",
 			"style": {}
 		},
-
 		{
 			"path": "pages/signin/signin",
 			"style": {}
@@ -64,8 +63,15 @@
 			"path": "pages/comment-detail/comment-detail",
 			"style": {}
 		}
-
-	],
+	    ,{
+            "path" : "pages/userDeal/userDeal",
+            "style" : {}
+        },
+		{
+			"path": "pages/about/aboutUs",
+			"style": {}
+		}
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "Nottinghome",
@@ -92,11 +98,6 @@
 			{
 				"name": "chatpage", //模式名称
 				"path": "pages/chatpage/chatpage", //启动页面，必选
-				"query": "" //启动参数，在页面的onLoad函数里面得到
-			},
-			{
-				"name": "fanslist", //模式名称
-				"path": "pages/fanslist/fanslist", //启动页面，必选
 				"query": "" //启动参数，在页面的onLoad函数里面得到
 			},
 			{
@@ -136,6 +137,16 @@
 				"name": "cmtdetail", //模式名称
 				"path": "pages/comment-detail/comment-detail", //启动页面，必选
 				"query": "" //启动参数，在页面的onLoad函数里面得到
+			},
+			{
+				"name": "test", //模式名称
+				"path": "pages/test/test", //启动页面，必选
+				"query": "" //启动参数，在页面的onLoad函数里面得到
+			},
+			{
+				"name": "aboutUs",
+				"path": "pages/about/aboutUs",
+				"query": ""
 			}
 		]
 	}

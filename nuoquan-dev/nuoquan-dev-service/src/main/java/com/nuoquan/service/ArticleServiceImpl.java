@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.nuoquan.utils.TimeAgoUtils;
-import com.sun.mail.imap.protocol.Status;
 import com.nuoquan.enums.StatusEnum;
 import com.nuoquan.mapper.ArticleImageMapper;
 import com.nuoquan.mapper.ArticleMapper;
@@ -143,7 +142,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public UserLikeArticle userLikeArticle(String userId, String articleId, String articleCreaterId) {
+	public UserLikeArticle userLikeArticle(String userId, String articleId, String articleCreaterId, Integer signFlag) {
 
 		// 保存用户和文章的点赞关联关系表
 		String likeId = sid.nextShort();
@@ -152,6 +151,7 @@ public class ArticleServiceImpl implements ArticleService {
 		ula.setId(likeId);
 		ula.setUserId(userId);
 		ula.setArticleId(articleId);
+		ula.setSignFlag(signFlag);
 		ula.setCreateDate(new Date());
 
 		userLikeArticleMapper.insertSelective(ula);
@@ -323,7 +323,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public UserLikeComment userLikeComment(String userId, String commentId, String createrId) {
+	public UserLikeComment userLikeComment(String userId, String commentId, String createrId, Integer signFlag) {
 		// 保存用户和文章的点赞关联关系表
 		String likeId = sid.nextShort();
 
@@ -331,6 +331,7 @@ public class ArticleServiceImpl implements ArticleService {
 		ulc.setId(likeId);
 		ulc.setUserId(userId);
 		ulc.setCommentId(commentId);
+		ulc.setSignFlag(signFlag);
 		ulc.setCreateDate(new Date());
 		
 		userLikeCommentMapper.insertSelective(ulc);
@@ -518,6 +519,7 @@ public class ArticleServiceImpl implements ArticleService {
 		return userLikeVOs;
 	}
 
+	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
 	public List<UserArticleCommentVO> getUnsignedCommentMsg(String userId) {
 		List<UserArticleCommentVO> commentVOs = userArticleCommentMapperCustom.getUnsignedCommentMsg(userId);
@@ -546,6 +548,7 @@ public class ArticleServiceImpl implements ArticleService {
 		articleMapper.updateByExampleSelective(a, example);
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public void banComment(String commentId) {
 		Example example = new Example(UserArticleComment.class);
@@ -556,6 +559,7 @@ public class ArticleServiceImpl implements ArticleService {
 		userArticleCommentMapper.updateByExampleSelective(commentHelper, example);
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public void passComment(String commentId) {
 		Example example = new Example(UserArticleComment.class);
@@ -564,6 +568,77 @@ public class ArticleServiceImpl implements ArticleService {
 		UserArticleComment commentHelper = new UserArticleComment();
 		commentHelper.setStatus(StatusEnum.READABLE.type);
 		userArticleCommentMapper.updateByExampleSelective(commentHelper, example);	
+	}
+
+	@Transactional(propagation = Propagation.SUPPORTS)
+	@Override
+	public PagedResult getAllMyHisArticle(Integer page, Integer pageSize, String userId) {
+		
+		PageHelper.startPage(page, pageSize);
+		
+		List<ArticleVO> list = articleMapperCustom.queryAllMyHisArticle(userId);
+		for (ArticleVO a : list) {
+			// 为每篇文章添加图片列表
+			a.setImgList(articleImageMapper.getArticleImgs(a.getId()));
+			// 添加和关于用户的点赞关系
+			a.setIsLike(isUserLikeArticle(userId, a.getId()));
+			// 添加标签列表
+			if (!StringUtils.isBlank(a.getTags())) {
+				String[] tagList = a.getTags().split("#");
+				List<String> finalTagList = new ArrayList<String>();
+				for (String tag : tagList) {
+					if(!StringUtils.isBlank(tag)) {
+						finalTagList.add(tag);
+					}
+				}
+				a.setTagList(finalTagList);
+			}
+		}
+		System.out.print(list.size());
+		PageInfo<ArticleVO> pageList = new PageInfo<>(list);
+		
+		PagedResult pagedResult = new PagedResult();
+		pagedResult.setPage(page);
+		pagedResult.setTotal(pageList.getPages());
+		pagedResult.setRows(list);
+		pagedResult.setRecords(pageList.getTotal());
+		
+		return pagedResult;
+		
+	}
+
+	@Transactional(propagation = Propagation.SUPPORTS)
+	@Override
+	public PagedResult gerOtherslegalHisArticle(Integer page, Integer pageSize, String userId, String targetId) {
+		
+		PageHelper.startPage(page, pageSize);
+		List<ArticleVO> list = articleMapperCustom.queryOthersLegalHisArticle(targetId);
+		for (ArticleVO a : list) {
+			// 为每篇文章添加图片列表
+			a.setImgList(articleImageMapper.getArticleImgs(a.getId()));
+			// 添加和关于用户的点赞关系
+			a.setIsLike(isUserLikeArticle(targetId, a.getId()));
+			// 添加标签列表
+			if (!StringUtils.isBlank(a.getTags())) {
+				String[] tagList = a.getTags().split("#");
+				List<String> finalTagList = new ArrayList<String>();
+				for (String tag : tagList) {
+					if(!StringUtils.isBlank(tag)) {
+						finalTagList.add(tag);
+					}
+				}
+				a.setTagList(finalTagList);
+			}
+		}
+		PageInfo<ArticleVO> pageList = new PageInfo<>(list);
+		
+		PagedResult pagedResult = new PagedResult();
+		pagedResult.setPage(page);
+		pagedResult.setTotal(pageList.getPages());
+		pagedResult.setRows(list);
+		pagedResult.setRecords(pageList.getTotal());
+		
+		return pagedResult;
 	}
 
 }

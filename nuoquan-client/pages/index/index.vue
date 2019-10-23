@@ -34,15 +34,7 @@
 				topArticles: '',
 				topHeight: 160,
 				
-				userInfo: { // 默认user设置
-					id: 'test-id123',
-					nickname: 'test-name',
-					faceImg: '',
-					faceImgThumb: '',
-					email: 'zy22089@nottingham.edu.cn',
-					emailPrefix: 'zy22089',
-					emailSuffix: '@nottingham.edu.cn'
-				},
+				userInfo: '',
 				totalPage: 1,
 				currentPage: 1,
 				scrollTop: 0,
@@ -65,7 +57,7 @@
 				})
 				return;
 			}else{
-				this.userInfo = userInfo; // 刷去默认值
+				this.userInfo = userInfo; // 刷去默认值(若有)
 			}
 
 			this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
@@ -110,6 +102,18 @@
 				uni.showLoading({
 					title: "加载中..."
 				})
+				setTimeout(()=>{
+					if(loadArticleFlag){
+						loadArticleFlag = false // 解锁
+						uni.hideLoading();
+						uni.showToast({
+							title: "网络未知错误",
+							icon: "none",
+							duration: 1000
+						})
+					}
+				}, 5000); // 延时5s timeout
+				
 				var that = this;
 				uni.request({
 					url: that.$serverUrl + '/article/queryAllArticles',
@@ -216,31 +220,35 @@
 				});
 			},
 
-			linkageWithTop(e) {
+			 linkageWithTop: async function(e) {
 				var y = e.detail.scrollTop; //获取 scrollTop
 				// console.log( y + "scrollTop" )
 				// console.log(timer + "//  timer");
 				var that = this;
 				clearInterval(timer); //清空 timer
+				if(that.topHeight > 160){ 
+					that.topHeight = 160;  //保证高度值正确
+				}
+				
 				if( y >= 100 && that.topHeight !== 40 ){
 					timer = setInterval(function(){ //设置计时器
 						if(that.topHeight == 40){	//在 topHeight 为 40 时清空计时器
 							clearInterval(timer);	
 						}else{
-						that.topHeight = that.topHeight - 5;
+						that.topHeight = that.topHeight - 10;
 						// console.log(that.topHeight +"//  topHeight收起");
 						}
-					},15)
+					},1)
 				}else{
 					if( y < 100 && that.topHeight !== 160 || y == 0){
 						timer = setInterval(function(){	//设置计时器
 							if(that.topHeight == 160){	//在 topHeight 为 160 时清空计时器
 								clearInterval(timer);
 							}else{
-							that.topHeight = that.topHeight + 5;
+							that.topHeight = that.topHeight + 10;
 							// console.log(that.topHeight + "//  topHeight展开");
 							}
-						},5)
+						},1)
 					}
 				}
 			},

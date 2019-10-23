@@ -582,7 +582,7 @@
 		right: -12upx;
 		width: 48%;
 		/* 在此更改按钮高度 */
-		height: 16%;
+		height: 30px; /* 保证内容剧中 */
 		display: flex;
 		justify-content: space-between;
 	}
@@ -626,7 +626,7 @@
 		right: -14upx;
 		width: 24%;
 		/* 在此更改按钮高度 */
-		height: 16%;
+		height: 30px; /* 保证内容剧中 */
 		display: flex;
 		justify-content: space-between;
 	}

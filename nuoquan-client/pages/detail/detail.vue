@@ -41,7 +41,7 @@
 				</view>
 				<view class="icons" @tap="swLikeArticle()">
 					<image v-if="!articleCard.isLike" class="icon" src="../../static/icon/like.png"></image>
-					<image v-if="articleCard.isLike" class="icon" src="../../static/icon/liked.png"></image>
+					<image v-if="articleCard.isLike" class="icon" src="../../static/icon/liked-red.png"></image>
 					<view class="icom" :class="{'liked':articleCard.isLike}">{{ articleCard.likeNum }}</view>
 				</view>
 			</view>
@@ -74,6 +74,8 @@
 
 <script>
 	import comment from '../../components/comment';
+	
+	var uploadFlag = false;
 	export default {
 		data() {
 			return {
@@ -169,9 +171,7 @@
 				console.log(e);
 				console.log(e.detail.height);
 				this.textAreaAdjust =  e.detail.height/3 + 'px' ;
-			
 				// this.textAreaAdjust = '0' ;
-			
 			},
 
 			unpopTextArea(e){
@@ -192,6 +192,15 @@
 			 *     子级评论有 fatherCommentId, underCommentId;
 			 */
 			saveComment: function() {
+				if (uploadFlag) {
+					console.log("正在上传...")
+					return;
+				}
+				uploadFlag = true;
+				uni.showLoading({
+					title: "正在上传..."
+				})
+				
 				this.submitData.comment=this.commentContent;
 				this.submitData.fromUserId=this.userInfo.id;
 				this.submitData.articleId=this.articleCard.id;
@@ -209,19 +218,39 @@
 						method: 'POST',
 						data: this.submitData,
 						success: (res) => {
-							that.writingComment = false;
-							that.commentContent = "";
-							that.showInput = false;
+							if (res.data.status == 200) {
+								uni.hideLoading();
+								uploadFlag = false;
+								
+								that.writingComment = false;
+								that.commentContent = "";
+								that.showInput = false;
+								
+								// 强制子组件重新刷新
+								that.commentList = '';
+								that.$nextTick(function() {
+									that.getComments(1);
+								});
+								
+								that.articleCard.commentNum++; // 文章评论数累加
+							}else if (res.data.status == 500){
+								that.contentIllegal();
+							}
 							
-							// 强制子组件重新刷新
-							that.commentList = '';
-							that.$nextTick(function() {
-								that.getComments(1);
-							});
 						},
 					})
 				}
-				this.articleCard.commentNum++; // 文章评论数累加
+			},
+			
+			contentIllegal(){
+				// 内容非法 用户提醒
+				uploadFlag = false;
+				uni.hideLoading();
+				uni.showToast({
+					title: '内容涉嫌违规，请联系管理员。',
+					duration: 2000,
+					icon: 'none',
+				})
 			},
 			
 			getComments: function(page) {		
@@ -516,6 +545,7 @@
 		flex-wrap: wrap;
 		width: 100%;
 		margin: 0 auto;
+		margin-bottom: 9px;
 	}
 
 	.detailpic {

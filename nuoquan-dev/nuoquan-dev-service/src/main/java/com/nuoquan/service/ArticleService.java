@@ -34,7 +34,7 @@ public interface ArticleService {
 	 * @param articleCreaterId
 	 * @return id in DB
 	 */
-	public UserLikeArticle userLikeArticle(String userId, String articleId, String articleCreaterId);
+	public UserLikeArticle userLikeArticle(String userId, String articleId, String articleCreaterId, Integer signFlag);
 	
 	/**
 	 * @des: 用户取消点赞文章
@@ -88,7 +88,7 @@ public interface ArticleService {
 	 * @param createrId
 	 * @return id in DB
 	 */
-	public UserLikeComment userLikeComment(String userId, String commentId, String createrId);
+	public UserLikeComment userLikeComment(String userId, String commentId, String createrId, Integer signFlag);
 	
 	/**
 	 * @des: 用户取消点赞评论
@@ -183,4 +183,24 @@ public interface ArticleService {
 	public void banComment(String commentId);
 	
 	public void passComment(String commentId);
+	
+	
+	/**
+	 * 操作者本人查看自己发布过的所有文章
+	 * @param page
+	 * @param pageSize
+	 * @param userId
+	 * @return
+	 */
+	public PagedResult getAllMyHisArticle(Integer page, Integer pageSize, String userId);
+
+	/**
+	 * 操作者查看他人发布过的文章(状态为1的文章)
+	 * @param page
+	 * @param pageSize
+	 * @param userId
+	 * @param targetId
+	 * @return
+	 */
+	public PagedResult gerOtherslegalHisArticle(Integer page, Integer pageSize, String userId, String targetId);
 }

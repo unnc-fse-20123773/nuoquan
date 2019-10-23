@@ -14,9 +14,13 @@
 </script>
 
 <style>
+	/* #ifndef APP-PLUS-NVUE */
+	/* uni.css - 通用组件、模板样式库，可以当作一套ui库应用 */
+	@import './common/uni.css';
+	/* #endif*/
+	
 	/*每个页面公共css */
 	/* @import './common/style/aliicon.css'; */
-
 	.container {
 		position: relative;
 		width: 100%;
@@ -54,4 +58,5 @@
 	.font-family {
 		font-family: weiruanyahei;
 	}
+	
 </style>

@@ -31,9 +31,6 @@ _vue.default.prototype.$store = _store.default;
 _vue.default.prototype.$serverUrl = "http://127.0.0.1:8080";
 _vue.default.prototype.$wsServerUrl = "wss://127.0.0.1:8088/ws";
 
-// Vue.prototype.$serverUrl = "http://192.168.1.101:8080"
-// Vue.prototype.$wsServerUrl = "ws://192.168.1.101:8088/ws"
-// 
 // 服务器地址
 // Vue.prototype.$serverUrl = "http://129.28.130.27:8080/nottinghome"
 // Vue.prototype.$wsServerUrl = "ws://129.28.130.27:8088/ws"
@@ -786,12 +783,12 @@ _vue.default.prototype.chat = {
      * 点赞评论通知
      */ };
 _vue.default.prototype.notification = {
-  LIKEMSG_KEY: "likeMsg",
-  COMMENTMSG_KEY: "commentMsg",
+  LIKEMSG_KEY: "likeMsg" + app.getGlobalUserInfo().id,
+  COMMENTMSG_KEY: "commentMsg" + app.getGlobalUserInfo().id,
   /**
-                                 * 把点赞通知存入缓存
-                                 * @param {Object} dataContent
-                                 */
+                                                              * 把点赞通知存入缓存
+                                                              * @param {Object} dataContent
+                                                              */
   saveLikeMsg: function saveLikeMsg(dataContent) {
     app.addIntoList(dataContent, this.LIKEMSG_KEY);
   },
@@ -2706,7 +2703,126 @@ store;exports.default = _default;
 
 /***/ }),
 
-/***/ 112:
+/***/ 110:
+/*!*****************************************************************************!*\
+  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/common/util.js ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+function formatTime(time) {
+  if (typeof time !== 'number' || time < 0) {
+    return time;
+  }
+
+  var hour = parseInt(time / 3600);
+  time = time % 3600;
+  var minute = parseInt(time / 60);
+  time = time % 60;
+  var second = time;
+
+  return [hour, minute, second].map(function (n) {
+    n = n.toString();
+    return n[1] ? n : '0' + n;
+  }).join(':');
+}
+
+function formatLocation(longitude, latitude) {
+  if (typeof longitude === 'string' && typeof latitude === 'string') {
+    longitude = parseFloat(longitude);
+    latitude = parseFloat(latitude);
+  }
+
+  longitude = longitude.toFixed(2);
+  latitude = latitude.toFixed(2);
+
+  return {
+    longitude: longitude.toString().split('.'),
+    latitude: latitude.toString().split('.') };
+
+}
+var dateUtils = {
+  UNITS: {
+    '年': 31557600000,
+    '月': 2629800000,
+    '天': 86400000,
+    '小时': 3600000,
+    '分钟': 60000,
+    '秒': 1000 },
+
+  humanize: function humanize(milliseconds) {
+    var humanize = '';
+    for (var key in this.UNITS) {
+      if (milliseconds >= this.UNITS[key]) {
+        humanize = Math.floor(milliseconds / this.UNITS[key]) + key + '前';
+        break;
+      }
+    }
+    return humanize || '刚刚';
+  },
+  format: function format(dateStr) {
+    var date = this.parse(dateStr);
+    var diff = Date.now() - date.getTime();
+    if (diff < this.UNITS['天']) {
+      return this.humanize(diff);
+    }
+    var _format = function _format(number) {
+      return number < 10 ? '0' + number : number;
+    };
+    return date.getFullYear() + '/' + _format(date.getMonth() + 1) + '/' + _format(date.getDay()) + '-' +
+    _format(date.getHours()) + ':' + _format(date.getMinutes());
+  },
+  parse: function parse(str) {//将"yyyy-mm-dd HH:MM:ss"格式的字符串，转化为一个Date对象
+    var a = str.split(/[^0-9]/);
+    return new Date(a[0], a[1] - 1, a[2], a[3], a[4], a[5]);
+  } };
+
+
+
+//工具包
+//正则匹配
+//匹配帐号
+var regUid = function regUid(str) {
+  return !RegExp(/^\w{6,12}$/).test(str);
+};
+
+var regName = function regName(str) {
+  return !RegExp(/^[\u4e00-\u9fa5]{2,5}$/).test(str);
+};
+
+//匹配身份证
+var regIDC = function regIDC(str) {
+  return !RegExp(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/).test(str);
+};
+//匹配手机号
+var regPhone = function regPhone(str) {
+  return !RegExp(/^1[34578]\d{9}$/).test(str);
+};
+//匹配验证码
+var regCheckNum = function regCheckNum(str) {
+  return !RegExp(/^\d{4}$/).test(str);
+};
+
+//匹配邮箱格式 true: 不匹配，false: 匹配
+var regEmail = function regEmail(str) {
+  return !RegExp(/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/).test(str);
+};
+
+module.exports = {
+  formatTime: formatTime,
+  formatLocation: formatLocation,
+  dateUtils: dateUtils,
+  regUid: regUid,
+  regPhone: regPhone,
+  regName: regName,
+  regIDC: regIDC,
+  regEmail: regEmail,
+  regCheckNum: regCheckNum };
+
+/***/ }),
+
+/***/ 113:
 /*!***********************************************************************************************************!*\
   !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"components%2Farticlebrief"} ***!
   \***********************************************************************************************************/
@@ -2717,13 +2833,13 @@ store;exports.default = _default;
 /* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _articlebrief = _interopRequireDefault(__webpack_require__(/*! ./components/articlebrief.vue */ 19));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _articlebrief = _interopRequireDefault(__webpack_require__(/*! ./components/articlebrief.vue */ 22));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_articlebrief.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
 
 /***/ }),
 
-/***/ 113:
+/***/ 114:
 /*!*******************************************************************************************************************!*\
   !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fmessagelist%2Fmessagelist"} ***!
   \*******************************************************************************************************************/
@@ -2734,7 +2850,7 @@ createPage(_articlebrief.default);
 /* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _messagelist = _interopRequireDefault(__webpack_require__(/*! ./pages/messagelist/messagelist.vue */ 114));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _messagelist = _interopRequireDefault(__webpack_require__(/*! ./pages/messagelist/messagelist.vue */ 115));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_messagelist.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
 
@@ -3691,7 +3807,7 @@ var index_esm = {
 
 /***/ }),
 
-/***/ 121:
+/***/ 122:
 /*!*******************************************************************************************************************!*\
   !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2FwechatLogin%2FwechatLogin"} ***!
   \*******************************************************************************************************************/
@@ -3702,13 +3818,13 @@ var index_esm = {
 /* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _wechatLogin = _interopRequireDefault(__webpack_require__(/*! ./pages/wechatLogin/wechatLogin.vue */ 122));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _wechatLogin = _interopRequireDefault(__webpack_require__(/*! ./pages/wechatLogin/wechatLogin.vue */ 123));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_wechatLogin.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
 
 /***/ }),
 
-/***/ 127:
+/***/ 128:
 /*!*************************************************************************************************************************!*\
   !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fcmt-likedetail%2Fcmt-likedetail"} ***!
   \*************************************************************************************************************************/
@@ -3719,7 +3835,7 @@ createPage(_wechatLogin.default);
 /* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _cmtLikedetail = _interopRequireDefault(__webpack_require__(/*! ./pages/cmt-likedetail/cmt-likedetail.vue */ 128));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _cmtLikedetail = _interopRequireDefault(__webpack_require__(/*! ./pages/cmt-likedetail/cmt-likedetail.vue */ 129));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_cmtLikedetail.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
 
@@ -3742,7 +3858,7 @@ createPage(_index.default);
 
 /***/ }),
 
-/***/ 135:
+/***/ 136:
 /*!*************************************************************************************************************************!*\
   !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fcomment-detail%2Fcomment-detail"} ***!
   \*************************************************************************************************************************/
@@ -3753,9 +3869,55 @@ createPage(_index.default);
 /* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _commentDetail = _interopRequireDefault(__webpack_require__(/*! ./pages/comment-detail/comment-detail.vue */ 136));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _commentDetail = _interopRequireDefault(__webpack_require__(/*! ./pages/comment-detail/comment-detail.vue */ 137));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_commentDetail.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
+
+/***/ }),
+
+/***/ 144:
+/*!*************************************************************************************************************!*\
+  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2FuserDeal%2FuserDeal"} ***!
+  \*************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _userDeal = _interopRequireDefault(__webpack_require__(/*! ./pages/userDeal/userDeal.vue */ 145));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_userDeal.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
+
+/***/ }),
+
+/***/ 152:
+/*!*********************************************************************************************************!*\
+  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fabout%2FaboutUs"} ***!
+  \*********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _aboutUs = _interopRequireDefault(__webpack_require__(/*! ./pages/about/aboutUs.vue */ 153));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_aboutUs.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
+
+/***/ }),
+
+/***/ 19:
+/*!**********************************************************!*\
+  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! regenerator-runtime */ 20);
+
 
 /***/ }),
 
@@ -9708,96 +9870,7 @@ internalMixin(Vue);
 
 /***/ }),
 
-/***/ 3:
-/*!***********************************!*\
-  !*** (webpack)/buildin/global.js ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || new Function("return this")();
-} catch (e) {
-	// This works if the window reference is available
-	if (typeof window === "object") g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-
-/***/ 32:
-/*!*********************************************************************************************************!*\
-  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fdetail%2Fdetail"} ***!
-  \*********************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _detail = _interopRequireDefault(__webpack_require__(/*! ./pages/detail/detail.vue */ 33));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_detail.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
-
-/***/ }),
-
-/***/ 4:
-/*!*************************************************************************!*\
-  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/pages.json ***!
-  \*************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/***/ }),
-
-/***/ 42:
-/*!*********************************************************************************************************!*\
-  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fsubmit%2Fsubmit"} ***!
-  \*********************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _submit = _interopRequireDefault(__webpack_require__(/*! ./pages/submit/submit.vue */ 43));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_submit.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
-
-/***/ }),
-
-/***/ 48:
-/*!**********************************************************!*\
-  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
-  \**********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(/*! regenerator-runtime */ 49);
-
-
-/***/ }),
-
-/***/ 49:
+/***/ 20:
 /*!************************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime-module.js ***!
   \************************************************************/
@@ -9828,7 +9901,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(/*! ./runtime */ 50);
+module.exports = __webpack_require__(/*! ./runtime */ 21);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -9845,7 +9918,7 @@ if (hadRuntime) {
 
 /***/ }),
 
-/***/ 50:
+/***/ 21:
 /*!*****************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime.js ***!
   \*****************************************************/
@@ -10574,6 +10647,83 @@ if (hadRuntime) {
   })() || Function("return this")()
 );
 
+
+/***/ }),
+
+/***/ 3:
+/*!***********************************!*\
+  !*** (webpack)/buildin/global.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || new Function("return this")();
+} catch (e) {
+	// This works if the window reference is available
+	if (typeof window === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+
+/***/ 35:
+/*!*********************************************************************************************************!*\
+  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fdetail%2Fdetail"} ***!
+  \*********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _detail = _interopRequireDefault(__webpack_require__(/*! ./pages/detail/detail.vue */ 36));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_detail.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
+
+/***/ }),
+
+/***/ 4:
+/*!*************************************************************************!*\
+  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/pages.json ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/***/ }),
+
+/***/ 45:
+/*!*********************************************************************************************************!*\
+  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fsubmit%2Fsubmit"} ***!
+  \*********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _submit = _interopRequireDefault(__webpack_require__(/*! ./pages/submit/submit.vue */ 46));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_submit.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
 
 /***/ }),
 

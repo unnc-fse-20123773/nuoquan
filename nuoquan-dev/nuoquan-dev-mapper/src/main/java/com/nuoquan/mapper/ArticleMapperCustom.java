@@ -61,5 +61,18 @@ public interface ArticleMapperCustom extends MyMapper<Article> {
 	 * @return
 	 */
 	public ArticleVO getArticleById(String articleId);
+
+	/**
+	 * 按userId获取本人发布的所有文章
+	 * @return
+	 */
+	public List<ArticleVO> queryAllMyHisArticle(String userId);
+
+	/**
+	 * 按targetId获取他人的, status为1的所有文章
+	 * @param targetId
+	 * @return
+	 */
+	public List<ArticleVO> queryOthersLegalHisArticle(String targetId);
 	
 }

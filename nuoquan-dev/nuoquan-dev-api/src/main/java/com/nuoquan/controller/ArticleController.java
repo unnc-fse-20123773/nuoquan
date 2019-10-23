@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.nuoquan.enums.ArticleStatusEnums;
+
 import com.nuoquan.enums.MsgActionEnum;
+import com.nuoquan.enums.MsgSignFlagEnum;
+import com.nuoquan.enums.StatusEnum;
 import com.nuoquan.netty.MsgHandler;
 import com.nuoquan.pojo.Article;
 import com.nuoquan.pojo.ArticleImage;
@@ -29,6 +31,7 @@ import com.nuoquan.pojo.vo.UserArticleCommentVO;
 import com.nuoquan.pojo.vo.UserLikeVO;
 import com.nuoquan.service.ArticleService;
 import com.nuoquan.service.UserService;
+import com.nuoquan.service.WeChatService;
 import com.nuoquan.utils.JSONResult;
 import com.nuoquan.utils.PagedResult;
 
@@ -48,6 +51,9 @@ public class ArticleController extends BasicController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private WeChatService weChatService;
 
 	@Value("${upload.maxFaceImageSize}")
 	private long MAX_FACE_IMAGE_SIZE;
@@ -55,6 +61,7 @@ public class ArticleController extends BasicController {
 	@ApiOperation(value = "查询全部文章", notes = "查询全部文章的接口")
 	@ApiImplicitParams({
 		// userId 查询用户和文章的点赞关系
+		// dataType 为 String, 应该改为 Integer
 		@ApiImplicitParam(name = "userId", value = "操作者id", required = true, dataType = "String", paramType = "form"),
 		@ApiImplicitParam(name = "page", value = "页数", required = true, dataType = "String", paramType = "form"),
 		@ApiImplicitParam(name = "pageSize", value = "每页大小", required = true, dataType = "String", paramType = "form") })
@@ -70,6 +77,39 @@ public class ArticleController extends BasicController {
 		PagedResult result = articleService.getAllArticles(page, pageSize, userId);
 
 		return JSONResult.ok(result);
+	}
+	
+	@ApiOperation(value = "查询我的发布的文章和他人发布的文章", notes = "查看他人时只能查看status为1的, 查询自己时,可显示所有status")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "page", value = "页数", required = true, dataType = "Integer", paramType = "form"),
+		@ApiImplicitParam(name = "pageSize", value = "每页大小", required = true, dataType = "Integer", paramType = "form"),
+		@ApiImplicitParam(name = "userId", value = "操作者id", required = true, dataType = "String", paramType = "form"),
+		@ApiImplicitParam(name = "targetId", value = "目标查询者id", required = true, dataType = "String", paramType = "form")
+	})
+	@PostMapping("/queryPublishHistory")
+	public JSONResult queryPublishHistory(Integer page, Integer pageSize, String userId, String targetId) {
+		
+		PagedResult finalResult = new PagedResult();
+		
+		if(page == null) {
+			page = 1;
+		}
+		if(pageSize == null) {
+			pageSize = PAGE_SIZE;
+		}
+		if(userId.equals(targetId)) {
+			// 查询所有状态的文章
+			PagedResult result = articleService.getAllMyHisArticle(page, pageSize, userId);
+			finalResult = result;
+		} else if (!userId.equals(targetId)) {
+			// 查询他人文章状态为1的文章
+			PagedResult result = articleService.gerOtherslegalHisArticle(page, pageSize, userId, targetId);
+			finalResult = result;
+		}
+		
+		
+		return JSONResult.ok(finalResult);
+		
 	}
 	
 	@ApiOperation(value = "按文章 id 查询文章", notes = "查询全部文章的接口")
@@ -90,23 +130,29 @@ public class ArticleController extends BasicController {
 			@ApiImplicitParam(name = "articleId", value = "文章id", required = true, dataType = "String", paramType = "form"),
 			@ApiImplicitParam(name = "articleCreaterId", value = "文章作者id", required = true, dataType = "String", paramType = "form") })
 	@PostMapping(value = "/userLikeArticle")
-	public JSONResult userLike(String userId, String articleId, String articleCreaterId) throws Exception {
-
-		// 储存到数据库 返回数据库对象
-		UserLikeArticle like = articleService.userLikeArticle(userId, articleId, articleCreaterId);
-		// 加上点赞人的信息
-		UserLikeVO likeVO = ConvertLikeToLikeVO(like);
-		User user = userService.queryUserById(likeVO.getUserId());
-		likeVO.setNickname(user.getNickname());
-		likeVO.setFaceImg(user.getFaceImg());
-		likeVO.setFaceImgThumb(user.getFaceImgThumb());
+	public JSONResult userLikeArticle(String userId, String articleId, String articleCreaterId) throws Exception {
 		
-		// 给目标作者发推送
-		DataContent dataContent = new DataContent();
-		dataContent.setAction(MsgActionEnum.LIKEARTICLE.type);
-		dataContent.setData(new NoticeCard(likeVO, articleService.getArticleById(articleId, userId)));
+		if (userId.equals(articleCreaterId)) {
+			// 点赞自己，标记已签收存入数据
+			articleService.userLikeArticle(userId, articleId, articleCreaterId, MsgSignFlagEnum.SIGNED.type);
+		}else {
+			// 标记未签收，储存到数据库 返回数据库对象
+			UserLikeArticle like = articleService.userLikeArticle(userId, articleId, articleCreaterId, MsgSignFlagEnum.UNSIGN.type);
+			// 加上点赞人的信息
+			UserLikeVO likeVO = ConvertLikeToLikeVO(like);
+			User user = userService.queryUserById(likeVO.getUserId());
+			likeVO.setNickname(user.getNickname());
+			likeVO.setFaceImg(user.getFaceImg());
+			likeVO.setFaceImgThumb(user.getFaceImgThumb());
+			
+			// 给目标作者发推送
+			DataContent dataContent = new DataContent();
+			dataContent.setAction(MsgActionEnum.LIKEARTICLE.type);
+			dataContent.setData(new NoticeCard(likeVO, articleService.getArticleById(articleId, userId)));
+			
+			MsgHandler.sendMsgTo(articleCreaterId, dataContent);
+		}
 		
-		MsgHandler.sendMsgTo(articleCreaterId, dataContent);
 		return JSONResult.ok();
 	}
 
@@ -118,22 +164,28 @@ public class ArticleController extends BasicController {
 			@ApiImplicitParam(name = "createrId", value = "作者id", required = true, dataType = "String", paramType = "form") })
 	@PostMapping(value = "/userLikeComment")
 	public JSONResult userLikeComment(String userId, String commentId, String createrId) throws Exception {
-
-		// 储存到数据库 返回数据库对象
-		UserLikeComment like = articleService.userLikeComment(userId, commentId, createrId);
-		// 加上点赞人的信息
-		UserLikeVO likeVO = ConvertLikeToLikeVO(like);
-		User user = userService.queryUserById(likeVO.getUserId());
-		likeVO.setNickname(user.getNickname());
-		likeVO.setFaceImg(user.getFaceImg());
-		likeVO.setFaceImgThumb(user.getFaceImgThumb());
-		
-		// 给作者发推送
-		DataContent dataContent = new DataContent();
-		dataContent.setAction(MsgActionEnum.LIKECOMMENT.type);
-		dataContent.setData(new NoticeCard(likeVO, articleService.getCommentById(commentId, userId)));
-		
-		MsgHandler.sendMsgTo(createrId, dataContent);
+	
+		if (userId.equals(createrId)) {
+			// 点赞自己，标记已签收存入数据
+			articleService.userLikeComment(userId, commentId, createrId, MsgSignFlagEnum.SIGNED.type);
+		} else {
+			// 标记未签收，储存到数据库 返回数据库对象
+			UserLikeComment like = articleService.userLikeComment(userId, commentId, createrId, MsgSignFlagEnum.UNSIGN.type);
+			// 加上点赞人的信息
+			UserLikeVO likeVO = ConvertLikeToLikeVO(like);
+			User user = userService.queryUserById(likeVO.getUserId());
+			likeVO.setNickname(user.getNickname());
+			likeVO.setFaceImg(user.getFaceImg());
+			likeVO.setFaceImgThumb(user.getFaceImgThumb());
+			
+			// 给作者发推送
+			DataContent dataContent = new DataContent();
+			dataContent.setAction(MsgActionEnum.LIKECOMMENT.type);
+			dataContent.setData(new NoticeCard(likeVO, articleService.getCommentById(commentId, userId)));
+			
+			MsgHandler.sendMsgTo(createrId, dataContent);
+		}
+	
 		return JSONResult.ok();
 	}
 
@@ -201,19 +253,32 @@ public class ArticleController extends BasicController {
 		if (StringUtils.isBlank(userId) || StringUtils.isEmpty(userId)) {
 			return JSONResult.errorMsg("Id can't be null");
 		}
-
+		boolean isLegal = false;
 		// 保存文章信息到数据库
 		Article article = new Article();
 		article.setArticleTitle(articleTitle);
 		article.setArticleContent(articleContent);
 		article.setUserId(userId);
 		article.setTags(articleTag);
-		article.setStatus(ArticleStatusEnums.SUCCESS.value);
 		article.setCreateDate(new Date());
+		// 检测内容是否非法
+		if (weChatService.msgSecCheck(articleTitle) 
+			&& weChatService.msgSecCheck(articleTag)
+			&& weChatService.msgSecCheck(articleContent)) {
+			// 合法
+			isLegal = true;
+			article.setStatus(StatusEnum.READABLE.type);
+		}else {
+			// 非法，尽管非法也保存到数据库
+			article.setStatus(StatusEnum.UNREADABLE.type);
+		}
+		String articleId = articleService.saveArticle(article); // 存入数据库
 		
-		String articleId = articleService.saveArticle(article);
-		
-		return JSONResult.ok(articleId);
+		if (isLegal) {
+			return JSONResult.ok(articleId);
+		}else {
+			return JSONResult.errorMap(articleId);
+		}
 	}
 	
 	/**
@@ -259,7 +324,6 @@ public class ArticleController extends BasicController {
 		return JSONResult.ok();
 	}
 
-	
 	@ApiOperation(value = "删除文章")
 	@ApiImplicitParams({
 			// uniapp使用formData时，paramType要改成form
@@ -310,7 +374,6 @@ public class ArticleController extends BasicController {
 		return JSONResult.ok();
 	}
 	
-	
 	/**
 	 * fromUserId 必填
 	 * toUserId 必填
@@ -323,28 +386,43 @@ public class ArticleController extends BasicController {
 	 */
 	@PostMapping("/saveComment")
 	public JSONResult saveComment(@RequestBody UserArticleComment comment) throws Exception {
-		// 存入数据库
-		String commentId = articleService.saveComment(comment);
+		// 内容安全检测
+		if (weChatService.msgSecCheck(comment.getComment()) ) {
+			
+			if(comment.getToUserId().equals(comment.getFromUserId())) {
+				// 给自己评论，设为已签收存入数据库
+				comment.setSignFlag(MsgSignFlagEnum.SIGNED.type);
+				articleService.saveComment(comment);
 
-		// 给作者发推送
-		DataContent dataContent = new DataContent();
-		
-		UserArticleCommentVO commentVO = articleService.getCommentById(commentId, null); // 无需查询用户点赞关系
-		if (StringUtils.isBlank(comment.getFatherCommentId())) {
-			// 给文章评论
-			ArticleVO targetArticle = articleService.getArticleById(comment.getArticleId(), null);
-			dataContent.setData(new NoticeCard(commentVO, targetArticle));
-			dataContent.setAction(MsgActionEnum.COMMENTARTICLE.type);
+			}else {
+				// 给他人评论，设为未签收存入数据库
+				comment.setSignFlag(MsgSignFlagEnum.UNSIGN.type);
+				String commentId = articleService.saveComment(comment);
+
+				// 给作者发推送
+				DataContent dataContent = new DataContent();
+				
+				UserArticleCommentVO commentVO = articleService.getCommentById(commentId, null); // 无需查询用户点赞关系
+				if (StringUtils.isBlank(comment.getFatherCommentId())) {
+					// 给文章评论
+					ArticleVO targetArticle = articleService.getArticleById(comment.getArticleId(), null);
+					dataContent.setData(new NoticeCard(commentVO, targetArticle));
+					dataContent.setAction(MsgActionEnum.COMMENTARTICLE.type);
+				}else {
+					// 给评论评论
+					UserArticleCommentVO targetComment = articleService.getCommentById(comment.getFatherCommentId(), null);
+					dataContent.setData(new NoticeCard(commentVO, targetComment));
+					dataContent.setAction(MsgActionEnum.COMMENTCOMMENT.type);
+				}
+				
+				MsgHandler.sendMsgTo(comment.getToUserId(), dataContent);
+			}
+
+			return JSONResult.ok();
 		}else {
-			// 给评论评论
-			UserArticleCommentVO targetComment = articleService.getCommentById(comment.getFatherCommentId(), null);
-			dataContent.setData(new NoticeCard(commentVO, targetComment));
-			dataContent.setAction(MsgActionEnum.COMMENTCOMMENT.type);
+			return JSONResult.errorMsg("内容不合法");
 		}
-
-		MsgHandler.sendMsgTo(comment.getToUserId(), dataContent);
-
-		return JSONResult.ok();
+		
 	}
 
 	@ApiImplicitParams({

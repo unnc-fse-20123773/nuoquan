@@ -20,9 +20,6 @@ Vue.prototype.$store = store
 Vue.prototype.$serverUrl = "http://127.0.0.1:8080"
 Vue.prototype.$wsServerUrl = "wss://127.0.0.1:8088/ws"
 
-// Vue.prototype.$serverUrl = "http://192.168.1.101:8080"
-// Vue.prototype.$wsServerUrl = "ws://192.168.1.101:8088/ws"
-// 
 // 服务器地址
 // Vue.prototype.$serverUrl = "http://129.28.130.27:8080/nottinghome"
 // Vue.prototype.$wsServerUrl = "ws://129.28.130.27:8088/ws"
@@ -774,9 +771,9 @@ Vue.prototype.chat = {
 /**
  * 点赞评论通知
  */
-Vue.prototype.notification={
-	LIKEMSG_KEY : "likeMsg",
-	COMMENTMSG_KEY : "commentMsg",
+Vue.prototype.notification={	
+	LIKEMSG_KEY : "likeMsg" + app.getGlobalUserInfo().id,
+	COMMENTMSG_KEY : "commentMsg" + app.getGlobalUserInfo().id,
 	/**
 	 * 把点赞通知存入缓存
 	 * @param {Object} dataContent

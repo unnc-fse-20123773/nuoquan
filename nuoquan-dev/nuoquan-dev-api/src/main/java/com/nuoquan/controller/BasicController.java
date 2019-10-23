@@ -50,6 +50,12 @@ public class BasicController {
 		return likeVO;
 	}
 	
+	/**
+	 * 上传文件
+	 * @param file
+	 * @param path
+	 * @throws Exception
+	 */
 	public void uploadFile(MultipartFile file, String path) throws Exception {
 
 		FileOutputStream fileOutputStream = null;
@@ -79,4 +85,7 @@ public class BasicController {
 			}
 		}
 	}
+	
+	
+	
 }

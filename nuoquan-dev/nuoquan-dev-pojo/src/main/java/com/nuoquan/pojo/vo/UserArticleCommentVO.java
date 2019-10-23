@@ -16,7 +16,8 @@ public class UserArticleCommentVO {
     private Integer commentNum;
     private String underCommentId; // 显示在该条评论下方
     private Integer signFlag;
-
+    private Integer status;
+    
     private String faceImg;
     private String nickname;
     private String timeAgo;
@@ -210,5 +211,13 @@ public class UserArticleCommentVO {
 
 	public void setToNickname(String toNickname) {
 		this.toNickname = toNickname;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 }

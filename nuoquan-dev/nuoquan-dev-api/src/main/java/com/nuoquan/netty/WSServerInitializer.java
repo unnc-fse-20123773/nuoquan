@@ -19,7 +19,8 @@ public class WSServerInitializer extends ChannelInitializer<SocketChannel>{
 
 	public String type = "JKS";
 	public String password = "5701k96a1fxz51v";
-	public String path = "/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/ssl_cert/www.checkchack.cn.jks"; // 改成你的证书地址, 证书在项目目录 /ssl_cert 里 -Jerrio
+//	public String path = "/Users/jerrio/Downloads/www.checkchack.cn/Tomcat/www.checkchack.cn.jks"; // 改成你的证书地址, 证书在项目目录 /ssl_cert 里 -Jerrio
+	public String path = "/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/ssl_cert/www.checkchack.cn.jks"; 
 //	public String path = "/home/ubuntu/apache-tomcat-8.5.42/conf/www.checkchack.cn.jks"; // 服务器证书地址，勿动
 	
 	@Override

@@ -213,7 +213,9 @@
 			scrollToBottom(){
 				// 将页面滚动到底部，
 				console.log(this.chatContent)
-				this.scrollToView = this.chatContent[this.chatContent.length-1].id;
+				if(this.chatContent.length>0){
+					this.scrollToView = this.chatContent[this.chatContent.length-1].id;
+				}
 			}
 		}
 	}
@@ -245,7 +247,7 @@
 		display: flex;
 		align-items: center;
 		bottom: 0;
-		min-height: 6%;
+		min-height: 48px;
 		width: 100%;
 		margin: 0;
 		padding: 0;
@@ -255,13 +257,14 @@
 
 	.bottomBar textarea {
 		display: inline-block;
-		width: 530upx;
-		padding:0 4upx;
+		height: 16px;
+		width: 522upx;
+		padding:0 8upx;
 		min-height: 50upx;
 		max-height: 95px;
 		border-radius: 24upx;
 		border: solid 1px #C6C6C6;
-		margin: 20upx 0 20upx 14upx;
+		margin: 22px 0 22px 14upx;
 		font-size: 13px;
 	}
 
