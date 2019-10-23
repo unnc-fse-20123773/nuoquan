@@ -11,7 +11,9 @@ button::after {
 	margin-left: 3%;
 	height: 100%;
 }
+
 /* 按百分比分配父组件区域 */
+
 /* 如更改样式需重新计算百分比分配 */
 #signin-container {
 	width: 100%;
@@ -92,8 +94,8 @@ button::after {
 	position: absolute;
 	bottom: 0%;
 	height: 10%;
-	left: -104%;
-	width: 300%;
+	right: -50%;
+	width: 200%;
 	/* background-color: #000000; */
 	/* opacity: 0.8; */
 	border-bottom-right-radius: 30rpx;
@@ -113,8 +115,8 @@ button::after {
 .confirm-button-before {
 	position: absolute;
 	top: 24%;
-	left: 26%;
-	width: 48%;
+	left: 30%;
+	width: 40%;
 	height: 40px;
 	border-radius: 10rpx;
 	background-color: #CCCCCC;
@@ -123,8 +125,8 @@ button::after {
 .confirm-button-checked {
 	position: absolute;
 	top: 24%;
-	left: 26%;
-	width: 48%;
+	left: 30%;
+	width: 40%;
 	height: 40px;
 	border-radius: 10rpx;
 	background-color: #FFCD2E;

@@ -62,6 +62,7 @@
 			</view>
 		</view>
 		<view id="confirm" class="super_center">
+			<!-- 微信绑定 -->
 			<view class="confirm-rel" v-if="swiperLeft == 0">
 				<button v-if="agreement == false" class="confirm-button-before super_center" hover-class="button-hover">
 					<view style="color: white;font-weight: 550;letter-spacing: 3px;font-family: Microsoft YaHei;">微信绑定</view>
@@ -135,6 +136,7 @@
 <script>
 	import whCaptcha from '../../components/wh-captcha/wh-captcha.vue';
 	import uniSteps from '@/components/uni-steps/uni-steps.vue'
+
 	var isLoding = false;
 	var timer = null;
 	var timer_ = null;
@@ -151,9 +153,11 @@
 			return {
 				agreement: false, // 是否同意用户协议
 				auth: false,
+
 				swiperLeft: 0, // 块滑动
 				swiperLineWidth: 0, // 进度条滑动
 				captchaLength: 6, // 验证码长度
+
 				active: 0,
 				activeList: [{
 					title: '微信绑定'
@@ -162,36 +166,44 @@
 				}, {
 					title: '登陆'
 				}],
+
 				userInfo: '',
 			};
 		},
+
 		onBackPress(e) {
 			// return true 表示禁止默认返回
 			console.log("监听到返回")
 			return false
 		},
+
 		methods: {
 			changeAgreement() {
 				this.agreement = !this.agreement;
 			},
+
 			changeAuth() {
 				this.auth = !this.auth;
 			},
+
 			cancleAuth() {
 				this.auth = false;
 				this.lastStep(false);
 			},
+
 			/**
 			 * 微信小程序登陆
 			 */
 			getUserInfo(e) {
 				// console.log("getting UserInfo...")
 				// console.log(e);
+
 				// 加锁
 				if (isLoding) {
 					return;
 				}
 				isLoding = true;
+
 				uni.showLoading({
 					title: '载入中...',
 				});
@@ -206,6 +218,7 @@
 						})
 					}
 				}, 5000); // 延时5s timeout
+
 				var info = e.detail;
 				var that = this;
 				uni.login({
@@ -220,6 +233,7 @@
 								encryptedData: info.encryptedData,
 								iv: info.iv,
 								code: res_login.code,
+
 								nickname: info.userInfo.nickName,
 								faceImg: info.userInfo.avatarUrl
 							},
@@ -232,8 +246,10 @@
 									console.log("暂存用户信息");
 									that.userInfo = res.data.data;
 									console.log(this.userInfo);
+
 									isLoding = false;
 									uni.hideLoading();
+
 									// 下一步
 									that.nextStep(true);
 								}
@@ -249,20 +265,25 @@
 							duration: 1000
 						})
 					}
+
 				});
 			},
+
 			onEmailInput(event) {
 				email = event.target.value;
 			},
+
 			onCaptchaInput(event) {
 				captcha = event.target.value;
 			},
+
 			/**
 			 * true: 不匹配, false: 匹配
 			 */
 			checkUNNCEmail(str) {
 				return !RegExp(/^\w+([-+.]\w+)*@nottingham\.edu\.cn+$/).test(str);
 			},
+
 			getCaptcha() {
 				if (email) {
 					// 检测邮箱
@@ -276,6 +297,7 @@
 							console.log("获取验证码 email=" + email);
 							this.$refs.captcha.begin();
 							this.title = "重新发送"
+
 							uni.request({
 								url: this.$serverUrl + '/user/getCode',
 								method: "POST",
@@ -299,17 +321,8 @@
 					});
 				}
 			},
+
 			confirmCode() {
-				if (email === "test@test.com"){
-					uni.showToast({
-						title: '认证成功',
-						icon: 'none'
-					});
-					this.changeAuth();
-					this.nextStep(false);
-					return;
-				}
-				
 				if (captcha) {
 					uni.showLoading({
 						title: "请等待"
@@ -332,12 +345,14 @@
 								// 4.分割邮箱地址, 重构 user
 								this.userInfo = this.myUser(finalUser);
 								console.log(this.userInfo);
+
 								uni.showToast({
 									title: '认证成功',
 									icon: 'none'
 								});
 								this.changeAuth();
 								this.nextStep(false);
+
 							} else {
 								console.log("验证失败 " + res.data.msg);
 								uni.showToast({
@@ -357,13 +372,16 @@
 					});
 				}
 			},
+
 			login() {
 				this.nextStep(false);
 				uni.showLoading({
 					title: "正在登陆..."
 				});
+
 				// 5.写入缓存
 				this.setGlobalUserInfo(this.userInfo);
+
 				setTimeout(() => {
 					uni.hideLoading();
 					uni.redirectTo({
@@ -371,6 +389,7 @@
 					});
 				}, 1000)
 			},
+
 			/**
 			 * 转场动画,需计算转场时间以保证进度条和块内容运动一致，
 			 * 当前运动时间为 500 ms
@@ -392,6 +411,7 @@
 						// console.log(that.swiperLineWidth);
 					}
 				}, 20)
+
 				if (sync) {
 					// 块右滑
 					clearInterval(timer); //清空定时器，防止重复操作
@@ -406,6 +426,7 @@
 					}, 10)
 				}
 			},
+
 			lastStep(sync) {
 				this.active--;
 				var point = 100.00 / this.activeList.length * this.active; //计算进度条节点 单位%
@@ -420,6 +441,7 @@
 						// console.log(that.swiperLineWidth);
 					}
 				}, 20)
+
 				if (sync) {
 					// 块左滑
 					clearInterval(timer); //清空定时器，防止重复操作
@@ -434,6 +456,7 @@
 					}, 10)
 				}
 			},
+
 			toUserDeal() {
 				uni.navigateTo({
 					url: "../userDeal/userDeal"
@@ -448,14 +471,17 @@
 		width: 100%;
 		height: 100%;
 	}
+
 	button::after {
 		border: none;
 		outline: none;
 	}
+
 	.wx-sign-checkbox {
 		margin-left: 3%;
 		height: 100%;
 	}
+
 	/* 按百分比分配父组件区域 */
 	/* 如更改样式需重新计算百分比分配 */
 	#signin-container {
@@ -463,6 +489,7 @@
 		height: 100%;
 		position: relative;
 	}
+
 	#introduction {
 		position: absolute;
 		display: flex;
@@ -471,11 +498,13 @@
 		width: 200%;
 		height: 54%;
 	}
+
 	.email-Box {
 		position: relative;
 		width: 35%;
 		height: 90%;
 	}
+
 	.email-intro {
 		position: absolute;
 		top: 15%;
@@ -484,6 +513,7 @@
 		width: 100%;
 		height: 30%;
 	}
+
 	.email-content {
 		position: absolute;
 		display: flex;
@@ -492,6 +522,7 @@
 		height: 50%;
 		top: 50%;
 	}
+
 	.email-input {
 		width: 100%;
 		height: 40px;
@@ -501,11 +532,13 @@
 		font-size: 15px;
 		color: #888888;
 	}
+
 	.introduction-contentBox {
 		position: relative;
 		width: 35%;
 		height: 90%;
 	}
+
 	.introduction-content {
 		position: absolute;
 		left: 5%;
@@ -513,48 +546,54 @@
 		width: 90%;
 		height: 86%;
 	}
+
 	.introduction-bottom-sign {
 		position: absolute;
 		bottom: 0%;
 		height: 10%;
-		left: -104%;
-		width: 300%;
+		right: -50%;
+		width: 200%;
 		/* background-color: #000000; */
 		/* opacity: 0.8; */
 		border-bottom-right-radius: 30upx;
 		border-bottom-left-radius: 30upx;
 	}
+
 	#confirm {
 		position: absolute;
 		top: 52%;
 		width: 100%;
 		height: 10%;
 	}
+
 	.confirm-rel {
 		position: relative;
 		width: 100%;
 		height: 100%;
 	}
+
 	.confirm-button-before {
 		position: absolute;
 		top: 24%;
-		left: 26%;
-		width: 48%;
+		left: 30%;
+		width: 40%;
 		height: 40px;
 		border-radius: 10upx;
 		background-color: #CCCCCC;
 		z-index: 20;
 	}
+
 	.confirm-button-checked {
 		position: absolute;
 		top: 24%;
-		left: 26%;
-		width: 48%;
+		left: 30%;
+		width: 40%;
 		height: 40px;
 		border-radius: 10upx;
 		background-color: #FFCD2E;
 		z-index: 20;
 	}
+
 	.conform-bgBox {
 		position: absolute;
 		top: 24%;
@@ -565,12 +604,14 @@
 		border-radius: 10upx;
 		z-index: 10;
 	}
+
 	.bottom-picBox {
 		position: absolute;
 		bottom: 0;
 		width: 100%;
 		height: 26%;
 	}
+
 	.backAngle {
 		position: absolute;
 		top: 24%;
@@ -582,6 +623,7 @@
 		z-index: 20;
 		background: #FDD041;
 	}
+
 	.back {
 		width: 40px;
 		height: 40px;

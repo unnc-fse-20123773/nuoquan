@@ -46,16 +46,19 @@
 			<view class="tag" :style="{background: tagColorList[index]}" v-for="(i, index) in thisArticle.tagList" v-bind:key="index">{{i}}</view>
 		</view>
 		<view class="menubar">
+			<!-- 点赞&评论蒙层，用于优化体验 -->
+			<view style="position: absolute;z-index: 20;height: 100%;width: 80upx;right: 0;" @tap="swLikeArticle"></view>
+			<view style="position: absolute;z-index: 20;height: 100%;width: 80upx;right: 80upx;" @click="jumpToDetail()"></view>
 			<image :src="thisArticle.faceImg" class="touxiang" @tap="goToPersonPublic(thisArticle.userId)"></image>
 			<view class="name">{{ thisArticle.nickname }}</view>
 			<view class="time">{{ thisArticle.createDate | timeDeal}}</view>
 
 			<view class="icons">
-				<image class="comment" src="../static/icon/comment.png" @click="jumpToDetail()"></image>
-				<view class="icon" @click="jumpToDetail()">{{thisArticle.commentNum}}</view>
-				<image v-if="!thisArticle.isLike" class="like" src="../static/icon/like.png" @tap="swLikeArticle"></image>
-				<image v-if="thisArticle.isLike" class="like" src="../static/icon/liked-red.png" @tap="swLikeArticle"></image>
-				<view class="icon"  @tap="swLikeArticle">{{thisArticle.likeNum}}</view>
+				<image class="comment" src="../static/icon/comment.png" ></image>
+				<view class="icon" >{{thisArticle.commentNum}}</view>
+				<image v-if="!thisArticle.isLike" class="like" src="../static/icon/like.png" ></image>
+				<image v-if="thisArticle.isLike" class="like" src="../static/icon/liked-red.png" ></image>
+				<view class="icon"  >{{thisArticle.likeNum}}</view>
 			</view>
 		</view>
 	</view>
@@ -339,8 +342,9 @@
 		vertical-align: middle;
 		margin-left: 15px;
 		border-radius: 8px;
+		height: 32px;
 	}
-
+	
 	.touxiang {
 		border-radius: 30px;
 		width: 20px;
@@ -368,6 +372,7 @@
 		position: absolute;
 		right: 0;
 		bottom: 0;
+		z-index: 10;
 		width: 206upx;
 		text-align: right;
 		display: inline-block;

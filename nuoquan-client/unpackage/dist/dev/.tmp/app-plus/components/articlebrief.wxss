@@ -80,6 +80,7 @@ image {
 	vertical-align: middle;
 	margin-left: 15px;
 	border-radius: 8px;
+	height: 32px;
 }
 .touxiang.data-v-2881634c {
 	border-radius: 30px;
@@ -105,6 +106,7 @@ image {
 	position: absolute;
 	right: 0;
 	bottom: 0;
+	z-index: 10;
 	width: 206rpx;
 	text-align: right;
 	display: inline-block;

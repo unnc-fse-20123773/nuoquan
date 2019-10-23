@@ -1,26 +1,36 @@
 <template>
 	<view class="comment" :id="mainComment.id">
 		<view class="contentarea" @tap="controlInputInComment('inComment')">{{ mainComment.comment }}</view>
+		<!-- ID 行 -->
 		<view class="bottombar">
-			<view style="width:70%;display:inline-block;">
-				<image :src="mainComment.faceImg" class="touxiang" @tap="goToPersonPublic(mainComment.fromUserId)"></image>
-				<text class="name">{{ mainComment.nickname }}</text>
-				<text class="time">{{ mainComment.timeAgo }}</text>
+			<!-- 蒙层,用于优化体验 -->
+			<view style="position: absolute;z-index: 20;height: 100%;width: 90upx;right: 16upx;" @tap="swLikeMainComment(mainComment)"></view>
+			<view style="position: absolute;z-index: 20;height: 100%;width: 80upx;right: 106upx;" @tap="goToCommentDetail(mainComment)"></view>
+			<!-- 蒙层结束 -->
+			<view class="touxiang column_center">
+				<image :src="mainComment.faceImg" class="touxiang_pic" @tap="goToPersonPublic(mainComment.fromUserId)"></image>
 			</view>
-			<view class="icons">
-				<view @tap="goToCommentDetail(mainComment)">
-					<!-- 评论按钮 -->
-					<image v-if="!RECOMMENT || mainComment.commentNum == 0" class="icon" src="../../../../static/icon/comment.png" 
-					style="padding-right: 23px;"></image>
-
-					<image v-if="RECOMMENT && mainComment.commentNum" src="../../../../static/icon/ReComment.png" 
-					style="height:23px;width:50px;position:relative;bottom:-5px;padding-right:4px;"></image>
-				</view>
-				<!-- 点赞按钮 -->
-				<view @tap="swLikeMainComment(mainComment)">
-					<image v-if="!mainComment.isLike" class="icon" src="../../../static/icon/like.png"></image>
-					<image v-if="mainComment.isLike" class="icon" src="../../../static/icon/liked.png"></image>
-					<text class="icom" :class="{'liked':mainComment.isLike}">{{ mainComment.likeNum }}</text>
+			<view class="text_line">
+				<view class="text_line_rel">
+					<view class="name column_center">
+						<view class="name_text">{{ mainComment.nickname }}</view>
+					</view>
+					<view class="time column_center">
+						<view class="time_text">{{ mainComment.timeAgo }}</view>
+					</view>
+					<view class="icons column_center">
+						<view class="column_center" style="position: relative;height: 100%;" @tap="goToCommentDetail(mainComment)">
+							<!-- 评论按钮 -->
+							<image v-if="!RECOMMENT || mainComment.commentNum == 0" class="icon_cmt" src="../../../../static/icon/comment.png"></image>
+							<image v-if="RECOMMENT && mainComment.commentNum" class="icon_recmt" src="../../../../static/icon/ReComment.png"></image>
+						</view>
+						<!-- 点赞按钮 -->
+						<view class="column_center" style="position: relative;width: 100%;height: 100%;" @tap="swLikeMainComment(mainComment)">
+							<image v-if="!mainComment.isLike" class="icon" src="../../../static/icon/like.png"></image>
+							<image v-if="mainComment.isLike" class="icon" src="../../../static/icon/liked-red.png"></image>
+							<text class="icom" :class="{'liked':mainComment.isLike}">{{ mainComment.likeNum }}</text>
+						</view>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -102,10 +112,10 @@
 							that.reCommentList = '';
 							that.$nextTick(function() {
 								const showCommentNum = 2;
-								if(res.data.data.rows.length>showCommentNum){
-									that.reCommentList = res.data.data.rows.slice(0,showCommentNum);
-								}else{
-									that.reCommentList = res.data.data.rows;	
+								if (res.data.data.rows.length > showCommentNum) {
+									that.reCommentList = res.data.data.rows.slice(0, showCommentNum);
+								} else {
+									that.reCommentList = res.data.data.rows;
 								}
 							});
 							// console.log(res);
@@ -123,7 +133,7 @@
 					}
 				});
 			},
-			
+
 			controlInputInComment(a) {
 				if (a == "inComment") {
 					var dataOfRecomment = {
@@ -202,8 +212,8 @@
 					url: '/pages/personpublic/personpublic?userId=' + userId,
 				});
 			},
-			
-			goToCommentDetail(mainComment){
+
+			goToCommentDetail(mainComment) {
 				uni.navigateTo({
 					url: '/pages/comment-detail/comment-detail?data=' + JSON.stringify(mainComment),
 				})
@@ -238,55 +248,119 @@
 	.bottombar {
 		position: relative;
 		border-radius: 20px;
-		height: 25px;
-		margin-top: 10px;
-		display: flex;
-		justify-content: space-between;
+		margin-top: 20px;
+		height: 30px;
 	}
 
 	.touxiang {
-		width: 20px;
-		height: 20px;
-		border-radius: 20px;
-		display: inline-block;
-		vertical-align: middle;
-		margin-right: 5px;
+		position: absolute;
+		left: 0;
+		height: 30px;
+		width: 10%;
 	}
 
-	.time,
+	.touxiang_pic {
+		border-radius: 300px;
+		width: 20px;
+		height: 20px;
+		margin-right: 5px;
+		vertical-align: middle;
+	}
+
+
+	.text_line {
+		position: absolute;
+		left: 10%;
+		height: 30px;
+		width: 90%;
+	}
+
+	.text_line_rel {
+		position: relative;
+	}
+
 	.name {
-		font-size: 10px;
-		margin-left: 7px;
-		margin-right: 10px;
+		position: absolute;
+		left: 0;
+		height: 30px;
+		width: 38%;
+	}
+
+	.name_text {
+		font-size: 13px;
 		color: #888888;
+		text-overflow: ellipsis;
+		max-width: 80px;
+	}
+
+	.time {
+		position: absolute;
+		left: 38%;
+		height: 30px;
+		max-width: 85px;
+	}
+
+	.time_text {
+		margin-top: 1px;
+		font-size: 12px;
+		color: #888888;
+		text-overflow: ellipsis;
 	}
 
 	.icons {
-		position: relative;
-		justify-content: flex-end;
-		display: inline-flex;
-		align-items: flex-end;
-		width: 30%;
+		position: absolute;
+		right: -8%;
+		width: 36%;
 		font-size: 10px;
-
+		height: 30px;
+		z-index: 10;
 	}
 
 	.icon {
-		width: 12px;
-		height: 12px;
+		position: absolute;
+		right: 46%;
+		width: 15px;
+		height: 15px;
 		font-size: 2px;
-		padding-right: 4px;
-		vertical-align: middle;
+		z-index: 10;
+		/* padding-right: 8upx; */
+	}
+
+	.icon_cmt{
+		position: absolute;
+		left: 4upx;
+		width: 15px;
+		height: 15px;
+		font-size: 2px;
+		z-index: 10;		
+	}
+
+	.icon_recmt{
+		position: absolute;
+		left: -20px;
+		width: 60px;
+		height: 25px;
+		font-size: 2px;
+		z-index: 10;
+		top: 4px;
+	}
+	
+	.liked {
+		position: absolute;
+		right: 56%;
+		color: #fe5f55;
+		z-index: 10;
+		font-size: 15px;
 	}
 
 	.icom {
-		padding-right: 17px;
-		align-items: flex-end;
-		vertical-align: middle;
+		position: absolute;
+		right: 74upx;
+		font-size: 13px;
+		z-index: 10;
 	}
-	.liked{
-		color: #FDD041;
-	}
+
+
 	.submitComment {
 		background: #FFCC30;
 		border-radius: 5px;
@@ -307,5 +381,6 @@
 		border-radius: 10px;
 		margin-left: 87.5upx;
 		margin-bottom: 10px;
+		margin-top:-2px ;
 	}
 </style>

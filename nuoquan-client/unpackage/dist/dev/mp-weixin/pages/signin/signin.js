@@ -259,6 +259,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 var isLoding = false;
 var timer = null;
 var timer_ = null;
@@ -275,9 +277,11 @@ var _default = {
     return {
       agreement: false, // 是否同意用户协议
       auth: false,
+
       swiperLeft: 0, // 块滑动
       swiperLineWidth: 0, // 进度条滑动
       captchaLength: 6, // 验证码长度
+
       active: 0,
       activeList: [{
         title: '微信绑定' },
@@ -286,36 +290,44 @@ var _default = {
       {
         title: '登陆' }],
 
+
       userInfo: '' };
 
   },
+
   onBackPress: function onBackPress(e) {
     // return true 表示禁止默认返回
     console.log("监听到返回");
     return false;
   },
+
   methods: {
     changeAgreement: function changeAgreement() {
       this.agreement = !this.agreement;
     },
+
     changeAuth: function changeAuth() {
       this.auth = !this.auth;
     },
+
     cancleAuth: function cancleAuth() {
       this.auth = false;
       this.lastStep(false);
     },
+
     /**
         * 微信小程序登陆
         */
     getUserInfo: function getUserInfo(e) {var _this = this;
       // console.log("getting UserInfo...")
       // console.log(e);
+
       // 加锁
       if (isLoding) {
         return;
       }
       isLoding = true;
+
       uni.showLoading({
         title: '载入中...' });
 
@@ -330,6 +342,7 @@ var _default = {
 
         }
       }, 5000); // 延时5s timeout
+
       var info = e.detail;
       var that = this;
       uni.login({
@@ -344,6 +357,7 @@ var _default = {
               encryptedData: info.encryptedData,
               iv: info.iv,
               code: res_login.code,
+
               nickname: info.userInfo.nickName,
               faceImg: info.userInfo.avatarUrl },
 
@@ -356,8 +370,10 @@ var _default = {
                 console.log("暂存用户信息");
                 that.userInfo = res.data.data;
                 console.log(_this.userInfo);
+
                 isLoding = false;
                 uni.hideLoading();
+
                 // 下一步
                 that.nextStep(true);
               }
@@ -374,19 +390,24 @@ var _default = {
 
         } });
 
+
     },
+
     onEmailInput: function onEmailInput(event) {
       email = event.target.value;
     },
+
     onCaptchaInput: function onCaptchaInput(event) {
       captcha = event.target.value;
     },
+
     /**
         * true: 不匹配, false: 匹配
         */
     checkUNNCEmail: function checkUNNCEmail(str) {
       return !RegExp(/^\w+([-+.]\w+)*@nottingham\.edu\.cn+$/).test(str);
     },
+
     getCaptcha: function getCaptcha() {
       if (email) {
         // 检测邮箱
@@ -400,6 +421,7 @@ var _default = {
             console.log("获取验证码 email=" + email);
             this.$refs.captcha.begin();
             this.title = "重新发送";
+
             uni.request({
               url: this.$serverUrl + '/user/getCode',
               method: "POST",
@@ -423,17 +445,8 @@ var _default = {
 
       }
     },
+
     confirmCode: function confirmCode() {var _this2 = this;
-      if (email === "test@test.com") {
-        uni.showToast({
-          title: '认证成功',
-          icon: 'none' });
-
-        this.changeAuth();
-        this.nextStep(false);
-        return;
-      }
-
       if (captcha) {
         uni.showLoading({
           title: "请等待" });
@@ -456,12 +469,14 @@ var _default = {
               // 4.分割邮箱地址, 重构 user
               _this2.userInfo = _this2.myUser(finalUser);
               console.log(_this2.userInfo);
+
               uni.showToast({
                 title: '认证成功',
                 icon: 'none' });
 
               _this2.changeAuth();
               _this2.nextStep(false);
+
             } else {
               console.log("验证失败 " + res.data.msg);
               uni.showToast({
@@ -481,13 +496,16 @@ var _default = {
 
       }
     },
+
     login: function login() {
       this.nextStep(false);
       uni.showLoading({
         title: "正在登陆..." });
 
+
       // 5.写入缓存
       this.setGlobalUserInfo(this.userInfo);
+
       setTimeout(function () {
         uni.hideLoading();
         uni.redirectTo({
@@ -495,6 +513,7 @@ var _default = {
 
       }, 1000);
     },
+
     /**
         * 转场动画,需计算转场时间以保证进度条和块内容运动一致，
         * 当前运动时间为 500 ms
@@ -516,6 +535,7 @@ var _default = {
           // console.log(that.swiperLineWidth);
         }
       }, 20);
+
       if (sync) {
         // 块右滑
         clearInterval(timer); //清空定时器，防止重复操作
@@ -530,6 +550,7 @@ var _default = {
         }, 10);
       }
     },
+
     lastStep: function lastStep(sync) {
       this.active--;
       var point = 100.00 / this.activeList.length * this.active; //计算进度条节点 单位%
@@ -544,6 +565,7 @@ var _default = {
           // console.log(that.swiperLineWidth);
         }
       }, 20);
+
       if (sync) {
         // 块左滑
         clearInterval(timer); //清空定时器，防止重复操作
@@ -558,6 +580,7 @@ var _default = {
         }, 10);
       }
     },
+
     toUserDeal: function toUserDeal() {
       uni.navigateTo({
         url: "../userDeal/userDeal" });
