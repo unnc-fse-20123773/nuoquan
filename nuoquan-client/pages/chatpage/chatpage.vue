@@ -10,8 +10,8 @@
 			<textarea auto-height="true" v-model="textMsg" :show-confirm-bar="false"/>
 			<view class="icons">
 				<button><image src="../../static/icon/viewLocalPic.png"></image></button>
-				<button><image src="../../static/icon/emoji.png"></image></button>
-				<button @click="sendText(textMsg)"><image src="../../static/icon/littlePlane.png"></image></button>
+<!-- 				<button><image src="../../static/icon/emoji.png"></image></button>
+ -->				<button @click="sendText(textMsg)"><image src="../../static/icon/littlePlane.png"></image></button>
 			</view>
 		</view>
 
@@ -258,23 +258,25 @@
 	.bottomBar textarea {
 		display: inline-block;
 		height: 16px;
-		width: 522upx;
-		padding:0 8upx;
-		min-height: 50upx;
-		max-height: 95px;
+		line-height: 16px;
+		width: 558upx;
+		max-height: 75px;
 		border-radius: 24upx;
 		border: solid 1px #C6C6C6;
-		margin: 22px 0 22px 14upx;
+		padding:5px 16upx;
+		margin: 11px 0 11px 28upx;
 		font-size: 13px;
 	}
 
 	.icons {
 		display: inline-flex;
-		width: 146upx;
+		width: 90upx;
 		height: 90upx;
 		margin-left: 18upx;
+		margin-right: 24upx;
 		justify-content: space-between;
 		align-items: center;
+		
 	}
 
 	.icons image {

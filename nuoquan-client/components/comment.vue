@@ -375,6 +375,7 @@
 	}
 
 	.reCommentsArea {
+		margin-top: 5px;
 		background: #EEEEEE;
 		width: 500upx;
 		padding: 14px 25upx 11px;
