@@ -180,6 +180,17 @@
 			}
 		},
 		
+		onShareAppMessage(res) {
+			if (res.from === 'menu') {// 来自右上角菜单的分享
+				var navData = JSON.stringify(this.articleCard);
+				console.log(navData)
+				return {
+					title: '来，给老子看！',
+					path: '/pages/detail/detail?data=' + navData
+				}
+			}
+		},
+		
 		methods: {
 			popTextArea(e){
 				console.log("展开");

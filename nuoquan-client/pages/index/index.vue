@@ -220,7 +220,7 @@
 				});
 			},
 
-			 linkageWithTop: async function(e) {
+			linkageWithTop: async function(e) {
 				var y = e.detail.scrollTop; //获取 scrollTop
 				// console.log( y + "scrollTop" )
 				// console.log(timer + "//  timer");
