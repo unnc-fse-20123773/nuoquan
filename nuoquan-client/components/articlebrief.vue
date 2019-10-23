@@ -50,8 +50,8 @@
 			<view style="position: absolute;z-index: 20;height: 30px;width: 80upx;top:0;right: 0;" @tap="swLikeArticle"></view>
 			<view style="position: absolute;z-index: 20;height: 30px;width: 80upx;top:0;right: 40px;" @click="jumpToDetail()"></view>
 			<image :src="thisArticle.faceImg" class="touxiang" @tap="goToPersonPublic(thisArticle.userId)"></image>
-			<view class="name">{{ thisArticle.nickname }}</view>
-			<view class="time">{{ thisArticle.createDate | timeDeal}}</view>
+			<view class="name" >{{ thisArticle.nickname }}</view>
+			<view class="time" >{{ thisArticle.createDate | timeDeal}}</view>
 
 			<view class="icons">
 				<image class="comment" src="../static/icon/comment.png" style="right: 65px;"></image>
@@ -113,7 +113,9 @@
 		
 		filters: {
 			timeDeal(timediff) {
+				console.log(timediff);
 				timediff = new Date(timediff);
+				console.log(timediff);
 				var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(),
 					timediff.getSeconds()
 				];
@@ -369,7 +371,9 @@
 		position: absolute;
 		bottom:3.75px;
 		left:30px;
-		width:80px;
+		min-width: 55px;
+		width:20%;
+		max-width: 104px;
 		height:17.5px;
 		white-space:nowrap; 
 		overflow: hidden;
@@ -382,9 +386,9 @@
 		font-size: 12px;
 		color: #888888;
 		position: absolute;
-		left:calc(50% - 24px);
+		left:calc(50% - 47px);
 		bottom: 1.75px;
-		width:48px;
+		width:78px;
 		height:17.5px;
 		text-align: center;
 	}
