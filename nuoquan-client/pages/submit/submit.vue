@@ -62,6 +62,8 @@
 	]
 
 	var uploadFlag = false; // 标志文章正在上传，为 true 时 block 该方法
+	var requestTask;
+	var uploadTasks = [];
 	export default {
 		data() {
 			return {
@@ -200,11 +202,30 @@
 				uni.showLoading({
 					title: "正在上传..."
 				})
+				
+				setTimeout(()=>{
+					if(uploadFlag){
+						uploadFlag = false // 解锁
+						uni.hideLoading();
+						uni.showToast({
+							title: "网络未知错误",
+							icon: "none",
+							duration: 1000
+						})
+						// TODO: 终止上传
+						for (let task in uploadTasks) {
+							console.log(task)
+							task.abort();
+						};
+						requestTask.abort();
+					}
+				}, 5000); // 延时5s timeout
+				
 				setTimeout(() => {
 					me.combineTagToString();
 
 					var serverUrl = me.$serverUrl;
-					uni.request({
+					requestTask = uni.request({
 						url: serverUrl + '/article/uploadArticle',
 						method: 'POST',
 						data: {
@@ -224,7 +245,7 @@
 									const articleId = res.data.data;
 									var resCount = 0
 									for (var i = 0; i < me.imageList.length; i++) {
-										uni.uploadFile({
+										uploadTasks[i] = uni.uploadFile({
 											url: this.$serverUrl + '/article/uploadArticleImg',
 											filePath: me.imageList[i],
 											name: 'file',
