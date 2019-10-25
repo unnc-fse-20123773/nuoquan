@@ -108,6 +108,12 @@
 					"query": "",
 					"id": 12,
 					"pathName": "pages/test/test"
+				},
+				{
+					"name": "我的发布",
+					"query": "",
+					"id": 13,
+					"pathName": "pages/myArticles/myArticles"
 				}
 			]
 		}

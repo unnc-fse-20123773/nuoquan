@@ -137,7 +137,7 @@ var _articlebrief = _interopRequireDefault(__webpack_require__(/*! ../../compone
 
 
 
-var _vuex = __webpack_require__(/*! vuex */ 12);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! import() | components/mainpagetop */ "components/mainpagetop").then(__webpack_require__.bind(null, /*! ../../components/mainpagetop.vue */ 152));};var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ 161));};
+var _vuex = __webpack_require__(/*! vuex */ 12);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! import() | components/mainpagetop */ "components/mainpagetop").then(__webpack_require__.bind(null, /*! ../../components/mainpagetop.vue */ 160));};var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ 169));};
 
 
 
@@ -570,11 +570,13 @@ var _default =
       heightWidthRate: 0,
       imgList: [],
       thisArticle: this.articleCard, // 转为局部变量
-      tagColorList: [] // 储存每个tag的颜色
-    };
+      tagColorList: [], // 储存每个tag的颜色
+      timeLeft: "" };
+
   },
 
   created: function created() {var _this = this;
+    console.log(this);
     if (this.thisArticle.imgList.length > 3) {
       // 只取前三
       for (var i = 0; i < 3; i++) {
@@ -623,6 +625,7 @@ var _default =
         timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
       } else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
         timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
+
       } else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && parts[0] == now.getFullYear()) {
         timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
       } else {
@@ -740,6 +743,13 @@ var _default =
         current: index,
         urls: arr });
 
+    },
+
+
+    buttomCaculation: function buttomCaculation(timeWidth) {
+      var bottmWidth = this.$refs.articleCard.offsetWidth;
+      console.log(bottmWidth);
+      debugger;
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

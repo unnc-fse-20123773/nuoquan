@@ -67,6 +67,10 @@
             "path" : "pages/userDeal/userDeal",
             "style" : {}
         }
+        ,{
+            "path" : "pages/myArticles/myArticles",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -137,6 +141,10 @@
 			{
 				"name": "test", //模式名称
 				"path": "pages/test/test", //启动页面，必选
+				"query": "" //启动参数，在页面的onLoad函数里面得到
+			},
+			{   "name":"我的发布",
+				"path" : "pages/myArticles/myArticles",
 				"query": "" //启动参数，在页面的onLoad函数里面得到
 			}
 		]

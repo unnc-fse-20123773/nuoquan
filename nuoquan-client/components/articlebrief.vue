@@ -1,5 +1,5 @@
 <template>
-	<view class="articlecard">
+	<view class="articlecard" ref="articleCard">
 		<view @click="jumpToDetail()">
 			<view class="title">{{ thisArticle.articleTitle }}</view>
 			<view class="briefarticleCard">{{ thisArticle.articleContent }}</view>
@@ -51,7 +51,7 @@
 			<view style="position: absolute;z-index: 20;height: 30px;width: 80upx;top:0;right: 40px;" @click="jumpToDetail()"></view>
 			<image :src="thisArticle.faceImg" class="touxiang" @tap="goToPersonPublic(thisArticle.userId)"></image>
 			<view class="name" >{{ thisArticle.nickname }}</view>
-			<view class="time" >{{ thisArticle.createDate | timeDeal}}</view>
+			<view class="time" :style="timeLeft">{{ thisArticle.createDate | timeDeal}}</view>
 
 			<view class="icons">
 				<image class="comment" src="../static/icon/comment.png" style="right: 65px;"></image>
@@ -81,10 +81,12 @@
 				imgList: [],
 				thisArticle: this.articleCard, // 转为局部变量
 				tagColorList: [], // 储存每个tag的颜色
+				timeLeft:"",
 			};
 		},
 		
 		created() {
+			console.log(this);
 			if (this.thisArticle.imgList.length > 3) {
 				// 只取前三
 				for (var i = 0; i < 3; i++) {
@@ -133,6 +135,7 @@
 					timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
 				} else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
 					timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
+					
 				} else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && parts[0] == now.getFullYear()) {
 					timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
 				} else {
@@ -250,6 +253,13 @@
 					current: index,
 					urls: arr,
 				})
+			},
+			
+			
+			buttomCaculation(timeWidth){
+				var bottmWidth = this.$refs.articleCard.offsetWidth;
+				console.log(bottmWidth);
+				debugger;
 			},
 		},
 	};
