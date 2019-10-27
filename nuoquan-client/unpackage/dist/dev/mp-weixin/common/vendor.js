@@ -3893,9 +3893,9 @@ createPage(_userDeal.default);
 /***/ }),
 
 /***/ 152:
-/*!*********************************************************************************************************!*\
-  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fabout%2FaboutUs"} ***!
-  \*********************************************************************************************************/
+/*!*****************************************************************************************************************!*\
+  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2FmyArticles%2FmyArticles"} ***!
+  \*****************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3903,8 +3903,8 @@ createPage(_userDeal.default);
 /* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _aboutUs = _interopRequireDefault(__webpack_require__(/*! ./pages/about/aboutUs.vue */ 153));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_aboutUs.default);
+var _myArticles = _interopRequireDefault(__webpack_require__(/*! ./pages/myArticles/myArticles.vue */ 153));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_myArticles.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
 
 /***/ }),

@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "one-article": "/pages/myArticles/oneArticle"
+  }
+}

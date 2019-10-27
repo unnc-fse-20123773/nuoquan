@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var blackarticlebrief = function blackarticlebrief() {return __webpack_require__.e(/*! import() | pages/black-index/black-articlebrief */ "pages/black-index/black-articlebrief").then(__webpack_require__.bind(null, /*! ./black-articlebrief */ 210));};var blackpopup = function blackpopup() {return __webpack_require__.e(/*! import() | pages/black-index/black-popup */ "pages/black-index/black-popup").then(__webpack_require__.bind(null, /*! ./black-popup */ 217));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var blackarticlebrief = function blackarticlebrief() {return __webpack_require__.e(/*! import() | pages/black-index/black-articlebrief */ "pages/black-index/black-articlebrief").then(__webpack_require__.bind(null, /*! ./black-articlebrief */ 212));};var blackpopup = function blackpopup() {return __webpack_require__.e(/*! import() | pages/black-index/black-popup */ "pages/black-index/black-popup").then(__webpack_require__.bind(null, /*! ./black-popup */ 219));};var _default =
 
 
 

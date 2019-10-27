@@ -16,7 +16,7 @@
     "pages/cmt-likedetail/cmt-likedetail",
     "pages/comment-detail/comment-detail",
     "pages/userDeal/userDeal",
-    "pages/about/aboutUs"
+    "pages/myArticles/myArticles"
   ],
   "subPackages": [],
   "window": {

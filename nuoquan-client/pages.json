@@ -68,8 +68,8 @@
             "style" : {}
         },
 		{
-			"path": "pages/about/aboutUs",
-			"style": {}
+			"path" : "pages/myArticles/myArticles",
+			"style" : {}
 		}
     ],
 	"globalStyle": {
@@ -143,10 +143,9 @@
 				"path": "pages/test/test", //启动页面，必选
 				"query": "" //启动参数，在页面的onLoad函数里面得到
 			},
-			{
-				"name": "aboutUs",
-				"path": "pages/about/aboutUs",
-				"query": ""
+			{   "name":"我的发布",
+				"path" : "pages/myArticles/myArticles",
+				"query": "" //启动参数，在页面的onLoad函数里面得到
 			}
 		]
 	}
