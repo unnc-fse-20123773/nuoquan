@@ -154,6 +154,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 var _default =
 {
   name: 'aticlebrief',
@@ -367,6 +369,83 @@ var _default =
       var bottmWidth = this.$refs.articleCard.offsetWidth;
       console.log(bottmWidth);
       debugger;
+    },
+
+    //以下方程为控制左滑删除的部分 ref： swipe-acton in messageLish
+    touchStart: function touchStart(event) {
+      console.log("start");
+      console.log(event);
+      console.log(event.currentTarget.dataset);
+      console.log(event.currentTarget.dataset.disabled);
+      debugger;
+      if (event.currentTarget.dataset.disabled === true) {
+        return;
+      }
+      this.startX = event.touches[0].pageX;
+      this.startY = event.touches[0].pageY;
+    },
+    touchMove: function touchMove(event) {
+      console.log("move");
+      console.log(event);
+      debugger;
+
+      if (this.direction === 'Y' || event.currentTarget.dataset.disabled === true) {
+        this.direction = '';
+        return;
+      }
+      var moveY = event.touches[0].pageY - this.startY,
+      //  moveX用于判断方向
+      moveX = -(event.touches[0].pageX - this.startX);
+      if (!this.isMoving && Math.abs(moveY) > Math.abs(moveX) || Math.abs(moveY) > 100 || Math.abs(moveX) < 50) {//纵向滑动//参数100与50可调节侧滑灵敏度
+        this.direction = 'Y';
+        return;
+      }
+      // 移动距离
+      console.log(moveX);
+      this.direction = moveX > 0 ? 'right' : 'left';
+      // 输出方向
+      console.log(this.direction);
+      this.messageIndex = moveX < 0 ? event.currentTarget.dataset.index : -1;
+      this.isMoving = true;
+    },
+    touchEnd: function touchEnd(event) {
+      console.log("touchEnd");
+      console.log(event);
+
+      this.isMoving = false;
+      if (this.direction !== 'right' && this.direction !== 'left') {
+        this.direction = '';
+        return;
+      }
+
+      // right -> left
+      if (this.direction == 'right') {
+        this.messageIndex = -1;
+      }
+      console.log(this.messageIndex);
+      this.endMove(event);
+    },
+    endMove: function endMove(event) {
+      debugger;
+      console.log("endMove");
+      console.log(event);
+
+      if (this.direction === 'Y' || event.currentTarget.dataset.disabled === true) {
+        this.direction = '';
+        return;
+      }
+      if (this.messageIndex !== -1) {
+        // 负号控制块左右移动
+        // this.transformX = `translateX(${-this.btnGroupWidth}px)`;
+        this.transformX = "translateX(".concat(58, "px)");
+        this.$emit('opened');
+        this.showdelete = 1;
+      } else {
+        this.transformX = 'translateX(0px)';
+        this.$emit('closed');
+        this.showdelete = 0;
+      }
+      this.direction = '';
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
