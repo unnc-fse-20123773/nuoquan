@@ -110,10 +110,10 @@
 					"pathName": "pages/test/test"
 				},
 				{
-					"name": "aboutUs",
+					"name": "我的发布",
 					"query": "",
 					"id": 13,
-					"pathName": "pages/about/aboutUs"
+					"pathName": "pages/myPublish/myPublish"
 				}
 			]
 		}

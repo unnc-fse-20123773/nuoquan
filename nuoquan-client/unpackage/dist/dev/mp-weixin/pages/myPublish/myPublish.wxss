@@ -1,0 +1,67 @@
+
+page {
+	height: 100%;
+	background: #F8F8F8;
+}
+.top-bar {
+	height: 30px;
+	padding: 24px 0;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	    -ms-flex-pack: justify;
+	        justify-content: space-between;
+	font: Source Han Sans CN;
+}
+.totalNum {
+	color: #888888;
+	font-size: 18px;
+	-ms-text-spacing: 80;
+	    text-spacing: 80;
+}
+.bin {
+	position: relative;
+	display: -webkit-inline-box;
+	display: -webkit-inline-flex;
+	display: -ms-inline-flexbox;
+	display: inline-flex;
+	background: #888888;
+	border-radius: 10px;
+	height: 30px;
+	width: 108px;
+	-webkit-box-shadow: ;
+	        box-shadow: ;
+}
+.bin image {
+	position: absolute;
+	width: 14px;
+	height: 15px;
+	top: 7.5px;
+	left: 9px;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	    -ms-flex-align: center;
+	        align-items: center;
+}
+.bin view {
+	position: absolute;
+	right: 14px;
+	color: #FFFFFF;
+	font-size: 14px;
+	-ms-text-spacing: 45;
+	    text-spacing: 45;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	    -ms-flex-align: center;
+	        align-items: center;
+	line-height: 30px;
+}
+.mainbody {
+	height: 100%;
+	width: 690rpx;
+	margin: auto;
+}
+
