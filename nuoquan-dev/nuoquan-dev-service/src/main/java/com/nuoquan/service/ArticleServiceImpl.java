@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.nuoquan.utils.TimeAgoUtils;
-import com.sun.mail.imap.protocol.Status;
 import com.nuoquan.enums.StatusEnum;
 import com.nuoquan.mapper.ArticleImageMapper;
 import com.nuoquan.mapper.ArticleMapper;
@@ -520,6 +519,7 @@ public class ArticleServiceImpl implements ArticleService {
 		return userLikeVOs;
 	}
 
+	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
 	public List<UserArticleCommentVO> getUnsignedCommentMsg(String userId) {
 		List<UserArticleCommentVO> commentVOs = userArticleCommentMapperCustom.getUnsignedCommentMsg(userId);
@@ -568,6 +568,83 @@ public class ArticleServiceImpl implements ArticleService {
 		UserArticleComment commentHelper = new UserArticleComment();
 		commentHelper.setStatus(StatusEnum.READABLE.type);
 		userArticleCommentMapper.updateByExampleSelective(commentHelper, example);	
+	}
+
+	@Transactional(propagation = Propagation.SUPPORTS)
+	@Override
+	public PagedResult getAllMyHisArticle(Integer page, Integer pageSize, String userId) {
+		
+		PageHelper.startPage(page, pageSize);
+		
+		List<ArticleVO> list = articleMapperCustom.queryAllMyHisArticle(userId);
+		for (ArticleVO a : list) {
+			// 为每篇文章添加图片列表
+			a.setImgList(articleImageMapper.getArticleImgs(a.getId()));
+			// 添加和关于用户的点赞关系
+			a.setIsLike(isUserLikeArticle(userId, a.getId()));
+			// 添加标签列表
+			if (!StringUtils.isBlank(a.getTags())) {
+				String[] tagList = a.getTags().split("#");
+				List<String> finalTagList = new ArrayList<String>();
+				for (String tag : tagList) {
+					if(!StringUtils.isBlank(tag)) {
+						finalTagList.add(tag);
+					}
+				}
+				a.setTagList(finalTagList);
+			}
+		}
+		System.out.print(list.size());
+		PageInfo<ArticleVO> pageList = new PageInfo<>(list);
+		
+		PagedResult pagedResult = new PagedResult();
+		pagedResult.setPage(page);
+		pagedResult.setTotal(pageList.getPages());
+		pagedResult.setRows(list);
+		pagedResult.setRecords(pageList.getTotal());
+		
+		return pagedResult;
+		
+	}
+
+	@Transactional(propagation = Propagation.SUPPORTS)
+	@Override
+	public PagedResult gerOtherslegalHisArticle(Integer page, Integer pageSize, String userId, String targetId) {
+		
+		PageHelper.startPage(page, pageSize);
+		List<ArticleVO> list = articleMapperCustom.queryOthersLegalHisArticle(targetId);
+		for (ArticleVO a : list) {
+			// 为每篇文章添加图片列表
+			a.setImgList(articleImageMapper.getArticleImgs(a.getId()));
+			// 添加和关于用户的点赞关系
+			a.setIsLike(isUserLikeArticle(targetId, a.getId()));
+			// 添加标签列表
+			if (!StringUtils.isBlank(a.getTags())) {
+				String[] tagList = a.getTags().split("#");
+				List<String> finalTagList = new ArrayList<String>();
+				for (String tag : tagList) {
+					if(!StringUtils.isBlank(tag)) {
+						finalTagList.add(tag);
+					}
+				}
+				a.setTagList(finalTagList);
+			}
+		}
+		PageInfo<ArticleVO> pageList = new PageInfo<>(list);
+		
+		PagedResult pagedResult = new PagedResult();
+		pagedResult.setPage(page);
+		pagedResult.setTotal(pageList.getPages());
+		pagedResult.setRows(list);
+		pagedResult.setRecords(pageList.getTotal());
+		
+		return pagedResult;
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Override
+	public void addViewCount(String articleId) {
+		articleMapperCustom.addViewCount(articleId);
 	}
 
 }

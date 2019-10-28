@@ -178,6 +178,8 @@
 					this.tagColorList.push(tagColors[random]);
 				}
 			}
+			
+			this.addViewCount();
 		},
 		
 		onShareAppMessage(res) {
@@ -192,14 +194,29 @@
 		},
 		
 		methods: {
+			addViewCount(){
+				uni.request({
+					url: this.$serverUrl + '/article/addViewCount',
+					method: 'POST',
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					data: {
+						userId: this.userInfo.id,
+						articleId: this.articleCard.id
+					},
+					success: (res) => {
+						
+					},
+				})
+			},
+			
 			popTextArea(e){
 				console.log("展开");
 				console.log(e);
 				console.log(e.detail.height);
 				this.textAreaAdjust =  e.detail.height/3 + 'px' ;
-			
 				// this.textAreaAdjust = '0' ;
-			
 			},
 
 			unpopTextArea(e){

@@ -60,6 +60,7 @@ public class ArticleController extends BasicController {
 	@ApiOperation(value = "查询全部文章", notes = "查询全部文章的接口")
 	@ApiImplicitParams({
 		// userId 查询用户和文章的点赞关系
+		// dataType 为 String, 应该改为 Integer
 		@ApiImplicitParam(name = "userId", value = "操作者id", required = true, dataType = "String", paramType = "form"),
 		@ApiImplicitParam(name = "page", value = "页数", required = true, dataType = "String", paramType = "form"),
 		@ApiImplicitParam(name = "pageSize", value = "每页大小", required = true, dataType = "String", paramType = "form") })
@@ -75,6 +76,39 @@ public class ArticleController extends BasicController {
 		PagedResult result = articleService.getAllArticles(page, pageSize, userId);
 
 		return JSONResult.ok(result);
+	}
+	
+	@ApiOperation(value = "查询我的发布的文章和他人发布的文章", notes = "查看他人时只能查看status为1的, 查询自己时,可显示所有status")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "page", value = "页数", required = true, dataType = "Integer", paramType = "form"),
+		@ApiImplicitParam(name = "pageSize", value = "每页大小", required = true, dataType = "Integer", paramType = "form"),
+		@ApiImplicitParam(name = "userId", value = "操作者id", required = true, dataType = "String", paramType = "form"),
+		@ApiImplicitParam(name = "targetId", value = "目标查询者id", required = true, dataType = "String", paramType = "form")
+	})
+	@PostMapping("/queryPublishHistory")
+	public JSONResult queryPublishHistory(Integer page, Integer pageSize, String userId, String targetId) {
+		
+		PagedResult finalResult = new PagedResult();
+		
+		if(page == null) {
+			page = 1;
+		}
+		if(pageSize == null) {
+			pageSize = PAGE_SIZE;
+		}
+		if(userId.equals(targetId)) {
+			// 查询所有状态的文章
+			PagedResult result = articleService.getAllMyHisArticle(page, pageSize, userId);
+			finalResult = result;
+		} else if (!userId.equals(targetId)) {
+			// 查询他人文章状态为1的文章
+			PagedResult result = articleService.gerOtherslegalHisArticle(page, pageSize, userId, targetId);
+			finalResult = result;
+		}
+		
+		
+		return JSONResult.ok(finalResult);
+		
 	}
 	
 	@ApiOperation(value = "按文章 id 查询文章", notes = "查询全部文章的接口")
@@ -509,4 +543,19 @@ public class ArticleController extends BasicController {
 		}
 		return JSONResult.ok(dataList);
 	}
+	
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "userId", required = true, dataType = "String", paramType = "form"),
+		@ApiImplicitParam(name = "articleId", required = true, dataType = "String", paramType = "form") })
+	@PostMapping("/addViewCount")
+	public JSONResult addViewCount(String userId, String articleId) {
+		String key = "VIEW_COUNT:" + userId + articleId;
+		String value = redis.get(key);
+		if (StringUtils.isBlank(value)) {
+			redis.set(key, "ture", 7200); //两小时内不重复计算浏览量
+			articleService.addViewCount(articleId);
+		}
+		return JSONResult.ok();
+	}
+	
 }

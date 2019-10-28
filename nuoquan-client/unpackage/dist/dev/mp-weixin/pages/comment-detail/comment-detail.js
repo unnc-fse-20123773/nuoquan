@@ -122,7 +122,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var sonCommentBox = function sonCommentBox() {return __webpack_require__.e(/*! import() | pages/comment-detail/sonCommentBox */ "pages/comment-detail/sonCommentBox").then(__webpack_require__.bind(null, /*! ./sonCommentBox.vue */ 241));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var sonCommentBox = function sonCommentBox() {return __webpack_require__.e(/*! import() | pages/comment-detail/sonCommentBox */ "pages/comment-detail/sonCommentBox").then(__webpack_require__.bind(null, /*! ./sonCommentBox.vue */ 247));};var _default =
 
 
 

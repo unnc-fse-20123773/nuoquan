@@ -22,11 +22,14 @@
 						+ 添加标签
 					</view>
 					<!-- TODO: 字数未区分中英文，下一个版本要加 -->
-					<input v-if="showInputTagArea" v-model="articleTag" focus="true" placeholder="请输入标签..." @blur="checkInput" maxlength="10" />
+					<input v-if="showInputTagArea" v-model="articleTag" focus="true" placeholder="请输入标签..." @blur="checkInput"
+					 maxlength="10" />
+
 				</view>
 			</view>
 			<textarea placeholder="内容" class="content" v-model="articleContent" maxlength="140" :show-confirm-bar="false"></textarea>
 			<view style="display: flex;justify-content: space-between;color: #353535;font-size: 13px;line-height: 28px;height: 24px;">
+				<view>还可以输入</view>
 				<view>{{140 - articleContent.length}}字</view>
 			</view>
 
@@ -85,8 +88,7 @@
 				sizeTypeIndex: 0,
 				sizeType: ['压缩', '原图', '压缩或原图'],
 				countIndex: 8,
-				count: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-				residualInputLength: 140,
+				count: [1, 2, 3, 4, 5, 6, 7, 8, 9]
 			}
 		},
 		onUnload() {
