@@ -212,6 +212,7 @@ __webpack_require__.r(__webpack_exports__);
           'content-type': 'application/x-www-form-urlencoded' },
 
         success: function success(res) {
+          console.log(res);
           // that.isPassingReComment = false;
           // that.reCommentListFromDetail = '';
           if (res.data.status == 200) {

@@ -1,26 +1,26 @@
-/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/User.java
-/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/ArticleImage.java
-/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/enums/MsgSignFlagEnum.java
-/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/SearchRecord.java
-/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/vo/UserLikeVO.java
-/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/enums/StatusEnum.java
-/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/netty/DataContent.java
-/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/UserFans.java
-/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/enums/MsgActionEnum.java
-/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/ChatMsg.java
-/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/vo/WxRes.java
-/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/vo/UserArticleCommentVO.java
-/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/UserReport.java
-/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/vo/UserVO.java
-/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/vo/FansFollow.java
-/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/Administrator.java
-/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/UserLikeComment.java
-/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/ArticleTags.java
-/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/UserLikeArticle.java
-/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/vo/ArticleVO.java
-/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/UserArticleComment.java
-/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/Article.java
-/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/vo/AccessTokenResult.java
-/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/netty/ChatMessage.java
-/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/netty/NoticeCard.java
-/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/vo/UserFansVO.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\vo\WxRes.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\UserArticleComment.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\netty\NoticeCard.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\ChatMsg.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\vo\AccessTokenResult.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\enums\MsgSignFlagEnum.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\Article.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\vo\FansFollow.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\SearchRecord.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\UserReport.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\UserLikeArticle.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\vo\UserFansVO.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\vo\UserVO.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\ArticleImage.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\vo\UserLikeVO.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\enums\MsgActionEnum.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\vo\ArticleVO.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\netty\ChatMessage.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\UserLikeComment.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\vo\UserArticleCommentVO.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\netty\DataContent.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\enums\StatusEnum.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\User.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\Administrator.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\ArticleTags.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-pojo\src\main\java\com\nuoquan\pojo\UserFans.java
