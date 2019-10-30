@@ -9,7 +9,7 @@
 		<view class="bottomBar" id="chatarea">
 			<textarea fixed="true" cursor-spacing="20" auto-height="true" v-model="textMsg" :show-confirm-bar="false"/>
 			<view class="icons">
-				<button><image src="../../static/icon/viewLocalPic.png"></image></button>
+				<button @click="showToast()"><image src="../../static/icon/viewLocalPic.png"></image></button>
 <!-- 				<button><image src="../../static/icon/emoji.png"></image></button>
  -->				<button @click="sendText(textMsg)"><image src="../../static/icon/littlePlane.png"></image></button>
 			</view>
@@ -133,6 +133,15 @@
 		},
 		
 		methods: {
+			showToast() {
+				uni.showToast({
+					// title: '⠀⠀⠀⠀⠀under⠀⠀⠀⠀⠀development',//不是空格，是特殊符号，莫删
+					title: '开发小哥正在玩命实现中...',
+					duration: 2000,
+					icon: 'none',
+				})
+			},
+			
 			scroll(e){
 				// console.log(e.detail);
 			},

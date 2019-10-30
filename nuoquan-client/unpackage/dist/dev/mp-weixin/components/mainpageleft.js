@@ -201,7 +201,7 @@ name: 'mainpageleft';var _default =
     showToast: function showToast() {
       uni.showToast({
         // title: '⠀⠀⠀⠀⠀under⠀⠀⠀⠀⠀development',//不是空格，是特殊符号，莫删
-        title: '上课不要玩手机',
+        title: '开发小哥正在玩命实现中...',
         duration: 2000,
         icon: 'none' });
 

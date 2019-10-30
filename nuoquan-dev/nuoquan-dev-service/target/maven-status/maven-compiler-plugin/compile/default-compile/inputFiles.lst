@@ -1,6 +1,15 @@
+<<<<<<< HEAD
 /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-service/src/main/java/com/nuoquan/service/ArticleServiceImpl.java
 /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-service/src/main/java/com/nuoquan/service/UserService.java
 /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-service/src/main/java/com/nuoquan/service/WeChatService.java
 /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-service/src/main/java/com/nuoquan/service/UserServiceImpl.java
 /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-service/src/main/java/com/nuoquan/service/WeChatServiceImpl.java
 /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-service/src/main/java/com/nuoquan/service/ArticleService.java
+=======
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-service\src\main\java\com\nuoquan\service\UserServiceImpl.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-service\src\main\java\com\nuoquan\service\ArticleServiceImpl.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-service\src\main\java\com\nuoquan\service\WeChatServiceImpl.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-service\src\main\java\com\nuoquan\service\UserService.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-service\src\main\java\com\nuoquan\service\WeChatService.java
+C:\Users\WalkingDemon\Desktop\Git NQ\nuoquan\nuoquan-dev\nuoquan-dev-service\src\main\java\com\nuoquan\service\ArticleService.java
+>>>>>>> ea97eaaf4523e4a008355c5032529f40c6dc5f4b

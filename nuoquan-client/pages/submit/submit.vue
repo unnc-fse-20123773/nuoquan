@@ -375,6 +375,8 @@
 		margin-top: 13px;
 		vertical-align: bottom;
 		min-height: 42px;
+		max-height: 62px;
+		overflow: hidden;
 	}
 
 	.tag {
