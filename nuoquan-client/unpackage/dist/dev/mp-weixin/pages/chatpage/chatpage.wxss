@@ -236,6 +236,21 @@ page{
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	/**
 	 * TODO： 滚动区域高度需固定
 	 * 					by Jerrio
@@ -245,11 +260,11 @@ page{
 		display: -webkit-flex;
 		display: -ms-flexbox;
 		display: flex;
-		margin-top: 30rpx;
+		/* margin-top: 30upx; */
 		margin-bottom: 90rpx;
 		background: #F5F5F5;
 		width: 100%;
-		height: 94%;
+		/* height: 94%; */
 }
 .bottomBar.data-v-7e9ec58b {
 		position: fixed;

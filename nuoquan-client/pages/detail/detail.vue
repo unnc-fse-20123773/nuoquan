@@ -80,7 +80,7 @@
 					<view class="submit" @click="saveComment()"></view>
 					<textarea class="commentSth" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
 					 adjust-position="false" v-model="commentContent" @click.stop="" :show-confirm-bar="false" @focus="popTextArea"
-					 @blur="unpopTextArea" cursor-spacing='-76' />
+					 @blur="unpopTextArea" cursor-spacing='20' />
 					</view>
             </view>
 		</view> 
@@ -765,6 +765,7 @@
 		left:0;
 		z-index: 40;
 	}
+	
 	.commentPart {
 		box-shadow: 0px 1px 5px 0px rgba(139, 139, 139, 0.32);
 		position:absolute;
@@ -787,16 +788,18 @@
 		margin-bottom: 7px;
 		display: inline-block;
 	}
-.submit{
-	display: inline-block;
-	width: 21px;
-	height:21px;
-	background: url(../../static/icon/arrow-right.png);
-	background-size: 14px 14px;
-	background-repeat: no-repeat;
-	background-position:center;
-	float:right;
-}
+	
+	.submit{
+		display: inline-block;
+		width: 21px;
+		height:21px;
+		background: url(../../static/icon/arrow-right.png);
+		background-size: 14px 14px;
+		background-repeat: no-repeat;
+		background-position:center;
+		float:right;
+	}
+	
 	.commentSth {
 		width: calc(670upx - 20px);
 		border: solid 1px #FCC041;

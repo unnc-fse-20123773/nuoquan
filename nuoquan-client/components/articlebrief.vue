@@ -381,9 +381,7 @@
 		position: absolute;
 		bottom:3.75px;
 		left:30px;
-		min-width: 55px;
-		width:20%;
-		max-width: 104px;
+		max-width: 24%;
 		height:17.5px;
 		white-space:nowrap; 
 		overflow: hidden;
