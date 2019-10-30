@@ -1,5 +1,9 @@
 
 .oneArticle {
+		width: 690rpx;
+		position: relative;
+}
+.swipe-contain{
 		position: relative;
 		width: 626rpx;
 		padding-left: 28rpx;
@@ -10,7 +14,7 @@
 		border-radius: 12.5px;
 		margin-bottom: 15px;
 }
-.oneArticleWithPic{
+.swipe_contain_withPic{
 		height:130px;
 }
 .title {
@@ -122,5 +126,19 @@
 		border-radius: 12.5px;
 /* 		box-shadow: ;
  */
+}
+.menu-area{
+	 width:60px;
+	 height: 100%;
+	 position: absolute;
+	 right:0;
+	 top:0;
+}
+.menu-area view {
+	 height:calc(50% - 5px);
+	 background: #E80080;
+	 border-radius: 10px;
+	 font-size: 10px;
+	 text-align:center;
 }
 

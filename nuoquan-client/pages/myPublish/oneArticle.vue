@@ -1,41 +1,51 @@
 <template>
 
 
-	<view class="oneArticle" :class="{ oneArticleWithPic : thisArticle.imgList.length!=0 }">
-		<view class="title">
-			{{ thisArticle.articleTitle }}
-		</view>
-		<view class="cardBody">
-			<view class="left-body" :class="{ leftBodyWithPic : thisArticle.imgList.length!=0 }">
-				<view class="content">
-					{{ thisArticle.articleContent }}
+	<view class="oneArticle" >
+		<view class="swipe-contain" :class="{ swipe_contain_withPic : thisArticle.imgList.length!=0 }" 
+        :style="{'transform':messageIndex == i ? transformX : 'translateX(0px)',
+		'-webkit-transform':messageIndex == i ? transformX : 'translateX(0px)'}" 		
+		@touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd" @touchcancel="touchEnd"
+		>
+			<view class="title">
+				{{ thisArticle.articleTitle }}
+			</view>
+			<view class="cardBody">
+				<view class="left-body" :class="{ leftBodyWithPic : thisArticle.imgList.length!=0 }">
+					<view class="content">
+						{{ thisArticle.articleContent }}
+					</view>
+					<view class="bottomBar">
+						<view class="time">
+							{{ thisArticle.createDate | timeDeal}}
+						</view>
+						<view class="comment">
+							<image src="../../static/icon/comment.png"></image>
+							<view> {{thisArticle.likeNum}}</view>
+						</view>
+						<view class="like">
+							<image v-if="!thisArticle.isLike"  src="../../static/icon/like.png" ></image>
+							<image v-if="thisArticle.isLike"  src="../../static/icon/liked-red.png" ></image>
+							<view> {{thisArticle.likeNum}}</view>
+						</view>
+					</view>
 				</view>
-				<view class="bottomBar">
-					<view class="time">
-						{{ thisArticle.createDate | timeDeal}}
-					</view>
-					<view class="comment">
-						<image src="../../static/icon/comment.png"></image>
-						<view> {{thisArticle.likeNum}}</view>
-					</view>
-					<view class="like">
-						<image v-if="!thisArticle.isLike"  src="../../static/icon/like.png" ></image>
-						<image v-if="thisArticle.isLike"  src="../../static/icon/liked-red.png" ></image>
-						<view> {{thisArticle.likeNum}}</view>
-					</view>
+				<view class="picArea" v-if="thisArticle.imgList.length">
+					<image src="../../static/icon/about.png"></image>
+					<view class="picNum"></view>
 				</view>
 			</view>
-			<view class="picArea" v-if="thisArticle.imgList.length">
-				<image src="../../static/icon/about.png"></image>
-				<view class="picNum"></view>
-			</view>
+			
+			<!-- 审核状态 -->
+			<view class="status" style="width:45px;background: #09BB07;" v-if="articleCard.status==1">√  审核通过</view>
+			<view class="status" style="width:36.5px;background: #3370FF;" v-if="articleCard.status==0">···  审核中</view>
+			<view class="status" style="width:51.5px;background: #888888;" v-if="articleCard.status==-1">❌  审核失败</view>
 		</view>
-		
-		<!-- 审核状态 -->
-		<view class="status" style="width:45px;background: #09BB07;" v-if="articleCard.status==1">√  审核通过</view>
-		<view class="status" style="width:36.5px;background: #3370FF;" v-if="articleCard.status==0">···  审核中</view>
-		<view class="status" style="width:51.5px;background: #888888;" v-if="articleCard.status==-1">❌  审核失败</view>
-		
+
+		<view class="menu-area" >
+			<view style="margin-bottom: 10px;">删除</view>
+			<view>收起</view>
+		</view>
 	</view>
 </template>
 
@@ -48,6 +58,7 @@
 		data() {
 			return {
 				thisArticle: this.articleCard, // 转为局部变量
+				transformX: 'translateX(0px)',
 
 
 
@@ -254,24 +265,17 @@
 				debugger;
 			},
 			
+			
+			
 			//以下方程为控制左滑删除的部分 ref： swipe-acton in messageLish
-			touchStart(event) {
-				console.log("start");
-				console.log(event);
-				console.log(event.currentTarget.dataset);
-				console.log(event.currentTarget.dataset.disabled)
-				debugger;
-				if (event.currentTarget.dataset.disabled === true) {
-					return;
-				}
+			touchStart(event) {				
+				// if (event.currentTarget.dataset.disabled === true) {
+				// 	return;
+				// }
 				this.startX = event.touches[0].pageX;
 				this.startY = event.touches[0].pageY;
 			},
 			touchMove(event) {
-				console.log("move");
-				console.log(event);
-				debugger;
-				
 				if (this.direction === 'Y' || event.currentTarget.dataset.disabled === true) {
 					this.direction = '';
 					return;
@@ -309,7 +313,6 @@
 				this.endMove(event)
 			},
 			endMove(event) {
-				debugger;
 				console.log("endMove");
 				console.log(event);
 			
@@ -336,6 +339,10 @@
 
 <style>
 	.oneArticle {
+		width: 690upx;
+		position: relative;
+}
+	.swipe-contain{
 		position: relative;
 		width: 626upx;
 		padding-left: 28upx;
@@ -346,7 +353,7 @@
 		border-radius: 12.5px;
 		margin-bottom: 15px;
 	}
-	.oneArticleWithPic{
+	.swipe_contain_withPic{
 		height:130px;
 	}
 
@@ -474,4 +481,18 @@
 		border-radius: 12.5px;
 /* 		box-shadow: ;
  */	}
+ .menu-area{
+	 width:60px;
+	 height: 100%;
+	 position: absolute;
+	 right:0;
+	 top:0;
+ }
+ .menu-area view {
+	 height:calc(50% - 5px);
+	 background: #E80080;
+	 border-radius: 10px;
+	 font-size: 10px;
+	 text-align:center;
+ }
 </style>
