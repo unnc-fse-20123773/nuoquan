@@ -2,6 +2,9 @@
 -- +  Database update  +
 -- +++++++++++++++++++++
 
+ALTER TABLE `nuoquan`.`user` 
+CHANGE COLUMN `nickname` `nickname` VARCHAR(45) CHARACTER SET 'utf8mb4' NOT NULL ;
+
 -- v19.10.3 @author: Deyan
 ALTER TABLE `nuoquan`.`user_article_comment` 
 ADD COLUMN `status` INT(11) NOT NULL DEFAULT '1' AFTER `sign_flag`;

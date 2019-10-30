@@ -69,6 +69,7 @@
 			</commentbox>
 			<!-- 用于推出评论下方空白 -->
 			<view name="marginHelper" style="height: 50px;width: 100%;background-color: white;"></view>
+<!-- 			发表评论按钮 -->
 			<view class="bottomLayerOfSubmit">
 				<view class="submitComment" @click="controlInput(1)">发 表 评 论</view>
 			</view>
@@ -161,7 +162,7 @@
 		
 		onLoad(options) {
 			this.articleCard = JSON.parse(options.data);
-			// console.log(this.articleCard);
+			console.log(this.articleCard);
 			var userInfo = this.getGlobalUserInfo();
 			if (!this.isNull(userInfo)) {
 				this.userInfo = this.getGlobalUserInfo();
@@ -177,17 +178,45 @@
 					this.tagColorList.push(tagColors[random]);
 				}
 			}
+			
+			this.addViewCount();
+		},
+		
+		onShareAppMessage(res) {
+			if (res.from === 'menu') {// 来自右上角菜单的分享
+				var navData = JSON.stringify(this.articleCard);
+				console.log(navData)
+				return {
+					title: '来，给老子看！',
+					path: '/pages/detail/detail?data=' + navData
+				}
+			}
 		},
 		
 		methods: {
+			addViewCount(){
+				uni.request({
+					url: this.$serverUrl + '/article/addViewCount',
+					method: 'POST',
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					data: {
+						userId: this.userInfo.id,
+						articleId: this.articleCard.id
+					},
+					success: (res) => {
+						
+					},
+				})
+			},
+			
 			popTextArea(e){
 				console.log("展开");
 				console.log(e);
 				console.log(e.detail.height);
 				this.textAreaAdjust =  e.detail.height/3 + 'px' ;
-			
 				// this.textAreaAdjust = '0' ;
-			
 			},
 
 			unpopTextArea(e){

@@ -21,7 +21,6 @@ org/n3r/idworker/IdWorker.class
 org/n3r/idworker/Test.class
 org/n3r/idworker/utils/HttpReq.class
 org/n3r/idworker/utils/Props.class
-com/nuoquan/enums/ArticleStatusEnums.class
 org/n3r/idworker/utils/Utils.class
 org/n3r/idworker/utils/Props$Silent.class
 org/n3r/idworker/strategy/FileLock.class

@@ -134,7 +134,8 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var comment = function comment() {return __webpack_require__.e(/*! import() | components/comment */ "components/comment").then(__webpack_require__.bind(null, /*! ../../components/comment */ 172));};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var comment = function comment() {return __webpack_require__.e(/*! import() | components/comment */ "components/comment").then(__webpack_require__.bind(null, /*! ../../components/comment */ 180));};
+
 
 
 
@@ -297,7 +298,7 @@ var uploadFlag = false;var _default =
 
   onLoad: function onLoad(options) {
     this.articleCard = JSON.parse(options.data);
-    // console.log(this.articleCard);
+    console.log(this.articleCard);
     var userInfo = this.getGlobalUserInfo();
     if (!this.isNull(userInfo)) {
       this.userInfo = this.getGlobalUserInfo();
@@ -313,17 +314,45 @@ var uploadFlag = false;var _default =
         this.tagColorList.push(tagColors[random]);
       }
     }
+
+    this.addViewCount();
+  },
+
+  onShareAppMessage: function onShareAppMessage(res) {
+    if (res.from === 'menu') {// 来自右上角菜单的分享
+      var navData = JSON.stringify(this.articleCard);
+      console.log(navData);
+      return {
+        title: '来，给老子看！',
+        path: '/pages/detail/detail?data=' + navData };
+
+    }
   },
 
   methods: {
+    addViewCount: function addViewCount() {
+      uni.request({
+        url: this.$serverUrl + '/article/addViewCount',
+        method: 'POST',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        data: {
+          userId: this.userInfo.id,
+          articleId: this.articleCard.id },
+
+        success: function success(res) {
+
+        } });
+
+    },
+
     popTextArea: function popTextArea(e) {
       console.log("展开");
       console.log(e);
       console.log(e.detail.height);
       this.textAreaAdjust = e.detail.height / 3 + 'px';
-
       // this.textAreaAdjust = '0' ;
-
     },
 
     unpopTextArea: function unpopTextArea(e) {

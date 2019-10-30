@@ -273,13 +273,13 @@ page{
 .bottomBar textarea.data-v-7e9ec58b {
 		display: inline-block;
 		height: 16px;
-		width: 522rpx;
-		padding:0 8rpx;
-		min-height: 50rpx;
-		max-height: 95px;
+		line-height: 16px;
+		width: 558rpx;
+		max-height: 75px;
 		border-radius: 24rpx;
 		border: solid 1px #C6C6C6;
-		margin: 22px 0 22px 14rpx;
+		padding:5px 16rpx;
+		margin: 11px 0 11px 28rpx;
 		font-size: 13px;
 }
 .icons.data-v-7e9ec58b {
@@ -287,9 +287,10 @@ page{
 		display: -webkit-inline-flex;
 		display: -ms-inline-flexbox;
 		display: inline-flex;
-		width: 146rpx;
+		width: 90rpx;
 		height: 90rpx;
 		margin-left: 18rpx;
+		margin-right: 24rpx;
 		-webkit-box-pack: justify;
 		-webkit-justify-content: space-between;
 		    -ms-flex-pack: justify;

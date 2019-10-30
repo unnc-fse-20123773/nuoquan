@@ -47,18 +47,18 @@
 		</view>
 		<view class="menubar">
 			<!-- 点赞&评论蒙层，用于优化体验 -->
-			<view style="position: absolute;z-index: 20;height: 100%;width: 80upx;right: 0;" @tap="swLikeArticle"></view>
-			<view style="position: absolute;z-index: 20;height: 100%;width: 80upx;right: 80upx;" @click="jumpToDetail()"></view>
+			<view style="position: absolute;z-index: 20;height: 30px;width: 80upx;top:0;right: 0;" @tap="swLikeArticle"></view>
+			<view style="position: absolute;z-index: 20;height: 30px;width: 80upx;top:0;right: 40px;" @click="jumpToDetail()"></view>
 			<image :src="thisArticle.faceImg" class="touxiang" @tap="goToPersonPublic(thisArticle.userId)"></image>
 			<view class="name">{{ thisArticle.nickname }}</view>
 			<view class="time">{{ thisArticle.createDate | timeDeal}}</view>
 
 			<view class="icons">
-				<image class="comment" src="../static/icon/comment.png" ></image>
-				<view class="icon" >{{thisArticle.commentNum}}</view>
-				<image v-if="!thisArticle.isLike" class="like" src="../static/icon/like.png" ></image>
-				<image v-if="thisArticle.isLike" class="like" src="../static/icon/liked-red.png" ></image>
-				<view class="icon"  >{{thisArticle.likeNum}}</view>
+				<image class="comment" src="../static/icon/comment.png" style="right: 65px;"></image>
+				<view class="icon" style="right:49px;">{{thisArticle.commentNum}}</view>
+				<image v-if="!thisArticle.isLike" class="like" src="../static/icon/like.png" style="right:22px;bottom:3.75px;"></image>
+				<image v-if="thisArticle.isLike" class="like" src="../static/icon/liked-red.png" style="right:22px;bottom:3.75px;"></image>
+				<view class="icon" style="right:6px;">{{thisArticle.likeNum}}</view>
 			</view>
 		</view>
 	</view>
@@ -342,30 +342,51 @@
 		vertical-align: middle;
 		margin-left: 15px;
 		border-radius: 8px;
-		height: 32px;
+		height: 25px;
 	}
 	
 	.touxiang {
 		border-radius: 30px;
 		width: 20px;
 		height: 20px;
-		margin-right: 5px;
+		margin-right: 10px;
 		vertical-align: middle;
 	}
-
+    .touxiang::after{
+		content: "";
+		position: absolute;
+		height:30px;
+		width:30px;
+		left:-5px;
+		top:0;
+	
+	
+	}
 	.name {
 		display: inline-block;
-		font-size: 10px;
-		margin-left: 7px;
+		font-size: 13px;
 		color: #888888;
-		padding-bottom: 5px;
+		position: absolute;
+		bottom:3.75px;
+		left:30px;
+		width:80px;
+		height:17.5px;
+		white-space:nowrap; 
+		overflow: hidden;
+		text-overflow: ellipsis;
+		
 	}
 
 	.time {
 		display: inline-block;
-		font-size: 10px;
-		margin-left: 25px;
+		font-size: 12px;
 		color: #888888;
+		position: absolute;
+		left:calc(50% - 24px);
+		bottom: 1.75px;
+		width:48px;
+		height:17.5px;
+		text-align: center;
 	}
 
 	.icons {
@@ -373,33 +394,39 @@
 		right: 0;
 		bottom: 0;
 		z-index: 10;
-		width: 206upx;
+		width: 100px;
+		height:25px;
 		text-align: right;
+		vertical-align: bottom;
 		display: inline-block;
 		background-image: url(../static/BG/iconsBG.png);
-		background-size: cover;
+		background-size:cover;
 		background-repeat: no-repeat;
-		
 		overflow: hidden;
 		border-bottom-right-radius: 8px;
-		background-size: cover;
+
 	}
 
 	.icons image {
-		position: relative;
+		position: absolute;
 		/* G添加相对位置 */
-		width: 11px;
-		height: 11px;
-		padding-right: 5px;
+		width: 16px;
+		height: 17.5px;
+		vertical-align: bottom;
+		bottom:2px;
 	}
 	
 	.icon {
+		position: absolute;
+		bottom:2.75px;
 		display: inline-block;
 		color: #353535;
-		font-size: 10px;
-		padding-right: 11px;
+		font-size: 13px;
 		text-align: center;
-		vertical-align: middle;
+		width:16px;
+		height:17.5px;
+		text-align: center;
+		vertical-align: bottom;
 	}
 
 	

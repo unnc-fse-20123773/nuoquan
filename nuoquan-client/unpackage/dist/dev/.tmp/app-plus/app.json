@@ -8,21 +8,21 @@
     "pages/profile/profile",
     "pages/personpublic/personpublic",
     "pages/search/search",
-    "pages/fanslist/fanslist",
     "pages/black-index/black-index",
     "pages/signin/signin",
     "components/articlebrief",
     "pages/messagelist/messagelist",
     "pages/wechatLogin/wechatLogin",
-    "pages/cmt-likedetail/cmt-likedetail"
+    "pages/cmt-likedetail/cmt-likedetail",
+    "pages/comment-detail/comment-detail",
+    "pages/userDeal/userDeal"
   ],
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-app",
+    "navigationBarTitleText": "Nottinghome",
     "navigationBarBackgroundColor": "#fdd041",
     "backgroundColor": "#F8F8F8"
   },
-  "usingComponents": {},
   "nvueCompiler": "weex",
   "renderer": "auto",
   "splashscreen": {
@@ -30,5 +30,6 @@
     "autoclose": false
   },
   "appname": "nuoquan",
-  "compilerVersion": "2.2.2"
+  "compilerVersion": "2.3.3",
+  "usingComponents": {}
 }

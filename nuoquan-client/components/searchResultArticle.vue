@@ -7,7 +7,7 @@
 			
 		</view>
 		<view class="tags">
-			<view class="tag" v-for="(i, index) in articleCard.tagList" v-bind:key="index">{{ i}}</view>
+			<view class="tag" :style="{background: tagColorList[index]}" v-for="(i, index) in articleCard.tagList" v-bind:key="index">{{ i}}</view>
 		</view>
 		<view class="menubar">
 			<image :src="articleCard.faceImg" class="touxiang"></image>
@@ -26,20 +26,18 @@
 		},
 		data() {
 			return {
-				taglist: [
-					['123', 'background:#40A792'],
-					['13', 'background:#621E81'],
-					['163', 'background:#738598'],
-					['标签', 'background:#F3AE4B'],
-					['13', 'background:#621E81'],
-					['163', 'background:#738598'],
-					['123', 'background:#40A792'],
-					['13', 'background:#621E81']
-				]
+				tagColorList: [],
 			};
 		},
 		created() {
-			// console.log(this.articleCard);
+			// 随机生成颜色
+			if (!this.isNull(this.articleCard.tagList)){
+				var tagColors = this.tagColors;
+				for (var i = 0; i < this.articleCard.tagList.length; i++) {
+					var random = Math.floor(Math.random() * tagColors.length);
+					this.tagColorList.push(tagColors[random]);
+				}
+			}
 		},
 		filters: {
 			timeDeal(timediff) {

@@ -131,6 +131,7 @@
 		line-height: 30px;
 }
 .reCommentsArea.data-v-63d0092f {
+		margin-top: 5px;
 		background: #EEEEEE;
 		width: 500rpx;
 		padding: 14px 25rpx 11px;

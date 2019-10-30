@@ -179,6 +179,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -195,7 +198,9 @@ var sizeType = [
 
 
 var uploadFlag = false; // 标志文章正在上传，为 true 时 block 该方法
-var _default = {
+var requestTask;
+var uploadTasks = [];var _default =
+{
   data: function data() {
     return {
       userInfo: '',
@@ -216,8 +221,7 @@ var _default = {
       sizeTypeIndex: 0,
       sizeType: ['压缩', '原图', '压缩或原图'],
       countIndex: 8,
-      count: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-      residualInputLength: 140 };
+      count: [1, 2, 3, 4, 5, 6, 7, 8, 9] };
 
   },
   onUnload: function onUnload() {
@@ -333,11 +337,30 @@ var _default = {
       uni.showLoading({
         title: "正在上传..." });
 
+
+      setTimeout(function () {
+        if (uploadFlag) {
+          uploadFlag = false; // 解锁
+          uni.hideLoading();
+          uni.showToast({
+            title: "网络未知错误",
+            icon: "none",
+            duration: 1000 });
+
+          // TODO: 终止上传
+          for (var task in uploadTasks) {
+            console.log(task);
+            task.abort();
+          };
+          requestTask.abort();
+        }
+      }, 5000); // 延时5s timeout
+
       setTimeout(function () {
         me.combineTagToString();
 
         var serverUrl = me.$serverUrl;
-        uni.request({
+        requestTask = uni.request({
           url: serverUrl + '/article/uploadArticle',
           method: 'POST',
           data: {
@@ -357,7 +380,7 @@ var _default = {
                 var articleId = res.data.data;
                 var resCount = 0;
                 for (var i = 0; i < me.imageList.length; i++) {
-                  uni.uploadFile({
+                  uploadTasks[i] = uni.uploadFile({
                     url: _this2.$serverUrl + '/article/uploadArticleImg',
                     filePath: me.imageList[i],
                     name: 'file',
