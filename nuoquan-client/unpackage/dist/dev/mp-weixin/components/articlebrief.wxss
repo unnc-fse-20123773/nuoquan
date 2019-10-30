@@ -10,13 +10,13 @@ image {
 } */
 
 
-.articlecard.data-v-774fa287 {
+.articlecard.data-v-67451924 {
 	width: 650rpx;
 	border-radius: 8px;
 	margin: 11px auto 0;
 	background-color: #ffffff;
 }
-.title.data-v-774fa287 {
+.title.data-v-67451924 {
 	margin: 16px 25px 0 25px;
 	font-size: 15px;
 	font: MicrosoftYaHei;
@@ -28,7 +28,7 @@ image {
 	word-break: break-all;
 	white-space: normal;
 }
-.briefarticleCard.data-v-774fa287 {
+.briefarticleCard.data-v-67451924 {
 	max-height: 500rpx;
 	margin: 10px 13px 0 15px;
 	font-size: 13px;
@@ -45,7 +45,7 @@ image {
 	-webkit-line-clamp: 15;
 	overflow: hidden;
 }
-.briefarticleCard-text.data-v-774fa287{
+.briefarticleCard-text.data-v-67451924{
 	font-size: 13px;
 	color: #3D3D3D;
 	white-space: pre-line;
@@ -54,11 +54,11 @@ image {
 	   text-overflow: ellipsis;
 	/**文字隐藏后添加省略号*/
 }
-.tags.data-v-774fa287 {
+.tags.data-v-67451924 {
 	margin-left: 10px;
 	min-height: 10px;
 }
-.tag.data-v-774fa287 {
+.tag.data-v-67451924 {
 	display: inline-block;
 	border-radius: 4px;
 	padding-left: 5px;
@@ -69,40 +69,40 @@ image {
 	font-size: 10px;
 	background: #621E81;
 }
-.tag-empty.data-v-774fa287 {
+.tag-empty.data-v-67451924 {
 	margin-left: 10px;
 	height: 15px;
 	width: auto;
 	background-color: white;
 }
-.menubar.data-v-774fa287 {
+.menubar.data-v-67451924 {
 	position: relative;
 	vertical-align: middle;
 	margin-left: 15px;
 	border-radius: 8px;
 	height: 32px;
 }
-.touxiang.data-v-774fa287 {
+.touxiang.data-v-67451924 {
 	border-radius: 30px;
 	width: 20px;
 	height: 20px;
 	margin-right: 5px;
 	vertical-align: middle;
 }
-.name.data-v-774fa287 {
+.name.data-v-67451924 {
 	display: inline-block;
 	font-size: 10px;
 	margin-left: 7px;
 	color: #888888;
 	padding-bottom: 5px;
 }
-.time.data-v-774fa287 {
+.time.data-v-67451924 {
 	display: inline-block;
 	font-size: 10px;
 	margin-left: 25px;
 	color: #888888;
 }
-.icons.data-v-774fa287 {
+.icons.data-v-67451924 {
 	position: absolute;
 	right: 0;
 	bottom: 0;
@@ -118,14 +118,14 @@ image {
 	border-bottom-right-radius: 8px;
 	background-size: cover;
 }
-.icons image.data-v-774fa287 {
+.icons image.data-v-67451924 {
 	position: relative;
 	/* G添加相对位置 */
 	width: 11px;
 	height: 11px;
 	padding-right: 5px;
 }
-.icon.data-v-774fa287 {
+.icon.data-v-67451924 {
 	display: inline-block;
 	color: #353535;
 	font-size: 10px;
@@ -133,7 +133,7 @@ image {
 	text-align: center;
 	vertical-align: middle;
 }
-.picturearea-one.data-v-774fa287 {
+.picturearea-one.data-v-67451924 {
 	/* margin: auto; */
 	display: -webkit-box;
 	display: -webkit-flex;
@@ -142,7 +142,7 @@ image {
 	width: 94%;
 	margin-left: 3%;
 }
-.picturearea-mul.data-v-774fa287 {
+.picturearea-mul.data-v-67451924 {
 	position: relative;
 	margin: auto;
 	display: -webkit-box;
