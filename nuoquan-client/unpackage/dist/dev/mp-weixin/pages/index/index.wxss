@@ -104,7 +104,9 @@ image {
 		position: absolute;
 		bottom:3.75px;
 		left:30px;
-		width:80px;
+		min-width: 55px;
+		width:20%;
+		max-width: 104px;
 		height:17.5px;
 		white-space:nowrap; 
 		overflow: hidden;
@@ -116,9 +118,9 @@ image {
 		font-size: 12px;
 		color: #888888;
 		position: absolute;
-		left:calc(50% - 24px);
+		left:calc(50% - 47px);
 		bottom: 1.75px;
-		width:48px;
+		width:78px;
 		height:17.5px;
 		text-align: center;
 }
