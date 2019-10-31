@@ -122,13 +122,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var oneArticle = function oneArticle() {return __webpack_require__.e(/*! import() | pages/myPublish/oneArticle */ "pages/myPublish/oneArticle").then(__webpack_require__.bind(null, /*! ./oneArticle.vue */ 256));};
-
-
-
-
-
-
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var oneArticle = function oneArticle() {return __webpack_require__.e(/*! import() | pages/myPublish/oneArticle */ "pages/myPublish/oneArticle").then(__webpack_require__.bind(null, /*! ./oneArticle.vue */ 256));};
 
 
 
@@ -146,17 +140,85 @@ __webpack_require__.r(__webpack_exports__);
 
 var loadArticleFlag = false; // 为加载文章加锁
 var _default = {
-
   components: {
     oneArticle: oneArticle },
 
   data: function data() {
     return {
       userInfo: '',
-      myArticleList: [],
       totalPage: 1,
       currentPage: 1,
-      totalNum: '0' };
+
+      totalNum: '5',
+      binNum: '12',
+      myArticleList: [_defineProperty({
+
+        articleContent: '哈哈哈↵↵哈哈哈↵哈哈哈哈',
+        articleTitle: '分段测试',
+        commentNum: 0,
+        createDate: 1571836849000,
+        dislikeNum: 0,
+        faceImg: 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKIk4xLLJS0Ksg5gr65QKG1gGsf0V4eFLVyXOh9sU0XsOqib4xVGCDZjlU8ugB1Ooial8ibnPtxtatHQ/132',
+        faceImgThumb: null,
+        id: '191023G6HF6C8P6W',
+        imgList: ['1'],
+        isAnonymous: 0,
+        isLike: false,
+        likeNum: 0,
+        nickname: 'Jerrio❤️',
+        popularity: 0,
+        status: 1,
+        tagList: null,
+        tags: '',
+        userId: 'oDwsO5HhYCIAP0AVpS4jRTLCvFlM',
+        viewNum: 0 }, "status",
+      1),
+
+      {
+        articleContent:
+        '我是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣辉↵',
+        articleTitle: 'hello2hello2hello2hello2hello2hello2hello2hello2hello2hello2hello2hello2hello2hello2hello2hello2hello2hello2hello2hello2',
+        commentNum: 1,
+        createDate: 1571745782000,
+        dislikeNum: 0,
+        faceImg: 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIvu8KVDia1G08KbQMeycm8Uf6dicb39xq9bwChM1qaRGGdWgL8qWSeROShbt3yVvOPMpib9ObfZurxA/132',
+        faceImgThumb: null,
+        id: '191022F8N2S98ARP',
+        imgList: [],
+        isAnonymous: 0,
+        isLike: false,
+        likeNum: 1,
+        nickname: '我是Guetta',
+        popularity: 0,
+        tagList: ['tag1', 'tag2'],
+        tags: '#找对象',
+        userId: 'oDwsO5Mjxnj2-O1yXl064bOQbELQ',
+        viewNum: 0,
+        status: 0 },
+
+      {
+        articleContent:
+        '我是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣是渣渣辉↵',
+        articleTitle: 'hello2hello2hello2hello2hello2hello2hello2hello2hello2hello2hello2hello2hello2hello2hello2hello2hello2hello2hello2hello2',
+        commentNum: 1,
+        createDate: 1571745782000,
+        dislikeNum: 0,
+        faceImg: 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIvu8KVDia1G08KbQMeycm8Uf6dicb39xq9bwChM1qaRGGdWgL8qWSeROShbt3yVvOPMpib9ObfZurxA/132',
+        faceImgThumb: null,
+        id: '191022F8N2S985RP',
+        imgList: [],
+        isAnonymous: 0,
+        isLike: false,
+        likeNum: 1,
+        nickname: '我是Guetta',
+        popularity: 0,
+        tagList: ['tag1', 'tag2'],
+        tags: '#找对象',
+        userId: 'oDwsO5Mjxnj2-O1yXl064bOQbELQ',
+        viewNum: 0,
+        status: -1 }] };
+
+
 
   },
 
@@ -164,7 +226,7 @@ var _default = {
     var userInfo = this.getGlobalUserInfo();
     if (this.isNull(userInfo)) {
       uni.redirectTo({
-        url: "../signin/signin" });
+        url: '../signin/signin' });
 
       return;
     } else {
@@ -175,6 +237,7 @@ var _default = {
     var page = this.currentPage;
     this.showArticles(page);
   },
+
   methods: {
     // 锁
     showArticles: function showArticles(page) {
@@ -183,15 +246,15 @@ var _default = {
       }
       loadArticleFlag = true;
       uni.showLoading({
-        title: "加载中..." });
+        title: '加载中...' });
 
       setTimeout(function () {
         if (loadArticleFlag) {
           loadArticleFlag = false; //解锁
           uni.hideLoading();
           uni.showToast({
-            title: "网络未知错误",
-            icon: "none",
+            title: '网络未知错误',
+            icon: 'none',
             duration: 1000 });
 
         }
@@ -200,7 +263,7 @@ var _default = {
       var that = this;
       uni.request({
         url: that.$serverUrl + '/article/queryPublishHistory',
-        method: "POST",
+        method: 'POST',
         data: {
           page: page,
           userId: that.userInfo.id,
@@ -210,7 +273,8 @@ var _default = {
           'content-type': 'application/x-www-form-urlencoded' },
 
         success: function success(res) {
-          setTimeout(function () {//延时加载
+          setTimeout(function () {
+            //延时加载
             uni.hideLoading();
             loadArticleFlag = false;
 
@@ -222,8 +286,8 @@ var _default = {
             var oldArticleList = that.myArticleList;
             that.myArticleList = oldArticleList.concat(newArticleList);
             that.currentPage = page;
-            that.totalPage = res.data.data.total;
-            that.totalNum = res.data.data.records;
+            that.totalPage = res.dat.data.total;
+            that.totalNum = res.data.ata.records;
             console.log(that.totalNum);
           }, 300);
         },
@@ -231,7 +295,7 @@ var _default = {
           uni.hideLoading();
           loadArticleFlag = false;
 
-          console.log("index unirequest fail");
+          console.log('index unirequest fail');
           console.log(res);
         } });
 
@@ -246,8 +310,8 @@ var _default = {
       if (currentPage == totalPage) {
         // that.showArticles(1);
         uni.showToast({
-          title: "没有更多文章了",
-          icon: "none",
+          title: '没有更多文章了',
+          icon: 'none',
           duration: 1000 });
 
       } else {

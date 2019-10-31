@@ -77,6 +77,10 @@ button::after {
 	margin-top: 15px;
 	font-size: 15px;
 	color: #888888;
+	-webkit-user-select: auto;
+	   -moz-user-select: auto;
+	    -ms-user-select: auto;
+	        user-select: auto;
 }
 .introduction-contentBox {
 	position: relative;

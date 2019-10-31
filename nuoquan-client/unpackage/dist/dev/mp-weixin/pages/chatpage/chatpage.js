@@ -148,6 +148,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var _vuex = __webpack_require__(/*! vuex */ 16);function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var onemessage = function onemessage() {return __webpack_require__.e(/*! import() | pages/chatpage/oneMessage */ "pages/chatpage/oneMessage").then(__webpack_require__.bind(null, /*! ./oneMessage */ 187));};
 
+var query = wx.createSelectorQuery();
+
 var page = 1; // PS: 非显示属性不放在渲染层
 var chatKey;
 var chatHistory;var _default =
@@ -176,8 +178,9 @@ var chatHistory;var _default =
       scrollToView: '',
 
       userInfo: '',
-      friendInfo: '' };
-
+      friendInfo: '',
+      textareaHeight: '' //聊天内容高度
+    };
   },
 
   computed: _objectSpread({},
@@ -233,6 +236,18 @@ var chatHistory;var _default =
       } });
 
 
+    //动态改变聊天内容高度
+    //获取输入框高度
+    var query = uni.createSelectorQuery();
+    query.select('#chatarea').boundingClientRect();
+    query.exec(function (res) {
+      console.log(res);
+      console.log(res[0].height);
+      //屏幕高度 - 输入框高度，赋值给聊天内容
+      that.textareaHeight = that.windowHeight - res[0].height - 5 + 'px';
+      console.log(that.textareaHeight);
+    });
+
     // 获取与该用户的聊天历史记录
     chatKey = "chat-" + this.userInfo.id + "-" + this.friendInfo.id;
     chatHistory = this.getListByKey(chatKey);
@@ -244,6 +259,15 @@ var chatHistory;var _default =
   },
 
   methods: {
+    showToast: function showToast() {
+      uni.showToast({
+        // title: '⠀⠀⠀⠀⠀under⠀⠀⠀⠀⠀development',//不是空格，是特殊符号，莫删
+        title: '开发小哥正在玩命实现中...',
+        duration: 2000,
+        icon: 'none' });
+
+    },
+
     scroll: function scroll(e) {
       // console.log(e.detail);
     },

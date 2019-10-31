@@ -77,10 +77,10 @@
 			<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)">
 				<view class="commentPart" @click.stop="" :style="{bottom: textAreaAdjust }">
 					<view class="emoji"></view>
-					<view class="submit" @click="saveComment()"></view>
+					<view class="submit" @click="saveComment()">发表</view>
 					<textarea class="commentSth" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
 					 adjust-position="false" v-model="commentContent" @click.stop="" :show-confirm-bar="false" @focus="popTextArea"
-					 @blur="unpopTextArea" cursor-spacing='-76' />
+					 @blur="unpopTextArea" cursor-spacing='20' />
 					</view>
             </view>
 		</view> 
@@ -716,7 +716,7 @@
 	
 	.icom{
 		position: absolute;
-		right: 74upx;
+		left: 60%;
 		font-size: 13px;
 		z-index: 10;
 	}
@@ -765,6 +765,7 @@
 		left:0;
 		z-index: 40;
 	}
+	
 	.commentPart {
 		box-shadow: 0px 1px 5px 0px rgba(139, 139, 139, 0.32);
 		position:absolute;
@@ -789,13 +790,17 @@
 	}
 .submit{
 	display: inline-block;
-	width: 21px;
+	width: 42px;
+	position: relative;
+	top:3px;
 	height:21px;
-	background: url(../../static/icon/arrow-right.png);
-	background-size: 14px 14px;
+/* 	background: url(../../static/icon/arrow-right.png);
+ */	background-size: 14px 14px;
 	background-repeat: no-repeat;
 	background-position:center;
 	float:right;
+	font-size: 14px;
+	color: #FCC041;
 }
 	.commentSth {
 		width: calc(670upx - 20px);

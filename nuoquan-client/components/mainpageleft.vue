@@ -26,7 +26,8 @@
 		<view class="personPageList">
 			<!-- TODO: 最好把 view 都改成 button 并加上样式 
 											  by Jerrio -->
-			<button class="pageLine" @click="goToMyPublish">
+			<!-- <button class="pageLine" @click="goToMyPublish"> -->
+			<button class="pageLine" @click="showToast()">
 				<image src="../static/icon/write.png"></image>
 				<view>我的发布</view>
 				<!-- <view class="noticeNum">3</view> -->
@@ -93,7 +94,7 @@
 			showToast() {
 				uni.showToast({
 					// title: '⠀⠀⠀⠀⠀under⠀⠀⠀⠀⠀development',//不是空格，是特殊符号，莫删
-					title: '上课不要玩手机',
+					title: '开发小哥正在玩命实现中...',
 					duration: 2000,
 					icon: 'none',
 				})
