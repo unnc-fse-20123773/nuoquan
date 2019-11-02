@@ -80,7 +80,7 @@
 					<view class="submit" @click="saveComment()">发表</view>
 					<textarea class="commentSth" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
 					 adjust-position="false" v-model="commentContent" @click.stop="" :show-confirm-bar="false" @focus="popTextArea"
-					 @blur="unpopTextArea" cursor-spacing='-76' fixed="true"/>
+					 @blur="unpopTextArea" cursor-spacing='20' />
 					</view>
             </view>
 		</view> 
@@ -178,17 +178,45 @@
 					this.tagColorList.push(tagColors[random]);
 				}
 			}
+			
+			this.addViewCount();
+		},
+		
+		onShareAppMessage(res) {
+			if (res.from === 'menu') {// 来自右上角菜单的分享
+				var navData = JSON.stringify(this.articleCard);
+				console.log(navData)
+				return {
+					title: '来，给老子看！',
+					path: '/pages/detail/detail?data=' + navData
+				}
+			}
 		},
 		
 		methods: {
+			addViewCount(){
+				uni.request({
+					url: this.$serverUrl + '/article/addViewCount',
+					method: 'POST',
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					data: {
+						userId: this.userInfo.id,
+						articleId: this.articleCard.id
+					},
+					success: (res) => {
+						
+					},
+				})
+			},
+			
 			popTextArea(e){
 				console.log("展开");
 				console.log(e);
 				console.log(e.detail.height);
 				this.textAreaAdjust =  e.detail.height/3 + 'px' ;
-			
 				// this.textAreaAdjust = '0' ;
-			
 			},
 
 			unpopTextArea(e){
@@ -688,7 +716,7 @@
 	
 	.icom{
 		position: absolute;
-		right: 74upx;
+		left: 60%;
 		font-size: 13px;
 		z-index: 10;
 	}
@@ -737,6 +765,7 @@
 		left:0;
 		z-index: 40;
 	}
+	
 	.commentPart {
 		box-shadow: 0px 1px 5px 0px rgba(139, 139, 139, 0.32);
 		position:absolute;

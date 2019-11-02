@@ -22,11 +22,14 @@
 						+ 添加标签
 					</view>
 					<!-- TODO: 字数未区分中英文，下一个版本要加 -->
-					<input v-if="showInputTagArea" v-model="articleTag" focus="true" placeholder="请输入标签..." @blur="checkInput" maxlength="10" />
+					<input v-if="showInputTagArea" v-model="articleTag" focus="true" placeholder="请输入标签..." @blur="checkInput"
+					 maxlength="10" />
+
 				</view>
 			</view>
 			<textarea placeholder="内容" class="content" v-model="articleContent" maxlength="140" :show-confirm-bar="false"></textarea>
 			<view style="display: flex;justify-content: space-between;color: #353535;font-size: 13px;line-height: 28px;height: 24px;">
+				<view>还可以输入</view>
 				<view>{{140 - articleContent.length}}字</view>
 			</view>
 
@@ -62,6 +65,8 @@
 	]
 
 	var uploadFlag = false; // 标志文章正在上传，为 true 时 block 该方法
+	var requestTask;
+	var uploadTasks = [];
 	export default {
 		data() {
 			return {
@@ -83,8 +88,7 @@
 				sizeTypeIndex: 0,
 				sizeType: ['压缩', '原图', '压缩或原图'],
 				countIndex: 8,
-				count: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-				residualInputLength: 140,
+				count: [1, 2, 3, 4, 5, 6, 7, 8, 9]
 			}
 		},
 		onUnload() {
@@ -200,11 +204,30 @@
 				uni.showLoading({
 					title: "正在上传..."
 				})
+				
+				setTimeout(()=>{
+					if(uploadFlag){
+						uploadFlag = false // 解锁
+						uni.hideLoading();
+						uni.showToast({
+							title: "网络未知错误",
+							icon: "none",
+							duration: 1000
+						})
+						// TODO: 终止上传
+						for (let task in uploadTasks) {
+							console.log(task)
+							task.abort();
+						};
+						requestTask.abort();
+					}
+				}, 5000); // 延时5s timeout
+				
 				setTimeout(() => {
 					me.combineTagToString();
 
 					var serverUrl = me.$serverUrl;
-					uni.request({
+					requestTask = uni.request({
 						url: serverUrl + '/article/uploadArticle',
 						method: 'POST',
 						data: {
@@ -224,7 +247,7 @@
 									const articleId = res.data.data;
 									var resCount = 0
 									for (var i = 0; i < me.imageList.length; i++) {
-										uni.uploadFile({
+										uploadTasks[i] = uni.uploadFile({
 											url: this.$serverUrl + '/article/uploadArticleImg',
 											filePath: me.imageList[i],
 											name: 'file',

@@ -1,15 +1,15 @@
 <!-- 本页面的 websocket 应写在 messagelist 里-->
 <template>
 	<view style="height:100%;width:100%;background: #F5F5F5;">
-		<scroll-view class="messageArea" scroll-y="true" @scrolltoupper="loadMore" @scroll="scroll" :scroll-into-view="scrollToView">
+		<scroll-view class="messageArea" :style="{height:textareaHeight}" scroll-y="true" @scrolltoupper="loadMore" @scroll="scroll" :scroll-into-view="scrollToView">
 			<onemessage v-for="(item,index) in chatContent" :key=index :thisMessage='item' :userInfo="userInfo" :friendInfo="friendInfo"
 			 :id="item.id"></onemessage>
 			<view class="marginHelper"></view>
 		</scroll-view>
-		<view class="bottomBar">
-			<textarea auto-height="true" v-model="textMsg" :show-confirm-bar="false"/>
+		<view class="bottomBar" id="chatarea">
+			<textarea fixed="true" cursor-spacing="20" auto-height="true" v-model="textMsg" :show-confirm-bar="false"/>
 			<view class="icons">
-				<button><image src="../../static/icon/viewLocalPic.png"></image></button>
+				<button @click="showToast()"><image src="../../static/icon/viewLocalPic.png"></image></button>
 <!-- 				<button><image src="../../static/icon/emoji.png"></image></button>
  -->				<button @click="sendText(textMsg)"><image src="../../static/icon/littlePlane.png"></image></button>
 			</view>
@@ -21,7 +21,9 @@
 <script>
 	import onemessage from './oneMessage';
 	import {mapState} from 'vuex';
-
+	
+	var query = wx.createSelectorQuery();
+	
 	var page = 1; // PS: 非显示属性不放在渲染层
 	var chatKey;
 	var chatHistory;
@@ -51,6 +53,7 @@
 				
 				userInfo: '',
 				friendInfo: '',
+				textareaHeight: '', //聊天内容高度
 			}
 		},
 		
@@ -107,6 +110,18 @@
 			  }
 			});
 			
+			//动态改变聊天内容高度
+				//获取输入框高度
+			var query = uni.createSelectorQuery();
+			query.select('#chatarea').boundingClientRect()
+			query.exec(function(res){
+				console.log(res);
+				console.log(res[0].height);
+				//屏幕高度 - 输入框高度，赋值给聊天内容
+				that.textareaHeight = that.windowHeight - res[0].height - 5 + 'px';
+				console.log(that.textareaHeight);
+			})
+			
 			// 获取与该用户的聊天历史记录
 			chatKey = "chat-" + this.userInfo.id + "-" + this.friendInfo.id;
 			chatHistory = this.getListByKey(chatKey);
@@ -118,6 +133,15 @@
 		},
 		
 		methods: {
+			showToast() {
+				uni.showToast({
+					// title: '⠀⠀⠀⠀⠀under⠀⠀⠀⠀⠀development',//不是空格，是特殊符号，莫删
+					title: '开发小哥正在玩命实现中...',
+					duration: 2000,
+					icon: 'none',
+				})
+			},
+			
 			scroll(e){
 				// console.log(e.detail);
 			},
@@ -235,11 +259,11 @@
 	 */
 	.messageArea {
 		display: flex;
-		margin-top: 30upx;
+		/* margin-top: 30upx; */
 		margin-bottom: 90upx;
 		background: #F5F5F5;
 		width: 100%;
-		height: 94%;
+		/* height: 94%; */
 	}
 	
 	.bottomBar {

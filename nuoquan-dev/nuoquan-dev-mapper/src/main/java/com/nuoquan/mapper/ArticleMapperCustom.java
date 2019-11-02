@@ -37,13 +37,6 @@ public interface ArticleMapperCustom extends MyMapper<Article> {
 	public List<ArticleVO> searchArticleContentYang(@Param("searchKeywords") String searchKeywords);
 	
 	/**
-	 * 为文章增加 num 的浏览量
-	 * @param articleId
-	 * @param num
-	 */
-	public void addViewNum(String articleId, int num);
-	
-	/**
 	 * 按公式更新热度
 	 * (24小时内的点赞数+24小时内的评论数)
 	 */
@@ -61,5 +54,24 @@ public interface ArticleMapperCustom extends MyMapper<Article> {
 	 * @return
 	 */
 	public ArticleVO getArticleById(String articleId);
+
+	/**
+	 * 按userId获取本人发布的所有文章
+	 * @return
+	 */
+	public List<ArticleVO> queryAllMyHisArticle(String userId);
+
+	/**
+	 * 按targetId获取他人的, status为1的所有文章
+	 * @param targetId
+	 * @return
+	 */
+	public List<ArticleVO> queryOthersLegalHisArticle(String targetId);
+	
+	/**
+	 * 浏览量+1
+	 * @param articleId
+	 */
+	public void addViewCount(String articleId);
 	
 }

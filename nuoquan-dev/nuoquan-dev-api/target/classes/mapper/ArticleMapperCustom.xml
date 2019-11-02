@@ -25,7 +25,6 @@
   </resultMap>
   
   <select id="queryAllArticles" resultMap="BaseResultMap">
-  	
  	select a.*, u.nickname as nickname, u.face_img, u.face_img_thumb from nuoquan.article a
    	left join nuoquan.user u on u.id = a.user_id
   	where
@@ -110,4 +109,26 @@ select * from (
   		and a.id = #{articleId}
   </select>
   
+  <select id="queryAllMyHisArticle" resultMap="BaseResultMap" parameterType="String">
+  	select a.*, u.nickname as nickname, u.face_img, u.face_img_thumb from nuoquan.article a
+  	left join nuoquan.user u on u.id = a.user_id
+  	where
+  		 1 = 1
+  		 and a.user_id = #{userId}
+  	order by a.create_date desc
+  </select>
+  
+  <select id="queryOthersLegalHisArticle" resultMap="BaseResultMap" parameterType="String">
+  	select a.*, u.nickname as nickname, u.face_img, u.face_img_thumb from nuoquan.article a
+  	left join nuoquan.user u on u.id = a.user_id
+  	where
+  		1 = 1
+  		and a.user_id = #{targetId}
+  		and a.status = 1
+  	order by a.create_date desc
+  </select>
+  
+  <update id="addViewCount" parameterType="String">
+  	update article set view_num=view_num+1 where id=#{articleId}
+  </update>
 </mapper>

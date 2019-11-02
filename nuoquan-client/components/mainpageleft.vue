@@ -26,6 +26,7 @@
 		<view class="personPageList">
 			<!-- TODO: 最好把 view 都改成 button 并加上样式 
 											  by Jerrio -->
+			<!-- <button class="pageLine" @click="goToMyPublish"> -->
 			<button class="pageLine" @click="showToast()">
 				<image src="../static/icon/write.png"></image>
 				<view>我的发布</view>
@@ -90,6 +91,15 @@
 		},
 		
 		methods: {
+			showToast() {
+				uni.showToast({
+					// title: '⠀⠀⠀⠀⠀under⠀⠀⠀⠀⠀development',//不是空格，是特殊符号，莫删
+					title: '开发小哥正在玩命实现中...',
+					duration: 2000,
+					icon: 'none',
+				})
+			},
+			
 			goToMessageListPage() {
 				this.$store.commit('setMyMsgCount', 0);
 				uni.navigateTo({
@@ -103,15 +113,6 @@
 				});
 			},
 			
-			showToast() {
-				uni.showToast({
-					// title: '⠀⠀⠀⠀⠀under⠀⠀⠀⠀⠀development',//不是空格，是特殊符号，莫删
-					title: '上课不要玩手机',
-					duration: 2000,
-					icon: 'none',
-				})
-			},
-			
 			/**
 			 * @param {Object} currentTab 0: 关注 1: 粉丝
 			 */
@@ -122,6 +123,12 @@
 				}
 				uni.navigateTo({
 					url: '../followlist/followlist?data=' + JSON.stringify(data),
+				});
+			},
+			
+			goToMyPublish() {
+				uni.navigateTo({
+					url: '../myPublish/myPublish',
 				});
 			},
 		},

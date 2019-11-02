@@ -66,11 +66,11 @@
 	    ,{
             "path" : "pages/userDeal/userDeal",
             "style" : {}
-        }
-        ,{
-            "path" : "pages/myPublish/myPublish",
-            "style" : {}
-        }
+        },
+		{
+			"path" : "pages/myPublish/myPublish",
+			"style" : {}
+		}
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

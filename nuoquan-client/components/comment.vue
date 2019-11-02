@@ -356,7 +356,7 @@
 
 	.icom {
 		position: absolute;
-		right: 74upx;
+		left: 60%;
 		font-size: 13px;
 		z-index: 10;
 	}
