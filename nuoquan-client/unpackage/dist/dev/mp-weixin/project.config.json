@@ -112,6 +112,12 @@
           "query": "",
           "id": 13,
           "pathName": "pages/myPublish/myPublish"
+        },
+        {
+          "name": "关于",
+          "query": "",
+          "id": 14,
+          "pathName": "pages/about/about"
         }
       ]
     }
