@@ -63,7 +63,7 @@
 </template>
 
 <script>
-	import sonCommentBox from './sonCommentBox.vue'
+	import sonCommentBox from '../detail/sonCommentBox.vue'
 	export default {
 		components: {
 			sonCommentBox,

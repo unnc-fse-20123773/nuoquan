@@ -188,6 +188,71 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var me;var _default =
 
@@ -197,30 +262,32 @@ var me;var _default =
       scrollLeft: 0,
       isClickChange: false,
       currentTab: 0,
-      menuTabs: [{
+      menuTabs: [
+      {
         name: '动态' },
+
       {
         name: '帖子' },
+
       {
         name: '点赞' },
+
       {
         name: '评论' }],
 
 
-      swiperDateList: [
-      [],
-      [],
-      [],
-      [],
-      [],
-      []],
 
+      swiperDateList: [[], [], [], [], [], []],
 
       screenWidth: 350,
-      serverUrl: "",
+      serverUrl: '',
 
       thisUserInfo: '',
-      myPublic: false };
+      myPublic: false,
+      windowHeight: 0,
+      windowWidth: 0,
+      yellowBottom: '',
+      cardWidth: '' };
 
   },
 
@@ -257,6 +324,22 @@ var me;var _default =
 
     // [测试代码块]
     // this.mySocket.init()
+
+    //获取屏幕宽高
+    var that = this;
+    uni.getSystemInfo({
+      success: function success(res) {
+        that.windowHeight = res.windowHeight;
+        that.windowWidth = res.windowWidth;
+      } });
+
+    //获取黄色头部位置
+    that.yellowBottom = that.windowHeight - 150 * (that.windowHeight / 720) + 'px';
+    console.log(that.yellowBottom);
+
+    // 获取卡片宽度
+    that.cardWidth = that.windowWidth - 26 + 'px';
+    console.log(that.cardWidth);
   },
 
   onPullDownRefresh: function onPullDownRefresh() {
@@ -268,6 +351,7 @@ var me;var _default =
 
   methods: {
     swichMenu: function () {var _swichMenu = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(current) {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:if (!(
+
                 this.currentTab == current)) {_context.next = 4;break;}return _context.abrupt("return",
                 false);case 4:
 
@@ -289,14 +373,21 @@ var me;var _default =
                 winWidth = uni.getSystemInfoSync().windowWidth;
                 this.scrollLeft = leftWidthSum > winWidth ? leftWidthSum - winWidth : 0;case 12:case "end":return _context3.stop();}}}, _callee3, this);}));function setScrollLeft(_x3) {return _setScrollLeft.apply(this, arguments);}return setScrollLeft;}(),
 
-    getWidth: function getWidth(id) {//得到元素的宽高
+    getWidth: function getWidth(id) {
+      //得到元素的宽高
       return new Promise(function (res, rej) {
-        uni.createSelectorQuery().select("#" + id).fields({
+        uni.createSelectorQuery().
+        select('#' + id).
+        fields(
+        {
           size: true,
           scrollOffset: true },
+
         function (data) {
           res(data);
-        }).exec();
+        }).
+
+        exec();
       });
     },
     loadMore: function loadMore(tabIndex) {
@@ -307,11 +398,11 @@ var me;var _default =
         * 添加关注
         */
     addFollow: function addFollow(userId) {
-      console.log("加关注...");
+      console.log('加关注...');
       var that = this;
       uni.request({
         url: that.$serverUrl + '/user/follow',
-        method: "POST",
+        method: 'POST',
         data: {
           userId: userId,
           fanId: me.id },
@@ -331,11 +422,11 @@ var me;var _default =
         * 取消关注
         */
     cancelFollow: function cancelFollow(userId) {
-      console.log("取关...");
+      console.log('取关...');
       var that = this;
       uni.request({
         url: that.$serverUrl + '/user/dontFollow',
-        method: "POST",
+        method: 'POST',
         data: {
           userId: userId,
           fanId: me.id },
@@ -363,7 +454,7 @@ var me;var _default =
         * @param {Object} currentTab 0: 关注 1: 粉丝
         */
     goToFansFollow: function goToFansFollow(currentTab) {
-      console.log("goToFansFollow...");
+      console.log('goToFansFollow...');
       var data = {
         currentTab: currentTab,
         thisUserInfo: this.thisUserInfo };
@@ -381,7 +472,7 @@ var me;var _default =
       var that = this;
       uni.request({
         url: that.$serverUrl + '/user/queryUserWithFollow',
-        method: "POST",
+        method: 'POST',
         data: {
           userId: userId,
           fanId: me.id },
@@ -400,7 +491,7 @@ var me;var _default =
 
             // 设置title
             uni.setNavigationBarTitle({
-              title: that.thisUserInfo.nickname + "的主页" });
+              title: that.thisUserInfo.nickname + '的主页' });
 
           }
         } });
