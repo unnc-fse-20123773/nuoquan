@@ -29,14 +29,14 @@
 								<view> {{thisArticle.likeNum}}</view>
 							</view>
 							<view class="view">
-								<image src="../../static/icon/view_num_temp.PNG"></image>
- <!-- 								第二版不显示图片总数了，此处注释掉 -->		
+								<image src="../../static/icon/eye-888888.png"></image>
+								<view>{{thisArticle.viewNum}}</view>
 					</view>
 						</view>
 					</view>
 					<view class="picArea" v-if="thisArticle.imgList.length">
-						<image src="../../static/icon/about.png"></image>
-						<view class="picNum"></view>
+						<image :src="serverUrl + thisArticle.imgList[0].imagePath"></image>
+	 <!-- 						<view class="picNum"></view>第二版不显示图片总数了，此处注释掉 -->	
 					</view>
 				</view>
 				
@@ -71,6 +71,7 @@
 		},
 		data() {
 			return {
+				serverUrl: this.$serverUrl,
 				transformX: 'translateX(0px)',
 				messageIndex: -1,
 				direction:"",
@@ -181,7 +182,7 @@
 		height:121px;
      	box-shadow:0px 0px 4px rgba(0,0,0,0.16);
 		border-radius: 12.5px;
-		margin-bottom: 15px;
+		margin-bottom: 20px;
 	}
 
 	.title {

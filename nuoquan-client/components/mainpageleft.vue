@@ -27,7 +27,7 @@
 			<!-- TODO: 最好把 view 都改成 button 并加上样式 
 											  by Jerrio -->
 			<!-- <button class="pageLine" @click="goToMyPublish"> -->
-			<button class="pageLine" @click="showToast()">
+			<button class="pageLine" @click=" goToMessageMyPoblish">
 				<image src="../static/icon/write.png"></image>
 				<view>我的发布</view>
 				<!-- <view class="noticeNum">3</view> -->
@@ -99,11 +99,16 @@
 					icon: 'none',
 				})
 			},
+			goToMessageMyPoblish() {
+				uni.navigateTo({
+					url: '../myPublish/myPublish',
+				});
+			},
 			
 			goToMessageListPage() {
 				this.$store.commit('setMyMsgCount', 0);
 				uni.navigateTo({
-					url: '../messagelist/messagelist',
+					url: '../pages/messagelist/messagelist',
 				});
 			},
 
