@@ -106,6 +106,7 @@
 	font-size: 17px;
 	color:#888888;
 	opacity:1;
+	padding-bottom: 30px;
 }
 .signin_bottom{
 	display: block;
@@ -227,9 +228,11 @@
 .picture{
 	border:1px;
 	border-style: dashed;
+	margin: 70px auto 10px;
 }
 .picture image{
+	margin: 60px auto 60px;
 	height:170px;
-	margin-bottom: 10px;
+	display:block;
 }
 </style>
