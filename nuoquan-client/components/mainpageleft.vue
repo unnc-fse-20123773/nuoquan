@@ -27,12 +27,12 @@
 			<!-- TODO: 最好把 view 都改成 button 并加上样式 
 											  by Jerrio -->
 			<!-- <button class="pageLine" @click="goToMyPublish"> -->
-			<button class="pageLine" @click="showToast()">
+			<button class="pageLine" @click=" goToMessageMyPoblish">
 				<image src="../static/icon/write.png"></image>
 				<view>我的发布</view>
 				<!-- <view class="noticeNum">3</view> -->
 			</button>
-			<button class="pageLine" @tap="goToMessageListPage">
+			<button class="pageLine" @click="goToMessageListPage">
 				<image src="../static/icon/message.png"></image>
 				<view>我的消息</view>
 				<view class="noticeNum" v-if="unreadMsgCount>0 && unreadMsgCount<=99"> {{unreadMsgCount}} </view>
@@ -98,6 +98,11 @@
 					duration: 2000,
 					icon: 'none',
 				})
+			},
+			goToMessageMyPoblish() {
+				uni.navigateTo({
+					url: '../myPublish/myPublish',
+				});
 			},
 			
 			goToMessageListPage() {

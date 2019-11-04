@@ -206,6 +206,11 @@ name: 'mainpageleft';var _default =
         icon: 'none' });
 
     },
+    goToMessageMyPoblish: function goToMessageMyPoblish() {
+      uni.navigateTo({
+        url: '../myPublish/myPublish' });
+
+    },
 
     goToMessageListPage: function goToMessageListPage() {
       this.$store.commit('setMyMsgCount', 0);

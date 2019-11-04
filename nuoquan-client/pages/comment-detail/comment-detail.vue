@@ -23,7 +23,7 @@
 								<!-- 此处点赞数量最长5位数，如超出样式出错 -->
 								<text class="likeNum" :class="{'liked':mainComment.isLike}">{{mainComment.likeNum}}</text>
 							</view>
-							<image src="../../static/icon/message.png" mode="aspectFill" class="commentIcon"></image>
+							<!-- <image src="../../static/icon/message.png" mode="aspectFill" class="commentIcon"></image> -->
 						</view>
 					</view>
 				</view>
@@ -394,7 +394,7 @@
 
 	.likeIcon {
 		position: absolute;
-		left: 5%;
+		left: 40%;
 		width: 18px;
 		height: 18px;
 		top: 8px;
@@ -403,7 +403,7 @@
 	.likeNum {
 		position: absolute;
 		top: 10px;
-		left: 26%;
+		left: 65%;
 		font-size: 12px;
 		color: #888888;
 	}
@@ -421,7 +421,7 @@
 	.son-likeNum{
 		position: absolute;
 		top: 10px;
-		right: 9%;
+		left: 65%;
 		font-size: 12px;
 		color: #888888;
 	}

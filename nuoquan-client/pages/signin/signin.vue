@@ -531,6 +531,7 @@
 		margin-top: 15px;
 		font-size: 15px;
 		color: #888888;
+		user-select: auto;
 	}
 
 	.introduction-contentBox {
