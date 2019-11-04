@@ -1,5 +1,5 @@
 <template>
-	<view style="width:100%;height:100%;margin:auto;">
+	<view style="width:100%;height:100%;margin:auto;background: #FFFFFF;">
 		<view class="top-bar">
 			<view class="totalNum">{{totalNum}}篇文章</view>
 			<!-- <view class="bin">

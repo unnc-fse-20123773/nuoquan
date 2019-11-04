@@ -122,7 +122,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -288,7 +288,16 @@ var _default =
         this.transformX = 'translateX(0px)';
       }
       this.direction = '';
+    },
+    //控制滑动结束，以下控制跳转detail
+    goToDetail: function goToDetail(thisArticle) {
+      //thisArticle用函数传入，因为v-for使用了ID为键名，所以无法筛选数据，就直接block传进来好了
+      var navData = JSON.stringify(thisArticle); // 这里转换成 字符串
+      uni.navigateTo({
+        url: '/pages/detail/detail?data=' + navData });
+
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

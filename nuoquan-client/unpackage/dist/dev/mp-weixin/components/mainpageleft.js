@@ -215,7 +215,7 @@ name: 'mainpageleft';var _default =
     goToMessageListPage: function goToMessageListPage() {
       this.$store.commit('setMyMsgCount', 0);
       uni.navigateTo({
-        url: '../pages/messagelist/messagelist' });
+        url: '../messagelist/messagelist' });
 
     },
 

@@ -1,11 +1,11 @@
 <template>
 <view style="width:100%;">
-	<block v-for="thisArticle in myArticleList" :key="thisArticle.id" @click="consoleEvent">
+	<block v-for="thisArticle in myArticleList" :key="thisArticle.id" >
 		<view class="oneArticle"  >
 			<view class="swipe-contain" 
 		    :style="{'transform':messageIndex == thisArticle.id ? transformX : 'translateX(0px)'}" 
 			:data-index="thisArticle.id"
-			@touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd" @touchcancel="touchEnd"
+			@touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd" @touchcancel="touchEnd" @click="goToDetail(thisArticle)"
 			>
 				<view class="title">
 					{{ thisArticle.articleTitle }}
@@ -164,6 +164,14 @@
 					this.transformX = 'translateX(0px)';
 				}
 				this.direction = '';
+			},
+			//控制滑动结束，以下控制跳转detail
+			goToDetail(thisArticle){
+				//thisArticle用函数传入，因为v-for使用了ID为键名，所以无法筛选数据，就直接block传进来好了
+				var navData = JSON.stringify(thisArticle); // 这里转换成 字符串
+				uni.navigateTo({
+					url: '/pages/detail/detail?data=' + navData
+				});
 			}
 		},
 	};
@@ -181,8 +189,10 @@
 		padding-right: 16px;
 		height:121px;
      	box-shadow:0px 0px 4px rgba(0,0,0,0.16);
-		border-radius: 12.5px;
+		border-radius: 8px;
 		margin-bottom: 20px;
+		z-index:10;
+		background: #FFFFFF;
 	}
 
 	.title {
@@ -309,12 +319,13 @@
 	 position: absolute;
 	 right:0;
 	 top:0;
+	 z-index:0;
  }
  .menu-area view {
 	 height:55px;
 	 width:48px;
 	 background: #E80080;
-	 border-radius: 10px;
+	 border-radius: 8px;
 	 font-size: 10px;
 	 text-align:center;
 	 margin-bottom: 11px;
