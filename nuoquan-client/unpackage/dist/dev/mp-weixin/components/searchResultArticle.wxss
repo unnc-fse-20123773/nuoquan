@@ -5,13 +5,13 @@ image {
 }
 
 
-.articlecard.data-v-18c529be {
+.articlecard.data-v-2fb2e558 {
 	width: 750rpx;
 	border-radius: 8px;
 	margin: 0 auto ;
 	background-color: #ffffff;
 }
-.title.data-v-18c529be {
+.title.data-v-2fb2e558 {
 	margin: 0px 25px 0 25px;
 	font-size: 15px;
 	font: MicrosoftYaHei;
@@ -19,7 +19,7 @@ image {
 	line-height: 19px;
 	padding-top: 10px;
 }
-.briefarticleCard.data-v-18c529be {
+.briefarticleCard.data-v-2fb2e558 {
 	max-height: 500rpx;
 	margin: 10px 25px 15px;
 	font-size: 13px;
@@ -35,10 +35,10 @@ image {
 	-webkit-line-clamp: 15;
 	overflow: hidden;
 }
-.tags.data-v-18c529be {
+.tags.data-v-2fb2e558 {
 	margin-left: 21px;
 }
-.tag.data-v-18c529be {
+.tag.data-v-2fb2e558 {
 	display: inline-block;
 	border-radius: 4px;
 	padding-left: 5px;
@@ -49,19 +49,19 @@ image {
 	font-size: 10px;
 	background: #621E81;
 }
-.menubar.data-v-18c529be {
+.menubar.data-v-2fb2e558 {
 	position: relative;
 	vertical-align: middle;
 	margin:0 25px;
 }
-.touxiang.data-v-18c529be {
+.touxiang.data-v-2fb2e558 {
 	border-radius: 30px;
 	width: 20px;
 	height: 20px;
 	margin-right: 5px;
 	vertical-align: middle;
 }
-.name.data-v-18c529be {
+.name.data-v-2fb2e558 {
 	display: inline-block;
 	font-size: 10px;
 	margin-left: 7px;
@@ -71,7 +71,7 @@ image {
 	-o-text-overflow: ellipsis;
 	   text-overflow: ellipsis;
 }
-.time.data-v-18c529be {
+.time.data-v-2fb2e558 {
 	position: absolute;
 	right: 0;
 	bottom: 5px;
@@ -83,7 +83,7 @@ image {
 	-o-text-overflow: ellipsis;
 	   text-overflow: ellipsis;
 }
-.picturearea.data-v-18c529be {
+.picturearea.data-v-2fb2e558 {
 	margin: auto;
 	display: -webkit-box;
 	display: -webkit-flex;
@@ -94,7 +94,7 @@ image {
 	    -ms-flex-pack: center;
 	        justify-content: center;
 }
-image.data-v-18c529be {
+image.data-v-2fb2e558 {
 	width: 30%;
 	height: 200rpx;
 	margin: auto;
