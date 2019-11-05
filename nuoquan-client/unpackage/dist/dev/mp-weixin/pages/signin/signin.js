@@ -122,7 +122,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var whCaptcha = function whCaptcha() {return __webpack_require__.e(/*! import() | components/wh-captcha/wh-captcha */ "components/wh-captcha/wh-captcha").then(__webpack_require__.bind(null, /*! ../../components/wh-captcha/wh-captcha.vue */ 230));};var uniSteps = function uniSteps() {return __webpack_require__.e(/*! import() | components/uni-steps/uni-steps */ "components/uni-steps/uni-steps").then(__webpack_require__.bind(null, /*! @/components/uni-steps/uni-steps.vue */ 235));};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var whCaptcha = function whCaptcha() {return __webpack_require__.e(/*! import() | components/wh-captcha/wh-captcha */ "components/wh-captcha/wh-captcha").then(__webpack_require__.bind(null, /*! ../../components/wh-captcha/wh-captcha.vue */ 238));};var uniSteps = function uniSteps() {return __webpack_require__.e(/*! import() | components/uni-steps/uni-steps */ "components/uni-steps/uni-steps").then(__webpack_require__.bind(null, /*! @/components/uni-steps/uni-steps.vue */ 243));};
 
 
 

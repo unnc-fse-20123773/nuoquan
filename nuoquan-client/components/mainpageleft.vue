@@ -50,7 +50,7 @@
 				<!-- <view class="noticeNum">3</view> -->
 
 			</button>
-			<button class="pageLine" @click="showToast()">
+			<button class="pageLine" @click="goToAboutPage">>
 				<image src="../static/icon/about.png"></image>
 				<view>关于</view>
 
@@ -111,7 +111,14 @@
 					url: '../messagelist/messagelist',
 				});
 			},
-
+			
+			goToAboutPage() {
+				this.$store.commit('setMyMsgCount', 0);
+				uni.navigateTo({
+					url: '../about/about',
+				});
+			},
+			
 			goToProfile() {
 				uni.navigateTo({
 					url: '../profile/profile',
