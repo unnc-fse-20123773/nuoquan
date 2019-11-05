@@ -173,7 +173,7 @@ name: 'mainpageleft';var _default =
 {
   props: {
     // 渲染时候替换默认值会被替换
-    userInfo: {
+    userInfos: {
       faceImg: '../static/touxiang.jpg',
       emailPrefix: 'test123',
       emailSuffix: '@nottingham.edu.cn' } },
@@ -181,8 +181,9 @@ name: 'mainpageleft';var _default =
 
   data: function data() {
     return {
-      unreadMsgCount: uni.getStorageSync('myMsgCount') // 从缓存中获取初始值
-    };
+      unreadMsgCount: uni.getStorageSync('myMsgCount'), // 从缓存中获取初始值
+      userInfo: this.userInfos };
+
   },
 
   computed: _objectSpread({},

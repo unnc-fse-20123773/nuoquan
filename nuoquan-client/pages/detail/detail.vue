@@ -1,72 +1,8 @@
 <template>
-	<view style="position: relative;height:100%;width:100%;">
-		<view class="topbar column_center">
-			<view class="detailtitle">{{ articleCard.articleTitle }}</view>
-		</view>
-		<!-- 9.16 by Guetta -->
-		<!-- drtailmain 修改拼写错误为 detailmain，并修改高度为 90% 以保证页面不会错误滚动 -->
-		<view class="detailmain">
-			<view class="detailcontent">{{ articleCard.articleContent }}</view>
-
-			<view>
-				<!-- 单图显示 -->
-				<view v-if="articleCard.imgList.length==1" class="detailpics 1pic" style="width: 100%;max-height: 400upx;display: flex;">
-					<image v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFill"
-					 style="height: 360upx;max-width:180px;display: inline-block;" @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
-				</view>
-				<!-- 其他数量 -->
-				<view v-else-if="articleCard.imgList.length==4" class="detailpics" style="max-width: 400upx;margin-left: 0;">
-					<image class="detailpic" v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFill"
-					 @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
-				</view>
-
-				<view v-else class="detailpics">
-					<image class="detailpic" v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFill"
-					 @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
-					<view v-if="articleCard.imgList.length==2||imageList.length==5||imageList.length==8" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
-
-				</view>
-
-			</view>
-			<view class="tags">
-				<view class="tag" :style="{background: tagColorList[index]}" v-for="(i,index) in articleCard.tagList" v-bind:key="index">{{i}}</view>
-			</view>
-
-			<!-- ID 行 -->
-			<view class="bottombar">
-				<!-- 蒙层,用于优化体验 -->
-				<view style="position: absolute;z-index: 20;height: 100%;width: 90upx;right: 16upx;" @tap="swLikeArticle()"></view>
-				<!-- 蒙层结束 -->
-				<view class="touxiang column_center">
-					<image :src="articleCard.faceImg" class="touxiang_pic" @click="goToPersonPublic()"></image>
-				</view>
-				<view class="text_line">
-					<view class="text_line_rel">
-						<view class="name column_center">
-							<view class="name_text">{{ articleCard.nickname }}</view>
-						</view>
-						<view class="time column_center">
-							<view class="time_text">{{ articleCard.createDate | timeDeal}}</view>
-						</view>
-						<view class="icons column_center" @tap="swLikeArticle()">
-							<view class="column_center" style="position: relative;width: 100%;height: 100%;">
-								<image v-if="!articleCard.isLike" class="icon" src="../../static/icon/like.png"></image>
-								<image v-if="articleCard.isLike" class="icon" src="../../static/icon/liked-red.png"></image>
-								<view class="icom" :class="{'liked':articleCard.isLike}">{{ articleCard.likeNum }}</view>
-							</view>
-						</view>
-					</view>
-				</view>
-			</view>
-
-			<view style="width: 100%;height: 12px;display: flex;" class="column_center">
-				<view style="width:20%;color: RGB(253, 217, 108);font-size: 15px;">
-					最新评论
-				</view>
-				<view class="fengexian" style="height: 1px;width: 80%;background-color: RGB(253, 217, 108);"></view>
-			</view>
-			<commentbox v-for="i in commentList" :key="i.id" v-bind:commentDetail="i" @controlInputSignal="controlInput">
-			</commentbox>
+	<view class="detail-page">
+<!-- 		<article :article="this.articleCard"></article>
+ -->
+ <detail_1_article class="article-area" :articleCard='articleCard' ></detail_1_article>
 			<!-- 用于推出评论下方空白 -->
 			<view name="marginHelper" style="height: 50px;width: 100%;background-color: white;"></view>
 <!-- 			发表评论按钮 -->
@@ -88,12 +24,11 @@
 </template>
 
 <script>
-	import comment from '../../components/comment';
-	
+import detail_1_article from "./detail_1_article.vue"
 	var uploadFlag = false;
 	export default {
 		data() {
-			return {
+			return {  
 				imgList: [],
 				singleImgState: '0',
 				
@@ -120,35 +55,10 @@
 			};
 		},
 		components: {
-			commentbox: comment
+			detail_1_article,
 		},
 		
-		filters: {
-			timeDeal(timediff) {
-				timediff = new Date(timediff);
-				var parts = [timediff.getFullYear(), timediff.getMonth()+1, timediff.getDate(), timediff.getHours(), timediff.getMinutes(),timediff.getSeconds()];
-				var oldTime = timediff.getTime();
-				var now = new Date();
-				var newTime = now.getTime();
-				var milliseconds = 0;
-				var timeSpanStr;
-				milliseconds = newTime - oldTime;
-				if (milliseconds <= 1000 * 60 * 1) {
-					timeSpanStr = '刚刚';
-				} else if (1000 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60) {
-					timeSpanStr = Math.round((milliseconds / (1000 * 60))) + '分钟前';
-				} else if (1000 * 60 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24) {
-					timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
-				} else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
-					timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
-				} else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && parts[0] == now.getFullYear()) {
-					timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
-				} else {
-					timeSpanStr = parts[0] + '-' + parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
-				}
-				return timeSpanStr;
-			}
-		},
+		
 		
 		onReachBottom() {
 			this.loadMore();
@@ -161,7 +71,9 @@
 		},
 		
 		onLoad(options) {
+			console.log(options);
 			this.articleCard = JSON.parse(options.data);
+			console.log("receive data from onload");
 			console.log(this.articleCard);
 			var userInfo = this.getGlobalUserInfo();
 			if (!this.isNull(userInfo)) {
@@ -512,213 +424,9 @@
 	}</style>
 
 <style scoped>
-
-	.topbar {
-		background: url(../../static/BG/detailBG.png);
-		background-repeat: no-repeat;
-		background-position-y: -5px;
-		background-size: cover;
-		height: 16%;
-	}
-
-	.detailtitle {
-		width: 85%;
-		color: #f5f5f5;
-		font-size: 20px;
-		margin: auto;
-		font-weight: 550;
-		padding-bottom:22px;
-		word-break: break-all;
-		word-wrap: break-word;
-		
-	}
-
-	.detailmain {
-		border-top-left-radius: 20px;
-		border-top-right-radius: 20px;
-		margin-top: -20px;
-		background: white;
-		/* box-shadow: 0px 0px 10px 1px #c0c0c0; */
-		/* 高度90%才可以保证页面不会无故滚动 */
-		height: 84%;
-		width: 85%;
-		padding: 0 7.5%;
-		overflow: scroll;
-	}
-
-	.detailcontent {
-		padding-top: 25px;
-		padding-bottom: 15px;
-		font-size: 17px;
-		font-family: Source Han Sans CN;
-/* 		width: 85%;
-		margin: 0px auto 10px; */
-		/* font-weight: 400;
-		word-break:break-all;
-		white-space:pre-line;
-	}
-
-/*	.picturearea-one {
-		margin: auto;
-		display: flex;
-		width: 94%;
-		margin-left: 3%;
-	}
-	
-	.picturearea-mul {
-		position: relative;
-		margin: auto;
-		display: flex; */
-		/* 在此设置图片区域宽度 */
-		/* width: 94%;
-		margin-left: 3%;
-	} */
-	
-		font-weight: 400;
-		word-break: break-all;
-		word-wrap: break-word;
-		white-space:pre-line;
-	}
-
-	.detailpics {
-		display: flex;
-		justify-content: space-between;
-		flex-wrap: wrap;
-		flex: 0 0 auto;
-		align-items: center;
-		flex-wrap: wrap;
-		width: 100%;
-		margin: 0 auto;
-		margin-bottom: 9px;
-	}
-
-	.detailpic {
-		width: 190upx;
-		height: 190upx;
-		margin: 6px 0;
-	}
-
-	.tags {
-		max-height: 20px;
-		line-height: 15px;
-		width: 85%;
-		margin-left: -5px;
-	}
-
-	.tag {
-		display: inline-block;
-		border-radius: 4px;
-		padding-left: 5px;
-		padding-right: 5px;
-		margin-left: 5px;
-		height: 15px;
-		line-height: 15px;
-		color: #ffffff;
-		font-size: 10px;
-		background: #621E81;
-		vertical-align: middle;
-	}
-
-	.articleCard {
-		margin: 2px auto 0;
-		width: 90%;
-		border-radius: 5px;
-	}
-
-	.bottombar {
-		position: relative;
-		border-radius: 20px;
-		margin-top: 20px;
-		padding-bottom: 5px;
-		height: 30px;
-	}
-	
-	.touxiang{
-		position: absolute;
-		left: 0;
-		height: 30px;
-		width: 10%;
-	}
-	
-	.touxiang_pic {
-		border-radius: 300px;
-		width: 20px;
-		height: 20px;
-		margin-right: 5px;
-		vertical-align: middle;
-	}
-	
-	
-	.text_line{
-		position: absolute;
-		left: 10%;
-		height: 30px;
-		width: 90%;
-	}
-	
-	.text_line_rel{
-		position: relative;
-	}
-	
-	.name {
-		position: absolute;
-		left: 0;
-		height: 30px;
-		width: 38%;
-	}
-	
-	.name_text{
-		font-size: 13px;
-		color: #888888;
-		text-overflow: ellipsis;
-		max-width: 80px;
-	}
-
-	.time {
-		position: absolute;
-		left: 38%;
-		height: 30px;
-		max-width: 85px;
-	}
-
-	.time_text{
-		margin-top: 1px;
-		font-size: 12px;
-		color: #888888;
-		text-overflow: ellipsis;
-	}
-
-	.icons {
-		position: absolute;
-		right: -8%;
-		width: 36%;
-		font-size: 10px;
-		height: 30px;
-		z-index: 10;
-	}
-
-	.icon {
-		position: absolute;
-		right: 46%;
-		width: 15px;
-		height: 15px;
-		font-size: 2px;
-		z-index: 10;
-		/* padding-right: 8upx; */
-	}
-	
-	.liked{
-		position: absolute;
-		right: 56%;
-		color: #fe5f55;
-		z-index: 10;
-	}
-	
-	.icom{
-		position: absolute;
-		left: 60%;
-		font-size: 13px;
-		z-index: 10;
+	.detail-page{
+		width: calc(100% - 32px);
+		margin:auto;
 	}
 	
 	/* 底部栏 */

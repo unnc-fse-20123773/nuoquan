@@ -1,5 +1,5 @@
 {
   "usingComponents": {
-    "commentbox": "/components/comment"
+    "detail_1_article": "/pages/detail/detail_1_article"
   }
 }

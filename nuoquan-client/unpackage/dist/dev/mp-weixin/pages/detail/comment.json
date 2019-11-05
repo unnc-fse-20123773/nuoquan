@@ -1,6 +1,6 @@
 {
   "usingComponents": {
-    "re-comment": "/components/reComment"
+    "re-comment": "/pages/detail/reComment"
   },
   "component": true
 }

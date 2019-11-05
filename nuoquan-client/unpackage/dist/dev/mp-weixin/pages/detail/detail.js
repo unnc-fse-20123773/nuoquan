@@ -75,16 +75,6 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var f0 = _vm._f("timeDeal")(_vm.articleCard.createDate)
-
-  _vm.$mp.data = Object.assign(
-    {},
-    {
-      $root: {
-        f0: f0
-      }
-    }
-  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -117,72 +107,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var comment = function comment() {return __webpack_require__.e(/*! import() | components/comment */ "components/comment").then(__webpack_require__.bind(null, /*! ../../components/comment */ 176));};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var detail_1_article = function detail_1_article() {return __webpack_require__.e(/*! import() | pages/detail/detail_1_article */ "pages/detail/detail_1_article").then(__webpack_require__.bind(null, /*! ./detail_1_article.vue */ 306));};
 
 
 
@@ -239,34 +164,9 @@ var uploadFlag = false;var _default =
 
   },
   components: {
-    commentbox: comment },
+    detail_1_article: detail_1_article },
 
 
-  filters: {
-    timeDeal: function timeDeal(timediff) {
-      timediff = new Date(timediff);
-      var parts = [timediff.getFullYear(), timediff.getMonth() + 1, timediff.getDate(), timediff.getHours(), timediff.getMinutes(), timediff.getSeconds()];
-      var oldTime = timediff.getTime();
-      var now = new Date();
-      var newTime = now.getTime();
-      var milliseconds = 0;
-      var timeSpanStr;
-      milliseconds = newTime - oldTime;
-      if (milliseconds <= 1000 * 60 * 1) {
-        timeSpanStr = '刚刚';
-      } else if (1000 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60) {
-        timeSpanStr = Math.round(milliseconds / (1000 * 60)) + '分钟前';
-      } else if (1000 * 60 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24) {
-        timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
-      } else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
-        timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
-      } else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && parts[0] == now.getFullYear()) {
-        timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
-      } else {
-        timeSpanStr = parts[0] + '-' + parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
-      }
-      return timeSpanStr;
-    } },
 
 
   onReachBottom: function onReachBottom() {
@@ -280,7 +180,9 @@ var uploadFlag = false;var _default =
   },
 
   onLoad: function onLoad(options) {
+    console.log(options);
     this.articleCard = JSON.parse(options.data);
+    console.log("receive data from onload");
     console.log(this.articleCard);
     var userInfo = this.getGlobalUserInfo();
     if (!this.isNull(userInfo)) {

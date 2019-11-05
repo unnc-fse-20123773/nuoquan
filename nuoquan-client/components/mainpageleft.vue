@@ -66,7 +66,7 @@
 	export default {
 		props: {
 			// 渲染时候替换默认值会被替换
-			userInfo: {
+			userInfos: {
 				faceImg: '../static/touxiang.jpg',
 				emailPrefix: 'test123',
 				emailSuffix: '@nottingham.edu.cn'
@@ -75,6 +75,7 @@
 		data() {
 			return {
 				unreadMsgCount: uni.getStorageSync('myMsgCount'), // 从缓存中获取初始值
+				userInfo:this.userInfos,
 			};
 		},
 		
