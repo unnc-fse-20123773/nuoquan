@@ -360,7 +360,6 @@ var me;var _default =
     // 获取卡片宽度
     that.cardWidth = that.windowWidth - 26 + 'px';
 
-    this.showArticles(page);
     console.log(this);
   },
 
