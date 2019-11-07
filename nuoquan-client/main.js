@@ -233,6 +233,14 @@ Vue.prototype.isNull = function(str) {
 }
 
 /**
+ * "" = true;
+ * " " = true;
+ */
+Vue.prototype.isBlank = function(str) {
+	return RegExp(/^\s*$/).test(str);
+}
+
+/**
  * 自定义封装 socket 供全局调用
  * @author: Jerrio
  */

@@ -311,7 +311,7 @@ var uploadTasks = [];var _default =
     // TODO：图片上传需加上大小限制，后台限制10M
     upload: function upload(e) {var _this2 = this;
       var me = this;
-      if (me.articleTitle == '' || me.articleTitle == null) {
+      if (this.isBlank(me.articleTitle) || this.isNull(me.articleTitle)) {
         uni.showToast({
           icon: 'none',
           title: '文章标题不能为空～',
@@ -320,7 +320,7 @@ var uploadTasks = [];var _default =
         return;
       }
 
-      if (me.articleContent == '' || me.articleContent == null) {
+      if (this.isBlank(me.articleContent) || this.isNull(me.articleContent)) {
         uni.showToast({
           icon: 'none',
           title: '文章内容不能为空～',

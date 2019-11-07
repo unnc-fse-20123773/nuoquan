@@ -243,6 +243,14 @@ _vue.default.prototype.isNull = function (str) {
 };
 
 /**
+    * "" = true;
+    * " " = true;
+    */
+_vue.default.prototype.isBlank = function (str) {
+  return RegExp(/^\s*$/).test(str);
+};
+
+/**
     * 自定义封装 socket 供全局调用
     * @author: Jerrio
     */

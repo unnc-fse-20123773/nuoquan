@@ -69,6 +69,7 @@
 				this.refreshArticle();
 			})
 			// [测试代码块]
+			console.log(this.isBlank(""));
 		},
 
 		onUnload() {
@@ -136,11 +137,13 @@
 							if (page == 1) {
 								that.showlist = [];
 							}
-							var newArticleList = res.data.data.rows;
-							var oldArticleList = that.showlist;
-							that.showlist = oldArticleList.concat(newArticleList);
-							that.currentPage = page;
-							that.totalPage = res.data.data.total;
+							this.$nextTick(()=>{
+								var newArticleList = res.data.data.rows;
+								var oldArticleList = that.showlist;
+								that.showlist = oldArticleList.concat(newArticleList);
+								that.currentPage = page;
+								that.totalPage = res.data.data.total;
+							})
 						}, 300);
 					},
 					fail: (res) => {
