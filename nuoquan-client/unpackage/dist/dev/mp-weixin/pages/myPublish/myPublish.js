@@ -122,7 +122,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var myArticles = function myArticles() {return __webpack_require__.e(/*! import() | pages/myPublish/myArticles */ "pages/myPublish/myArticles").then(__webpack_require__.bind(null, /*! ./myArticles.vue */ 264));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var myArticles = function myArticles() {return __webpack_require__.e(/*! import() | pages/myPublish/myArticles */ "pages/myPublish/myArticles").then(__webpack_require__.bind(null, /*! ./myArticles.vue */ 264));};
 
 
 
@@ -138,27 +138,26 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
+var loadArticleFlag = false;var _default =
 {
-
   components: {
     myArticles: myArticles },
 
   data: function data() {
     return {
-      loadArticleFlag: false,
       userInfo: '',
+      binNum: '12',
+
       totalPage: 1,
       currentPage: 1,
-
       totalNum: '0',
-      binNum: '12',
-      myArticleList: "" };
+      myArticleList: '' };
 
   },
 
   onLoad: function onLoad() {
     var userInfo = this.getGlobalUserInfo();
+    console.log(userInfo);
     if (this.isNull(userInfo)) {
       uni.redirectTo({
         url: '../signin/signin' });
@@ -175,21 +174,21 @@ __webpack_require__.r(__webpack_exports__);
 
   methods: {
     // 锁
-    showArticles: function showArticles(page) {var _this = this;
-      console.log(this.loadArticleFlag);
+    showArticles: function showArticles(page) {
+      console.log(loadArticleFlag);
 
-      if (this.loadArticleFlag) {
-
+      if (loadArticleFlag) {
+        loadArticleFlag = false;
       }
 
-      this.loadArticleFlag = true;
+      loadArticleFlag = true;
 
       uni.showLoading({
         title: '加载中...' });
 
       setTimeout(function () {
-        if (_this.loadArticleFlag) {
-          _this.loadArticleFlag = false; //解锁
+        if (loadArticleFlag) {
+          loadArticleFlag = false; //解锁
           uni.hideLoading();
           uni.showToast({
             title: '网络未知错误',
@@ -200,6 +199,7 @@ __webpack_require__.r(__webpack_exports__);
       }, 5000); //延时五秒timeout
 
       var that = this;
+      console.log(that.userInfo);
       uni.request({
         url: that.$serverUrl + '/article/queryPublishHistory',
         method: 'POST',
@@ -217,7 +217,7 @@ __webpack_require__.r(__webpack_exports__);
           setTimeout(function () {
             //延时加载
             uni.hideLoading();
-            _this.loadArticleFlag = false;
+            loadArticleFlag = false;
 
             console.log(res);
             if (page == 1) {
@@ -234,7 +234,7 @@ __webpack_require__.r(__webpack_exports__);
         },
         fail: function fail(res) {
           uni.hideLoading();
-          _this.loadArticleFlag = false;
+          loadArticleFlag = false;
 
           console.log('index unirequest fail');
           console.log(res);

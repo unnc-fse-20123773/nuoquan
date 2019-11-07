@@ -73,7 +73,7 @@
 			</view>
 		</view>
 		<!-- 信息块标题 -->
-		<view id="public-titleBox"><text class="public-title-text">他的信息</text></view>
+		<view id="public-titleBox"><text class="public-title-text">个人信息</text></view>
 		<!-- 信息块 -->
 		<view id="publix-profileLine" :style="{ width: cardWidth }">
 			<view class="profileCard">
@@ -90,74 +90,44 @@
 			</view>
 		</view>
 		<!-- 发布块标题 -->
-		<view id="public-titleBox"><text class="public-title-text">他的发布</text></view>
-		<!-- 有图发布块 -->
-		<view id="public-articleCard" :style="{ width: cardWidth }">
-			<view class="articleTitle">这里是一个标题这里是一个标题这里是一个标题这里是一个标题</view>
-			<!-- 发布内容行 -->
-			<view class="articleContentLine">
-				<!-- 文字部分卡片 -->
-				<!-- 有图跟无图只有 teamareaCard 这一个 class 的区别，判断只需要更改这一个 class -->
-				<view class="textareaCard-img">
-					<view class="textContent">
-						这里是文字的内容这里是文字的内容这里是文字的内容这里是文字的内容这里是文字的内容这里是文字的内容这里是文字的内容容这里是文字的内容这里是文字的内容
-					</view>
-					<!-- 底部栏 -->
-					<view class="bottomBar">
-						<view style="position: relative;width: 100%;height: 100%;">
-							<view class="bottom-time column_center"><text>2018.01.01 18:18</text></view>
-							<view class="view column_center">
-								<image src="../../static/icon/eye-888888.png" mode="aspectFill"></image>
-								<text>99+</text>
-							</view>
-							<view class="comment column_center">
-								<image src="../../static/icon/comment-alt.png" mode="aspectFill"></image>
-								<text>99+</text>
-							</view>
-							<view class="like column_center">
-								<image src="../../static/icon/like.png" mode="aspectFill"></image>
-								<text>99+</text>
+		<view id="public-titleBox"><text class="public-title-text">发布文章</text></view>	
+		<!-- 发布内容块 -->
+		<view :style="{ width: cardWidth }" v-bind:myArticleList="myArticleList">
+			<view id="public-articleCard" :style="{ width: cardWidth }" v-for="thisArticle in myArticleList" :key="thisArticle.id" @click="jumpToDetail(thisArticle)">
+				<view class="articleTitle">{{ thisArticle.articleTitle }}</view>
+				<!-- 发布内容行 -->
+				<view class="articleContentLine">
+					<!-- 文字部分卡片 -->
+					<!-- 有图跟无图只有 teamareaCard 这一个 class 的区别，判断只需要更改这一个 class -->
+					<view :class="[thisArticle.imgList.length > 0?'textareaCard-img':'textareaCard']">
+						<view class="textContent">
+							{{thisArticle.articleContent}}
+						</view>
+						<!-- 底部栏 -->
+						<view class="bottomBar">
+							<view style="position: relative;width: 100%;height: 100%;">
+								<view class="bottom-time column_center"><text>{{timeDeal(thisArticle.createDate)}}</text></view>
+								<view class="view column_center">
+									<image src="../../static/icon/eye-888888.png" mode="aspectFill"></image>
+									<text>{{thisArticle.viewNum}}</text>
+								</view>
+								<view class="comment column_center">
+									<image src="../../static/icon/comment-alt.png" mode="aspectFill"></image>
+									<text>{{thisArticle.commentNum}}</text>
+								</view>
+								<view class="like column_center">
+									<image src="../../static/icon/like.png" mode="aspectFill"></image>
+									<text>{{thisArticle.likeNum}}</text>
+								</view>
 							</view>
 						</view>
 					</view>
+					<!-- 图片部分盒子 -->
+					<view class="imgBox" v-if="thisArticle.imgList.length > 0"><image mode="aspectFill" :src="serverUrl + thisArticle.imgList[0].imagePath"></image></view>
 				</view>
-				<!-- 图片部分盒子 -->
-				<view class="imgBox"><image mode="aspectFill" src="../../static/BG/submitBG.jpg"></image></view>
 			</view>
 		</view>
-		<!-- 无图发布块 -->
-		<view id="public-articleCard" :style="{ width: cardWidth }">
-			<view class="articleTitle">这里是一个标题这里是一个标题这里是一个标题这里是一个标题</view>
-			<!-- 发布内容行 -->
-			<view class="articleContentLine">
-				<!-- 文字部分卡片 -->
-				<view class="textareaCard">
-					<view class="textContent">这里是文字的内容这里是文字的内内容</view>
-					<!-- 底部栏 -->
-					<view class="bottomBar">
-						<view style="position: relative;width: 100%;height: 100%;">
-							<view class="bottom-time column_center"><text>2018.01.01 18:18</text></view>
-							<view class="view column_center">
-								<image src="../../static/icon/eye-888888.png" mode="aspectFill"></image>
-								<text>99+</text>
-							</view>
-							<view class="comment column_center">
-								<image src="../../static/icon/comment-alt.png" mode="aspectFill"></image>
-								<text>99+</text>
-							</view>
-							<view class="like column_center">
-								<image src="../../static/icon/like.png" mode="aspectFill"></image>
-								<text>99+</text>
-							</view>
-						</view>
-					</view>
-				</view>
-				<!-- 图片部分盒子 -->
-				<!-- <view class="imgBox">
-					<image mode="aspectFill" src="../../static/BG/submitBG.jpg"></image>
-				</view> -->
-			</view>
-		</view>
+
 		<!-- 占位块 -->
 		<view style="height: 30px;" :style="{ width: cardWidth }"></view>
 	</view>
@@ -165,12 +135,13 @@
 
 <script>
 var me;
-
+var userId; // this user's id
+var loadArticleFlag = false;
 export default {
 	data() {
 		return {
 			screenWidth: 350,
-			serverUrl: '',
+			serverUrl: this.$serverUrl,
 
 			thisUserInfo: '',
 			myPublic: false,
@@ -178,21 +149,18 @@ export default {
 			windowWidth: 0,
 			yellowBottom: '',
 			cardWidth: '',
-			
-			loadArticleFlag:false,
-			userInfo: '',
+			ifhaveImg: 0,
+
 			totalPage: 1,
 			currentPage: 1,
-			
 			totalNum: '0',
-			binNum: '12',
-			myArticleList: "",
+			myArticleList: ''
 		};
 	},
 
 	onLoad(opt) {
-		var userId = opt.userId;
-		console.log(userId);
+		userId = opt.userId;
+
 		me = this.getGlobalUserInfo();
 		if (me.id == userId) {
 			// 如果打开自己的页面，屏蔽关注和发私信按钮
@@ -208,9 +176,6 @@ export default {
 		// 获取这个人的信息, TODO: 更新本地用户信息缓存
 		this.queryUserWithFollow(userId);
 
-		// [测试代码块]
-		// this.mySocket.init()
-
 		//获取屏幕宽高
 		var that = this;
 		uni.getSystemInfo({
@@ -220,23 +185,23 @@ export default {
 			}
 		});
 		//获取黄色头部位置
-		if (that.windowHeight <= 1000){
-			if (that.windowHeight < 667 ){
-			that.yellowBottom = -that.windowHeight*0.25 + 'px';
-			// console.log("超小屏幕，黄色头部上移了" + that.yellowBottom);
-			}else{
-			that.yellowBottom = -that.windowHeight*0.22 + 'px';
-			// console.log("手机屏幕，黄色头部上移了" + that.yellowBottom);
+		if (that.windowHeight <= 1000) {
+			if (that.windowHeight < 667) {
+				that.yellowBottom = -that.windowHeight * 0.25 + 'px';
+				// console.log("超小屏幕，黄色头部上移了" + that.yellowBottom);
+			} else {
+				that.yellowBottom = -that.windowHeight * 0.22 + 'px';
+				// console.log("手机屏幕，黄色头部上移了" + that.yellowBottom);
 			}
-		}else{
-			that.yellowBottom = -that.windowHeight*0.20 + 'px';
+		} else {
+			that.yellowBottom = -that.windowHeight * 0.2 + 'px';
 			// console.log("平板屏幕，黄色头部上移了" + that.yellowBottom);
-		}		
-		
+		}
+
 		// 获取卡片宽度
 		that.cardWidth = that.windowWidth - 26 + 'px';
-		
-		console.log(this);
+
+		this.showArticles(1);
 	},
 
 	onPullDownRefresh() {
@@ -247,10 +212,6 @@ export default {
 	},
 
 	methods: {
-		loadMore: function(tabIndex) {
-			console.log('正在加载更多数据。。。');
-			this.getDateList(tabIndex);
-		},
 		/**
 		 * 添加关注
 		 */
@@ -353,7 +314,100 @@ export default {
 					}
 				}
 			});
-		}
+		},
+
+		showArticles: function(page) {
+			console.log(loadArticleFlag);
+
+			if (loadArticleFlag) {
+				loadArticleFlag = false;
+			}
+
+			loadArticleFlag = true;
+
+			uni.showLoading({
+				title: '加载中...'
+			});
+			setTimeout(() => {
+				if (loadArticleFlag) {
+					loadArticleFlag = false; //解锁
+					uni.hideLoading();
+					uni.showToast({
+						title: '网络未知错误',
+						icon: 'none',
+						duration: 1000
+					});
+				}
+			}, 5000); //延时五秒timeout
+
+			var that = this;
+			// console.log(that.thisUserInfo);
+			uni.request({
+				url: that.$serverUrl + '/article/queryPublishHistory',
+				method: 'POST',
+				data: {
+					page: page,
+					userId: me.id,
+					targetId: userId
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					setTimeout(() => {
+						//延时加载
+						uni.hideLoading();
+						loadArticleFlag = false;
+
+						console.log(res);
+						if (page == 1) {
+							that.myArticleList = [];
+						}
+						var newArticleList = res.data.data.rows;
+						var oldArticleList = that.myArticleList;
+						that.myArticleList = oldArticleList.concat(newArticleList);
+						that.currentPage = page;
+						that.totalPage = res.data.data.total;
+						that.totalNum = res.data.data.records;
+						console.log(that.totalNum);
+					}, 300);
+				},
+				fail: res => {
+					uni.hideLoading();
+					loadArticleFlag = false;
+
+					console.log('index unirequest fail');
+					console.log(res);
+				}
+			});
+		},
+
+		loadMore: function() {
+			var that = this;
+			var currentPage = that.currentPage;
+			console.log(currentPage);
+			var totalPage = that.totalPage;
+			console.log(totalPage);
+			// 判断当前页数和总页数是否相等
+			if (currentPage == totalPage) {
+				// that.showArticles(1);
+				uni.showToast({
+					title: '没有更多文章了',
+					icon: 'none',
+					duration: 1000
+				});
+			} else {
+				var page = currentPage + 1;
+				that.showArticles(page);
+			}
+		},
+		
+		jumpToDetail(thisArticle) {
+			var navData = JSON.stringify(thisArticle); // 这里转换成 字符串
+			uni.navigateTo({
+				url: '/pages/detail/detail?data=' + navData
+			});
+		},
 	}
 };
 </script>
@@ -615,10 +669,10 @@ page {
 	display: flex;
 }
 
+/* 定高 */
 .textareaCard {
 	position: relative;
-	min-height: 34px;
-	max-height: 63px;
+	height: 63px;
 	width: 100%;
 }
 

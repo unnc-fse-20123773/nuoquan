@@ -1,11 +1,11 @@
 
-page{
-		background: #F8F8F8;
+page {
+	background: #f8f8f8;
 }
-.top-bar{
-	width:calc(100% - 58px);
-	height:30px;
-	padding:24px 0;
+.top-bar {
+	width: calc(100% - 58px);
+	height: 30px;
+	padding: 24px 0;
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -ms-flexbox;
@@ -14,8 +14,8 @@ page{
 	-webkit-justify-content: space-between;
 	    -ms-flex-pack: justify;
 	        justify-content: space-between;
-	font:Source Han Sans CN;
-	margin:auto;
+	font: Source Han Sans CN;
+	margin: auto;
 }
 .totalNum {
 	color: #888888;
@@ -49,8 +49,8 @@ page{
 	align-items: center;
 	line-height: 30px;
 } */
-.mainbody{
-	width:calc(100% - 26px);
+.mainbody {
+	width: calc(100% - 26px);
 	margin: auto;
 }
 

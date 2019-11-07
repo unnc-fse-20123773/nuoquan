@@ -90,6 +90,22 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var l0 = _vm.__map(_vm.myArticleList, function(thisArticle, __i0__) {
+    var m0 = _vm.timeDeal(thisArticle.createDate)
+    return {
+      $orig: _vm.__get_orig(thisArticle),
+      m0: m0
+    }
+  })
+
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        l0: l0
+      }
+    }
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -257,44 +273,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
-var me;var _default =
-
+var me;
+var userId; // this user's id
+var loadArticleFlag = false;var _default =
 {
   data: function data() {
     return {
       screenWidth: 350,
-      serverUrl: '',
+      serverUrl: this.$serverUrl,
 
       thisUserInfo: '',
       myPublic: false,
@@ -302,21 +289,18 @@ var me;var _default =
       windowWidth: 0,
       yellowBottom: '',
       cardWidth: '',
+      ifhaveImg: 0,
 
-      loadArticleFlag: false,
-      userInfo: '',
       totalPage: 1,
       currentPage: 1,
-
       totalNum: '0',
-      binNum: '12',
-      myArticleList: "" };
+      myArticleList: '' };
 
   },
 
   onLoad: function onLoad(opt) {
-    var userId = opt.userId;
-    console.log(userId);
+    userId = opt.userId;
+
     me = this.getGlobalUserInfo();
     if (me.id == userId) {
       // 如果打开自己的页面，屏蔽关注和发私信按钮
@@ -331,9 +315,6 @@ var me;var _default =
 
     // 获取这个人的信息, TODO: 更新本地用户信息缓存
     this.queryUserWithFollow(userId);
-
-    // [测试代码块]
-    // this.mySocket.init()
 
     //获取屏幕宽高
     var that = this;
@@ -353,14 +334,14 @@ var me;var _default =
         // console.log("手机屏幕，黄色头部上移了" + that.yellowBottom);
       }
     } else {
-      that.yellowBottom = -that.windowHeight * 0.20 + 'px';
+      that.yellowBottom = -that.windowHeight * 0.2 + 'px';
       // console.log("平板屏幕，黄色头部上移了" + that.yellowBottom);
     }
 
     // 获取卡片宽度
     that.cardWidth = that.windowWidth - 26 + 'px';
 
-    console.log(this);
+    this.showArticles(1);
   },
 
   onPullDownRefresh: function onPullDownRefresh() {
@@ -371,13 +352,9 @@ var me;var _default =
   },
 
   methods: {
-    loadMore: function loadMore(tabIndex) {
-      console.log('正在加载更多数据。。。');
-      this.getDateList(tabIndex);
-    },
     /**
-        * 添加关注
-        */
+              * 添加关注
+              */
     addFollow: function addFollow(userId) {
       console.log('加关注...');
       var that = this;
@@ -476,6 +453,99 @@ var me;var _default =
 
           }
         } });
+
+    },
+
+    showArticles: function showArticles(page) {
+      console.log(loadArticleFlag);
+
+      if (loadArticleFlag) {
+        loadArticleFlag = false;
+      }
+
+      loadArticleFlag = true;
+
+      uni.showLoading({
+        title: '加载中...' });
+
+      setTimeout(function () {
+        if (loadArticleFlag) {
+          loadArticleFlag = false; //解锁
+          uni.hideLoading();
+          uni.showToast({
+            title: '网络未知错误',
+            icon: 'none',
+            duration: 1000 });
+
+        }
+      }, 5000); //延时五秒timeout
+
+      var that = this;
+      // console.log(that.thisUserInfo);
+      uni.request({
+        url: that.$serverUrl + '/article/queryPublishHistory',
+        method: 'POST',
+        data: {
+          page: page,
+          userId: me.id,
+          targetId: userId },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          setTimeout(function () {
+            //延时加载
+            uni.hideLoading();
+            loadArticleFlag = false;
+
+            console.log(res);
+            if (page == 1) {
+              that.myArticleList = [];
+            }
+            var newArticleList = res.data.data.rows;
+            var oldArticleList = that.myArticleList;
+            that.myArticleList = oldArticleList.concat(newArticleList);
+            that.currentPage = page;
+            that.totalPage = res.data.data.total;
+            that.totalNum = res.data.data.records;
+            console.log(that.totalNum);
+          }, 300);
+        },
+        fail: function fail(res) {
+          uni.hideLoading();
+          loadArticleFlag = false;
+
+          console.log('index unirequest fail');
+          console.log(res);
+        } });
+
+    },
+
+    loadMore: function loadMore() {
+      var that = this;
+      var currentPage = that.currentPage;
+      console.log(currentPage);
+      var totalPage = that.totalPage;
+      console.log(totalPage);
+      // 判断当前页数和总页数是否相等
+      if (currentPage == totalPage) {
+        // that.showArticles(1);
+        uni.showToast({
+          title: '没有更多文章了',
+          icon: 'none',
+          duration: 1000 });
+
+      } else {
+        var page = currentPage + 1;
+        that.showArticles(page);
+      }
+    },
+
+    jumpToDetail: function jumpToDetail(thisArticle) {
+      var navData = JSON.stringify(thisArticle); // 这里转换成 字符串
+      uni.navigateTo({
+        url: '/pages/detail/detail?data=' + navData });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

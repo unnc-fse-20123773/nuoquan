@@ -19,6 +19,7 @@
 								<view class="time">{{ thisArticle.createDate | timeDeal }}</view>
 								<view class="comment">
 									<image src="../../static/icon/comment-alt.png"></image>
+									<!-- 这里为什么是 likeNum？ -->
 									<view>{{ thisArticle.likeNum }}</view>
 								</view>
 								<view class="like">

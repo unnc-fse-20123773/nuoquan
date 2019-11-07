@@ -258,10 +258,11 @@ page {
 	display: -ms-flexbox;
 	display: flex;
 }
+
+/* 定高 */
 .textareaCard {
 	position: relative;
-	min-height: 34px;
-	max-height: 63px;
+	height: 63px;
 	width: 100%;
 }
 .textareaCard-img {

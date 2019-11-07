@@ -1006,6 +1006,40 @@ _vue.default.prototype.getTwo = function (s) {
     return "" + s;
   }
 };
+
+/**
+    * Timestamp 渲染
+    * @param {Object} timediff
+    */
+_vue.default.prototype.timeDeal = function (timediff) {
+  console.log(timediff);
+  timediff = new Date(timediff);
+  console.log(timediff);
+  var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(),
+  timediff.getSeconds()];
+
+  var oldTime = timediff.getTime();
+  var now = new Date();
+  var newTime = now.getTime();
+  var milliseconds = 0;
+  var timeSpanStr;
+  milliseconds = newTime - oldTime;
+  if (milliseconds <= 1000 * 60 * 1) {
+    timeSpanStr = '刚刚';
+  } else if (1000 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60) {
+    timeSpanStr = Math.round(milliseconds / (1000 * 60)) + '分钟前';
+  } else if (1000 * 60 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24) {
+    timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
+  } else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
+    timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
+
+  } else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && parts[0] == now.getFullYear()) {
+    timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
+  } else {
+    timeSpanStr = parts[0] + '-' + parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
+  }
+  return timeSpanStr;
+};
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createApp"], __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
