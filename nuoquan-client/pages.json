@@ -71,6 +71,10 @@
 			"path" : "pages/myPublish/myPublish",
 			"style" : {}
 		}
+        ,{
+            "path" : "pages/about/about",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -145,6 +149,11 @@
 			},
 			{   "name":"我的发布",
 				"path" : "pages/myPublish/myPublish",
+				"query": "" //启动参数，在页面的onLoad函数里面得到
+			},
+			{
+				"name":"关于",
+				"path" : "pages/about/about",
 				"query": "" //启动参数，在页面的onLoad函数里面得到
 			}
 		]

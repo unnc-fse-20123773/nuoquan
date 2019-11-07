@@ -151,14 +151,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 var _articlebrief = _interopRequireDefault(__webpack_require__(/*! ../../components/articlebrief */ 26));
 
 
 
-var _vuex = __webpack_require__(/*! vuex */ 16);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! import() | components/mainpagetop */ "components/mainpagetop").then(__webpack_require__.bind(null, /*! ../../components/mainpagetop.vue */ 164));};var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ 173));};
-
-
+var _vuex = __webpack_require__(/*! vuex */ 16);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! import() | components/mainpagetop */ "components/mainpagetop").then(__webpack_require__.bind(null, /*! ../../components/mainpagetop.vue */ 172));};var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ 181));};
 
 var loadArticleFlag = false; // 为加载文章加锁
 var timer = null; // 为头部做定时器收起
@@ -190,7 +187,7 @@ var _default = {
     var userInfo = this.getGlobalUserInfo();
     if (this.isNull(userInfo)) {
       uni.redirectTo({
-        url: "../signin/signin" });
+        url: '../signin/signin' });
 
       return;
     } else {
@@ -202,15 +199,15 @@ var _default = {
     var page = this.currentPage;
     this.showArticles(page); // 显示文章流
 
-    uni.$on("flash", function () {// from submit
+    uni.$on('flash', function () {
+      // from submit
       _this.refreshArticle();
     });
     // [测试代码块]
-    console.log(this.isBlank(""));
   },
 
   onUnload: function onUnload() {
-    // 移除监听事件  
+    // 移除监听事件
     uni.$off('flash');
   },
 
@@ -230,23 +227,22 @@ var _default = {
   // },
 
   methods: {
-
-    showArticles: function showArticles(page) {var _this2 = this;
+    showArticles: function showArticles(page) {
       if (loadArticleFlag) {
         return;
       }
       loadArticleFlag = true;
 
       uni.showLoading({
-        title: "加载中..." });
+        title: '加载中...' });
 
       setTimeout(function () {
         if (loadArticleFlag) {
           loadArticleFlag = false; // 解锁
           uni.hideLoading();
           uni.showToast({
-            title: "网络未知错误",
-            icon: "none",
+            title: '网络未知错误',
+            icon: 'none',
             duration: 1000 });
 
         }
@@ -255,17 +251,18 @@ var _default = {
       var that = this;
       uni.request({
         url: that.$serverUrl + '/article/queryAllArticles',
-        method: "POST",
+        method: 'POST',
         data: {
           page: page,
-          // pageSize: '', 
+          // pageSize: '',
           userId: that.userInfo.id },
 
         header: {
           'content-type': 'application/x-www-form-urlencoded' },
 
         success: function success(res) {
-          setTimeout(function () {// 延时加载
+          setTimeout(function () {
+            // 延时加载
             uni.hideLoading();
             loadArticleFlag = false;
 
@@ -274,20 +271,18 @@ var _default = {
             if (page == 1) {
               that.showlist = [];
             }
-            _this2.$nextTick(function () {
-              var newArticleList = res.data.data.rows;
-              var oldArticleList = that.showlist;
-              that.showlist = oldArticleList.concat(newArticleList);
-              that.currentPage = page;
-              that.totalPage = res.data.data.total;
-            });
+            var newArticleList = res.data.data.rows;
+            var oldArticleList = that.showlist;
+            that.showlist = oldArticleList.concat(newArticleList);
+            that.currentPage = page;
+            that.totalPage = res.data.data.total;
           }, 300);
         },
         fail: function fail(res) {
           uni.hideLoading();
           loadArticleFlag = false;
 
-          console.log("index unirequest fail");
+          console.log('index unirequest fail');
           console.log(res);
         } });
 
@@ -303,8 +298,8 @@ var _default = {
       if (currentPage == totalPage) {
         // that.showArticles(1);
         uni.showToast({
-          title: "没有更多文章了",
-          icon: "none",
+          title: '没有更多文章了',
+          icon: 'none',
           duration: 1000 });
 
       } else {
@@ -321,7 +316,7 @@ var _default = {
       var that = this;
       uni.request({
         url: that.$serverUrl + '/article/getHotTop3',
-        method: "POST",
+        method: 'POST',
         data: {
           userId: that.userInfo.id },
 
@@ -337,11 +332,11 @@ var _default = {
     /**
         * 查询用户信息，并分割邮箱更新到缓存
         */
-    queryUserInfo: function queryUserInfo(userId) {var _this3 = this;
+    queryUserInfo: function queryUserInfo(userId) {var _this2 = this;
       var that = this;
       uni.request({
         url: that.$serverUrl + '/user/queryUser',
-        method: "POST",
+        method: 'POST',
         data: {
           userId: userId },
 
@@ -351,9 +346,9 @@ var _default = {
         success: function success(res) {
           if (res.data.status == 200) {
             var user = res.data.data;
-            var finalUser = _this3.myUser(user); // 分割邮箱地址, 重构 user
-            _this3.setGlobalUserInfo(finalUser); // 把用户信息写入缓存
-            _this3.userInfo = finalUser; // 更新页面用户数据
+            var finalUser = _this2.myUser(user); // 分割邮箱地址, 重构 user
+            _this2.setGlobalUserInfo(finalUser); // 把用户信息写入缓存
+            _this2.userInfo = finalUser; // 更新页面用户数据
             // console.log(this.userInfo);
           }
         } });
@@ -371,8 +366,10 @@ var _default = {
                 }
 
                 if (y >= 100 && that.topHeight !== 40) {
-                  timer = setInterval(function () {//设置计时器
-                    if (that.topHeight == 40) {//在 topHeight 为 40 时清空计时器
+                  timer = setInterval(function () {
+                    //设置计时器
+                    if (that.topHeight == 40) {
+                      //在 topHeight 为 40 时清空计时器
                       clearInterval(timer);
                     } else {
                       that.topHeight = that.topHeight - 10;
@@ -381,8 +378,10 @@ var _default = {
                   }, 1);
                 } else {
                   if (y < 100 && that.topHeight !== 160 || y == 0) {
-                    timer = setInterval(function () {//设置计时器
-                      if (that.topHeight == 160) {//在 topHeight 为 160 时清空计时器
+                    timer = setInterval(function () {
+                      //设置计时器
+                      if (that.topHeight == 160) {
+                        //在 topHeight 为 160 时清空计时器
                         clearInterval(timer);
                       } else {
                         that.topHeight = that.topHeight + 10;

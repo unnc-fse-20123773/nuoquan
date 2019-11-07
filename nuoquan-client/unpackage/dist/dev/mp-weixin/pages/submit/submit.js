@@ -221,7 +221,9 @@ var uploadTasks = [];var _default =
       sizeTypeIndex: 0,
       sizeType: ['压缩', '原图', '压缩或原图'],
       countIndex: 8,
-      count: [1, 2, 3, 4, 5, 6, 7, 8, 9] };
+      count: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      windowHeight: 0,
+      submitMainHeight: '' };
 
   },
   onUnload: function onUnload() {
@@ -234,6 +236,15 @@ var uploadTasks = [];var _default =
   },
   onLoad: function onLoad() {
     this.userInfo = this.getGlobalUserInfo();
+    // 获取屏幕高度
+    var that = this;
+    uni.getSystemInfo({
+      success: function success(res) {
+        that.windowHeight = res.windowHeight;
+      } });
+
+    // 获取页面高度
+    that.submitMainHeight = that.windowHeight - 45 + 'px';
   },
   methods: {
     addTag: function addTag() {

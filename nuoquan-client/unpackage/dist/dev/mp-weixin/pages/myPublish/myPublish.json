@@ -1,5 +1,5 @@
 {
   "usingComponents": {
-    "one-article": "/pages/myPublish/oneArticle"
+    "my-articles": "/pages/myPublish/myArticles"
   }
 }

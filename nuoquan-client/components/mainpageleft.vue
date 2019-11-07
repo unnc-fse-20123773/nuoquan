@@ -27,12 +27,12 @@
 			<!-- TODO: 最好把 view 都改成 button 并加上样式 
 											  by Jerrio -->
 			<!-- <button class="pageLine" @click="goToMyPublish"> -->
-			<button class="pageLine" @click="showToast()">
+			<button class="pageLine" @click=" goToMessageMyPoblish">
 				<image src="../static/icon/write.png"></image>
 				<view>我的发布</view>
 				<!-- <view class="noticeNum">3</view> -->
 			</button>
-			<button class="pageLine" @tap="goToMessageListPage">
+			<button class="pageLine" @click="goToMessageListPage">
 				<image src="../static/icon/message.png"></image>
 				<view>我的消息</view>
 				<view class="noticeNum" v-if="unreadMsgCount>0 && unreadMsgCount<=99"> {{unreadMsgCount}} </view>
@@ -50,7 +50,7 @@
 				<!-- <view class="noticeNum">3</view> -->
 
 			</button>
-			<button class="pageLine" @click="showToast()">
+			<button class="pageLine" @click="goToAboutPage">
 				<image src="../static/icon/about.png"></image>
 				<view>关于</view>
 
@@ -99,6 +99,11 @@
 					icon: 'none',
 				})
 			},
+			goToMessageMyPoblish() {
+				uni.navigateTo({
+					url: '../myPublish/myPublish',
+				});
+			},
 			
 			goToMessageListPage() {
 				this.$store.commit('setMyMsgCount', 0);
@@ -106,7 +111,14 @@
 					url: '../messagelist/messagelist',
 				});
 			},
-
+			
+			goToAboutPage() {
+				this.$store.commit('setMyMsgCount', 0);
+				uni.navigateTo({
+					url: '../about/about',
+				});
+			},
+			
 			goToProfile() {
 				uni.navigateTo({
 					url: '../profile/profile',
