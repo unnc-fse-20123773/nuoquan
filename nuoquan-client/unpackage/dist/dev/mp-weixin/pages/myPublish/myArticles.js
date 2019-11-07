@@ -183,10 +183,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
-//
-//
-//
-//
 var _default =
 {
   name: 'aticlebrief',
@@ -198,7 +194,7 @@ var _default =
       serverUrl: this.$serverUrl,
       transformX: 'translateX(0px)',
       messageIndex: -1,
-      direction: "" };
+      direction: '' };
 
   },
 
@@ -207,9 +203,7 @@ var _default =
       //console.log(timediff);
       timediff = new Date(timediff);
       //console.log(timediff);
-      var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(),
-      timediff.getSeconds()];
-
+      var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(), timediff.getSeconds()];
       var oldTime = timediff.getTime();
       var now = new Date();
       var newTime = now.getTime();
@@ -224,7 +218,6 @@ var _default =
         timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
       } else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
         timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
-
       } else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && parts[0] == now.getFullYear()) {
         timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
       } else {
@@ -254,9 +247,10 @@ var _default =
       // console.log(moveX);
       // console.log("moveY");
       // console.log(moveY);
-      if (Math.abs(moveY) > Math.abs(moveX) || Math.abs(moveY) > 100 || Math.abs(moveX) < 50) {//纵向滑动//参数100与50可调节侧滑灵敏度
+      if (Math.abs(moveY) > Math.abs(moveX) || Math.abs(moveY) > 100 || Math.abs(moveX) < 50) {
+        //纵向滑动//参数100与50可调节侧滑灵敏度
         this.direction = 'Y';
-        console.log("direction is Y ");
+        console.log('direction is Y ');
         return;
       }
       // 移动距离
@@ -265,7 +259,6 @@ var _default =
       this.messageIndex = moveX < 0 ? event.currentTarget.dataset.index : -1;
     },
     touchEnd: function touchEnd(event) {
-
       if (this.direction !== 'right' && this.direction !== 'left') {
         this.direction = '';
         return;

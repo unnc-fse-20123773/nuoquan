@@ -1,21 +1,27 @@
 <template>
 	<view id="public-container">
 		<!-- 黄色头部 -->
-		<view id="yellowTop" :style="{ bottom: yellowBottom }"></view>
+		<view id="yellowTopBox">
+			<view class="yellowTop" :style="{ bottom: yellowBottom }"></view>
+			<!-- <view class="yellowTop" style="bottom: -240rpx"></view> -->
+		</view>
 		<!-- 简介块 -->
 		<view id="public-infoBox" class="column_center">
-				<!-- 基本信息内容 -->
-				<view id="idCard" class="idCard" :style="{ width: cardWidth }">
-					<!-- ID -->
-					<view class="nameBox super_center">
-						<text class="name-text">{{ thisUserInfo.nickname }}</text>
-					</view>
-					<!-- 个人简介 -->
-					<view class="introBox super_center"><text class="introBox-text">个人简介：这个人很懒，什么都没写哦...</text></view>
-					<!-- 判断是否为本人主页 -->
-					<view class="guanzhuBox super_center" v-if="!myPublic">
-						<view class="guanzhuLine super_center">
-							<view style="height: 100%;display: flex;">
+			<!-- 基本信息内容 -->
+			<view id="idCard" class="idCard" :style="{ width: cardWidth }">
+				<view style="width: 100%;height: 74px;margin-top: -46px;" class="super_center">
+					<image class="publicTouxiang" mode="aspectFill" :src="thisUserInfo.faceImg"></image>
+				</view>
+				<!-- ID -->
+				<view class="nameBox super_center">
+					<text class="name-text">{{ thisUserInfo.nickname }}</text>
+				</view>
+				<!-- 个人简介 -->
+				<view class="introBox super_center"><text class="introBox-text">个人简介：这个人很懒，什么都没写哦...</text></view>
+				<!-- 判断是否为本人主页 -->
+				<view class="guanzhuBox super_center" v-if="!myPublic">
+					<view class="guanzhuLine super_center">
+						<view style="height: 100%;display: flex;">
 							<!-- 关注&已关注 -->
 							<button class="guanzhuButton super_center" @tap="addFollow(thisUserInfo.id)" v-if="thisUserInfo.follow == false">
 								<text class="guanzhuButton-text">关注</text>
@@ -39,93 +45,121 @@
 								opacity:1;"
 								></image>
 							</view>
-							</view>
 						</view>
 					</view>
-					<!-- 操作行 -->
-					<view class="operationLine">
-						<!-- 粉丝 -->
-						<view class="operationCard" @tap="goToFansFollow(1)">
-							<view class="operationNum super_center">
-								<text class="operationNum-text" style="color:color:rgba(53,53,53,1);">{{thisUserInfo.fansNum}}</text>
-							</view>
-							<view class="operationTitle super_center">
-								<text class="operationTitle-text">粉丝</text>
-							</view>
+				</view>
+				<!-- 操作行 -->
+				<view class="operationLine">
+					<!-- 粉丝 -->
+					<view class="operationCard" @tap="goToFansFollow(1)">
+						<view class="operationNum super_center">
+							<text class="operationNum-text" style="color:color:rgba(53,53,53,1);">{{ thisUserInfo.fansNum }}</text>
 						</view>
-						<!-- 影响力 -->
-						<view class="operationCard">
-							<view class="operationNum super_center">
-								<text class="operationNum-text" style="color:rgba(254,95,85,1);">999999</text>
-							</view>
-							<view class="operationTitle super_center">
-								<text class="operationTitle-text">影响力</text>
-							</view>
+						<view class="operationTitle super_center"><text class="operationTitle-text">粉丝</text></view>
+					</view>
+					<!-- 影响力 -->
+					<view class="operationCard">
+						<view class="operationNum super_center"><text class="operationNum-text" style="color:rgba(254,95,85,1);">999999</text></view>
+						<view class="operationTitle super_center"><text class="operationTitle-text">影响力</text></view>
+					</view>
+					<!-- 关注 -->
+					<view class="operationCard" @tap="goToFansFollow(0)">
+						<view class="operationNum super_center">
+							<text class="operationNum-text" style="color:color:rgba(53,53,53,1);">{{ thisUserInfo.followNum }}</text>
 						</view>
-						<!-- 关注 -->
-						<view class="operationCard" @tap="goToFansFollow(0)">
-							<view class="operationNum super_center">
-								<text class="operationNum-text" style="color:color:rgba(53,53,53,1);">{{thisUserInfo.followNum}}</text>
+						<view class="operationTitle super_center"><text class="operationTitle-text">关注</text></view>
+					</view>
+				</view>
+			</view>
+		</view>
+		<!-- 信息块标题 -->
+		<view id="public-titleBox"><text class="public-title-text">他的信息</text></view>
+		<!-- 信息块 -->
+		<view id="publix-profileLine" :style="{ width: cardWidth }">
+			<view class="profileCard">
+				<!-- 检测是否设置 -->
+				<text v-if="thisUserInfo.graduationYear != null" class="profile-content-text">{{ thisUserInfo.graduationYear }}</text>
+				<text v-else class="profile-content-text">未知</text>
+				<text class="profile-title-text">毕业年份</text>
+			</view>
+			<view class="profileCard">
+				<!-- 检测是否设置 -->
+				<text v-if="thisUserInfo.major != null" class="profile-content-text">{{ thisUserInfo.major }}</text>
+				<text v-else class="profile-content-text">未知</text>
+				<text class="profile-title-text">专业</text>
+			</view>
+		</view>
+		<!-- 发布块标题 -->
+		<view id="public-titleBox"><text class="public-title-text">他的发布</text></view>
+		<!-- 有图发布块 -->
+		<view id="public-articleCard" :style="{ width: cardWidth }">
+			<view class="articleTitle">这里是一个标题这里是一个标题这里是一个标题这里是一个标题</view>
+			<!-- 发布内容行 -->
+			<view class="articleContentLine">
+				<!-- 文字部分卡片 -->
+				<!-- 有图跟无图只有 teamareaCard 这一个 class 的区别，判断只需要更改这一个 class -->
+				<view class="textareaCard-img">
+					<view class="textContent">
+						这里是文字的内容这里是文字的内容这里是文字的内容这里是文字的内容这里是文字的内容这里是文字的内容这里是文字的内容容这里是文字的内容这里是文字的内容
+					</view>
+					<!-- 底部栏 -->
+					<view class="bottomBar">
+						<view style="position: relative;width: 100%;height: 100%;">
+							<view class="bottom-time column_center"><text>2018.01.01 18:18</text></view>
+							<view class="view column_center">
+								<image src="../../static/icon/eye-888888.png" mode="aspectFill"></image>
+								<text>99+</text>
 							</view>
-							<view class="operationTitle super_center">
-								<text class="operationTitle-text">关注</text>
+							<view class="comment column_center">
+								<image src="../../static/icon/comment-alt.png" mode="aspectFill"></image>
+								<text>99+</text>
+							</view>
+							<view class="like column_center">
+								<image src="../../static/icon/like.png" mode="aspectFill"></image>
+								<text>99+</text>
 							</view>
 						</view>
 					</view>
 				</view>
-		</view>
-		<!-- 头像 -->
-		<view style="width: 100%;height: 74px;position: fixed;z-index: 30;top: 16px;" class="super_center">
-			<image class="publicTouxiang" mode="aspectFill" :src="thisUserInfo.faceImg"></image>
-		</view>
-		<!-- 信息块标题 -->
-		<view id="public-titleBox" :style="{positionHelper}">
-			<text class="public-title-text">他的信息</text>
-		</view>
-		<!-- 信息块 -->
-		<view id="publix-profileLine" :style="{ width: cardWidth }">
-			<view class="profileCard">
-					<text class="profile-content-text">2020</text>
-					<text class="profile-title-text">毕业年份</text>
-			</view>
-			<view class="profileCard">
-					<text class="profile-content-text">PDM</text>
-					<text class="profile-title-text">专业</text>
+				<!-- 图片部分盒子 -->
+				<view class="imgBox"><image mode="aspectFill" src="../../static/BG/submitBG.jpg"></image></view>
 			</view>
 		</view>
-		<!-- 发布块标题 -->
-		<view id="public-titleBox" :style="{positionHelper}">
-			<text class="public-title-text">他的发布</text>
-		</view>
-		<!-- 发布块 -->
-		
-		<!-- <view id="public-message-futherbox">
-			<scroll-view class="top-menu-view" scroll-x="true" scroll-left="scrollLeft">
-				<block v-for="(menuTabs,index) in menuTabs" :key="index">
-					<view class="menu-one-view" v-bind:id="'tabNum'+index" @click="swichMenu(index)">
-						<view :class="[currentTab==index ? 'menu-one-act' : 'menu-one']">
-							<view class="menu-one-txt">{{menuTabs.name}}</view>
-							<view class="menu-one-bottom">
-								<view class="menu-one-bottom-color"></view>
+		<!-- 无图发布块 -->
+		<view id="public-articleCard" :style="{ width: cardWidth }">
+			<view class="articleTitle">这里是一个标题这里是一个标题这里是一个标题这里是一个标题</view>
+			<!-- 发布内容行 -->
+			<view class="articleContentLine">
+				<!-- 文字部分卡片 -->
+				<view class="textareaCard">
+					<view class="textContent">这里是文字的内容这里是文字的内内容</view>
+					<!-- 底部栏 -->
+					<view class="bottomBar">
+						<view style="position: relative;width: 100%;height: 100%;">
+							<view class="bottom-time column_center"><text>2018.01.01 18:18</text></view>
+							<view class="view column_center">
+								<image src="../../static/icon/eye-888888.png" mode="aspectFill"></image>
+								<text>99+</text>
+							</view>
+							<view class="comment column_center">
+								<image src="../../static/icon/comment-alt.png" mode="aspectFill"></image>
+								<text>99+</text>
+							</view>
+							<view class="like column_center">
+								<image src="../../static/icon/like.png" mode="aspectFill"></image>
+								<text>99+</text>
 							</view>
 						</view>
 					</view>
-				</block>
-			</scroll-view>
-			<swiper :current="currentTab" class="swiper-box-list" duration="300" @change="swiperChange">
-				<block v-for="(swiperDate,index1) in swiperDateList" :key="index1">
-					<swiper-item>
-						<scroll-view class="swiper-one-list" scroll-y="true" @scrolltolower="loadMore(index1)">
-							<view class="warning-text-box super_center">
-								<view class="warning-text">
-									Function under developed.
-								</view>
-							</view>
-						</scroll-view>
-					</swiper-item>
-				</block>
-			</swiper>
-		</view> -->
+				</view>
+				<!-- 图片部分盒子 -->
+				<!-- <view class="imgBox">
+					<image mode="aspectFill" src="../../static/BG/submitBG.jpg"></image>
+				</view> -->
+			</view>
+		</view>
+		<!-- 占位块 -->
+		<view style="height: 30px;" :style="{ width: cardWidth }"></view>
 	</view>
 </template>
 
@@ -135,26 +169,6 @@ var me;
 export default {
 	data() {
 		return {
-			scrollLeft: 0,
-			isClickChange: false,
-			currentTab: 0,
-			menuTabs: [
-				{
-					name: '动态'
-				},
-				{
-					name: '帖子'
-				},
-				{
-					name: '点赞'
-				},
-				{
-					name: '评论'
-				}
-			],
-
-			swiperDateList: [[], [], [], [], [], []],
-
 			screenWidth: 350,
 			serverUrl: '',
 
@@ -164,25 +178,21 @@ export default {
 			windowWidth: 0,
 			yellowBottom: '',
 			cardWidth: '',
+			
+			loadArticleFlag:false,
+			userInfo: '',
+			totalPage: 1,
+			currentPage: 1,
+			
+			totalNum: '0',
+			binNum: '12',
+			myArticleList: "",
 		};
-	},
-
-	changeIndicatorDots(e) {
-		this.indicatorDots = !this.indicatorDots;
-	},
-	changeAutoplay(e) {
-		this.autoplay = !this.autoplay;
-	},
-	intervalChange(e) {
-		this.interval = e.target.value;
-	},
-	durationChange(e) {
-		this.duration = e.target.value;
 	},
 
 	onLoad(opt) {
 		var userId = opt.userId;
-
+		console.log(userId);
 		me = this.getGlobalUserInfo();
 		if (me.id == userId) {
 			// 如果打开自己的页面，屏蔽关注和发私信按钮
@@ -210,12 +220,24 @@ export default {
 			}
 		});
 		//获取黄色头部位置
-		that.yellowBottom = that.windowHeight - 150 * (that.windowHeight / 720) + 'px';
-		console.log(that.yellowBottom);
+		if (that.windowHeight <= 1000){
+			if (that.windowHeight < 667 ){
+			that.yellowBottom = -that.windowHeight*0.25 + 'px';
+			// console.log("超小屏幕，黄色头部上移了" + that.yellowBottom);
+			}else{
+			that.yellowBottom = -that.windowHeight*0.22 + 'px';
+			// console.log("手机屏幕，黄色头部上移了" + that.yellowBottom);
+			}
+		}else{
+			that.yellowBottom = -that.windowHeight*0.20 + 'px';
+			// console.log("平板屏幕，黄色头部上移了" + that.yellowBottom);
+		}		
 		
 		// 获取卡片宽度
 		that.cardWidth = that.windowWidth - 26 + 'px';
-		console.log(that.cardWidth);
+		
+		this.showArticles(page);
+		console.log(this);
 	},
 
 	onPullDownRefresh() {
@@ -226,46 +248,6 @@ export default {
 	},
 
 	methods: {
-		swichMenu: async function(current) {
-			//点击其中一个 menu
-			if (this.currentTab == current) {
-				return false;
-			} else {
-				this.currentTab = current;
-				this.setScrollLeft(current);
-			}
-		},
-		swiperChange: async function(e) {
-			let index = e.target.current;
-			this.setScrollLeft(index);
-			this.currentTab = index;
-		},
-		setScrollLeft: async function(tabIndex) {
-			let leftWidthSum = 0;
-			for (var i = 0; i <= tabIndex; i++) {
-				let nowElement = await this.getWidth('tabNum' + i);
-				leftWidthSum = leftWidthSum + nowElement.width;
-			}
-			let winWidth = uni.getSystemInfoSync().windowWidth;
-			this.scrollLeft = leftWidthSum > winWidth ? leftWidthSum - winWidth : 0;
-		},
-		getWidth: function(id) {
-			//得到元素的宽高
-			return new Promise((res, rej) => {
-				uni.createSelectorQuery()
-					.select('#' + id)
-					.fields(
-						{
-							size: true,
-							scrollOffset: true
-						},
-						data => {
-							res(data);
-						}
-					)
-					.exec();
-			});
-		},
 		loadMore: function(tabIndex) {
 			console.log('正在加载更多数据。。。');
 			this.getDateList(tabIndex);
@@ -380,8 +362,6 @@ export default {
 <style>
 page {
 	width: 100%;
-	height: 100%;
-	overflow: scroll;
 }
 
 #public-container {
@@ -390,8 +370,14 @@ page {
 }
 
 /* 黄色头部 */
-#yellowTop {
-	position: fixed; /* 此处采用 fixed 定位，以保证页面流可以正常显示。层级设为 -10，以保证其显示在页面最底部。 */
+#yellowTopBox {
+	width: 100%;
+	position: relative;
+	z-index: -30;
+}
+
+.yellowTop {
+	position: absolute; /* 此处采用 fixed 定位，以保证页面流可以正常显示。层级设为 -10，以保证其显示在页面最底部。 */
 	left: -430upx;
 	height: 1600upx;
 	width: 1600upx;
@@ -403,12 +389,6 @@ page {
 /* 简介块 */
 #public-infoBox {
 	width: 100%;
-}
-
-.public-infoBox-rel {
-	width: 100%;
-	height: 100%;
-	position: relative;
 }
 
 .publicTouxiang {
@@ -430,7 +410,7 @@ page {
 }
 
 .nameBox {
-	margin-top: 30px;
+	margin-top: 8px;
 	width: 100%;
 }
 
@@ -517,57 +497,58 @@ page {
 	justify-content: space-between;
 }
 
-.operationCard{
+.operationCard {
 	width: 33.3%;
 	height: 43px;
 }
 
-.operationNum{
+.operationNum {
 	width: 100%;
 	height: 17px;
 	overflow: visible;
 }
 
-.operationNum-text{
-	font-size:17px;
-	font-family:Source Han Sans CN;
-	font-weight:800;
-	opacity:1;
+.operationNum-text {
+	font-size: 17px;
+	font-family: Source Han Sans CN;
+	font-weight: 800;
+	opacity: 1;
 }
 
-.operationTitle{
+.operationTitle {
 	margin-top: 11px;
 	width: 100%;
 	height: 11px;
 	overflow: visible;
 }
 
-.operationTitle-text{
-	font-size:10px;
-	font-family:Source Han Sans CN;
-	font-weight:500;
-	color:rgba(178,178,178,1);
-	opacity:1;
+.operationTitle-text {
+	font-size: 10px;
+	font-family: Source Han Sans CN;
+	font-weight: 500;
+	color: rgba(178, 178, 178, 1);
+	opacity: 1;
 }
 
-/* 他的信息标题 */
-#public-titleBox{
+/* 标题 */
+#public-titleBox {
 	width: 100%;
 	margin-top: 20px;
+	margin-bottom: 12px;
 }
 
-.public-title-text{
+.public-title-text {
 	margin-left: 13px;
-	font-size:17px;
-	font-family:Source Han Sans CN;
-	font-weight:bold;
-	color:rgba(136,136,136,1);
-	opacity:1;
+	font-size: 17px;
+	font-family: Source Han Sans CN;
+	font-weight: bold;
+	color: rgba(136, 136, 136, 1);
+	opacity: 1;
+	letter-spacing: 1px;
 }
 
 /* 他的信息块 */
-#publix-profileLine{
-	margin-top: 12px;
+#publix-profileLine {
 	margin-left: 13px;
 	border-radius: 8px;
 	background-color: rgba(255, 255, 255, 1);
@@ -576,179 +557,165 @@ page {
 	justify-content: space-between;
 }
 
-.profileCard{
+.profileCard {
 	width: 50%;
 	display: flex;
 	flex-direction: column;
 }
 
-.profile-content-text{
+.profile-content-text {
 	margin-top: 16px;
 	margin-left: 38px;
-	font-size:17px;
-	font-family:Source Han Sans CN;
-	font-weight:500;
-	color:rgba(53,53,53,1);
-	opacity:1;
+	font-size: 17px;
+	font-family: Source Han Sans CN;
+	font-weight: 500;
+	color: rgba(53, 53, 53, 1);
+	opacity: 1;
 }
 
-.profile-title-text{
+.profile-title-text {
 	margin-bottom: 16px;
 	margin-top: 8px;
 	margin-left: 38px;
-	font-size:10px;
-	font-family:Source Han Sans CN;
-	font-weight:500;
-	color:rgba(178,178,178,1);
-	opacity:1;
+	font-size: 10px;
+	font-family: Source Han Sans CN;
+	font-weight: 500;
+	color: rgba(178, 178, 178, 1);
+	opacity: 1;
 }
 
-#public-message-futherbox
-
-	/* 这里是帖子块最高级父组件*/
-		 {
-	/* border: 1upx solid red; 如果想快速了解该组件样式,则取消这个注释*/
-	position: fixed;
-	top: 20%;
-	width: 100%;
-	height: 80%;
-	/* 此处为背景半径，若要更改帖子块上方半径，请同时更改此处和下面导航条处 */
-	border-top-left-radius: 50upx;
-	border-top-right-radius: 50upx;
-	box-shadow: 0upx -1upx 8upx 1upx #a6a6a6;
+/* 他的发布文章块 */
+#public-articleCard {
+	margin-bottom: 8px;
+	max-height: 114px;
+	margin-left: 13px;
+	padding: 12px 0px;
+	border-radius: 8px;
+	background-color: rgba(255, 255, 255, 1);
+	box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
 }
 
-/* fengexian 以下是旧代码 */
-
-
-
-
-/* 以下是帖子展示块的样式 */
-
-.top-menu-view {
-	display: flex;
-	justify-content: space-around;
-	width: 100%;
-	background-color: white;
-	height: 8%;
-	/* 在这里设置导航条高度 */
-	border-top-left-radius: 50upx;
-	border-top-right-radius: 50upx;
-}
-
-.menu-one-view {
-	display: inline-block;
+.articleTitle {
+	width: calc(100% - 32px);
+	margin-left: 16px;
+	font-size: 15px;
+	font-family: Source Han Sans CN;
+	font-weight: 550;
+	color: rgba(74, 74, 74, 1);
+	opacity: 1;
 	white-space: nowrap;
-	height: 100%;
-	width: 24%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	line-height: 17px;
 }
 
-.top-menu-view .menu-one-view .menu-one {
-	/* 在这里写 单个按钮样式 */
-	margin-left: 8%;
-	position: relative;
-	height: 100%;
+.articleContentLine {
+	margin-top: 12px;
+	width: calc(100% - 32px);
+	margin-left: 16px;
 	display: flex;
-	align-items: center;
-	justify-content: center;
+}
+
+.textareaCard {
+	position: relative;
+	min-height: 34px;
+	max-height: 63px;
 	width: 100%;
 }
 
-.top-menu-view .menu-one-view .menu-one .menu-one-txt {
-	height: 40upx;
-	font-size: 32upx;
-	font-weight: 550;
-	color: #888888;
-	line-height: 40upx;
+.textareaCard-img {
+	position: relative;
+	height: 63px;
+	width: calc(100% - 61px);
+	margin-right: 12px;
 }
 
-.top-menu-view .menu-one-view .menu-one .menu-one-bottom {
+.textContent {
+	position: absolute;
+	top: 0;
+	width: 100%;
+	max-height: 39px;
+	font-size: 12px;
+	font-family: Source Han Sans CN;
+	font-weight: 400;
+	line-height: 13px;
+	color: rgba(53, 53, 53, 1);
+	opacity: 1;
+
+	word-break: break-all;
+	text-overflow: ellipsis;
+	/**文字隐藏后添加省略号*/
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+	overflow: hidden;
+}
+
+.bottomBar {
 	position: absolute;
 	bottom: 0;
 	width: 100%;
+	height: 12px;
 }
 
-.top-menu-view .menu-one-view .menu-one .menu-one-bottom .menu-one-bottom-color {
-	width: 60%;
-	height: 4upx;
+.bottomBar image {
+	height: 12px;
+	width: 12px;
 }
 
-.top-menu-view .menu-one-view .menu-one-act {
-	/* 在这里写 单个按钮样式 */
-	margin-left: 8%;
-	position: relative;
-	height: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 100%;
+.bottomBar text {
+	margin-left: 4px;
+	font-size: 10px;
+	font-family: Source Han Sans CN;
+	font-weight: 400;
+	color: rgba(136, 136, 136, 1);
+	opacity: 1;
 }
 
-.top-menu-view .menu-one-view .menu-one-act .menu-one-txt {
-	height: 40upx;
-	font-size: 36upx;
-	font-weight: 550;
-	color: #353535;
-	line-height: 40upx;
-}
-
-.top-menu-view .menu-one-view .menu-one-act .menu-one-bottom {
-	/* 在这里设置底部横条宽度 */
+.bottom-time {
 	position: absolute;
-	bottom: 0;
-	width: 80%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	width: 84px;
+	height: 12px;
 }
 
-.top-menu-view .menu-one-view .menu-one-act .menu-one-bottom .menu-one-bottom-color {
-	/* 在这里设置底部横条高度和颜色 */
-	width: 100%;
-	height: 6upx;
-	background: #ffcf3c;
+.bottomBar .bottom-time text {
+	margin-left: 0px;
+	font-size: 10px;
+	font-family: Source Han Sans CN;
+	font-weight: 400;
+	color: rgba(155, 155, 155, 1);
+	opacity: 1;
+	white-space: nowrap;
 }
 
-.swiper-box-list {
-	flex: 1;
-	height: 92%;
-	width: 100%;
-	background-color: red;
+.view {
+	position: absolute;
+	width: 43px;
+	height: 12px;
+	right: 86px;
 }
 
-.swiper-one-list {
-	height: 100%;
-	width: 100%;
+.comment {
+	position: absolute;
+	width: 43px;
+	height: 12px;
+	right: 43px;
 }
 
-/* 	.swiper-one-list .swiper-list-entity {
-		width: 100%;
-		height: 112upx;
-		text-align: center;
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		justify-content: center;
-	} */
-
-/* swiper */
-
-.swiper {
-	height: 360upx;
+.like {
+	position: absolute;
+	width: 43px;
+	height: 12px;
+	right: 0;
 }
 
-.slideimage {
-	width: 100%;
+.imgBox {
+	width: 61px;
+	height: 61px;
 }
 
-/* under development 盖板 */
-.warning-text-box {
-	height: 100%;
-	background-color: #d5d5d5;
-}
-
-.warning-text-box .warning-text {
-	color: black;
-	font-size: 35upx;
+.imgBox image {
+	width: 61px;
+	height: 61px;
 }
 </style>

@@ -27,7 +27,7 @@
 			totalPage: 1,
 			currentPage: 1,
 
-			totalNum: '5',
+			totalNum: '0',
 			binNum: '12',
 			myArticleList: "",
 		};

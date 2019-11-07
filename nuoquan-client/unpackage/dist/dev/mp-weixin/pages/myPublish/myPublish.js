@@ -151,7 +151,7 @@ __webpack_require__.r(__webpack_exports__);
       totalPage: 1,
       currentPage: 1,
 
-      totalNum: '5',
+      totalNum: '0',
       binNum: '12',
       myArticleList: "" };
 
