@@ -140,6 +140,14 @@ page {
 	line-height: 20px;
 	max-height: 120px;
 	overflow: scroll;
+	/* 保证文章正常显示 */
+	word-break: break-all;
+	white-space: pre-line;
+	-o-text-overflow: ellipsis;
+	   text-overflow: ellipsis;
+	/* display: -webkit-box; */
+	/* -webkit-box-orient: vertical; */
+	/* -webkit-line-clamp: 15; */
 }
 .bottom-picture image {
 	width: 100%;

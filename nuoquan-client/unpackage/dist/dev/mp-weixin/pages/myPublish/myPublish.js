@@ -155,7 +155,7 @@ var loadArticleFlag = false;var _default =
 
   },
 
-  onLoad: function onLoad() {
+  onLoad: function onLoad() {var _this = this;
     var userInfo = this.getGlobalUserInfo();
     console.log(userInfo);
     if (this.isNull(userInfo)) {
@@ -170,6 +170,10 @@ var loadArticleFlag = false;var _default =
     this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
     var page = this.currentPage;
     this.showArticles(page);
+
+    uni.$on("refresh", function () {
+      _this.showArticles(1);
+    });
   },
 
   methods: {

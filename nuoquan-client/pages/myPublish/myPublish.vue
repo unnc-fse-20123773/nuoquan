@@ -1,5 +1,5 @@
 <template>
-	<view style="width:100%;height:100%;margin:auto;">
+	<view style="width:100%;height:100%;margin:auto;background: #FFFFFF;">
 		<view class="top-bar">
 			<view class="totalNum">{{ totalNum }}篇文章</view>
 			<!-- <view class="bin">
@@ -46,6 +46,10 @@ export default {
 		this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
 		var page = this.currentPage;
 		this.showArticles(page);
+		
+		uni.$on("refresh", () => {
+			this.showArticles(1);
+		});
 	},
 
 	methods: {

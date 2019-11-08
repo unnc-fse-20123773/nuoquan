@@ -1,7 +1,7 @@
 <template>
 	<view style="width:100%;">
 		<block v-for="thisArticle in myArticleList" :key="thisArticle.id" @click="consoleEvent">
-			<view class="oneArticle">
+			<view class="oneArticle" v-if="thisArticle.status != 0">
 				<view
 					class="swipe-contain"
 					:style="{ transform: messageIndex == thisArticle.id ? transformX : 'translateX(0px)' }"
@@ -41,12 +41,12 @@
 
 					<!-- 审核状态 -->
 					<view class="status pass" style="width:49px;background: #09BB07;" v-if="thisArticle.status == 1">审核通过</view>
-					<view class="status pending" style="width:36px;background: #3370FF;" v-if="thisArticle.status == 0">审核中</view>
-					<view class="status fail" style="width:49px;background: #888888;" v-if="thisArticle.status == -1">审核失败</view>
+					<view class="status pending" style="width:36px;background: #3370FF;" v-if="thisArticle.status == 2">审核中</view>
+					<view class="status fail" style="width:49px;background: #888888;" v-if="thisArticle.status == 3">审核失败</view>
 				</view>
 
 				<view class="menu-area" v-if="messageIndex == thisArticle.id">
-					<view style="background: #FE5F55;">
+					<view style="background: #FE5F55;" @click="banArticle(thisArticle.id)">
 						<image src="../../static/icon/bin.png"></image>
 						<text>删除</text>
 					</view>
@@ -135,6 +135,7 @@ export default {
 			// 输出方向
 			this.messageIndex = moveX < 0 ? event.currentTarget.dataset.index : -1;
 		},
+		
 		touchEnd(event) {
 			if (this.direction !== 'right' && this.direction !== 'left') {
 				this.direction = '';
@@ -145,6 +146,7 @@ export default {
 			}
 			this.endMove(event);
 		},
+		
 		endMove(event) {
 			if (this.direction === 'Y') {
 				debugger;
@@ -158,6 +160,26 @@ export default {
 				this.transformX = 'translateX(0px)';
 			}
 			this.direction = '';
+		},
+		
+		banArticle(articleId){
+			uni.request({
+				url: this.$serverUrl + '/article/fDeleteArticle',
+				method: 'POST',
+				data: {
+					articleId: articleId
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					console.log(res);
+				},
+				fail: res => {
+					
+				}
+			});
+			uni.$emit("refresh");
 		}
 	}
 };
