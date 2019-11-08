@@ -8,7 +8,8 @@ public enum StatusEnum {
 	
 	UNREADABLE(0, "unreadable"),
 	READABLE(1, "readable"), 
-	CHECKING(2, "checking");
+	CHECKING(2, "checking"),
+	BANNED(3, "banned");
  
 	public final Integer type;
 	public final String content;

@@ -122,7 +122,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -259,6 +259,7 @@ var _default =
       // 输出方向
       this.messageIndex = moveX < 0 ? event.currentTarget.dataset.index : -1;
     },
+
     touchEnd: function touchEnd(event) {
       if (this.direction !== 'right' && this.direction !== 'left') {
         this.direction = '';
@@ -269,6 +270,7 @@ var _default =
       }
       this.endMove(event);
     },
+
     endMove: function endMove(event) {
       if (this.direction === 'Y') {
         debugger;
@@ -282,7 +284,28 @@ var _default =
         this.transformX = 'translateX(0px)';
       }
       this.direction = '';
+    },
+
+    banArticle: function banArticle(articleId) {
+      uni.request({
+        url: this.$serverUrl + '/article/fDeleteArticle',
+        method: 'POST',
+        data: {
+          articleId: articleId },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          console.log(res);
+        },
+        fail: function fail(res) {
+
+        } });
+
+      uni.$emit("refresh");
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 
