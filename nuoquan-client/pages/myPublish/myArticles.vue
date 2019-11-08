@@ -1,6 +1,6 @@
 <template>
 	<view style="width:100%;">
-		<block v-for="thisArticle in myArticleList" :key="thisArticle.id" @click="consoleEvent">
+		<block v-for="thisArticle in myArticleList" :key="thisArticle.id" >
 			<view class="oneArticle" v-if="thisArticle.status != 0">
 				<view
 					class="swipe-contain"
@@ -10,6 +10,7 @@
 					@touchmove="touchMove"
 					@touchend="touchEnd"
 					@touchcancel="touchEnd"
+					@click="goToDetail(thisArticle)"
 				>
 					<view class="title">{{ thisArticle.articleTitle }}</view>
 					<view class="cardBody">
@@ -50,7 +51,7 @@
 						<image src="../../static/icon/bin.png"></image>
 						<text>删除</text>
 					</view>
-					<view style="background: #FCC041;">
+					<view style="background: #FCC041;" @click="closeSwipe">
 						<image src="../../static/icon/arrow-right-FFFFFF.png"></image>
 						<text>收起</text>
 					</view>
@@ -160,7 +161,20 @@ export default {
 				this.transformX = 'translateX(0px)';
 			}
 			this.direction = '';
-		},
+			},
+			//控制滑动结束，以下控制跳转detail
+			goToDetail(thisArticle){
+				//thisArticle用函数传入，因为v-for使用了ID为键名，所以无法筛选数据，就直接block传进来好了
+				var navData = JSON.stringify(thisArticle); // 这里转换成 字符串
+				uni.navigateTo({
+					url: '/pages/detail/detail?data=' + navData
+				});
+			},
+			
+			//收起
+			closeSwipe(){
+				this.messageIndex = -1;
+			},
 		
 		banArticle(articleId){
 			uni.request({
@@ -197,8 +211,10 @@ export default {
 	padding-right: 16px;
 	height: 121px;
 	box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
-	border-radius: 12.5px;
+	border-radius: 8px;
 	margin-bottom: 20px;
+	z-index: 10;
+	background-color: #FFFFFF;
 }
 
 .title {
@@ -328,7 +344,7 @@ export default {
 	height: 55px;
 	width: 48px;
 	background: #e80080;
-	border-radius: 10px;
+	border-radius: 8px;
 	font-size: 10px;
 	text-align: center;
 	margin-bottom: 11px;
