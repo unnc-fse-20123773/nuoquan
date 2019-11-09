@@ -70,6 +70,10 @@
 		{
 			"path" : "pages/myPublish/myPublish",
 			"style" : {}
+		},
+		{
+			"path":"pages/about/about",
+			"style": {}
 		}
     ],
 	"globalStyle": {
@@ -146,6 +150,11 @@
 			{   "name":"我的发布",
 				"path" : "pages/myPublish/myPublish",
 				"query": "" //启动参数，在页面的onLoad函数里面得到
+			},
+			{
+				"name":"关于我们",
+				"path":"pages/about/about",
+				"query":""
 			}
 		]
 	}
