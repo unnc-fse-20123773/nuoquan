@@ -105,7 +105,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var oneArticle = function oneArticle() {return __webpack_require__.e(/*! import() | pages/myPublish/oneArticle */ "pages/myPublish/oneArticle").then(__webpack_require__.bind(null, /*! ./oneArticle.vue */ 260));};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var myArticles = function myArticles() {return __webpack_require__.e(/*! import() | pages/myPublish/myArticles */ "pages/myPublish/myArticles").then(__webpack_require__.bind(null, /*! ./myArticles.vue */ 264));};
 
 
 
@@ -121,33 +121,29 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
-
-
-var loadArticleFlag = false; // 为加载文章加锁
-var _default = {
-
+var loadArticleFlag = false;var _default =
+{
   components: {
-    oneArticle: oneArticle },
+    myArticles: myArticles },
 
   data: function data() {
     return {
       userInfo: '',
-      myArticleList: [],
+      binNum: '12',
+
       totalPage: 1,
       currentPage: 1,
-      totalNum: '0' };
+      totalNum: '0',
+      myArticleList: '' };
 
   },
 
-  onLoad: function onLoad() {
+  onLoad: function onLoad() {var _this = this;
     var userInfo = this.getGlobalUserInfo();
+    console.log(userInfo);
     if (this.isNull(userInfo)) {
       uni.redirectTo({
-        url: "../signin/signin" });
+        url: '../signin/signin' });
 
       return;
     } else {
@@ -157,33 +153,43 @@ var _default = {
     this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
     var page = this.currentPage;
     this.showArticles(page);
+
+    uni.$on("refresh", function () {
+      _this.showArticles(1);
+    });
   },
+
   methods: {
     // 锁
     showArticles: function showArticles(page) {
+      console.log(loadArticleFlag);
+
       if (loadArticleFlag) {
-        return;
+        loadArticleFlag = false;
       }
+
       loadArticleFlag = true;
+
       uni.showLoading({
-        title: "加载中..." });
+        title: '加载中...' });
 
       setTimeout(function () {
         if (loadArticleFlag) {
           loadArticleFlag = false; //解锁
           uni.hideLoading();
           uni.showToast({
-            title: "网络未知错误",
-            icon: "none",
+            title: '网络未知错误',
+            icon: 'none',
             duration: 1000 });
 
         }
       }, 5000); //延时五秒timeout
 
       var that = this;
+      console.log(that.userInfo);
       uni.request({
         url: that.$serverUrl + '/article/queryPublishHistory',
-        method: "POST",
+        method: 'POST',
         data: {
           page: page,
           userId: that.userInfo.id,
@@ -193,7 +199,10 @@ var _default = {
           'content-type': 'application/x-www-form-urlencoded' },
 
         success: function success(res) {
-          setTimeout(function () {//延时加载
+          console.log(res);
+
+          setTimeout(function () {
+            //延时加载
             uni.hideLoading();
             loadArticleFlag = false;
 
@@ -214,7 +223,7 @@ var _default = {
           uni.hideLoading();
           loadArticleFlag = false;
 
-          console.log("index unirequest fail");
+          console.log('index unirequest fail');
           console.log(res);
         } });
 
@@ -229,8 +238,8 @@ var _default = {
       if (currentPage == totalPage) {
         // that.showArticles(1);
         uni.showToast({
-          title: "没有更多文章了",
-          icon: "none",
+          title: '没有更多文章了',
+          icon: 'none',
           duration: 1000 });
 
       } else {

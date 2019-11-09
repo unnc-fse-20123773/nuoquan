@@ -17,16 +17,16 @@ Vue.prototype.tagColors = ['#FE5F55','#40A792','#FDD041','#5CA0D3','#621E81','#7
 
 Vue.prototype.$store = store
 
-Vue.prototype.$serverUrl = "http://127.0.0.1:8080"
-Vue.prototype.$wsServerUrl = "wss://127.0.0.1:8088/ws"
+// Vue.prototype.$serverUrl = "http://127.0.0.1:8080"
+// Vue.prototype.$wsServerUrl = "wss://127.0.0.1:8088/ws"
 
 // 服务器地址
 // Vue.prototype.$serverUrl = "http://129.28.130.27:8080/nottinghome"
 // Vue.prototype.$wsServerUrl = "ws://129.28.130.27:8088/ws"
 
 // 安全服务器地址
-// Vue.prototype.$serverUrl = "https://www.checkchack.cn:8443/nottinghome"
-// Vue.prototype.$wsServerUrl = "wss://www.checkchack.cn:8088/ws"
+Vue.prototype.$serverUrl = "https://www.checkchack.cn:8443/nottinghome"
+Vue.prototype.$wsServerUrl = "wss://www.checkchack.cn:8088/ws"
 
 /**
  * 获取当前用户信息（我）
@@ -230,6 +230,14 @@ Vue.prototype.isNull = function(str) {
 		return true;
 	}
 	return false;
+}
+
+/**
+ * "" = true;
+ * " " = true;
+ */
+Vue.prototype.isBlank = function(str) {
+	return RegExp(/^\s*$/).test(str);
 }
 
 /**
@@ -997,4 +1005,36 @@ Vue.prototype.getTwo = function(s) {
 	}
 }
 
-
+/**
+ * Timestamp 渲染
+ * @param {Object} timediff
+ */
+Vue.prototype.timeDeal = function(timediff) {
+	console.log(timediff);
+	timediff = new Date(timediff);
+	console.log(timediff);
+	var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(),
+		timediff.getSeconds()
+	];
+	var oldTime = timediff.getTime();
+	var now = new Date();
+	var newTime = now.getTime();
+	var milliseconds = 0;
+	var timeSpanStr;
+	milliseconds = newTime - oldTime;
+	if (milliseconds <= 1000 * 60 * 1) {
+		timeSpanStr = '刚刚';
+	} else if (1000 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60) {
+		timeSpanStr = Math.round((milliseconds / (1000 * 60))) + '分钟前';
+	} else if (1000 * 60 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24) {
+		timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
+	} else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
+		timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
+		
+	} else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && parts[0] == now.getFullYear()) {
+		timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
+	} else {
+		timeSpanStr = parts[0] + '-' + parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
+	}
+	return timeSpanStr;
+}

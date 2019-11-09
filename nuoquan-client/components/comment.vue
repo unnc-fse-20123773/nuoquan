@@ -105,6 +105,7 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: (res) => {
+						console.log(res);
 						// that.isPassingReComment = false;
 						// that.reCommentListFromDetail = '';
 						if (res.data.status == 200) {
@@ -355,7 +356,7 @@
 
 	.icom {
 		position: absolute;
-		right: 74upx;
+		left: 60%;
 		font-size: 13px;
 		z-index: 10;
 	}

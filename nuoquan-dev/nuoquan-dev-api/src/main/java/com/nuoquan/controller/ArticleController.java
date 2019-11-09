@@ -335,6 +335,16 @@ public class ArticleController extends BasicController {
 		return JSONResult.ok();
 	}
 	
+	@ApiOperation(value = "更改文章状态为unreadble")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "articleId", value = "文章id", required = true, dataType = "String", paramType = "form")
+	})
+	@PostMapping(value="/fDeleteArticle")
+	public JSONResult fDeleteArticle(String articleId) throws Exception {
+		articleService.fDeleteArticle(articleId);
+		return JSONResult.ok();
+	}
+	
 	@ApiOperation(value = "更改文章状态为ban")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "articleId", value = "文章id", required = true, dataType = "String", paramType = "form")

@@ -1,12 +1,17 @@
-<view><view><image class="logo_app" src="../../static/icon/logo_app.png" mode></image></view><view class="company_name">Nottinghome</view><view class="version">1.0.3</view><view class="text1"><view class="title-line1"><view class="title1">联系我们</view><block wx:if="{{contentShow1}}"><image src="../../static/icon/angle-down.png" data-event-opts="{{[['tap',[['control1',['$event']]]]]}}" bindtap="__e"></image></block><block wx:if="{{!contentShow1}}"><image src="../../static/icon/angle-up.png" data-event-opts="{{[['tap',[['control1',['$event']]]]]}}" bindtap="__e"></image></block></view><block wx:if="{{!contentShow1}}"><view class="more-content"><view class="second-title">副标题副标题副标题副标题副标题</view><view class="content">正文正文正文正文正文正文正文正文正文正文正文
-				正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文
-				正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文
-				正文正文正文正文最多六行剩余滚动</view></view></block></view><view class="text2"><view class="title-line2"><view class="title2">更新公告</view><block wx:if="{{contentShow2}}"><image src="../../static/icon/angle-down.png" data-event-opts="{{[['tap',[['control2',['$event']]]]]}}" bindtap="__e"></image></block><block wx:if="{{!contentShow2}}"><image src="../../static/icon/angle-up.png" data-event-opts="{{[['tap',[['control2',['$event']]]]]}}" bindtap="__e"></image></block></view><block wx:if="{{!contentShow2}}"><view class="more-content"><view class="second-title">副标题副标题副标题副标题副标题</view><view class="content">正文正文正文正文正文正文正文正文正文正文正文
-				正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文
-				正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文
-				正文正文正文正文最多六行剩余滚动</view></view></block></view><view class="text3"><view class="title-line3"><view class="title3">打赏</view><block wx:if="{{contentShow3}}"><image src="../../static/icon/angle-down.png" data-event-opts="{{[['tap',[['control3',['$event']]]]]}}" bindtap="__e"></image></block><block wx:if="{{!contentShow3}}"><image src="../../static/icon/angle-up.png" data-event-opts="{{[['tap',[['control3',['$event']]]]]}}" bindtap="__e"></image></block></view><block wx:if="{{!contentShow3}}"><view class="more-content"><view class="second-title">副标题副标题副标题副标题副标题</view><view class="content">正文正文正文正文正文正文正文正文正文正文正文
-				正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文
-				正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文
-				正文正文正文正文文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文
-				正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文
-				正文正文正文正文最多六行剩余滚动</view></view></block></view><view class="picture"><image src="../../static/BG/signin_bottom.png"></image></view></view>
+<view id="about-container"><view class="top-picture"><view><image class="logo-app" src="../../static/icon/logo_app.png"></image></view><view class="company-name">Nottinghome</view><view class="version">1.0.3</view></view><view class="three-forms"><view class="form1"><view class="form1-fold"><view class="contact-us">联系我们</view><block wx:if="{{contentShow1}}"><image src="../../static/icon/angle-down.png" data-event-opts="{{[['tap',[['control1',['$event']]]]]}}" bindtap="__e"></image></block><block wx:if="{{!contentShow1}}"><image src="../../static/icon/angle-up.png" data-event-opts="{{[['tap',[['control1',['$event']]]]]}}" bindtap="__e"></image></block></view><block wx:if="{{!contentShow1}}"><view class="form1-expand"><view class="body">我们的初衷一直是为 UNNCer 打造一个专属的校际圈，让大家自由表达、拓宽交友圈、更有效的利用校内的信息和资源。
+					因此，我们欢迎校内各组织社团、学生团队、alumni 创业企业等与我们合作。合作形式包括但不限于联名活动、官方账号入驻 Nottinghome 小程序、资源共享等等。
+					我们欢迎一切能让 UNNCer 变的更好的 idea。
+					举报和反馈请联系：
+					wx: honggh-
+					
+					商务合作请联系：
+					wx: qian4223x
+					email: jumbox_nb@outlook.com
+					
+					官方微信公众号：
+					Jumboxtech</view></view></block></view><view class="form2"><view class="form2-fold"><view class="update-notice">更新公告</view><block wx:if="{{contentShow2}}"><image src="../../static/icon/angle-down.png" data-event-opts="{{[['tap',[['control2',['$event']]]]]}}" bindtap="__e"></image></block><block wx:if="{{!contentShow2}}"><image src="../../static/icon/angle-up.png" data-event-opts="{{[['tap',[['control2',['$event']]]]]}}" bindtap="__e"></image></block></view><block wx:if="{{!contentShow2}}"><view class="form2-expand"><view class="subtitle">V1.0.3</view><view class="body">19.11.8 更新：
+					1. 升级“个人主页”的外观，实现全部功能；
+					2. 新增“关于”页面
+					3. 新增“我的发布”页面，现用户可以通过该页面删除已发布的帖子
+					4. 修复若干 bug
+					5. 解决了部分页面部分机型不适配问题</view></view></block></view></view><view class="bottom-picture"><image src="../../static/BG/signin_bottom.png" mode="aspectFit"></image></view></view>

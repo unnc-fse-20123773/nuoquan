@@ -582,7 +582,18 @@ public class ArticleServiceImpl implements ArticleService {
 		List<UserArticleCommentVO> commentVOs = userArticleCommentMapperCustom.getUnsignedCommentMsg(userId);
 		return commentVOs;
 	}
-
+	
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Override
+	public void fDeleteArticle(String articleId) {
+		Example example = new Example(Article.class);
+		Criteria criteria = example.createCriteria();
+		criteria.andEqualTo("id", articleId);
+		Article a = new Article();
+		a.setStatus(StatusEnum.UNREADABLE.type);
+		articleMapper.updateByExampleSelective(a, example);
+	}
+	
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public void banArticle(String articleId) {
@@ -590,7 +601,7 @@ public class ArticleServiceImpl implements ArticleService {
 		Criteria criteria = example.createCriteria();
 		criteria.andEqualTo("id", articleId);
 		Article a = new Article();
-		a.setStatus(StatusEnum.UNREADABLE.type);
+		a.setStatus(StatusEnum.BANNED.type);
 		articleMapper.updateByExampleSelective(a, example);
 	}
 
@@ -612,7 +623,7 @@ public class ArticleServiceImpl implements ArticleService {
 		Criteria criteria = example.createCriteria();
 		criteria.andEqualTo("id", commentId);
 		UserArticleComment commentHelper = new UserArticleComment();
-		commentHelper.setStatus(StatusEnum.UNREADABLE.type);
+		commentHelper.setStatus(StatusEnum.BANNED.type);
 		userArticleCommentMapper.updateByExampleSelective(commentHelper, example);
 	}
 

@@ -114,7 +114,7 @@
 }
 .icom.data-v-a79986f2 {
 		position: absolute;
-		right: 74rpx;
+		left: 60%;
 		font-size: 13px;
 		z-index: 10;
 }

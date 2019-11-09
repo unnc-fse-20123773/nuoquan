@@ -75,6 +75,10 @@
 			"path":"pages/about/about",
 			"style": {}
 		}
+        ,{
+            "path" : "pages/about/about",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -152,9 +156,9 @@
 				"query": "" //启动参数，在页面的onLoad函数里面得到
 			},
 			{
-				"name":"关于我们",
-				"path":"pages/about/about",
-				"query":""
+				"name":"关于",
+				"path" : "pages/about/about",
+				"query": "" //启动参数，在页面的onLoad函数里面得到
 			}
 		]
 	}

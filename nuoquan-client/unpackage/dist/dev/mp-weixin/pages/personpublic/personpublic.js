@@ -73,6 +73,22 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var l0 = _vm.__map(_vm.myArticleList, function(thisArticle, __i0__) {
+    var m0 = _vm.timeDeal(thisArticle.createDate)
+    return {
+      $orig: _vm.__get_orig(thisArticle),
+      m0: m0
+    }
+  })
+
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        l0: l0
+      }
+    }
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -105,7 +121,76 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 19));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};} //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -172,56 +257,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
-var me;var _default =
-
+var me;
+var userId; // this user's id
+var loadArticleFlag = false;var _default =
 {
   data: function data() {
     return {
-      scrollLeft: 0,
-      isClickChange: false,
-      currentTab: 0,
-      menuTabs: [{
-        name: '动态' },
-      {
-        name: '帖子' },
-      {
-        name: '点赞' },
-      {
-        name: '评论' }],
-
-
-      swiperDateList: [
-      [],
-      [],
-      [],
-      [],
-      [],
-      []],
-
-
       screenWidth: 350,
-      serverUrl: "",
+      serverUrl: this.$serverUrl,
 
       thisUserInfo: '',
-      myPublic: false };
+      myPublic: false,
+      windowHeight: 0,
+      windowWidth: 0,
+      yellowBottom: '',
+      cardWidth: '',
+      ifhaveImg: 0,
 
-  },
+      totalPage: 1,
+      currentPage: 1,
+      totalNum: '0',
+      myArticleList: '' };
 
-  changeIndicatorDots: function changeIndicatorDots(e) {
-    this.indicatorDots = !this.indicatorDots;
-  },
-  changeAutoplay: function changeAutoplay(e) {
-    this.autoplay = !this.autoplay;
-  },
-  intervalChange: function intervalChange(e) {
-    this.interval = e.target.value;
-  },
-  durationChange: function durationChange(e) {
-    this.duration = e.target.value;
   },
 
   onLoad: function onLoad(opt) {
-    var userId = opt.userId;
+    userId = opt.userId;
 
     me = this.getGlobalUserInfo();
     if (me.id == userId) {
@@ -238,8 +299,32 @@ var me;var _default =
     // 获取这个人的信息, TODO: 更新本地用户信息缓存
     this.queryUserWithFollow(userId);
 
-    // [测试代码块]
-    // this.mySocket.init()
+    //获取屏幕宽高
+    var that = this;
+    uni.getSystemInfo({
+      success: function success(res) {
+        that.windowHeight = res.windowHeight;
+        that.windowWidth = res.windowWidth;
+      } });
+
+    //获取黄色头部位置
+    if (that.windowHeight <= 1000) {
+      if (that.windowHeight < 667) {
+        that.yellowBottom = -that.windowHeight * 0.25 + 'px';
+        // console.log("超小屏幕，黄色头部上移了" + that.yellowBottom);
+      } else {
+        that.yellowBottom = -that.windowHeight * 0.22 + 'px';
+        // console.log("手机屏幕，黄色头部上移了" + that.yellowBottom);
+      }
+    } else {
+      that.yellowBottom = -that.windowHeight * 0.2 + 'px';
+      // console.log("平板屏幕，黄色头部上移了" + that.yellowBottom);
+    }
+
+    // 获取卡片宽度
+    that.cardWidth = that.windowWidth - 26 + 'px';
+
+    this.showArticles(1);
   },
 
   onPullDownRefresh: function onPullDownRefresh() {
@@ -250,51 +335,15 @@ var me;var _default =
   },
 
   methods: {
-    swichMenu: function () {var _swichMenu = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(current) {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:if (!(
-                this.currentTab == current)) {_context.next = 4;break;}return _context.abrupt("return",
-                false);case 4:
-
-                this.currentTab = current;
-                this.setScrollLeft(current);case 6:case "end":return _context.stop();}}}, _callee, this);}));function swichMenu(_x) {return _swichMenu.apply(this, arguments);}return swichMenu;}(),
-
-
-    swiperChange: function () {var _swiperChange = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(e) {var index;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
-                index = e.target.current;
-                this.setScrollLeft(index);
-                this.currentTab = index;case 3:case "end":return _context2.stop();}}}, _callee2, this);}));function swiperChange(_x2) {return _swiperChange.apply(this, arguments);}return swiperChange;}(),
-
-    setScrollLeft: function () {var _setScrollLeft = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3(tabIndex) {var leftWidthSum, i, nowElement, winWidth;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
-                leftWidthSum = 0;
-                i = 0;case 2:if (!(i <= tabIndex)) {_context3.next = 10;break;}_context3.next = 5;return (
-                  this.getWidth('tabNum' + i));case 5:nowElement = _context3.sent;
-                leftWidthSum = leftWidthSum + nowElement.width;case 7:i++;_context3.next = 2;break;case 10:
-
-                winWidth = uni.getSystemInfoSync().windowWidth;
-                this.scrollLeft = leftWidthSum > winWidth ? leftWidthSum - winWidth : 0;case 12:case "end":return _context3.stop();}}}, _callee3, this);}));function setScrollLeft(_x3) {return _setScrollLeft.apply(this, arguments);}return setScrollLeft;}(),
-
-    getWidth: function getWidth(id) {//得到元素的宽高
-      return new Promise(function (res, rej) {
-        uni.createSelectorQuery().select("#" + id).fields({
-          size: true,
-          scrollOffset: true },
-        function (data) {
-          res(data);
-        }).exec();
-      });
-    },
-    loadMore: function loadMore(tabIndex) {
-      console.log('正在加载更多数据。。。');
-      this.getDateList(tabIndex);
-    },
     /**
-        * 添加关注
-        */
+              * 添加关注
+              */
     addFollow: function addFollow(userId) {
-      console.log("加关注...");
+      console.log('加关注...');
       var that = this;
       uni.request({
         url: that.$serverUrl + '/user/follow',
-        method: "POST",
+        method: 'POST',
         data: {
           userId: userId,
           fanId: me.id },
@@ -314,11 +363,11 @@ var me;var _default =
         * 取消关注
         */
     cancelFollow: function cancelFollow(userId) {
-      console.log("取关...");
+      console.log('取关...');
       var that = this;
       uni.request({
         url: that.$serverUrl + '/user/dontFollow',
-        method: "POST",
+        method: 'POST',
         data: {
           userId: userId,
           fanId: me.id },
@@ -346,7 +395,7 @@ var me;var _default =
         * @param {Object} currentTab 0: 关注 1: 粉丝
         */
     goToFansFollow: function goToFansFollow(currentTab) {
-      console.log("goToFansFollow...");
+      console.log('goToFansFollow...');
       var data = {
         currentTab: currentTab,
         thisUserInfo: this.thisUserInfo };
@@ -364,7 +413,7 @@ var me;var _default =
       var that = this;
       uni.request({
         url: that.$serverUrl + '/user/queryUserWithFollow',
-        method: "POST",
+        method: 'POST',
         data: {
           userId: userId,
           fanId: me.id },
@@ -383,10 +432,103 @@ var me;var _default =
 
             // 设置title
             uni.setNavigationBarTitle({
-              title: that.thisUserInfo.nickname + "的主页" });
+              title: that.thisUserInfo.nickname + '的主页' });
 
           }
         } });
+
+    },
+
+    showArticles: function showArticles(page) {
+      console.log(loadArticleFlag);
+
+      if (loadArticleFlag) {
+        loadArticleFlag = false;
+      }
+
+      loadArticleFlag = true;
+
+      uni.showLoading({
+        title: '加载中...' });
+
+      setTimeout(function () {
+        if (loadArticleFlag) {
+          loadArticleFlag = false; //解锁
+          uni.hideLoading();
+          uni.showToast({
+            title: '网络未知错误',
+            icon: 'none',
+            duration: 1000 });
+
+        }
+      }, 5000); //延时五秒timeout
+
+      var that = this;
+      // console.log(that.thisUserInfo);
+      uni.request({
+        url: that.$serverUrl + '/article/queryPublishHistory',
+        method: 'POST',
+        data: {
+          page: page,
+          userId: me.id,
+          targetId: userId },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          setTimeout(function () {
+            //延时加载
+            uni.hideLoading();
+            loadArticleFlag = false;
+
+            console.log(res);
+            if (page == 1) {
+              that.myArticleList = [];
+            }
+            var newArticleList = res.data.data.rows;
+            var oldArticleList = that.myArticleList;
+            that.myArticleList = oldArticleList.concat(newArticleList);
+            that.currentPage = page;
+            that.totalPage = res.data.data.total;
+            that.totalNum = res.data.data.records;
+            console.log(that.totalNum);
+          }, 300);
+        },
+        fail: function fail(res) {
+          uni.hideLoading();
+          loadArticleFlag = false;
+
+          console.log('index unirequest fail');
+          console.log(res);
+        } });
+
+    },
+
+    loadMore: function loadMore() {
+      var that = this;
+      var currentPage = that.currentPage;
+      console.log(currentPage);
+      var totalPage = that.totalPage;
+      console.log(totalPage);
+      // 判断当前页数和总页数是否相等
+      if (currentPage == totalPage) {
+        // that.showArticles(1);
+        uni.showToast({
+          title: '没有更多文章了',
+          icon: 'none',
+          duration: 1000 });
+
+      } else {
+        var page = currentPage + 1;
+        that.showArticles(page);
+      }
+    },
+
+    jumpToDetail: function jumpToDetail(thisArticle) {
+      var navData = JSON.stringify(thisArticle); // 这里转换成 字符串
+      uni.navigateTo({
+        url: '/pages/detail/detail?data=' + navData });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

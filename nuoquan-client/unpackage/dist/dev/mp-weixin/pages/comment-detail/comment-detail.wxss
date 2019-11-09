@@ -98,7 +98,7 @@ page {
 }
 .likeIcon {
 	position: absolute;
-	left: 5%;
+	left: 40%;
 	width: 18px;
 	height: 18px;
 	top: 8px;
@@ -106,7 +106,7 @@ page {
 .likeNum {
 	position: absolute;
 	top: 10px;
-	left: 26%;
+	left: 65%;
 	font-size: 12px;
 	color: #888888;
 }
@@ -123,7 +123,7 @@ page {
 .son-likeNum{
 	position: absolute;
 	top: 10px;
-	right: 9%;
+	left: 65%;
 	font-size: 12px;
 	color: #888888;
 }

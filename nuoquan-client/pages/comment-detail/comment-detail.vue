@@ -19,11 +19,11 @@
 						<view class="cmtdetail-rightrel">
 							<view @tap="swLikeComment(mainComment)">
 								<image v-if="!mainComment.isLike" src="../../static/icon/like.png" mode="aspectFill" class="likeIcon"></image>
-								<image v-if="mainComment.isLike" src="../../static/icon/liked.png" mode="aspectFill" class="likeIcon"></image>
+								<image v-if="mainComment.isLike" src="../../static/icon/liked-red.png" mode="aspectFill" class="likeIcon"></image>
 								<!-- 此处点赞数量最长5位数，如超出样式出错 -->
 								<text class="likeNum" :class="{'liked':mainComment.isLike}">{{mainComment.likeNum}}</text>
 							</view>
-							<image src="../../static/icon/message.png" mode="aspectFill" class="commentIcon"></image>
+							<!-- <image src="../../static/icon/message.png" mode="aspectFill" class="commentIcon"></image> -->
 						</view>
 					</view>
 				</view>
@@ -36,7 +36,7 @@
 					查看全部
 				</view>
 			</view> -->
-			<view style="height: 2px;width: 74%;margin-left: 62px;background-color: #E4E4E4;margin-top: 10px;"></view>
+			<!-- <view style="height: 2px;width: 74%;margin-left: 62px;background-color: #E4E4E4;margin-top: 10px;"></view> -->
 		</view>
 		<!-- 子评论区域 -->
 		<view style="width: 100%;">
@@ -56,14 +56,14 @@
 				<view class="emoji"></view>
 				<view class="submit" @click="saveComment()"></view>
 				<textarea class="commentSth" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
-				 adjust-position="false" v-model="commentContent" @click.stop="" :show-confirm-bar="false"  cursor-spacing='-76'/>
+				 adjust-position="false" v-model="commentContent" @click.stop="" :show-confirm-bar="false"  cursor-spacing='20'/>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
-	import sonCommentBox from './sonCommentBox.vue'
+	import sonCommentBox from '../detail/sonCommentBox.vue'
 	export default {
 		components: {
 			sonCommentBox,
@@ -394,7 +394,7 @@
 
 	.likeIcon {
 		position: absolute;
-		left: 5%;
+		left: 40%;
 		width: 18px;
 		height: 18px;
 		top: 8px;
@@ -403,7 +403,7 @@
 	.likeNum {
 		position: absolute;
 		top: 10px;
-		left: 26%;
+		left: 65%;
 		font-size: 12px;
 		color: #888888;
 	}
@@ -421,7 +421,7 @@
 	.son-likeNum{
 		position: absolute;
 		top: 10px;
-		right: 9%;
+		left: 65%;
 		font-size: 12px;
 		color: #888888;
 	}

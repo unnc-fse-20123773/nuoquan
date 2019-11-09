@@ -3,6 +3,7 @@ com/nuoquan/utils/JSONResult.class
 org/n3r/idworker/strategy/DefaultRandomCodeStrategy.class
 org/n3r/idworker/strategy/DefaultWorkerIdStrategy$2.class
 org/n3r/idworker/utils/Ip.class
+com/nuoquan/utils/RestTemplateUtil$SingleTonHolder.class
 org/n3r/idworker/RandomCodeStrategy.class
 org/n3r/idworker/utils/Serializes.class
 com/nuoquan/utils/FileUtils.class
@@ -20,7 +21,9 @@ org/n3r/idworker/strategy/DefaultRandomCodeStrategy$1.class
 org/n3r/idworker/IdWorker.class
 org/n3r/idworker/Test.class
 org/n3r/idworker/utils/HttpReq.class
+com/nuoquan/utils/RestTemplateUtil.class
 org/n3r/idworker/utils/Props.class
+com/nuoquan/utils/RedisOperator.class
 org/n3r/idworker/utils/Utils.class
 org/n3r/idworker/utils/Props$Silent.class
 org/n3r/idworker/strategy/FileLock.class
