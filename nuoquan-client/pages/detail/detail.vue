@@ -1,14 +1,28 @@
 <template>
 	<view class="detail-page">
-<!-- 		<article :article="this.articleCard"></article>
- -->
- <detail_1_article class="article-area" :articleCard='articleCard' ></detail_1_article>
-			<!-- 用于推出评论下方空白 -->
-			<view name="marginHelper" style="height: 50px;width: 100%;background-color: white;"></view>
-<!-- 			发表评论按钮 -->
-			<view class="bottomLayerOfSubmit">
-				<view class="submitComment" @click="controlInput(1)">发 表 评 论</view>
-			</view>
+	
+<!-- 第一个大块二，文章本体 -->
+ <detail_1_article class="article-area" :articleCard='articleCard'  @controlInputSignal="controlInput"></detail_1_article>
+ 
+<view style="border-bottom: 4px solid #ECECEC;height:0;width:750upx;font-size: 0;position: relative;left: -16px;"  @controlInputSignal="controlInput">这是分割线</view>
+ <!--第一个大块二，评论区域-->
+ 
+<detail_2_comments class="comment-area" :commentList='commentList' :userInfo="userInfo"></detail_2_comments>
+ 
+ 
+ 
+ <!--触底提示和功能-->
+ <view class="comment-bottom">
+ 	<view class="comment-bottom-notice">划到底部啦</view>
+ 	<view class="comment-bottom-buttons">
+ 		<image class="back" @tap="backToLastPage" src="../../static/icon/arrow-left-fcc041.png" mode="aspectFit"></image>
+ 		<image class="to-top" @tap="scrollToTop" src="../../static/icon/arrow-left-fcc041.png" ></image>
+ 		<view class="active-input-button" @click="controlInput(1)">发表评论</view>
+ 	</view>
+ 
+ </view>
+ 
+
 
 			<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)">
 				<view class="commentPart" @click.stop="" :style="{bottom: textAreaAdjust }">
@@ -25,17 +39,17 @@
 
 <script>
 import detail_1_article from "./detail_1_article.vue"
+import detail_2_comments from "./detail_2_comments.vue"
 	var uploadFlag = false;
 	export default {
 		data() {
 			return {  
-				imgList: [],
-				singleImgState: '0',
-				
+				imgList: [],				
 				userInfo: {},
 				articleCard: "",  //detail的主角，由index传过来的单个文章信息
                 commentContent:"",  //用户准备提交的评论内容
 				commentList: {},  //返回值，获取评论列表信息
+				
 				showInput:false,  //控制输入框，true时显示输入框
 				writingComment:false,  //控制输入框，true时自动获取焦点，拉起输入法
 				placeholderText: "评论点什么吧......",
@@ -48,7 +62,6 @@ import detail_1_article from "./detail_1_article.vue"
 				serverUrl: this.$serverUrl,
 				
 				textAreaAdjust:"",
-				tagColorList: [],
 				
 				totalPage: 1,
 				currentPage: 1,
@@ -56,6 +69,7 @@ import detail_1_article from "./detail_1_article.vue"
 		},
 		components: {
 			detail_1_article,
+			detail_2_comments,
 		},
 		
 		
@@ -268,16 +282,6 @@ import detail_1_article from "./detail_1_article.vue"
 				}
 			},
 
-			singleImgeFit(e){
-				var height = e.detail.height;
-				var width = e.detail.width;
-				if(height >= width){
-					this.singleImgState = 0;
-				}else{
-					this.singleImgState = 1;
-				}
-				// console.log(e.detail);
-			},
 			
 			controlInput(a){
 				if(a!=0&&a!=1){
@@ -299,56 +303,6 @@ import detail_1_article from "./detail_1_article.vue"
 				}
 			},
 			
-			swLikeArticle(){
-				if (this.articleCard.isLike){
-					this.unLikeArticle();
-					this.articleCard.likeNum--;
-				}else{
-					this.likeArticle();
-					this.articleCard.likeNum++;
-				}
-				this.articleCard.isLike = !this.articleCard.isLike;
-			},
-			
-			likeArticle(){
-				console.log("点赞文章");
-				var that = this;
-				uni.request({
-					method: "POST",
-					url: that.$serverUrl + '/article/userLikeArticle',
-					data: {
-						userId: that.userInfo.id,
-						articleId: that.articleCard.id,
-						articleCreaterId: that.articleCard.userId,
-					},
-					header: {
-						'content-type': 'application/x-www-form-urlencoded'
-					},
-					success: (res) => {	
-						console.log(res);
-					},
-				});
-			},
-			
-			unLikeArticle(){
-				console.log("取消点赞文章");
-				var that = this;
-				uni.request({
-					method: "POST",
-					url: that.$serverUrl + '/article/userUnLikeArticle',
-					data: {
-						userId: that.userInfo.id,
-						articleId: that.articleCard.id,
-						articleCreaterId: that.articleCard.userId,
-					},
-					header: {
-						'content-type': 'application/x-www-form-urlencoded'
-					},
-					success: (res) => {	
-						console.log(res);
-					},
-				});
-			},
 			
 			goToPersonPublic(){
 				uni.navigateTo({
@@ -356,78 +310,97 @@ import detail_1_article from "./detail_1_article.vue"
 				})
 			},
 			
-			previewImg: function(index) {
-				var imgIndex = index;
-				// console.log(res)
-				// 获取全部图片路径
-				var imgList = this.articleCard.imgList;
-				var arr = [];
-				var path;
-				for (var i=0; i<imgList.length; i++){
-					// console.log(imgList[i].imagePath);
-					path = this.serverUrl + imgList[i].imagePath
-					arr = arr.concat(path);
-				}
-				// console.log(arr);
-				
-				uni.previewImage({
-					current: index,
-					urls:arr,
+			backToLastPage(){
+				uni.navigateBack({
 				})
 			},
-
-			aboutImg: function(index){
-				var that = this;
-				console.log(this.articleCard.imgList[index].imagePath);
-				uni.showActionSheet({
-					itemList: ['保存图片到本地'],
-					success: function(res) {
-						console.log(res.tapIndex);
-						// 保存图片至本地
-						if(res.tapIndex == 0) {
-							uni.showLoading({
-								title:'下载中...'
-							})
-							uni.downloadFile({
-								url: that.serverUrl + that.articleCard.imgList[index].imagePath,
-								success: function(res) {
-									if(res.statusCode == 200){
-										uni.saveImageToPhotosAlbum({
-											filePath: res.tempFilePath,
-											success: function () {
-												console.log('save success');
-												uni.hideLoading();
-											},
-											fail: function() {
-												console.log('save failed');
-												uni.hideLoading();
-												uni.showToast({
-													title:'保存失败',
-													icon:'none',
-													duration:1000,
-												})
-											}
-										});
-									}
-								}
-							})
-						}
-					}
+			scrollToTop(){
+				uni.pageScrollTo({
+				    scrollTop: 0,
+				    duration: 300
 				});
-			},
-		},
+       		},
+		},//method
 	};
 </script>
 <style>	page {
 		height: 100%;
 		width: 100%;
+		background: #FCFCFC;
 	}</style>
 
 <style scoped>
 	.detail-page{
 		width: calc(100% - 32px);
 		margin:auto;
+		background: #FCFCFC;
 	}
+	
+	
+	.comment-bottom{
+		height:160px;
+		width:calc(202px + 80upx);
+		margin: auto;
+		}
+		
+	.comment-bottom-notice{
+		width:71px;
+		height:14px;
+		line-height: 14px;
+		font-size:14px;
+		color:#B2B2B2;
+		margin:37px auto 27px;
+	}
+	.comment-bottom-buttons{
+		display: flex;
+			justify-content: space-between;
+		
+	}
+	.comment-bottom-buttons .back{
+		width:16px;
+		height:16px;
+		padding:14px;
+		background: #FFF1D5;
+		border-radius: 22px;
+	}
+	.comment-bottom-buttons .to-top{
+		width:18px;
+		height:12px;
+		background: #FFF1D5;
+		border-radius: 22px;
+		padding: 16px 11px 16px 15px;
+		position: relative;
+		transform: rotate(90deg);
+	}
+	.comment-bottom-buttons .to-top::after{
+content: "";
+position: absolute;
+top: 14px;
+left: 12px;
+width: 2px;
+height: 16px;
+background: #FCC041;
+border-radius: 2px;
+
+	}
+	.active-input-button{
+		color:#FFFFFF;
+		width:76px;
+		height:17px;
+		font-size:17px;
+		font-family:Source Han Sans CN;
+		font-weight:400;
+		line-height:17px;
+		color:rgba(255,255,255,1);
+		padding:10px 22px;
+		border-radius: 10px;
+		box-shadow:  0px 0px 8px rgba(0,0,0,0.16);
+		background: #FCC041;
+		letter-spacing:2px;
+	}
+
+
+
 	
 	/* 底部栏 */
     .bottomLayerOfSubmit{

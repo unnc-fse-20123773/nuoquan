@@ -1,6 +1,7 @@
 
 .detail-article {
 		width: 100%;
+		background: #FCFCFC;
 }
 .detail-title {
 		width: 100%;

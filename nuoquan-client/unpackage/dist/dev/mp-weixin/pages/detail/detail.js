@@ -107,7 +107,22 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var detail_1_article = function detail_1_article() {return __webpack_require__.e(/*! import() | pages/detail/detail_1_article */ "pages/detail/detail_1_article").then(__webpack_require__.bind(null, /*! ./detail_1_article.vue */ 306));};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var detail_1_article = function detail_1_article() {return __webpack_require__.e(/*! import() | pages/detail/detail_1_article */ "pages/detail/detail_1_article").then(__webpack_require__.bind(null, /*! ./detail_1_article.vue */ 176));};var detail_2_comments = function detail_2_comments() {return __webpack_require__.e(/*! import() | pages/detail/detail_2_comments */ "pages/detail/detail_2_comments").then(__webpack_require__.bind(null, /*! ./detail_2_comments.vue */ 183));};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -139,12 +154,11 @@ var uploadFlag = false;var _default =
   data: function data() {
     return {
       imgList: [],
-      singleImgState: '0',
-
       userInfo: {},
       articleCard: "", //detail的主角，由index传过来的单个文章信息
       commentContent: "", //用户准备提交的评论内容
       commentList: {}, //返回值，获取评论列表信息
+
       showInput: false, //控制输入框，true时显示输入框
       writingComment: false, //控制输入框，true时自动获取焦点，拉起输入法
       placeholderText: "评论点什么吧......",
@@ -157,14 +171,14 @@ var uploadFlag = false;var _default =
       serverUrl: this.$serverUrl,
 
       textAreaAdjust: "",
-      tagColorList: [],
 
       totalPage: 1,
       currentPage: 1 };
 
   },
   components: {
-    detail_1_article: detail_1_article },
+    detail_1_article: detail_1_article,
+    detail_2_comments: detail_2_comments },
 
 
 
@@ -377,16 +391,6 @@ var uploadFlag = false;var _default =
       }
     },
 
-    singleImgeFit: function singleImgeFit(e) {
-      var height = e.detail.height;
-      var width = e.detail.width;
-      if (height >= width) {
-        this.singleImgState = 0;
-      } else {
-        this.singleImgState = 1;
-      }
-      // console.log(e.detail);
-    },
 
     controlInput: function controlInput(a) {
       if (a != 0 && a != 1) {
@@ -408,56 +412,6 @@ var uploadFlag = false;var _default =
       }
     },
 
-    swLikeArticle: function swLikeArticle() {
-      if (this.articleCard.isLike) {
-        this.unLikeArticle();
-        this.articleCard.likeNum--;
-      } else {
-        this.likeArticle();
-        this.articleCard.likeNum++;
-      }
-      this.articleCard.isLike = !this.articleCard.isLike;
-    },
-
-    likeArticle: function likeArticle() {
-      console.log("点赞文章");
-      var that = this;
-      uni.request({
-        method: "POST",
-        url: that.$serverUrl + '/article/userLikeArticle',
-        data: {
-          userId: that.userInfo.id,
-          articleId: that.articleCard.id,
-          articleCreaterId: that.articleCard.userId },
-
-        header: {
-          'content-type': 'application/x-www-form-urlencoded' },
-
-        success: function success(res) {
-          console.log(res);
-        } });
-
-    },
-
-    unLikeArticle: function unLikeArticle() {
-      console.log("取消点赞文章");
-      var that = this;
-      uni.request({
-        method: "POST",
-        url: that.$serverUrl + '/article/userUnLikeArticle',
-        data: {
-          userId: that.userInfo.id,
-          articleId: that.articleCard.id,
-          articleCreaterId: that.articleCard.userId },
-
-        header: {
-          'content-type': 'application/x-www-form-urlencoded' },
-
-        success: function success(res) {
-          console.log(res);
-        } });
-
-    },
 
     goToPersonPublic: function goToPersonPublic() {
       uni.navigateTo({
@@ -465,65 +419,18 @@ var uploadFlag = false;var _default =
 
     },
 
-    previewImg: function previewImg(index) {
-      var imgIndex = index;
-      // console.log(res)
-      // 获取全部图片路径
-      var imgList = this.articleCard.imgList;
-      var arr = [];
-      var path;
-      for (var i = 0; i < imgList.length; i++) {
-        // console.log(imgList[i].imagePath);
-        path = this.serverUrl + imgList[i].imagePath;
-        arr = arr.concat(path);
-      }
-      // console.log(arr);
-
-      uni.previewImage({
-        current: index,
-        urls: arr });
+    backToLastPage: function backToLastPage() {
+      uni.navigateBack({});
 
     },
+    scrollToTop: function scrollToTop() {
+      uni.pageScrollTo({
+        scrollTop: 0,
+        duration: 300 });
 
-    aboutImg: function aboutImg(index) {
-      var that = this;
-      console.log(this.articleCard.imgList[index].imagePath);
-      uni.showActionSheet({
-        itemList: ['保存图片到本地'],
-        success: function success(res) {
-          console.log(res.tapIndex);
-          // 保存图片至本地
-          if (res.tapIndex == 0) {
-            uni.showLoading({
-              title: '下载中...' });
-
-            uni.downloadFile({
-              url: that.serverUrl + that.articleCard.imgList[index].imagePath,
-              success: function success(res) {
-                if (res.statusCode == 200) {
-                  uni.saveImageToPhotosAlbum({
-                    filePath: res.tempFilePath,
-                    success: function success() {
-                      console.log('save success');
-                      uni.hideLoading();
-                    },
-                    fail: function fail() {
-                      console.log('save failed');
-                      uni.hideLoading();
-                      uni.showToast({
-                        title: '保存失败',
-                        icon: 'none',
-                        duration: 1000 });
-
-                    } });
-
-                }
-              } });
-
-          }
-        } });
-
-    } } };exports.default = _default;
+    } }
+  //method
+};exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

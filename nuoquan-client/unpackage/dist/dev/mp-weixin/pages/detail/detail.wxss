@@ -2,12 +2,82 @@
 page {
 	height: 100%;
 	width: 100%;
+	background: #FCFCFC;
 }
 
 .detail-page.data-v-0dddf152{
 		width: calc(100% - 32px);
 		margin:auto;
+		background: #FCFCFC;
 }
+.comment-bottom.data-v-0dddf152{
+		height:160px;
+		width:calc(202px + 80rpx);
+		margin: auto;
+}
+.comment-bottom-notice.data-v-0dddf152{
+		width:71px;
+		height:14px;
+		line-height: 14px;
+		font-size:14px;
+		color:#B2B2B2;
+		margin:37px auto 27px;
+}
+.comment-bottom-buttons.data-v-0dddf152{
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: -ms-flexbox;
+		display: flex;
+			-webkit-box-pack: justify;
+			-webkit-justify-content: space-between;
+			    -ms-flex-pack: justify;
+			        justify-content: space-between;
+}
+.comment-bottom-buttons .back.data-v-0dddf152{
+		width:16px;
+		height:16px;
+		padding:14px;
+		background: #FFF1D5;
+		border-radius: 22px;
+}
+.comment-bottom-buttons .to-top.data-v-0dddf152{
+		width:18px;
+		height:12px;
+		background: #FFF1D5;
+		border-radius: 22px;
+		padding: 16px 11px 16px 15px;
+		position: relative;
+		-webkit-transform: rotate(90deg);
+		    -ms-transform: rotate(90deg);
+		        transform: rotate(90deg);
+}
+.comment-bottom-buttons .to-top.data-v-0dddf152::after{
+content: "";
+position: absolute;
+top: 14px;
+left: 12px;
+width: 2px;
+height: 16px;
+background: #FCC041;
+border-radius: 2px;
+}
+.active-input-button.data-v-0dddf152{
+		color:#FFFFFF;
+		width:76px;
+		height:17px;
+		font-size:17px;
+		font-family:Source Han Sans CN;
+		font-weight:400;
+		line-height:17px;
+		color:rgba(255,255,255,1);
+		padding:10px 22px;
+		border-radius: 10px;
+		-webkit-box-shadow:  0px 0px 8px rgba(0,0,0,0.16);
+		        box-shadow:  0px 0px 8px rgba(0,0,0,0.16);
+		background: #FCC041;
+		letter-spacing:2px;
+}
+	
 	
 	/* 底部栏 */
 .bottomLayerOfSubmit.data-v-0dddf152{
@@ -52,6 +122,7 @@ page {
 		background: #F3FFFF;
 		z-index: -1;
 }
+	
 	
 	/* 以下五条为底部输入框样式 */
 .bottoLayerOfInput.data-v-0dddf152{

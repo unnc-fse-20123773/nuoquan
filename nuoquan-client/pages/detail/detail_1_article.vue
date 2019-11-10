@@ -5,7 +5,7 @@
 		<!--作者信息，头像名字时间-->
 		<view class="author-info-bar">
 			<image :src="articleCard.faceImg" class="touxiang" @click="goToPersonPublic()"></image>
-			<view class="name">{{ articleCard.nickname }}</view>
+			<view class="name" @tap="goToPersonPublic()">{{ articleCard.nickname }}</view>
 			<view class="time">{{ articleCard.createDate | timeDeal}}</view>
 		</view>
 		<!--标签-->
@@ -17,9 +17,9 @@
 		<!--图片区域-->
 		<view>
 			<!-- 单图显示 -->
-			<view v-if="articleCard.imgList.length==1" class="detailpics" style="width: 100%;max-height: 400upx;display: flex;">
-				<image v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFill" style="height: 360upx;max-width:180px;display: inline-block;"
-				 @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
+			<view v-if="articleCard.imgList.length==1" class="detailpics" style="width:100%;height:124px;display: flex;margin-left: 0;">
+				<image v-for="(i,index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFill" :style="{'width': (singleImgWidth)+'px','height':'124px'}"
+				 @tap="previewImg(index)" @longpress="aboutImg(index)" @load="singleImgeFit"></image>
 			</view>
 			<!-- 其他数量 -->
 			<view v-else-if="articleCard.imgList.length==4" class="detailpics" style="max-width: 400upx;margin-left: 0;">
@@ -37,12 +37,11 @@
 		</view>
 		<!--4个ICON, 点赞评论分享返回-->
 		<view class="menu-bar">
-			<view class="like">{{articleCard.commentNum}}</view>
-			<view class="comment">{{articleCard.commentNum}}</view>
+			<view class="like" @tap="swLikeMainComment()">{{articleCard.commentNum}}</view>
+			<view class="comment" @tap="controlInputInDetailArticle">{{articleCard.commentNum}}</view>
 			<view class="share"></view>
 			<view class="back"></view>
 		</view>
-		<view style="border-bottom: 4px solid #ECECEC;height:0;width:750upx;font-size: 0;position: fixed;left:0;">这是分割线</view>
 	</view>
 </template>
 
@@ -56,6 +55,9 @@
 		data() {
 			return {
 				serverUrl: this.$serverUrl,
+				singleImgWidth:"", //一图调整宽度
+				tagColorList: [],
+				
 			};
 		},
 		created() {},
@@ -87,6 +89,140 @@
 				return timeSpanStr;
 			}
 		},
+		methods:{
+			singleImgeFit(e) {
+				var height = e.detail.height;
+				var width = e.detail.width;
+				var rateWith = 124*width/height;
+				if (rateWith <= 186) {
+					this.singleImgWidth = rateWith;
+				} else {
+					this.singleImgWidth = 186;
+				}
+				// console.log(e.detail);
+			},
+			goToPersonPublic(){
+				uni.navigateTo({
+					url: '/pages/personpublic/personpublic?userId=' + this.articleCard.userId,
+				})
+			},
+			swLikeMainComment(comment) {
+				debugger;
+				if (comment.isLike) {
+					this.unLikeComment(comment);
+					comment.likeNum--;
+				} else {
+					this.likeComment(comment);
+					comment.likeNum++;
+				}
+				comment.isLike = !comment.isLike;
+				// console.log(this.mainComment.isLike);
+			},
+			
+			likeComment(comment) {
+				console.log("点赞评论");
+				var that = this;
+				uni.request({
+					method: "POST",
+					url: that.$serverUrl + '/article/userLikeComment',
+					data: {
+						userId: that.userInfo.id,
+						commentId: comment.id,
+						createrId: comment.fromUserId,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {
+						console.log(res);
+					},
+				});
+			},
+			
+			unLikeComment(comment) {
+				console.log("取消点赞评论");
+				var that = this;
+				uni.request({
+					method: "POST",
+					url: that.$serverUrl + '/article/userUnLikeComment',
+					data: {
+						userId: that.userInfo.id,
+						commentId: comment.id,
+						createrId: comment.fromUserId,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {
+						console.log(res);
+					},
+				});
+			},
+			
+			
+			previewImg: function(index) {
+				var imgIndex = index;
+				// console.log(res)
+				// 获取全部图片路径
+				var imgList = this.articleCard.imgList;
+				var arr = [];
+				var path;
+				for (var i=0; i<imgList.length; i++){
+					// console.log(imgList[i].imagePath);
+					path = this.serverUrl + imgList[i].imagePath
+					arr = arr.concat(path);
+				}
+				// console.log(arr);
+				
+				uni.previewImage({
+					current: index,
+					urls:arr,
+				})
+			},
+			
+			aboutImg: function(index){
+				var that = this;
+				console.log(this.articleCard.imgList[index].imagePath);
+				uni.showActionSheet({
+					itemList: ['保存图片到本地'],
+					success: function(res) {
+						console.log(res.tapIndex);
+						// 保存图片至本地
+						if(res.tapIndex == 0) {
+							uni.showLoading({
+								title:'下载中...'
+							})
+							uni.downloadFile({
+								url: that.serverUrl + that.articleCard.imgList[index].imagePath,
+								success: function(res) {
+									if(res.statusCode == 200){
+										uni.saveImageToPhotosAlbum({
+											filePath: res.tempFilePath,
+											success: function () {
+												console.log('save success');
+												uni.hideLoading();
+											},
+											fail: function() {
+												console.log('save failed');
+												uni.hideLoading();
+												uni.showToast({
+													title:'保存失败',
+													icon:'none',
+													duration:1000,
+												})
+											}
+										});
+									}
+								}
+							})
+						}
+					}
+				});
+			},
+			controlInputInDetailArticle(){
+				this.$emit(controlInputSignal,1);
+			},
+		},//method
 
 	};
 </script>
@@ -94,6 +230,7 @@
 <style>
 	.detail-article {
 		width: 100%;
+		background: #FCFCFC;
 	}
 
 	.detail-title {
