@@ -260,6 +260,16 @@ var uploadFlag = false;var _default =
 
       this.textAreaAdjust = "";
     },
+    changeLikeStatus: function changeLikeStatus(status) {
+      debugger;
+      this.articleCard.isLike = status;
+      if (status) {
+        this.articleCard.likeNum++;
+      } else {
+        this.articleCard.likeNum--;
+      }
+
+    },
 
     /**
         * fromUserId 必填

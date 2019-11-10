@@ -166,7 +166,8 @@ var _default =
 {
   name: "detail_1_article",
   props: {
-    articleCard: "" },
+    articleCard: "",
+    userInfo: "" },
 
   components: {},
   data: function data() {
@@ -223,59 +224,61 @@ var _default =
         url: '/pages/personpublic/personpublic?userId=' + this.articleCard.userId });
 
     },
-    swLikeMainComment: function swLikeMainComment(comment) {
-      debugger;
-      if (comment.isLike) {
-        this.unLikeComment(comment);
-        comment.likeNum--;
+    swLikeArticle: function swLikeArticle() {
+      if (this.articleCard.isLike) {
+        this.unLikeArticle();
       } else {
-        this.likeComment(comment);
-        comment.likeNum++;
+        this.likeArticle();
       }
-      comment.isLike = !comment.isLike;
-      // console.log(this.mainComment.isLike);
+      // 	this.thisArticle.isLike = !this.thisArticle.isLike;
+      // 
     },
 
-    likeComment: function likeComment(comment) {
-      console.log("点赞评论");
+    likeArticle: function likeArticle() {var _this = this;
+      console.log("点赞文章");
       var that = this;
       uni.request({
         method: "POST",
-        url: that.$serverUrl + '/article/userLikeComment',
+        url: that.$serverUrl + '/article/userLikeArticle',
         data: {
           userId: that.userInfo.id,
-          commentId: comment.id,
-          createrId: comment.fromUserId },
+          articleId: that.articleCard.id,
+          articleCreaterId: that.articleCard.userId },
 
         header: {
           'content-type': 'application/x-www-form-urlencoded' },
 
         success: function success(res) {
+          debugger;
           console.log(res);
+
+          _this.$emit('swLikeArticleSignal', true);
+
         } });
 
     },
 
-    unLikeComment: function unLikeComment(comment) {
-      console.log("取消点赞评论");
+    unLikeArticle: function unLikeArticle() {var _this2 = this;
+      console.log("取消点赞文章");
       var that = this;
       uni.request({
         method: "POST",
-        url: that.$serverUrl + '/article/userUnLikeComment',
+        url: that.$serverUrl + '/article/userUnLikeArticle',
         data: {
           userId: that.userInfo.id,
-          commentId: comment.id,
-          createrId: comment.fromUserId },
+          articleId: that.articleCard.id,
+          articleCreaterId: that.articleCard.userId },
 
         header: {
           'content-type': 'application/x-www-form-urlencoded' },
 
         success: function success(res) {
+          debugger;
           console.log(res);
+          _this2.$emit('swLikeArticleSignal', false);
         } });
 
     },
-
 
     previewImg: function previewImg(index) {
       var imgIndex = index;
@@ -337,7 +340,7 @@ var _default =
 
     },
     controlInputInDetailArticle: function controlInputInDetailArticle() {
-      this.$emit(controlInputSignal, 1);
+      this.$emit("controlInputSignal", 1);
     } }
   //method
 };exports.default = _default;

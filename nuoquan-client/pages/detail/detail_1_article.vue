@@ -37,7 +37,7 @@
 		</view>
 		<!--4个ICON, 点赞评论分享返回-->
 		<view class="menu-bar">
-			<view class="like" @tap="swLikeMainComment()">{{articleCard.commentNum}}</view>
+			<view class="like" :class="{liked:articleCard.isLike}" @tap="swLikeArticle()">{{articleCard.likeNum}}</view>
 			<view class="comment" @tap="controlInputInDetailArticle">{{articleCard.commentNum}}</view>
 			<view class="share"></view>
 			<view class="back"></view>
@@ -50,6 +50,7 @@
 		name: "detail_1_article",
 		props: {
 			articleCard: "",
+			userInfo:"",
 		},
 		components: {},
 		data() {
@@ -106,59 +107,61 @@
 					url: '/pages/personpublic/personpublic?userId=' + this.articleCard.userId,
 				})
 			},
-			swLikeMainComment(comment) {
-				debugger;
-				if (comment.isLike) {
-					this.unLikeComment(comment);
-					comment.likeNum--;
+			swLikeArticle() {
+				if (this.articleCard.isLike) {
+					this.unLikeArticle();
 				} else {
-					this.likeComment(comment);
-					comment.likeNum++;
+					this.likeArticle();
 				}
-				comment.isLike = !comment.isLike;
-				// console.log(this.mainComment.isLike);
+			// 	this.thisArticle.isLike = !this.thisArticle.isLike;
+			// 
 			},
 			
-			likeComment(comment) {
-				console.log("点赞评论");
+			likeArticle() {
+				console.log("点赞文章");
 				var that = this;
 				uni.request({
 					method: "POST",
-					url: that.$serverUrl + '/article/userLikeComment',
+					url: that.$serverUrl + '/article/userLikeArticle',
 					data: {
 						userId: that.userInfo.id,
-						commentId: comment.id,
-						createrId: comment.fromUserId,
+						articleId: that.articleCard.id,
+						articleCreaterId: that.articleCard.userId,
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: (res) => {
+						debugger;
 						console.log(res);
+
+						this.$emit('swLikeArticleSignal', true);
+						
 					},
 				});
 			},
 			
-			unLikeComment(comment) {
-				console.log("取消点赞评论");
+			unLikeArticle() {
+				console.log("取消点赞文章");
 				var that = this;
 				uni.request({
 					method: "POST",
-					url: that.$serverUrl + '/article/userUnLikeComment',
+					url: that.$serverUrl + '/article/userUnLikeArticle',
 					data: {
 						userId: that.userInfo.id,
-						commentId: comment.id,
-						createrId: comment.fromUserId,
+						articleId: that.articleCard.id,
+						articleCreaterId: that.articleCard.userId,
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: (res) => {
+						debugger;
 						console.log(res);
+						this.$emit('swLikeArticleSignal', false);
 					},
 				});
 			},
-			
 			
 			previewImg: function(index) {
 				var imgIndex = index;
@@ -220,7 +223,7 @@
 				});
 			},
 			controlInputInDetailArticle(){
-				this.$emit(controlInputSignal,1);
+				this.$emit("controlInputSignal",1);
 			},
 		},//method
 

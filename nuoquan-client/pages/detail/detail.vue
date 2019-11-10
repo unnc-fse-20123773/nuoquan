@@ -2,12 +2,12 @@
 	<view class="detail-page">
 	
 <!-- 第一个大块二，文章本体 -->
- <detail_1_article class="article-area" :articleCard='articleCard'  @controlInputSignal="controlInput"></detail_1_article>
+ <detail_1_article class="article-area" :articleCard='articleCard'  @controlInputSignal="controlInput" :userInfo="userInfo" @swLikeArticleSignal="changeLikeStatus"></detail_1_article>
  
 <view style="border-bottom: 4px solid #ECECEC;height:0;width:750upx;font-size: 0;position: relative;left: -16px;"  @controlInputSignal="controlInput">这是分割线</view>
  <!--第一个大块二，评论区域-->
  
-<detail_2_comments class="comment-area" :commentList='commentList' :userInfo="userInfo"></detail_2_comments>
+<detail_2_comments class="comment-area" :commentList='commentList'   @controlInputSignal="controlInput"  :userInfo="userInfo"></detail_2_comments>
  
  
  
@@ -150,6 +150,16 @@ import detail_2_comments from "./detail_2_comments.vue"
 				console.log(e);
 				
 				this.textAreaAdjust = "";
+			},
+			changeLikeStatus(status){
+				debugger;
+			this.articleCard.isLike = status;
+			 if(status){
+			  this.articleCard.likeNum++;
+			  }else{
+		      this.articleCard.likeNum--;
+			  }
+			
 			},
 
 			/**
