@@ -32,7 +32,7 @@
 				<view>我的发布</view>
 				<!-- <view class="noticeNum">3</view> -->
 			</button>
-			<button class="pageLine" @tap="goToMessageListPage">
+			<button class="pageLine" @click="goToMessageListPage">
 				<image src="../static/icon/message.png"></image>
 				<view>我的消息</view>
 				<view class="noticeNum" v-if="unreadMsgCount>0 && unreadMsgCount<=99"> {{unreadMsgCount}} </view>
@@ -50,7 +50,7 @@
 				<!-- <view class="noticeNum">3</view> -->
 
 			</button>
-			<button class="pageLine" @click="showToast()">
+			<button class="pageLine" @click="goToAboutPage">
 				<image src="../static/icon/about.png"></image>
 				<view>关于</view>
 
@@ -66,7 +66,7 @@
 	export default {
 		props: {
 			// 渲染时候替换默认值会被替换
-			userInfos: {
+			userInfo: {
 				faceImg: '../static/touxiang.jpg',
 				emailPrefix: 'test123',
 				emailSuffix: '@nottingham.edu.cn'
@@ -75,7 +75,6 @@
 		data() {
 			return {
 				unreadMsgCount: uni.getStorageSync('myMsgCount'), // 从缓存中获取初始值
-				userInfo:this.userInfos,
 			};
 		},
 		
@@ -112,7 +111,14 @@
 					url: '../messagelist/messagelist',
 				});
 			},
-
+			
+			goToAboutPage() {
+				this.$store.commit('setMyMsgCount', 0);
+				uni.navigateTo({
+					url: '../about/about',
+				});
+			},
+			
 			goToProfile() {
 				uni.navigateTo({
 					url: '../profile/profile',

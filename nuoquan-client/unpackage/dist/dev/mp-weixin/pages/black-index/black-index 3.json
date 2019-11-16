@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "blackarticlebrief": "/pages/black-index/black-articlebrief",
+    "blackpopup": "/pages/black-index/black-popup"
+  }
+}

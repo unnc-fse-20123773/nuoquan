@@ -326,10 +326,22 @@ public class ArticleController extends BasicController {
 	@ApiOperation(value = "删除文章")
 	@ApiImplicitParams({
 			// uniapp使用formData时，paramType要改成form
-			@ApiImplicitParam(name = "articleId", value = "文章id", required = true, dataType = "String", paramType = "form") })
+			@ApiImplicitParam(name = "articleId", value = "文章id", required = true, dataType = "String", paramType = "form"),
+			@ApiImplicitParam(name = "userId", value = "操作者id", required = true, dataType = "String", paramType = "form")
+	})
 	@PostMapping(value="/deleteArticle")
-	public JSONResult deleteArticle(String articleId) throws Exception {
-		articleService.deleteArticle(articleId);
+	public JSONResult deleteArticle(String articleId, String userId) throws Exception {
+		articleService.deleteArticle(articleId, userId);
+		return JSONResult.ok();
+	}
+	
+	@ApiOperation(value = "更改文章状态为unreadble")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "articleId", value = "文章id", required = true, dataType = "String", paramType = "form")
+	})
+	@PostMapping(value="/fDeleteArticle")
+	public JSONResult fDeleteArticle(String articleId) throws Exception {
+		articleService.fDeleteArticle(articleId);
 		return JSONResult.ok();
 	}
 	

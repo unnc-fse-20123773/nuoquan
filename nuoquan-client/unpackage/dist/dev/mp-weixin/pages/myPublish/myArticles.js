@@ -184,9 +184,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 var _default =
 {
   name: 'aticlebrief',
@@ -198,7 +195,7 @@ var _default =
       serverUrl: this.$serverUrl,
       transformX: 'translateX(0px)',
       messageIndex: -1,
-      direction: "" };
+      direction: '' };
 
   },
 
@@ -207,9 +204,7 @@ var _default =
       //console.log(timediff);
       timediff = new Date(timediff);
       //console.log(timediff);
-      var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(),
-      timediff.getSeconds()];
-
+      var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(), timediff.getSeconds()];
       var oldTime = timediff.getTime();
       var now = new Date();
       var newTime = now.getTime();
@@ -224,7 +219,6 @@ var _default =
         timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
       } else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
         timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
-
       } else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && parts[0] == now.getFullYear()) {
         timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
       } else {
@@ -254,9 +248,10 @@ var _default =
       // console.log(moveX);
       // console.log("moveY");
       // console.log(moveY);
-      if (Math.abs(moveY) > Math.abs(moveX) || Math.abs(moveY) > 100 || Math.abs(moveX) < 50) {//纵向滑动//参数100与50可调节侧滑灵敏度
+      if (Math.abs(moveY) > Math.abs(moveX) || Math.abs(moveY) > 100 || Math.abs(moveX) < 50) {
+        //纵向滑动//参数100与50可调节侧滑灵敏度
         this.direction = 'Y';
-        console.log("direction is Y ");
+        console.log('direction is Y ');
         return;
       }
       // 移动距离
@@ -264,8 +259,8 @@ var _default =
       // 输出方向
       this.messageIndex = moveX < 0 ? event.currentTarget.dataset.index : -1;
     },
-    touchEnd: function touchEnd(event) {
 
+    touchEnd: function touchEnd(event) {
       if (this.direction !== 'right' && this.direction !== 'left') {
         this.direction = '';
         return;
@@ -275,6 +270,7 @@ var _default =
       }
       this.endMove(event);
     },
+
     endMove: function endMove(event) {
       if (this.direction === 'Y') {
         debugger;
@@ -289,13 +285,25 @@ var _default =
       }
       this.direction = '';
     },
-    //控制滑动结束，以下控制跳转detail
-    goToDetail: function goToDetail(thisArticle) {
-      //thisArticle用函数传入，因为v-for使用了ID为键名，所以无法筛选数据，就直接block传进来好了
-      var navData = JSON.stringify(thisArticle); // 这里转换成 字符串
-      uni.navigateTo({
-        url: '/pages/detail/detail?data=' + navData });
 
+    banArticle: function banArticle(articleId) {
+      uni.request({
+        url: this.$serverUrl + '/article/fDeleteArticle',
+        method: 'POST',
+        data: {
+          articleId: articleId },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          console.log(res);
+        },
+        fail: function fail(res) {
+
+        } });
+
+      uni.$emit("refresh");
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

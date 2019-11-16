@@ -181,6 +181,31 @@ var uploadFlag = false;var _default =
     detail_2_comments: detail_2_comments },
 
 
+  filters: {
+    timeDeal: function timeDeal(timediff) {
+      timediff = new Date(timediff);
+      var parts = [timediff.getFullYear(), timediff.getMonth() + 1, timediff.getDate(), timediff.getHours(), timediff.getMinutes(), timediff.getSeconds()];
+      var oldTime = timediff.getTime();
+      var now = new Date();
+      var newTime = now.getTime();
+      var milliseconds = 0;
+      var timeSpanStr;
+      milliseconds = newTime - oldTime;
+      if (milliseconds <= 1000 * 60 * 1) {
+        timeSpanStr = '刚刚';
+      } else if (1000 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60) {
+        timeSpanStr = Math.round(milliseconds / (1000 * 60)) + '分钟前';
+      } else if (1000 * 60 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24) {
+        timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
+      } else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
+        timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
+      } else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && parts[0] == now.getFullYear()) {
+        timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
+      } else {
+        timeSpanStr = parts[0] + '-' + parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
+      }
+      return timeSpanStr;
+    } },
 
 
   onReachBottom: function onReachBottom() {
@@ -194,9 +219,7 @@ var uploadFlag = false;var _default =
   },
 
   onLoad: function onLoad(options) {
-    console.log(options);
     this.articleCard = JSON.parse(options.data);
-    console.log("receive data from onload");
     console.log(this.articleCard);
     var userInfo = this.getGlobalUserInfo();
     if (!this.isNull(userInfo)) {

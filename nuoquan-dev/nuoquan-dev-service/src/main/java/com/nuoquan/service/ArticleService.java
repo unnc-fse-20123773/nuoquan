@@ -72,7 +72,7 @@ public interface ArticleService {
 	 * 删除文章
 	 * @param articleId
 	 */
-	public void deleteArticle(String articleId);
+	public void deleteArticle(String articleId, String userId);
 	
 	/**
 	 * 上传评论到数据库
@@ -175,6 +175,12 @@ public interface ArticleService {
 	 * @return
 	 */
 	public List<UserArticleCommentVO> getUnsignedCommentMsg(String userId);
+	
+	/**
+	 * Set the status to unreadable
+	 * @param articleId
+	 */
+	public void fDeleteArticle(String articleId);
 	
 	public void banArticle(String articleId);
 	

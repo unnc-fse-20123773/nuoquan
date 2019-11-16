@@ -82,6 +82,7 @@ public class BasicController {
 			if (fileOutputStream != null) {
 				fileOutputStream.flush();
 				fileOutputStream.close();
+				inputStream.close();
 			}
 		}
 	}

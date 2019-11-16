@@ -1,5 +1,6 @@
 package com.nuoquan.service;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -249,7 +250,7 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public void deleteArticle(String articleId) {
+	public void deleteArticle(String articleId, String userId) {
 		// 1. 删除文章图片数据库路径 
 		// 1.1 删除实际图片
 		// 2. 删除文章评论
@@ -258,13 +259,20 @@ public class ArticleServiceImpl implements ArticleService {
 		// 4. 删除文章
 		
 		// 删除文章图片
+		String fileSpace = "/Users/xudeyan/Desktop/JumboX/nuoquanTmp";
+		String uploadDB = "/" + userId + "/article" + "/" + articleId;
+		String path = fileSpace + uploadDB;
+		String path1 = "/Users/xudeyan/Desktop/JUMBOX/nuoquanTmp/oDwsO5Btm6HsoGie6E8qB7WN9aYQ/article/191003BSB10GYWM8/0.jpg";
+		File file = new File(path1);
+		deletefile(file);
+		
 		// 删除数据库中的路径
 		Example exampleDelImg = new Example(ArticleImage.class);
 		Criteria criteria1 = exampleDelImg.createCriteria();
 		criteria1.andEqualTo("articleId", articleId);
 		articleImageMapper.deleteByExample(exampleDelImg);
 
-		System.out.println(articleId);
+//		System.out.println(articleId);
 		
 		// 删除文章评论的点赞
 		// 先在userArticleComment里找到articleId对应的评论id, 该id为userLikeComment中的commentId
@@ -282,9 +290,9 @@ public class ArticleServiceImpl implements ArticleService {
 			userLikeCommentMapper.deleteByExample(exampleToDelCommentLikeExample);
 		}
 		// 删除目标文章所有评论
-		// Example exampleDelComment = new Example(UserArticleComment.class);
-		// Criteria criteria2 = exampleDelComment.createCriteria();
-		// criteria2.andEqualTo("articleId", articleId);
+		 Example exampleDelComment = new Example(UserArticleComment.class);
+		 Criteria criteria2 = exampleDelComment.createCriteria();
+		 criteria2.andEqualTo("articleId", articleId);
 		userArticleCommentMapper.deleteByExample(exampleToFindCommentId);
 		
 		// 删除文章的点赞
@@ -298,6 +306,55 @@ public class ArticleServiceImpl implements ArticleService {
 		Criteria criteria3 = exampleDelArticle.createCriteria();
 		criteria3.andEqualTo("id", articleId);
 		articleMapper.deleteByExample(exampleDelArticle);
+	}
+	
+//	private static void deletefile(File file) {
+//		// TODO Auto-generated method stub
+//		if(file.isDirectory()) {
+//			File[] files = file.listFiles();
+//			for (File key : files) {
+//				if (key.isFile()) {
+//					key.delete();
+//				} else {
+//					deletefile(key);
+//				}
+//			}
+//		}
+//		file.delete();
+//	}
+
+	private void deletefile(File file) {
+		
+		System.out.println(file.getAbsolutePath());
+		if (file.isFile()) {
+			// 判断是否为文件--Y
+//			System.out.println(file.getAbsolutePath());
+//			file.setExecutable(true);
+			file.setWritable(true);
+//			file.exists();
+//			file.canExecute();
+//			file.canWrite();
+//			file.getParent();
+			boolean t = file.delete();
+			System.out.println(t);
+			System.out.println("exist? " + file.exists());
+			System.out.println("canExecute? " +file.canExecute());
+			System.out.println("canWrite? "+ file.canWrite());
+			System.out.println("parent is " + file.getParent());
+		} else {
+			String[] childFilePathStrings = file.list();
+			
+			System.out.println(childFilePathStrings[1]);
+			System.out.println(childFilePathStrings.length);
+			
+			for (String path : childFilePathStrings) {
+				System.out.println(path);
+				File childFile = new File(file.getAbsoluteFile() + "/" + path);
+				deletefile(childFile);
+			}
+			System.out.println(file.getAbsolutePath());
+			file.delete();
+		}
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -405,8 +462,8 @@ public class ArticleServiceImpl implements ArticleService {
 		List<UserArticleCommentVO> list = userArticleCommentMapperCustom.queryComments(articleId);
 		for (UserArticleCommentVO c : list) {
 			// 对时间格式进行处理
-			String timeAgo = TimeAgoUtils.format(c.getCreateDate());
-			c.setTimeAgo(timeAgo);
+//			String timeAgo = TimeAgoUtils.format(c.getCreateDate());
+//			c.setTimeAgo(timeAgo);
 			// 查询并设置关于用户的点赞关系
 			c.setIsLike(isUserLikeComment(userId, c.getId()));
 		}
@@ -430,8 +487,8 @@ public class ArticleServiceImpl implements ArticleService {
 		List<UserArticleCommentVO> list = userArticleCommentMapperCustom.querySonComments(underCommentId);
 		
 		for (UserArticleCommentVO c : list) {
-			String timeAgo = TimeAgoUtils.format(c.getCreateDate());
-			c.setTimeAgo(timeAgo);
+//			String timeAgo = TimeAgoUtils.format(c.getCreateDate());
+//			c.setTimeAgo(timeAgo);
 			// 查询并设置关于用户的点赞关系
 			c.setIsLike(isUserLikeComment(userId, c.getId()));
 			// 设置回复人昵称
@@ -525,7 +582,18 @@ public class ArticleServiceImpl implements ArticleService {
 		List<UserArticleCommentVO> commentVOs = userArticleCommentMapperCustom.getUnsignedCommentMsg(userId);
 		return commentVOs;
 	}
-
+	
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Override
+	public void fDeleteArticle(String articleId) {
+		Example example = new Example(Article.class);
+		Criteria criteria = example.createCriteria();
+		criteria.andEqualTo("id", articleId);
+		Article a = new Article();
+		a.setStatus(StatusEnum.UNREADABLE.type);
+		articleMapper.updateByExampleSelective(a, example);
+	}
+	
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public void banArticle(String articleId) {
@@ -533,7 +601,7 @@ public class ArticleServiceImpl implements ArticleService {
 		Criteria criteria = example.createCriteria();
 		criteria.andEqualTo("id", articleId);
 		Article a = new Article();
-		a.setStatus(StatusEnum.UNREADABLE.type);
+		a.setStatus(StatusEnum.BANNED.type);
 		articleMapper.updateByExampleSelective(a, example);
 	}
 
@@ -555,7 +623,7 @@ public class ArticleServiceImpl implements ArticleService {
 		Criteria criteria = example.createCriteria();
 		criteria.andEqualTo("id", commentId);
 		UserArticleComment commentHelper = new UserArticleComment();
-		commentHelper.setStatus(StatusEnum.UNREADABLE.type);
+		commentHelper.setStatus(StatusEnum.BANNED.type);
 		userArticleCommentMapper.updateByExampleSelective(commentHelper, example);
 	}
 

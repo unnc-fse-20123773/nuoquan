@@ -128,7 +128,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 var _vuex = __webpack_require__(/*! vuex */ 12);function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var onemessage = function onemessage() {return __webpack_require__.e(/*! import() | pages/chatpage/oneMessage */ "pages/chatpage/oneMessage").then(__webpack_require__.bind(null, /*! ./oneMessage */ 190));};
 
 var query = wx.createSelectorQuery();
@@ -143,15 +142,15 @@ var chatHistory;var _default =
   data: function data() {
     return {
       /**
-              * ChatMessageCard example
-             ChatMessageCard = {
-             	this.senderId = senderId;
-             	this.receiverId = receiverId;
-             	this.msg = msg;		// 显示
-             	this.msgId = msgId; // 前端不需要用到
-             	this.creatTime = creatTime; // 显示 flag
-             },
-             */
+             	 * ChatMessageCard example
+             	ChatMessageCard = {
+             		this.senderId = senderId;
+             		this.receiverId = receiverId;
+             		this.msg = msg;		// 显示
+             		this.msgId = msgId; // 前端不需要用到
+             		this.creatTime = creatTime; // 显示 flag
+             	},
+             	*/
 
       chatContent: [],
 
@@ -167,10 +166,7 @@ var chatHistory;var _default =
   },
 
   computed: _objectSpread({},
-  (0, _vuex.mapState)([
-  'chatMessageCard',
-  'flashChatPage'])),
-
+  (0, _vuex.mapState)(['chatMessageCard', 'flashChatPage'])),
 
 
   watch: {
@@ -206,7 +202,7 @@ var chatHistory;var _default =
     // 获取我的信息
     var userInfo = this.getGlobalUserInfo();
     if (this.isNull(userInfo)) {
-      console.log("No userInfo!!");
+      console.log('No userInfo!!');
       return;
     }
     this.userInfo = userInfo;
@@ -232,7 +228,7 @@ var chatHistory;var _default =
     });
 
     // 获取与该用户的聊天历史记录
-    chatKey = "chat-" + this.userInfo.id + "-" + this.friendInfo.id;
+    chatKey = 'chat-' + this.userInfo.id + '-' + this.friendInfo.id;
     chatHistory = this.getListByKey(chatKey);
 
     this.getChatHistory();
@@ -266,7 +262,6 @@ var chatHistory;var _default =
       // var list = this.getListByKey(chatKey);
       // this.chatContent.push(list[list.length-1]);
       // this.scrollToBottom();
-
     },
 
     // 进入获取聊天
@@ -339,7 +334,7 @@ var chatHistory;var _default =
     },
 
     generateId: function generateId(index) {
-      var id = "m" + Math.floor(Math.random() * 1000) + "-" + index + new Date().valueOf();
+      var id = 'm' + Math.floor(Math.random() * 1000) + '-' + index + new Date().valueOf();
       return id;
     },
 
