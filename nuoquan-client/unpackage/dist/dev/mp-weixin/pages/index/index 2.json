@@ -1,7 +1,0 @@
-{
-  "usingComponents": {
-    "articlebrief": "/components/articlebrief",
-    "mainpagetop": "/components/mainpagetop",
-    "mainpageleft": "/components/mainpageleft"
-  }
-}

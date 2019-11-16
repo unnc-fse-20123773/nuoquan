@@ -5,7 +5,7 @@
 			<view class="comment-info">
 				<image :src="commentDetail.faceImg" @tap="goToPersonPublic(commentDetail.fromUserId)"></image>
 				<view class="name_text">{{ commentDetail.nickname }}</view>
-				<view class="replyTo">
+				<view class="replyTo" v-if="commentDetail.toNickname != null && commentDetail.toNickname != undefined">
 					{{commentDetail.toNickname}}
 				</view>
 				<view class="time_text">{{ commentDetail.timeAgo }}</view>
@@ -86,7 +86,20 @@
 	display: inline-block;
 	position: absolute;
 	top: 0;
-	left: 128px;
+	left: 144px;
 	width: 96px;
 }
+.replyTo::after{
+	content: "回复  @";
+	font-size: 12px;
+	font-family: Source Han Sans CN;
+	font-weight: 400;
+	line-height: 24px;
+	height: 24px;
+	color: #9B9B9B;
+	display: inline-block;
+	position: absolute;
+	left:-40px;
+	width:40px;
+	}
 </style>

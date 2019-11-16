@@ -8,9 +8,9 @@
 					<view class="name_text">{{ mainComment.nickname }}</view>
 					<view class="time_text">{{ mainComment.timeAgo }}</view>
 				</view>
-				<view class="comment-content" @tap="controlInput()">{{ mainComment.comment }}</view>
+				<view class="comment-content" @tap="controlInput(mainComment)">{{ mainComment.comment }}</view>
 				<view class="comment-menu">
-					<view class="son-comment-num" @tap="controlInput()">{{mainComment.commentNum}}</view>
+					<view class="son-comment-num" @tap="controlInput(mainComment)">{{mainComment.commentNum}}</view>
 					<view class="like-num" :class="{liked:mainComment.isLike}" @tap="swLikeComment(mainComment)">{{ mainComment.likeNum }}</view>
 				</view>
 			</view>
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-	import sonCommentBox from '../detail/sonCommentBox.vue'
+	import sonCommentBox from './sonCommentBox.vue'
 	export default {
 		components: {
 			sonCommentBox,
@@ -105,12 +105,7 @@
 							that.commentList = oldCommentList.concat(newCommentList);
 							that.currentPage = page;
 							that.totalPage = res.data.data.total;
-							
-							// that.commentList = "";
-							// that.$nextTick(function(){
-							// 	that.commentList =  res.data.data.rows;	
-							// });
-							// console.log(that.commentList);
+
 						}
 					}
 				});
@@ -278,7 +273,9 @@
 	margin-top:15px;
 }
 
-
+.son-comment-num{
+	background:linear-gradient(313deg,rgba(255,184,32,0.84) 0%,rgba(240,240,122,1) 100%);
+}
 
 
 

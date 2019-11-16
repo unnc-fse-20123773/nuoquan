@@ -107,7 +107,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var detail_1_article = function detail_1_article() {return __webpack_require__.e(/*! import() | pages/detail/detail_1_article */ "pages/detail/detail_1_article").then(__webpack_require__.bind(null, /*! ./detail_1_article.vue */ 176));};var detail_2_comments = function detail_2_comments() {return __webpack_require__.e(/*! import() | pages/detail/detail_2_comments */ "pages/detail/detail_2_comments").then(__webpack_require__.bind(null, /*! ./detail_2_comments.vue */ 183));};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var detail_1_article = function detail_1_article() {return __webpack_require__.e(/*! import() | pages/detail/detail_1_article */ "pages/detail/detail_1_article").then(__webpack_require__.bind(null, /*! ./detail_1_article.vue */ 184));};var detail_2_comments = function detail_2_comments() {return __webpack_require__.e(/*! import() | pages/detail/detail_2_comments */ "pages/detail/detail_2_comments").then(__webpack_require__.bind(null, /*! ./detail_2_comments.vue */ 191));};
 
 
 
@@ -181,32 +181,6 @@ var uploadFlag = false;var _default =
     detail_2_comments: detail_2_comments },
 
 
-  filters: {
-    timeDeal: function timeDeal(timediff) {
-      timediff = new Date(timediff);
-      var parts = [timediff.getFullYear(), timediff.getMonth() + 1, timediff.getDate(), timediff.getHours(), timediff.getMinutes(), timediff.getSeconds()];
-      var oldTime = timediff.getTime();
-      var now = new Date();
-      var newTime = now.getTime();
-      var milliseconds = 0;
-      var timeSpanStr;
-      milliseconds = newTime - oldTime;
-      if (milliseconds <= 1000 * 60 * 1) {
-        timeSpanStr = '刚刚';
-      } else if (1000 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60) {
-        timeSpanStr = Math.round(milliseconds / (1000 * 60)) + '分钟前';
-      } else if (1000 * 60 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24) {
-        timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
-      } else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
-        timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
-      } else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && parts[0] == now.getFullYear()) {
-        timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
-      } else {
-        timeSpanStr = parts[0] + '-' + parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
-      }
-      return timeSpanStr;
-    } },
-
 
   onReachBottom: function onReachBottom() {
     this.loadMore();
@@ -277,7 +251,6 @@ var uploadFlag = false;var _default =
       this.textAreaAdjust = "";
     },
     changeLikeStatus: function changeLikeStatus(status) {
-      debugger;
       this.articleCard.isLike = status;
       if (status) {
         this.articleCard.likeNum++;

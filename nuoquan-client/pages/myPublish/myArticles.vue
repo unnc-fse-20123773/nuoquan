@@ -16,11 +16,10 @@
 						<view class="left-body" :class="{ leftBodyWithPic: thisArticle.imgList.length != 0 }">
 							<view class="content">{{ thisArticle.articleContent }}</view>
 							<view class="bottomBar">
-								<view class="time">{{ thisArticle.createDate | timeDeal }}</view>
+								<view class="time">{{timeDeal(thisArticle.createDate)}}</view>
 								<view class="comment">
 									<image src="../../static/icon/comment-alt.png"></image>
-									<!-- 这里为什么是 likeNum？ -->
-									<view>{{ thisArticle.likeNum }}</view>
+									<view>{{ thisArticle.commentNum }}</view>
 								</view>
 								<view class="like">
 									<image v-if="!thisArticle.isLike" src="../../static/icon/like.png"></image>
@@ -74,35 +73,6 @@ export default {
 			direction: ''
 		};
 	},
-
-	filters: {
-		timeDeal(timediff) {
-			//console.log(timediff);
-			timediff = new Date(timediff);
-			//console.log(timediff);
-			var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(), timediff.getSeconds()];
-			var oldTime = timediff.getTime();
-			var now = new Date();
-			var newTime = now.getTime();
-			var milliseconds = 0;
-			var timeSpanStr;
-			milliseconds = newTime - oldTime;
-			if (milliseconds <= 1000 * 60 * 1) {
-				timeSpanStr = '刚刚';
-			} else if (1000 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60) {
-				timeSpanStr = Math.round(milliseconds / (1000 * 60)) + '分钟前';
-			} else if (1000 * 60 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24) {
-				timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
-			} else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
-				timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
-			} else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && parts[0] == now.getFullYear()) {
-				timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
-			} else {
-				timeSpanStr = parts[0] + '-' + parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
-			}
-			return timeSpanStr;
-		}
-	},
 	onPageScroll() {
 		this.messageIndex = -1;
 	},
@@ -149,7 +119,6 @@ export default {
 		
 		endMove(event) {
 			if (this.direction === 'Y') {
-				debugger;
 				this.direction = '';
 				this.messageIndex = -1;
 				return;

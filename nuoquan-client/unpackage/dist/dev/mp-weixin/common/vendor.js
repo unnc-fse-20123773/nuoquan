@@ -3951,6 +3951,23 @@ createPage(_myPublish.default);
 
 /***/ }),
 
+/***/ 160:
+/*!************************************************************************************************************!*\
+  !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fabout%2Fabout"} ***!
+  \************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _about = _interopRequireDefault(__webpack_require__(/*! ./pages/about/about.vue */ 161));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_about.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
+
+/***/ }),
+
 /***/ 19:
 /*!**********************************************************!*\
   !*** ./node_modules/@babel/runtime/regenerator/index.js ***!

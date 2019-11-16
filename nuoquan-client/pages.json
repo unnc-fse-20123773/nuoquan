@@ -75,10 +75,7 @@
 			"path":"pages/about/about",
 			"style": {}
 		}
-        ,{
-            "path" : "pages/about/about",
-            "style" : {}
-        }
+
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

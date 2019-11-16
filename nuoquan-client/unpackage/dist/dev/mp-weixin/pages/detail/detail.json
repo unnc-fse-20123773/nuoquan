@@ -1,10 +1,6 @@
 {
   "usingComponents": {
-<<<<<<< HEAD
     "detail_1_article": "/pages/detail/detail_1_article",
     "detail_2_comments": "/pages/detail/detail_2_comments"
-=======
-    "commentbox": "/components/comment"
->>>>>>> deyan
   }
 }

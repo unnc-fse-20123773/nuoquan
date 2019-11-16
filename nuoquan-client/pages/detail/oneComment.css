@@ -56,31 +56,21 @@
 	}
 
 	.son-comment-num {
-		color: rgba(136, 136, 136, 1);
+		width:14px;
+		height: 14px;	
 		font-size: 12px;
-		height: 14px;
-		line-height: 14px;
+
+		line-height: 14px;	
+		color: rgba(136, 136, 136, 1);
+		
 		display: inline-block;
 		position: absolute;
 		right: 60px;
 		top: 0;
-		padding: 3px 8px 3px 30px;
+		padding: 4px 8px 2px 30px;
 		text-align: center;
 		border-radius: 50px;
 	}
-
-	.son-comment-num::after {
-		position: absolute;
-		width: 14px;
-		height: 14px;
-		left: 9px;
-		top: 3px;
-		content: "";
-		background: url(../../static/icon/comment-alt-888888.png);
-		background-size: 14px 14px;
-		background-repeat: no-repeat;
-	}
-
 	.like-num {
 		width: 14px;
 		height: 14px;
@@ -90,13 +80,20 @@
 		position: absolute;
 		right: 0;
 		top: 0;
-		padding: 3px 8px 3px 30px;
+		padding: 4px 8px 2px 30px;
 		 border-radius:50px;
 		 text-align: center;
 	}
-
-	.liked {
-		background: linear-gradient(130deg, rgba(254, 110, 110, 0.84) 0%, rgba(245, 60, 60, 1) 100%);
+	.son-comment-num::after {
+		position: absolute;
+		width: 14px;
+		height: 14px;
+		left: 9px;
+		top: 4px;
+		content: "";
+		background: url(../../static/icon/comment-alt-888888.png);
+		background-size: 14px 14px;
+		background-repeat: no-repeat;
 	}
 
 	.like-num::after {
@@ -104,11 +101,14 @@
 		width: 14px;
 		height: 14px;
 		left: 9px;
-		top: 3px;
+		top: 4px;
 		content: "";
 		background: url(../../static/icon/thumbs-up-888888.png);
 		background-size: 14px 14px;
 		background-repeat: no-repeat;
+	}	
+	.liked {
+		background: linear-gradient(130deg, rgba(254, 110, 110, 0.84) 0%, rgba(245, 60, 60, 1) 100%);
 	}
 /* 一条卡片的CSS结束
  */
