@@ -8,10 +8,10 @@
 					<view class="name_text">{{ mainComment.nickname }}</view>
 					<view class="time_text">{{ mainComment.timeAgo }}</view>
 				</view>
-				<view class="comment-content" @tap="goToCommentDetail(mainComment)">{{ mainComment.comment }}</view>
+				<view class="comment-content" @tap="controlInput()">{{ mainComment.comment }}</view>
 				<view class="comment-menu">
-					<view class="son-comment-num" @tap="goToCommentDetail(mainComment)">{{mainComment.commentNum}}</view>
-					<view class="like-num" :class="{liked:mainComment.isLike}" @tap="swLikeMainComment(mainComment)">{{ mainComment.likeNum }}</view>
+					<view class="son-comment-num" @tap="controlInput()">{{mainComment.commentNum}}</view>
+					<view class="like-num" :class="{liked:mainComment.isLike}" @tap="swLikeComment(mainComment)">{{ mainComment.likeNum }}</view>
 				</view>
 			</view>
 			
@@ -267,6 +267,7 @@
 </script>
 
 <style>
+	 @import url("../detail/oneComment.css");
 	page {
 		width: 100%;
 		background-color: #F3F3F3;
@@ -277,119 +278,6 @@
 	margin-top:15px;
 }
 
-/* 一条卡片的CSS开始
- */
-.comment-info {
-		height: 24px;
-		width: 100%;
-		position: relative;
-	}
-
-	.comment-info image {
-		width: 24px;
-		height: 24px;
-		border-radius: 12px;
-	}
-
-	.name_text {
-		font-size: 12px;
-		font-family: Source Han Sans CN;
-		font-weight: 400;
-		line-height: 24px;
-		height: 24px;
-		color: #9B9B9B;
-		display: inline-block;
-		position: absolute;
-		top: 0;
-		left: 32px;
-		width: 96px;
-	}
-
-	.time_text {
-		position: absolute;
-		right: 0;
-		top: 0;
-		text-align: right;
-		font-size: 12px;
-		color: #9B9B9B;
-		line-height: 24px;
-		width: 102px;
-	}
-
-	.comment-content {
-		padding-top: 12px;
-		padding-bottom: 8px;
-		font-size: 14px;
-		font-family: Source Han Sans CN;
-		font-weight: 400;
-		line-height: 18px;
-		color: rgba(53, 53, 53, 1);
-	}
-
-	.comment-menu {
-		height: 20px;
-		position: relative;
-		padding-bottom: 9px;
-		border-bottom: 1px solid rgba(236, 236, 236, 1);
-	}
-
-	.son-comment-num {
-		color: rgba(136, 136, 136, 1);
-		font-size: 12px;
-		height: 14px;
-		line-height: 14px;
-		display: inline-block;
-		position: absolute;
-		right: 60px;
-		top: 0;
-		padding: 3px 8px 3px 30px;
-		text-align: center;
-		border-radius: 50px;
-	}
-
-	.son-comment-num::after {
-		position: absolute;
-		width: 14px;
-		height: 14px;
-		left: 9px;
-		top: 3px;
-		content: "";
-		background: url(../../static/icon/comment-alt-888888.png);
-		background-size: 14px 14px;
-		background-repeat: no-repeat;
-	}
-
-	.like-num {
-		width: 14px;
-		height: 14px;
-		font-size: 12px;
-		line-height: 14px;
-		color: rgba(136, 136, 136, 1);
-		position: absolute;
-		right: 0;
-		top: 0;
-		padding: 3px 8px 3px 30px;
-		 border-radius:50px;
-		 text-align: center;
-	}
-
-	.liked {
-		background: linear-gradient(130deg, rgba(254, 110, 110, 0.84) 0%, rgba(245, 60, 60, 1) 100%);
-	}
-
-	.like-num::after {
-		position: absolute;
-		width: 14px;
-		height: 14px;
-		left: 9px;
-		top: 3px;
-		content: "";
-		background: url(../../static/icon/thumbs-up-888888.png);
-		background-size: 14px 14px;
-		background-repeat: no-repeat;
-	}
-/* 一条卡片的CSS结束
- */
 
 
 

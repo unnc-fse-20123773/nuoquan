@@ -73,6 +73,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  if (!_vm._isMounted) {
+    _vm.e0 = function($event) {
+      _vm.controlInputInSonCommentBox()()
+    }
+  }
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -129,16 +134,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 var _default =
 {
   props: {
@@ -160,7 +155,7 @@ var _default =
   },
 
   methods: {
-    controlIputInSonCommentBox: function controlIputInSonCommentBox() {
+    controlInputInSonCommentBox: function controlInputInSonCommentBox() {
       var dataOfRecomment = {
         toUserId: this.reCommentDetail.fromUserId,
         fatherCommentId: this.reCommentDetail.id,
@@ -170,7 +165,7 @@ var _default =
       this.$emit('controlInputSignal', dataOfRecomment);
     },
 
-    swLikeComment: function swLikeComment() {
+    swLikeCommentDetail: function swLikeCommentDetail() {
       this.$emit('swLikeComment', this.commentDetail);
     },
 

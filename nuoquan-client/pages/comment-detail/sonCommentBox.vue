@@ -1,34 +1,24 @@
 <template>
 	<view>
-		<view class="son-commentBox">
-			<view class="cmtdetail-IDline">
-				<view class="cmtdetail-IDrel">
-					<view class="son-cmtdetail-profilePic">
-						<image :src="commentDetail.faceImg" mode="aspectFill" class="son-profilePic"></image>
-					</view>
-					<view class="cmtdetail-middle">
-						<view class="cmtdetail-IDtext">
-							{{commentDetail.nickname}}
-						</view>
-						<view class="cmtdetail-time">
-							{{commentDetail.timeAgo}}
-						</view>
-					</view>
-					<view class="cmtdetail-right">
-						<view class="cmtdetail-rightrel" @tap="swLikeComment()">
-							<image v-if="!commentDetail.isLike" src="../../static/icon/like.png" mode="aspectFill" class="son-likeIcon"></image>
-							<image v-else src="../../static/icon/liked.png" mode="aspectFill" class="son-likeIcon"></image>
-							<!-- 此处点赞数量最长5位数，如超出样式出错 -->
-							<text class="son-likeNum" :class="{'liked':commentDetail.isLike}">{{commentDetail.likeNum}}</text>
-						</view>
-					</view>
+<!--开始 		 此BLOCK,detail的评论,comment-detail,son-Comment卡片统一样式,所以统一引入,后期更改请同步------妖      -->
+		<view class="comment">
+			<view class="comment-info">
+				<image :src="commentDetail.faceImg" @tap="goToPersonPublic(commentDetail.fromUserId)"></image>
+				<view class="name_text">{{ commentDetail.nickname }}</view>
+				<view class="replyTo">
+					{{commentDetail.toNickname}}
 				</view>
+				<view class="time_text">{{ commentDetail.timeAgo }}</view>
 			</view>
-			<view class="cmtdetail-contentBox" id="contentBox" @tap="controlIputInSonCommentBox()">
-				回复@{{commentDetail.toNickname}}: {{commentDetail.comment}}
+			<view class="comment-content" @tap="controlInputInSonCommentBox()()">{{ commentDetail.comment }}</view>
+			<view class="comment-menu">
+				<view class="son-comment-num" @tap="controlInputInSonCommentBox()">{{commentDetail.commentNum}}</view>
+				<view class="like-num" :class="{liked:commentDetail.isLike}" @tap="swLikeCommentDetail(commentDetail)">{{ commentDetail.likeNum }}</view>
 			</view>
-			<view style="height: 2px;width: 74%;margin-left: 62px;background-color: #E4E4E4;margin-top: 10px;"></view>
 		</view>
+<!--结束 		 此BLOCK,detail的评论,comment-detail,son-Comment卡片统一样式,所以统一引入,后期更改请同步------妖      -->
+		
+		
 	</view>
 </template>
 
@@ -53,7 +43,7 @@
 		},
 		
 		methods:{
-			controlIputInSonCommentBox(){
+			controlInputInSonCommentBox(){
 				var dataOfRecomment={
 					toUserId:this.reCommentDetail.fromUserId,
 					fatherCommentId:this.reCommentDetail.id,
@@ -63,7 +53,7 @@
 				this.$emit('controlInputSignal',dataOfRecomment);
 			},
 			
-			swLikeComment(){
+			swLikeCommentDetail(){
 				this.$emit('swLikeComment',this.commentDetail);
 			},
 			
@@ -82,4 +72,21 @@
 	.liked{
 		color: #FDD041;
 	}
+	
+@import url("../detail.oneComment.css");
+/* 此文件,detail的评论,comment-detail,son-Comment卡片统一样式,所以统一引入,后期更改请同步------妖
+ */	
+.replyTo{
+	font-size: 12px;
+	font-family: Source Han Sans CN;
+	font-weight: 400;
+	line-height: 24px;
+	height: 24px;
+	color: #9B9B9B;
+	display: inline-block;
+	position: absolute;
+	top: 0;
+	left: 128px;
+	width: 96px;
+}
 </style>

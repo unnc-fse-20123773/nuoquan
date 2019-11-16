@@ -1,19 +1,10 @@
-
-page {
-		width: 100%;
-		background-color: #F3F3F3;
-}
-.comment-detail-page{
-	padding: 0 15px;
-	width: calc(100% - 30px);
-	margin-top:15px;
-}
-/* 一条卡片的CSS开始
+/* 一条卡片的CSS开始， HTML见末尾
  */
 .comment-info {
 		height: 24px;
 		width: 100%;
 		position: relative;
+		margin-top: 8px;
 }
 .comment-info image {
 		width: 24px;
@@ -112,6 +103,27 @@ page {
 }
 /* 一条卡片的CSS结束
  */
+/* <view class="comment">
+			<view class="comment-info">
+				<image :src="commentDetail.faceImg" @tap="goToPersonPublic(commentDetail.fromUserId)"></image>
+				<view class="name_text">{{ commentDetail.nickname }}</view>
+				<view class="time_text">{{ commentDetail.timeAgo }}</view>
+			</view>
+			<view class="comment-content" @tap="goToCommentDetail(commentDetail)">{{ commentDetail.comment }}</view>
+			<view class="comment-menu">
+				<view class="son-comment-num" @tap="goToCommentDetail(commentDetail)">{{commentDetail.commentNum}}</view>
+				<view class="like-num" :class="{liked:commentDetail.isLike}" @tap="swLikeCommentDetail(commentDetail)">{{ commentDetail.likeNum }}</view>
+			</view>
+		</view> */
+page {
+		width: 100%;
+		background-color: #F3F3F3;
+}
+.comment-detail-page{
+	padding: 0 15px;
+	width: calc(100% - 30px);
+	margin-top:15px;
+}
 .cmtdetail-loadmore {
 		margin-left: 62px;
 		height: 30px;

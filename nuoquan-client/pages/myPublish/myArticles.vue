@@ -20,7 +20,7 @@
 								{{ thisArticle.createDate | timeDeal}}
 							</view>
 							<view class="comment">
-								<image src="../../static/icon/comment-alt%20353535.png"></image>
+								<image src="../../static/icon/comment-alt-353535.png"></image>
 								<view> {{thisArticle.likeNum}}</view>
 							</view>
 							<view class="like">

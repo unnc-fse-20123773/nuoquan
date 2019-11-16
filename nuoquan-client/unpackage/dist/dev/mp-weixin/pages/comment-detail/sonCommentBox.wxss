@@ -1,5 +1,20 @@
 
 .liked{
-	color: #FDD041;
+		color: #FDD041;
+}
+/* 此文件,detail的评论,comment-detail,son-Comment卡片统一样式,所以统一引入,后期更改请同步------妖
+ */
+.replyTo{
+	font-size: 12px;
+	font-family: Source Han Sans CN;
+	font-weight: 400;
+	line-height: 24px;
+	height: 24px;
+	color: #9B9B9B;
+	display: inline-block;
+	position: absolute;
+	top: 0;
+	left: 128px;
+	width: 96px;
 }
 

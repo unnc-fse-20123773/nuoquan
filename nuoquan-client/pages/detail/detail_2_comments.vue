@@ -121,6 +121,7 @@
 </script>
 
 <style>
+	@import url("./oneComment.css");
 	.comments-menu {
 		height: 28px;
 		padding-top: 13px;
@@ -139,8 +140,9 @@
 
 
 	}
+	
 
-	.comment-info {
+/* 	.comment-info {
 		height: 24px;
 		width: 100%;
 		position: relative;
@@ -249,5 +251,5 @@
 		background-size: 14px 14px;
 		background-repeat: no-repeat;
 	}
-	
+	 */
 </style>
