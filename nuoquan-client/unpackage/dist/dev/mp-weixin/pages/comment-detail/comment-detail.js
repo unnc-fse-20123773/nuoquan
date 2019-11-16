@@ -149,40 +149,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 {
   components: {
     sonCommentBox: sonCommentBox },
 
 
   data: function data() {
-    // 我抄了一小部分代码过来，还没改 -Guetta
-    // O(∩_∩)O
-    // 😄
-    // 🤭
-    // (●'◡'●)
-    // 页面有点丑（高仿微博），回头让仅仅优化一下
     return {
       mainComment: '', //用于接受跳转传过来的underCommentId,然后申请获取sonComment  yaoyao 9.16 
       userInfo: '',

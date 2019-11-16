@@ -1,43 +1,21 @@
 <template>
-	<view>
+	<view class="comment-detail-page">
 		<!-- 主评论区域 -->
-		<view class="commentBox">
-			<view class="cmtdetail-IDline">
-				<view class="cmtdetail-IDrel">
-					<view class="cmtdetail-profilePic">
-						<image :src="mainComment.faceImg" mode="aspectFill" class="profilePic" @tap="goToPersonPublic"></image>
-					</view>
-					<view class="cmtdetail-middle">
-						<view class="cmtdetail-IDtext">
-							{{mainComment.nickname}}
-						</view>
-						<view class="cmtdetail-time">
-							{{mainComment.timeAgo}}
-						</view>
-					</view>
-					<view class="cmtdetail-right">
-						<view class="cmtdetail-rightrel">
-							<view @tap="swLikeComment(mainComment)">
-								<image v-if="!mainComment.isLike" src="../../static/icon/like.png" mode="aspectFill" class="likeIcon"></image>
-								<image v-if="mainComment.isLike" src="../../static/icon/liked-red.png" mode="aspectFill" class="likeIcon"></image>
-								<!-- 此处点赞数量最长5位数，如超出样式出错 -->
-								<text class="likeNum" :class="{'liked':mainComment.isLike}">{{mainComment.likeNum}}</text>
-							</view>
-							<!-- <image src="../../static/icon/message.png" mode="aspectFill" class="commentIcon"></image> -->
-						</view>
-					</view>
+		
+			<view class="comment-Box">
+				<view class="comment-info">
+					<image :src="mainComment.faceImg" @tap="goToPersonPublic(mainComment.fromUserId)"></image>
+					<view class="name_text">{{ mainComment.nickname }}</view>
+					<view class="time_text">{{ mainComment.timeAgo }}</view>
+				</view>
+				<view class="comment-content" @tap="goToCommentDetail(mainComment)">{{ mainComment.comment }}</view>
+				<view class="comment-menu">
+					<view class="son-comment-num" @tap="goToCommentDetail(mainComment)">{{mainComment.commentNum}}</view>
+					<view class="like-num" :class="{liked:mainComment.isLike}" @tap="swLikeMainComment(mainComment)">{{ mainComment.likeNum }}</view>
 				</view>
 			</view>
-			<view class="cmtdetail-contentBox" id="contentBox" @click="controlInput(1)">
-				{{mainComment.comment}}
-			</view>
-			<!-- <view class="cmtdetail-loadmore column_center">
-				<view class="loadmore-text">
-					查看全部
-				</view>
-			</view> -->
-			<!-- <view style="height: 2px;width: 74%;margin-left: 62px;background-color: #E4E4E4;margin-top: 10px;"></view> -->
-		</view>
+			
+			
 		<!-- 子评论区域 -->
 		<view style="width: 100%;">
 			<!--移到了sonCommentBox组件，考虑评论之间的点赞方程容易混淆，做了组件，就互不影响了-->
@@ -70,12 +48,6 @@
 		},
 		
 		data() {
-			// 我抄了一小部分代码过来，还没改 -Guetta
-			// O(∩_∩)O
-			// 😄
-			// 🤭
-			// (●'◡'●)
-			// 页面有点丑（高仿微博），回头让仅仅优化一下
 			return {
 				mainComment:'',    //用于接受跳转传过来的underCommentId,然后申请获取sonComment  yaoyao 9.16 
 				userInfo: '',
@@ -299,151 +271,137 @@
 		width: 100%;
 		background-color: #F3F3F3;
 	}
+.comment-detail-page{
+	padding: 0 15px;
+	width: calc(100% - 30px);
+	margin-top:15px;
+}
 
-	.commentBox {
-		width: 100%;
-		min-height: 200upx;
-		background-color: white;
-	}
-
-	.son-commentBox {
-		width: 100%;
-		min-height: 200upx;
-	}
-
-	/* ID 行 */
-	.cmtdetail-IDline {
-		display: flex;
-		height: 50px;
-		width: 100%;
-	}
-
-	.cmtdetail-IDrel {
-		height: 100%;
+/* 一条卡片的CSS开始
+ */
+.comment-info {
+		height: 24px;
 		width: 100%;
 		position: relative;
 	}
 
-	.cmtdetail-profilePic {
-		position: absolute;
-		top: 8px;
-		left: 10px;
-		width: 42px;
-		height: 42px;
-		border-radius: 200px;
+	.comment-info image {
+		width: 24px;
+		height: 24px;
+		border-radius: 12px;
 	}
 
-	.son-cmtdetail-profilePic {
-		position: absolute;
-		top: 8px;
-		left: 16px;
-		width: 36px;
-		height: 36px;
-		border-radius: 200px;
-	}
-
-	.profilePic {
-		width: 42px;
-		height: 42px;
-		border-radius: 200px;
-	}
-
-	.son-profilePic {
-		width: 36px;
-		height: 36px;
-		border-radius: 200px;
-	}
-
-	.cmtdetail-middle {
-		position: absolute;
-		top: 10px;
-		left: 62px;
-		display: flex;
-		flex-direction: column;
-		width: 60%;
-		height: 42px;
-	}
-
-	.cmtdetail-IDtext {
-		width: 100%;
-		height: 50%;
-		color: #3d3d3d;
-		font-size: 15px;
-	}
-
-	.cmtdetail-time {
-		width: 100%;
-		height: 50%;
-		color: #888888;
+	.name_text {
 		font-size: 12px;
-	}
-
-	.cmtdetail-right {
+		font-family: Source Han Sans CN;
+		font-weight: 400;
+		line-height: 24px;
+		height: 24px;
+		color: #9B9B9B;
+		display: inline-block;
 		position: absolute;
-		right: 10px;
-		display: flex;
-		min-width: 24%;
-		height: 100%;
+		top: 0;
+		left: 32px;
+		width: 96px;
 	}
 
-	.cmtdetail-rightrel {
+	.time_text {
+		position: absolute;
+		right: 0;
+		top: 0;
+		text-align: right;
+		font-size: 12px;
+		color: #9B9B9B;
+		line-height: 24px;
+		width: 102px;
+	}
+
+	.comment-content {
+		padding-top: 12px;
+		padding-bottom: 8px;
+		font-size: 14px;
+		font-family: Source Han Sans CN;
+		font-weight: 400;
+		line-height: 18px;
+		color: rgba(53, 53, 53, 1);
+	}
+
+	.comment-menu {
+		height: 20px;
 		position: relative;
-		width: 100%;
-		height: 100%;
+		padding-bottom: 9px;
+		border-bottom: 1px solid rgba(236, 236, 236, 1);
 	}
 
-	.likeIcon {
-		position: absolute;
-		left: 40%;
-		width: 18px;
-		height: 18px;
-		top: 8px;
-	}
-
-	.likeNum {
-		position: absolute;
-		top: 10px;
-		left: 65%;
+	.son-comment-num {
+		color: rgba(136, 136, 136, 1);
 		font-size: 12px;
-		color: #888888;
-	}
-	.liked{
-		color: #FDD041;
-	}
-	.son-likeIcon{
+		height: 14px;
+		line-height: 14px;
+		display: inline-block;
 		position: absolute;
-		right: 40%;
-		width: 18px;
-		height: 18px;
-		top: 8px;
+		right: 60px;
+		top: 0;
+		padding: 3px 8px 3px 30px;
+		text-align: center;
+		border-radius: 50px;
 	}
-	
-	.son-likeNum{
+
+	.son-comment-num::after {
 		position: absolute;
-		top: 10px;
-		left: 65%;
+		width: 14px;
+		height: 14px;
+		left: 9px;
+		top: 3px;
+		content: "";
+		background: url(../../static/icon/comment-alt-888888.png);
+		background-size: 14px 14px;
+		background-repeat: no-repeat;
+	}
+
+	.like-num {
+		width: 14px;
+		height: 14px;
 		font-size: 12px;
-		color: #888888;
-	}
-	
-	.commentIcon {
+		line-height: 14px;
+		color: rgba(136, 136, 136, 1);
 		position: absolute;
-		right: 5%;
-		width: 18px;
-		height: 18px;
-		top: 8px;
+		right: 0;
+		top: 0;
+		padding: 3px 8px 3px 30px;
+		 border-radius:50px;
+		 text-align: center;
 	}
 
-
-	.cmtdetail-contentBox {
-		width: 74%;
-		margin-left: 62px;
-		margin-top: 10px;
-		min-height: 20px;
-		color: #3D3D3D;
-		font-size: 15px;
-		font-weight: 500;
+	.liked {
+		background: linear-gradient(130deg, rgba(254, 110, 110, 0.84) 0%, rgba(245, 60, 60, 1) 100%);
 	}
+
+	.like-num::after {
+		position: absolute;
+		width: 14px;
+		height: 14px;
+		left: 9px;
+		top: 3px;
+		content: "";
+		background: url(../../static/icon/thumbs-up-888888.png);
+		background-size: 14px 14px;
+		background-repeat: no-repeat;
+	}
+/* 一条卡片的CSS结束
+ */
+
+
+
+
+
+
+
+
+
+
+
+
 
 	.cmtdetail-loadmore {
 		margin-left: 62px;

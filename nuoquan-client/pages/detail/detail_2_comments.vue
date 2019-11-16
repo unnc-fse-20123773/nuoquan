@@ -18,9 +18,9 @@
 						<view class="name_text">{{ mainComment.nickname }}</view>
 						<view class="time_text">{{ mainComment.timeAgo }}</view>
 					</view>
-					<view class="comment-content" @tap="controlInputInComment('inComment')">{{ mainComment.comment }}</view>
+					<view class="comment-content" @tap="goToCommentDetail(mainComment)">{{ mainComment.comment }}</view>
 					<view class="comment-menu">
-						<view class="son-comment-num">{{mainComment.commentNum}}</view>
+						<view class="son-comment-num" @tap="goToCommentDetail(mainComment)">{{mainComment.commentNum}}</view>
 						<view class="like-num" :class="{liked:mainComment.isLike}" @tap="swLikeMainComment(mainComment)">{{ mainComment.likeNum }}</view>
 					</view>
 				</view>
@@ -105,7 +105,12 @@
 					},
 				});
 			},
-		},
+						goToCommentDetail(mainComment) {
+							uni.navigateTo({
+								url: '/pages/comment-detail/comment-detail?data=' + JSON.stringify(mainComment),
+							})
+						}
+		},//method
 
 
 

@@ -211,7 +211,14 @@ var _default =
           console.log(res);
         } });
 
-    } } };exports.default = _default;
+    },
+    goToCommentDetail: function goToCommentDetail(mainComment) {
+      uni.navigateTo({
+        url: '/pages/comment-detail/comment-detail?data=' + JSON.stringify(mainComment) });
+
+    } }
+  //method
+};exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

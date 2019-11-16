@@ -205,14 +205,7 @@ var uploadFlag = false;var _default =
     var page = this.currentPage;
     this.getComments(page);
 
-    // 随机生成颜色
-    if (!this.isNull(this.articleCard.tagList)) {
-      var tagColors = this.tagColors;
-      for (var i = 0; i < this.articleCard.tagList.length; i++) {
-        var random = Math.floor(Math.random() * tagColors.length); // 0~tagColors.length-1
-        this.tagColorList.push(tagColors[random]);
-      }
-    }
+
 
     this.addViewCount();
   },

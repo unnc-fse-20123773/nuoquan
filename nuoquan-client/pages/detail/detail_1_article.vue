@@ -61,7 +61,16 @@
 				
 			};
 		},
-		created() {},
+		mounted() {
+			// 随机生成颜色
+			if(!this.isNull(this.articleCard.tagList)){
+				var tagColors = this.tagColors;
+				for (var i=0; i<this.articleCard.tagList.length; i++){
+					var random = Math.floor(Math.random()*tagColors.length); // 0~tagColors.length-1
+					this.tagColorList.push(tagColors[random]);
+				}
+			}
+		},
 		filters: {
 			timeDeal(timediff) {
 				timediff = new Date(timediff);
@@ -306,6 +315,8 @@
 		padding: 6px 10px;
 		background: #621E81;
 		vertical-align: middle;
+		margin-right: 9px;
+		color:#FFFFFF;
 	}
 
 	.detailcontent {
