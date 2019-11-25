@@ -420,6 +420,7 @@ page {
 #public-container {
 	height: 100%;
 	width: 100%;
+	overflow: hidden;
 }
 
 /* 黄色头部 */
@@ -430,7 +431,7 @@ page {
 }
 
 .yellowTop {
-	position: absolute; /* 此处采用 fixed 定位，以保证页面流可以正常显示。层级设为 -10，以保证其显示在页面最底部。 */
+	position: absolute; /* 此处采用 absolote 定位，以保证页面流可以正常显示。层级设为 -10，以保证其显示在页面最底部。 */
 	left: -430upx;
 	height: 1600upx;
 	width: 1600upx;

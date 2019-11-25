@@ -81,6 +81,7 @@
 		"navigationBarTitleText": "Nottinghome",
 		"navigationBarBackgroundColor": "#fdd041",
 		"backgroundColor": "#F8F8F8"
+		// "navigationStyle": "custom" // 取消原生导航栏
 	},
 	"condition": {
 		//模式配置，仅开发期间生效
