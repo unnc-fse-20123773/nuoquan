@@ -184,6 +184,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 var _default =
 {
   name: 'aticlebrief',
@@ -284,6 +285,19 @@ var _default =
         this.transformX = 'translateX(0px)';
       }
       this.direction = '';
+    },
+    //控制滑动结束，以下控制跳转detail
+    goToDetail: function goToDetail(thisArticle) {
+      //thisArticle用函数传入，因为v-for使用了ID为键名，所以无法筛选数据，就直接block传进来好了
+      var navData = JSON.stringify(thisArticle); // 这里转换成 字符串
+      uni.navigateTo({
+        url: '/pages/detail/detail?data=' + navData });
+
+    },
+
+    //收起
+    closeSwipe: function closeSwipe() {
+      this.messageIndex = -1;
     },
 
     banArticle: function banArticle(articleId) {
