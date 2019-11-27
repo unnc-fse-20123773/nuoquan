@@ -227,7 +227,7 @@ var _default = {
   // },
 
   methods: {
-    showArticles: function showArticles(page) {
+    showArticles: function showArticles(page) {var _this2 = this;
       if (loadArticleFlag) {
         return;
       }
@@ -271,11 +271,13 @@ var _default = {
             if (page == 1) {
               that.showlist = [];
             }
-            var newArticleList = res.data.data.rows;
-            var oldArticleList = that.showlist;
-            that.showlist = oldArticleList.concat(newArticleList);
-            that.currentPage = page;
-            that.totalPage = res.data.data.total;
+            _this2.$nextTick(function () {
+              var newArticleList = res.data.data.rows;
+              var oldArticleList = that.showlist;
+              that.showlist = oldArticleList.concat(newArticleList);
+              that.currentPage = page;
+              that.totalPage = res.data.data.total;
+            });
           }, 300);
         },
         fail: function fail(res) {
@@ -332,7 +334,7 @@ var _default = {
     /**
         * 查询用户信息，并分割邮箱更新到缓存
         */
-    queryUserInfo: function queryUserInfo(userId) {var _this2 = this;
+    queryUserInfo: function queryUserInfo(userId) {var _this3 = this;
       var that = this;
       uni.request({
         url: that.$serverUrl + '/user/queryUser',
@@ -346,9 +348,9 @@ var _default = {
         success: function success(res) {
           if (res.data.status == 200) {
             var user = res.data.data;
-            var finalUser = _this2.myUser(user); // 分割邮箱地址, 重构 user
-            _this2.setGlobalUserInfo(finalUser); // 把用户信息写入缓存
-            _this2.userInfo = finalUser; // 更新页面用户数据
+            var finalUser = _this3.myUser(user); // 分割邮箱地址, 重构 user
+            _this3.setGlobalUserInfo(finalUser); // 把用户信息写入缓存
+            _this3.userInfo = finalUser; // 更新页面用户数据
             // console.log(this.userInfo);
           }
         } });

@@ -21,7 +21,7 @@
 								<view class="comment">
 									<image src="../../static/icon/comment-alt.png"></image>
 									<!-- 这里为什么是 likeNum？ -->
-									<view>{{ thisArticle.likeNum }}</view>
+									<view>{{ thisArticle.commentNum }}</view>
 								</view>
 								<view class="like">
 									<image v-if="!thisArticle.isLike" src="../../static/icon/like.png"></image>

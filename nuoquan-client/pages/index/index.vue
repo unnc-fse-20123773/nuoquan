@@ -134,11 +134,13 @@ export default {
 						if (page == 1) {
 							that.showlist = [];
 						}
-						var newArticleList = res.data.data.rows;
-						var oldArticleList = that.showlist;
-						that.showlist = oldArticleList.concat(newArticleList);
-						that.currentPage = page;
-						that.totalPage = res.data.data.total;
+						this.$nextTick(()=>{
+							var newArticleList = res.data.data.rows;
+							var oldArticleList = that.showlist;
+							that.showlist = oldArticleList.concat(newArticleList);
+							that.currentPage = page;
+							that.totalPage = res.data.data.total;
+						})
 					}, 300);
 				},
 				fail: res => {
