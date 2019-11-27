@@ -10,6 +10,9 @@ page {
 		margin:auto;
 		background: #FCFCFC;
 }
+	
+/* 滑到底了等提示
+ */
 .comment-bottom.data-v-0dddf152{
 		height:160px;
 		width:calc(202px + 80rpx);
@@ -78,8 +81,7 @@ border-radius: 2px;
 		letter-spacing:2px;
 }
 	
-	
-	/* 底部栏 */
+/* 底部栏 */
 .bottomLayerOfSubmit.data-v-0dddf152{
 		display: -webkit-box;
 		display: -webkit-flex;
@@ -123,8 +125,7 @@ border-radius: 2px;
 		z-index: -1;
 }
 	
-	
-	/* 以下五条为底部输入框样式 */
+/* 以下五条为底部输入框样式 */
 .bottoLayerOfInput.data-v-0dddf152{
 		position: absolute;
 		width: 750rpx;

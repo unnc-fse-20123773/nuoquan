@@ -322,6 +322,10 @@ var _default =
     },
     controlInputInDetailArticle: function controlInputInDetailArticle() {
       this.$emit("controlInputSignal", 1);
+    },
+    menu_back: function menu_back() {
+      this.$emit("backToLastPage");
+
     } }
   //method
 };exports.default = _default;

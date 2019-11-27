@@ -68,12 +68,10 @@
 	
 </script>
 
-<style>
-	.liked{
-		color: #FDD041;
-	}
+<style scoped>
+
 	
-@import url("../detail.oneComment.css");
+@import url("../detail/oneComment.css");
 /* 此文件,detail的评论,comment-detail,son-Comment卡片统一样式,所以统一引入,后期更改请同步------妖
  */	
 .replyTo{
@@ -84,9 +82,11 @@
 	height: 24px;
 	color: #9B9B9B;
 	display: inline-block;
-	position: absolute;
+	/* position: absolute;
 	top: 0;
-	left: 144px;
+	left: 144px; */
+	position: relative;
+	left:48px;
 	width: 96px;
 }
 .replyTo::after{

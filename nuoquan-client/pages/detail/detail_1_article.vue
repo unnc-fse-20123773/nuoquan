@@ -40,7 +40,7 @@
 			<view class="like" :class="{liked:articleCard.isLike}" @tap="swLikeArticle()">{{articleCard.likeNum}}</view>
 			<view class="comment" @tap="controlInputInDetailArticle">{{articleCard.commentNum}}</view>
 			<view class="share"></view>
-			<view class="back"></view>
+			<view class="back" @tap="menu_back()"></view>
 		</view>
 	</view>
 </template>
@@ -207,6 +207,10 @@
 			controlInputInDetailArticle(){
 				this.$emit("controlInputSignal",1);
 			},
+			menu_back(){
+				this.$emit("backToLastPage");
+				
+			}
 		},//method
 
 	};

@@ -2,7 +2,7 @@
 	<view class="detail-page">
 	
 <!-- 第一个大块二，文章本体 -->
- <detail_1_article class="article-area" :articleCard='articleCard'  @controlInputSignal="controlInput" :userInfo="userInfo" @swLikeArticleSignal="changeLikeStatus"></detail_1_article>
+ <detail_1_article class="article-area" :articleCard='articleCard'  @controlInputSignal="controlInput" :userInfo="userInfo" @swLikeArticleSignal="changeLikeStatus" @backToLastPage="backToLastPage()"></detail_1_article>
  
 <view style="border-bottom: 4px solid #ECECEC;height:0;width:750upx;font-size: 0;position: relative;left: -16px;"  @controlInputSignal="controlInput">这是分割线</view>
  <!--第一个大块二，评论区域-->
@@ -11,7 +11,7 @@
  
  
  
- <!--触底提示和功能-->
+ <!--触底提示和功能  start-->
  <view class="comment-bottom">
  	<view class="comment-bottom-notice">划到底部啦</view>
  	<view class="comment-bottom-buttons">
@@ -19,8 +19,8 @@
  		<image class="to-top" @tap="scrollToTop" src="../../static/icon/arrow-left-fcc041.png" ></image>
  		<view class="active-input-button" @click="controlInput(1)">发表评论</view>
  	</view>
- 
  </view>
+  <!--触底提示和功能  END-->
  
 
 
@@ -335,8 +335,8 @@ import detail_2_comments from "./detail_2_comments.vue"
 		background: #FCFCFC;
 	}
 	
-	
-	.comment-bottom{
+/* 滑到底了等提示
+ */	.comment-bottom{
 		height:160px;
 		width:calc(202px + 80upx);
 		margin: auto;
