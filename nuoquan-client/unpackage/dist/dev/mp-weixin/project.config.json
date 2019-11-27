@@ -120,6 +120,12 @@
 					"query": "",
 					"id": 14,
 					"pathName": "pages/about/about"
+				},
+				{
+					"name": "人工审核",
+					"query": "",
+					"id": 15,
+					"pathName": "pages/manager_tool/manager_tool"
 				}
 			]
 		}

@@ -17,7 +17,8 @@
     "pages/comment-detail/comment-detail",
     "pages/userDeal/userDeal",
     "pages/myPublish/myPublish",
-    "pages/about/about"
+    "pages/about/about",
+    "pages/manager_tool/manager_tool"
   ],
   "subPackages": [],
   "window": {
