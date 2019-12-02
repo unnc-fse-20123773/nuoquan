@@ -1,6 +1,6 @@
 (global["webpackJsonp"] = global["webpackJsonp"] || []).push([["components/articlebrief"],{
 
-/***/ 117:
+/***/ 131:
 /*!**********************************************************************************************!*\
   !*** F:/codingWorkspace/nuoquan/nuoquan-client/main.js?{"page":"components%2Farticlebrief"} ***!
   \**********************************************************************************************/
@@ -455,5 +455,5 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ })
 
-},[[117,"common/runtime","common/vendor"]]]);
+},[[131,"common/runtime","common/vendor"]]]);
 //# sourceMappingURL=../../.sourcemap/mp-weixin/components/articlebrief.js.map

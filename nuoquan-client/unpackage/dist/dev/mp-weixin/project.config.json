@@ -13,8 +13,6 @@
 	"libVersion": "2.7.0",
 	"appid": "wxebb29e9646be657f",
 	"projectname": "nuoquan",
-	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,
@@ -24,102 +22,114 @@
 			"current": -1,
 			"list": []
 		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
 		"game": {
 			"current": -1,
 			"list": []
 		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
 		"miniprogram": {
-			"current": 0,
+			"current": -1,
 			"list": [
 				{
-					"name": "index",
-					"query": "",
 					"id": 0,
-					"pathName": "pages/index/index"
+					"name": "index",
+					"pathName": "pages/tabPages/index",
+					"query": "",
+					"scene": null
 				},
 				{
-					"name": "signin",
-					"query": "",
 					"id": 1,
-					"pathName": "pages/signin/signin"
+					"name": "signin",
+					"pathName": "pages/signin/signin",
+					"query": ""
 				},
 				{
-					"name": "submit",
-					"query": "",
 					"id": 2,
-					"pathName": "pages/submit/submit"
+					"name": "submit",
+					"pathName": "pages/submit/submit",
+					"query": ""
 				},
 				{
-					"name": "chatpage",
-					"query": "",
 					"id": 3,
-					"pathName": "pages/chatpage/chatpage"
+					"name": "chatpage",
+					"pathName": "pages/chatpage/chatpage",
+					"query": ""
 				},
 				{
-					"name": "followlist",
-					"query": "",
 					"id": 4,
-					"pathName": "pages/followlist/followlist"
+					"name": "followlist",
+					"pathName": "pages/followlist/followlist",
+					"query": ""
 				},
 				{
-					"name": "messagelist",
-					"query": "",
 					"id": 5,
-					"pathName": "pages/messagelist/messagelist"
+					"name": "messagelist",
+					"pathName": "pages/tabPages/messagelist",
+					"query": "",
+					"scene": null
 				},
 				{
-					"name": "profile",
-					"query": "",
 					"id": 6,
-					"pathName": "pages/profile/profile"
+					"name": "profile",
+					"pathName": "pages/tabPages/profile",
+					"query": "",
+					"scene": null
 				},
 				{
-					"name": "personpublic",
-					"query": "userId=test-id123",
 					"id": 7,
-					"pathName": "pages/personpublic/personpublic"
+					"name": "personpublic",
+					"pathName": "pages/personpublic/personpublic",
+					"query": "userId=test-id123"
 				},
 				{
-					"name": "wechatLogin",
-					"query": "",
 					"id": 8,
-					"pathName": "pages/wechatLogin/wechatLogin"
+					"name": "wechatLogin",
+					"pathName": "pages/wechatLogin/wechatLogin",
+					"query": ""
 				},
 				{
-					"name": "detail",
-					"query": "",
 					"id": 9,
-					"pathName": "pages/detail/detail"
+					"name": "detail",
+					"pathName": "pages/detail/detail",
+					"query": ""
 				},
 				{
-					"name": "search",
-					"query": "",
 					"id": 10,
-					"pathName": "pages/search/search"
+					"name": "search",
+					"pathName": "pages/search/search",
+					"query": ""
 				},
 				{
-					"name": "cmtdetail",
-					"query": "",
 					"id": 11,
-					"pathName": "pages/comment-detail/comment-detail"
+					"name": "cmtdetail",
+					"pathName": "pages/comment-detail/comment-detail",
+					"query": ""
 				},
 				{
-					"name": "test",
-					"query": "",
-					"id": 12,
-					"pathName": "pages/test/test"
-				},
-				{
-					"name": "我的发布",
-					"query": "",
 					"id": 13,
-					"pathName": "pages/myPublish/myPublish"
+					"name": "我的发布",
+					"pathName": "pages/myPublish/myPublish",
+					"query": ""
 				},
 				{
-					"name": "关于",
-					"query": "",
 					"id": 14,
-					"pathName": "pages/about/about"
+					"name": "关于",
+					"pathName": "pages/about/about",
+					"query": ""
+				},
+				{
+					"id": 15,
+					"name": "vote",
+					"pathName": "pages/tabPages/votePage",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

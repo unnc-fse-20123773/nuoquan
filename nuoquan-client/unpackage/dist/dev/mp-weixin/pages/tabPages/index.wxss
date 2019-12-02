@@ -187,23 +187,23 @@ page {
 }
 
 
-.index.data-v-a441ac5e {
+.index.data-v-42642aa6 {
 	/* 页面高度由内容扩充，最低值为100%（page 定义的）- by Guetta */
 	height: 100%;
 	background-color: #f3f3f3;
 }
-.indexArticleArea.data-v-a441ac5e {
+.indexArticleArea.data-v-42642aa6 {
 	height: 100%;
 }
-image.data-v-a441ac5e {
+image.data-v-42642aa6 {
 	width: 60px;
 	height: 60px;
 	display: inline-block;
 }
-.touxiang.data-v-a441ac5e {
+.touxiang.data-v-42642aa6 {
 	border-radius: 30px;
 }
-.search.data-v-a441ac5e {
+.search.data-v-42642aa6 {
 	display: inline-block;
 	width: 70%;
 	-webkit-box-shadow: inset 0 0 20px #ccc;
@@ -211,11 +211,11 @@ image.data-v-a441ac5e {
 	border-radius: 20rpx;
 	margin-left: 50rpx;
 }
-.hot.data-v-a441ac5e {
+.hot.data-v-42642aa6 {
 	background-color: #e4e4e4;
 	width: 100%;
 }
-.hotitem.data-v-a441ac5e {
+.hotitem.data-v-42642aa6 {
 	margin-bottom: 20px;
 	background: white;
 	height: 27px;
@@ -231,11 +231,11 @@ image.data-v-a441ac5e {
 	font-weight: normal;
 	font-style: normal;
 }
-.arrow.data-v-a441ac5e {
+.arrow.data-v-42642aa6 {
 	width: 100rpx;
 	height: 60rpx;
 }
-.marginHelper.data-v-a441ac5e {
+.marginHelper.data-v-42642aa6 {
 	height: 15rpx;
 	margin-top: 15rpx;
 	width: 100%;

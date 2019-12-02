@@ -1038,3 +1038,17 @@ Vue.prototype.timeDeal = function(timediff) {
 	}
 	return timeSpanStr;
 }
+
+// 封装tabbar索引，避免重复书写
+Vue.mixin({
+  methods:{
+    setTabBarIndex(index){
+      if (typeof this.$mp.page.getTabBar === 'function' &&
+        this.$mp.page.getTabBar()) {
+        this.$mp.page.getTabBar().setData({
+          selected:index
+        })
+      }
+    }
+  }
+})
