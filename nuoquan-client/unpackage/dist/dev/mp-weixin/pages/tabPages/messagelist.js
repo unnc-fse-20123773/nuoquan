@@ -362,8 +362,10 @@ var socketOpen = false;var _default =
       this.chat.readUserChatSnapShot(myId, friendId);
       // this.chat.saveUserChatSnapshot(e.myId, e.friendId, e.msg, this.chat.READ);
 
+      var encodeData = encodeURIComponent(JSON.stringify(friendInfo)); // 对数据字符串化并转码，防止特殊字符影响传参
+      // console.log(decodeURIComponent(encodeData));
       uni.navigateTo({
-        url: '../chatpage/chatpage?friendInfo=' + JSON.stringify(friendInfo) });
+        url: "../chatpage/chatpage?friendInfo=" + encodeData });
 
     },
 
