@@ -61,10 +61,6 @@
       }
     ]
   },
-  "permission": {
-    "scope.userLocation": {
-      "desc": ""
-    }
-  },
+  "permission": {},
   "usingComponents": {}
 }

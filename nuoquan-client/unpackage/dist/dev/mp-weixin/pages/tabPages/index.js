@@ -737,10 +737,10 @@ var _default =
         } });
 
     },
-    jumpToDetail: function jumpToDetail() {
-      var navData = JSON.stringify(this.thisArticle); // 这里转换成 字符串
+    goToDetail: function goToDetail() {
+      var encodeData = encodeURIComponent(JSON.stringify(this.thisArticle)); // 对数据字符串化并转码，防止特殊字符影响传参
       uni.navigateTo({
-        url: '/pages/detail/detail?data=' + navData });
+        url: '/pages/detail/detail?data=' + encodeData });
 
     },
     goToPersonPublic: function goToPersonPublic(userId) {
