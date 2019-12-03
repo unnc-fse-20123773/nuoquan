@@ -322,8 +322,9 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     goToCommentDetail: function goToCommentDetail(mainComment) {
+      var encodeData = encodeURIComponent(JSON.stringify(mainComment)); // 对数据字符串化并转码，防止特殊字符影响传参
       uni.navigateTo({
-        url: '/pages/comment-detail/comment-detail?data=' + JSON.stringify(mainComment) });
+        url: '/pages/comment-detail/comment-detail?data=' + encodeData });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
