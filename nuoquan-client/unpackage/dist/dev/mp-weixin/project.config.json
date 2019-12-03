@@ -33,7 +33,7 @@
           "name": "index",
           "query": "",
           "id": 0,
-          "pathName": "pages/index/index"
+          "pathName": "pages/tabPages/index"
         },
         {
           "name": "signin",
@@ -63,13 +63,13 @@
           "name": "messagelist",
           "query": "",
           "id": 5,
-          "pathName": "pages/messagelist/messagelist"
+          "pathName": "pages/tabPages/messagelist"
         },
         {
           "name": "profile",
           "query": "",
           "id": 6,
-          "pathName": "pages/profile/profile"
+          "pathName": "pages/tabPages/profile"
         },
         {
           "name": "personpublic",
