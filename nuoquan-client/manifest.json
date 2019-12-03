@@ -94,6 +94,10 @@
             "es6" : false
         },
         "usingComponents" : true,
-        "permission" : {}
+        "permission" : {
+            "scope.userLocation" : {
+                "desc" : ""
+            }
+        }
     }
 }
