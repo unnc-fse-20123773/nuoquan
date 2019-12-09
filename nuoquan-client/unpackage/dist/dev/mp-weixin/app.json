@@ -25,8 +25,7 @@
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "Nottinghome",
     "navigationBarBackgroundColor": "#fdd041",
-    "backgroundColor": "#F8F8F8",
-    "navigationStyle": "custom"
+    "backgroundColor": "#F8F8F8"
   },
   "tabBar": {
     "custom": true,
@@ -61,6 +60,10 @@
       }
     ]
   },
-  "permission": {},
+  "permission": {
+    "scope.userLocation": {
+      "desc": ""
+    }
+  },
   "usingComponents": {}
 }

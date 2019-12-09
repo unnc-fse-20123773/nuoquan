@@ -92,10 +92,9 @@
 			});
 			var userInfo = this.getGlobalUserInfo()
 			this.userInfo = userInfo;
-			
 			// 接收传过来的主角评论ID
-			this.mainComment = JSON.parse(options.data);
-			// console.log(this.mainComment);
+			this.mainComment = JSON.parse(decodeURIComponent(options.data));
+			console.log(this.mainComment);
 			// 获取次评论
 			this.getSubComments(1);
 		},

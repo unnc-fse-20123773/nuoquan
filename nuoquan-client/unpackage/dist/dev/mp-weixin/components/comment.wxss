@@ -114,7 +114,7 @@
 }
 .icom.data-v-51ea2b8e {
 		position: absolute;
-		right: 74rpx;
+		left: 60%;
 		font-size: 13px;
 		z-index: 10;
 }
@@ -131,6 +131,7 @@
 		line-height: 30px;
 }
 .reCommentsArea.data-v-51ea2b8e {
+		margin-top: 5px;
 		background: #EEEEEE;
 		width: 500rpx;
 		padding: 14px 25rpx 11px;
