@@ -2529,12 +2529,32 @@ uni$1;exports.default = _default;
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 10:
 /*!********************************************************************!*\
   !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
   \********************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
+=======
+/***/ 119:
+/*!***********************************************************************************!*\
+  !*** F:/codingWorkspace/nuoquan/nuoquan-client/pages/black-index/black-index.css ***!
+  \***********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ 128:
+/*!****************************************************************!*\
+  !*** F:/codingWorkspace/nuoquan/nuoquan-client/common/util.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+>>>>>>> guetta-new
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
@@ -10862,12 +10882,16 @@ createPage(_personpublic.default);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+<<<<<<< HEAD
 /* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
 var _search = _interopRequireDefault(__webpack_require__(/*! ./pages/search/search.vue */ 88));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_search.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
+=======
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/tabPages/index": {}, "pages/tabPages/votePage": {}, "pages/tabPages/messagelist": {}, "pages/tabPages/profile": {}, "pages/detail/detail": {}, "pages/submit/submit": {}, "pages/chatpage/chatpage": {}, "pages/followlist/followlist": {}, "pages/personpublic/personpublic": {}, "pages/search/search": {}, "pages/black-index/black-index": {}, "pages/signin/signin": {}, "components/articlebrief": {}, "pages/wechatLogin/wechatLogin": {}, "pages/cmt-likedetail/cmt-likedetail": {}, "pages/comment-detail/comment-detail": {}, "pages/userDeal/userDeal": {}, "pages/myPublish/myPublish": {}, "pages/about/about": {} }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "Nottinghome", "navigationBarBackgroundColor": "#fdd041", "backgroundColor": "#F8F8F8", "navigationStyle": "custom" } };exports.default = _default;
+>>>>>>> guetta-new
 
 /***/ }),
 

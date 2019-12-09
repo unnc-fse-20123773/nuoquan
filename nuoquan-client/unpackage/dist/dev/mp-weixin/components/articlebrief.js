@@ -1,9 +1,33 @@
 (global["webpackJsonp"] = global["webpackJsonp"] || []).push([["components/articlebrief"],{
 
+<<<<<<< HEAD
 /***/ 22:
 /*!***********************************************************************************************!*\
   !*** C:/Users/WalkingDemon/Desktop/Git NQ/nuoquan/nuoquan-client/components/articlebrief.vue ***!
   \***********************************************************************************************/
+=======
+/***/ 131:
+/*!**********************************************************************************************!*\
+  !*** F:/codingWorkspace/nuoquan/nuoquan-client/main.js?{"page":"components%2Farticlebrief"} ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);__webpack_require__(/*! @dcloudio/uni-stat */ 5);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _articlebrief = _interopRequireDefault(__webpack_require__(/*! ./components/articlebrief.vue */ 26));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_articlebrief.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
+
+/***/ }),
+
+/***/ 26:
+/*!*****************************************************************************!*\
+  !*** F:/codingWorkspace/nuoquan/nuoquan-client/components/articlebrief.vue ***!
+  \*****************************************************************************/
+>>>>>>> guetta-new
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -406,5 +430,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ })
 
+<<<<<<< HEAD
 },[[113,"common/runtime","common/vendor"]]]);
+=======
+},[[131,"common/runtime","common/vendor"]]]);
+>>>>>>> guetta-new
 //# sourceMappingURL=../../.sourcemap/mp-weixin/components/articlebrief.js.map

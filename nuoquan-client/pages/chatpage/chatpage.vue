@@ -84,7 +84,8 @@ export default {
 	onLoad(opt) {
 		page = 1; //初始化page,
 		// 获取界面传参
-		this.friendInfo = JSON.parse(opt.friendInfo);
+		console.log(opt.friendInfo)
+		this.friendInfo = JSON.parse(decodeURIComponent(opt.friendInfo)); //解码
 
 		uni.setNavigationBarTitle({
 			title: this.friendInfo.nickname
