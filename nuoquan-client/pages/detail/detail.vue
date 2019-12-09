@@ -1,37 +1,50 @@
 <template>
 	<view class="detail-page">
-	
-<!-- 第一个大块二，文章本体 -->
- <detail_1_article class="article-area" :articleCard='articleCard'  @controlInputSignal="controlInput" :userInfo="userInfo" @swLikeArticleSignal="changeLikeStatus" @backToLastPage="backToLastPage()"></detail_1_article>
- 
-<view style="border-bottom: 4px solid #ECECEC;height:0;width:750upx;font-size: 0;position: relative;left: -16px;"  @controlInputSignal="controlInput">这是分割线</view>
- <!--第一个大块二，评论区域-->
- 
-<detail_2_comments class="comment-area" :commentList='commentList'   @controlInputSignal="controlInput"  :userInfo="userInfo"></detail_2_comments>
- 
- 
- 
- <!--触底提示和功能  start-->
- <view class="comment-bottom">
- 	<view class="comment-bottom-notice">划到底部啦</view>
- 	<view class="comment-bottom-buttons">
- 		<image class="back" @tap="backToLastPage" src="../../static/icon/arrow-left-fcc041.png" mode="aspectFit"></image>
- 		<image class="to-top" @tap="scrollToTop" src="../../static/icon/arrow-left-fcc041.png" ></image>
- 		<view class="active-input-button" @click="controlInput(1)">发表评论</view>
- 	</view>
- </view>
-  <!--触底提示和功能  END-->
- 
+
+		<!-- 第一个大块二，文章本体 -->
+		<detail_1_article class="article-area" :articleCard='articleCard' @controlInputSignal="controlInput" :userInfo="userInfo"
+		 @swLikeArticleSignal="changeLikeStatus" @backToLastPage="backToLastPage()"></detail_1_article>
+
+		<view style="border-bottom: 4px solid #ECECEC;height:0;width:750upx;font-size: 0;position: relative;left: -16px;"
+		 @controlInputSignal="controlInput">这是分割线</view>
+		<!--第一个大块二，评论区域-->
+
+		<detail_2_comments class="comment-area" :commentList='commentList' @controlInputSignal="controlInput" :userInfo="userInfo"></detail_2_comments>
 
 
-			<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)">
-				<view class="commentPart" @click.stop="" :style="{bottom: textAreaAdjust }">
-					<view class="emoji"></view>
-					<view class="submit" @click="saveComment()">发表</view>
-					<textarea class="commentSth" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
+
+		<!--触底提示和功能  start-->
+		<view class="comment-bottom">
+			<view class="comment-bottom-notice">划到底部啦</view>
+			<view class="comment-bottom-buttons">
+				<image class="back" @tap="backToLastPage" src="../../static/icon/arrow-left-fcc041.png" mode="aspectFit"></image>
+				<image class="to-top" @tap="scrollToTop" src="../../static/icon/arrow-left-fcc041.png"></image>
+				<view class="active-input-button" @click="controlInput(1)">发表评论</view>
+			</view>
+		</view>
+		<!--触底提示和功能  END-->
+
+
+
+		<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)">
+			<view class="commentPart" @click.stop="" :style="{bottom: textAreaAdjust }">
+				<!-- 					<view class="emoji"></view>
+ -->
+				<view class="add-pic"></view>
+
+				<view class="submit" @click="saveComment()">发送</view>
+				<view class="commentSth">
+					<textarea class="comment-text" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
 					 adjust-position="false" v-model="commentContent" @click.stop="" :show-confirm-bar="false" @focus="popTextArea"
 					 @blur="unpopTextArea" cursor-spacing='20' />
+					<view class="comment-pic-area">
+						<image src="../../static/BG/indexBG.png"></image>
+						<image src="../../static/icon/about.png"></image>
+						<image src="../../static/icon/1575235531(1).png"></image>
 					</view>
+					 <view class="word-count-left">{{wordNotice}}</view>
+				
+				</view>
             </view>
 		</view> 
  </view>
@@ -53,6 +66,7 @@ import detail_2_comments from "./detail_2_comments.vue"
 				showInput:false,  //控制输入框，true时显示输入框
 				writingComment:false,  //控制输入框，true时自动获取焦点，拉起输入法
 				placeholderText: "评论点什么吧......",
+				wordNotice:"48",
 				inputData:{},  //localData,用于拼接不同情况下的savecomment请求的数据
 				
 				submitData:{
@@ -453,12 +467,12 @@ border-radius: 2px;
 		z-index: 999;
 		left: 0;
 		width: 670upx;
-		padding:11px 40upx;
+		padding:10px 24upx 4px;
 		min-height: 50px;
 		background: white;
 	}
 
-	.emoji {
+	.emoji{
 		background-repeat: no-repeat;
 		background-position: center;
 		border: none;
@@ -466,6 +480,18 @@ border-radius: 2px;
 		height: 21px;
 		background-size: 21px 21px;
 		margin-bottom: 7px;
+		display: inline-block;
+	}
+	.add-pic{
+		background: url(../../static/icon/image-888888.png);
+		background-repeat: no-repeat;
+		background-position: center;
+		border: none;
+		width: 21px;
+		height: 21px;
+		background-size: 20px 16px;
+		margin-bottom: 7px;
+		margin-left: 11px;
 		display: inline-block;
 	}
 .submit{
@@ -483,12 +509,45 @@ border-radius: 2px;
 	color: #FCC041;
 }
 	.commentSth {
-		width: calc(670upx - 20px);
-		border: solid 1px #FCC041;
-		border-radius: 10px;
+		
+		border: solid 2px #FCC041;
+		border-radius: 8px;
 		line-height: 20px;
+		padding:12px 12px 0px;
+		position: relative;
+
+	}
+	.comment-text{
+		width: calc(670upx - 20px);	
 		font-size: 14px;
-		padding:8px 10px;
 		max-height: 95px;
+		line-height: 20px;
+		max-height: 100px;
+		padding-bottom: 14px;
+		
+	}
+	.comment-pic-area{
+		position: relative;
+		height:45px;
+	}
+	.comment-pic-area image{
+		width:35px;
+		height:35px;
+		margin-right: 18px;
+
+	}
+
+	.word-count-left{
+	position: absolute;
+		width:15px;
+		height:11px;
+		font-size: 11px;
+		font-weight: 400;
+		color:#9B9B9B;
+		right:11px;
+		bottom:8px;
+		line-height: 11px;
+		
+		
 	}
 </style>

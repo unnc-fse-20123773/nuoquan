@@ -1,1 +1,0 @@
-<view class="page-view"><block wx:for="{{articleList}}" wx:for-item="i" wx:for-index="__i0__" wx:key="id"><articlebrief vue-id="{{'1-'+__i0__}}" articleCard="{{i}}" bind:__l="__l"></articlebrief></block></view>

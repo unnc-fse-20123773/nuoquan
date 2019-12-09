@@ -76,10 +76,6 @@
 			"style": {}
 		}
 
-        ,{
-            "path" : "pages/manager_tool/manager_tool",
-            "style" : {}
-        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -160,11 +156,6 @@
 			{
 				"name":"关于",
 				"path" : "pages/about/about",
-				"query": "" //启动参数，在页面的onLoad函数里面得到
-			},
-			{
-				"name":"人工审核",
-				"path" : "pages/manager_tool/manager_tool",
 				"query": "" //启动参数，在页面的onLoad函数里面得到
 			}
 		]

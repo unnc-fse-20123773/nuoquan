@@ -4,7 +4,15 @@
 		<!--评论数，排序方式-->
 		<view class="comments-menu">
 			<view class="comments-num">{{mainCommentList.length}}条评论</view>
-			<view class="comments-order"></view>
+			<view class="comments-order">
+                   <view class="order-in-time" :class="{ chosen : order == 'time'}" @tap="change_comment_order('time')">
+					   时间
+				   </view>
+				   <view class="order-in-hot" :class="{ chosen : order != 'time'}" @tap="change_comment_order('hot')">
+				   	   热度
+				   </view>
+				   <view class="bg-of-order" :style="{'left':order == 'time' ? '-20px;' :'14px' ,}"></view>
+			</view>
 		</view>
 
 
@@ -42,6 +50,7 @@
 		data() {
 			return {
 				mainCommentList: this.commentList,
+				order:"time",//评论排序方式
 			}
 		},
 		watch: {
@@ -108,6 +117,11 @@
 				uni.navigateTo({
 					url: '/pages/comment-detail/comment-detail?data=' + JSON.stringify(mainComment),
 				})
+			},
+			change_comment_order(new_order){
+				this.order = new_order ;
+				console.log(new_order);
+				console.log(this.order);
 			}
 		}, //method
 
@@ -136,5 +150,44 @@
 		color: rgba(155, 155, 155, 1);
 		padding-left: 4px;
 		display: inline-block;
+	}
+
+	.comments-order {
+		margin-top:3px;
+		height: 22px;
+		background: #ECECEC;
+		border-radius: 75px;
+		width: 86px;
+		float: right;
+		line-height: 28px;
+		display: flex;
+		position: relative;
+		justify-content: space-between;
+		
+	}
+	.order-in-hot ,.order-in-time{
+		color:#9B9B9B;
+		font-size: 10px;
+		line-height: 22px;
+		display: inline-block;
+		align-items: center;
+		
+		z-index: 30;
+	}
+	.bg-of-order{
+		height:28px;
+		width:54px;
+		background: #FFFFFF;
+		border-radius: 75px;
+		box-shadow: 0px 0px 10px rgba(0,0,0,0.16);
+		z-index: 20;
+		position: absolute;
+		left:-20px;
+		top:-3px;
+		transition: left 1000ms;
+	}
+	.chosen{
+		font-size: 14px;
+		color:#353535;
 	}
 </style>

@@ -134,4 +134,53 @@
 	padding-left: 4px;
 	display: inline-block;
 }
+.comments-order {
+	margin-top:3px;
+	height: 22px;
+	background: #ECECEC;
+	border-radius: 75px;
+	width: 86px;
+	float: right;
+	line-height: 28px;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	position: relative;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	    -ms-flex-pack: justify;
+	        justify-content: space-between;
+}
+.order-in-hot,.order-in-time{
+	color:#9B9B9B;
+	font-size: 10px;
+	line-height: 22px;
+	display: inline-block;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	    -ms-flex-align: center;
+	        align-items: center;
+	
+	z-index: 30;
+}
+.bg-of-order{
+	height:28px;
+	width:54px;
+	background: #FFFFFF;
+	border-radius: 75px;
+	-webkit-box-shadow: 0px 0px 10px rgba(0,0,0,0.16);
+	        box-shadow: 0px 0px 10px rgba(0,0,0,0.16);
+	z-index: 20;
+	position: absolute;
+	left:-20px;
+	top:-3px;
+	-webkit-transition: left 1000ms;
+	-o-transition: left 1000ms;
+	transition: left 1000ms;
+}
+.chosen{
+	font-size: 14px;
+	color:#353535;
+}
 

@@ -10,21 +10,13 @@ image {
 } */
 
 
-<<<<<<< HEAD
 .articlecard.data-v-0734f7a0 {
-=======
-.articlecard.data-v-67451924 {
->>>>>>> guetta-new
 		width: 650rpx;
 		border-radius: 8px;
 		margin: 11px auto 0;
 		background-color: #ffffff;
 }
-<<<<<<< HEAD
 .title.data-v-0734f7a0 {
-=======
-.title.data-v-67451924 {
->>>>>>> guetta-new
 		margin: 16px 25px 0 25px;
 		font-size: 15px;
 		font: MicrosoftYaHei;
@@ -36,11 +28,7 @@ image {
 		word-break: break-all;
 		white-space: normal;
 }
-<<<<<<< HEAD
 .briefarticleCard.data-v-0734f7a0 {
-=======
-.briefarticleCard.data-v-67451924 {
->>>>>>> guetta-new
 		max-height: 500rpx;
 		margin: 10px 13px 0 15px;
 		font-size: 13px;
@@ -57,11 +45,7 @@ image {
 		-webkit-line-clamp: 15;
 		overflow: hidden;
 }
-<<<<<<< HEAD
 .briefarticleCard-text.data-v-0734f7a0{
-=======
-.briefarticleCard-text.data-v-67451924{
->>>>>>> guetta-new
 		font-size: 13px;
 		color: #3D3D3D;
 		white-space: pre-line;
@@ -70,19 +54,11 @@ image {
 		   text-overflow: ellipsis;
 		/**文字隐藏后添加省略号*/
 }
-<<<<<<< HEAD
 .tags.data-v-0734f7a0 {
 		margin-left: 10px;
 		min-height: 10px;
 }
 .tag.data-v-0734f7a0 {
-=======
-.tags.data-v-67451924 {
-		margin-left: 10px;
-		min-height: 10px;
-}
-.tag.data-v-67451924 {
->>>>>>> guetta-new
 		display: inline-block;
 		border-radius: 4px;
 		padding-left: 5px;
@@ -93,43 +69,27 @@ image {
 		font-size: 10px;
 		background: #621E81;
 }
-<<<<<<< HEAD
 .tag-empty.data-v-0734f7a0 {
-=======
-.tag-empty.data-v-67451924 {
->>>>>>> guetta-new
 		margin-left: 10px;
 		height: 15px;
 		width: auto;
 		background-color: white;
 }
-<<<<<<< HEAD
 .menubar.data-v-0734f7a0 {
-=======
-.menubar.data-v-67451924 {
->>>>>>> guetta-new
 		position: relative;
 		vertical-align: middle;
 		margin-left: 15px;
 		border-radius: 8px;
 		height: 25px;
 }
-<<<<<<< HEAD
 .touxiang.data-v-0734f7a0 {
-=======
-.touxiang.data-v-67451924 {
->>>>>>> guetta-new
 		border-radius: 30px;
 		width: 20px;
 		height: 20px;
 		margin-right: 10px;
 		vertical-align: middle;
 }
-<<<<<<< HEAD
 .touxiang.data-v-0734f7a0::after{
-=======
-.touxiang.data-v-67451924::after{
->>>>>>> guetta-new
 		content: "";
 		position: absolute;
 		height:30px;
@@ -137,11 +97,7 @@ image {
 		left:-5px;
 		top:0;
 }
-<<<<<<< HEAD
 .name.data-v-0734f7a0 {
-=======
-.name.data-v-67451924 {
->>>>>>> guetta-new
 		display: inline-block;
 		font-size: 13px;
 		color: #888888;
@@ -155,11 +111,7 @@ image {
 		-o-text-overflow: ellipsis;
 		   text-overflow: ellipsis;
 }
-<<<<<<< HEAD
 .time.data-v-0734f7a0 {
-=======
-.time.data-v-67451924 {
->>>>>>> guetta-new
 		display: inline-block;
 		font-size: 12px;
 		color: #888888;
@@ -170,11 +122,7 @@ image {
 		height:17.5px;
 		text-align: center;
 }
-<<<<<<< HEAD
 .icons.data-v-0734f7a0 {
-=======
-.icons.data-v-67451924 {
->>>>>>> guetta-new
 		position: absolute;
 		right: 0;
 		bottom: 0;
@@ -190,11 +138,7 @@ image {
 		overflow: hidden;
 		border-bottom-right-radius: 8px;
 }
-<<<<<<< HEAD
 .icons image.data-v-0734f7a0 {
-=======
-.icons image.data-v-67451924 {
->>>>>>> guetta-new
 		position: absolute;
 		/* G添加相对位置 */
 		width: 16px;
@@ -202,11 +146,7 @@ image {
 		vertical-align: bottom;
 		bottom:2px;
 }
-<<<<<<< HEAD
 .icon.data-v-0734f7a0 {
-=======
-.icon.data-v-67451924 {
->>>>>>> guetta-new
 		position: absolute;
 		bottom:2.75px;
 		display: inline-block;
@@ -218,11 +158,7 @@ image {
 		text-align: center;
 		vertical-align: bottom;
 }
-<<<<<<< HEAD
 .picturearea-one.data-v-0734f7a0 {
-=======
-.picturearea-one.data-v-67451924 {
->>>>>>> guetta-new
 		/* margin: auto; */
 		display: -webkit-box;
 		display: -webkit-flex;
@@ -231,11 +167,7 @@ image {
 		width: 94%;
 		margin-left: 3%;
 }
-<<<<<<< HEAD
 .picturearea-mul.data-v-0734f7a0 {
-=======
-.picturearea-mul.data-v-67451924 {
->>>>>>> guetta-new
 		position: relative;
 		margin: auto;
 		display: -webkit-box;
