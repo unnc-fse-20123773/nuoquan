@@ -139,13 +139,14 @@
 	height: 22px;
 	background: #ECECEC;
 	border-radius: 75px;
-	width: 86px;
+	width: 82px;
 	float: right;
 	line-height: 28px;
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -ms-flexbox;
 	display: flex;
+	vertical-align: middle;
 	position: relative;
 	-webkit-box-pack: justify;
 	-webkit-justify-content: space-between;
@@ -161,8 +162,26 @@
 	-webkit-align-items: center;
 	    -ms-flex-align: center;
 	        align-items: center;
-	
+	padding-right:10.5px;
+	padding-left: 10.5px;
 	z-index: 30;
+	width:28px;
+	text-align: center;
+	-webkit-transition: padding-left 200ms,
+	padding-right 200ms,
+	font-size  200ms,
+	color 200ms;
+	-o-transition: padding-left 200ms,
+	padding-right 200ms,
+	font-size  200ms,
+	color 200ms;
+	transition: padding-left 200ms,
+	padding-right 200ms,
+	font-size  200ms,
+	color 200ms;
+	 -webkit-transition-delay: 0ms;
+	      -o-transition-delay: 0ms;
+	         transition-delay: 0ms;
 }
 .bg-of-order{
 	height:28px;
@@ -173,14 +192,32 @@
 	        box-shadow: 0px 0px 10px rgba(0,0,0,0.16);
 	z-index: 20;
 	position: absolute;
-	left:-20px;
+	left:-13px;
 	top:-3px;
-	-webkit-transition: left 1000ms;
-	-o-transition: left 1000ms;
-	transition: left 1000ms;
+	-webkit-transition: left 500ms ease;
+	-o-transition: left 500ms ease;
+	transition: left 500ms ease;
 }
 .chosen{
 	font-size: 14px;
 	color:#353535;
+	width:28px;
+	padding-left: 0;
+	padding-right: 0;
+	-webkit-transition: padding-left 300ms,
+	padding-right 300ms,
+	font-size  300ms,
+	color 300ms;
+	-o-transition: padding-left 300ms,
+	padding-right 300ms,
+	font-size  300ms,
+	color 300ms;
+	transition: padding-left 300ms,
+	padding-right 300ms,
+	font-size  300ms,
+	color 300ms;
+	 -webkit-transition-delay: 100ms;
+	      -o-transition-delay: 100ms;
+	         transition-delay: 100ms;
 }
 

@@ -11,7 +11,7 @@
 				   <view class="order-in-hot" :class="{ chosen : order != 'time'}" @tap="change_comment_order('hot')">
 				   	   热度
 				   </view>
-				   <view class="bg-of-order" :style="{'left':order == 'time' ? '-20px;' :'14px' ,}"></view>
+				   <view class="bg-of-order" :style="{'left':order == 'time' ? '-13px;' :'41px' ,}"></view>
 			</view>
 		</view>
 
@@ -157,10 +157,11 @@
 		height: 22px;
 		background: #ECECEC;
 		border-radius: 75px;
-		width: 86px;
+		width: 82px;
 		float: right;
 		line-height: 28px;
 		display: flex;
+		vertical-align: middle;
 		position: relative;
 		justify-content: space-between;
 		
@@ -171,8 +172,16 @@
 		line-height: 22px;
 		display: inline-block;
 		align-items: center;
-		
+		padding-right:10.5px;
+		padding-left: 10.5px;
 		z-index: 30;
+		width:28px;
+		text-align: center;
+		transition: padding-left 200ms,
+		padding-right 200ms,
+		font-size  200ms,
+		color 200ms;
+		 transition-delay: 0ms;
 	}
 	.bg-of-order{
 		height:28px;
@@ -182,12 +191,20 @@
 		box-shadow: 0px 0px 10px rgba(0,0,0,0.16);
 		z-index: 20;
 		position: absolute;
-		left:-20px;
+		left:-13px;
 		top:-3px;
-		transition: left 1000ms;
+		transition: left 500ms ease;
 	}
 	.chosen{
 		font-size: 14px;
 		color:#353535;
+		width:28px;
+		padding-left: 0;
+		padding-right: 0;
+		transition: padding-left 300ms,
+		padding-right 300ms,
+		font-size  300ms,
+		color 300ms;
+		 transition-delay: 100ms;
 	}
 </style>

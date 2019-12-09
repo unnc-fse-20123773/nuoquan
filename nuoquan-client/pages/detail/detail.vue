@@ -14,12 +14,12 @@
 
 
 		<!--触底提示和功能  start-->
-		<view class="comment-bottom">
+		<view class="comment-bottom" v-if="control_scroll_button_flag">
 			<view class="comment-bottom-notice">划到底部啦</view>
 			<view class="comment-bottom-buttons">
 				<image class="back" @tap="backToLastPage" src="../../static/icon/arrow-left-fcc041.png" mode="aspectFit"></image>
 				<image class="to-top" @tap="scrollToTop" src="../../static/icon/arrow-left-fcc041.png"></image>
-				<view class="active-input-button" @click="controlInput(1)">发表评论</view>
+				<!-- <view class="active-input-button" @click="controlInput(1)">发表评论</view> -->
 			</view>
 		</view>
 		<!--触底提示和功能  END-->
@@ -47,6 +47,20 @@
 				</view>
             </view>
 		</view> 
+<!-- 		常驻input
+ --> 
+ <view class="permanent_input_BG" v-if="!showInput" @click="controlInput(1)">
+        <input class="permanent_input" :placeholder="placeholderText" v-model="commentContent" disabled="true" min-height="10px" />
+ </view>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  </view>
 </template>
 
@@ -79,6 +93,7 @@ import detail_2_comments from "./detail_2_comments.vue"
 				
 				totalPage: 1,
 				currentPage: 1,
+				control_scroll_button_flag:0,
 			};
 		},
 		components: {
@@ -111,7 +126,7 @@ import detail_2_comments from "./detail_2_comments.vue"
 			
 			this.addViewCount();
 		},
-		
+
 		onShareAppMessage(res) {
 			if (res.from === 'menu') {// 来自右上角菜单的分享
 				var navData = JSON.stringify(this.articleCard);
@@ -269,6 +284,7 @@ import detail_2_comments from "./detail_2_comments.vue"
 							console.log(res);
 						}
 						uni.hideLoading();
+						this.control_scroll_butoon();//获取评论数据后，生成卡片后，判断总页面高度，控制是否显示回到顶部按钮
 					}
 				});
 			},
@@ -310,7 +326,7 @@ import detail_2_comments from "./detail_2_comments.vue"
 				}else{ //a==0, 关闭输入框，一切恢复默认状态
 				    console.log('this is control input in detail. a ==0, EXIT');
 					this.submitData = {};
-					this.placeholderText="评论";
+					this.placeholderText="评论点什么吧......";
 					this.showInput = false;
 					this.writingComment =false;
 				}
@@ -333,6 +349,32 @@ import detail_2_comments from "./detail_2_comments.vue"
 				    duration: 300
 				});
        		},
+			control_scroll_butoon(){
+				var content_height;
+				var page_height;
+				let info1 = uni.createSelectorQuery().select(".article-area");
+				info1.boundingClientRect(function(data) { //data - 各种参数
+                    content_height = data.height;
+					// console.log(content_height);
+				  　}).exec();
+				let info2 = uni.createSelectorQuery().select(".comment-area");
+				info2.boundingClientRect(function(data) { //data - 各种参数
+				    if(data.height!=0){
+					    content_height = content_height + data.height;
+						// console.log(content_height);
+				     }            
+				}).exec();
+				uni.getSystemInfo({
+				    success: function (res) {
+				        page_height = res.screenHeight;
+				    }
+				    });
+				if(content_height > (page_height * 2)){
+					console.log(page_height);
+					console.log(content_height);
+					this.control_scroll_button_flag = 1 ;
+				}
+				},//获取评论数据后，生成卡片后，判断总页面高度，控制是否显示回到顶部按钮
 		},//method
 	};
 </script>
@@ -352,7 +394,7 @@ import detail_2_comments from "./detail_2_comments.vue"
 /* 滑到底了等提示
  */	.comment-bottom{
 		height:160px;
-		width:calc(202px + 80upx);
+		width:calc(88px + 40upx);
 		margin: auto;
 		}
 		
@@ -547,7 +589,30 @@ border-radius: 2px;
 		right:11px;
 		bottom:8px;
 		line-height: 11px;
-		
-		
 	}
+	.permanent_input_BG{
+		position: fixed;
+		bottom: 0px;
+		left: 0;
+		width: 100%;
+		height:58px;
+	    box-shadow:0px 0px 10px rgba(0,0,0,0.16);
+		background: #FFFFFF;
+line-height: 14px;
+	}
+	.permanent_input{
+	height:30px ;
+	display: flex;
+	vertical-align: top;
+	color:#888888;overflow: hidden;
+	text-overflow: ellipsis;
+	width:calc(100% - 48px);
+	
+	padding: 3px 12px 4px;
+	margin:12px auto 0;
+	border-radius:8px;
+	border:2px solid rgba(252,192,65,1);
+    font-size: 12px;
+	line-height: 30px;
+}
 </style>

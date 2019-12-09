@@ -1,18 +1,10 @@
 
-<<<<<<< HEAD
 .touxiang.data-v-16ee2e71 {
-=======
-.touxiang.data-v-d203d3ca {
->>>>>>> master
 	width: 60rpx;
 	height: 60rpx;
 	border-radius: 60rpx;
 }
-<<<<<<< HEAD
 .bottomBar.data-v-16ee2e71 {
-=======
-.bottomBar.data-v-d203d3ca {
->>>>>>> master
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -ms-flexbox;
