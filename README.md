@@ -3,31 +3,31 @@ README
 Current Verion: `v1.0.3`
 
 .
-├── README.md
-├── nuoquan-client
-│   ├── App.vue
-│   ├── common
-│   ├── components
-│   ├── custom-tab-bar
-│   ├── main.js
-│   ├── manifest.json
-│   ├── pages
-│   ├── pages.json
-│   ├── static
-│   ├── store
-│   └── uni.scss
-├── nuoquan-dev
-│   ├── nuoquan-dev-api
-│   ├── nuoquan-dev-common
-│   ├── nuoquan-dev-mapper
-│   ├── nuoquan-dev-pojo
-│   ├── nuoquan-dev-service
-│   ├── nuoquan-mybatisTool
-│   ├── pom.xml
-│   └── ssl_cert
-├── sqlRecord.sql
-├── testBugs
-└── updateLog.md
+├── README.md  
+├── nuoquan-client  
+│   ├── App.vue  
+│   ├── common  
+│   ├── components  
+│   ├── custom-tab-bar  
+│   ├── main.js  
+│   ├── manifest.json  
+│   ├── pages  
+│   ├── pages.json  
+│   ├── static  
+│   ├── store  
+│   └── uni.scss  
+├── nuoquan-dev  
+│   ├── nuoquan-dev-api  
+│   ├── nuoquan-dev-common  
+│   ├── nuoquan-dev-mapper  
+│   ├── nuoquan-dev-pojo  
+│   ├── nuoquan-dev-service  
+│   ├── nuoquan-mybatisTool  
+│   ├── pom.xml  
+│   └── ssl_cert  
+├── sqlRecord.sql  
+├── testBugs  
+└── updateLog.md  
 ******
 ## *TODO：* ##
 - 暂无
