@@ -158,13 +158,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -194,7 +187,9 @@ var uploadTasks = [];var _default =
       showInputTagArea: 0,
       showAddTagButton: 1,
       showTagArea: 0,
-      tagList: [],
+      tagList_1: ["标签实例", "标签1"],
+      tagList_2: ["标签。第二行", "哈哈哈", "上下左右"],
+
       finalTag: '',
       tagIndex: 0,
 
@@ -205,8 +200,7 @@ var uploadTasks = [];var _default =
       sizeType: ['压缩', '原图', '压缩或原图'],
       countIndex: 8,
       count: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-      windowHeight: 0,
-      submitMainHeight: '' };
+      windowHeight: 0 };
 
   },
   onUnload: function onUnload() {
@@ -226,13 +220,15 @@ var uploadTasks = [];var _default =
         that.windowHeight = res.windowHeight;
       } });
 
-    // 获取页面高度
-    that.submitMainHeight = that.windowHeight - 45 + 'px';
+
   },
   methods: {
     addTag: function addTag() {
       this.showInputTagArea = 1;
       this.showAddTagButton = 0;
+    },
+    manageTag: function manageTag() {
+
     },
     // 检查tagList的数量
     checkInput: function checkInput(res) {

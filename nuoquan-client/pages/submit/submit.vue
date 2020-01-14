@@ -1,52 +1,45 @@
 <!-- TODO: 取消添加图片, 标签输入不能含有特殊字符，颜色变化 -->
 <template>
-	<viwe>
-		<view style="height:45px;width:100%;background: url(../../static/BG/submitBG.png);background-repeat: no-repeat;background-position-y: -5px;background-size: 750upx 80px;">
-			<view class="submit" @click="upload">
-				发 表
+	<view class="submitMain">
+
+		<!-- 当失去焦点时，将输入内容存入articleTitle -->
+		<view style="position: relative;">
+			<input class="title" v-model="articleTitle" placeholder="标题" maxlength="20" placeholder-class="title-placeholder">
+			<view class="titleTextLeft">{{20 - articleTitle.length}}</view>
+		</view>
+
+		<view class="tagsArea">
+			<!-- 展示标签区域 -->
+			<view class="tag1_area" style="display: inline-block;">
+				<view class="tag" v-for="(item,index) in tagList_1" :key="index" @click="deleteTag(index)" style="box-shadow:0px 0px 6px rgba(167,75,220,0.43);;">{{item}}</view>
+			</view>
+			<view class="submit-button" @tap="upload()">完成</view>
+			<view class="tag2_area">
+				<view class="tag" v-for="(item,index) in tagList_2" :key="index" @click="deleteTag(index)">{{item}}</view>
 			</view>
 		</view>
-		<view class="submitMain" :style="{height: submitMainHeight}">
-			<!-- 当失去焦点时，将输入内容存入articleTitle -->
-			<input class="title" v-model="articleTitle" placeholder="标题" maxlength="20">
-			<view style="display: flex;justify-content: space-between;color: #353535;font-size: 13px;line-height: 28px;height: 24px;">
-				<view>还可以输入</view>
-				<view>{{20 - articleTitle.length}}字</view>
-			</view>
-			<view class="tagsArea">
-				<!-- 展示标签区域 -->
-				<view class="tag" v-if="showTagArea" v-for="(item,index) in tagList" :key="index" @click="deleteTag(index)">{{item}}</view>
-				<!-- 添加标签区域 -->
-				<view class="addTag">
-					<view v-if="showAddTagButton" @click="addTag">
-						+ 添加标签
-					</view>
-					<!-- TODO: 字数未区分中英文，下一个版本要加 -->
-					<input v-if="showInputTagArea" v-model="articleTag" focus="true" placeholder="请输入标签..." @blur="checkInput"
-					 maxlength="10" />
 
+
+		<textarea placeholder="内容" class="content" v-model="articleContent" maxlength="140" :show-confirm-bar="false"></textarea>
+		<view style="display: flex;justify-content: space-between;color: #353535;font-size: 13px;line-height: 28px;height: 24px;">
+			<view>还可以输入</view>
+			<view>{{140 - articleContent.length}}字</view>
+		</view>
+
+		<view class="picturearea">
+			<block v-for="(image,index) in imageList" :key="index">
+				<view style="position: relative;">
+					<!-- todo 预览图片缩放 -->
+					<image :src="image" :data-src="image" @tap="previewImage" mode="aspectFill"></image>
+					<view style="width:15px;height: 15px;font-size: 10px;line-height: 10px;border-bottom-left-radius: 3px;background: rgba(166, 169, 168,0.3);color:#FFFFFF;position: absolute;top:6px;right:0;text-align: center;"
+					 @click="deleteImg(index)">✕</view>
 				</view>
-			</view>
-			<textarea placeholder="内容" class="content" v-model="articleContent" maxlength="140" :show-confirm-bar="false"></textarea>
-			<view style="display: flex;justify-content: space-between;color: #353535;font-size: 13px;line-height: 28px;height: 24px;">
-				<view>还可以输入</view>
-				<view>{{140 - articleContent.length}}字</view>
-			</view>
-
-			<view class="picturearea">
-				<block v-for="(image,index) in imageList" :key="index">
-					<view style="position: relative;">
-						<!-- todo 预览图片缩放 -->
-						<image :src="image" :data-src="image" @tap="previewImage" mode="aspectFill"></image>
-						<view style="width:15px;height: 15px;font-size: 10px;line-height: 10px;border-bottom-left-radius: 3px;background: rgba(166, 169, 168,0.3);color:#FFFFFF;position: absolute;top:6px;right:0;text-align: center;"
-						 @click="deleteImg(index)">✕</view>
-					</view>
-				</block>
-				<view v-show="isAddImage(this.imageList.length)" id="clickToChooseImage" class="addPic" @click="chooseImg">+</view>
-				<view v-if="imageList.length==1||imageList.length==4||imageList.length==7" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
-			</view>
+			</block>
+			<view v-show="isAddImage(this.imageList.length)" id="clickToChooseImage" class="addPic" @click="chooseImg">+</view>
+			<view v-if="imageList.length==1||imageList.length==4||imageList.length==7" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
 		</view>
-	</viwe>
+
+	</view>
 </template>
 
 <script>
@@ -78,7 +71,9 @@
 				showInputTagArea: 0,
 				showAddTagButton: 1,
 				showTagArea: 0,
-				tagList: [],
+				tagList_1: ["标签实例", "标签1"],
+				tagList_2: ["标签。第二行", "哈哈哈", "上下左右"],
+
 				finalTag: '',
 				tagIndex: 0,
 
@@ -90,7 +85,6 @@
 				countIndex: 8,
 				count: [1, 2, 3, 4, 5, 6, 7, 8, 9],
 				windowHeight: 0,
-				submitMainHeight: '',
 			}
 		},
 		onUnload() {
@@ -106,17 +100,19 @@
 			// 获取屏幕高度
 			var that = this;
 			uni.getSystemInfo({
-			  success: function(res) {
-				that.windowHeight = res.windowHeight;
-			  }
+				success: function(res) {
+					that.windowHeight = res.windowHeight;
+				}
 			});
-			// 获取页面高度
-			that.submitMainHeight = that.windowHeight - 45 +'px';
+
 		},
 		methods: {
 			addTag: function() {
 				this.showInputTagArea = 1;
 				this.showAddTagButton = 0;
+			},
+			manageTag: function() {
+
 			},
 			// 检查tagList的数量
 			checkInput: function(res) {
@@ -185,7 +181,7 @@
 					return true;
 				}
 			},
-			
+
 			// TODO：图片上传需加上大小限制，后台限制10M
 			upload: function(e) {
 				var me = this;
@@ -197,7 +193,7 @@
 					});
 					return;
 				}
-				
+
 				if (this.isBlank(me.articleContent) || this.isNull(me.articleContent)) {
 					uni.showToast({
 						icon: 'none',
@@ -215,9 +211,9 @@
 				uni.showLoading({
 					title: "正在上传..."
 				})
-				
-				setTimeout(()=>{
-					if(uploadFlag){
+
+				setTimeout(() => {
+					if (uploadFlag) {
 						uploadFlag = false // 解锁
 						uni.hideLoading();
 						uni.showToast({
@@ -233,7 +229,7 @@
 						requestTask.abort();
 					}
 				}, 5000); // 延时5s timeout
-				
+
 				setTimeout(() => {
 					me.combineTagToString();
 
@@ -269,16 +265,16 @@
 											},
 											success: (uploadFileRes) => {
 												resCount++;
-												if(resCount == me.imageList.length){
+												if (resCount == me.imageList.length) {
 													me.uploadSuccess();
 												}
 											}
 										});
 									}
-								}else{
+								} else {
 									me.uploadSuccess();
 								}
-							} else if(res.data.status == 501){
+							} else if (res.data.status == 501) {
 								me.contentIllegal();
 							} else {
 								me.uploadFail();
@@ -290,8 +286,8 @@
 					})
 				}, 100) //延时执行等待上锁
 			},
-			
-			uploadSuccess(){
+
+			uploadSuccess() {
 				uploadFlag = false;
 				uni.hideLoading();
 				uni.$emit("flash"); // 给 index 发送刷新信号
@@ -304,8 +300,8 @@
 					icon: 'success',
 				})
 			},
-			
-			uploadFail(){
+
+			uploadFail() {
 				// 上传失败 用户提醒
 				uploadFlag = false;
 				uni.hideLoading();
@@ -315,8 +311,8 @@
 					icon: 'none',
 				})
 			},
-			
-			contentIllegal(){
+
+			contentIllegal() {
 				// 内容非法 用户提醒
 				uploadFlag = false;
 				uni.hideLoading();
@@ -326,7 +322,7 @@
 					icon: 'none',
 				})
 			},
-			
+
 			deleteTag: function(index) {
 				console.log(index);
 				var targetTag = this.tagList[index];
@@ -344,42 +340,40 @@
 </script>
 <style>
 	page {
-		background: #FDD047;
 		height: 100%;
 	}
 
-	.submit {
-		float: right;
-		margin-right: 80upx;
-		margin-top: 14px;
-		width: 55px;
-		height: 26px;
-		line-height: 26px;
-		border: solid 1px #FDD041;
-		border-radius: 5px;
-		font-weight: bold;
-		font-size: 15px;
-		color: #FDD041;
-		text-align: center;
-		background: #FFFFFF;
-	}
-
 	.submitMain {
-		width: 606upx;
-		padding: 38upx 72upx;
-		border-top-left-radius: 18px;
-		border-top-right-radius: 18px;
-		background: #FFFFFF;
-		box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.35);
-		overflow: scroll;
+		width: 698upx;
+		margin: auto;
 	}
 
 	.title {
-		height: 36px;
-		border-radius: 5px;
-		background: #F4F1E9;
-		margin-top: 19px;
-		padding: 0 4px;
+		width: 698upx;
+		height: 38px;
+		border: 2px solid rgba(238, 238, 238, 1);
+		border-radius: 8px;
+	}
+
+	.title-placeholder {
+		height: 14px;
+		font-size: 14px;
+		font-family: Source Han Sans CN;
+		font-weight: 400;
+		line-height: 16px;
+		color: rgba(199, 199, 199, 1);
+		letter-spacing: 17px;
+	}
+
+	.titleTextLeft {
+		position: absolute;
+		right: 8px;
+		top: 15px;
+		width: 12px;
+		height: 11px;
+		font-size: 11px;
+		font-weight: 400;
+		color: rgba(199, 199, 199, 1);
 	}
 
 	.tagsArea {
@@ -388,25 +382,27 @@
 		min-height: 42px;
 		max-height: 62px;
 		overflow: hidden;
+		position: relative;
 	}
 
 	.tag {
 		display: inline-block;
 		vertical-align: bottom;
 		color: #353535;
-		font-size: 13px;
-		line-height: 24px;
-		height: 24px;
+		font-size: 14px;
+		line-height: 26px;
+		height: 26px;
+
+		position: relative;
+		margin-left: 8px;
+		margin-top: 6px;
 		padding-right: 27px;
 		padding-left: 12px;
-		border: solid 2px #FE5F55;
-		border-radius: 14px;
-		position: relative;
-		margin-right: 12px;
-		margin-bottom: 6px;
 		pointer-events: none;
 		/* 用于解决空格换行问题 */
 		white-space: nowrap;
+
+		border-radius: 20px;
 	}
 
 	.tag::after {
@@ -414,48 +410,28 @@
 		content: "✕";
 		right: 10px;
 		margin-left: 4px;
-		color: #939393;
+		color: #000000;
 		font-size: 13px;
 		pointer-events: auto;
+		font-weight: 900;
 		/* 用于解决空格换行问题 */
 		white-space: nowrap;
 	}
 
-	.addTag {
-		height: 30px;
-		display: inline-block;
-		vertical-align: bottom;
-		margin-bottom: 6px;
+	.submit-button {
+		width: 68px;
+		height: 26px;
+		background: linear-gradient(318deg, rgba(251, 118, 118, 1) 0%, rgba(254, 192, 77, 1) 100%);
+		box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+		border-radius: 8px;
 
-	}
-
-	.addTag input {
-		display: inline-block;
-		color: #353535;
-		font-size: 13px;
-		line-height: 24px;
-		height: 24px;
-		padding-right: 12px;
-		padding-left: 12px;
-		border: solid 2px #FE5F55;
-		border-radius: 14px;
-		min-height: 24px;
-		vertical-align: bottom;
-		margin-top: 2px;
-
-	}
-
-	.addTag view {
-		display: inline-block;
-		color: #353535;
-		font-size: 13px;
-		line-height: 28px;
-		height: 28px;
-		padding-right: 12px;
-		padding-left: 12px;
-		border-radius: 14px;
-		background: #FDD041;
-		margin-right: 12px;
+		font-size: 14px;
+		line-height: 26px;
+		color: rgba(255, 255, 255, 1);
+		text-align: center;
+		position: absolute;
+		right: 0;
+		top: 0;
 	}
 
 	.content {
