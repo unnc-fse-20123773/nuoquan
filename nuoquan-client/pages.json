@@ -1,22 +1,31 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-		// {
-		//     "path" : "pages/search/search",
-		//     "style" : {}
-		// },
 		{
-
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "uni-app"
 			}
 		},
 		{
+			"path": "pages/search/search",
+			"style": {}
+		},
+		{
+			"path": "pages/personpublic/personpublic",
+			"style": {}
+		},
+		{
+			"path": "pages/fanslist/fanslist",
+			"style": {}
+		},
+		{
+			"path": "pages/profile/profile",
+			"style": {}
+		},
+		{
 			"path": "pages/black-index/black-index",
 			"style": {}
 		},
-
-
 		{
 			"path": "pages/detail/detail",
 			"style": {}
@@ -26,19 +35,20 @@
 			"path": "pages/signin/signin",
 			"style": {}
 		},
-
-
-
 		{
 			"path": "components/articlebrief",
 			"style": {}
-		}
-
-
-
-
-		, {
+		}, {
 			"path": "pages/submit/submit",
+			"style": {}
+		},  {
+			"path": "pages/followlist/followlist",
+			"style": {}
+		}, {
+			"path": "pages/messagelist/messagelist",
+			"style": {}
+		}, {
+			"path": "pages/chatpage/chatpage",
 			"style": {}
 		}
 	],

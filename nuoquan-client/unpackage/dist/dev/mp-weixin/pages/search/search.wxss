@@ -1,0 +1,56 @@
+
+.sousuokuang {
+	height: 50px;
+	width: 100%;
+}
+.result {
+	width: 100%;
+	border: 5px;
+	border-color: #b2b2b2;
+}
+.mainPageTop {
+	padding-top: 4px;
+	/* 	height: 168px;
+ */
+	width: 100%;
+	background: #fdd041;
+	box-shadow: 0 -2px 10px #000000;
+	border-bottom-right-radius: 25px;
+	border-bottom-left-radius: 25px;
+}
+.topBarTouxiang {
+	width: 30px;
+	height: 30px;
+	border-radius: 30px;
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 12px;
+}
+.topBarSearch {
+	font-size: 15px;
+	display: inline-block;
+	width: 190px;
+	height: 28px;
+	vertical-align: middle;
+	border-radius: 8px;
+	margin-left: 13px;
+	background: white;
+	letter-spacing: 1px;
+	color: #b2b2b2;
+	font-family: MicrosoftYaHei;
+	line-height: 10px;
+	min-height: 28px;
+}
+.topBarPlus {
+	font-size: 25px;
+	background: #ffffff;
+	display: inline-block;
+	height: 25px;
+	width: 25px;
+	vertical-align: middle;
+	text-align: center;
+	margin-left: 10px;
+	border-radius: 3px;
+	line-height: 23px;
+}
+

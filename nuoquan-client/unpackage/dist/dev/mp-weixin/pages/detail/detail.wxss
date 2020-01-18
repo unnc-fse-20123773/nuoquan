@@ -90,11 +90,9 @@ image{
 	margin: auto;
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-box-pack: center;
 	-webkit-justify-content: center;
-	    -ms-flex-pack: center;
 	        justify-content: center;
 }
 image {
@@ -123,8 +121,7 @@ image {
 	border-radius: 20px;
 	margin-top: -20px;
 	background: white;
-	-webkit-box-shadow: 0 -1px 8px grey;
-	        box-shadow: 0 -1px 8px grey;
+	box-shadow: 0 -1px 8px grey;
 }
 .detailcontent {
 	font-size: 13px;
@@ -135,18 +132,14 @@ image {
 .detailpics {
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-box-pack: center;
 	-webkit-justify-content: center;
-	    -ms-flex-pack: center;
 	        justify-content: center;
 	-webkit-box-align: center;
 	-webkit-align-items: center;
-	    -ms-flex-align: center;
 	        align-items: center;
 	-webkit-flex-wrap: wrap;
-	    -ms-flex-wrap: wrap;
 	        flex-wrap: wrap;
 	margin-bottom: 30px;
 }
@@ -155,8 +148,7 @@ image {
 	height: 180rpx;
 	margin: 6px;
 }
-.tags {
-}
+.tags {}
 .tag {
 	display: inline-block;
 	border-radius: 4px;

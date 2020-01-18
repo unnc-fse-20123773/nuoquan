@@ -1,0 +1,26 @@
+<template>
+	<view class="">
+		这是他的粉丝，下面是他的粉丝列表，点击粉丝头像可以进入到他的粉丝的主页
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+
+			}
+		},
+		onLoad: function() {
+			uni.setNavigationBarTitle({
+				title: "粉丝列表"
+			});
+		},
+		methods: {
+
+		}
+	}
+</script>
+
+<style>
+</style>
