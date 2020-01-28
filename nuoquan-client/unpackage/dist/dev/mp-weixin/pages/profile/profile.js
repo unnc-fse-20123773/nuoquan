@@ -234,6 +234,23 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {
   data: function data() {
     // 为毕业年份 picker 传值
@@ -254,7 +271,7 @@ __webpack_require__.r(__webpack_exports__);
     var degrees = ['高中', '本科', '研究生'];
 
     return {
-      genderList: ['女', '男', '其他'], // 顺序和数据库保持一致
+      genderList: ['女', '男'], // 顺序和数据库保持一致
 
       years: years, // 传入毕业年份 picker
       yearPickerVal: [], // 毕业年份 picker 的起始值, 必须为list
@@ -285,15 +302,14 @@ __webpack_require__.r(__webpack_exports__);
     uni.setNavigationBarTitle({
       title: "个人信息" });
 
-
-    var userInfo = this.getGlobalUserInfo();
-    this.userInfo = userInfo;
-
+    console.log(this.getGlobalUserInfo());
+    var a = this.getGlobalUserInfo();
+    this.userInfo = a;
     // 按已有信息修改默认值
-    var gender = userInfo.gender;
-    var year = userInfo.graduationYear;
-    var major = userInfo.major;
-    var degree = userInfo.degree;
+    var gender = this.userInfo.gender;
+    var year = this.userInfo.graduationYear;
+    var major = this.userInfo.major;
+    var degree = this.userInfo.degree;
     if (!this.isNull(gender)) {// 判空，防止默认值被刷掉
       this.gender = gender;
     }
@@ -398,8 +414,7 @@ __webpack_require__.r(__webpack_exports__);
         major: this.major,
         degree: this.degreeDB };
 
-      // console.log(data);
-
+      console.log(data);
       var that = this;
       uni.request({
         url: that.$serverUrl + '/user/updateUser',
