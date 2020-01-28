@@ -1,14 +1,14 @@
 <template>
 	<view class="articlecard" id="'+articleCard.id+'" @click="jumpToDetail()">
-		<view class="title">{{ articleCard.articleTitle }}</view>
-		<view class="briefarticleCard">{{ articleCard.articleContent }}</view>
+		<view class="title" v-html="articleCard.articleTitle"></view>
+		<view class="briefarticleCard" v-html="articleCard.articleContent"></view>
 		<view class="picturearea">
 			<!-- 这里是文章配图的位置 -->
 			
 		</view>
-		<view class="tags">
+<!-- 		<view class="tags">
 			<view class="tag" :style="{background: tagColorList[index]}" v-for="(i, index) in articleCard.tagList" v-bind:key="index">{{ i}}</view>
-		</view>
+		</view> -->
 		<view class="menubar">
 			<image :src="articleCard.faceImg" class="touxiang"></image>
 			<view class="name">{{ articleCard.nickname }}</view>
@@ -62,30 +62,32 @@
 		width: 750upx;
 		border-radius: 8px;
 		margin: 0 auto ;
-		background-color: #ffffff;
+		background-color: #FDFDFD;
 	}
 	.title {
 		margin: 0px 25px 0 25px;
-		font-size: 15px;
+		font-size:17px;
+		max-height: 38px;
 		font: MicrosoftYaHei;
 		font-weight: bold;
 		line-height: 19px;
 		padding-top: 10px;
+		word-break: break-all;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 	.briefarticleCard {
-		max-height: 500upx;
+		max-height: 51px;
 		margin: 10px 25px 15px;
-		font-size: 13px;
-		line-height: 15px;
+		font-size: 14px;
+		line-height: 17px;
 		margin-bottom: 15px;
-		word-break: break-all;
-		white-space: pre-line;
-		text-overflow: ellipsis;
 		/**文字隐藏后添加省略号*/
 		display: -webkit-box;
 		-webkit-box-orient: vertical;
-		-webkit-line-clamp: 15;
+		-webkit-line-clamp: 3;
 		overflow: hidden;
+
 	}
 	.tags {
 		margin-left: 21px;
@@ -130,7 +132,7 @@
 		font-size: 10px;
 		margin-left: 25px;
 		color: #888888;
-		max-width: 80px;
+		max-width: 84px;
 		text-overflow: ellipsis;
 	}
 	

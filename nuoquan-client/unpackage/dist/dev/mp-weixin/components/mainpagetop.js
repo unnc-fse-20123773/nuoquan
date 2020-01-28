@@ -148,6 +148,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
 var isSearching = false; //搜索锁
 var _default = {
   data: function data() {
@@ -279,6 +283,11 @@ var _default = {
             }
 
             var newArticleList = result.data.data.rows;
+            console.log(newArticleList);
+
+            newArticleList = that.highLightKeyWord(newArticleList);
+            // 需要一个方程处理高亮标签内容
+
             var oldArticleList = that.searchedArticleList;
             that.searchedArticleList = oldArticleList.concat(newArticleList);
             // console.log(result.data.data.page);
@@ -337,10 +346,16 @@ var _default = {
       // console.log(this.searching);
     },
     exitSearch: function exitSearch() {
-      this.hotList = "",
-      this.searchKeyWords = "",
-      this.searchedArticleList = "",
-      this.$emit("exitSearchSignal", 0);
+      if (this.searching == false) {
+        this.searchKeyWords = "",
+        this.searchedArticleList = "",
+        this.searching = !this.searching;
+      } else {
+        this.hotList = "";
+        this.searchKeyWords = "";
+        this.searchedArticleList = "";
+        this.$emit("exitSearchSignal", 0);
+      }
     },
     putHotIntoInput: function putHotIntoInput(index) {
       // console.log(index);
@@ -353,6 +368,21 @@ var _default = {
       var keywords = this.searchHisKeyList[index];
       // console.log(keywords);
       this.searchKeyWords = keywords;
+    },
+    highLightKeyWord: function highLightKeyWord(newArticleList) {
+      // 	console.log("highLighting!!!!!");
+      var highLighPart = '<span style="color:#FF5D5D">' + this.searchKeyWords + '</span>';
+      console.log(highLighPart);
+      var i;
+      for (i = 0; i < newArticleList.length; i++) {
+        newArticleList[i].articleTitle = newArticleList[i].articleTitle.replace(new RegExp(this.searchKeyWords, 'g'),
+        highLighPart);
+        newArticleList[i].articleContent = newArticleList[i].articleContent.replace(new RegExp(this.searchKeyWords, 'g'),
+        highLighPart);
+        // console.log(newArticleList[i].articleTitle);
+        // console.log(newArticleList[i].articleContent);
+      }
+      return newArticleList;
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
