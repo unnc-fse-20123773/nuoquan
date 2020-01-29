@@ -1,5 +1,6 @@
 package com.nuoquan.pojo;
 
+import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "user_like_article")
@@ -13,6 +14,15 @@ public class UserLikeArticle {
     @Column(name = "article_id")
     private String articleId;
 
+    @Column(name = "create_date")
+    private Date createDate;
+    
+    /**
+     * 点赞消息是否被签收\\n 0: 未签收 1：签收
+     */
+    @Column(name = "sign_flag")
+    private Integer signFlag;
+    
     /**
      * @return id
      */
@@ -53,5 +63,37 @@ public class UserLikeArticle {
      */
     public void setArticleId(String articleId) {
         this.articleId = articleId;
+    }
+
+    /**
+     * @return create_time
+     */
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    /**
+     * @param createDate
+     */
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+    
+    /**
+     * 获取点赞消息是否被签收\\n 0: 未签收 1：签收
+     *
+     * @return sign_flag - 点赞消息是否被签收\\n 0: 未签收 1：签收
+     */
+    public Integer getSignFlag() {
+        return signFlag;
+    }
+
+    /**
+     * 设置点赞消息是否被签收\\n 0: 未签收 1：签收
+     *
+     * @param signFlag 点赞消息是否被签收\\n 0: 未签收 1：签收
+     */
+    public void setSignFlag(Integer signFlag) {
+        this.signFlag = signFlag;
     }
 }

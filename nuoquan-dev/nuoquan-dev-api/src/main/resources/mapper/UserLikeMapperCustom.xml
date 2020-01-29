@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nuoquan.mapper.UserLikeMapperCustom" >
+  <resultMap id="BaseResultMap" type="com.nuoquan.pojo.vo.UserLikeVO" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="article_id" property="articleId" jdbcType="VARCHAR" />
+    <result column="comment_id" property="commentId" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="sign_flag" property="signFlag" jdbcType="INTEGER" />
+    
+    <result column="author_id" property="authorId" jdbcType="VARCHAR" />
+    
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="face_img" property="faceImg" jdbcType="VARCHAR" />
+    <result column="face_img_thumb" property="faceImgThumb" jdbcType="VARCHAR" />
+  </resultMap>
+  
+	<!-- 按作者获取未签收的点赞消息 -->
+ 	<select id="getUnsignedLikeMsg" resultMap="BaseResultMap" parameterType="String">
+		SELECT f.* FROM
+			(SELECT au.*, bb.user_id as author_id FROM
+				(SELECT aa.*, u.nickname as nickname, u.face_img, u.face_img_thumb FROM
+					(SELECT a.id, a.user_id, a.article_id, c.comment_id, a.create_date, a.sign_flag 
+					FROM user_like_article a LEFT JOIN user_like_comment c on a.id = c.id) aa
+				LEFT JOIN user u on u.id = aa.user_id) au
+			LEFT JOIN article bb on au.article_id = bb.id
+			union
+			SELECT au.*, bb.from_user_id as author_id FROM
+				(SELECT aa.*, u.nickname as nickname, u.face_img, u.face_img_thumb FROM
+					(SELECT c.id, c.user_id, a.article_id, c.comment_id, c.create_date, c.sign_flag 
+					FROM user_like_article a RIGHT JOIN user_like_comment c on a.id = c.id) aa
+				LEFT JOIN user u on u.id = aa.user_id) au
+			LEFT JOIN user_article_comment bb on au.comment_id = bb.id) f
+		WHERE 
+			1=1
+			and f.author_id = #{userId}
+			and f.sign_flag = 0
+		order by create_date desc			
+	</select>
+</mapper>

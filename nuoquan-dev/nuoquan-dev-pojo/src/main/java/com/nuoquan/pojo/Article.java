@@ -32,7 +32,7 @@ public class Article {
     /**
      * 0 = unreadable, 1 = readable, 2 = checking
      */
-    private Byte status;
+    private Integer status;
 
     @Column(name = "create_date")
     private Date createDate;
@@ -42,6 +42,12 @@ public class Article {
      */
     @Column(name = "is_anonymous")
     private Byte isAnonymous;
+
+    /**
+     * 浏览量
+     */
+    @Column(name = "view_num")
+    private Integer viewNum;
 
     /**
      * @return id
@@ -174,7 +180,7 @@ public class Article {
      *
      * @return status - 0 = unreadable, 1 = readable, 2 = checking
      */
-    public Byte getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
@@ -183,7 +189,7 @@ public class Article {
      *
      * @param status 0 = unreadable, 1 = readable, 2 = checking
      */
-    public void setStatus(Byte status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
@@ -217,5 +223,23 @@ public class Article {
      */
     public void setIsAnonymous(Byte isAnonymous) {
         this.isAnonymous = isAnonymous;
+    }
+
+    /**
+     * 获取浏览量
+     *
+     * @return view_num - 浏览量
+     */
+    public Integer getViewNum() {
+        return viewNum;
+    }
+
+    /**
+     * 设置浏览量
+     *
+     * @param viewNum 浏览量
+     */
+    public void setViewNum(Integer viewNum) {
+        this.viewNum = viewNum;
     }
 }

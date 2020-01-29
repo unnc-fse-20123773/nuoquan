@@ -5,18 +5,21 @@
     <!--
       WARNING - @mbg.generated
     -->
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
-    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
-    <result column="face_img" jdbcType="VARCHAR" property="faceImg" />
-    <result column="follow_num" jdbcType="INTEGER" property="followNum" />
-    <result column="gender" jdbcType="TINYINT" property="gender" />
-    <result column="major" jdbcType="VARCHAR" property="major" />
-    <result column="graduation_year" jdbcType="DATE" property="graduationYear" />
-    <result column="degree" jdbcType="TINYINT" property="degree" />
-   	<result column="receive_like_counts" jdbcType="INTEGER" property="receiveLikeCounts" />
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="face_img" property="faceImg" jdbcType="VARCHAR" />
+    <result column="face_img_thumb" property="faceImgThumb" jdbcType="VARCHAR" />
+    <result column="follow_num" property="followNum" jdbcType="INTEGER" />
+    <result column="fans_num" property="fansNum" jdbcType="INTEGER" />
+    <result column="gender" property="gender" jdbcType="TINYINT" />
+    <result column="major" property="major" jdbcType="VARCHAR" />
+    <result column="graduation_year" property="graduationYear" jdbcType="INTEGER" />
+    <result column="degree" property="degree" jdbcType="TINYINT" />
+    <result column="receive_like_counts" property="receiveLikeCounts" jdbcType="INTEGER" />
+    <result column="cid" property="cid" jdbcType="VARCHAR" />
   </resultMap>
   
   <update id="addReceiveLikeCount" parameterType="String">
@@ -26,4 +29,21 @@
   <update id="reduceReceiveLikeCount" parameterType="String">
   	update nuoquan.user set receive_like_counts=receive_like_counts-1 where id = #{userId}
   </update>
+  
+  <update id="addFansCount" parameterType="String">
+  	update nuoquan.user set fans_num=fans_num+1 where id = #{userId}
+  </update>
+  
+  <update id="reduceFansCount" parameterType="String">
+  	update nuoquan.user set fans_num=fans_num-1 where id = #{userId}
+  </update>
+  
+  <update id="addFollowCount" parameterType="String">
+  	update nuoquan.user set follow_num=follow_num+1 where id = #{userId}
+  </update>
+  
+  <update id="reduceFollowCount" parameterType="String">
+  	update nuoquan.user set follow_num=follow_num-1 where id = #{userId}
+  </update>
+  
 </mapper>

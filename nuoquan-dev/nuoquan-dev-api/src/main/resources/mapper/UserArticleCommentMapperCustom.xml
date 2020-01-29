@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nuoquan.mapper.UserArticleCommentMapperCustom">
+  <resultMap id="BaseResultMap" type="com.nuoquan.pojo.vo.UserArticleCommentVO">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="from_user_id" property="fromUserId" jdbcType="VARCHAR" />
+    <result column="to_user_id" property="toUserId" jdbcType="VARCHAR" />
+    <result column="father_comment_id" property="fatherCommentId" jdbcType="VARCHAR" />
+    <result column="article_id" property="articleId" jdbcType="VARCHAR" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="like_num" property="likeNum" jdbcType="INTEGER" />
+    <result column="dislike_num" property="dislikeNum" jdbcType="INTEGER" />
+    <result column="comment_num" property="commentNum" jdbcType="INTEGER" />
+    <result column="under_comment_id" property="underCommentId" jdbcType="VARCHAR" />
+    <result column="sign_flag" property="signFlag" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="face_img" jdbcType="VARCHAR" property="faceImg" />
+    <result column="face_img_thumb" property="faceImgThumb" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="queryComments" resultMap="BaseResultMap" parameterType="String">
+  	select c.*, u.nickname, u.face_img, u.face_img_thumb from nuoquan.user_article_comment c
+  	left join nuoquan.user u on c.from_user_id = u.id
+  	where
+  		1=1
+  		and c.article_id = #{articleId}
+  		and c.under_comment_id is null
+  	order by c.create_date desc
+  </select>
+  
+  <select id="getCommentById" resultMap="BaseResultMap" parameterType="String">
+  	select c.*, u.nickname, u.face_img, u.face_img_thumb from nuoquan.user_article_comment c
+  	left join nuoquan.user u on c.from_user_id = u.id
+  	where
+  	  	1 = 1 
+  	  	and c.id = #{commentId}
+  </select>
+  
+  <select id="querySonComments" resultMap="BaseResultMap" parameterType="String">
+  	select c.*, u.nickname, u.face_img, u.face_img_thumb from nuoquan.user_article_comment c
+  	left join nuoquan.user u on c.from_user_id = u.id
+  	where
+  		1=1
+  		and c.under_comment_id = #{underCommentId}
+  	order by c.create_date desc
+  </select>
+  
+  <update id="addCommentLikeCount" parameterType="String">
+  	update nuoquan.user_article_comment set like_num=like_num+1 where id=#{commentId}
+  </update>
+  
+  <update id="reduceCommentLikeCount" parameterType="String">
+  	update nuoquan.user_article_comment set like_num=like_num-1 where id=#{commentId}
+  </update>
+  
+  <update id="addCommentCount" parameterType="String">
+  	update nuoquan.user_article_comment set comment_num=comment_num+1 where id=#{commentId}
+  </update>
+  
+  <!-- 批处理更新消息为已签收 -->
+  <update id="batchUpdateMsgSigned">
+	update user_article_comment set sign_flag = 1 where id in
+	<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+		#{item}
+	</foreach>
+  </update>
+  
+  <select id="getUnsignedCommentMsg" resultMap="BaseResultMap" parameterType="String">
+  	select c.*, u.nickname, u.face_img, u.face_img_thumb from nuoquan.user_article_comment c
+  	left join nuoquan.user u on c.from_user_id = u.id
+	where
+		1 = 1 
+	  	and c.to_user_id = #{userId}
+	  	and sign_flag = 0
+  	order by c.create_date desc
+  </select>
+  
+</mapper>

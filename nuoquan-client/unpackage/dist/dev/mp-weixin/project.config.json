@@ -4,11 +4,14 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": true
+		"urlCheck": true,
+		"postcss": true,
+		"minified": true,
+		"es6": false
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.9.2",
-	"appid": "touristappid",
+	"appid": "wxebb29e9646be657f",
 	"projectname": "nuoquan",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
@@ -26,8 +29,99 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
-			"list": []
+			"current": 0,
+			"list": [
+				{
+					"name": "index",
+					"query": "",
+					"id": 0,
+					"pathName": "pages/tabPages/index"
+				},
+				{
+					"name": "signin",
+					"query": "",
+					"id": 1,
+					"pathName": "pages/signin/signin"
+				},
+				{
+					"name": "submit",
+					"query": "",
+					"id": 2,
+					"pathName": "pages/submit/submit"
+				},
+				{
+					"name": "chatpage",
+					"query": "",
+					"id": 3,
+					"pathName": "pages/chatpage/chatpage"
+				},
+				{
+					"name": "followlist",
+					"query": "",
+					"id": 4,
+					"pathName": "pages/followlist/followlist"
+				},
+				{
+					"name": "messagelist",
+					"query": "",
+					"id": 5,
+					"pathName": "pages/tabPages/messagelist"
+				},
+				{
+					"name": "profile",
+					"query": "",
+					"id": 6,
+					"pathName": "pages/tabPages/profile"
+				},
+				{
+					"name": "personpublic",
+					"query": "userId=test-id123",
+					"id": 7,
+					"pathName": "pages/personpublic/personpublic"
+				},
+				{
+					"name": "wechatLogin",
+					"query": "",
+					"id": 8,
+					"pathName": "pages/wechatLogin/wechatLogin"
+				},
+				{
+					"name": "detail",
+					"query": "",
+					"id": 9,
+					"pathName": "pages/detail/detail"
+				},
+				{
+					"name": "search",
+					"query": "",
+					"id": 10,
+					"pathName": "pages/search/search"
+				},
+				{
+					"name": "cmtdetail",
+					"query": "",
+					"id": 11,
+					"pathName": "pages/comment-detail/comment-detail"
+				},
+				{
+					"name": "test",
+					"query": "",
+					"id": 12,
+					"pathName": "pages/test/test"
+				},
+				{
+					"name": "我的发布",
+					"query": "",
+					"id": 13,
+					"pathName": "pages/myPublish/myPublish"
+				},
+				{
+					"name": "关于",
+					"query": "",
+					"id": 14,
+					"pathName": "pages/about/about"
+				}
+			]
 		}
 	}
 }

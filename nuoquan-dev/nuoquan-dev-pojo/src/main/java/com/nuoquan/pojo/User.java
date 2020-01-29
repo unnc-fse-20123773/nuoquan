@@ -3,66 +3,65 @@ package com.nuoquan.pojo;
 import java.util.Date;
 import javax.persistence.*;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
-@ApiModel(value="用户对象", description="this is user object")
 public class User {
-	@ApiModelProperty(hidden=true)
     @Id
     private String id;
 
-	@ApiModelProperty(hidden=true)
     private String email;
-    
-    @ApiModelProperty(value="密码", name="password", example="123456", required=true)
+
     private String password;
 
-    @ApiModelProperty(value="昵称", name="nickname", example="JUMBOX123", required=true)
     private String nickname;
 
     @Column(name = "create_date")
-    @ApiModelProperty(hidden=true)
     private Date createDate;
 
     @Column(name = "face_img")
-    @ApiModelProperty(hidden=true)
     private String faceImg;
 
+    /**
+     * 小头像
+     */
+    @Column(name = "face_img_thumb")
+    private String faceImgThumb;
+
+    /**
+     * 关注数
+     */
     @Column(name = "follow_num")
-    @ApiModelProperty(hidden=true)
     private Integer followNum;
-    
-    @Column(name = "receive_like_counts")
-    @ApiModelProperty(hidden=true)
-    private Integer receiveLikeCounts;
 
-    public Integer getReceiveLikeCounts() {
-		return receiveLikeCounts;
-	}
+    /**
+     * 粉丝数
+     */
+    @Column(name = "fans_num")
+    private Integer fansNum;
 
-	public void setReceiveLikeCounts(Integer receiveLikeCounts) {
-		this.receiveLikeCounts = receiveLikeCounts;
-	}
-
-	/**
+    /**
      * 0 = female, 1 = male, 2 = others
      */
-    @ApiModelProperty(hidden=true)
     private Byte gender;
 
-    @ApiModelProperty(hidden=true)
     private String major;
 
+    /**
+     * Example: 2022
+     */
     @Column(name = "graduation_year")
-    @ApiModelProperty(hidden=true)
-    private Date graduationYear;
+    private Integer graduationYear;
 
     /**
      * 0 = high school, 1 = undergraduate, 2 = graduate
      */
-    @ApiModelProperty(hidden=true)
     private Byte degree;
+
+    @Column(name = "receive_like_counts")
+    private Integer receiveLikeCounts;
+
+    /**
+     * Client-id 设备id，用于消息推送
+     */
+    private String cid;
 
     /**
      * @return id
@@ -149,17 +148,57 @@ public class User {
     }
 
     /**
-     * @return follow_num
+     * 获取小头像
+     *
+     * @return face_img_thumb - 小头像
+     */
+    public String getFaceImgThumb() {
+        return faceImgThumb;
+    }
+
+    /**
+     * 设置小头像
+     *
+     * @param faceImgThumb 小头像
+     */
+    public void setFaceImgThumb(String faceImgThumb) {
+        this.faceImgThumb = faceImgThumb;
+    }
+
+    /**
+     * 获取关注数
+     *
+     * @return follow_num - 关注数
      */
     public Integer getFollowNum() {
         return followNum;
     }
 
     /**
-     * @param followNum
+     * 设置关注数
+     *
+     * @param followNum 关注数
      */
     public void setFollowNum(Integer followNum) {
         this.followNum = followNum;
+    }
+
+    /**
+     * 获取粉丝数
+     *
+     * @return fans_num - 粉丝数
+     */
+    public Integer getFansNum() {
+        return fansNum;
+    }
+
+    /**
+     * 设置粉丝数
+     *
+     * @param fansNum 粉丝数
+     */
+    public void setFansNum(Integer fansNum) {
+        this.fansNum = fansNum;
     }
 
     /**
@@ -195,16 +234,20 @@ public class User {
     }
 
     /**
-     * @return graduation_year
+     * 获取Example: 2022
+     *
+     * @return graduation_year - Example: 2022
      */
-    public Date getGraduationYear() {
+    public Integer getGraduationYear() {
         return graduationYear;
     }
 
     /**
-     * @param graduationYear
+     * 设置Example: 2022
+     *
+     * @param graduationYear Example: 2022
      */
-    public void setGraduationYear(Date graduationYear) {
+    public void setGraduationYear(Integer graduationYear) {
         this.graduationYear = graduationYear;
     }
 
@@ -224,5 +267,37 @@ public class User {
      */
     public void setDegree(Byte degree) {
         this.degree = degree;
+    }
+
+    /**
+     * @return receive_like_counts
+     */
+    public Integer getReceiveLikeCounts() {
+        return receiveLikeCounts;
+    }
+
+    /**
+     * @param receiveLikeCounts
+     */
+    public void setReceiveLikeCounts(Integer receiveLikeCounts) {
+        this.receiveLikeCounts = receiveLikeCounts;
+    }
+
+    /**
+     * 获取Client-id 设备id，用于消息推送
+     *
+     * @return cid - Client-id 设备id，用于消息推送
+     */
+    public String getCid() {
+        return cid;
+    }
+
+    /**
+     * 设置Client-id 设备id，用于消息推送
+     *
+     * @param cid Client-id 设备id，用于消息推送
+     */
+    public void setCid(String cid) {
+        this.cid = cid;
     }
 }

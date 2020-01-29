@@ -1,385 +1,775 @@
 <template>
 	<view id="public-container">
-		<view id="public-infobox" class="column_center">
-			<image class="publicTouxiang" mode="aspectFill" src="../../static/touxiang2.jpg" ></image>
-			<view class="personInfo">
-				<view class="personName">
-					<text class="personName-text">陈仅仅六号</text>
-				</view>
-				<navigator url="../fanslist/fanslist" class="personFans super_center">
-					<text class="personFans-text">关注他的</text>
-					<text class="personFansNum-text">101</text>
-				</navigator>
-				<navigator url="../followlist/followlist" class="personFans super_center">
-					<text class="personFans-text">他关注的</text>
-					<text class="personFansNum-text">101</text>
-				</navigator>
-			</view>
-			<button type="default" size="mini" class="guanzhuButton">
-				<text class="guanzhuButton-text">关注</text>
-			</button>
+		<!-- 黄色头部 -->
+		<view id="yellowTopBox">
+			<view class="yellowTop" :style="{ bottom: yellowBottom }"></view>
+			<!-- <view class="yellowTop" style="bottom: -240rpx"></view> -->
 		</view>
-
-		<view id="public-message-futherbox">
-			<scroll-view class="top-menu-view" scroll-x="true" scroll-left="scrollLeft">
-				<block v-for="(menuTabs,index) in menuTabs" :key="index">
-					<view class="menu-one-view" v-bind:id="'tabNum'+index" @click="swichMenu(index)">
-						<view :class="[currentTab==index ? 'menu-one-act' : 'menu-one']">
-							<view class="menu-one-txt">{{menuTabs.name}}</view>
-							<view class="menu-one-bottom">
-								<view class="menu-one-bottom-color"></view>
+		<!-- 简介块 -->
+		<view id="public-infoBox" class="column_center">
+			<!-- 基本信息内容 -->
+			<view id="idCard" class="idCard" :style="{ width: cardWidth }">
+				<view style="width: 100%;height: 74px;margin-top: -46px;" class="super_center">
+					<image class="publicTouxiang" mode="aspectFill" :src="thisUserInfo.faceImg"></image>
+				</view>
+				<!-- ID -->
+				<view class="nameBox super_center">
+					<text class="name-text">{{ thisUserInfo.nickname }}</text>
+				</view>
+				<!-- 个人简介 -->
+				<view class="introBox super_center"><text class="introBox-text">个人简介：这个人很懒，什么都没写哦...</text></view>
+				<!-- 判断是否为本人主页 -->
+				<view class="guanzhuBox super_center" v-if="!myPublic">
+					<view class="guanzhuLine super_center">
+						<view style="height: 100%;display: flex;">
+							<!-- 关注&已关注 -->
+							<button class="guanzhuButton super_center" @tap="addFollow(thisUserInfo.id)" v-if="thisUserInfo.follow == false">
+								<text class="guanzhuButton-text">关注</text>
+							</button>
+							<button
+								plain="true"
+								class="guanzhuButton-after super_center"
+								style="border:1px solid rgba(255,201,90,1);"
+								@tap="cancelFollow(thisUserInfo.id)"
+								v-if="thisUserInfo.follow == true"
+							>
+								<text class="guanzhuButton-text-after">已关注</text>
+							</button>
+							<!-- 私信 -->
+							<view class="messageButton super_center" @tap="goToChatPage">
+								<image
+									src="../../static/icon/comment-personpublic.png"
+									mode="scaleToFill"
+									style="width:18px;
+								height:18px;
+								opacity:1;"
+								></image>
 							</view>
 						</view>
 					</view>
-				</block>
-			</scroll-view>
-			<swiper :current="currentTab" class="swiper-box-list" duration="300" @change="swiperChange">
-				<block v-for="(swiperDate,index1) in swiperDateList" :key="index1">
-					<swiper-item>
-						<scroll-view class="swiper-one-list" scroll-y="true" @scrolltolower="loadMore(index1)">
-							<view class="warning-text-box super_center">
-								<view class="warning-text">
-								Function under developed.
+				</view>
+				<!-- 操作行 -->
+				<view class="operationLine">
+					<!-- 粉丝 -->
+					<view class="operationCard" @tap="goToFansFollow(1)">
+						<view class="operationNum super_center">
+							<text class="operationNum-text" style="color:color:rgba(53,53,53,1);">{{ thisUserInfo.fansNum }}</text>
+						</view>
+						<view class="operationTitle super_center"><text class="operationTitle-text">粉丝</text></view>
+					</view>
+					<!-- 影响力 -->
+					<view class="operationCard">
+						<view class="operationNum super_center"><text class="operationNum-text" style="color:rgba(254,95,85,1);">999999</text></view>
+						<view class="operationTitle super_center"><text class="operationTitle-text">影响力</text></view>
+					</view>
+					<!-- 关注 -->
+					<view class="operationCard" @tap="goToFansFollow(0)">
+						<view class="operationNum super_center">
+							<text class="operationNum-text" style="color:color:rgba(53,53,53,1);">{{ thisUserInfo.followNum }}</text>
+						</view>
+						<view class="operationTitle super_center"><text class="operationTitle-text">关注</text></view>
+					</view>
+				</view>
+			</view>
+		</view>
+		<!-- 信息块标题 -->
+		<view id="public-titleBox"><text class="public-title-text">个人信息</text></view>
+		<!-- 信息块 -->
+		<view id="publix-profileLine" :style="{ width: cardWidth }">
+			<view class="profileCard">
+				<!-- 检测是否设置 -->
+				<text v-if="thisUserInfo.graduationYear != null" class="profile-content-text">{{ thisUserInfo.graduationYear }}</text>
+				<text v-else class="profile-content-text">未知</text>
+				<text class="profile-title-text">毕业年份</text>
+			</view>
+			<view class="profileCard">
+				<!-- 检测是否设置 -->
+				<text v-if="thisUserInfo.major != null" class="profile-content-text">{{ thisUserInfo.major }}</text>
+				<text v-else class="profile-content-text">未知</text>
+				<text class="profile-title-text">专业</text>
+			</view>
+		</view>
+		<!-- 发布块标题 -->
+		<view id="public-titleBox"><text class="public-title-text">发布文章</text></view>	
+		<!-- 发布内容块 -->
+		<view :style="{ width: cardWidth }" v-bind:myArticleList="myArticleList">
+			<view id="public-articleCard" :style="{ width: cardWidth }" v-for="thisArticle in myArticleList" :key="thisArticle.id" @click="jumpToDetail(thisArticle)">
+				<view class="articleTitle">{{ thisArticle.articleTitle }}</view>
+				<!-- 发布内容行 -->
+				<view class="articleContentLine">
+					<!-- 文字部分卡片 -->
+					<!-- 有图跟无图只有 teamareaCard 这一个 class 的区别，判断只需要更改这一个 class -->
+					<view :class="[thisArticle.imgList.length > 0?'textareaCard-img':'textareaCard']">
+						<view class="textContent">
+							{{thisArticle.articleContent}}
+						</view>
+						<!-- 底部栏 -->
+						<view class="bottomBar">
+							<view style="position: relative;width: 100%;height: 100%;">
+								<view class="bottom-time column_center"><text>{{timeDeal(thisArticle.createDate)}}</text></view>
+								<view class="view column_center">
+									<image src="../../static/icon/eye-888888.png" mode="aspectFill"></image>
+									<text>{{thisArticle.viewNum}}</text>
+								</view>
+								<view class="comment column_center">
+									<image src="../../static/icon/comment-alt.png" mode="aspectFill"></image>
+									<text>{{thisArticle.commentNum}}</text>
+								</view>
+								<view class="like column_center">
+									<image src="../../static/icon/like.png" mode="aspectFill"></image>
+									<text>{{thisArticle.likeNum}}</text>
 								</view>
 							</view>
-						</scroll-view>
-					</swiper-item>
-				</block>
-			</swiper>
+						</view>
+					</view>
+					<!-- 图片部分盒子 -->
+					<view class="imgBox" v-if="thisArticle.imgList.length > 0"><image mode="aspectFill" :src="serverUrl + thisArticle.imgList[0].imagePath"></image></view>
+				</view>
+			</view>
 		</view>
+
+		<!-- 占位块 -->
+		<view style="height: 30px;" :style="{ width: cardWidth }"></view>
 	</view>
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				scrollLeft: 0,
-				isClickChange: false,
-				currentTab: 0,
-				menuTabs: [{
-					name: '动态'
-				}, {
-					name: '帖子'
-				}, {
-					name: '点赞'
-				}, {
-					name: '评论'
-				}],
+var me;
+var userId; // this user's id
+var loadArticleFlag = false;
+export default {
+	data() {
+		return {
+			screenWidth: 350,
+			serverUrl: this.$serverUrl,
 
-				swiperDateList: [
-					[],
-					[],
-					[],
-					[],
-					[],
-					[]
-				],
+			thisUserInfo: '',
+			myPublic: false,
+			windowHeight: 0,
+			windowWidth: 0,
+			yellowBottom: '',
+			cardWidth: '',
+			ifhaveImg: 0,
 
-				// 用于分页的属性
-				totalPage: 1,
-				page: 1,
-				videoList: [],
+			totalPage: 1,
+			currentPage: 1,
+			totalNum: '0',
+			myArticleList: ''
+		};
+	},
 
-				screenWidth: 350,
-				serverUrl: "",
+	onLoad(opt) {
+		userId = opt.userId;
 
+		me = this.getGlobalUserInfo();
+		if (me.id == userId) {
+			// 如果打开自己的页面，屏蔽关注和发私信按钮
+			this.myPublic = true;
+		}
+
+		var screenWidth = uni.getSystemInfoSync().screenWidth;
+		this.screenWidth = screenWidth;
+
+		// 获取当前分页
+		var page = this.page;
+
+		// 获取这个人的信息, TODO: 更新本地用户信息缓存
+		this.queryUserWithFollow(userId);
+
+		//获取屏幕宽高
+		var that = this;
+		uni.getSystemInfo({
+			success: function(res) {
+				that.windowHeight = res.windowHeight;
+				that.windowWidth = res.windowWidth;
+			}
+		});
+		//获取黄色头部位置
+		if (that.windowHeight <= 1000) {
+			if (that.windowHeight < 667) {
+				that.yellowBottom = -that.windowHeight * 0.25 + 'px';
+				// console.log("超小屏幕，黄色头部上移了" + that.yellowBottom);
+			} else {
+				that.yellowBottom = -that.windowHeight * 0.22 + 'px';
+				// console.log("手机屏幕，黄色头部上移了" + that.yellowBottom);
+			}
+		} else {
+			that.yellowBottom = -that.windowHeight * 0.2 + 'px';
+			// console.log("平板屏幕，黄色头部上移了" + that.yellowBottom);
+		}
+
+		// 获取卡片宽度
+		that.cardWidth = that.windowWidth - 26 + 'px';
+
+		this.showArticles(1);
+	},
+
+	onPullDownRefresh() {
+		console.log('refresh');
+		setTimeout(function() {
+			uni.stopPullDownRefresh();
+		}, 1000);
+	},
+
+	methods: {
+		/**
+		 * 添加关注
+		 */
+		addFollow: function(userId) {
+			console.log('加关注...');
+			var that = this;
+			uni.request({
+				url: that.$serverUrl + '/user/follow',
+				method: 'POST',
+				data: {
+					userId: userId,
+					fanId: me.id
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					if (res.data.status == 200) {
+						// 刷新用户信息
+						that.queryUserWithFollow(userId);
+					}
+				}
+			});
+		},
+		/**
+		 * 取消关注
+		 */
+		cancelFollow: function(userId) {
+			console.log('取关...');
+			var that = this;
+			uni.request({
+				url: that.$serverUrl + '/user/dontFollow',
+				method: 'POST',
+				data: {
+					userId: userId,
+					fanId: me.id
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					if (res.data.status == 200) {
+						// 刷新用户信息
+						that.queryUserWithFollow(userId);
+					}
+				}
+			});
+		},
+
+		goToChatPage: function() {
+			var friendInfo = this.thisUserInfo;
+			uni.redirectTo({
+				url: '../chatpage/chatpage?friendInfo=' + JSON.stringify(friendInfo)
+			});
+		},
+
+		/**
+		 * @param {Object} currentTab 0: 关注 1: 粉丝
+		 */
+		goToFansFollow: function(currentTab) {
+			console.log('goToFansFollow...');
+			var data = {
+				currentTab: currentTab,
+				thisUserInfo: this.thisUserInfo
+			};
+			uni.redirectTo({
+				url: '../followlist/followlist?data=' + JSON.stringify(data)
+			});
+		},
+
+		/**
+		 * 查询该用户信息和我是否关注该用户
+		 * @param {Object} userId 该用户 id
+		 */
+		queryUserWithFollow: function(userId) {
+			var that = this;
+			uni.request({
+				url: that.$serverUrl + '/user/queryUserWithFollow',
+				method: 'POST',
+				data: {
+					userId: userId,
+					fanId: me.id
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					// console.log(res)
+					if (res.data.status == 200) {
+						that.thisUserInfo = res.data.data;
+						that.setUserInfoToUserList(res.data.data); //更新缓存
+						// console.log(res.data.data)
+						// console.log(that.getUserInfoFromUserList(res.data.data.id))
+						// console.log(that.getListByKey("userList"))
+
+						// 设置title
+						uni.setNavigationBarTitle({
+							title: that.thisUserInfo.nickname + '的主页'
+						});
+					}
+				}
+			});
+		},
+
+		showArticles: function(page) {
+			console.log(loadArticleFlag);
+
+			if (loadArticleFlag) {
+				loadArticleFlag = false;
+			}
+
+			loadArticleFlag = true;
+
+			uni.showLoading({
+				title: '加载中...'
+			});
+			setTimeout(() => {
+				if (loadArticleFlag) {
+					loadArticleFlag = false; //解锁
+					uni.hideLoading();
+					uni.showToast({
+						title: '网络未知错误',
+						icon: 'none',
+						duration: 1000
+					});
+				}
+			}, 5000); //延时五秒timeout
+
+			var that = this;
+			// console.log(that.thisUserInfo);
+			uni.request({
+				url: that.$serverUrl + '/article/queryPublishHistory',
+				method: 'POST',
+				data: {
+					page: page,
+					userId: me.id,
+					targetId: userId
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					setTimeout(() => {
+						//延时加载
+						uni.hideLoading();
+						loadArticleFlag = false;
+
+						console.log(res);
+						if (page == 1) {
+							that.myArticleList = [];
+						}
+						var newArticleList = res.data.data.rows;
+						var oldArticleList = that.myArticleList;
+						that.myArticleList = oldArticleList.concat(newArticleList);
+						that.currentPage = page;
+						that.totalPage = res.data.data.total;
+						that.totalNum = res.data.data.records;
+						console.log(that.totalNum);
+					}, 300);
+				},
+				fail: res => {
+					uni.hideLoading();
+					loadArticleFlag = false;
+
+					console.log('index unirequest fail');
+					console.log(res);
+				}
+			});
+		},
+
+		loadMore: function() {
+			var that = this;
+			var currentPage = that.currentPage;
+			console.log(currentPage);
+			var totalPage = that.totalPage;
+			console.log(totalPage);
+			// 判断当前页数和总页数是否相等
+			if (currentPage == totalPage) {
+				// that.showArticles(1);
+				uni.showToast({
+					title: '没有更多文章了',
+					icon: 'none',
+					duration: 1000
+				});
+			} else {
+				var page = currentPage + 1;
+				that.showArticles(page);
 			}
 		},
-
-		changeIndicatorDots(e) {
-			this.indicatorDots = !this.indicatorDots
-		},
-		changeAutoplay(e) {
-			this.autoplay = !this.autoplay
-		},
-		intervalChange(e) {
-			this.interval = e.target.value
-		},
-		durationChange(e) {
-			this.duration = e.target.value
-		},
-
-		onLoad() {
-			uni.setNavigationBarTitle({
-				title: 'XXX的主页'
+		
+		jumpToDetail(thisArticle) {
+			var navData = JSON.stringify(thisArticle); // 这里转换成 字符串
+			uni.navigateTo({
+				url: '/pages/detail/detail?data=' + navData
 			});
-
-			var screenWidth = uni.getSystemInfoSync().screenWidth;
-			this.screenWidth = screenWidth;
-
-			// 获取当前页面
-			var page = this.page;
-			this.getAllVideoList(page);
-
 		},
-
-		onPullDownRefresh() {
-			console.log('refresh');
-			setTimeout(function() {
-				uni.stopPullDownRefresh();
-			}, 1000);
-		},
-
-		methods: {
-			swichMenu: async function(current) { //点击其中一个 menu
-				if (this.currentTab == current) {
-					return false;
-				} else {
-					this.currentTab = current;
-					this.setScrollLeft(current);
-				}
-			},
-			swiperChange: async function(e) {
-				let index = e.target.current;
-				this.setScrollLeft(index);
-				this.currentTab = index;
-			},
-			setScrollLeft: async function(tabIndex) {
-				let leftWidthSum = 0;
-				for (var i = 0; i <= tabIndex; i++) {
-					let nowElement = await this.getWidth('tabNum' + i);
-					leftWidthSum = leftWidthSum + nowElement.width;
-				}
-				let winWidth = uni.getSystemInfoSync().windowWidth;
-				this.scrollLeft = leftWidthSum > winWidth ? (leftWidthSum - winWidth) : 0
-			},
-			getWidth: function(id) { //得到元素的宽高
-				return new Promise((res, rej) => {
-					uni.createSelectorQuery().select("#" + id).fields({
-						size: true,
-						scrollOffset: true
-					}, (data) => {
-						res(data);
-					}).exec();
-				})
-			},
-			loadMore: function(tabIndex) {
-				console.log('正在加载更多数据。。。')
-				this.getDateList(tabIndex);
-			},
-		}
 	}
+};
 </script>
 
 <style>
-	page {
-		width: 100%;
-		height: 100%;
-	}
+page {
+	width: 100%;
+}
 
-	#public-container {
-		position: fixed;
-		height: 100%;
-		width: 100%;
-		background-color: #ffcf3c;
-	}
+#public-container {
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+}
 
-	#public-infobox {
-		position: fixed;
-		height: 20%;
-		width: 100%;
-	}
-	
-	#public-message-futherbox /* 这里是帖子块最高级父组件*/{
-		/* border: 1upx solid red; 如果想快速了解该组件样式,则取消这个注释*/
-		position: fixed;
-		top: 20%;
-		width: 100%;
-		height: 80%;
-		/* 此处为背景半径，若要更改帖子块上方半径，请同时更改此处和下面导航条处 */
-		border-top-left-radius: 50upx;
-		border-top-right-radius: 50upx;
-		box-shadow: 0upx -1upx 8upx 1upx #A6A6A6;
-	}
+/* 黄色头部 */
+#yellowTopBox {
+	width: 100%;
+	position: relative;
+	z-index: -30;
+}
 
-	/* 以下是个人信息展示块的样式 */
-	
-	.publicTouxiang {
-		margin-left: 4%;
-		width: 180upx;
-		height: 180upx;
-		border-radius: 120px;
-		display: inline-block;
-		vertical-align: middle;
-	}
-	
-	.personInfo{
-		margin-left: 4%;
-		height: 180upx;
-		width: 180upx;
-	}
-	
-	.personName{
-		width: 100%;
-		margin-top: 2%;
-	}
-	
-	.personName-text{
-		color: white;
-		font-size: 32upx;
-		font-weight: 550;
-	}
-	
-	.personFans{
-		height: 25%;
-		width: 100%;
-		margin-top: 10upx;
-		background-color: #ffe285;
-		border-radius: 5upx;
-		display: flex;
-		justify-content: space-around;
-	}
-	
-	.personFans-text{
-		color: white;
-		font-size: 23upx;
-		font-weight: 550;
-	}
-	
-	.personFansNum-text{
-		color: white;
-		font-size: 23upx;
-		font-weight: 550;
-	}
-	
-	.guanzhuButton{
-		margin-top: 13%;
-		margin-left: 20%;
-		width: 20%;
-	}
-	
-	.guanzhuButton-text{
-		font-size: 28upx;
-		font-weight: 550;
-		color: #FFCF3C;
-	}
-	
-	
-	/* 以下是帖子展示块的样式 */
-	
-	.top-menu-view {
-		display: flex;
-		justify-content: space-around;
-		width: 100%;
-		background-color: white;
-		height: 8%; /* 在这里设置导航条高度 */
-		border-top-left-radius: 50upx;
-		border-top-right-radius: 50upx;
-	}
+.yellowTop {
+	position: absolute; /* 此处采用 absolote 定位，以保证页面流可以正常显示。层级设为 -10，以保证其显示在页面最底部。 */
+	left: -430upx;
+	height: 1600upx;
+	width: 1600upx;
+	z-index: -10;
+	border-radius: 3000upx;
+	background-color: #ffc95a;
+}
 
-	.menu-one-view {
-		display: inline-block;
-		white-space: nowrap;
-		height: 100%;
-		width: 24%;
-	}
+/* 简介块 */
+#public-infoBox {
+	width: 100%;
+}
 
-	.top-menu-view .menu-one-view .menu-one {
-		/* 在这里写 单个按钮样式 */
-		margin-left: 8%;
-		position: relative;
-		height: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-	}
+.publicTouxiang {
+	width: 74px;
+	height: 74px;
+	border-radius: 120px;
+	border: 4px solid white;
+	display: inline-block;
+	vertical-align: middle;
+}
 
-	.top-menu-view .menu-one-view .menu-one .menu-one-txt {
-		height: 40upx;
-		font-size: 32upx;
-		font-weight: 550;
-		color: #888888;
-		line-height: 40upx;
-	}
+.idCard {
+	margin-top: 64px;
+	margin-left: 13px;
+	border-radius: 8px;
+	min-height: 140px;
+	background-color: rgba(255, 255, 255, 1);
+	box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+}
 
-	.top-menu-view .menu-one-view .menu-one .menu-one-bottom {
-		position: absolute;
-		bottom: 0;
-		width: 100%;
-	}
+.nameBox {
+	margin-top: 8px;
+	width: 100%;
+}
 
-	.top-menu-view .menu-one-view .menu-one .menu-one-bottom .menu-one-bottom-color {
-		width: 60%;
-		height: 4upx;
-	}
+.nameBox .name-text {
+	font-size: 17px;
+	font-weight: 600;
+}
 
-	.top-menu-view .menu-one-view .menu-one-act {
-		/* 在这里写 单个按钮样式 */
-		margin-left: 8%;
-		position: relative;
-		height: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-	}
+.introBox {
+	margin-top: 12px;
+	width: 100%;
+}
 
-	.top-menu-view .menu-one-view .menu-one-act .menu-one-txt {
-		height: 40upx;
-		font-size: 36upx;
-		font-weight: 550;
-		color: #353535;
-		line-height: 40upx;
-	}
+.introBox-text {
+	max-width: 61%;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 13px;
+	color: rgba(136, 136, 136, 1);
+	opacity: 1;
+	word-break: keep-all;
+	word-wrap: break-word;
+}
 
-	.top-menu-view .menu-one-view .menu-one-act .menu-one-bottom {
-		/* 在这里设置底部横条宽度 */
-		position: absolute;
-		bottom: 0;
-		width: 80%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
+.guanzhuLine {
+	margin-top: 17px;
+	height: 26px;
+	width: 100%;
+	display: flex;
+}
 
-	.top-menu-view .menu-one-view .menu-one-act .menu-one-bottom .menu-one-bottom-color {
-		/* 在这里设置底部横条高度和颜色 */
-		width: 100%;
-		height: 6upx;
-		background: #FFCF3C;
-	}
+.guanzhuButton {
+	/* margin-left: 35.2%; */
+	margin-right: 0px;
+	width: 68px;
+	height: 26px;
+	background-color: rgba(255, 201, 90, 1);
+	box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
+	opacity: 1;
+	border-radius: 4px;
+}
 
-	.swiper-box-list {
-		flex: 1;
-		height: 92%;
-		width: 100%;
-		background-color: red;
-	}
+.guanzhuButton-after {
+	/* margin-left: 31.2%; */
+	margin-right: 0px;
+	width: 82px;
+	height: 26px;
+	opacity: 1;
+	border-radius: 4px;
+}
 
-	.swiper-one-list {
-		height: 100%;
-		width: 100%;
-	}
+.guanzhuButton-text {
+	font-size: 14px;
+	font-family: Source Han Sans CN;
+	font-weight: 400;
+	color: rgba(255, 255, 255, 1);
+	opacity: 1;
+}
 
-	/* 	.swiper-one-list .swiper-list-entity {
-		width: 100%;
-		height: 112upx;
-		text-align: center;
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		justify-content: center;
-	} */
+.guanzhuButton-text-after {
+	font-size: 14px;
+	font-family: Source Han Sans CN;
+	font-weight: 400;
+	line-height: 13px;
+	color: rgba(255, 201, 90, 1);
+	opacity: 1;
+}
 
-	/* swiper */
+.messageButton {
+	margin-left: 8px;
+	margin-top: -1px;
+	width: 28px;
+	height: 28px;
+	background: rgba(255, 241, 213, 1);
+	border-radius: 14px;
+	opacity: 1;
+}
 
-	.swiper {
-		height: 360upx;
-	}
+.operationLine {
+	margin: 17px 3.2%;
+	width: 93.6%;
+	height: 43px;
+	display: flex;
+	justify-content: space-between;
+}
 
-	.slideimage {
-		width: 100%;
-	}
-	/* under development 盖板 */
-	.warning-text-box{
-		height: 100%;
-		background-color: #D5D5D5;
-	}
-	
-	.warning-text-box .warning-text{
-		color: black;
-		font-size: 35upx;
-	}
+.operationCard {
+	width: 33.3%;
+	height: 43px;
+}
+
+.operationNum {
+	width: 100%;
+	height: 17px;
+	overflow: visible;
+}
+
+.operationNum-text {
+	font-size: 17px;
+	font-family: Source Han Sans CN;
+	font-weight: 800;
+	opacity: 1;
+}
+
+.operationTitle {
+	margin-top: 11px;
+	width: 100%;
+	height: 11px;
+	overflow: visible;
+}
+
+.operationTitle-text {
+	font-size: 10px;
+	font-family: Source Han Sans CN;
+	font-weight: 500;
+	color: rgba(178, 178, 178, 1);
+	opacity: 1;
+}
+
+/* 标题 */
+#public-titleBox {
+	width: 100%;
+	margin-top: 20px;
+	margin-bottom: 12px;
+}
+
+.public-title-text {
+	margin-left: 13px;
+	font-size: 17px;
+	font-family: Source Han Sans CN;
+	font-weight: bold;
+	color: rgba(136, 136, 136, 1);
+	opacity: 1;
+	letter-spacing: 1px;
+}
+
+/* 他的信息块 */
+#publix-profileLine {
+	margin-left: 13px;
+	border-radius: 8px;
+	background-color: rgba(255, 255, 255, 1);
+	box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+	display: flex;
+	justify-content: space-between;
+}
+
+.profileCard {
+	width: 50%;
+	display: flex;
+	flex-direction: column;
+}
+
+.profile-content-text {
+	margin-top: 16px;
+	margin-left: 38px;
+	font-size: 17px;
+	font-family: Source Han Sans CN;
+	font-weight: 500;
+	color: rgba(53, 53, 53, 1);
+	opacity: 1;
+}
+
+.profile-title-text {
+	margin-bottom: 16px;
+	margin-top: 8px;
+	margin-left: 38px;
+	font-size: 10px;
+	font-family: Source Han Sans CN;
+	font-weight: 500;
+	color: rgba(178, 178, 178, 1);
+	opacity: 1;
+}
+
+/* 他的发布文章块 */
+#public-articleCard {
+	margin-bottom: 8px;
+	max-height: 114px;
+	margin-left: 13px;
+	padding: 12px 0px;
+	border-radius: 8px;
+	background-color: rgba(255, 255, 255, 1);
+	box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+}
+
+.articleTitle {
+	width: calc(100% - 32px);
+	margin-left: 16px;
+	font-size: 15px;
+	font-family: Source Han Sans CN;
+	font-weight: 550;
+	color: rgba(74, 74, 74, 1);
+	opacity: 1;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	line-height: 17px;
+}
+
+.articleContentLine {
+	margin-top: 12px;
+	width: calc(100% - 32px);
+	margin-left: 16px;
+	display: flex;
+}
+
+/* 定高 */
+.textareaCard {
+	position: relative;
+	height: 63px;
+	width: 100%;
+}
+
+.textareaCard-img {
+	position: relative;
+	height: 63px;
+	width: calc(100% - 61px);
+	margin-right: 12px;
+}
+
+.textContent {
+	position: absolute;
+	top: 0;
+	width: 100%;
+	max-height: 39px;
+	font-size: 12px;
+	font-family: Source Han Sans CN;
+	font-weight: 400;
+	line-height: 13px;
+	color: rgba(53, 53, 53, 1);
+	opacity: 1;
+
+	word-break: break-all;
+	text-overflow: ellipsis;
+	/**文字隐藏后添加省略号*/
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+	overflow: hidden;
+}
+
+.bottomBar {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 12px;
+}
+
+.bottomBar image {
+	height: 12px;
+	width: 12px;
+}
+
+.bottomBar text {
+	margin-left: 4px;
+	font-size: 10px;
+	font-family: Source Han Sans CN;
+	font-weight: 400;
+	color: rgba(136, 136, 136, 1);
+	opacity: 1;
+}
+
+.bottom-time {
+	position: absolute;
+	width: 84px;
+	height: 12px;
+}
+
+.bottomBar .bottom-time text {
+	margin-left: 0px;
+	font-size: 10px;
+	font-family: Source Han Sans CN;
+	font-weight: 400;
+	color: rgba(155, 155, 155, 1);
+	opacity: 1;
+	white-space: nowrap;
+}
+
+.view {
+	position: absolute;
+	width: 43px;
+	height: 12px;
+	right: 86px;
+}
+
+.comment {
+	position: absolute;
+	width: 43px;
+	height: 12px;
+	right: 43px;
+}
+
+.like {
+	position: absolute;
+	width: 43px;
+	height: 12px;
+	right: 0;
+}
+
+.imgBox {
+	width: 61px;
+	height: 61px;
+}
+
+.imgBox image {
+	width: 61px;
+	height: 61px;
+}
 </style>

@@ -10,7 +10,8 @@
   </resultMap>
   
   <select id="getHotWords" resultType="String">
-  	SELECT content FROM nuoquan.search_record group by content order by count(content) desc
+  	SELECT content FROM nuoquan.search_record group by content order by count(content) desc limit 5
+  	 
   </select>
   
 </mapper>

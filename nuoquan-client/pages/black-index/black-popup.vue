@@ -126,6 +126,8 @@ export default {
 	margin-left: 25px;
 	color: #888888;
 	vertical-align: top;
+	max-width: 85px;
+	text-overflow: ellipsis;
 }
 
 .icons {

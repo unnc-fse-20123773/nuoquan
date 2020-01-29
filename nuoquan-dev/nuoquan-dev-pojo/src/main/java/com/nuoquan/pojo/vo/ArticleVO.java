@@ -1,6 +1,9 @@
 package com.nuoquan.pojo.vo;
 
 import java.util.Date;
+import java.util.List;
+
+import com.nuoquan.pojo.ArticleImage;
 
 public class ArticleVO {
     private String id;
@@ -15,8 +18,15 @@ public class ArticleVO {
     private Byte status;
     private Date createDate;
     private Byte isAnonymous;
+    private Integer viewNum;
+    
+    private List<ArticleImage> imgList; // 文章图片列表
+    private Boolean isLike; // 用户是否喜欢该文章
     
     private String nickname;
+    private String faceImg;
+    private String faceImgThumb;
+    private List<String> tagList;
     
     /**
      * @return id
@@ -200,5 +210,53 @@ public class ArticleVO {
 
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+
+	public String getFaceImg() {
+		return faceImg;
+	}
+
+	public void setFaceImg(String faceImg) {
+		this.faceImg = faceImg;
+	}
+
+	public String getFaceImgThumb() {
+		return faceImgThumb;
+	}
+
+	public void setFaceImgThumb(String faceImgThumb) {
+		this.faceImgThumb = faceImgThumb;
+	}
+
+	public Integer getViewNum() {
+		return viewNum;
+	}
+
+	public void setViewNum(Integer viewNum) {
+		this.viewNum = viewNum;
+	}
+
+	public List<ArticleImage> getImgList() {
+		return imgList;
+	}
+
+	public void setImgList(List<ArticleImage> imgList) {
+		this.imgList = imgList;
+	}
+
+	public Boolean getIsLike() {
+		return isLike;
+	}
+
+	public void setIsLike(Boolean isLike) {
+		this.isLike = isLike;
+	}
+
+	public List<String> getTagList() {
+		return tagList;
+	}
+
+	public void setTagList(List<String> tagList) {
+		this.tagList = tagList;
 	}
 }

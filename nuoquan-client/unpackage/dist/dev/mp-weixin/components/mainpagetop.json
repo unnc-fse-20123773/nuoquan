@@ -1,6 +1,7 @@
 {
   "component": true,
   "usingComponents": {
-    "mainpageleft": "/components/mainpageleft"
+    "mainpageleft": "/components/mainpageleft",
+    "searchpage": "/pages/search/search"
   }
 }
