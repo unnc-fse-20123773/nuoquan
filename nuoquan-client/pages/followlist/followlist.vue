@@ -98,7 +98,7 @@
 		},
 
 		onLoad(opt) {
-			var data = JSON.parse(opt.data);
+			var data = JSON.parse(decodeURIComponent(opt.data));
 			var thisUserInfo = data.thisUserInfo;
 			var currentTab = data.currentTab;
 

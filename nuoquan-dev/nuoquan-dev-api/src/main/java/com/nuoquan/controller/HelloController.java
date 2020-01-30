@@ -3,6 +3,7 @@ package com.nuoquan.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.util.concurrent.Service.State;
@@ -130,4 +131,5 @@ public class HelloController {
 			return JSONResult.errorMsg("测试不通过, errcode:" + checkRes.getErrcode() + ", " + checkRes.getErrmsg());
 		}
     }
+    
 }
