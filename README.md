@@ -21,37 +21,37 @@ Current Dev Verion: `v1.0.3`
 ├── nuoquan-dev app 后端代码
 │   ├── nuoquan-dev-api 顶层请求模块
 │   │   ├── src
-│   │	│	├── Application.java 启动类 [运行这个启动]
-│   │	│	├── Swagger2.java
-│   │	│	├── WarStartApplication.java tomcat启动类
-│   │	│	├── admin 后台管理
-│   │	│	├── config 配置类
-│   │	│	├── controller 控制类
-│   │	│	├── email 邮件服务
-│   │	│	├── netty netty消息队列服务
-│   │	│	└── scheduler 定时任务
+│   │	  │	  ├── Application.java 启动类 [运行这个启动]
+│   │	  │	  ├── Swagger2.java
+│   │	  │ 	├── WarStartApplication.java tomcat启动类
+│   │ 	│ 	├── admin 后台管理
+│   │	  │	  ├── config 配置类
+│   │	  │	  ├── controller 控制类
+│   │	  │	  ├── email 邮件服务
+│   │	  │	  ├── netty netty消息队列服务
+│   │	  │ 	└── scheduler 定时任务
 │   │   │
-│	│	└── resources 配置文件夹
-│   │	    ├── META-INF
-│   │	    ├── application-dev.properties 开发环境配置
-│   │	    ├── application-prod.properties 生产环境配置
-│   │	    ├── application.properties springboot配置
-│   │	    ├── log4j.properties
-│   │	    ├── mapper 自动/手写Mapper.xml文件夹
-│   │	    ├── resource-dev.properties 资源开发环境配置
-│   │	    ├── resource-prod.properties 资源生产环境配置
+│   │	  └── resources 配置文件夹
+│   │	      ├── META-INF
+│   │	      ├── application-dev.properties 开发环境配置
+│   │	      ├── application-prod.properties 生产环境配置
+│   │	      ├── application.properties springboot配置
+│   │	      ├── log4j.properties
+│   │	      ├── mapper 自动/手写Mapper.xml文件夹
+│   │	      ├── resource-dev.properties 资源开发环境配置
+│   │	      ├── resource-prod.properties 资源生产环境配置
 │   │       ├── static 静态文件存放文件夹[后台模版就放在此文件夹下面。所有的模版页面都在下面]
-│   │	    │   ├── admin 后台目录存放
-│   │	    │   │   ├── assets js、css存放路径
-│   │	    │   │   ├── assets js、css存放路径
-│   │	    │   │   └── bootstarp 后台模板存放路径
-│   │	    │   ├── js js存放
-│   │	    │   └── login 登录页面js、css、image
-│   │	    │
-│   │	    └── templates 前台HTML存放文件夹
-│   │	        ├── admin 动态后台html模板
-│	│           ├── error 错误页面html模板
-│   │			└── login.html 登录html页面
+│   │	      │   ├── admin 后台目录存放
+│   │	      │   │   ├── assets js、css存放路径
+│   │	      │   │   ├── assets js、css存放路径
+│   │	      │   │   └── bootstarp 后台模板存放路径
+│   │	      │   ├── js js存放
+│   │	      │   └── login 登录页面js、css、image
+│   │	      │
+│   │	      └── templates 前台HTML存放文件夹
+│   │	          ├── admin 动态后台html模板
+│   │           ├── error 错误页面html模板
+│   │	    		  └── login.html 登录html页面
 │   │
 │   ├── nuoquan-dev-common 公共模块
 │   │   ├── utils 工具类
