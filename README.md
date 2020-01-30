@@ -21,15 +21,15 @@ Current Dev Verion: `v1.0.3`
 ├── nuoquan-dev app 后端代码
 │   ├── nuoquan-dev-api 顶层请求模块
 │   │   ├── src
-│   │	│	├── Application.java 启动类 [运行这个启动]
-│   │	│	├── Swagger2.java
-│   │	│	├── WarStartApplication.java tomcat启动类
-│   │	│	├── admin 后台管理
-│   │	│	├── config 配置类
-│   │	│	├── controller 控制类
-│   │	│	├── email 邮件服务
-│   │	│	├── netty netty消息队列服务
-│   │	│	└── scheduler 定时任务
+│   │   │   ├── Application.java 启动类 [运行这个启动]
+│   │   │   ├── Swagger2.java
+│   │   │   ├── WarStartApplication.java tomcat启动类
+│   │   │   ├── admin 后台管理
+│   │   │   ├── config 配置类
+│   │   │   ├── controller 控制类
+│   │   │   ├── email 邮件服务
+│   │   │   ├── netty netty消息队列服务
+│   │   │   └── scheduler 定时任务
 │   │   │
 │	│	└── resources 配置文件夹
 │   │	    ├── META-INF
