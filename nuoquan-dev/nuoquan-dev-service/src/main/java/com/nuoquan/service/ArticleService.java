@@ -176,6 +176,12 @@ public interface ArticleService {
 	 */
 	public List<UserArticleCommentVO> getUnsignedCommentMsg(String userId);
 	
+	/**
+	 * Set the status to unreadable
+	 * @param articleId
+	 */
+	public void fDeleteArticle(String articleId);
+	
 	public void banArticle(String articleId);
 	
 	public void passArticle(String articleId);

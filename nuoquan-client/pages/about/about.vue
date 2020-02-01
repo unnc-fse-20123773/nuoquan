@@ -21,12 +21,20 @@
 					<image @click="control1" v-if="!contentShow1" src="../../static/icon/angle-up.png"></image>
 				</view>
 				<view class="form1-expand" v-if="!contentShow1">
-					<view class="subtitle">副标题副标题副标题副标题副标题</view>
+					<!-- <view class="subtitle">商务合作</view> -->
 					<view class="body">
-						正文正文正文正文正文正文正文正文正文正文正文 正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文
-						正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文 正文正文正文正文最多六行剩余滚动正文正文正文正文正文正文正文正文正文正文正文
-						正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文 正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文
-						正文正文正文正文最多六行剩余滚动
+						我们的初衷一直是为 UNNCer 打造一个专属的校际圈，让大家自由表达、拓宽交友圈、更有效的利用校内的信息和资源。
+						因此，我们欢迎校内各组织社团、学生团队、alumni 创业企业等与我们合作。合作形式包括但不限于联名活动、官方账号入驻 Nottinghome 小程序、资源共享等等。
+						我们欢迎一切能让 UNNCer 变的更好的 idea。
+						举报和反馈请联系：
+						wx: honggh-
+						
+						商务合作请联系：
+						wx: qian4223x
+						email: jumbox_nb@outlook.com
+						
+						官方微信公众号：
+						Jumboxtech
 					</view>
 				</view>
 			</view>
@@ -39,16 +47,20 @@
 					<image @click="control2" v-if="!contentShow2" src="../../static/icon/angle-up.png"></image>
 				</view>
 				<view class="form2-expand" v-if="!contentShow2">
-					<view class="subtitle">副标题副标题副标题副标题副标题</view>
+					<view class="subtitle">V1.0.3</view>
 					<view class="body">
-						正文正文正文正文正文正文正文正文正文正文正文 正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文
-						正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文 正文正文正文正文最多六行剩余滚动
+						19.11.8 更新：
+						1. 升级“个人主页”的外观，实现全部功能；
+						2. 新增“关于”页面
+						3. 新增“我的发布”页面，现用户可以通过该页面删除已发布的帖子
+						4. 修复若干 bug
+						5. 解决了部分页面部分机型不适配问题
 					</view>
 				</view>
 			</view>
 			
 			<!--表单3-->
-			<view class="form3">
+			<!-- <view class="form3">
 				<view class="form3-fold">
 					<view class="tipping">打赏</view>
 					<image @click="control3" v-if="contentShow3" src="../../static/icon/angle-down.png"></image>
@@ -62,7 +74,7 @@
 						正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文 正文正文正文正文最多六行剩余滚动
 					</view>
 				</view>
-			</view>
+			</view> -->
 			
 		</view>
 		
@@ -235,6 +247,13 @@ page {
 	line-height: 20px;
 	max-height: 120px;
 	overflow: scroll;
+	/* 保证文章正常显示 */
+	word-break: break-all;
+	white-space: pre-line;
+	text-overflow: ellipsis;
+	/* display: -webkit-box; */
+	/* -webkit-box-orient: vertical; */
+	/* -webkit-line-clamp: 15; */
 }
 .bottom-picture image {
 	width: 100%;

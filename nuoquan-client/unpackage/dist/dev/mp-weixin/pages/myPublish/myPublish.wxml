@@ -1,1 +1,1 @@
-<view style="width:100%;height:100%;margin:auto;"><view class="top-bar"><view class="totalNum">{{totalNum+"篇文章"}}</view></view><view class="mainbody"><my-articles vue-id="1" myArticleList="{{myArticleList}}" bind:__l="__l"></my-articles></view></view>
+<view style="width:100%;height:100%;margin:auto;background:#FFFFFF;"><view class="top-bar"><view class="totalNum">{{totalNum+"篇文章"}}</view></view><view class="mainbody"><my-articles vue-id="1" myArticleList="{{myArticleList}}" bind:__l="__l"></my-articles></view></view>

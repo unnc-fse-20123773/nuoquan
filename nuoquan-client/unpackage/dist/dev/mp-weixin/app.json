@@ -1,17 +1,18 @@
 {
   "pages": [
-    "pages/index/index",
+    "pages/tabPages/index",
+    "pages/tabPages/votePage",
+    "pages/tabPages/messagelist",
+    "pages/tabPages/profile",
     "pages/detail/detail",
     "pages/submit/submit",
     "pages/chatpage/chatpage",
     "pages/followlist/followlist",
-    "pages/profile/profile",
     "pages/personpublic/personpublic",
     "pages/search/search",
     "pages/black-index/black-index",
     "pages/signin/signin",
     "components/articlebrief",
-    "pages/messagelist/messagelist",
     "pages/wechatLogin/wechatLogin",
     "pages/cmt-likedetail/cmt-likedetail",
     "pages/comment-detail/comment-detail",
@@ -26,6 +27,39 @@
     "navigationBarTitleText": "Nottinghome",
     "navigationBarBackgroundColor": "#fdd041",
     "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#7A7E83",
+    "selectedColor": "#3cc51f",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/tabPages/index",
+        "iconPath": "static/icon/star.png",
+        "selectedIconPath": "static/icon/star.png",
+        "text": "主页"
+      },
+      {
+        "pagePath": "pages/tabPages/votePage",
+        "iconPath": "static/icon/star.png",
+        "selectedIconPath": "static/icon/star.png",
+        "text": "投票"
+      },
+      {
+        "pagePath": "pages/tabPages/messagelist",
+        "iconPath": "static/icon/star.png",
+        "selectedIconPath": "static/icon/star.png",
+        "text": "动态"
+      },
+      {
+        "pagePath": "pages/tabPages/profile",
+        "iconPath": "static/icon/star.png",
+        "selectedIconPath": "static/icon/star.png",
+        "text": "我的"
+      }
+    ]
   },
   "permission": {},
   "usingComponents": {}

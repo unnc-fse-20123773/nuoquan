@@ -286,6 +286,16 @@
 
 			getCaptcha() {
 				if (email) {
+					// 测试账号代码
+					if (email=="test@test.com"){
+						uni.showToast({
+							title: '认证成功',
+							icon: 'none'
+						});
+						this.changeAuth();
+						this.nextStep(false);
+						return;
+					}
 					// 检测邮箱
 					if (util.regEmail(email) || this.checkUNNCEmail(email)) {
 						uni.showToast({

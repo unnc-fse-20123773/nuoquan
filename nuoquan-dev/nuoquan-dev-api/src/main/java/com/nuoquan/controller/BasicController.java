@@ -8,16 +8,17 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nuoquan.config.ResourceConfig;
 import com.nuoquan.pojo.User;
+import com.nuoquan.pojo.vo.TitleVo;
 import com.nuoquan.pojo.vo.UserLikeVO;
 import com.nuoquan.pojo.vo.UserVO;
 import com.nuoquan.utils.RedisOperator;
 
-@RestController
 public class BasicController {
 
 	@Autowired
@@ -86,6 +87,21 @@ public class BasicController {
 		}
 	}
 	
-	
+	/**
+     * 设置标题通用方法
+     * @param model
+     */
+    public void setTitle(ModelMap map, TitleVo titleVo){
+    	//标题
+    	map.put("title",titleVo.getTitle());
+    	map.put("parenttitle",titleVo.getParenttitle());
+		//是否打开欢迎语
+    	map.put("isMsg",titleVo.isMsg());
+		//欢迎语
+    	map.put("msgHTML",titleVo.getMsgHtml());
+		//小控件
+    	map.put("isControl",titleVo.isControl());
+		map.put("isribbon", titleVo.isIsribbon());
+    }
 	
 }

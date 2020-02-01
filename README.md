@@ -1,29 +1,83 @@
 README
 ======
-Current Verion: `v1.0.1`
+Current Dev Verion: `v1.0.3`
+
+项目后端采用分层架构：common <- pojo <- mapper(DAO) <- service <- api
+```
+.
+├── README.md  
+├── nuoquan-client app 前端代码
+│   ├── App.vue  
+│   ├── common  
+│   ├── components  
+│   ├── custom-tab-bar  
+│   ├── main.js  
+│   ├── manifest.json  
+│   ├── pages  
+│   ├── pages.json  
+│   ├── static  
+│   ├── store  
+│   └── uni.scss  
+├── nuoquan-dev app 后端代码
+│   ├── nuoquan-dev-api 顶层请求模块
+│   │   ├── src
+│   │   │   ├── Application.java 启动类 [运行这个启动]
+│   │   │   ├── Swagger2.java
+│   │   │   ├── WarStartApplication.java tomcat启动类
+│   │   │   ├── admin 后台管理
+│   │   │   ├── config 配置类
+│   │   │   ├── controller 控制类
+│   │   │   ├── email 邮件服务
+│   │   │   ├── netty netty消息队列服务
+│   │   │   └── scheduler 定时任务
+│   │   │
+│   │   └── resources 配置文件夹
+│   │       ├── META-INF
+│   │       ├── application-dev.properties 开发环境配置
+│   │       ├── application-prod.properties 生产环境配置
+│   │       ├── application.properties springboot配置
+│   │       ├── log4j.properties
+│   │       ├── mapper 自动/手写Mapper.xml文件夹
+│   │       ├── resource-dev.properties 资源开发环境配置
+│   │       ├── resource-prod.properties 资源生产环境配置
+│   │       ├── static 静态文件存放文件夹[后台模版就放在此文件夹下面。所有的模版页面都在下面]
+│   │       │   ├── admin 后台目录存放
+│   │       │   │   ├── assets js、css存放路径
+│   │       │   │   ├── assets js、css存放路径
+│   │       │   │   └── bootstarp 后台模板存放路径
+│   │       │   ├── js js存放
+│   │       │   └── login 登录页面js、css、image
+│   │       │
+│   │       └── templates 前台HTML存放文件夹
+│   │           ├── admin 动态后台html模板
+│   │           ├── error 错误页面html模板
+│   │           └── login.html 登录html页面
+│   │
+│   ├── nuoquan-dev-common 公共模块
+│   │   ├── utils 工具类
+│   │   └── pom.xml 项目所有依赖写在这里
+│   │
+│   ├── nuoquan-dev-mapper Dao模块
+│   ├── nuoquan-dev-pojo 对象模块
+│   ├── nuoquan-dev-service 服务层模块
+│   ├── nuoquan-mybatisTool mybatis半自动生成工具 [考虑到自动生成文件会覆盖原有文件，因此把它独立成一个项目，运行后需手动复制文件]
+│   ├── pom.xml  
+│   └── ssl_cert  
+├── sqlRecord.sql 数据库更新文档
+├── testBugs Bug记录文档 
+└── updateLog.md  
+```
 ******
 ## *TODO：* ##
-- 点赞开灯效果优化 (guetta & jinjin)
-- index 黄色异形适配长整型 (yaoyao)
+- 暂无
 
 ## [Recent Update](./updateLog.md): ##
-**v19.10.6 更新**
-1. 优化 登陆逻辑
-2. 修正 自己不接收点赞&评论自己内容的消息
-3. 优化 多个页面视觉体验（guetta）
-4. 优化 邮箱验证逻辑
-5. 新增 按内容&标题&标签搜索（deyan）
+**v20.1.30 更新**
+1. 新增 后台管理模板代码
+2. 修复 后端热部署与 mybatis 依赖的冲突，现可正常使用热部署
+3. 新增 admin.controller
 
-**v19.10.4 更新**
-1. 整合 deyan & guetta
-2. 小改 数据库，详情见 sqlRecord.sql
-3. 新增 文章和评论文本内容安全检测
-4. 新增 文章和评论的状态修改（deyan）
-5. 优化 detail 评论文章代码，加锁
-6. 优化 通知类消息缓存逻辑，同设备无法看见其他账号的消息
-
-**v19.10.2 更新**
-1. 新增 服务器ssl证书
-2. 新增 https & wss 安全访问（如需后台本地调试，请修改 netty.WSServerInitializer 第22行配置）
-3. 修复 查询单条文章接口缺陷（此项更新尚未同步服务器）
-4. 优化 cmt-like -> 文章detail 跳转逻辑
+**v19.11.8 更新**
+1. 优化 personpublic 页面
+2. 新增 关于页面
+3. 新增 myPublish 页面

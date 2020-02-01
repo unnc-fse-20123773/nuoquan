@@ -161,7 +161,7 @@
 		},
 		
 		onLoad(options) {
-			this.articleCard = JSON.parse(options.data);
+			this.articleCard = JSON.parse(decodeURIComponent(options.data));
 			console.log(this.articleCard);
 			var userInfo = this.getGlobalUserInfo();
 			if (!this.isNull(userInfo)) {

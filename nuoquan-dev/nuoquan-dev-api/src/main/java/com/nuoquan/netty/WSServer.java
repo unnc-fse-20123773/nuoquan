@@ -45,6 +45,7 @@ public class WSServer {
 		this.childGroup.shutdownGracefully();
 	}
 	
+//	以下为测试方法。
 //	public static void main(String[] args) throws Exception{
 //		
 //		EventLoopGroup parentGroup = new NioEventLoopGroup();

@@ -50,7 +50,7 @@
 				<!-- <view class="noticeNum">3</view> -->
 
 			</button>
-			<button class="pageLine" @click="goToAboutPage">>
+			<button class="pageLine" @click="goToAboutPage">
 				<image src="../static/icon/about.png"></image>
 				<view>关于</view>
 

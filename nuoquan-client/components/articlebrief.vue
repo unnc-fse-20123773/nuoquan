@@ -1,6 +1,6 @@
 <template>
 	<view class="articlecard" ref="articleCard">
-		<view @click="jumpToDetail()">
+		<view @click="goToDetail()">
 			<view class="title">{{ thisArticle.articleTitle }}</view>
 			<view class="briefarticleCard">{{ thisArticle.articleContent }}</view>
 		</view>
@@ -9,14 +9,14 @@
 
 			<!-- 下面两个 view 分别为蒙版背景层和数字层，都是由 margin-left = 67.5% 精准推至第三张图位置上的 -->
 			<view v-if="thisArticle.imgList.length > 3" style="margin-left: 67.5%;position: absolute;width: 30%;height: 200upx;"
-			 class="super_center" @click="jumpToDetail()">
+			 class="super_center" @click="goToDetail()">
 				<view style="color: white;font-weight: 600;font-size: 24px;z-index: 20;">
 					+{{thisArticle.imgList.length-3}}
 				</view>
 			</view>
 			<view v-if="thisArticle.imgList.length > 3" style="position: absolute;width: 30%;height: 200upx;
 			background-color: #000000;opacity: 0.5;margin-left: 67.5%;z-index: 10;"
-			 @click="jumpToDetail()"></view>
+			 @click="goToDetail()"></view>
 
 			<!-- 宽高和 image 保持一致 -->
 			<!-- 单图显示 -->
@@ -42,13 +42,13 @@
 			</view>
 
 		</view>
-		<view class="tags" @click="jumpToDetail()">
+		<view class="tags" @click="goToDetail()">
 			<view class="tag" :style="{background: tagColorList[index]}" v-for="(i, index) in thisArticle.tagList" v-bind:key="index">{{i}}</view>
 		</view>
 		<view class="menubar">
 			<!-- 点赞&评论蒙层，用于优化体验 -->
 			<view style="position: absolute;z-index: 20;height: 30px;width: 80upx;top:0;right: 0;" @tap="swLikeArticle"></view>
-			<view style="position: absolute;z-index: 20;height: 30px;width: 80upx;top:0;right: 40px;" @click="jumpToDetail()"></view>
+			<view style="position: absolute;z-index: 20;height: 30px;width: 80upx;top:0;right: 40px;" @click="goToDetail()"></view>
 			<image :src="thisArticle.faceImg" class="touxiang" @tap="goToPersonPublic(thisArticle.userId)"></image>
 			<view class="name" >{{ thisArticle.nickname }}</view>
 			<view class="time" :style="timeLeft">{{ thisArticle.createDate | timeDeal}}</view>
@@ -224,10 +224,10 @@
 					},
 				});
 			},
-			jumpToDetail() {
-				var navData = JSON.stringify(this.thisArticle); // 这里转换成 字符串
+			goToDetail() {
+				var encodeData = encodeURIComponent(JSON.stringify(this.thisArticle)); // 对数据字符串化并转码，防止特殊字符影响传参
 				uni.navigateTo({
-					url: '/pages/detail/detail?data=' + navData
+					url: '/pages/detail/detail?data=' + encodeData,
 				});
 			},
 			goToPersonPublic(userId) {

@@ -1,40 +1,39 @@
 <template>
-	<view style="width:100%;height:100%;margin:auto;">
+	<view style="width:100%;height:100%;margin:auto;background: #FFFFFF;">
 		<view class="top-bar">
-			<view class="totalNum">{{totalNum}}篇文章</view>
+			<view class="totalNum">{{ totalNum }}篇文章</view>
 			<!-- <view class="bin">
 				<image src="../../static/icon/bin.png"></image>
 				<view>回收站  {{binNum}}</view>
 			</view> -->
 		</view>
-		<view class="mainbody">
-			<myArticles  v-bind:myArticleList="myArticleList"></myArticles>
-		</view>
+		<view class="mainbody"><myArticles v-bind:myArticleList="myArticleList"></myArticles></view>
 	</view>
 </template>
 
 <script>
-	import myArticles from './myArticles.vue'
-	export default {
-			
-		components:{
-			myArticles,
-		},
-		data() {
-			return {
-			loadArticleFlag:false,
+import myArticles from './myArticles.vue';
+
+var loadArticleFlag = false;
+export default {
+	components: {
+		myArticles
+	},
+	data() {
+		return {
 			userInfo: '',
+			binNum: '12',
+			
 			totalPage: 1,
 			currentPage: 1,
-
-			totalNum: '5',
-			binNum: '12',
-			myArticleList: "",
+			totalNum: '0',
+			myArticleList: '',
 		};
 	},
 
 	onLoad() {
 		var userInfo = this.getGlobalUserInfo();
+		console.log(userInfo);
 		if (this.isNull(userInfo)) {
 			uni.redirectTo({
 				url: '../signin/signin'
@@ -47,25 +46,29 @@
 		this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
 		var page = this.currentPage;
 		this.showArticles(page);
+		
+		uni.$on("refresh", () => {
+			this.showArticles(1);
+		});
 	},
 
 	methods: {
 		// 锁
 		showArticles: function(page) {
-			console.log(this.loadArticleFlag);
-			
-			if ( this.loadArticleFlag ) {
-			
+			console.log(loadArticleFlag);
+
+			if (loadArticleFlag) {
+				loadArticleFlag = false;
 			}
 
-			this.loadArticleFlag = true;
+			loadArticleFlag = true;
 
 			uni.showLoading({
 				title: '加载中...'
 			});
 			setTimeout(() => {
-				if (this.loadArticleFlag) {
-					this.loadArticleFlag = false; //解锁
+				if (loadArticleFlag) {
+					loadArticleFlag = false; //解锁
 					uni.hideLoading();
 					uni.showToast({
 						title: '网络未知错误',
@@ -76,6 +79,7 @@
 			}, 5000); //延时五秒timeout
 
 			var that = this;
+			console.log(that.userInfo);
 			uni.request({
 				url: that.$serverUrl + '/article/queryPublishHistory',
 				method: 'POST',
@@ -89,11 +93,11 @@
 				},
 				success: res => {
 					console.log(res);
-					
+
 					setTimeout(() => {
 						//延时加载
 						uni.hideLoading();
-					this.loadArticleFlag = false;
+						loadArticleFlag = false;
 
 						console.log(res);
 						if (page == 1) {
@@ -110,7 +114,7 @@
 				},
 				fail: res => {
 					uni.hideLoading();
-				this.loadArticleFlag = false;
+					loadArticleFlag = false;
 
 					console.log('index unirequest fail');
 					console.log(res);
@@ -141,17 +145,18 @@
 </script>
 
 <style>
-	page{
-		background: #F8F8F8;
-	}
-.top-bar{
-	width:calc(100% - 58px);
-	height:30px;
-	padding:24px 0;
+page {
+	background: #FFFFFF;
+	/* background: #f8f8f8; */
+}
+.top-bar {
+	width: calc(100% - 58px);
+	height: 30px;
+	padding: 24px 0;
 	display: flex;
 	justify-content: space-between;
-	font:Source Han Sans CN;
-	margin:auto;
+	font: Source Han Sans CN;
+	margin: auto;
 }
 
 .totalNum {
@@ -159,7 +164,7 @@
 	font-size: 18px;
 	text-spacing: 80;
 }
-	
+
 /* .bin{
 	position: relative;
 	display: inline-flex;
@@ -186,8 +191,8 @@
 	align-items: center;
 	line-height: 30px;
 } */
-.mainbody{
-	width:calc(100% - 26px);
+.mainbody {
+	width: calc(100% - 26px);
 	margin: auto;
 }
 </style>
