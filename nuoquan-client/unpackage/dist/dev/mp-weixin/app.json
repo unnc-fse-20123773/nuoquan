@@ -60,6 +60,7 @@
       }
     ]
   },
+<<<<<<< HEAD
   "permission": {
     "scope.userLocation": {
       "desc": ""
@@ -67,4 +68,8 @@
   },
   "usingComponents": {},
   "sitemapLocation": "sitemap57.json"
+=======
+  "permission": {},
+  "usingComponents": {}
+>>>>>>> master
 }

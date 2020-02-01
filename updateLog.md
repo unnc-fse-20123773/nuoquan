@@ -1,4 +1,9 @@
 # Update Log: #
+**v20.1.30 更新**
+1. 新增 后台管理模板代码
+2. 修复 后端热部署与 mybatis 依赖的冲突，现可正常使用热部署
+3. 新增 admin.controller
+
 **v19.11.8 更新**
 1. 优化 personpublic 页面
 2. 新增 关于页面
