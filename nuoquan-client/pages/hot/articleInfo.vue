@@ -15,7 +15,7 @@
 								<!--{{ thisArticle.createDate }}-->
 							</view>
 							<view class="comment">
-								<image src="../../static/icon/comment-alt%20353535.png"></image>
+								<image src="../../static/icon/comment-alt-353535.png"></image>
 								<view> {{thisArticle.commentNum}}</view>
 							</view>
 							<view class="like">
@@ -30,7 +30,7 @@
 						</view>
 					</view>
 					<view class="picArea" v-if="thisArticle.imgList.length">
-						<image :src="serverUrl + thisArticle.imgList[0].imagePath"></image>
+						<image class = "picArea" :src="serverUrl + thisArticle.imgList[0].imagePath"></image>
 					</view>	
 				</view>	
 			</view>
@@ -61,7 +61,7 @@
 }
 	.title {
 		font-size: 15px;
-		color: ##4A4A4A;
+		color: #4A4A4A;
 		margin-top: 10px;
 		padding-top: 10px;
 		white-space: nowrap;
@@ -78,11 +78,10 @@
 
 	.picArea {
 		position: absolute;
-		right: 0;
-		top: 10px;;
+		right: 10px;
+		top: -10px;
 		width: 61px;
 		height: 61px;
-		background:black;
 	}
 
 	.left-body {
@@ -95,8 +94,8 @@
 	}
 
 	.content {
-		height: 39px;
-		width: 100%;
+		height: 40px;
+		width: 70%;
 		font-size: 12px;
 		line-height: 13px;
 		overflow: hidden;
@@ -107,14 +106,11 @@
 		width: 100%;
 		height: 15px;
 		margin-bottom:15px;
-		position: absolute;
-		top:85px;
-		right:5px;
 		color:#9B9B9B;
 	}
 
 	.time {
-		width: 77px;
+		width: 85px;
 		/* 暂时,到  月-日 时:分*/
 		height: 10px;
 		line-height: 10px;

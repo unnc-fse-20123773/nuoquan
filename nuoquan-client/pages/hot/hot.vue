@@ -16,71 +16,11 @@ import articleInfo from './articleInfo.vue'
 		components:{articleInfo,},
 		data() {
 			return {
+				totalPage: 1,
+				currentPage: 1,
 			loadArticleFlag:false,
 			userInfo: '',
-			myArticleList:[
-				
-				{
-				articleContent: "这位同学难道不知hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii道阿消会爬网站吗",
-				articleTitle: "阿消发威",
-				commentNum: 0,
-				createDate: 1578561839000,
-				dislikeNum: 0,
-				id: "2009CBNY5DZ91P",
-				imgList: Array(1),
-				isAnonymous: 0,
-				isLike: false,
-				likeNum: 1,
-				nickname: "eddie",
-				popularity: 0,
-				status: 1,
-				tagList: null,
-				tags: "",
-				userId: "oDwsO5JL9WJ4RsbeT3yjsyoLuoLU",
-				viewNum: 3
-				},
-				
-				{
-				articleContent: "这位同学难道不知道阿fffffffffffffffffffffffffff消会爬网站吗",
-				articleTitle: "阿消发威",
-				commentNum: 0,
-				createDate: 1578561839000,
-				dislikeNum: 0,
-				id: "200109CBNYZ91",
-				imgList: Array(1),
-				isAnonymous: 0,
-				isLike: false,
-				likeNum: 1,
-				nickname: "eddie",
-				popularity: 0,
-				status: 1,
-				tagList: null,
-				tags: "",
-				userId: "oDwsO5JL9WJ4RsbeT3yjsyoLuoLU",
-				viewNum: 3	
-				}
-				,{
-					articleContent: "这位同学难道不知道阿消会爬网站吗",
-					articleTitle: "阿消发威",
-					commentNum: 0,
-					createDate: 178561839000,
-					dislikeNum: 0,
-					id: "200109CBNDZ91P",
-					imgList: Array(1),
-					isAnonymous: 0,
-					isLike: false,
-					likeNum: 1,
-					nickname: "eddie",
-					popularity: 0,
-					status: 1,
-					tagList: null,
-					tags: "",
-					userId: "oDwsO5JL9WJ4RsbeT3yjsyoLuoLU",
-					viewNum: 3
-				}
-				
-				
-			],
+			myArticleList:[],
 		};
 	},
 
@@ -97,12 +37,12 @@ import articleInfo from './articleInfo.vue'
 
 		this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
 		var page = this.currentPage;
-		/*this.showArticles(page);*/
+		this.showArticles(page);
 	},
 
 	methods: {
 		reload: function() {
-			this.showArticles(page);
+			this.showArticles(1);
 		},
 		// 锁
 		showArticles: function(page) {
@@ -131,7 +71,7 @@ import articleInfo from './articleInfo.vue'
 
 			var that = this;
 			uni.request({
-				url: that.$serverUrl + '/article/queryPublishHistory',
+				url: that.$serverUrl + '/article/queryAllArticles',
 				method: 'POST',
 				data: {
 					page: page,
