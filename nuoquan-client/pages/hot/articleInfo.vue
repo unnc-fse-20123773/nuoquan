@@ -1,7 +1,6 @@
 <template>
 <view style="width:100%;">
-	<block v-for="thisArticle in myArticleList" :key="thisArticle.id" @click="consoleEvent">
-		<view class="oneArticle"  >
+		<view class="oneArticle">
 				<view class="title">
 					{{ thisArticle.articleTitle }}
 				</view>
@@ -12,16 +11,17 @@
 						</view>
 						<view class="bottomBar">
 							<view class="time">
-								{{ timeDeal(thisArticle.createDate)}}
+								{{timeDeal(thisArticle.createDate)}}
+								<!--{{ thisArticle.createDate }}-->
 							</view>
 							<view class="comment">
 								<image src="../../static/icon/comment-alt%20353535.png"></image>
-								<view> {{thisArticle.likeNum}}</view>
+								<view> {{thisArticle.commentNum}}</view>
 							</view>
 							<view class="like">
 								<image v-if="!thisArticle.isLike"  src="../../static/icon/like.png" ></image>
 								<image v-if="thisArticle.isLike"  src="../../static/icon/liked-red.png" ></image>
-								<view> {{thisArticle.likeNum}}</view>
+								<view>{{thisArticle.likeNum}}</view>
 							</view>
 							<view class="view">
 								<image src="../../static/icon/eye-888888.png"></image>
@@ -31,12 +31,10 @@
 					</view>
 					<view class="picArea" v-if="thisArticle.imgList.length">
 						<image :src="serverUrl + thisArticle.imgList[0].imagePath"></image>
-	 <!-- 						<view class="picNum"></view>第二版不显示图片总数了，此处注释掉 -->	
-					</view>
+					</view>	
 				</view>	
 			</view>
-		</view>
-	</block>
+
 </view>
 
 
@@ -45,7 +43,7 @@
 <script>
 	export default {
 		props: {
-			myArticleList: {}
+			thisArticle:{}
 		},
 		data() {
 			return {
@@ -53,21 +51,19 @@
 				
 			};
 		},
-
-		methods: {	
-		}
 }
 </script>
 
 <style>
 	.oneArticle {
 		width: 100%;
-		position: relative;
+		position:relative;
 }
 	.title {
-		font-size: 17px;
+		font-size: 15px;
 		color: ##4A4A4A;
-		padding-top: 19px;
+		margin-top: 10px;
+		padding-top: 10px;
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -77,27 +73,16 @@
 		position: relative;
 		width: 100%;
 		/* height:83px; */
-		padding-top:12px;
-		height:0;
+		padding-top:10px;
 	}
-
-
 
 	.picArea {
-		display: inline-block;
-		width:61px;
-		height:61px;
-		position: absolute;
-		top:12px;
-		right:4px;
-	}
-
-	.picArea image {
 		position: absolute;
 		right: 0;
-		top: 0;
+		top: 10px;;
 		width: 61px;
 		height: 61px;
+		background:black;
 	}
 
 	.left-body {
@@ -120,10 +105,11 @@
 
 	.bottomBar {
 		width: 100%;
-		height: 10px;
-		padding-top: 12px;
-		padding-bottom: 12px;
-		position: relative;
+		height: 15px;
+		margin-bottom:15px;
+		position: absolute;
+		top:85px;
+		right:5px;
 		color:#9B9B9B;
 	}
 
@@ -134,7 +120,7 @@
 		line-height: 10px;
 		font-size: 10px;
 		position: absolute;
-		left: 0;
+		left: 5px;
 		bottom: 12px;
 	}
 

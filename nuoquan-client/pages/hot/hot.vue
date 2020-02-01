@@ -1,31 +1,86 @@
 <template>
 	<view style="width:100%;height:100%;margin:auto;">
-		<view class="top-bar">
-			<view class="totalNum">{{totalNum}}篇文章</view>
-		</view>
+		<button class="reload" @click="reload()">
+			<text class="refresh">刷新</text>
+		</button>
 		<view class="mainbody">
-			<myArticles  v-bind:myArticleList="myArticleList"></myArticles>
+			<articleInfo v-for="item in myArticleList" :key="item.id" :thisArticle="item"></articleInfo>
+
 		</view>
 	</view>
 </template>
 
 <script>
-	import myArticles from './myArticles.vue'
+import articleInfo from './articleInfo.vue'
 	export default {
-			
-		components:{
-			myArticles,
-		},
+		components:{articleInfo,},
 		data() {
 			return {
 			loadArticleFlag:false,
 			userInfo: '',
-			totalPage: 1,
-			currentPage: 1,
-
-			totalNum: '5',
-			binNum: '12',
-			myArticleList: "",
+			myArticleList:[
+				
+				{
+				articleContent: "这位同学难道不知hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii道阿消会爬网站吗",
+				articleTitle: "阿消发威",
+				commentNum: 0,
+				createDate: 1578561839000,
+				dislikeNum: 0,
+				id: "2009CBNY5DZ91P",
+				imgList: Array(1),
+				isAnonymous: 0,
+				isLike: false,
+				likeNum: 1,
+				nickname: "eddie",
+				popularity: 0,
+				status: 1,
+				tagList: null,
+				tags: "",
+				userId: "oDwsO5JL9WJ4RsbeT3yjsyoLuoLU",
+				viewNum: 3
+				},
+				
+				{
+				articleContent: "这位同学难道不知道阿fffffffffffffffffffffffffff消会爬网站吗",
+				articleTitle: "阿消发威",
+				commentNum: 0,
+				createDate: 1578561839000,
+				dislikeNum: 0,
+				id: "200109CBNYZ91",
+				imgList: Array(1),
+				isAnonymous: 0,
+				isLike: false,
+				likeNum: 1,
+				nickname: "eddie",
+				popularity: 0,
+				status: 1,
+				tagList: null,
+				tags: "",
+				userId: "oDwsO5JL9WJ4RsbeT3yjsyoLuoLU",
+				viewNum: 3	
+				}
+				,{
+					articleContent: "这位同学难道不知道阿消会爬网站吗",
+					articleTitle: "阿消发威",
+					commentNum: 0,
+					createDate: 178561839000,
+					dislikeNum: 0,
+					id: "200109CBNDZ91P",
+					imgList: Array(1),
+					isAnonymous: 0,
+					isLike: false,
+					likeNum: 1,
+					nickname: "eddie",
+					popularity: 0,
+					status: 1,
+					tagList: null,
+					tags: "",
+					userId: "oDwsO5JL9WJ4RsbeT3yjsyoLuoLU",
+					viewNum: 3
+				}
+				
+				
+			],
 		};
 	},
 
@@ -42,10 +97,13 @@
 
 		this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
 		var page = this.currentPage;
-		this.showArticles(page);
+		/*this.showArticles(page);*/
 	},
 
 	methods: {
+		reload: function() {
+			this.showArticles(page);
+		},
 		// 锁
 		showArticles: function(page) {
 			console.log(this.loadArticleFlag);
@@ -85,7 +143,6 @@
 				},
 				success: res => {
 					console.log(res);
-					
 					setTimeout(() => {
 						//延时加载
 						uni.hideLoading();
@@ -139,6 +196,7 @@
 <style>
 	page{
 		background: #F8F8F8;
+		position:relative;
 	}
 .top-bar{
 	width:calc(100% - 58px);
@@ -161,4 +219,19 @@
 	width:calc(100% - 26px);
 	margin: auto;
 }
+.reload {
+		margin-top:20px;
+		margin-left:80%;
+		width: 60px;
+		height: 30px;
+		line-height:30px;
+		background-color: #FFCF3C;
+		border-width: 1upx;
+		border-radius: 20upx;
+	}
+
+	.refresh{
+		font-size:15px;
+	}
+
 </style>

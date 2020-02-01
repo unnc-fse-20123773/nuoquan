@@ -1,0 +1,45 @@
+
+page{
+		background: #F8F8F8;
+		position:relative;
+}
+.top-bar{
+	width:calc(100% - 58px);
+	height:30px;
+	padding:24px 0;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	    -ms-flex-pack: justify;
+	        justify-content: space-between;
+	font:Source Han Sans CN;
+	margin:auto;
+}
+.totalNum {
+	color: #888888;
+	font-size: 18px;
+	-ms-text-spacing: 80;
+	    text-spacing: 80;
+}
+.mainbody{
+	width:calc(100% - 26px);
+	margin: auto;
+}
+.reload {
+		margin-top:20px;
+		margin-left:80%;
+		width: 60px;
+		height: 30px;
+		line-height:30px;
+		background-color: #FFCF3C;
+		border-width: 1rpx;
+		border-radius: 20rpx;
+}
+.refresh{
+		font-size:15px;
+}
+
+
