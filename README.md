@@ -2,6 +2,11 @@ README
 ======
 Current Dev Verion: `v1.0.3`
 
+### 开发环境
+- JDK8.0
+- mysql5.7以上
+- eclipse
+
 项目后端采用分层架构：common <- pojo <- mapper(DAO) <- service <- api
 ```
 .
@@ -69,7 +74,7 @@ Current Dev Verion: `v1.0.3`
 ```
 ******
 ## *TODO：* ##
-- 暂无
+- 微信授权登陆->若有记录，无需认证，显示欢迎回来。
 
 ## [Recent Update](./updateLog.md): ##
 **v20.1.30 更新**

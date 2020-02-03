@@ -197,6 +197,7 @@
 <script type="text/javascript" th:inline="javascript">
 window.rootPath=[[${rootPath}]];
 var isRoll=[[${RollVerification}]];
+console.log(isRoll);
 $(document).ready(function(){
 	(function(window,document){
 		window.v2={
@@ -322,7 +323,8 @@ $(document).ready(function(){
 								$.modal.alertError("系统错误");
 							},
 							success : function(data) {
-								if(data.code==200){
+								/* console.log(data) */
+								if(data.status==200){
 									 location.href = rootPath + '/admin/index';
 								}else{
 									$('#myModal').modal('hide');
@@ -384,7 +386,8 @@ $(document).ready(function(){
 									$.modal.alertError("系统错误");
 								},
 								success : function(data) {
-									if(data.code==200){
+									/* console.log(data) */
+									if(data.status==200){
 										 location.href = rootPath + '/admin/index';
 									}else{
 										v2.showdd().init();

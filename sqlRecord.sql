@@ -2,6 +2,18 @@
 -- +  Database update  +
 -- +++++++++++++++++++++
 
+-- v20.2.1 @author: jerio
+ALTER TABLE `nuoquan`.`administrator` 
+ADD COLUMN `nickname` VARCHAR(45) NULL AFTER `possward`,
+CHANGE COLUMN `ad_username` `username` VARCHAR(45) NOT NULL ,
+CHANGE COLUMN `ad_possward` `possward` VARCHAR(45) NOT NULL ,
+CHANGE COLUMN `create_date` `create_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ;
+
+ALTER TABLE `nuoquan`.`administrator` 
+ADD COLUMN `description` VARCHAR(45) NULL COMMENT '备注，用于标注账号所属人' AFTER `create_date`, RENAME TO  `nuoquan`.`admin` ;
+
+
+-- v19.?.? @author: jerio Enable emojis in nickname
 ALTER TABLE `nuoquan`.`user` 
 CHANGE COLUMN `nickname` `nickname` VARCHAR(45) CHARACTER SET 'utf8mb4' NOT NULL ;
 
