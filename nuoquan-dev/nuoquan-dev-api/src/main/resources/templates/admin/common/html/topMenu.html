@@ -75,7 +75,7 @@
 	                <!-- END消息通知栏 -->
 	                <!-- 右边警告图标通知栏 -->
 	                <li>
-	
+
 	                    <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i style="font-size:19px;" class="icon-warning tooltitle"></i><div class="noft-green" th:text="${session.notices.size()}">5</div></a>
 	                    <ul style="margin: 12px 0 0 0;" role="menu" class="dropdown-menu dropdown-wrap">
 	                        <th:block th:each="notice : ${session.notices}">

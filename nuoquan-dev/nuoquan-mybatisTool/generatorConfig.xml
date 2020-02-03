@@ -29,8 +29,7 @@
         type="XMLMAPPER"/>
 
 
-		<!-- <table tableName="user_like_comment"></table> -->
-		<!-- <table tableName="user_like_article"></table> -->
-		<table tableName="article"></table>
+		<table tableName="admin_notice"></table>
+		<table tableName="admin_user_notice"></table>
     </context>
 </generatorConfiguration>

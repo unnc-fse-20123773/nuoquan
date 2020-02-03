@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nuoquan.mapper.AdminPermissionMapper" >
+  <resultMap id="BaseResultMap" type="com.nuoquan.pojo.AdminPermission" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="descripion" property="descripion" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="is_blank" property="isBlank" jdbcType="INTEGER" />
+    <result column="pid" property="pid" jdbcType="VARCHAR" />
+    <result column="perms" property="perms" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+    <result column="order_num" property="orderNum" jdbcType="INTEGER" />
+    <result column="visible" property="visible" jdbcType="INTEGER" />
+    
+    <result column="child_count" property="childCount" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <select id="findByAdminUserId" parameterType="String" resultMap="BaseResultMap">
+        select distinct p.*,(select count(1) from admin_permission where pid=p.id) child_count
+        from admin_role_permission arp,admin_user_role aur,admin_permission p
+        where arp.role_id = aur.role_id AND arp.permission_id = p.id AND aur.admin_user_id=#{userId} 
+		GROUP BY p.id
+		ORDER BY order_num is null ASC,order_num  ASC
+ </select>
+ 
+  <select id="queryPermissionByRoleId"  parameterType="String" resultMap="BaseResultMap">
+	 	select p.* from admin_permission p
+		left join admin_role_permission rp on p.id=pr.permission_id
+		where rp.role_id=#{roleId}
+  </select>
+  
+</mapper>

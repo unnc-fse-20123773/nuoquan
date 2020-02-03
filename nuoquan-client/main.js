@@ -312,7 +312,7 @@ Vue.prototype.mySocket = {
 						var myId = chatMessage.receiverId;
 						var friendId = chatMessage.senderId;
 						var msg = chatMessage.msg;
-						var createDate = app.formatTime(chatMessage.createDate); // 对时间戳进行格式化
+						var createDate = chatMessage.createDate; // 对时间戳进行格式化
 						
 						app.chat.saveUserChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);
 						
@@ -351,7 +351,6 @@ Vue.prototype.mySocket = {
 						// 签收消息
 						that.signLikeArticleList(dataContent.data.source.id);
 						// 存入缓存 (TODO：登陆时获取未签收点赞消息)
-						dataContent.data.source.createDate = app.formatTime(dataContent.data.source.createDate);
 						app.notification.saveLikeMsg(dataContent);
 						app.$store.commit('setLikeMsgCount');
 						break;
@@ -360,7 +359,6 @@ Vue.prototype.mySocket = {
 						// 签收消息
 						that.signLikeCommentList(dataContent.data.source.id);
 						// 存入缓存
-						dataContent.data.source.createDate = app.formatTime(dataContent.data.source.createDate);
 						app.notification.saveLikeMsg(dataContent);
 						app.$store.commit('setLikeMsgCount');
 						break;
@@ -369,7 +367,6 @@ Vue.prototype.mySocket = {
 						// 签收消息
 						that.signCommentList(dataContent.data.source.id);
 						// 存入缓存
-						dataContent.data.source.createDate = app.formatTime(dataContent.data.source.createDate);
 						app.notification.saveCommentMsg(dataContent);
 						app.$store.commit('setCommentMsgCount');
 						break;
@@ -378,7 +375,6 @@ Vue.prototype.mySocket = {
 						// 签收消息
 						that.signCommentList(dataContent.data.source.id);
 						// 存入缓存
-						dataContent.data.source.createDate = app.formatTime(dataContent.data.source.createDate);
 						app.notification.saveCommentMsg(dataContent);
 						app.$store.commit('setCommentMsgCount');
 						break;
@@ -444,19 +440,18 @@ Vue.prototype.mySocket = {
 		if (dataContent.action == app.netty.CHAT) {
 			// 保存聊天历史到本地缓存，保存聊天快照到本地
 			var chatMessage = dataContent.data;
-			var createDate = app.formatTime(chatMessage.createDate);
 			
 			// console.log("发消息的时间戳：" + createDate);
 			app.chat.saveUserChatHistory(chatMessage.senderId, 
 										 chatMessage.receiverId, 
 										 chatMessage.msg, 
 										 app.chat.ME, 
-										 createDate);
+										 chatMessage.createDate);
 			app.chat.saveUserChatSnapshot(chatMessage.senderId, 
 										  chatMessage.receiverId, 
 										  chatMessage.msg, 
 										  app.chat.READ, 
-										  createDate);
+										  chatMessage.createDate);
 			// 刷到对话窗口
 			app.$store.commit('doFlashChatPage');
 		}
@@ -749,20 +744,18 @@ Vue.prototype.chat = {
 						app.$store.commit('setMyMsgCount', unsignedMsgList.length); // 增加 msgCount in index.js
 						for (var i = 0; i < unsignedMsgList.length; i++) {
 							var msgObj = unsignedMsgList[i];
-							var timeStamp = new Date(msgObj.createDate).getTime();
-							var createDate = app.formatTime(timeStamp);
 							// 1.逐条存入聊天记录
 							this.saveUserChatHistory(msgObj.acceptUserId,
 								msgObj.sendUserId,
 								msgObj.msg,
 								this.FRIEND,
-								createDate);
+								msgObj.createDate);
 							// 2.保存聊天快照到本地
 							this.saveUserChatSnapshot(msgObj.acceptUserId,
 								msgObj.sendUserId,
 								msgObj.msg,
 								this.UNREAD,
-								createDate);
+								msgObj.createDate);
 							// 3.拼接批量签收id的字符串
 							msgIds += msgObj.id + ",";
 						}
@@ -861,7 +854,6 @@ Vue.prototype.notification={
 							app.$store.commit('setMyMsgCount'); // 累加通用信息
 							app.$store.commit('setLikeMsgCount'); //累加点赞信息
 							// 逐条存入缓存
-							dataContent.data.source.createDate = app.formatTime(dataContent.data.source.createDate);
 							app.notification.saveLikeMsg(dataContent);
 							// 拼接批量签收id的字符串
 							switch (dataContent.action){
@@ -913,7 +905,6 @@ Vue.prototype.notification={
 							app.$store.commit('setMyMsgCount'); // 累加通用信息
 							app.$store.commit('setCommentMsgCount'); //累加评论信息
 							// 逐条存入缓存
-							dataContent.data.source.createDate = app.formatTime(dataContent.data.source.createDate);
 							app.notification.saveCommentMsg(dataContent);
 							// 拼接批量签收id的字符串
 							commentIds += dataContent.data.source.id + ",";
@@ -971,38 +962,6 @@ Vue.prototype.netty = {
 		this.data = data;
 		this.extand = extand;
 	},
-}
-
-/**
- * 格式化时间戳
- * @param {Object} timeStamp
- */
-Vue.prototype.formatTime = function(timeStamp) {
-	// 将/[0-9]/位的数字编成/0[0-9]/  
-
-	if (timeStamp.length < 13) {
-		timeStamp += "000";
-	}
-	var d = new Date(parseInt(timeStamp));
-
-	var year = d.getFullYear();
-	var month = this.getTwo(d.getMonth() + 1);
-	var date = this.getTwo(d.getDate());
-	var hour = this.getTwo(d.getHours());
-	var minute = this.getTwo(d.getMinutes());
-	var second = this.getTwo(d.getSeconds());
-	
-	return month + "/" + date + " " + hour + ":" + minute;
-	// 明年改加上年的逻辑 鸣谦说的...
-	// return year + "/" + month + "/" + date + " " + hour + ":" + minute + ":" + second;
-}
-
-Vue.prototype.getTwo = function(s) {
-	if (parseInt(s) < 10) {
-		return "0" + s;
-	} else {
-		return "" + s;
-	}
 }
 
 /**
