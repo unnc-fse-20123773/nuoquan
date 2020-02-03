@@ -588,6 +588,7 @@ var _search = _interopRequireDefault(__webpack_require__(/*! ../pages/search/sea
 
   },
 
+
   methods: {
     controlShowLeft: function controlShowLeft(a) {
       this.showMainPageLeft = a;

@@ -106,10 +106,13 @@
 			},
 			
 			goToMessageListPage() {
+				console.log("going to messageList");
+				
 				this.$store.commit('setMyMsgCount', 0);
-				uni.navigateTo({
-					url: '../messagelist/messagelist',
-				});
+				uni.switchTab({
+				      url:'./messagelist',
+				})
+
 			},
 			
 			goToAboutPage() {

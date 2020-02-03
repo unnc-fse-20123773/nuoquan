@@ -128,6 +128,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
 var _vuex = __webpack_require__(/*! vuex */ 12);function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var onemessage = function onemessage() {return __webpack_require__.e(/*! import() | pages/chatpage/oneMessage */ "pages/chatpage/oneMessage").then(__webpack_require__.bind(null, /*! ./oneMessage */ 220));};
 
 var query = wx.createSelectorQuery();
@@ -161,8 +166,11 @@ var chatHistory;var _default =
 
       userInfo: '',
       friendInfo: '',
-      textareaHeight: '' //聊天内容高度
-    };
+      textareaHeight: '', //聊天内容高度
+
+      keyboardHeight: '',
+      showEmojiFlag: false };
+
   },
 
   computed: _objectSpread({},
@@ -191,6 +199,7 @@ var chatHistory;var _default =
 
 
   onLoad: function onLoad(opt) {
+    console.log(opt);
     page = 1; //初始化page,
     // 获取界面传参
     console.log(opt.friendInfo);
@@ -223,6 +232,9 @@ var chatHistory;var _default =
     query.exec(function (res) {
       console.log(res);
       console.log(res[0].height);
+
+      that.keyboardHeight = res[0].height + 'px';
+
       //屏幕高度 - 输入框高度，赋值给聊天内容
       that.textareaHeight = that.windowHeight - res[0].height - 5 + 'px';
       console.log(that.textareaHeight);
@@ -264,6 +276,7 @@ var chatHistory;var _default =
       // this.chatContent.push(list[list.length-1]);
       // this.scrollToBottom();
     },
+
 
     // 进入获取聊天
     getChatHistory: function getChatHistory() {

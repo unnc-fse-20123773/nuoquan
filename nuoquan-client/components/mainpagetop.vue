@@ -64,6 +64,7 @@
 			};
 		},
 
+
 		methods: {
 			controlShowLeft(a) {
 				this.showMainPageLeft = a;

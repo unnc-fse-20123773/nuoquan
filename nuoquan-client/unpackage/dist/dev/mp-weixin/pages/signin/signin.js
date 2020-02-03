@@ -364,6 +364,7 @@ var _default = {
 
         }, // end of login success
         fail: function fail(res) {
+          console.log(res);
           isLoding = false;
           uni.hideLoading();
           uni.showToast({

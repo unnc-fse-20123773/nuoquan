@@ -213,9 +213,12 @@ name: 'mainpageleft';var _default =
     },
 
     goToMessageListPage: function goToMessageListPage() {
+      console.log("going to messageList");
+
       this.$store.commit('setMyMsgCount', 0);
-      uni.navigateTo({
-        url: '../messagelist/messagelist' });
+      uni.switchTab({
+        url: './messagelist' });
+
 
     },
 

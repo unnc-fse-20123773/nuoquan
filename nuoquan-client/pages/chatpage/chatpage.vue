@@ -1,8 +1,11 @@
 <!-- 本页面的 websocket 应写在 messagelist 里-->
 <template>
-	<view style="height:100%;width:100%;background: #F5F5F5;">
-		<scroll-view class="messageArea" :style="{ height: textareaHeight }" scroll-y="true" @scrolltoupper="loadMore" @scroll="scroll" :scroll-into-view="scrollToView">
-			<onemessage v-for="(item, index) in chatContent" :key="index" :thisMessage="item" :userInfo="userInfo" :friendInfo="friendInfo" :id="item.id"></onemessage>
+	<view style="height:100%;width:100%;">
+		<scroll-view class="messageArea" :style="{ height: textareaHeight }" scroll-y="true" @scrolltoupper="loadMore"
+		 @scroll="scroll" :scroll-into-view="scrollToView">
+			<view style="height:20px;width:100%;"></view>
+			<onemessage v-for="(item, index) in chatContent" :key="index" :thisMessage="item" :userInfo="userInfo" :friendInfo="friendInfo"
+			 :id="item.id"></onemessage>
 			<view class="marginHelper"></view>
 		</scroll-view>
 		<view class="bottomBar" id="chatarea">
@@ -11,7 +14,9 @@
 				<button @click="showToast()"><image src="../../static/icon/viewLocalPic.png"></image></button>
 				<!-- 				<button><image src="../../static/icon/emoji.png"></image></button>
  -->
-				<button @click="sendText(textMsg)"><image src="../../static/icon/littlePlane.png"></image></button>
+				<button @click="showEmoji()"><image src="../../static/icon/emoji.png"></image></button>
+				<button @click="sendText(textMsg)" class="sendText">发送</image></button>
+
 			</view>
 		</view>
 	</view>
@@ -52,7 +57,10 @@ export default {
 
 			userInfo: '',
 			friendInfo: '',
-			textareaHeight: '' //聊天内容高度
+			textareaHeight: '' ,//聊天内容高度
+			
+			keyboardHeight:'',
+			showEmojiFlag:false,
 		};
 	},
 
@@ -82,6 +90,7 @@ export default {
 	},
 
 	onLoad(opt) {
+		console.log(opt);
 		page = 1; //初始化page,
 		// 获取界面传参
 		console.log(opt.friendInfo)
@@ -114,6 +123,9 @@ export default {
 		query.exec(function(res) {
 			console.log(res);
 			console.log(res[0].height);
+			
+			that.keyboardHeight = res[0].height + 'px';
+			
 			//屏幕高度 - 输入框高度，赋值给聊天内容
 			that.textareaHeight = that.windowHeight - res[0].height - 5 + 'px';
 			console.log(that.textareaHeight);
@@ -155,6 +167,7 @@ export default {
 			// this.chatContent.push(list[list.length-1]);
 			// this.scrollToBottom();
 		},
+
 
 		// 进入获取聊天
 		getChatHistory() {
@@ -244,7 +257,7 @@ export default {
 page {
 	height: 100%;
 	width: 100%;
-	background-color: #f5f5f5;
+	background-color: #FEFBFF;
 }
 </style>
 
@@ -257,7 +270,6 @@ page {
 	display: flex;
 	/* margin-top: 30upx; */
 	margin-bottom: 90upx;
-	background: #f5f5f5;
 	width: 100%;
 	/* height: 94%; */
 }
@@ -279,7 +291,7 @@ page {
 	display: inline-block;
 	height: 16px;
 	line-height: 16px;
-	width: 558upx;
+	width: 480upx;
 	max-height: 75px;
 	border-radius: 24upx;
 	border: solid 1px #c6c6c6;
@@ -290,7 +302,7 @@ page {
 
 .icons {
 	display: inline-flex;
-	width: 90upx;
+	width: 200upx;
 	height: 90upx;
 	margin-left: 18upx;
 	margin-right: 24upx;
@@ -300,8 +312,8 @@ page {
 
 .icons image {
 	display: block;
-	width: 34upx;
-	height: 34upx;
+	width: 48upx;
+	height: 24px;
 	vertical-align: middle;
 }
 .icons button.button-hover {
@@ -313,18 +325,25 @@ button {
 	display: inline-block;
 	margin: 0;
 	padding: 0;
-	width: 34upx;
-	height: 34upx;
+	width: 48upx;
+	height: 48upx;
 	vertical-align: middle;
 	background: #ffffff;
 }
 button::after {
 	border: none;
 }
-
+.sendText{
+	line-height: 46upx;
+	width:68upx;
+	height:46upx;
+	font-size:17px;
+	font-weight:500;
+	color:rgba(252,192,65,1);
+}
 .marginHelper {
 	height: 40upx;
 	width: 100%;
-	background-color: #f5f5f5;
+	background-color: #FEFBFF;
 }
 </style>

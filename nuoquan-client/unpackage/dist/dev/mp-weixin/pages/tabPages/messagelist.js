@@ -288,6 +288,7 @@ var socketOpen = false;var _default =
           // 不在缓存中, 向服务器请求
           sendCount++;
           var that = this;
+          console.log(thisFrindId);
           uni.request({
             url: that.$serverUrl + '/user/queryUser',
             method: "POST",
