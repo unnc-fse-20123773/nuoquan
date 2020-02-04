@@ -137,14 +137,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 {
-  components: { articleInfo: articleInfo },
+  components: {
+    articleInfo: articleInfo },
+
   data: function data() {
     return {
+      minute: '',
+      second: '',
       totalPage: 1,
       currentPage: 1,
       loadArticleFlag: false,
       userInfo: '',
-      myArticleList: [] };
+      myArticleList: '' };
 
   },
 
@@ -162,18 +166,28 @@ __webpack_require__.r(__webpack_exports__);
     this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
     var page = this.currentPage;
     this.showArticles(page);
+    this.nextRefresh();
   },
 
   methods: {
+    nextRefresh: function nextRefresh() {var _this = this;
+      var now = new Date();
+      this.minute = 9 - now.getMinutes() % 10;
+      this.second = 59 - now.getSeconds();
+      if (now.getMinutes() % 10 == 0 && now.getSeconds() == 0) {
+        this.reload();
+      }
+      setTimeout(function () {_this.nextRefresh();}, 1000);
+    },
     reload: function reload() {
       this.showArticles(1);
     },
     // 锁
-    showArticles: function showArticles(page) {var _this = this;
+    showArticles: function showArticles(page) {var _this2 = this;
       console.log(this.loadArticleFlag);
 
       if (this.loadArticleFlag) {
-
+        loadArticleFlag = false;
       }
 
       this.loadArticleFlag = true;
@@ -182,8 +196,8 @@ __webpack_require__.r(__webpack_exports__);
         title: '加载中...' });
 
       setTimeout(function () {
-        if (_this.loadArticleFlag) {
-          _this.loadArticleFlag = false; //解锁
+        if (_this2.loadArticleFlag) {
+          _this2.loadArticleFlag = false; //解锁
           uni.hideLoading();
           uni.showToast({
             title: '网络未知错误',
@@ -210,7 +224,7 @@ __webpack_require__.r(__webpack_exports__);
           setTimeout(function () {
             //延时加载
             uni.hideLoading();
-            _this.loadArticleFlag = false;
+            _this2.loadArticleFlag = false;
 
             console.log(res);
             if (page == 1) {
@@ -227,7 +241,7 @@ __webpack_require__.r(__webpack_exports__);
         },
         fail: function fail(res) {
           uni.hideLoading();
-          _this.loadArticleFlag = false;
+          _this2.loadArticleFlag = false;
 
           console.log('index unirequest fail');
           console.log(res);

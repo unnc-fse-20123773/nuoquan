@@ -73,12 +73,19 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var m0 = _vm.timeDeal(_vm.thisArticle.createDate)
+  var l0 = _vm.__map(_vm.myArticleList, function(thisArticle, __i0__) {
+    var m0 = _vm.timeDeal(thisArticle.createDate)
+    return {
+      $orig: _vm.__get_orig(thisArticle),
+      m0: m0
+    }
+  })
+
   _vm.$mp.data = Object.assign(
     {},
     {
       $root: {
-        m0: m0
+        l0: l0
       }
     }
   )
@@ -148,18 +155,11 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 var _default =
 {
   props: {
-    thisArticle: {} },
+    /*thisArticle:{}*/
+    myArticleList: {} },
 
   data: function data() {
     return {

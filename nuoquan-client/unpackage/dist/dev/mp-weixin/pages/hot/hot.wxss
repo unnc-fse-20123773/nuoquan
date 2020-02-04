@@ -3,43 +3,43 @@ page{
 		background: #F8F8F8;
 		position:relative;
 }
-.top-bar{
-	width:calc(100% - 58px);
-	height:30px;
-	padding:24px 0;
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: -ms-flexbox;
-	display: flex;
-	-webkit-box-pack: justify;
-	-webkit-justify-content: space-between;
-	    -ms-flex-pack: justify;
-	        justify-content: space-between;
-	font:Source Han Sans CN;
-	margin:auto;
+.top {
+		width:100%;
+		height:40px;
+		display:-webkit-box;
+		display:-webkit-flex;
+		display:-ms-flexbox;
+		display:flex;
+		-webkit-box-align:center;
+		-webkit-align-items:center;
+		    -ms-flex-align:center;
+		        align-items:center;
+		position:static;
 }
-.totalNum {
-	color: #888888;
-	font-size: 18px;
-	-ms-text-spacing: 80;
-	    text-spacing: 80;
+.topleft{
+		font-size:14px;
+		margin-left:30px;
+		margin-right:15%;
+		height: 20px;
 }
 .mainbody{
 	width:calc(100% - 26px);
 	margin: auto;
 }
-.reload {
-		margin-top:20px;
-		margin-left:80%;
+.topright {
+		display:inline-block;
+		position:absolute;
+		right:10px;
 		width: 60px;
-		height: 30px;
-		line-height:30px;
+		height: 20px;
+		line-height:15px;
 		background-color: #FFCF3C;
 		border-width: 1rpx;
-		border-radius: 20rpx;
+		border-radius: 10rpx;
 }
 .refresh{
-		font-size:15px;
+		font-size:13px;
+		color: white;
 }
 
 

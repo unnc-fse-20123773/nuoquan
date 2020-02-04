@@ -1,26 +1,30 @@
 <template>
 	<view style="width:100%;height:100%;margin:auto;">
-		<button class="reload" @click="reload()">
-			<text class="refresh">刷新</text>
-		</button>
+		<view class = "top">
+			<text class="topleft">下次更新 {{minute}}分{{second}}秒</text>
+			<button class="topright" @click="reload()"><text class="refresh">刷新</text></button>
+		</view>
 		<view class="mainbody">
-			<articleInfo v-for="item in myArticleList" :key="item.id" :thisArticle="item"></articleInfo>
-
+			<articleInfo :myArticleList="myArticleList"></articleInfo>
 		</view>
 	</view>
 </template>
 
 <script>
-import articleInfo from './articleInfo.vue'
+import articleInfo from './articleInfo.vue';
 	export default {
-		components:{articleInfo,},
+		components:{
+			articleInfo
+		},
 		data() {
 			return {
+				minute:'',
+				second:'',
 				totalPage: 1,
 				currentPage: 1,
-			loadArticleFlag:false,
-			userInfo: '',
-			myArticleList:[],
+				loadArticleFlag:false,
+				userInfo: '',
+				myArticleList: '',
 		};
 	},
 
@@ -38,9 +42,19 @@ import articleInfo from './articleInfo.vue'
 		this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
 		var page = this.currentPage;
 		this.showArticles(page);
+		this.nextRefresh();
 	},
 
-	methods: {
+	methods: {		
+		nextRefresh:function() {
+			var now = new Date();
+			this.minute = 9-now.getMinutes()%10;
+			this.second = 59-now.getSeconds();
+			if((now.getMinutes()%10==0)&&(now.getSeconds()==0)){
+				this.reload();
+			}	
+			setTimeout(() => {this.nextRefresh()}, 1000);
+		},
 		reload: function() {
 			this.showArticles(1);
 		},
@@ -49,7 +63,7 @@ import articleInfo from './articleInfo.vue'
 			console.log(this.loadArticleFlag);
 			
 			if ( this.loadArticleFlag ) {
-			
+				loadArticleFlag = false;
 			}
 
 			this.loadArticleFlag = true;
@@ -138,40 +152,39 @@ import articleInfo from './articleInfo.vue'
 		background: #F8F8F8;
 		position:relative;
 	}
-.top-bar{
-	width:calc(100% - 58px);
-	height:30px;
-	padding:24px 0;
-	display: flex;
-	justify-content: space-between;
-	font:Source Han Sans CN;
-	margin:auto;
-}
-
-.totalNum {
-	color: #888888;
-	font-size: 18px;
-	text-spacing: 80;
-}
-	
-
+		
+	.top {
+		width:100%;
+		height:40px;
+		display:flex;
+		align-items:center;
+		position:static;
+	}
+	.topleft{
+		font-size:14px;
+		margin-left:30px;
+		margin-right:15%;
+		height: 20px;
+	}
 .mainbody{
 	width:calc(100% - 26px);
 	margin: auto;
 }
-.reload {
-		margin-top:20px;
-		margin-left:80%;
+.topright {
+		display:inline-block;
+		position:absolute;
+		right:10px;
 		width: 60px;
-		height: 30px;
-		line-height:30px;
+		height: 20px;
+		line-height:15px;
 		background-color: #FFCF3C;
 		border-width: 1upx;
-		border-radius: 20upx;
+		border-radius: 10upx;
 	}
 
 	.refresh{
-		font-size:15px;
+		font-size:13px;
+		color: white;
 	}
 
 </style>
