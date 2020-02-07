@@ -53,6 +53,14 @@ user:例如/admins/user/**=user没有参数表示必须存在用户，当登入�
 		
 		filterChainDefinitionMap.put("/quartz/**", "anon");
 		
+		//swagger接口权限 开放
+		filterChainDefinitionMap.put("/swagger-ui.html", "anon");
+		filterChainDefinitionMap.put("/webjars/**", "anon");
+		filterChainDefinitionMap.put("/v2/**", "anon");
+		filterChainDefinitionMap.put("/swagger-resources/**", "anon");
+		
+		filterChainDefinitionMap.put("/configuration/security", "anon");
+		filterChainDefinitionMap.put("/configuration/ui", "anon");
 		//
 		//对所有页面进行认证
 		filterChainDefinitionMap.put("/**","authc");
