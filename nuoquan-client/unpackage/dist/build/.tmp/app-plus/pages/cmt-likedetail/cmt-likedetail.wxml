@@ -1,2 +1,0 @@
-<import src="./cmt-likedetail.vue.wxml" />
-    <template is="92389ff8" data="{{ ...$root['0'], $root }}"/>

@@ -65,7 +65,7 @@ public class ArticleController extends BasicController {
 		@ApiImplicitParam(name = "page", value = "页数", required = true, dataType = "String", paramType = "form"),
 		@ApiImplicitParam(name = "pageSize", value = "每页大小", required = true, dataType = "String", paramType = "form") })
 	@PostMapping("/queryAllArticles")
-	public JSONResult showAllArticles(Integer page, Integer pageSize, String userId) throws Exception {
+	public JSONResult shoAllArticles(Integer page, Integer pageSize, String userId) throws Exception {
 
 		if (page == null) {
 			page = 1;

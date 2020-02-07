@@ -215,9 +215,10 @@
 			},
 
 			goToCommentDetail(mainComment) {
+				var encodeData = encodeURIComponent(JSON.stringify(mainComment)); // 对数据字符串化并转码，防止特殊字符影响传参
 				uni.navigateTo({
-					url: '/pages/comment-detail/comment-detail?data=' + JSON.stringify(mainComment),
-				})
+					url: '/pages/comment-detail/comment-detail?data=' + encodeData,
+				});
 			}
 		},
 

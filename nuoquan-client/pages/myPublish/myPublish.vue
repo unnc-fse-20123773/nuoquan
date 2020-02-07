@@ -146,7 +146,8 @@ export default {
 
 <style>
 page {
-	background: #f8f8f8;
+	background: #FFFFFF;
+	/* background: #f8f8f8; */
 }
 .top-bar {
 	width: calc(100% - 58px);
