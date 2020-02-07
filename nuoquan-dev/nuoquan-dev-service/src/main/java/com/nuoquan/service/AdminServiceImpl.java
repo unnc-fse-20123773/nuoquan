@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.nuoquan.mapper.AdminNoticeMapper;
 import com.nuoquan.mapper.AdminPermissionMapper;
@@ -26,12 +28,6 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired 
 	private AdminUserMapper adminUserMapper;
 	
-	@Autowired 
-	private AdminRoleMapper adminRoleMapper;
-	
-	@Autowired 
-	private AdminPermissionMapper adminPermissionMapper;
-	
 	@Autowired
 	private AdminNoticeMapper adminNoticeMapper;
 	
@@ -39,6 +35,7 @@ public class AdminServiceImpl implements AdminService {
 	private AdminUserNoticeMapper adminUserNoticeMapper;
 	
 	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public AdminUser queryAdminUserName(String username) {
 		Example example = new Example(AdminUser.class);
 		Criteria criteria = example.createCriteria();
@@ -52,18 +49,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public List<AdminRole> queryAdminUserRoles(String uid) {
-		
-		return adminRoleMapper.queryAdminUserRoles(uid);
-	}
-
-	@Override
-	public List<AdminPermission> queryPermissionByRoleId(String roleId) {
-	
-		return adminPermissionMapper.queryPermissionByRoleId(roleId);
-	}
-	
-	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<AdminNotice> getUserNotice(AdminUser adminUser, int state){
 		List<AdminNotice> notices=new ArrayList<>();
 		//查询公告用户外键

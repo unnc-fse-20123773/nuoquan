@@ -50,7 +50,7 @@ label.error {
 				</div>
 				<div class="body-nest" id="element">
 					<div class="panel-body">
-						<form  class="form-horizontal m" id="form-edit" th:object="${TsysRole}">
+						<form  class="form-horizontal m" id="form-edit" th:object="${adminRole}">
 							<input id="id" name="id" type="hidden" th:value="*{id}"/>
 							<div class="form-group">
 								<!-- 验证用 -->
@@ -173,8 +173,9 @@ function getTree() {
 			$.modal.alertError("系统错误");
 		},
 		success : function(data) {
-			if(!$.common.isEmpty(data)&&data.code==200){
+			if(!$.common.isEmpty(data)&&data.status==200){
 				tree.push(data.data);
+				console.log(data.data);
 			}
 		}
 		

@@ -62,6 +62,7 @@ public class AdminPermission {
      */
     private Integer visible;
     
+    @Column(name = "child_count")
     private Integer childCount;
     
     /**
