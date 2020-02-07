@@ -1,5 +1,6 @@
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/shiro/config/ShiroConfig.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/FastdfsImporter.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/admin/controller/RoleController.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/config/ResourceConfig.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/netty/SslUtil.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/controller/UserController.java
@@ -14,6 +15,7 @@
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/netty/WSServer.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/config/KaptchaConfig.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/netty/WSServerInitializer.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/admin/controller/AdminUserController.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/admin/controller/CaptchaController.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/NettyBooter.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/controller/BasicController.java
@@ -31,3 +33,4 @@
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/netty/HeartBeatHandler.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/shiro/service/ExtendRolesAuthorizationFilter.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/shiro/config/ShiroFilterMapFactory.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-api/src/main/java/com/nuoquan/admin/controller/PermissionController.java

@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 import org.apache.shiro.SecurityUtils;
@@ -43,6 +45,7 @@ import com.nuoquan.utils.StringUtils;
  * 后台方法
  * 
  */
+@Api(value = "入口请求")
 @Controller
 @RequestMapping("/admin")
 public class AdminController extends BasicController{

@@ -11,7 +11,7 @@
   
   <select id="queryAdminUserRoles" parameterType="String" resultMap="BaseResultMap">
         select r.id,r.name from admin_role r
-		LEFT JOIN admin_user_role ur ON  r.id=ur.admin_user_id
+		LEFT JOIN admin_user_role ur ON  r.id=ur.role_id
 		where ur.admin_user_id=#{userid}
   </select>
   

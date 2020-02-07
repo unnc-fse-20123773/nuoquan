@@ -18,6 +18,7 @@
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/UserReport.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/vo/UserVO.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/vo/FansFollow.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/admin/Tablepar.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/UserLikeComment.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/AdminPermission.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/ArticleTags.java
@@ -30,5 +31,6 @@
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/vo/AccessTokenResult.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/netty/ChatMessage.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/netty/NoticeCard.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/vo/AdminRoleVo.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/vo/TitleVo.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-pojo/src/main/java/com/nuoquan/pojo/vo/UserFansVO.java

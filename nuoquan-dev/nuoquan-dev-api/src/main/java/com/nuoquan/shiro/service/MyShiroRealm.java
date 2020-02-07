@@ -5,6 +5,8 @@ import java.util.List;
 import com.nuoquan.pojo.AdminPermission;
 import com.nuoquan.pojo.AdminRole;
 import com.nuoquan.pojo.AdminUser;
+import com.nuoquan.service.AdminPermissionService;
+import com.nuoquan.service.AdminRoleService;
 import com.nuoquan.service.AdminService;
 import com.nuoquan.utils.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -37,6 +39,11 @@ public class MyShiroRealm extends AuthorizingRealm {
 	@Autowired
 	private AdminService adminService;
 	
+	@Autowired
+	private AdminRoleService adminRoleService;
+	
+	@Autowired
+	private AdminPermissionService adminPermissionService;
 	
 	/**
 	 * 认证登陆
@@ -84,12 +91,12 @@ public class MyShiroRealm extends AuthorizingRealm {
 		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
 		AdminUser userinfo  = (AdminUser)principals.getPrimaryPrincipal();
 		String uid=userinfo.getId();
-		List<AdminRole> adminRoles= adminService.queryAdminUserRoles(uid); // 一个用户可能多个角色
+		List<AdminRole> adminRoles= adminRoleService.queryAdminUserRoles(uid); // 一个用户可能多个角色
 		for(AdminRole userRole:adminRoles){
 			//System.out.println("角色名字:"+gson.toJson(userrole));
 			String rolid=userRole.getId();//角色id
 			authorizationInfo.addRole(userRole.getName());//添加角色名字
-			List<AdminPermission> permissions=adminService.queryPermissionByRoleId(rolid);
+			List<AdminPermission> permissions=adminPermissionService.queryPermissionByRoleId(rolid);
 			for(AdminPermission p:permissions){
 				//System.out.println("角色下面的权限:"+gson.toJson(p));
 				if(StringUtils.isNotEmpty(p.getPerms())){
