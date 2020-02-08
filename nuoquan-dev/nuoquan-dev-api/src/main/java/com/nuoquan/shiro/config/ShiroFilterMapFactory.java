@@ -43,7 +43,7 @@ user:例如/admins/user/**=user没有参数表示必须存在用户，当登入�
 		filterChainDefinitionMap.put("/admin/logout", "logout");
 		//放验证码
 		filterChainDefinitionMap.put("/captcha/**", "anon");
-		// 释放 druid 监控画面
+		//释放 druid 监控画面
 		filterChainDefinitionMap.put("/druid/**", "anon");
 		//释放websocket请求
 		filterChainDefinitionMap.put("/websocket", "anon");
@@ -53,7 +53,19 @@ user:例如/admins/user/**=user没有参数表示必须存在用户，当登入�
 		
 		filterChainDefinitionMap.put("/quartz/**", "anon");
 		
-		//
+		//swagger接口权限 开放
+		filterChainDefinitionMap.put("/swagger-ui.html", "anon");
+		filterChainDefinitionMap.put("/webjars/**", "anon");
+		filterChainDefinitionMap.put("/v2/**", "anon");
+		filterChainDefinitionMap.put("/swagger-resources/**", "anon");
+		
+		filterChainDefinitionMap.put("/configuration/security", "anon");
+		filterChainDefinitionMap.put("/configuration/ui", "anon");
+		
+		//放行app请求
+		filterChainDefinitionMap.put("/user/**", "anon");
+		filterChainDefinitionMap.put("/article/**", "anon");
+		
 		//对所有页面进行认证
 		filterChainDefinitionMap.put("/**","authc");
 		return filterChainDefinitionMap;

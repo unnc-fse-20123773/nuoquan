@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.nuoquan</groupId>
-		<artifactId>nuoquan-admin</artifactId>
+		<artifactId>nuoquan-dev</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>nuoquan-dev-common</artifactId>
@@ -126,12 +126,12 @@
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
-			<version>2.4.0</version>
+			<version>2.7.0</version>
 		</dependency>
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
-			<version>2.4.0</version>
+			<version>2.7.0</version>
 		</dependency>
 
 		<!-- 引入 redis 依赖 -->

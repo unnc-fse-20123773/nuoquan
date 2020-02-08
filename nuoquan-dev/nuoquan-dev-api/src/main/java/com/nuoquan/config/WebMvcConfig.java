@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.resource.WebJarsResourceResolver;
 
 import com.nuoquan.controller.interceptor.MyInterceptor;
 
@@ -21,6 +22,8 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 		registry.addResourceHandler("/**")
 				.addResourceLocations("classpath:/")
 				.addResourceLocations("classpath:/static/")
+				.addResourceLocations("classpath:/META-INF/resources/") // 解决swagger无法访问
+				.addResourceLocations("classpath:/META-INF/resources/webjars/") // 解决swagger的js文件无法访问
 				.addResourceLocations("file:"+resourceconfig.getFileSpace()+"/");
 	}
 	
