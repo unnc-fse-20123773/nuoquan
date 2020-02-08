@@ -16,7 +16,11 @@ import com.nuoquan.utils.MD5Utils;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-
+/**
+ * 当前业务暂时不用这个 controller
+ * @author jerrio
+ * @date 2/8/20
+ */
 @RestController
 @Api(value="用户注册登录的接口", tags= {"注册和登录的controller"})
 public class RegistLoginController extends BasicController{
