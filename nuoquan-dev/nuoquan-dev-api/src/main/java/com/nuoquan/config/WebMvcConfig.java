@@ -21,6 +21,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 		registry.addResourceHandler("/**")
 				.addResourceLocations("classpath:/")
 				.addResourceLocations("classpath:/static/")
+				.addResourceLocations("classpath:/META-INF/resources/") // 解决swagger无法访问
 				.addResourceLocations("file:"+resourceconfig.getFileSpace()+"/");
 	}
 	

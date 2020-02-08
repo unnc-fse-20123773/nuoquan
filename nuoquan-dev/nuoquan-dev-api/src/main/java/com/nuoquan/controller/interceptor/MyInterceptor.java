@@ -35,7 +35,7 @@ public class MyInterceptor implements HandlerInterceptor {
 		return true;// 只有返回true才会继续向下执行，返回false取消当前请求
 	}
 	
-	/**
+	/** 
 	 * 判断是否需要拦截的用于展示演示模式
 	 * @param request
 	 * @param response
