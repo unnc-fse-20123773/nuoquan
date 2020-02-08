@@ -306,7 +306,7 @@ page {
 	display: inline-block;
 	height: 16px;
 	line-height: 16px;
-	width: 480rpx;
+	width: 438rpx;
 	max-height: 75px;
 	border-radius: 24rpx;
 	border: solid 1px #c6c6c6;
@@ -320,23 +320,21 @@ page {
 	display: -ms-inline-flexbox;
 	display: inline-flex;
 	width: 200rpx;
-	height: 90rpx;
 	margin-left: 18rpx;
 	margin-right: 24rpx;
 	-webkit-box-pack: justify;
 	-webkit-justify-content: space-between;
 	    -ms-flex-pack: justify;
 	        justify-content: space-between;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	    -ms-flex-align: center;
-	        align-items: center;
+	position: absolute;
+	bottom: 13px;
+	right:0;
 }
 .icons image.data-v-13bf3097 {
 	display: block;
 	width: 48rpx;
 	height: 24px;
-	vertical-align: middle;
+	vertical-align: bottom;
 }
 .icons button.button-hover.data-v-13bf3097 {
 	position: relative;
@@ -350,7 +348,7 @@ button.data-v-13bf3097 {
 	padding: 0;
 	width: 48rpx;
 	height: 48rpx;
-	vertical-align: middle;
+	vertical-align: bottom;
 	background: #ffffff;
 }
 button.data-v-13bf3097::after {

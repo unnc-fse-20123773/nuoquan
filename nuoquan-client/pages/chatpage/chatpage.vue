@@ -291,7 +291,7 @@ page {
 	display: inline-block;
 	height: 16px;
 	line-height: 16px;
-	width: 480upx;
+	width: 438upx;
 	max-height: 75px;
 	border-radius: 24upx;
 	border: solid 1px #c6c6c6;
@@ -303,18 +303,19 @@ page {
 .icons {
 	display: inline-flex;
 	width: 200upx;
-	height: 90upx;
 	margin-left: 18upx;
 	margin-right: 24upx;
 	justify-content: space-between;
-	align-items: center;
+	position: absolute;
+	bottom: 13px;
+	right:0;
 }
 
 .icons image {
 	display: block;
 	width: 48upx;
 	height: 24px;
-	vertical-align: middle;
+	vertical-align: bottom;
 }
 .icons button.button-hover {
 	position: relative;
@@ -327,7 +328,7 @@ button {
 	padding: 0;
 	width: 48upx;
 	height: 48upx;
-	vertical-align: middle;
+	vertical-align: bottom;
 	background: #ffffff;
 }
 button::after {
