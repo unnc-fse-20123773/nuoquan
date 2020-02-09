@@ -158,6 +158,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -187,8 +198,13 @@ var uploadTasks = [];var _default =
       showInputTagArea: 0,
       showAddTagButton: 1,
       showTagArea: 0,
-      tagList_1: ["标签实例", "标签1"],
-      tagList_2: ["标签。第二行", "哈哈哈", "上下左右"],
+      editingTag: false,
+
+      tagList: ["12", "###", "sdk肯定就好看f", "时刻监督和", '实际到货付款'],
+      tagColorList: [], // 储存每个备选tag的颜色
+      selectedTags: ["12", "###", "sdkjhf", "时刻监督和"],
+      selectedTagColorList: [], // 储存每个已选tag的颜色
+
 
       finalTag: '',
       tagIndex: 0,
@@ -221,15 +237,19 @@ var uploadTasks = [];var _default =
       } });
 
 
+    // 随机生成颜色
+    var tagColors = this.tagColors;
+    for (var i = 0; i < this.tagList.length; i++) {
+      var random_1 = Math.floor(Math.random() * tagColors.length);
+      var random_2 = Math.floor(Math.random() * tagColors.length);
+      // 0~tagColors.length-1
+      this.tagColorList.push(tagColors[random_1]);
+      this.selectedTagColorList.push(tagColors[random_2]);
+
+    }
+
   },
   methods: {
-    addTag: function addTag() {
-      this.showInputTagArea = 1;
-      this.showAddTagButton = 0;
-    },
-    manageTag: function manageTag() {
-
-    },
     // 检查tagList的数量
     checkInput: function checkInput(res) {
       var that = this;
@@ -439,6 +459,11 @@ var uploadTasks = [];var _default =
 
     },
 
+    addTag: function addTag(index) {
+      debugger;
+      this.selectedTags.push(index);
+
+    },
     deleteTag: function deleteTag(index) {
       console.log(index);
       var targetTag = this.tagList[index];
@@ -450,6 +475,10 @@ var uploadTasks = [];var _default =
       // console.log(index);
       // console.log(this.imageList[index]);
       this.imageList.splice(index, 1);
+    },
+
+    editTag: function editTag(a) {
+      this.editingTag = a;
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

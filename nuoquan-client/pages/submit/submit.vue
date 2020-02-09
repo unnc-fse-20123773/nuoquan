@@ -3,27 +3,37 @@
 	<view class="submitMain">
 
 		<!-- 当失去焦点时，将输入内容存入articleTitle -->
-		<view style="position: relative;">
+		<view style="position: relative;margin-top: 20px;">
 			<input class="title" v-model="articleTitle" placeholder="标题" maxlength="20" placeholder-class="title-placeholder">
 			<view class="titleTextLeft">{{20 - articleTitle.length}}</view>
 		</view>
 
-		<view class="tagsArea">
-			<!-- 展示标签区域 -->
-			<view class="tag1_area" style="display: inline-block;">
-				<view class="tag" v-for="(item,index) in tagList_1" :key="index" @click="deleteTag(index)" style="box-shadow:0px 0px 6px rgba(167,75,220,0.43);;">{{item}}</view>
-			</view>
-			<view class="submit-button" @tap="upload()">完成</view>
-			<view class="tag2_area">
-				<view class="tag" v-for="(item,index) in tagList_2" :key="index" @click="deleteTag(index)">{{item}}</view>
-			</view>
+		<!--已选标签部分，会周围彩色光圈的那个-->
+		<view class="selectedTagsArea" :class="{'selectedTagsAreaEditing':editingTag}">
+			<view class="finish-button" @tap="editTag(false)" v-if="editingTag">完成</view>
+			<view class="selectedTag" v-for="(item,index) in selectedTags" :key="index" @click="deleteTag(index)" :style="{ 'box-shadow' : '0px 0px 6px '+ selectedTagColorList[index],}">{{item}}</view>
+			<button class="editTagsButton" @tap="editTag(true)" v-if="!editingTag">添加标签 + </button>
+
+
+		</view>
+
+		<view class="tagsArea" v-if="editingTag">
+			<!-- TO DO 为啥有俩标签这个东西，目前用着同一个列表，是不是还需要改，我们提供标签的那个请求-->
+			<!-- 展示待选标签区域 -->
+			<text>最近选择</text>
+			<view class="tag" v-for="(item,index) in tagList" :key="index" :style="{background: tagColorList[index]}" @tap="addTag(item)">{{item}}</view>
+			<text>最近选择</text>
+			<view class="tag" v-for="(item,index) in tagList" :key="index" :style="{background: tagColorList[index]}" @tap="addTag(item)">{{item}}</view>
+			<!-- 			<view style="width: 750upx;height: 1000px;position: absolute;top:-1000px;z-index: 50;" @click="editTag(false)" v-if="editingTag"></view>
+			<view style="width: 750upx;height: 1000px;position: absolute;bottom:-1000px;z-index: 50;" @click="editTag(false)" v-if="editingTag"></view> -->
+
 		</view>
 
 
-		<textarea placeholder="内容" class="content" v-model="articleContent" maxlength="140" :show-confirm-bar="false"></textarea>
-		<view style="display: flex;justify-content: space-between;color: #353535;font-size: 13px;line-height: 28px;height: 24px;">
-			<view>还可以输入</view>
-			<view>{{140 - articleContent.length}}字</view>
+		<view style="position: relative;">
+			<textarea class="content" v-model="articleContent" maxlength="140" :auto-height="true" :show-confirm-bar="false"></textarea>
+			<view style="position: absolute;bottom: 8px;right:8px;font-size: 11px;color:#888888;">{{140 - articleContent.length}}</view>
+			<image src="../../static/icon/emoji.png" style="position: absolute;left:12px;top:8px;width:20px;height:20px;"></image>
 		</view>
 
 		<view class="picturearea">
@@ -38,6 +48,7 @@
 			<view v-show="isAddImage(this.imageList.length)" id="clickToChooseImage" class="addPic" @click="chooseImg">+</view>
 			<view v-if="imageList.length==1||imageList.length==4||imageList.length==7" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
 		</view>
+		<button class="submit-button" @tap="upload()">发表</button>
 
 	</view>
 </template>
@@ -71,8 +82,13 @@
 				showInputTagArea: 0,
 				showAddTagButton: 1,
 				showTagArea: 0,
-				tagList_1: ["标签实例", "标签1"],
-				tagList_2: ["标签。第二行", "哈哈哈", "上下左右"],
+				editingTag: false,
+
+				tagList: ["12", "###", "sdk肯定就好看f", "时刻监督和",'实际到货付款'],
+				tagColorList: [], // 储存每个备选tag的颜色
+				selectedTags: ["12", "###", "sdkjhf", "时刻监督和"],
+				selectedTagColorList: [], // 储存每个已选tag的颜色
+
 
 				finalTag: '',
 				tagIndex: 0,
@@ -105,15 +121,19 @@
 				}
 			});
 
+			// 随机生成颜色
+			var tagColors = this.tagColors;
+			for (var i = 0; i < this.tagList.length; i++) {
+				var random_1 = Math.floor(Math.random() * tagColors.length);
+				var random_2 = Math.floor(Math.random() * tagColors.length);
+				// 0~tagColors.length-1
+				this.tagColorList.push(tagColors[random_1]);
+				this.selectedTagColorList.push(tagColors[random_2]);
+
+			}
+
 		},
 		methods: {
-			addTag: function() {
-				this.showInputTagArea = 1;
-				this.showAddTagButton = 0;
-			},
-			manageTag: function() {
-
-			},
 			// 检查tagList的数量
 			checkInput: function(res) {
 				var that = this;
@@ -322,7 +342,12 @@
 					icon: 'none',
 				})
 			},
-
+			
+			addTag(index){
+				debugger;
+				this.selectedTags.push(index);
+				
+			},
 			deleteTag: function(index) {
 				console.log(index);
 				var targetTag = this.tagList[index];
@@ -334,6 +359,10 @@
 				// console.log(index);
 				// console.log(this.imageList[index]);
 				this.imageList.splice(index, 1);
+			},
+
+			editTag(a) {
+				this.editingTag = a;
 			},
 		}
 	};
@@ -349,10 +378,12 @@
 	}
 
 	.title {
-		width: 698upx;
+		width: calc(698upx - 36px);
 		height: 38px;
-		border: 2px solid rgba(238, 238, 238, 1);
+		border: 2px solid #FCC041;
 		border-radius: 8px;
+		padding-left: 12px;
+		padding-right: 24px;
 	}
 
 	.title-placeholder {
@@ -376,36 +407,68 @@
 		color: rgba(199, 199, 199, 1);
 	}
 
-	.tagsArea {
+	/* 已选标签部分,开始
+ */
+	.selectedTagsArea {
 		margin-top: 13px;
-		vertical-align: bottom;
-		min-height: 42px;
-		max-height: 62px;
-		overflow: hidden;
 		position: relative;
 	}
 
-	.tag {
+	.selectedTagsAreaEditing {
+		width: calc(100% - 73px);
+	}
+
+	.finish-button {
+		width: 68px;
+		height: 26px;
+		background: linear-gradient(318deg, rgba(251, 118, 118, 1) 0%, rgba(254, 192, 77, 1) 100%);
+		box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+		border-radius: 8px;
+		font-size: 14px;
+		line-height: 26px;
+		color: rgba(255, 255, 255, 1);
+		text-align: center;
+		position: absolute;
+		right: -73px;
+		top: 8px;
+	}
+
+	.editTagsButton {
+		vertical-align: bottom;
+		margin-top: 8px;
+		width: 99px;
+		height: 26px;
+		background: linear-gradient(318deg, rgba(251, 118, 118, 1) 0%, rgba(254, 192, 77, 1) 100%);
+		box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+		border-radius: 8px;
+
+		font-size: 14px;
+		line-height: 23px;
+		color: rgba(255, 255, 255, 1);
+		display: inline-block;
+	}
+
+	.selectedTag {
 		display: inline-block;
 		vertical-align: bottom;
-		color: #353535;
+		color: #000000;
 		font-size: 14px;
 		line-height: 26px;
 		height: 26px;
 
 		position: relative;
-		margin-left: 8px;
-		margin-top: 6px;
+		margin-right: 9px;
+		margin-top: 8px;
 		padding-right: 27px;
 		padding-left: 12px;
 		pointer-events: none;
 		/* 用于解决空格换行问题 */
 		white-space: nowrap;
-
 		border-radius: 20px;
+
 	}
 
-	.tag::after {
+	.selectedTag::after {
 		position: absolute;
 		content: "✕";
 		right: 10px;
@@ -418,29 +481,65 @@
 		white-space: nowrap;
 	}
 
-	.submit-button {
-		width: 68px;
-		height: 26px;
-		background: linear-gradient(318deg, rgba(251, 118, 118, 1) 0%, rgba(254, 192, 77, 1) 100%);
-		box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
-		border-radius: 8px;
-
-		font-size: 14px;
-		line-height: 26px;
-		color: rgba(255, 255, 255, 1);
-		text-align: center;
-		position: absolute;
-		right: 0;
-		top: 0;
+	/* 已选标签,结束...待选标签部分开始,灰色部分
+ */
+	.tagsArea {
+		margin-top: 13px;
+		padding-bottom: 16px;
+		vertical-align: bottom;
+		min-height: 130px;
+		max-height: 192px;
+		overflow: hidden;
+		position: relative;
+		background: url(../../static/BG/submit_BG.png);
+		background-repeat: no-repeat;
+		background-size: 100% 100%;
+		border-radius: 10px;
 	}
 
+	.tagsArea text {
+		display: block;
+		height: 12px;
+		font-size: 12px;
+		color: rgba(155, 155, 155, 1);
+		padding-top: 16px;
+		padding-left: 12px;
+		padding-bottom: 8px;
+	}
+
+	.tag {
+		display: inline-block;
+		vertical-align: bottom;
+		color: #FFFFFF;
+		font-size: 14px;
+		line-height: 26px;
+		height: 26px;
+
+		position: relative;
+		margin-left: 8px;
+		margin-top: 6px;
+		padding-right: 12px;
+		padding-left: 12px;
+		pointer-events: none;
+		/* 用于解决空格换行问题 */
+		white-space: nowrap;
+
+		border-radius: 20px;
+	}
+
+	/* 待选部分结束*/
+
 	.content {
-		min-height: 136px;
-		background: #F4F1E9;
+		min-height: 51px;
+		max-height: 300px;
 		margin-top: 13px;
-		width: 100%;
+		width: calc(100% - 12px);
 		overflow: scroll;
-		padding: 4px;
+		padding: 36px 4px 24px;
+
+		border: 2px solid rgba(252, 192, 65, 1);
+		border-radius: 8px;
+		font-size: 14px;
 	}
 
 	.picturearea {
@@ -462,11 +561,25 @@
 		height: 178upx;
 		line-height: 160upx;
 		margin: 6px 0;
-		border: dashed 3px #BEBCB5;
 		text-align: center;
 		vertical-align: middle;
-		color: #BEBCB5;
-		font-size: 70px;
+		color: #888888;
+		font-size: 50px;
 		font-weight: 200;
+		background: #ECECEC;
+	}
+
+	.submit-button {
+		margin-top: 100px;
+		width: 558upx;
+		height: 42px;
+		background: rgba(252, 192, 65, 1);
+		box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+		border-radius: 8px;
+
+		font-size: 18px;
+		font-weight: 500;
+		color: #FFFFFF;
+
 	}
 </style>
