@@ -6,7 +6,7 @@ import com.nuoquan.pojo.AdminPermission;
 import com.nuoquan.utils.MyMapper;
 
 public interface AdminPermissionMapper extends MyMapper<AdminPermission> {
-	
+
 	/**
 	 * 根据用户id获取用户角色的权限
 	 * 
@@ -27,4 +27,7 @@ public interface AdminPermissionMapper extends MyMapper<AdminPermission> {
 
 	@Override
 	public List<AdminPermission> selectByExample(Object example);
+	
+	@Override
+	public int updateByPrimaryKey(AdminPermission record);
 }

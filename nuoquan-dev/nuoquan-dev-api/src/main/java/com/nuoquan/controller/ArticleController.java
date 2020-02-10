@@ -130,7 +130,7 @@ public class ArticleController extends BasicController {
 			@ApiImplicitParam(name = "articleCreaterId", value = "文章作者id", required = true, dataType = "String", paramType = "form") })
 	@PostMapping(value = "/userLikeArticle")
 	public JSONResult userLikeArticle(String userId, String articleId, String articleCreaterId) throws Exception {
-		
+	
 		if (userId.equals(articleCreaterId)) {
 			// 点赞自己，标记已签收存入数据
 			articleService.userLikeArticle(userId, articleId, articleCreaterId, MsgSignFlagEnum.SIGNED.type);

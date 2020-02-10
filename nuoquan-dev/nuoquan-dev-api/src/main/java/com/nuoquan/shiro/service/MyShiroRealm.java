@@ -86,7 +86,7 @@ public class MyShiroRealm extends AuthorizingRealm {
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		//System.out.println("权限配置-->MyShiroRealm.doGetAuthorizationInfo()");
 		if(principals == null){  
-	       throw new AuthorizationException("principals should not be null");  
+	       throw new AuthorizationException("principals should not be null");
 	    }
 		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
 		AdminUser userinfo  = (AdminUser)principals.getPrimaryPrincipal();

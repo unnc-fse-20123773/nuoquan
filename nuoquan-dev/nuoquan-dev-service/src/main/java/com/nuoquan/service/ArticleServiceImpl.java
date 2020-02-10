@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.github.pagehelper.util.StringUtil;
 import com.nuoquan.utils.TimeAgoUtils;
 import com.nuoquan.enums.StatusEnum;
 import com.nuoquan.mapper.ArticleImageMapper;
@@ -34,6 +35,7 @@ import com.nuoquan.pojo.UserLikeComment;
 import com.nuoquan.pojo.vo.ArticleVO;
 import com.nuoquan.pojo.vo.UserArticleCommentVO;
 import com.nuoquan.pojo.vo.UserLikeVO;
+import com.nuoquan.support.Convert;
 import com.nuoquan.utils.PagedResult;
 
 import tk.mybatis.mapper.entity.Example;
@@ -80,11 +82,80 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
-	public PagedResult getAllArticles(Integer page, Integer pageSize, String userId) {
+	public PagedResult list(Integer page, Integer pageSize) {
 
 		// 从controller中获取page和pageSize (经实验，PageHelper 只拦截下一次查询)
 		PageHelper.startPage(page, pageSize);
 
+		List<ArticleVO> list = articleMapperCustom.list();
+		for (ArticleVO a : list) {
+			// 为每个文章添加图片列表
+			a.setImgList(articleImageMapper.getArticleImgs(a.getId()));
+			// 添加标签list
+			if (!StringUtils.isBlank(a.getTags())) {
+				String[] tagList = a.getTags().split("#");
+				List<String> finalTagList = new ArrayList<String>();
+				for (String tag : tagList) {
+					if (!StringUtils.isBlank(tag)) {
+						finalTagList.add(tag);
+					}
+				}
+				a.setTagList(finalTagList);
+			}
+		}
+		
+		PageInfo<ArticleVO> pageList = new PageInfo<>(list);
+
+		PagedResult pagedResult = new PagedResult();
+		pagedResult.setPage(page);
+		pagedResult.setTotal(pageList.getPages());
+		pagedResult.setRows(list);
+		pagedResult.setRecords(pageList.getTotal());
+
+		return pagedResult;
+	}
+	
+	@Transactional(propagation = Propagation.SUPPORTS)
+	@Override
+	public PagedResult listCheckOnly(Integer page, Integer pageSize) {
+
+		// 从controller中获取page和pageSize (经实验，PageHelper 只拦截下一次查询)
+		PageHelper.startPage(page, pageSize);
+
+		List<ArticleVO> list = articleMapperCustom.listCheckOnly();
+		for (ArticleVO a : list) {
+			// 为每个文章添加图片列表
+			a.setImgList(articleImageMapper.getArticleImgs(a.getId()));
+			// 添加标签list
+			if (!StringUtils.isBlank(a.getTags())) {
+				String[] tagList = a.getTags().split("#");
+				List<String> finalTagList = new ArrayList<String>();
+				for (String tag : tagList) {
+					if (!StringUtils.isBlank(tag)) {
+						finalTagList.add(tag);
+					}
+				}
+				a.setTagList(finalTagList);
+			}
+		}
+		
+		PageInfo<ArticleVO> pageList = new PageInfo<>(list);
+
+		PagedResult pagedResult = new PagedResult();
+		pagedResult.setPage(page);
+		pagedResult.setTotal(pageList.getPages());
+		pagedResult.setRows(list);
+		pagedResult.setRecords(pageList.getTotal());
+
+		return pagedResult;
+	}
+	
+	@Transactional(propagation = Propagation.SUPPORTS)
+	@Override
+	public PagedResult getAllArticles(Integer page, Integer pageSize, String userId) {
+
+		// 从controller中获取page和pageSize (经实验，PageHelper 只拦截下一次查询)
+		PageHelper.startPage(page, pageSize);
 		List<ArticleVO> list = articleMapperCustom.queryAllArticles();
 		for (ArticleVO a : list) {
 			// 为每个文章添加图片列表
@@ -658,4 +729,19 @@ public class ArticleServiceImpl implements ArticleService {
 		articleMapperCustom.addViewCount(articleId);
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Override
+	public int updateArticleStatus(String articleIds, int status) {
+		if (StringUtils.isEmpty(articleIds)) {
+			return -1;
+		}
+		
+		List<String> listId = Convert.toListStrArray(articleIds);
+		
+		Example example = new Example(Article.class);
+		example.createCriteria().andIn("id", listId);
+		Article a = new Article();
+		a.setStatus(status);
+		return articleMapper.updateByExampleSelective(a, example);
+	}
 }
