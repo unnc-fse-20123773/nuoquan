@@ -65,7 +65,7 @@ public class ArticleController extends BasicController {
 		@ApiImplicitParam(name = "page", value = "页数", required = true, dataType = "String", paramType = "form"),
 		@ApiImplicitParam(name = "pageSize", value = "每页大小", required = true, dataType = "String", paramType = "form") })
 	@PostMapping("/queryAllArticles")
-	public JSONResult showAllArticles(Integer page, Integer pageSize, String userId) throws Exception {
+	public JSONResult shoAllArticles(Integer page, Integer pageSize, String userId) throws Exception {
 
 		if (page == null) {
 			page = 1;
@@ -326,10 +326,12 @@ public class ArticleController extends BasicController {
 	@ApiOperation(value = "删除文章")
 	@ApiImplicitParams({
 			// uniapp使用formData时，paramType要改成form
-			@ApiImplicitParam(name = "articleId", value = "文章id", required = true, dataType = "String", paramType = "form") })
+			@ApiImplicitParam(name = "articleId", value = "文章id", required = true, dataType = "String", paramType = "form"),
+			@ApiImplicitParam(name = "userId", value = "操作者id", required = true, dataType = "String", paramType = "form")
+	})
 	@PostMapping(value="/deleteArticle")
-	public JSONResult deleteArticle(String articleId) throws Exception {
-		articleService.deleteArticle(articleId);
+	public JSONResult deleteArticle(String articleId, String userId) throws Exception {
+		articleService.deleteArticle(articleId, userId);
 		return JSONResult.ok();
 	}
 	

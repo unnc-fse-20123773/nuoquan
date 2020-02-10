@@ -84,7 +84,7 @@ public interface ArticleService {
 	 * 删除文章
 	 * @param articleId
 	 */
-	public void deleteArticle(String articleId);
+	public void deleteArticle(String articleId, String userId);
 	
 	/**
 	 * 上传评论到数据库

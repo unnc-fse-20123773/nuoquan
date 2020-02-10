@@ -62,5 +62,10 @@
   },
   "permission": {},
   "usingComponents": {},
+<<<<<<< HEAD
   "sitemapLocation": "sitemap12.json"
 }
+=======
+  "sitemapLocation": "sitemap.json"
+}
+>>>>>>> 5520c1ac15bd7058b6c63be3ec3ccec863b47e9c

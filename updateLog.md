@@ -1,4 +1,10 @@
 # Update Log: #
+**v20.2.11 更新**
+1. 整合 deyan
+2. 新增 投票相关接口（deyan）
+3. 中改 数据库，详情见 sqlRecord.sql
+4. 新增 文章人工审核
+
 **v20.2.7 更新**
 1. 优化 部分后端代码，合并 resource.properties 到 application.properties
 2. 新增 后台管理中用户-角色-权限关联操作

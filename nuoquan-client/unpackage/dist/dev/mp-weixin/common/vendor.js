@@ -1,5 +1,1070 @@
 (global["webpackJsonp"] = global["webpackJsonp"] || []).push([["common/vendor"],{
 
+/***/ 0:
+/*!**********************************************************************!*\
+  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createApp, uni) {__webpack_require__(/*! uni-pages */ 4);
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ 5));
+var _store = _interopRequireDefault(__webpack_require__(/*! ./store */ 11));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;} // 引入 vuex 的 store 对象
+// import {mapMutations} from 'vuex';
+
+var app = new _vue.default(_objectSpread({
+  store: _store.default },
+_App.default));
+
+createApp(app).$mount();
+_App.default.mpType = 'app';
+
+_vue.default.config.productionTip = false;
+
+_vue.default.prototype.version = "v1.0.3 - 公测版";
+_vue.default.prototype.tagColors = ['#FE5F55', '#40A792', '#FDD041', '#5CA0D3', '#621E81', '#738598', '#F3AE4B'];
+
+_vue.default.prototype.$store = _store.default;
+
+_vue.default.prototype.$serverUrl = "http://127.0.0.1:8080";
+_vue.default.prototype.$wsServerUrl = "wss://127.0.0.1:8088/ws";
+
+// 服务器地址
+// Vue.prototype.$serverUrl = "http://129.28.130.27:8080/nottinghome"
+// Vue.prototype.$wsServerUrl = "ws://129.28.130.27:8088/ws"
+
+// 安全服务器地址
+// Vue.prototype.$serverUrl = "https://www.checkchack.cn:8443/nottinghome"
+// Vue.prototype.$wsServerUrl = "wss://www.checkchack.cn:8088/ws"
+
+/**
+ * 获取当前用户信息（我）
+ * @param {Object} user
+ */
+_vue.default.prototype.setGlobalUserInfo = function (user) {
+  uni.setStorageSync('userInfo', user);
+};
+
+/**
+    * 设置当前用户信息
+    */
+_vue.default.prototype.getGlobalUserInfo = function () {
+  var value = uni.getStorageSync('userInfo');
+  return value;
+};
+
+/**
+    * 清空当前用户信息
+    */
+_vue.default.prototype.removeGlobalUserInfo = function () {
+  uni.removeStorageSync('userInfo');
+};
+
+/**
+    * 把对象添加到列表尾部，并储存在缓存里
+    * @param {Object} obj
+    * @param {Object} list
+    */
+_vue.default.prototype.setIntoList = function (obj, listName) {
+  var listStr = uni.getStorageSync(listName);
+  // 从本地缓存获取列表名是否存在
+  var list;
+  if (app.isNull(listStr)) {
+    // 为空，赋一个空的list；
+    list = [];
+  } else {
+    // 不为空
+    list = JSON.parse(listStr);
+  }
+  // 插入对象到尾部
+  list.push(obj);
+  uni.setStorageSync(listName, JSON.stringify(list));
+};
+/**
+    * 把对象添加到列表头部，并储存在缓存里
+    * @param {Object} obj
+    * @param {Object} listName
+    */
+_vue.default.prototype.addIntoList = function (obj, listName) {
+  var listStr = uni.getStorageSync(listName);
+  // 从本地缓存获取列表名是否存在
+  var list;
+  if (app.isNull(listStr)) {
+    // 为空，赋一个空的list；
+    list = [];
+  } else {
+    // 不为空
+    list = JSON.parse(listStr);
+  }
+  // 插入对象到头部
+  list.unshift(obj);
+  uni.setStorageSync(listName, JSON.stringify(list));
+};
+/**
+    * 从缓存中按名字获取改名列表
+    * @param {Object} listName
+    */
+_vue.default.prototype.getListByKey = function (listName) {
+  var listStr = uni.getStorageSync(listName);
+  var list;
+  if (app.isNull(listStr)) {
+    // 为空，赋一个空的list；
+    list = [];
+  } else {
+    // 不为空
+    list = JSON.parse(listStr);
+  }
+
+  return list;
+};
+
+
+/** TODO: 可使用 Map 代替 List 提升查询性能（暂时不知道 map 在 uniapp 中怎么写）
+    *	 															by Jerrio
+    * 把该用户信息添加到本地缓存的 userlist 中，如果存在则替换
+    * @param {Object} userInfo
+    */
+_vue.default.prototype.setUserInfoToUserList = function (userInfo) {
+  var userListStr = uni.getStorageSync("userList");
+  var userList;
+  if (app.isNull(userListStr)) {
+    // 为空，赋一个空的list；
+    userList = [];
+  } else {
+    // 不为空，查看该用户是否存在
+    var userList = JSON.parse(userListStr);
+    for (var i = 0; i < userList.length; i++) {
+      var user = userList[i];
+      if (user.id == userInfo.id) {
+        userList.splice(i, 1, userInfo); // 替换
+        uni.setStorageSync("userList", JSON.stringify(userList));
+        return;
+      }
+    }
+  }
+  // 用户不存在
+  userList.push(userInfo);
+  uni.setStorageSync("userList", JSON.stringify(userList));
+};
+
+/**
+    * 根据 userId，在本地缓存中获取该用户信息
+    * @param {Object} userId
+    */
+_vue.default.prototype.getUserInfoFromUserList = function (userId) {
+  var userListStr = uni.getStorageSync("userList");
+
+  if (app.isNull(userListStr)) {
+    // 为空，直接返回 null
+    return null;
+  } else {
+    // 不为空
+    var userList = JSON.parse(userListStr);
+    for (var i = 0; i < userList.length; i++) {
+      var user = userList[i];
+      if (user.id == userId) {
+        return user;
+      }
+    }
+  }
+  return null;
+};
+
+/**
+    * 返回页面栈最后一页(当前页面)
+    */
+_vue.default.prototype.getCurrentPage = function () {
+  var pages = getCurrentPages();
+  var currentPage = pages[pages.length - 1];
+  return currentPage;
+};
+/**
+    * 从服务器查询用户信息, 并拼接额外信息。
+    * [需要设置同步否则得不到值，还未测试，暂时弃用，请手动调用myUser拼接]
+    */
+// Vue.prototype.myQueryUserInfo = async function(userId) {
+// 	var that = this;
+// 	var finalUser;
+// 	uni.request({
+// 		url: that.$serverUrl + '/user/queryUser',
+// 		method: "POST",
+// 		data: {
+// 			userId: userId
+// 		},
+// 		header: {
+// 			'content-type': 'application/x-www-form-urlencoded'
+// 		},
+// 		success: (res) => {
+// 			// console.log(res)
+// 			if (res.data.status == 200) {
+// 				// 3.获取返回的用户信息
+// 				finalUser = res.data.data;
+// 				// 4.分割邮箱地址, 重构user
+// 				finalUser = that.myUser(finalUser);
+// 			}
+// 			console.log("里面");
+// 			console.log(finalUser);
+// 			return finalUser;
+// 		}
+// 	});
+// 	
+// 	// app.$nextTick(function(){
+// 	// 	console.log(finalUser);
+// 	// })
+// 	
+// 	// console.log("里面2");
+// 	// console.log(finalUser);
+// 	// return finalUser;
+// }
+
+/**
+ * 分割邮箱地址, 重构user
+ * @param {Object} user
+ */
+_vue.default.prototype.myUser = function (user) {
+  // 分割邮箱地址
+  var email = user.email;
+  if (this.isNull(email)) {
+    email = "[Email]@nottingham.edu.cn";
+  }
+  var list = email.split('@');
+  user.emailPrefix = list[0];
+  user.emailSuffix = "@" + list[1];
+
+  return user;
+};
+
+_vue.default.prototype.isNull = function (str) {
+  if (str == null || str == "" || str == undefined) {
+    return true;
+  }
+  return false;
+};
+
+/**
+    * "" = true;
+    * " " = true;
+    */
+_vue.default.prototype.isBlank = function (str) {
+  return RegExp(/^\s*$/).test(str);
+};
+
+/**
+    * 自定义封装 socket 供全局调用
+    * @author: Jerrio
+    */
+_vue.default.prototype.mySocket = {
+
+  isOpen: false,
+  socketMsgQueue: [], // 未发送的消息队列	
+
+  init: function init() {
+    var that = this;
+    // 创建websocket长连接
+    uni.connectSocket({
+      url: app.$wsServerUrl,
+      complete: function complete() {} });
+
+
+    uni.onSocketOpen(function (res) {
+      that.isOpen = true;
+      console.log('WebSocket连接已打开！isSocketOpen=' + that.isOpen);
+      //发送连接消息，向服务器注册信息
+      var myUserId = app.getGlobalUserInfo().id; // 调用全局用户缓存，需要先请求获取
+      if (app.isNull(myUserId)) {
+        console.log("请先获取用户数据");
+        return;
+      }
+      var dataContent = new app.netty.DataContent(app.netty.CONNECT, null, myUserId);
+      that.sendDataContent(dataContent);
+      // 发送未发送的信息
+      for (var i = 0; i < that.socketMsgQueue.length; i++) {
+        if (that.socketMsgQueue[i].action == app.netty.CHAT) {
+          that.sendDataContent(that.socketMsgQueue[i]);
+        }
+      }
+      that.socketMsgQueue = [];
+
+      // 签收未签收消息
+      app.chat.fetchUnsignedChatMsg(); // 获取聊天信息
+      app.notification.fetchUnsignedLikeMsg(); // 获取点赞通知
+      app.notification.fetchUnsignedCommentMsg(); // 获取评论通知
+      // 定时发送心跳
+      setInterval(that.keepAlive, 50000);
+    });
+
+    uni.onSocketError(function (res) {
+      console.log('WebSocket连接打开失败，请检查！');
+    });
+
+    uni.onSocketMessage(function (res) {
+      var dataContent = JSON.parse(res.data);
+      console.log("收到服务器内容：");
+      console.log(dataContent);
+      var action = dataContent.action;
+
+      if (action == app.netty.CHAT ||
+      action == app.netty.LIKEARTICLE ||
+      action == app.netty.LIKECOMMENT ||
+      action == app.netty.COMMENTARTICLE ||
+      action == app.netty.COMMENTCOMMENT) {
+
+        app.$store.commit('setMyMsgCount'); // 累加 msgCount in index.js
+
+        switch (action) {
+          case app.netty.CHAT: // 如果消息类型为 CHAT
+            var chatMessage = dataContent.data;
+            // 发送签收消息
+            that.signMsgList(chatMessage.msgId);
+
+            // 保存聊天历史记录到本地缓存
+            var myId = chatMessage.receiverId;
+            var friendId = chatMessage.senderId;
+            var msg = chatMessage.msg;
+            var createDate = app.formatTime(chatMessage.createDate); // 对时间戳进行格式化
+
+            app.chat.saveUserChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);
+
+            // 判断当前页面，保存聊天快照
+            var page = app.getCurrentPage();
+            if (page.route == 'pages/chatpage/chatpage') {
+              var pageFriendId = page.data.friendInfo.id; // 打开页面才有对象，越层判断会报对象为空的错
+              /* 
+              【BUG】ISO 虚拟机获取 friendInfo.id 报错信息：
+               undefined is not an object (evaluating 'page.data.friendInfo.id')
+               不知道真机会不会有这种情况
+              */
+              // var pagestr = JSON.stringify(page.data);
+              // console.log(pagestr);
+              if (pageFriendId == friendId) {
+                // 与该用户在聊天，标记为已读
+                console.log("与该用户在聊天，标记为已读");
+                app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.READ, createDate);
+
+                // 修改 store，发送信号，把消息卡片渲染到对话窗口 和 消息列表
+                var newMessage = new app.chat.ChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);
+                app.$store.commit('setChatMessageCard', newMessage);
+              } else {
+                //不是与该用户聊天，标记为未读
+                console.log("不是与该用户聊天，标记为未读");
+                app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.UNREAD, createDate);
+              }
+            } else {
+              // 聊天页面未打开，标记为未读
+              console.log("聊天页面未打开，标记为未读");
+              app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.UNREAD, createDate);
+            }
+            break;
+          case app.netty.LIKEARTICLE:
+            console.log("获取点赞文章");
+            // 签收消息
+            that.signLikeArticleList(dataContent.data.source.id);
+            // 存入缓存 (TODO：登陆时获取未签收点赞消息)
+            dataContent.data.source.createDate = app.formatTime(dataContent.data.source.createDate);
+            app.notification.saveLikeMsg(dataContent);
+            app.$store.commit('setLikeMsgCount');
+            break;
+          case app.netty.LIKECOMMENT:
+            console.log("获取点赞评论");
+            // 签收消息
+            that.signLikeCommentList(dataContent.data.source.id);
+            // 存入缓存
+            dataContent.data.source.createDate = app.formatTime(dataContent.data.source.createDate);
+            app.notification.saveLikeMsg(dataContent);
+            app.$store.commit('setLikeMsgCount');
+            break;
+          case app.netty.COMMENTARTICLE:
+            console.log("获取评论文章");
+            // 签收消息
+            that.signCommentList(dataContent.data.source.id);
+            // 存入缓存
+            dataContent.data.source.createDate = app.formatTime(dataContent.data.source.createDate);
+            app.notification.saveCommentMsg(dataContent);
+            app.$store.commit('setCommentMsgCount');
+            break;
+          case app.netty.COMMENTCOMMENT:
+            console.log("获取评论评论");
+            // 签收消息
+            that.signCommentList(dataContent.data.source.id);
+            // 存入缓存
+            dataContent.data.source.createDate = app.formatTime(dataContent.data.source.createDate);
+            app.notification.saveCommentMsg(dataContent);
+            app.$store.commit('setCommentMsgCount');
+            break;
+          default:
+            break;}
+
+      }
+    });
+
+    uni.onSocketClose(function (res) {
+      that.isOpen = false;
+      console.log('WebSocket 已关闭！isSocketOpen=' + that.isOpen);
+      // 三秒一次重连
+      console.log("重连中..");
+      setTimeout(function () {
+        that.init();
+      }, 3000);
+    });
+
+  },
+  /**
+      * 向 netty 服务器发送 聊天信息的方法 sendChatObj
+      * @param {Object} type
+      * @param {Object} toUserId
+      * @param {Object} msg
+      * @param {Object} extand
+      */
+  sendObj: function sendObj(action, toUserId, msg, extand) {
+    var myUserId = app.getGlobalUserInfo().id; // 调用全局用户缓存，需要先请求获取
+    if (app.isNull(myUserId)) {
+      console.log("请先获取用户数据");
+      return;
+    }
+
+    // 获取当前时间戳，传输时间戳
+    var timeStamp = new Date().getTime();
+
+    // 构建载体
+    var chatMessage = new app.netty.ChatMessage(myUserId, toUserId, msg, null, timeStamp);
+    var dataContent = new app.netty.DataContent(action, chatMessage, extand);
+
+    var isSocketOpen = app.mySocket.isOpen;
+    if (isSocketOpen == true) {
+      this.sendDataContent(dataContent);
+    } else {
+      // 加到待发送列表
+      console.log("isSocketOpen=" + isSocketOpen);
+      this.socketMsgQueue.push(dataContent);
+      console.log(this.socketMsgQueue);
+    }
+  },
+
+  /**
+      * 向 netty 服务器发送 DataConten 对象
+      * @param {Object} dataContent
+      */
+  sendDataContent: function sendDataContent(dataContent) {
+    var data = JSON.stringify(dataContent);
+    uni.sendSocketMessage({
+      data: data });
+
+
+    if (dataContent.action == app.netty.CHAT) {
+      // 保存聊天历史到本地缓存，保存聊天快照到本地
+      var chatMessage = dataContent.data;
+      var createDate = app.formatTime(chatMessage.createDate);
+
+      // console.log("发消息的时间戳：" + createDate);
+      app.chat.saveUserChatHistory(chatMessage.senderId,
+      chatMessage.receiverId,
+      chatMessage.msg,
+      app.chat.ME,
+      createDate);
+      app.chat.saveUserChatSnapshot(chatMessage.senderId,
+      chatMessage.receiverId,
+      chatMessage.msg,
+      app.chat.READ,
+      createDate);
+      // 刷到对话窗口
+      app.$store.commit('doFlashChatPage');
+    }
+  },
+
+  /**
+      * 批量签收聊天消息
+      * @param {Object} msgIds
+      */
+  signMsgList: function signMsgList(msgIds) {
+    var dataContent = new app.netty.DataContent(app.netty.SIGNED, null, msgIds);
+    this.sendDataContent(dataContent);
+  },
+
+  /**
+      * 批量签收点赞文章消息
+      * @param {Object} msgIds
+      */
+  signLikeArticleList: function signLikeArticleList(msgIds) {
+    var dataContent = new app.netty.DataContent(app.netty.LIKEARTICLE_SIGN, null, msgIds);
+    this.sendDataContent(dataContent);
+  },
+
+  /**
+      * 批量签收点赞评论消息
+      * @param {Object} msgIds
+      */
+  signLikeCommentList: function signLikeCommentList(msgIds) {
+    var dataContent = new app.netty.DataContent(app.netty.LIKECOMMENT_SIGN, null, msgIds);
+    this.sendDataContent(dataContent);
+  },
+
+  /**
+      * 批量签收评论消息
+      * @param {Object} msgIds
+      */
+  signCommentList: function signCommentList(msgIds) {
+    var dataContent = new app.netty.DataContent(app.netty.COMMENT_SIGN, null, msgIds);
+    this.sendDataContent(dataContent);
+  },
+
+  /**
+      * 发送心跳
+      */
+  keepAlive: function keepAlive() {
+    // 用 setInterval 调用时，使用 this 获取不到实例，故用 app
+    var dataContent = new app.netty.DataContent(app.netty.KEEPALIVE, null, null);
+    app.mySocket.sendDataContent(dataContent);
+  } };
+
+
+_vue.default.prototype.chat = {
+
+  ME: 1, // 我的消息-右边
+  FRIEND: 2, // 对方消息-左边
+  READ: 3,
+  UNREAD: 4,
+  /**
+              * 历史记录对象
+              * @param {Object} myId
+              * @param {Object} friendId
+              * @param {Object} msg
+              * @param {Object} flag 是我的消息还是朋友的消息
+              * @param {Object} createDate
+              */
+  ChatHistory: function ChatHistory(myId, friendId, msg, flag, createDate) {
+    this.myId = myId;
+    this.friendId = friendId;
+    this.msg = msg;
+    this.flag = flag;
+    this.createDate = createDate;
+  },
+
+  /**
+      * 快照对象
+      * @param {Object} myId
+      * @param {Object} friendId
+      * @param {Object} msg
+      * @param {Object} isRead 用于判断消息是已读还是未读
+      * @param {Object} createDate
+      */
+  ChatSnapshot: function ChatSnapshot(myId, friendId, msg, isRead, createDate) {
+    this.myId = myId;
+    this.friendId = friendId;
+    this.msg = msg;
+    this.isRead = isRead;
+    this.createDate = createDate;
+  },
+  /**
+      * 保存用户的聊天记录
+      * @param {Object} myId
+      * @param {Object} friendId
+      * @param {Object} msg
+      * @param {Object} flag 判断本条消息是谁发送的, 1：我 2：朋友
+      * @param {Object} createDate
+      */
+  saveUserChatHistory: function saveUserChatHistory(myId, friendId, msg, flag, createDate) {
+
+    var chatKey = "chat-" + myId + "-" + friendId;
+    // 从本地缓存获取聊天记录是否存在
+    var chatHistoryListStr = uni.getStorageSync(chatKey);
+    var chatHistoryList;
+    if (app.isNull(chatHistoryListStr)) {
+      // 为空，赋一个空的list；
+      chatHistoryList = [];
+    } else {
+      // 不为空
+      chatHistoryList = JSON.parse(chatHistoryListStr);
+    }
+
+    // 构建聊天记录对象
+    var singleMsg = new this.ChatHistory(myId, friendId, msg, flag, createDate);
+
+    // 添加到list尾部
+    chatHistoryList.push(singleMsg);
+
+    uni.setStorageSync(chatKey, JSON.stringify(chatHistoryList));
+
+  },
+
+  /**
+      * 分页获取聊天历史，从列表尾部开始读取(反取)
+      * @param {Object} myId
+      * @param {Object} friendId
+      * @param {Object} page
+      */
+  getUserChatHistory: function getUserChatHistory(myId, friendId, page) {
+    var chatKey = "chat-" + myId + "-" + friendId;
+    var list = app.getListByKey(chatKey).reverse();
+    var size = 20;
+    var start = (page - 1) * size;
+    var newList = [];
+    if (list.length < start) {
+      return null;
+    } else {
+      for (var i = 0; i < size; i++) {
+        if (!app.isNull(list[start + i])) {
+          newList.unshift(list[start + i]);
+        }
+      }
+      return newList;
+    }
+  },
+
+  /**
+      * 删除我和朋友的聊天记录
+      * @param {Object} myId
+      * @param {Object} friendId
+      */
+  deletUserChatHistory: function deletUserChatHistory(myId, friendId) {
+    var chatKey = "chat-" + myId + "-" + friendId;
+    uni.removeStorageSync(chatKey);
+  },
+
+  /**
+      * 聊天记录快照，仅保存每次和朋友聊天的最后一条消息
+      * @param {Object} myId
+      * @param {Object} friendId
+      * @param {Object} msg
+      * @param {Object} isRead
+      * @param {Object} createDate
+      */
+  saveUserChatSnapshot: function saveUserChatSnapshot(myId, friendId, msg, isRead, createDate) {
+
+    var chatKey = "chat-snapshot" + myId;
+
+    // 从本地缓存获取聊天快照的 list
+    var chatSnapshotListStr = uni.getStorageSync(chatKey);
+    var chatSnapshotList;
+    if (app.isNull(chatSnapshotListStr)) {
+      // 为空，赋一个空的list；
+      chatSnapshotList = [];
+    } else {
+      // 不为空
+      chatSnapshotList = JSON.parse(chatSnapshotListStr);
+      // 循环快照list，删除含 friendId 的项
+      for (var i = 0; i < chatSnapshotList.length; i++) {
+        if (chatSnapshotList[i].friendId == friendId) {
+          chatSnapshotList.splice(i, 1); // 从i项往后删，只删一个
+          break;
+        }
+      }
+    }
+    // 构建聊天快照对象
+    var singleMsg = new this.ChatSnapshot(myId, friendId, msg, isRead, createDate);
+    // 添加到 list 第一项
+    chatSnapshotList.unshift(singleMsg);
+
+    uni.setStorageSync(chatKey, JSON.stringify(chatSnapshotList));
+  },
+
+  /**
+      * 获取用户快照记录列表
+      */
+  getUserChatSnapShot: function getUserChatSnapShot(myId) {
+    var chatKey = "chat-snapshot" + myId;
+
+    // 从本地缓存获取聊天快照的 list
+    var chatSnapshotListStr = uni.getStorageSync(chatKey);
+    var chatSnapshotList;
+    if (app.isNull(chatSnapshotListStr)) {
+      // 为空，赋一个空的list；
+      chatSnapshotList = [];
+    } else {
+      // 不为空
+      chatSnapshotList = JSON.parse(chatSnapshotListStr);
+    }
+
+    return chatSnapshotList;
+  },
+
+  /**
+      * 删除与该用户的聊天快照记录
+      * @param {Object} myId
+      * @param {Object} friendId
+      */
+  deletUserChatSnapShot: function deletUserChatSnapShot(myId, friendId) {
+    var chatKey = "chat-snapshot" + myId;
+    // 从本地缓存获取聊天快照的 list
+    var chatSnapshotListStr = uni.getStorageSync(chatKey);
+    var chatSnapshotList;
+    if (app.isNull(chatSnapshotListStr)) {
+      // 为空，不作处理
+      return;
+    } else {
+      // 不为空
+      chatSnapshotList = JSON.parse(chatSnapshotListStr);
+      // 循环快照list，删除含 friendId 的项
+      for (var i = 0; i < chatSnapshotList.length; i++) {
+        if (chatSnapshotList[i].friendId == friendId) {
+          chatSnapshotList.splice(i, 1); // 从i项往后删，只删一个
+          break;
+        }
+      }
+    }
+
+    uni.setStorageSync(chatKey, JSON.stringify(chatSnapshotList));
+  },
+
+  /**
+      * 把快照标记为已读，并且不改变在列表中的位置
+      * @param {Object} myId
+      * @param {Object} friendId
+      */
+  readUserChatSnapShot: function readUserChatSnapShot(myId, friendId) {
+    var chatKey = "chat-snapshot" + myId;
+
+    // 从本地缓存获取聊天快照的 list
+    var chatSnapshotListStr = uni.getStorageSync(chatKey);
+    var chatSnapshotList;
+    if (app.isNull(chatSnapshotListStr)) {
+      // 为空，赋一个空的list；
+      return;
+    } else {
+      // 不为空
+      chatSnapshotList = JSON.parse(chatSnapshotListStr);
+      // 删除快照对象并放入新的在原有位置
+      for (var i = 0; i < chatSnapshotList.length; i++) {
+        var item = chatSnapshotList[i];
+        if (item.friendId == friendId) {
+          item.isRead = this.READ;
+          chatSnapshotList.splice(i, 1, item); // 替换
+          break;
+        }
+      }
+
+      uni.setStorageSync(chatKey, JSON.stringify(chatSnapshotList));
+    }
+  },
+
+  fetchUnsignedChatMsg: function fetchUnsignedChatMsg() {var _this = this;
+    var user = app.getGlobalUserInfo();
+    var msgIds = ","; // 格式: ,1001,1002,1003,
+    var that = this;
+    uni.request({
+      url: app.$serverUrl + '/user/getUnsignedMsg',
+      method: "POST",
+      data: {
+        userId: user.id },
+
+      header: {
+        'content-type': 'application/x-www-form-urlencoded' },
+
+      success: function success(res) {
+        // console.log(res)
+        if (res.data.status == 200) {
+          var unsignedMsgList = res.data.data;
+          console.log(unsignedMsgList);
+          if (!app.isNull(unsignedMsgList)) {
+            app.$store.commit('setMyMsgCount', unsignedMsgList.length); // 增加 msgCount in index.js
+            for (var i = 0; i < unsignedMsgList.length; i++) {
+              var msgObj = unsignedMsgList[i];
+              var timeStamp = new Date(msgObj.createDate).getTime();
+              var createDate = app.formatTime(timeStamp);
+              // 1.逐条存入聊天记录
+              _this.saveUserChatHistory(msgObj.acceptUserId,
+              msgObj.sendUserId,
+              msgObj.msg,
+              _this.FRIEND,
+              createDate);
+              // 2.保存聊天快照到本地
+              _this.saveUserChatSnapshot(msgObj.acceptUserId,
+              msgObj.sendUserId,
+              msgObj.msg,
+              _this.UNREAD,
+              createDate);
+              // 3.拼接批量签收id的字符串
+              msgIds += msgObj.id + ",";
+            }
+
+            // 调用批量签收方法
+            app.mySocket.signMsgList(msgIds);
+          }
+        }
+      } });
+
+  }
+
+
+  /**
+     * 点赞评论通知
+     */ };
+_vue.default.prototype.notification = {
+  LIKEMSG_KEY: "likeMsg" + app.getGlobalUserInfo().id,
+  COMMENTMSG_KEY: "commentMsg" + app.getGlobalUserInfo().id,
+  /**
+                                                              * 把点赞通知存入缓存
+                                                              * @param {Object} dataContent
+                                                              */
+  saveLikeMsg: function saveLikeMsg(dataContent) {
+    app.addIntoList(dataContent, this.LIKEMSG_KEY);
+  },
+
+  getLikeMsg: function getLikeMsg(page) {
+    var size = 10;
+    var list = app.getListByKey(this.LIKEMSG_KEY);
+    var start = (page - 1) * size;
+    var newList = [];
+    if (list.length < start) {
+      return null;
+    } else {
+      for (var i = 0; i < size; i++) {
+        if (!app.isNull(list[start + i])) {
+          newList.push(list[start + i]);
+        }
+      }
+      return newList;
+    }
+  },
+
+  /**
+      * 把评论通知存入缓存
+      * @param {Object} dataContent
+      */
+  saveCommentMsg: function saveCommentMsg(dataContent) {
+    app.addIntoList(dataContent, this.COMMENTMSG_KEY);
+  },
+
+  getCommentMsg: function getCommentMsg(page) {
+    var size = 10;
+    var list = app.getListByKey(this.COMMENTMSG_KEY);
+    var start = (page - 1) * size;
+    var newList = [];
+    if (list.length < start) {
+      return null;
+    } else {
+      for (var i = 0; i < size; i++) {
+        if (!app.isNull(list[start + i])) {
+          newList.push(list[start + i]);
+        }
+      }
+      return newList;
+    }
+  },
+
+  /**
+      * 获取并签收未签收的点赞通知
+      */
+  fetchUnsignedLikeMsg: function fetchUnsignedLikeMsg() {
+    var user = app.getGlobalUserInfo();
+    var likeArticleIds = ","; // 格式: ,1001,1002,1003,
+    var likeCommentIds = ",";
+    var that = this;
+    uni.request({
+      url: app.$serverUrl + '/article/getUnsignedLikeMsg',
+      method: "POST",
+      data: {
+        userId: user.id },
+
+      header: {
+        'content-type': 'application/x-www-form-urlencoded' },
+
+      success: function success(res) {
+        // console.log(res)
+        if (res.data.status == 200) {
+          var unsignedMsgList = res.data.data;
+          console.log(unsignedMsgList);
+          if (!app.isNull(unsignedMsgList)) {
+            for (var i = 0; i < unsignedMsgList.length; i++) {
+              var dataContent = unsignedMsgList[i];
+              //累加信息
+              app.$store.commit('setMyMsgCount'); // 累加通用信息
+              app.$store.commit('setLikeMsgCount'); //累加点赞信息
+              // 逐条存入缓存
+              dataContent.data.source.createDate = app.formatTime(dataContent.data.source.createDate);
+              app.notification.saveLikeMsg(dataContent);
+              // 拼接批量签收id的字符串
+              switch (dataContent.action) {
+                case app.netty.LIKEARTICLE:
+                  likeArticleIds += dataContent.data.source.id + ",";
+                  break;
+                case app.netty.LIKECOMMENT:
+                  likeCommentIds += dataContent.data.source.id + ",";
+                  break;
+                default:
+                  break;}
+
+            }
+
+            // 调用批量签收方法
+            app.mySocket.signLikeArticleList(likeArticleIds);
+            app.mySocket.signLikeCommentList(likeCommentIds);
+          }
+        }
+      } });
+
+  },
+
+  /**
+      * 获取并签收未签收的评论通知
+      */
+  fetchUnsignedCommentMsg: function fetchUnsignedCommentMsg() {
+    var user = app.getGlobalUserInfo();
+    var commentIds = ","; // 格式: ,1001,1002,1003,
+    var that = this;
+    uni.request({
+      url: app.$serverUrl + '/article/getUnsignedCommentMsg',
+      method: "POST",
+      data: {
+        userId: user.id },
+
+      header: {
+        'content-type': 'application/x-www-form-urlencoded' },
+
+      success: function success(res) {
+        // console.log(res)
+        if (res.data.status == 200) {
+          var unsignedMsgList = res.data.data;
+          console.log(unsignedMsgList);
+          if (!app.isNull(unsignedMsgList)) {
+            for (var i = 0; i < unsignedMsgList.length; i++) {
+              var dataContent = unsignedMsgList[i];
+              //累加信息
+              app.$store.commit('setMyMsgCount'); // 累加通用信息
+              app.$store.commit('setCommentMsgCount'); //累加评论信息
+              // 逐条存入缓存
+              dataContent.data.source.createDate = app.formatTime(dataContent.data.source.createDate);
+              app.notification.saveCommentMsg(dataContent);
+              // 拼接批量签收id的字符串
+              commentIds += dataContent.data.source.id + ",";
+            }
+
+            // 调用批量签收方法
+            app.mySocket.signCommentList(commentIds);
+          }
+        }
+      } });
+
+  } };
+
+
+_vue.default.prototype.netty = {
+  /**
+                                  * 和后端的枚举对应
+                                  */
+  CONNECT: 1, // 第一次(或重连)初始化连接
+  CHAT: 2, // 聊天消息
+  SIGNED: 3, // 消息签收
+  KEEPALIVE: 4, // 客户端保持心跳
+  LIKEARTICLE: 5, // 点赞文章通知
+  LIKECOMMENT: 6, // 点赞评论通知
+  COMMENTARTICLE: 7, // 评论文章通知
+  COMMENTCOMMENT: 8, // 评论评论通知
+  LIKEARTICLE_SIGN: 9, // 签收点赞文章通知
+  LIKECOMMENT_SIGN: 10, // 签收点赞评论通知
+  COMMENT_SIGN: 11, // 签收评论文章通知
+
+  /**
+   * 和后端 ChatMessage 聊天模型的对象保持一致
+   * @param {Object} senderId
+   * @param {Object} receiverId
+   * @param {Object} msg
+   * @param {Object} msgId
+   * @param {Object} createDate
+   */
+  ChatMessage: function ChatMessage(senderId, receiverId, msg, msgId, createDate) {
+    this.senderId = senderId;
+    this.receiverId = receiverId;
+    this.msg = msg;
+    this.msgId = msgId; // 前端发送设置null就好
+    this.createDate = createDate;
+  },
+
+  /**
+      * 构建消息 DataContent 模型对象
+      * @param {Object} action
+      * @param {Object} data
+      * @param {Object} extand
+      */
+  DataContent: function DataContent(action, data, extand) {
+    this.action = action;
+    this.data = data;
+    this.extand = extand;
+  }
+
+
+  /**
+     * 格式化时间戳
+     * @param {Object} timeStamp
+     */ };
+_vue.default.prototype.formatTime = function (timeStamp) {
+  // 将/[0-9]/位的数字编成/0[0-9]/  
+
+  if (timeStamp.length < 13) {
+    timeStamp += "000";
+  }
+  var d = new Date(parseInt(timeStamp));
+
+  var year = d.getFullYear();
+  var month = this.getTwo(d.getMonth() + 1);
+  var date = this.getTwo(d.getDate());
+  var hour = this.getTwo(d.getHours());
+  var minute = this.getTwo(d.getMinutes());
+  var second = this.getTwo(d.getSeconds());
+
+  return month + "/" + date + " " + hour + ":" + minute;
+  // 明年改加上年的逻辑 鸣谦说的...
+  // return year + "/" + month + "/" + date + " " + hour + ":" + minute + ":" + second;
+};
+
+_vue.default.prototype.getTwo = function (s) {
+  if (parseInt(s) < 10) {
+    return "0" + s;
+  } else {
+    return "" + s;
+  }
+};
+
+/**
+    * Timestamp 渲染
+    * @param {Object} timediff
+    */
+_vue.default.prototype.timeDeal = function (timediff) {
+  console.log(timediff);
+  timediff = new Date(timediff);
+  console.log(timediff);
+  var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(),
+  timediff.getSeconds()];
+
+  var oldTime = timediff.getTime();
+  var now = new Date();
+  var newTime = now.getTime();
+  var milliseconds = 0;
+  var timeSpanStr;
+  milliseconds = newTime - oldTime;
+  if (milliseconds <= 1000 * 60 * 1) {
+    timeSpanStr = '刚刚';
+  } else if (1000 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60) {
+    timeSpanStr = Math.round(milliseconds / (1000 * 60)) + '分钟前';
+  } else if (1000 * 60 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24) {
+    timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
+  } else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
+    timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
+
+  } else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && parts[0] == now.getFullYear()) {
+    timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
+  } else {
+    timeSpanStr = parts[0] + '-' + parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
+  }
+  return timeSpanStr;
+};
+
+// 封装tabbar索引，避免重复书写
+_vue.default.mixin({
+  methods: {
+    setTabBarIndex: function setTabBarIndex(index) {
+      if (typeof this.$mp.page.getTabBar === 'function' &&
+      this.$mp.page.getTabBar()) {
+        this.$mp.page.getTabBar().setData({
+          selected: index });
+
+      }
+    } } });
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createApp"], __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
 /***/ 1:
 /*!************************************************************!*\
   !*** ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js ***!
@@ -241,7 +1306,7 @@ var promiseInterceptor = {
 
 
 var SYNC_API_RE =
-/^\$|getMenuButtonBoundingClientRect|^report|interceptors|Interceptor$|getSubNVueById|requireNativePlugin|upx2px|hideKeyboard|canIUse|^create|Sync$|Manager$|base64ToArrayBuffer|arrayBufferToBase64/;
+/^\$|interceptors|Interceptor$|getSubNVueById|requireNativePlugin|upx2px|hideKeyboard|canIUse|^create|Sync$|Manager$|base64ToArrayBuffer|arrayBufferToBase64/;
 
 var CONTEXT_API_RE = /^create|Manager$/;
 
@@ -397,9 +1462,7 @@ var previewImage = {
 var protocols = {
   previewImage: previewImage };
 
-var todos = [
-'vibrate'];
-
+var todos = [];
 var canIUses = [];
 
 var CALLBACKS = ['success', 'fail', 'cancel', 'complete'];
@@ -1127,10 +2190,6 @@ function parseBaseApp(vm, _ref3)
 
 
 {var mocks = _ref3.mocks,initRefs = _ref3.initRefs;
-  if (vm.$options.store) {
-    _vue.default.prototype.$store = vm.$options.store;
-  }
-
   _vue.default.prototype.mpHost = "mp-weixin";
 
   _vue.default.mixin({
@@ -1347,14 +2406,6 @@ function parseBaseComponent(vueComponentOptions)
 
 
 
-  if (Array.isArray(vueOptions.wxsCallMethods)) {
-    vueOptions.wxsCallMethods.forEach(function (callMethod) {
-      componentOptions.methods[callMethod] = function (args) {
-        return this.$vm[callMethod](args);
-      };
-    });
-  }
-
   if (isPage) {
     return componentOptions;
   }
@@ -1428,9 +2479,6 @@ var uni = {};
 if (typeof Proxy !== 'undefined' && "mp-weixin" !== 'app-plus') {
   uni = new Proxy({}, {
     get: function get(target, name) {
-      if (target[name]) {
-        return target[name];
-      }
       if (baseApi[name]) {
         return baseApi[name];
       }
@@ -1452,10 +2500,6 @@ if (typeof Proxy !== 'undefined' && "mp-weixin" !== 'app-plus') {
         return;
       }
       return promisify(name, wrapper(name, wx[name]));
-    },
-    set: function set(target, name, value) {
-      target[name] = value;
-      return true;
     } });
 
 } else {
@@ -1497,137 +2541,7 @@ uni$1;exports.default = _default;
 
 /***/ }),
 
-/***/ 119:
-/*!************************************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/pages/black-index/black-index.css ***!
-  \************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
-/***/ 128:
-/*!*****************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/common/util.js ***!
-  \*****************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-function formatTime(time) {
-  if (typeof time !== 'number' || time < 0) {
-    return time;
-  }
-
-  var hour = parseInt(time / 3600);
-  time = time % 3600;
-  var minute = parseInt(time / 60);
-  time = time % 60;
-  var second = time;
-
-  return [hour, minute, second].map(function (n) {
-    n = n.toString();
-    return n[1] ? n : '0' + n;
-  }).join(':');
-}
-
-function formatLocation(longitude, latitude) {
-  if (typeof longitude === 'string' && typeof latitude === 'string') {
-    longitude = parseFloat(longitude);
-    latitude = parseFloat(latitude);
-  }
-
-  longitude = longitude.toFixed(2);
-  latitude = latitude.toFixed(2);
-
-  return {
-    longitude: longitude.toString().split('.'),
-    latitude: latitude.toString().split('.') };
-
-}
-var dateUtils = {
-  UNITS: {
-    '年': 31557600000,
-    '月': 2629800000,
-    '天': 86400000,
-    '小时': 3600000,
-    '分钟': 60000,
-    '秒': 1000 },
-
-  humanize: function humanize(milliseconds) {
-    var humanize = '';
-    for (var key in this.UNITS) {
-      if (milliseconds >= this.UNITS[key]) {
-        humanize = Math.floor(milliseconds / this.UNITS[key]) + key + '前';
-        break;
-      }
-    }
-    return humanize || '刚刚';
-  },
-  format: function format(dateStr) {
-    var date = this.parse(dateStr);
-    var diff = Date.now() - date.getTime();
-    if (diff < this.UNITS['天']) {
-      return this.humanize(diff);
-    }
-    var _format = function _format(number) {
-      return number < 10 ? '0' + number : number;
-    };
-    return date.getFullYear() + '/' + _format(date.getMonth() + 1) + '/' + _format(date.getDay()) + '-' +
-    _format(date.getHours()) + ':' + _format(date.getMinutes());
-  },
-  parse: function parse(str) {//将"yyyy-mm-dd HH:MM:ss"格式的字符串，转化为一个Date对象
-    var a = str.split(/[^0-9]/);
-    return new Date(a[0], a[1] - 1, a[2], a[3], a[4], a[5]);
-  } };
-
-
-
-//工具包
-//正则匹配
-//匹配帐号
-var regUid = function regUid(str) {
-  return !RegExp(/^\w{6,12}$/).test(str);
-};
-
-var regName = function regName(str) {
-  return !RegExp(/^[\u4e00-\u9fa5]{2,5}$/).test(str);
-};
-
-//匹配身份证
-var regIDC = function regIDC(str) {
-  return !RegExp(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/).test(str);
-};
-//匹配手机号
-var regPhone = function regPhone(str) {
-  return !RegExp(/^1[34578]\d{9}$/).test(str);
-};
-//匹配验证码
-var regCheckNum = function regCheckNum(str) {
-  return !RegExp(/^\d{4}$/).test(str);
-};
-
-//匹配邮箱格式 true: 不匹配，false: 匹配
-var regEmail = function regEmail(str) {
-  return !RegExp(/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/).test(str);
-};
-
-module.exports = {
-  formatTime: formatTime,
-  formatLocation: formatLocation,
-  dateUtils: dateUtils,
-  regUid: regUid,
-  regPhone: regPhone,
-  regName: regName,
-  regIDC: regIDC,
-  regEmail: regEmail,
-  regCheckNum: regCheckNum };
-
-/***/ }),
-
-/***/ 14:
+/***/ 10:
 /*!********************************************************************!*\
   !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
   \********************************************************************/
@@ -1734,16 +2648,50 @@ function normalizeComponent (
 
 /***/ }),
 
-/***/ 15:
+/***/ 101:
+/*!*********************************************************************************************************!*\
+  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fsearch%2Fsearch"} ***!
+  \*********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _search = _interopRequireDefault(__webpack_require__(/*! ./pages/search/search.vue */ 102));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_search.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
+
+/***/ }),
+
+/***/ 109:
+/*!*******************************************************************************************************************!*\
+  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fblack-index%2Fblack-index"} ***!
+  \*******************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _blackIndex = _interopRequireDefault(__webpack_require__(/*! ./pages/black-index/black-index.vue */ 110));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_blackIndex.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
+
+/***/ }),
+
+/***/ 11:
 /*!*****************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/store/index.js ***!
+  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/store/index.js ***!
   \*****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _vuex = _interopRequireDefault(__webpack_require__(/*! vuex */ 16));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _vuex = _interopRequireDefault(__webpack_require__(/*! vuex */ 12));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 _vue.default.use(_vuex.default);
 
@@ -1815,7 +2763,35 @@ store;exports.default = _default;
 
 /***/ }),
 
-/***/ 16:
+/***/ 115:
+/*!************************************************************************************************!*\
+  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/pages/black-index/black-index.css ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ 118:
+/*!*********************************************************************************************************!*\
+  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fsignin%2Fsignin"} ***!
+  \*********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _signin = _interopRequireDefault(__webpack_require__(/*! ./pages/signin/signin.vue */ 119));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_signin.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
+
+/***/ }),
+
+/***/ 12:
 /*!********************************************!*\
   !*** ./node_modules/vuex/dist/vuex.esm.js ***!
   \********************************************/
@@ -2766,6 +3742,273 @@ var index_esm = {
 
 /***/ }),
 
+/***/ 124:
+/*!*****************************************************************************!*\
+  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/common/util.js ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+function formatTime(time) {
+  if (typeof time !== 'number' || time < 0) {
+    return time;
+  }
+
+  var hour = parseInt(time / 3600);
+  time = time % 3600;
+  var minute = parseInt(time / 60);
+  time = time % 60;
+  var second = time;
+
+  return [hour, minute, second].map(function (n) {
+    n = n.toString();
+    return n[1] ? n : '0' + n;
+  }).join(':');
+}
+
+function formatLocation(longitude, latitude) {
+  if (typeof longitude === 'string' && typeof latitude === 'string') {
+    longitude = parseFloat(longitude);
+    latitude = parseFloat(latitude);
+  }
+
+  longitude = longitude.toFixed(2);
+  latitude = latitude.toFixed(2);
+
+  return {
+    longitude: longitude.toString().split('.'),
+    latitude: latitude.toString().split('.') };
+
+}
+var dateUtils = {
+  UNITS: {
+    '年': 31557600000,
+    '月': 2629800000,
+    '天': 86400000,
+    '小时': 3600000,
+    '分钟': 60000,
+    '秒': 1000 },
+
+  humanize: function humanize(milliseconds) {
+    var humanize = '';
+    for (var key in this.UNITS) {
+      if (milliseconds >= this.UNITS[key]) {
+        humanize = Math.floor(milliseconds / this.UNITS[key]) + key + '前';
+        break;
+      }
+    }
+    return humanize || '刚刚';
+  },
+  format: function format(dateStr) {
+    var date = this.parse(dateStr);
+    var diff = Date.now() - date.getTime();
+    if (diff < this.UNITS['天']) {
+      return this.humanize(diff);
+    }
+    var _format = function _format(number) {
+      return number < 10 ? '0' + number : number;
+    };
+    return date.getFullYear() + '/' + _format(date.getMonth() + 1) + '/' + _format(date.getDay()) + '-' +
+    _format(date.getHours()) + ':' + _format(date.getMinutes());
+  },
+  parse: function parse(str) {//将"yyyy-mm-dd HH:MM:ss"格式的字符串，转化为一个Date对象
+    var a = str.split(/[^0-9]/);
+    return new Date(a[0], a[1] - 1, a[2], a[3], a[4], a[5]);
+  } };
+
+
+
+//工具包
+//正则匹配
+//匹配帐号
+var regUid = function regUid(str) {
+  return !RegExp(/^\w{6,12}$/).test(str);
+};
+
+var regName = function regName(str) {
+  return !RegExp(/^[\u4e00-\u9fa5]{2,5}$/).test(str);
+};
+
+//匹配身份证
+var regIDC = function regIDC(str) {
+  return !RegExp(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/).test(str);
+};
+//匹配手机号
+var regPhone = function regPhone(str) {
+  return !RegExp(/^1[34578]\d{9}$/).test(str);
+};
+//匹配验证码
+var regCheckNum = function regCheckNum(str) {
+  return !RegExp(/^\d{4}$/).test(str);
+};
+
+//匹配邮箱格式 true: 不匹配，false: 匹配
+var regEmail = function regEmail(str) {
+  return !RegExp(/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/).test(str);
+};
+
+module.exports = {
+  formatTime: formatTime,
+  formatLocation: formatLocation,
+  dateUtils: dateUtils,
+  regUid: regUid,
+  regPhone: regPhone,
+  regName: regName,
+  regIDC: regIDC,
+  regEmail: regEmail,
+  regCheckNum: regCheckNum };
+
+/***/ }),
+
+/***/ 127:
+/*!***********************************************************************************************************!*\
+  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"components%2Farticlebrief"} ***!
+  \***********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _articlebrief = _interopRequireDefault(__webpack_require__(/*! ./components/articlebrief.vue */ 22));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_articlebrief.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
+
+/***/ }),
+
+/***/ 128:
+/*!*******************************************************************************************************************!*\
+  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2FwechatLogin%2FwechatLogin"} ***!
+  \*******************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _wechatLogin = _interopRequireDefault(__webpack_require__(/*! ./pages/wechatLogin/wechatLogin.vue */ 129));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_wechatLogin.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
+
+/***/ }),
+
+/***/ 13:
+/*!**********************************************************************************************************!*\
+  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2FtabPages%2Findex"} ***!
+  \**********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _index = _interopRequireDefault(__webpack_require__(/*! ./pages/tabPages/index.vue */ 14));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_index.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
+
+/***/ }),
+
+/***/ 134:
+/*!*************************************************************************************************************************!*\
+  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fcmt-likedetail%2Fcmt-likedetail"} ***!
+  \*************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _cmtLikedetail = _interopRequireDefault(__webpack_require__(/*! ./pages/cmt-likedetail/cmt-likedetail.vue */ 135));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_cmtLikedetail.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
+
+/***/ }),
+
+/***/ 142:
+/*!*************************************************************************************************************************!*\
+  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fcomment-detail%2Fcomment-detail"} ***!
+  \*************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _commentDetail = _interopRequireDefault(__webpack_require__(/*! ./pages/comment-detail/comment-detail.vue */ 143));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_commentDetail.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
+
+/***/ }),
+
+/***/ 150:
+/*!*************************************************************************************************************!*\
+  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2FuserDeal%2FuserDeal"} ***!
+  \*************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _userDeal = _interopRequireDefault(__webpack_require__(/*! ./pages/userDeal/userDeal.vue */ 151));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_userDeal.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
+
+/***/ }),
+
+/***/ 158:
+/*!***************************************************************************************************************!*\
+  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2FmyPublish%2FmyPublish"} ***!
+  \***************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _myPublish = _interopRequireDefault(__webpack_require__(/*! ./pages/myPublish/myPublish.vue */ 159));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_myPublish.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
+
+/***/ }),
+
+/***/ 166:
+/*!*******************************************************************************************************!*\
+  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fabout%2Fabout"} ***!
+  \*******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _about = _interopRequireDefault(__webpack_require__(/*! ./pages/about/about.vue */ 167));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_about.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
+
+/***/ }),
+
+/***/ 19:
+/*!**********************************************************!*\
+  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! regenerator-runtime */ 20);
+
+
+/***/ }),
+
 /***/ 2:
 /*!******************************************************************************************!*\
   !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js ***!
@@ -3488,8 +4731,8 @@ Dep.prototype.removeSub = function removeSub (sub) {
 };
 
 Dep.prototype.depend = function depend () {
-  if (Dep.SharedObject.target) {
-    Dep.SharedObject.target.addDep(this);
+  if (Dep.target) {
+    Dep.target.addDep(this);
   }
 };
 
@@ -3510,20 +4753,17 @@ Dep.prototype.notify = function notify () {
 // The current target watcher being evaluated.
 // This is globally unique because only one watcher
 // can be evaluated at a time.
-// fixed by xxxxxx (nvue shared vuex)
-/* eslint-disable no-undef */
-Dep.SharedObject = typeof SharedObject !== 'undefined' ? SharedObject : {};
-Dep.SharedObject.target = null;
-Dep.SharedObject.targetStack = [];
+Dep.target = null;
+var targetStack = [];
 
 function pushTarget (target) {
-  Dep.SharedObject.targetStack.push(target);
-  Dep.SharedObject.target = target;
+  targetStack.push(target);
+  Dep.target = target;
 }
 
 function popTarget () {
-  Dep.SharedObject.targetStack.pop();
-  Dep.SharedObject.target = Dep.SharedObject.targetStack[Dep.SharedObject.targetStack.length - 1];
+  targetStack.pop();
+  Dep.target = targetStack[targetStack.length - 1];
 }
 
 /*  */
@@ -3690,13 +4930,7 @@ var Observer = function Observer (value) {
   def(value, '__ob__', this);
   if (Array.isArray(value)) {
     if (hasProto) {
-      {// fixed by xxxxxx 微信小程序使用 plugins 之后，数组方法被直接挂载到了数组对象上，需要执行 copyAugment 逻辑
-        if(value.push !== value.__proto__.push){
-          copyAugment(value, arrayMethods, arrayKeys);
-        } else {
-          protoAugment(value, arrayMethods);
-        }
-      }
+      protoAugment(value, arrayMethods);
     } else {
       copyAugment(value, arrayMethods, arrayKeys);
     }
@@ -3808,7 +5042,7 @@ function defineReactive$$1 (
     configurable: true,
     get: function reactiveGetter () {
       var value = getter ? getter.call(obj) : val;
-      if (Dep.SharedObject.target) { // fixed by xxxxxx
+      if (Dep.target) {
         dep.depend();
         if (childOb) {
           childOb.dep.depend();
@@ -5261,12 +6495,7 @@ function resolveSlots (
         slot.push(child);
       }
     } else {
-      // fixed by xxxxxx 临时 hack 掉 uni-app 中的异步 name slot page
-      if(child.asyncMeta && child.asyncMeta.data && child.asyncMeta.data.slot === 'page'){
-        (slots['page'] || (slots['page'] = [])).push(child);
-      }else{
-        (slots.default || (slots.default = [])).push(child);
-      }
+      (slots.default || (slots.default = [])).push(child);
     }
   }
   // ignore slots that contains only whitespace
@@ -7522,7 +8751,7 @@ function createComputedGetter (key) {
       if (watcher.dirty) {
         watcher.evaluate();
       }
-      if (Dep.SharedObject.target) {// fixed by xxxxxx
+      if (Dep.target) {
         watcher.depend();
       }
       return watcher.value
@@ -8729,19 +9958,7 @@ internalMixin(Vue);
 
 /***/ }),
 
-/***/ 23:
-/*!**********************************************************!*\
-  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
-  \**********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(/*! regenerator-runtime */ 24);
-
-
-/***/ }),
-
-/***/ 24:
+/***/ 20:
 /*!************************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime-module.js ***!
   \************************************************************/
@@ -8772,7 +9989,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(/*! ./runtime */ 25);
+module.exports = __webpack_require__(/*! ./runtime */ 21);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -8789,7 +10006,7 @@ if (hadRuntime) {
 
 /***/ }),
 
-/***/ 25:
+/***/ 21:
 /*!*****************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime.js ***!
   \*****************************************************/
@@ -9552,9 +10769,26 @@ module.exports = g;
 
 /***/ }),
 
+/***/ 35:
+/*!*************************************************************************************************************!*\
+  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2FtabPages%2FvotePage"} ***!
+  \*************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _votePage = _interopRequireDefault(__webpack_require__(/*! ./pages/tabPages/votePage.vue */ 36));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_votePage.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
+
+/***/ }),
+
 /***/ 4:
 /*!*************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/pages.json ***!
+  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/pages.json ***!
   \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9564,922 +10798,122 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 5:
-/*!*******************************************************!*\
-  !*** ./node_modules/@dcloudio/uni-stat/dist/index.js ***!
-  \*******************************************************/
+/***/ 41:
+/*!****************************************************************************************************************!*\
+  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2FtabPages%2Fmessagelist"} ***!
+  \****************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {var _package = __webpack_require__(/*! ../package.json */ 6);function _possibleConstructorReturn(self, call) {if (call && (typeof call === "object" || typeof call === "function")) {return call;}return _assertThisInitialized(self);}function _assertThisInitialized(self) {if (self === void 0) {throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return self;}function _getPrototypeOf(o) {_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {return o.__proto__ || Object.getPrototypeOf(o);};return _getPrototypeOf(o);}function _inherits(subClass, superClass) {if (typeof superClass !== "function" && superClass !== null) {throw new TypeError("Super expression must either be null or a function");}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } });if (superClass) _setPrototypeOf(subClass, superClass);}function _setPrototypeOf(o, p) {_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {o.__proto__ = p;return o;};return _setPrototypeOf(o, p);}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}
-
-var STAT_VERSION = _package.version;
-var STAT_URL = 'https://tongji.dcloud.io/uni/stat';
-var STAT_H5_URL = 'https://tongji.dcloud.io/uni/stat.gif';
-var PAGE_PVER_TIME = 1800;
-var APP_PVER_TIME = 300;
-var OPERATING_TIME = 10;
-
-var UUID_KEY = '__DC_STAT_UUID';
-var UUID_VALUE = '__DC_UUID_VALUE';
-
-function getUuid() {
-  var uuid = '';
-  if (getPlatformName() === 'n') {
-    try {
-      uuid = plus.runtime.getDCloudId();
-    } catch (e) {
-      uuid = '';
-    }
-    return uuid;
-  }
-
-  try {
-    uuid = uni.getStorageSync(UUID_KEY);
-  } catch (e) {
-    uuid = UUID_VALUE;
-  }
-
-  if (!uuid) {
-    uuid = Date.now() + '' + Math.floor(Math.random() * 1e7);
-    try {
-      uni.setStorageSync(UUID_KEY, uuid);
-    } catch (e) {
-      uni.setStorageSync(UUID_KEY, UUID_VALUE);
-    }
-  }
-  return uuid;
-}
-
-var getSgin = function getSgin(statData) {
-  var arr = Object.keys(statData);
-  var sortArr = arr.sort();
-  var sgin = {};
-  var sginStr = '';
-  for (var i in sortArr) {
-    sgin[sortArr[i]] = statData[sortArr[i]];
-    sginStr += sortArr[i] + '=' + statData[sortArr[i]] + '&';
-  }
-  // const options = sginStr.substr(0, sginStr.length - 1)
-  // sginStr = sginStr.substr(0, sginStr.length - 1) + '&key=' + STAT_KEY;
-  // const si = crypto.createHash('md5').update(sginStr).digest('hex');
-  return {
-    sign: '',
-    options: sginStr.substr(0, sginStr.length - 1) };
-
-};
-
-var getSplicing = function getSplicing(data) {
-  var str = '';
-  for (var i in data) {
-    str += i + '=' + data[i] + '&';
-  }
-  return str.substr(0, str.length - 1);
-};
-
-var getTime = function getTime() {
-  return parseInt(new Date().getTime() / 1000);
-};
-
-var getPlatformName = function getPlatformName() {
-  var platformList = {
-    'app-plus': 'n',
-    'h5': 'h5',
-    'mp-weixin': 'wx',
-    'mp-alipay': 'ali',
-    'mp-baidu': 'bd',
-    'mp-toutiao': 'tt',
-    'mp-qq': 'qq' };
-
-  return platformList["mp-weixin"];
-};
-
-var getPackName = function getPackName() {
-  var packName = '';
-  if (getPlatformName() === 'wx' || getPlatformName() === 'qq') {
-    packName = uni.getAccountInfoSync().miniProgram.appId || '';
-  }
-  return packName;
-};
-
-var getVersion = function getVersion() {
-  return getPlatformName() === 'n' ? plus.runtime.version : '';
-};
-
-var getChannel = function getChannel() {
-  var platformName = getPlatformName();
-  var channel = '';
-  if (platformName === 'n') {
-    channel = plus.runtime.channel;
-  }
-  return channel;
-};
-
-var getScene = function getScene(options) {
-  var platformName = getPlatformName();
-  var scene = '';
-  if (options) {
-    return options;
-  }
-  if (platformName === 'wx') {
-    scene = uni.getLaunchOptionsSync().scene;
-  }
-  return scene;
-};
-var First__Visit__Time__KEY = 'First__Visit__Time';
-var Last__Visit__Time__KEY = 'Last__Visit__Time';
-
-var getFirstVisitTime = function getFirstVisitTime() {
-  var timeStorge = uni.getStorageSync(First__Visit__Time__KEY);
-  var time = 0;
-  if (timeStorge) {
-    time = timeStorge;
-  } else {
-    time = getTime();
-    uni.setStorageSync(First__Visit__Time__KEY, time);
-    uni.removeStorageSync(Last__Visit__Time__KEY);
-  }
-  return time;
-};
-
-var getLastVisitTime = function getLastVisitTime() {
-  var timeStorge = uni.getStorageSync(Last__Visit__Time__KEY);
-  var time = 0;
-  if (timeStorge) {
-    time = timeStorge;
-  } else {
-    time = '';
-  }
-  uni.setStorageSync(Last__Visit__Time__KEY, getTime());
-  return time;
-};
-
-
-var PAGE_RESIDENCE_TIME = '__page__residence__time';
-var First_Page_residence_time = 0;
-var Last_Page_residence_time = 0;
-
-
-var setPageResidenceTime = function setPageResidenceTime() {
-  First_Page_residence_time = getTime();
-  if (getPlatformName() === 'n') {
-    uni.setStorageSync(PAGE_RESIDENCE_TIME, getTime());
-  }
-  return First_Page_residence_time;
-};
-
-var getPageResidenceTime = function getPageResidenceTime() {
-  Last_Page_residence_time = getTime();
-  if (getPlatformName() === 'n') {
-    First_Page_residence_time = uni.getStorageSync(PAGE_RESIDENCE_TIME);
-  }
-  return Last_Page_residence_time - First_Page_residence_time;
-};
-var TOTAL__VISIT__COUNT = 'Total__Visit__Count';
-var getTotalVisitCount = function getTotalVisitCount() {
-  var timeStorge = uni.getStorageSync(TOTAL__VISIT__COUNT);
-  var count = 1;
-  if (timeStorge) {
-    count = timeStorge;
-    count++;
-  }
-  uni.setStorageSync(TOTAL__VISIT__COUNT, count);
-  return count;
-};
-
-var GetEncodeURIComponentOptions = function GetEncodeURIComponentOptions(statData) {
-  var data = {};
-  for (var prop in statData) {
-    data[prop] = encodeURIComponent(statData[prop]);
-  }
-  return data;
-};
-
-var Set__First__Time = 0;
-var Set__Last__Time = 0;
-
-var getFirstTime = function getFirstTime() {
-  var time = new Date().getTime();
-  Set__First__Time = time;
-  Set__Last__Time = 0;
-  return time;
-};
-
-
-var getLastTime = function getLastTime() {
-  var time = new Date().getTime();
-  Set__Last__Time = time;
-  return time;
-};
-
-
-var getResidenceTime = function getResidenceTime(type) {
-  var residenceTime = 0;
-  if (Set__First__Time !== 0) {
-    residenceTime = Set__Last__Time - Set__First__Time;
-  }
-
-  residenceTime = parseInt(residenceTime / 1000);
-  residenceTime = residenceTime < 1 ? 1 : residenceTime;
-  if (type === 'app') {
-    var overtime = residenceTime > APP_PVER_TIME ? true : false;
-    return {
-      residenceTime: residenceTime,
-      overtime: overtime };
-
-  }
-  if (type === 'page') {
-    var _overtime = residenceTime > PAGE_PVER_TIME ? true : false;
-    return {
-      residenceTime: residenceTime,
-      overtime: _overtime };
-
-  }
-
-  return {
-    residenceTime: residenceTime };
-
-
-};
-
-var getRoute = function getRoute() {
-  var pages = getCurrentPages();
-  var page = pages[pages.length - 1];
-  var _self = page.$vm;
-
-  if (getPlatformName() === 'bd') {
-    return _self.$mp && _self.$mp.page.is;
-  } else {
-    return _self.$scope && _self.$scope.route || _self.$mp && _self.$mp.page.route;
-  }
-};
-
-var getPageRoute = function getPageRoute(self) {
-  var pages = getCurrentPages();
-  var page = pages[pages.length - 1];
-  var _self = page.$vm;
-  var query = self._query;
-  var str = query && JSON.stringify(query) !== '{}' ? '?' + JSON.stringify(query) : '';
-  // clear
-  self._query = '';
-  if (getPlatformName() === 'bd') {
-    return _self.$mp && _self.$mp.page.is + str;
-  } else {
-    return _self.$scope && _self.$scope.route + str || _self.$mp && _self.$mp.page.route + str;
-  }
-};
-
-var getPageTypes = function getPageTypes(self) {
-  if (self.mpType === 'page' || self.$mp && self.$mp.mpType === 'page' || self.$options.mpType === 'page') {
-    return true;
-  }
-  return false;
-};
-
-var calibration = function calibration(eventName, options) {
-  //  login 、 share 、pay_success 、pay_fail 、register 、title
-  if (!eventName) {
-    console.error("uni.report \u7F3A\u5C11 [eventName] \u53C2\u6570");
-    return true;
-  }
-  if (typeof eventName !== 'string') {
-    console.error("uni.report [eventName] \u53C2\u6570\u7C7B\u578B\u9519\u8BEF,\u53EA\u80FD\u4E3A String \u7C7B\u578B");
-    return true;
-  }
-  if (eventName.length > 255) {
-    console.error("uni.report [eventName] \u53C2\u6570\u957F\u5EA6\u4E0D\u80FD\u5927\u4E8E 255");
-    return true;
-  }
-
-  if (typeof options !== 'string' && typeof options !== 'object') {
-    console.error("uni.report [options] \u53C2\u6570\u7C7B\u578B\u9519\u8BEF,\u53EA\u80FD\u4E3A String \u6216 Object \u7C7B\u578B");
-    return true;
-  }
-
-  if (typeof options === 'string' && options.length > 255) {
-    console.error("uni.report [options] \u53C2\u6570\u957F\u5EA6\u4E0D\u80FD\u5927\u4E8E 255");
-    return true;
-  }
-
-  if (eventName === 'title' && typeof options !== 'string') {
-    console.error('uni.report [eventName] 参数为 title 时，[options] 参数只能为 String 类型');
-    return true;
-  }
-};
-
-var PagesJson = __webpack_require__(/*! uni-pages?{"type":"style"} */ 7).default;
-var statConfig = __webpack_require__(/*! uni-stat-config */ 8).default || __webpack_require__(/*! uni-stat-config */ 8);
-
-var resultOptions = uni.getSystemInfoSync();var
-
-Util = /*#__PURE__*/function () {
-  function Util() {_classCallCheck(this, Util);
-    this.self = '';
-    this._retry = 0;
-    this._platform = '';
-    this._query = {};
-    this._navigationBarTitle = {
-      config: '',
-      page: '',
-      report: '',
-      lt: '' };
-
-    this._operatingTime = 0;
-    this._reportingRequestData = {
-      '1': [],
-      '11': [] };
-
-    this.__prevent_triggering = false;
-
-    this.__licationHide = false;
-    this.__licationShow = false;
-    this._lastPageRoute = '';
-    this.statData = {
-      uuid: getUuid(),
-      ut: getPlatformName(),
-      mpn: getPackName(),
-      ak: statConfig.appid,
-      usv: STAT_VERSION,
-      v: getVersion(),
-      ch: getChannel(),
-      cn: '',
-      pn: '',
-      ct: '',
-      t: getTime(),
-      tt: '',
-      p: resultOptions.platform === 'android' ? 'a' : 'i',
-      brand: resultOptions.brand || '',
-      md: resultOptions.model,
-      sv: resultOptions.system.replace(/(Android|iOS)\s/, ''),
-      mpsdk: resultOptions.SDKVersion || '',
-      mpv: resultOptions.version || '',
-      lang: resultOptions.language,
-      pr: resultOptions.pixelRatio,
-      ww: resultOptions.windowWidth,
-      wh: resultOptions.windowHeight,
-      sw: resultOptions.screenWidth,
-      sh: resultOptions.screenHeight };
-
-
-  }_createClass(Util, [{ key: "_applicationShow", value: function _applicationShow()
-
-    {
-      if (this.__licationHide) {
-        getLastTime();
-        var time = getResidenceTime('app');
-        if (time.overtime) {
-          var options = {
-            path: this._lastPageRoute,
-            scene: this.statData.sc };
-
-          this._sendReportRequest(options);
-        }
-        this.__licationHide = false;
-      }
-    } }, { key: "_applicationHide", value: function _applicationHide(
-
-    self, type) {
-
-      this.__licationHide = true;
-      getLastTime();
-      var time = getResidenceTime();
-      getFirstTime();
-      var route = getPageRoute(this);
-      this._sendHideRequest({
-        urlref: route,
-        urlref_ts: time.residenceTime },
-      type);
-    } }, { key: "_pageShow", value: function _pageShow()
-
-    {
-      var route = getPageRoute(this);
-      var routepath = getRoute();
-      this._navigationBarTitle.config = PagesJson &&
-      PagesJson.pages[routepath] &&
-      PagesJson.pages[routepath].titleNView &&
-      PagesJson.pages[routepath].titleNView.titleText ||
-      PagesJson &&
-      PagesJson.pages[routepath] &&
-      PagesJson.pages[routepath].navigationBarTitleText || '';
-
-      if (this.__licationShow) {
-        getFirstTime();
-        this.__licationShow = false;
-        // console.log('这是 onLauch 之后执行的第一次 pageShow ，为下次记录时间做准备');
-        this._lastPageRoute = route;
-        return;
-      }
-
-      getLastTime();
-      this._lastPageRoute = route;
-      var time = getResidenceTime('page');
-      if (time.overtime) {
-        var options = {
-          path: this._lastPageRoute,
-          scene: this.statData.sc };
-
-        this._sendReportRequest(options);
-      }
-      getFirstTime();
-    } }, { key: "_pageHide", value: function _pageHide()
-
-    {
-      if (!this.__licationHide) {
-        getLastTime();
-        var time = getResidenceTime('page');
-        this._sendPageRequest({
-          url: this._lastPageRoute,
-          urlref: this._lastPageRoute,
-          urlref_ts: time.residenceTime });
-
-        this._navigationBarTitle = {
-          config: '',
-          page: '',
-          report: '',
-          lt: '' };
-
-        return;
-      }
-    } }, { key: "_login", value: function _login()
-
-    {
-      this._sendEventRequest({
-        key: 'login' },
-      0);
-    } }, { key: "_share", value: function _share()
-
-    {
-      this._sendEventRequest({
-        key: 'share' },
-      0);
-    } }, { key: "_payment", value: function _payment(
-    key) {
-      this._sendEventRequest({
-        key: key },
-      0);
-    } }, { key: "_sendReportRequest", value: function _sendReportRequest(
-    options) {
-
-      this._navigationBarTitle.lt = '1';
-      var query = options.query && JSON.stringify(options.query) !== '{}' ? '?' + JSON.stringify(options.query) : '';
-      this.statData.lt = '1';
-      this.statData.url = options.path + query || '';
-      this.statData.t = getTime();
-      this.statData.sc = getScene(options.scene);
-      this.statData.fvts = getFirstVisitTime();
-      this.statData.lvts = getLastVisitTime();
-      this.statData.tvc = getTotalVisitCount();
-      if (getPlatformName() === 'n') {
-        this.getProperty();
-      } else {
-        this.getNetworkInfo();
-      }
-    } }, { key: "_sendPageRequest", value: function _sendPageRequest(
-
-    opt) {var
-
-      url =
-
-
-      opt.url,urlref = opt.urlref,urlref_ts = opt.urlref_ts;
-      this._navigationBarTitle.lt = '11';
-      var options = {
-        ak: this.statData.ak,
-        uuid: this.statData.uuid,
-        lt: '11',
-        ut: this.statData.ut,
-        url: url,
-        tt: this.statData.tt,
-        urlref: urlref,
-        urlref_ts: urlref_ts,
-        ch: this.statData.ch,
-        usv: this.statData.usv,
-        t: getTime(),
-        p: this.statData.p };
-
-      this.request(options);
-    } }, { key: "_sendHideRequest", value: function _sendHideRequest(
-
-    opt, type) {var
-
-      urlref =
-
-      opt.urlref,urlref_ts = opt.urlref_ts;
-      var options = {
-        ak: this.statData.ak,
-        uuid: this.statData.uuid,
-        lt: '3',
-        ut: this.statData.ut,
-        urlref: urlref,
-        urlref_ts: urlref_ts,
-        ch: this.statData.ch,
-        usv: this.statData.usv,
-        t: getTime(),
-        p: this.statData.p };
-
-      this.request(options, type);
-    } }, { key: "_sendEventRequest", value: function _sendEventRequest()
-
-
-
-    {var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},_ref$key = _ref.key,key = _ref$key === void 0 ? '' : _ref$key,_ref$value = _ref.value,value = _ref$value === void 0 ? "" : _ref$value;
-      var route = this._lastPageRoute;
-      var options = {
-        ak: this.statData.ak,
-        uuid: this.statData.uuid,
-        lt: '21',
-        ut: this.statData.ut,
-        url: route,
-        ch: this.statData.ch,
-        e_n: key,
-        e_v: typeof value === 'object' ? JSON.stringify(value) : value.toString(),
-        usv: this.statData.usv,
-        t: getTime(),
-        p: this.statData.p };
-
-      this.request(options);
-    } }, { key: "getNetworkInfo", value: function getNetworkInfo()
-
-    {var _this = this;
-      uni.getNetworkType({
-        success: function success(result) {
-          _this.statData.net = result.networkType;
-          _this.getLocation();
-        } });
-
-    } }, { key: "getProperty", value: function getProperty()
-
-    {var _this2 = this;
-      plus.runtime.getProperty(plus.runtime.appid, function (wgtinfo) {
-        _this2.statData.v = wgtinfo.version || '';
-        _this2.getNetworkInfo();
-      });
-    } }, { key: "getLocation", value: function getLocation()
-
-    {var _this3 = this;
-      if (statConfig.getLocation) {
-        uni.getLocation({
-          type: 'wgs84',
-          geocode: true,
-          success: function success(result) {
-            if (result.address) {
-              _this3.statData.cn = result.address.country;
-              _this3.statData.pn = result.address.province;
-              _this3.statData.ct = result.address.city;
-            }
-
-            _this3.statData.lat = result.latitude;
-            _this3.statData.lng = result.longitude;
-            _this3.request(_this3.statData);
-          } });
-
-      } else {
-        this.statData.lat = 0;
-        this.statData.lng = 0;
-        this.request(this.statData);
-      }
-    } }, { key: "request", value: function request(
-
-    data, type) {var _this4 = this;
-      var time = getTime();
-      var title = this._navigationBarTitle;
-      data.ttn = title.page;
-      data.ttpj = title.config;
-      data.ttc = title.report;
-
-      var requestData = this._reportingRequestData;
-      if (getPlatformName() === 'n') {
-        requestData = uni.getStorageSync('__UNI__STAT__DATA') || {};
-      }
-      if (!requestData[data.lt]) {
-        requestData[data.lt] = [];
-      }
-      requestData[data.lt].push(data);
-
-      if (getPlatformName() === 'n') {
-        uni.setStorageSync('__UNI__STAT__DATA', requestData);
-      }
-      if (getPageResidenceTime() < OPERATING_TIME && !type) {
-        return;
-      }
-      var uniStatData = this._reportingRequestData;
-      if (getPlatformName() === 'n') {
-        uniStatData = uni.getStorageSync('__UNI__STAT__DATA');
-      }
-      // 时间超过，重新获取时间戳
-      setPageResidenceTime();
-      var firstArr = [];
-      var contentArr = [];
-      var lastArr = [];var _loop = function _loop(
-
-      i) {
-        var rd = uniStatData[i];
-        rd.forEach(function (elm) {
-          var newData = getSplicing(elm);
-          if (i === 0) {
-            firstArr.push(newData);
-          } else if (i === 3) {
-            lastArr.push(newData);
-          } else {
-            contentArr.push(newData);
-          }
-        });};for (var i in uniStatData) {_loop(i);
-      }
-
-      firstArr.push.apply(firstArr, contentArr.concat(lastArr));
-      var optionsData = {
-        usv: STAT_VERSION, //统计 SDK 版本号
-        t: time, //发送请求时的时间戮
-        requests: JSON.stringify(firstArr) };
-
-
-      this._reportingRequestData = {};
-      if (getPlatformName() === 'n') {
-        uni.removeStorageSync('__UNI__STAT__DATA');
-      }
-
-      if (data.ut === 'h5') {
-        this.imageRequest(optionsData);
-        return;
-      }
-
-      if (getPlatformName() === 'n' && this.statData.p === 'a') {
-        setTimeout(function () {
-          _this4._sendRequest(optionsData);
-        }, 200);
-        return;
-      }
-      this._sendRequest(optionsData);
-    } }, { key: "_sendRequest", value: function _sendRequest(
-    optionsData) {var _this5 = this;
-      uni.request({
-        url: STAT_URL,
-        method: 'POST',
-        // header: {
-        //   'content-type': 'application/json' // 默认值
-        // },
-        data: optionsData,
-        success: function success() {
-          // if (process.env.NODE_ENV === 'development') {
-          //   console.log('stat request success');
-          // }
-        },
-        fail: function fail(e) {
-          if (++_this5._retry < 3) {
-            setTimeout(function () {
-              _this5._sendRequest(optionsData);
-            }, 1000);
-          }
-        } });
-
-    }
-    /**
-       * h5 请求
-       */ }, { key: "imageRequest", value: function imageRequest(
-    data) {
-      var image = new Image();
-      var options = getSgin(GetEncodeURIComponentOptions(data)).options;
-      image.src = STAT_H5_URL + '?' + options;
-    } }, { key: "sendEvent", value: function sendEvent(
-
-    key, value) {
-      // 校验 type 参数
-      if (calibration(key, value)) return;
-
-      if (key === 'title') {
-        this._navigationBarTitle.report = value;
-        return;
-      }
-      this._sendEventRequest({
-        key: key,
-        value: typeof value === 'object' ? JSON.stringify(value) : value },
-      1);
-    } }]);return Util;}();var
-
-
-
-Stat = /*#__PURE__*/function (_Util) {_inherits(Stat, _Util);_createClass(Stat, null, [{ key: "getInstance", value: function getInstance()
-    {
-      if (!this.instance) {
-        this.instance = new Stat();
-      }
-      return this.instance;
-    } }]);
-  function Stat() {var _this6;_classCallCheck(this, Stat);
-    _this6 = _possibleConstructorReturn(this, _getPrototypeOf(Stat).call(this));
-    _this6.instance = null;
-    // 注册拦截器
-    if (typeof uni.addInterceptor === 'function') {
-      _this6.addInterceptorInit();
-      _this6.interceptLogin();
-      _this6.interceptShare(true);
-      _this6.interceptRequestPayment();
-    }return _this6;
-  }_createClass(Stat, [{ key: "addInterceptorInit", value: function addInterceptorInit()
-
-    {
-      var self = this;
-      uni.addInterceptor('setNavigationBarTitle', {
-        invoke: function invoke(args) {
-          self._navigationBarTitle.page = args.title;
-        } });
-
-    } }, { key: "interceptLogin", value: function interceptLogin()
-
-    {
-      var self = this;
-      uni.addInterceptor('login', {
-        complete: function complete() {
-          self._login();
-        } });
-
-    } }, { key: "interceptShare", value: function interceptShare(
-
-    type) {
-      var self = this;
-      if (!type) {
-        self._share();
-        return;
-      }
-      uni.addInterceptor('share', {
-        success: function success() {
-          self._share();
-        },
-        fail: function fail() {
-          self._share();
-        } });
-
-    } }, { key: "interceptRequestPayment", value: function interceptRequestPayment()
-
-    {
-      var self = this;
-      uni.addInterceptor('requestPayment', {
-        success: function success() {
-          self._payment('pay_success');
-        },
-        fail: function fail() {
-          self._payment('pay_fail');
-        } });
-
-    } }, { key: "report", value: function report(
-
-    options, self) {
-      this.self = self;
-      // if (process.env.NODE_ENV === 'development') {
-      //   console.log('report init');
-      // }
-      setPageResidenceTime();
-      this.__licationShow = true;
-      this._sendReportRequest(options, true);
-    } }, { key: "load", value: function load(
-
-    options, self) {
-      if (!self.$scope && !self.$mp) {
-        var page = getCurrentPages();
-        self.$scope = page[page.length - 1];
-      }
-      this.self = self;
-      this._query = options;
-    } }, { key: "show", value: function show(
-
-    self) {
-      this.self = self;
-      if (getPageTypes(self)) {
-        this._pageShow(self);
-      } else {
-        this._applicationShow(self);
-      }
-    } }, { key: "ready", value: function ready(
-
-    self) {
-      // this.self = self;
-      // if (getPageTypes(self)) {
-      //   this._pageShow(self);
-      // }
-    } }, { key: "hide", value: function hide(
-    self) {
-      this.self = self;
-      if (getPageTypes(self)) {
-        this._pageHide(self);
-      } else {
-        this._applicationHide(self, true);
-      }
-    } }, { key: "error", value: function error(
-    em) {
-      if (this._platform === 'devtools') {
-        if (true) {
-          console.info('当前运行环境为开发者工具，不上报数据。');
-        }
-        // return;
-      }
-      var emVal = '';
-      if (!em.message) {
-        emVal = JSON.stringify(em);
-      } else {
-        emVal = em.stack;
-      }
-      var options = {
-        ak: this.statData.ak,
-        uuid: this.statData.uuid,
-        lt: '31',
-        ut: this.statData.ut,
-        ch: this.statData.ch,
-        mpsdk: this.statData.mpsdk,
-        mpv: this.statData.mpv,
-        v: this.statData.v,
-        em: emVal,
-        usv: this.statData.usv,
-        t: getTime(),
-        p: this.statData.p };
-
-      this.request(options);
-    } }]);return Stat;}(Util);
-
-
-var stat = Stat.getInstance();
-var isHide = false;
-var lifecycle = {
-  onLaunch: function onLaunch(options) {
-    stat.report(options, this);
-  },
-  onReady: function onReady() {
-    stat.ready(this);
-  },
-  onLoad: function onLoad(options) {
-    stat.load(options, this);
-    // 重写分享，获取分享上报事件
-    if (this.$scope && this.$scope.onShareAppMessage) {
-      var oldShareAppMessage = this.$scope.onShareAppMessage;
-      this.$scope.onShareAppMessage = function (options) {
-        stat.interceptShare(false);
-        return oldShareAppMessage.call(this, options);
-      };
-    }
-  },
-  onShow: function onShow() {
-    isHide = false;
-    stat.show(this);
-  },
-  onHide: function onHide() {
-    isHide = true;
-    stat.hide(this);
-  },
-  onUnload: function onUnload() {
-    if (isHide) {
-      isHide = false;
-      return;
-    }
-    stat.hide(this);
-  },
-  onError: function onError(e) {
-    stat.error(e);
-  } };
-
-
-function main() {
-  if (true) {
-    uni.report = function (type, options) {};
-  } else { var Vue; }
-}
-
-main();
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _messagelist = _interopRequireDefault(__webpack_require__(/*! ./pages/tabPages/messagelist.vue */ 42));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_messagelist.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
 
 /***/ }),
 
-/***/ 6:
-/*!******************************************************!*\
-  !*** ./node_modules/@dcloudio/uni-stat/package.json ***!
-  \******************************************************/
-/*! exports provided: _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _shasum, _spec, _where, author, bugs, bundleDependencies, deprecated, description, devDependencies, files, gitHead, homepage, license, main, name, repository, scripts, version, default */
-/***/ (function(module) {
-
-module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.0.0-23320190923002","_inBundle":false,"_integrity":"sha512-MnftsvgOac3q1FCOBPzivbFn8GNQFo7D2DY325HeEZyFCWgx5GEwHpGYjT1PQU6v7DaDn0ruxa3ObdpUIYbmZw==","_location":"/@dcloudio/uni-stat","_phantomChildren":{},"_requested":{"type":"tag","registry":true,"raw":"@dcloudio/uni-stat@next","name":"@dcloudio/uni-stat","escapedName":"@dcloudio%2funi-stat","scope":"@dcloudio","rawSpec":"next","saveSpec":null,"fetchSpec":"next"},"_requiredBy":["#USER","/","/@dcloudio/vue-cli-plugin-uni"],"_resolved":"https://registry.npmjs.org/@dcloudio/uni-stat/-/uni-stat-2.0.0-23320190923002.tgz","_shasum":"0c400c140ca0b3c05f52d25f11583cf05a0c4e9a","_spec":"@dcloudio/uni-stat@next","_where":"/Users/fxy/Documents/DCloud/HbuilderX-plugins/release/uniapp-cli","author":"","bugs":{"url":"https://github.com/dcloudio/uni-app/issues"},"bundleDependencies":false,"deprecated":false,"description":"","devDependencies":{"@babel/core":"^7.5.5","@babel/preset-env":"^7.5.5","eslint":"^6.1.0","rollup":"^1.19.3","rollup-plugin-babel":"^4.3.3","rollup-plugin-clear":"^2.0.7","rollup-plugin-commonjs":"^10.0.2","rollup-plugin-copy":"^3.1.0","rollup-plugin-eslint":"^7.0.0","rollup-plugin-json":"^4.0.0","rollup-plugin-node-resolve":"^5.2.0","rollup-plugin-replace":"^2.2.0","rollup-plugin-uglify":"^6.0.2"},"files":["dist","package.json","LICENSE"],"gitHead":"fed4c73fb9142a1b277dd79313939cad90693d3e","homepage":"https://github.com/dcloudio/uni-app#readme","license":"Apache-2.0","main":"dist/index.js","name":"@dcloudio/uni-stat","repository":{"type":"git","url":"git+https://github.com/dcloudio/uni-app.git","directory":"packages/uni-stat"},"scripts":{"build":"NODE_ENV=production rollup -c rollup.config.js","dev":"NODE_ENV=development rollup -w -c rollup.config.js"},"version":"2.0.0-23320190923002"};
-
-/***/ }),
-
-/***/ 7:
-/*!******************************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/pages.json?{"type":"style"} ***!
-  \******************************************************************************************/
+/***/ 49:
+/*!************************************************************************************************************!*\
+  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2FtabPages%2Fprofile"} ***!
+  \************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/tabPages/index": {}, "pages/tabPages/votePage": {}, "pages/tabPages/messagelist": {}, "pages/tabPages/profile": {}, "pages/detail/detail": {}, "pages/submit/submit": {}, "pages/chatpage/chatpage": {}, "pages/followlist/followlist": {}, "pages/personpublic/personpublic": {}, "pages/search/search": {}, "pages/black-index/black-index": {}, "pages/signin/signin": {}, "components/articlebrief": {}, "pages/wechatLogin/wechatLogin": {}, "pages/cmt-likedetail/cmt-likedetail": {}, "pages/comment-detail/comment-detail": {}, "pages/userDeal/userDeal": {}, "pages/myPublish/myPublish": {}, "pages/about/about": {} }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "Nottinghome", "navigationBarBackgroundColor": "#fdd041", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _profile = _interopRequireDefault(__webpack_require__(/*! ./pages/tabPages/profile.vue */ 50));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_profile.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
 
 /***/ }),
 
-/***/ 8:
-/*!*****************************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/pages.json?{"type":"stat"} ***!
-  \*****************************************************************************************/
+/***/ 57:
+/*!*********************************************************************************************************!*\
+  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fdetail%2Fdetail"} ***!
+  \*********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "appid": "__UNI__910C4BE" };exports.default = _default;
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _detail = _interopRequireDefault(__webpack_require__(/*! ./pages/detail/detail.vue */ 58));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_detail.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
+
+/***/ }),
+
+/***/ 67:
+/*!*********************************************************************************************************!*\
+  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fsubmit%2Fsubmit"} ***!
+  \*********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _submit = _interopRequireDefault(__webpack_require__(/*! ./pages/submit/submit.vue */ 68));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_submit.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
+
+/***/ }),
+
+/***/ 75:
+/*!*************************************************************************************************************!*\
+  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fchatpage%2Fchatpage"} ***!
+  \*************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _chatpage = _interopRequireDefault(__webpack_require__(/*! ./pages/chatpage/chatpage.vue */ 76));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_chatpage.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
+
+/***/ }),
+
+/***/ 85:
+/*!*****************************************************************************************************************!*\
+  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Ffollowlist%2Ffollowlist"} ***!
+  \*****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _followlist = _interopRequireDefault(__webpack_require__(/*! ./pages/followlist/followlist.vue */ 86));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_followlist.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
+
+/***/ }),
+
+/***/ 93:
+/*!*********************************************************************************************************************!*\
+  !*** /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-client/main.js?{"page":"pages%2Fpersonpublic%2Fpersonpublic"} ***!
+  \*********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _personpublic = _interopRequireDefault(__webpack_require__(/*! ./pages/personpublic/personpublic.vue */ 94));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_personpublic.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
 
 /***/ })
 

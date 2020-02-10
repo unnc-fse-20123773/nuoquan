@@ -2,6 +2,183 @@
 -- +  Database update  +
 -- +++++++++++++++++++++
 
+-- v20.2.2 @author: deyan
+-- 投票相关数据表及数据添加
+-- PS：本次数据库更新代码较长，请仔细复制避免漏行
+
+DROP TABLE IF EXISTS `user_like_comment_vote`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `user_like_comment_vote` (
+  `id` varchar(45) NOT NULL,
+  `user_id` varchar(45) NOT NULL COMMENT '点赞人',
+  `comment_id` varchar(45) NOT NULL,
+  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `sign_flag` int(11) NOT NULL DEFAULT '0' COMMENT '点赞消息是否被签收\\n 0: 未签收 1：签收',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_comment_rel` (`user_id`,`comment_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_like_comment_vote`
+--
+
+LOCK TABLES `user_like_comment_vote` WRITE;
+/*!40000 ALTER TABLE `user_like_comment_vote` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_like_comment_vote` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_vote_comment`
+--
+
+DROP TABLE IF EXISTS `user_vote_comment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `user_vote_comment` (
+  `id` varchar(45) NOT NULL,
+  `from_user_id` varchar(45) NOT NULL,
+  `to_user_id` varchar(45) NOT NULL,
+  `father_comment_id` varchar(45) DEFAULT NULL COMMENT '复式评论，父评论，子评论无 article_id',
+  `vote_id` varchar(45) NOT NULL,
+  `comment` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
+  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `like_num` int(11) NOT NULL DEFAULT '0',
+  `dislike_num` int(11) NOT NULL DEFAULT '0',
+  `comment_num` int(11) NOT NULL DEFAULT '0',
+  `under_comment_id` varchar(45) DEFAULT NULL,
+  `sign_flag` int(11) DEFAULT '0' COMMENT '评论消息是否被签收 0: 未签收 1：签收',
+  `status` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_vote_comment`
+--
+
+LOCK TABLES `user_vote_comment` WRITE;
+/*!40000 ALTER TABLE `user_vote_comment` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_vote_comment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `vote`
+--
+
+DROP TABLE IF EXISTS `vote`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `vote` (
+  `id` varchar(45) NOT NULL,
+  `vote_title` varchar(45) CHARACTER SET utf8mb4 NOT NULL,
+  `vote_type` int(11) NOT NULL DEFAULT '0' COMMENT '0 = single choice, 1 = multiple choice',
+  `user_id` varchar(45) NOT NULL,
+  `vote_content` text NOT NULL,
+  `comment_num` int(11) NOT NULL DEFAULT '0',
+  `sum_vote` int(11) NOT NULL DEFAULT '0',
+  `sum_user` int(11) NOT NULL DEFAULT '0',
+  `status` int(11) NOT NULL DEFAULT '2' COMMENT '0 = unreadable, 1 = readable, 2 = checking',
+  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `expiry_date` datetime NOT NULL,
+  `duration_time` int(11) NOT NULL DEFAULT '3',
+  `view_num` int(11) NOT NULL DEFAULT '0' COMMENT '浏览量',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `vote`
+--
+
+LOCK TABLES `vote` WRITE;
+/*!40000 ALTER TABLE `vote` DISABLE KEYS */;
+INSERT INTO `vote` VALUES ('200204974M03P37C','123',0,'123','321',0,0,0,1,'2020-02-03 22:58:06','2020-02-06 22:58:06',3,0),('200204CN179CB828','Who\'s your daddy',0,'xudeyan093998','single choice',0,0,0,1,'2020-02-04 03:45:59','2020-02-07 03:45:59',3,0),('200204CNRGK0BSCH','choose a number',0,'许德琰0939','from1-10',0,0,0,1,'2020-02-04 03:48:09','2020-02-07 03:48:09',3,0);
+/*!40000 ALTER TABLE `vote` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `vote_image`
+--
+
+DROP TABLE IF EXISTS `vote_image`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `vote_image` (
+  `id` varchar(45) NOT NULL,
+  `vote_id` varchar(45) NOT NULL,
+  `image_path` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `vote_image`
+--
+
+LOCK TABLES `vote_image` WRITE;
+/*!40000 ALTER TABLE `vote_image` DISABLE KEYS */;
+/*!40000 ALTER TABLE `vote_image` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `vote_option`
+--
+
+DROP TABLE IF EXISTS `vote_option`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `vote_option` (
+  `id` varchar(45) NOT NULL,
+  `vote_id` varchar(45) NOT NULL,
+  `option_content` text NOT NULL,
+  `option_index` int(11) NOT NULL DEFAULT '0',
+  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `count` int(11) NOT NULL DEFAULT '0',
+  `percent` double unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `vote_option`
+--
+
+LOCK TABLES `vote_option` WRITE;
+/*!40000 ALTER TABLE `vote_option` DISABLE KEYS */;
+INSERT INTO `vote_option` VALUES ('200204CNRGNCMD68','200204CNRGK0BSCH','',0,'2020-02-04 17:48:11',0,0),('200204CNRGNSX214','200204CNRGK0BSCH','1',1,'2020-02-04 17:48:11',0,0),('200204CNRGP1P3XP','200204CNRGK0BSCH','2',2,'2020-02-04 17:48:11',0,0),('200204CNRGP53MW0','200204CNRGK0BSCH','3',3,'2020-02-04 17:48:11',0,0),('200204CNRGP8G5S8','200204CNRGK0BSCH','4',4,'2020-02-04 17:48:11',0,0);
+/*!40000 ALTER TABLE `vote_option` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `vote_user`
+--
+
+DROP TABLE IF EXISTS `vote_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `vote_user` (
+  `id` varchar(45) NOT NULL,
+  `user_id` varchar(45) NOT NULL,
+  `vote_id` varchar(45) NOT NULL,
+  `option_id` varchar(45) NOT NULL,
+  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `vote_user`
+--
+
+LOCK TABLES `vote_user` WRITE;
+/*!40000 ALTER TABLE `vote_user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `vote_user` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+
 -- v20.2.1 @author: jerio
 -- 后台管理相关数据表及数据添加
 -- PS: 本次数据库更新代码较长，请仔细复制不用漏行
