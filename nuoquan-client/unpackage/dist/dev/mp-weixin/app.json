@@ -19,7 +19,8 @@
     "pages/userDeal/userDeal",
     "pages/myPublish/myPublish",
     "pages/about/about",
-    "pages/hot/hot"
+    "pages/hot/hot",
+    "pages/tabPages/mine"
   ],
   "subPackages": [],
   "window": {
@@ -54,7 +55,7 @@
         "text": "动态"
       },
       {
-        "pagePath": "pages/tabPages/profile",
+        "pagePath": "pages/tabPages/mine",
         "iconPath": "static/icon/star.png",
         "selectedIconPath": "static/icon/star.png",
         "text": "我的"
@@ -62,6 +63,5 @@
     ]
   },
   "permission": {},
-  "usingComponents": {},
-  "sitemapLocation": "sitemap99.json"
+  "usingComponents": {}
 }

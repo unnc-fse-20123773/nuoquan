@@ -20,7 +20,7 @@ Component({
 				selectedIconPath: '../static/icon/star.png',
 				text: '动态'
 			},{
-				pagePath: 'profile',
+				pagePath: 'mine',
 				iconPath: '../static/icon/star.png',
 				selectedIconPath: '../static/icon/star.png',
 				text: '我的'

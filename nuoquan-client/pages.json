@@ -82,6 +82,10 @@
 		    "path" : "pages/hot/hot",
 		    "style" : {}
 		}
+        ,{
+            "path" : "pages/tabPages/mine",
+            "style" : {}
+        }
     ],
 	
 	//微信小程序自定义导航栏custom-tab-bar
@@ -108,7 +112,7 @@
 				"selectedIconPath": "static/icon/star.png",
 				"text": "动态"
 			},{
-				"pagePath": "pages/tabPages/profile",
+				"pagePath": "pages/tabPages/mine",
 				"iconPath": "static/icon/star.png",
 				"selectedIconPath": "static/icon/star.png",
 				"text": "我的"
@@ -202,6 +206,11 @@
 			{
 				"name": "关于",
 				"path": "pages/about/about",
+				"query": "" //启动参数，在页面的onLoad函数里面得到
+			},
+			{
+				"name": "mine",
+				"path": "pages/tabPages/mine",
 				"query": "" //启动参数，在页面的onLoad函数里面得到
 			}
 		]

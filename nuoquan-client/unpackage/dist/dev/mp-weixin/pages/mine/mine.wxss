@@ -1,0 +1,171 @@
+
+page {
+	width: 100%;
+}
+#public-container {
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+}
+
+/* 黄色头部 */
+#yellowTopBox {
+	width: 100%;
+	position: relative;
+	z-index: -30;
+}
+.yellowTop {
+	position: absolute; /* 此处采用 absolote 定位，以保证页面流可以正常显示。层级设为 -10，以保证其显示在页面最底部。 */
+	left: -430rpx;
+	height: 1600rpx;
+	width: 1600rpx;
+	z-index: -10;
+	border-radius: 3000rpx;
+	background-color: #ffc95a;
+}
+
+/* 简介块 */
+#public-infoBox {
+	width: 100%;
+}
+.publicTouxiang {
+	width: 74px;
+	height: 74px;
+	border-radius: 120px;
+	border: 4px solid white;
+	display: inline-block;
+	vertical-align: middle;
+}
+.idCard {
+	margin-top: 64px;
+	margin-left: 13px;
+	border-radius: 8px;
+	min-height: 140px;
+	background-color: rgba(255, 255, 255, 1);
+	-webkit-box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+	        box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+}
+.nameBox {
+	margin-top: 8px;
+	width: 100%;
+}
+.nameBox .name-text {
+	font-size: 17px;
+	font-weight: 600;
+}
+.introBox {
+	margin-top: 12px;
+	width: 100%;
+}
+.introBox-text {
+	max-width: 61%;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 13px;
+	color: rgba(136, 136, 136, 1);
+	opacity: 1;
+	word-break: keep-all;
+	word-wrap: break-word;
+}
+.operationLine {
+	margin: 17px 3.2%;
+	width: 93.6%;
+	height: 43px;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	    -ms-flex-pack: justify;
+	        justify-content: space-between;
+}
+.operationCard {
+	width: 33.3%;
+	height: 43px;
+}
+.operationNum {
+	width: 100%;
+	height: 17px;
+	overflow: visible;
+}
+.operationNum-text {
+	font-size: 17px;
+	font-family: Source Han Sans CN;
+	font-weight: 800;
+	opacity: 1;
+}
+.operationTitle {
+	margin-top: 11px;
+	width: 100%;
+	height: 11px;
+	overflow: visible;
+}
+.operationTitle-text {
+	font-size: 10px;
+	font-family: Source Han Sans CN;
+	font-weight: 500;
+	color: rgba(178, 178, 178, 1);
+	opacity: 1;
+}
+.pagejump_box{
+	margin-top:30px;
+	margin-left:13px;
+	width:349px;
+	height:126px;
+	background:rgba(255,255,255,1);
+	-webkit-box-shadow:0px 0px 3px rgba(0,0,0,0.16);
+	        box-shadow:0px 0px 3px rgba(0,0,0,0.16);
+	opacity:1;
+	border-radius:8px;
+}
+.item1{
+	width:84px;
+	height:14px;
+	margin-left:41px ;
+	padding-top: 20px;
+	font-size:14px;
+	font-family:Source Han Sans CN;
+	font-weight:400;
+	line-height:16px;
+	color:rgba(53,53,53,1);
+	opacity:1;
+}
+.line1{
+	margin:10px auto ;
+	width:309px;
+	height:0px;
+	border:1px solid rgba(236,236,236,1);
+	opacity:1;
+}
+.item2{
+	margin-left:41px ;
+	width:56px;
+	height:14px;
+	font-size:14px;
+	font-family:Source Han Sans CN;
+	font-weight:400;
+	line-height:16px;
+	color:rgba(53,53,53,1);
+	opacity:1;
+}
+.line2{
+	margin:10px auto ;
+	width:309px;
+	height:0px;
+	border:1px solid rgba(236,236,236,1);
+	opacity:1;
+}
+.item3{
+	margin-left:41px ;
+	width:28px;
+	height:14px;
+	font-size:14px;
+	font-family:Source Han Sans CN;
+	font-weight:400;
+	line-height:16px;
+	color:rgba(53,53,53,1);
+	opacity:1;
+}
+
+
