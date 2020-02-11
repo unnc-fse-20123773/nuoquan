@@ -98,7 +98,7 @@ public class MyShiroRealm extends AuthorizingRealm {
 			authorizationInfo.addRole(userRole.getName());//添加角色名字
 			List<AdminPermission> permissions=adminPermissionService.queryPermissionByRoleId(rolid);
 			for(AdminPermission p:permissions){
-				//System.out.println("角色下面的权限:"+gson.toJson(p));
+				//System.out.println("角色下面的权限:"+p.getPerms());
 				if(StringUtils.isNotEmpty(p.getPerms())){
 					authorizationInfo.addStringPermission(p.getPerms());
 				}

@@ -156,9 +156,9 @@
 	<!-- jquery-export 表格导出插件 -->
 
 		<!-- 导出 -->
-		var dataUrl=window.rootPath+"/CheckArticle/list";
-		var updateUrl=window.rootPath+"/CheckArticle/edit/{id}";
-		var exportUrl=window.rootPath+"/CheckArticle/export";
+		var dataUrl=window.rootPath+"/CheckVote/list";
+		var updateUrl=window.rootPath+"/CheckVote/edit/{id}";
+		var exportUrl=window.rootPath+"/CheckVote/export";
 		var options = {
 				dataUrl: dataUrl,
 		        updateUrl: updateUrl,
@@ -172,19 +172,27 @@
 					},                   
 					{
 					    field: 'id',
-					    title: '文章Id'
+					    title: '投票Id'
 					}, 
 					{
-					    field: 'articleTitle',
+					    field: 'voteTitle',
 					    title: '标题'
 					},
 					{
-					    field: 'tags',
-					    title: '标签'
+					    field: 'voteType',
+					    title: '类型',
+				    	formatter : function (value, row, index) {
+			                if (value == 0) {
+			                    return '单项';
+			                }
+			                if (value == 1) {
+			                    return '多选';
+			                }
+			            }
 					},
 					{
-					    field: 'articleContent',
-					    title: '文章内容'
+					    field: 'voteContent',
+					    title: '投票内容'
 					},
 					{
 					    field: 'imgList',
@@ -200,6 +208,20 @@
 				    	}
 					},
 					{
+					    field: 'optionList',
+					    title: '选项',
+				    	formatter : function (value, row, index) {
+				    		if(value.length > 0){
+					    		var str = "";
+					    		for (var i = 0; i < value.length; i++){
+					    			str += value[i].optionContent+"<br>"
+					    		}
+					    	    return str;
+				    		}
+				    	}  
+					    
+					},
+					{
 					    field: 'userId',
 					    title: '用户Id'
 					},
@@ -208,8 +230,12 @@
 					    title: '用户昵称'
 					},
 					{
-					    field: 'likeNum',
-					    title: '点赞数'
+					    field: 'sumVote',
+					    title: '总票数'
+					},
+					{
+					    field: 'sumUser',
+					    title: '参与人数'
 					},
 					{
 					    field: 'commentNum',
@@ -218,10 +244,6 @@
 					{
 					    field: 'viewNum',
 					    title: '浏览量'
-					},
-					{
-					    field: 'popularity',
-					    title: '人气'
 					},
 					{
 					    field: 'status',
@@ -244,6 +266,14 @@
 					{
 					    field: 'createDate',
 					    title: '创建时间'
+					},
+					{
+					    field: 'expiryDate',
+					    title: '过期时间'
+					},
+					{
+					    field: 'durationTime',
+					    title: '持续时间'
 					},
 					{
 					    field: 'isAnonymous',
@@ -269,7 +299,7 @@
 
 
 	<script type="text/javascript">
-	var batchEditUrl=window.rootPath+"/CheckArticle/batchEdit/{ids}";
+	var batchEditUrl=window.rootPath+"/CheckVote/batchEdit/{ids}";
 	function batchEdit(){
 		 var rows = $.common.isEmpty($.table._option.id) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.id);
          if (rows.length == 0) {
@@ -293,7 +323,7 @@
 	}
 	
 	function listCheckOnly(){
-        var url = rootPath+"/CheckArticle/listCheckOnly";
+        var url = rootPath+"/CheckVote/listCheckOnly";
         /* $.operate.submit(url, "post", "json", data); */
         $("#dataTable").bootstrapTable("refresh", {
             url: url,

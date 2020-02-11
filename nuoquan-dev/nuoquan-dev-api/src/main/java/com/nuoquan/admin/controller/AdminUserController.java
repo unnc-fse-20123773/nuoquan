@@ -13,10 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.databind.introspect.TypeResolutionContext.Basic;
-import com.github.pagehelper.PageInfo;
 import com.nuoquan.controller.BasicController;
-import com.nuoquan.mapper.AdminRoleMapper;
 import com.nuoquan.pojo.AdminRole;
 import com.nuoquan.pojo.AdminUser;
 import com.nuoquan.pojo.admin.Tablepar;
