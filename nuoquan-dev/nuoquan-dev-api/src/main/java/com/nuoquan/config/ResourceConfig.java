@@ -27,7 +27,8 @@ public class ResourceConfig {
 	
 	private Boolean rollVerification;
 	
-
+	private Boolean autoCheckArticle;
+	
 	public String getName() {
 		return name;
 	}
@@ -74,5 +75,13 @@ public class ResourceConfig {
 
 	public void setRollVerification(Boolean rollVerification) {
 		this.rollVerification = rollVerification;
+	}
+
+	public Boolean getAutoCheckArticle() {
+		return autoCheckArticle;
+	}
+
+	public void setAutoCheckArticle(Boolean autoCheckArticle) {
+		this.autoCheckArticle = autoCheckArticle;
 	}
 }

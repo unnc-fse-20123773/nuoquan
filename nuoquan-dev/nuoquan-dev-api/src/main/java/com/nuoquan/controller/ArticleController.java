@@ -266,7 +266,11 @@ public class ArticleController extends BasicController {
 			&& weChatService.msgSecCheck(articleContent)) {
 			// 合法
 			isLegal = true;
-			article.setStatus(StatusEnum.READABLE.type);
+			if (resourceConfig.getAutoCheckArticle()) { //查看是否设置自动过审
+				article.setStatus(StatusEnum.READABLE.type);
+			}else {
+				article.setStatus(StatusEnum.CHECKING.type);
+			}
 		}else {
 			// 非法，尽管非法也保存到数据库
 			article.setStatus(StatusEnum.UNREADABLE.type);

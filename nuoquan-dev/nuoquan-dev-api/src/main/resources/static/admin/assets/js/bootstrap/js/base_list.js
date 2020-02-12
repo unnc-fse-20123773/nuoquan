@@ -53,7 +53,7 @@
 			            },
 			            responseHandler: function(res){
 			                var result = {total:0,rows:[]};
-			                console.log(res);
+			                //console.log(res);
 			                if(res.records > 0){
 			                    result.total = res.records;
 			                    result.rows = res.rows;

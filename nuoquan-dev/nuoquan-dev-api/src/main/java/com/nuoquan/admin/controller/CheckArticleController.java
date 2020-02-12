@@ -111,5 +111,26 @@ public class CheckArticleController extends BasicController {
 	public JSONResult editSave(String id, Integer status) {
 		return articleService.updateArticleStatus(id, status) > 0 ? JSONResult.ok() : JSONResult.errorMsg("保存失败");
 	}
+	
+	/**
+	 * 查询自动审核
+	 */
+	@RequiresPermissions("system:article:list")
+	@PostMapping("/getAutoCheck")
+	@ResponseBody
+	public Boolean getAutoCheck() {
+		return resourceConfig.getAutoCheckArticle();
+	}
+	
+	/**
+	 * 开启/关闭自动审核
+	 */
+	@RequiresPermissions("system:article:edit")
+	@PostMapping("/toggleAutoCheck")
+	@ResponseBody
+	public JSONResult toggleAutoCheck(Boolean status) {
+		resourceConfig.setAutoCheckArticle(status);
+		return JSONResult.ok();
+	}
 
 }

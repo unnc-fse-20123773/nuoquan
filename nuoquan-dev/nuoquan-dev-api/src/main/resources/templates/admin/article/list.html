@@ -13,7 +13,7 @@
 <link
 	th:href="@{/static/admin/assets/js/bootstrap/css/bootstrap-table/bootstrap-table.min.css}"
 	rel="stylesheet" />
-
+	
 <style type="text/css">
 /**
 *这里写单独的css样式
@@ -95,6 +95,7 @@
 								<!-- 工具条 -->
 								<div class="btn-group hidden-xs" id="exampleTableEventsToolbar"
 									role="group">
+									
 									<button onclick="showAll()" type="button"
 										class="btn btn-primary">
 										<span class="entypo-plus-squared"></span>&nbsp;&nbsp;显示全部
@@ -107,9 +108,13 @@
 										class="btn btn-warning">
 										<span class="entypo-list"></span>&nbsp;&nbsp;批量审核
 									</button>
-
-
+									自动过审
+									<!-- <div class="make-switch" data-on="info" data-off="success" >
+	                                   	<input id="swtich" name="swtich" type="checkbox" value="on" onchange="toggleAutoCheck(this)">
+	                               	</div> -->
+									<input id="switch" name="switch" type="checkbox" onchange="toggleAutoCheck(this)">
 								</div>
+                               	
 								<!-- 工具条 end-->
 								<table id="dataTable"
 									class="table-striped footable-res footable metro-blue"
@@ -154,7 +159,7 @@
 
 	<script type="text/javascript">
 	<!-- jquery-export 表格导出插件 -->
-
+																																																																														
 		<!-- 导出 -->
 		var dataUrl=window.rootPath+"/CheckArticle/list";
 		var updateUrl=window.rootPath+"/CheckArticle/edit/{id}";
@@ -166,8 +171,7 @@
 		        sortName: "articleSort",
 		        modalName: "文章",
 		        search: false,
-			  	dataColumns: [
-					{
+			  	dataColumns: [{
 					    checkbox: true
 					},                   
 					{
@@ -259,12 +263,15 @@
 					        //return '<a class="btn btn-xs btn-danger" onclick="delPermission(' + "'" + id + "'" + ')"><i class="fa fa-remove"></i>删除</a>';
 					    }
 					}]
-		  };
+		};
+
 		$(function(){
+			
 			var oTab=$.table.oTableInit(options);
 			oTab.Init();
+			
+			getAutoCheck();//获取自动审核状态
 		})
-	
 	</script>
 
 
@@ -300,7 +307,39 @@
             silent: true
         })
 	}
-
+	
+	function getAutoCheck(){
+        url = rootPath+"/CheckArticle/getAutoCheck";
+        $.ajax({
+            url: url,
+            type: "post",
+            data: "",
+            success: function(result) {
+    			document.getElementById('switch').checked=result;
+            },
+        	error:function(jqXHR, textStatus, errorThrown){
+        		
+        	}
+        });
+	}
+	
+	function toggleAutoCheck(e){
+        var url = rootPath+"/CheckArticle/toggleAutoCheck";
+        console.log("修改autoCheckArticle为"+e.checked);
+        $.ajax({
+            url: url,
+            type: "post",
+            data: {
+            	status: e.checked
+            },
+            success: function(result) {
+				
+            },
+        	error:function(jqXHR, textStatus, errorThrown){
+        		
+        	}
+        });
+	}
 	</script>
 
 
