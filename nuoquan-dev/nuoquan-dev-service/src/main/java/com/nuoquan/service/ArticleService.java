@@ -65,9 +65,10 @@ public interface ArticleService {
 	public boolean isUserLikeArticle(String userId, String articleId);
 	
 	/**
-	 *  查询阳面文章
+	 *  按关键词搜索阳面文章，支持多关键词以空格分割
+	 *  TODO: 可以增加多种排序模式 @author jerrio
 	 */
-	public PagedResult searchYangArticlesContent(Integer isSaveRecord, Integer page, Integer pageSize, Article article, String userId);
+	public PagedResult searchYangArticlesContent(Integer isSaveRecord, Integer page, Integer pageSize, String searchText, String userId);
 	
 	/**
 	 * 获取热搜词

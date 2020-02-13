@@ -7,11 +7,13 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.n3r.idworker.Sid;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.nuoquan.enums.StatusEnum;
@@ -35,6 +37,7 @@ import com.nuoquan.pojo.vo.ArticleVO;
 import com.nuoquan.pojo.vo.UserArticleCommentVO;
 import com.nuoquan.pojo.vo.UserLikeVO;
 import com.nuoquan.support.Convert;
+import com.nuoquan.utils.PageUtils;
 import com.nuoquan.utils.PagedResult;
 
 import tk.mybatis.mapper.entity.Example;
@@ -72,13 +75,13 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Autowired
 	private ArticleImageMapper articleImageMapper;
-	
+
 	@Autowired
 	private UserLikeMapperCustom userLikeMapperCustom;
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
 	public PagedResult list(Integer page, Integer pageSize) {
@@ -102,7 +105,7 @@ public class ArticleServiceImpl implements ArticleService {
 				a.setTagList(finalTagList);
 			}
 		}
-		
+
 		PageInfo<ArticleVO> pageList = new PageInfo<>(list);
 
 		PagedResult pagedResult = new PagedResult();
@@ -113,7 +116,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 		return pagedResult;
 	}
-	
+
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
 	public PagedResult listCheckOnly(Integer page, Integer pageSize) {
@@ -137,7 +140,7 @@ public class ArticleServiceImpl implements ArticleService {
 				a.setTagList(finalTagList);
 			}
 		}
-		
+
 		PageInfo<ArticleVO> pageList = new PageInfo<>(list);
 
 		PagedResult pagedResult = new PagedResult();
@@ -148,7 +151,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 		return pagedResult;
 	}
-	
+
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
 	public PagedResult getAllArticles(Integer page, Integer pageSize, String userId) {
@@ -173,7 +176,7 @@ public class ArticleServiceImpl implements ArticleService {
 				a.setTagList(finalTagList);
 			}
 		}
-		
+
 		PageInfo<ArticleVO> pageList = new PageInfo<>(list);
 
 		PagedResult pagedResult = new PagedResult();
@@ -229,7 +232,7 @@ public class ArticleServiceImpl implements ArticleService {
 		articleMapperCustom.addArticleLikeCount(articleId);
 		// 用户受喜欢数量的累加
 		userMapper.addReceiveLikeCount(articleCreaterId);
-		
+
 		return ula;
 	}
 
@@ -258,44 +261,64 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public PagedResult searchYangArticlesContent(Integer isSaveRecord, Integer page, Integer pageSize, Article article, String userId) {
+	public PagedResult searchYangArticlesContent(Integer isSaveRecord, Integer page, Integer pageSize,
+			String searchText, String userId) {
 		
-		// 保存热搜词 
-		String articleContent = article.getArticleContent();
+		String[] texts = searchText.split(" ");
+		// 保存热搜词
 		if (isSaveRecord != null && isSaveRecord == 1) {
-			SearchRecord record = new SearchRecord();
-			String recordId = sid.nextShort();
-			record.setId(recordId);
-			record.setContent(articleContent);
-			searchRecordMapper.insert(record);
+			for (String text : texts) {
+				SearchRecord record = new SearchRecord();
+				String recordId = sid.nextShort();
+				record.setId(recordId);
+				record.setContent(text);
+				searchRecordMapper.insert(record);
+			}
 		}
-
+		
+		//开启分页查询并转换为vo对象
+		Example articleExample = new Example(Article.class);
+		articleExample.setOrderByClause("create_date desc");
+		Criteria criteria = articleExample.createCriteria();
+		for(String text : texts) {
+			criteria.orLike("articleTitle", "%" + text + "%");
+			criteria.orLike("articleContent", "%" + text + "%");
+			criteria.orLike("tags", "%" + text + "%");
+		}
+		criteria.andEqualTo("status", StatusEnum.READABLE);
+		
 		PageHelper.startPage(page, pageSize);
-		List<ArticleVO> list = articleMapperCustom.searchArticleContentYang(articleContent);
-		for (ArticleVO a : list) {
+		List<Article> list = articleMapperCustom.selectByExample(articleExample);
+		PageInfo<Article> pageInfo = new PageInfo<>(list);
+		PageInfo<ArticleVO> pageInfoVo = PageUtils.PageInfo2PageInfoVo(pageInfo);
+		
+		List<ArticleVO> listVo = new ArrayList<>();
+		for (Article a : list) {
+			ArticleVO av = new ArticleVO();
+			BeanUtils.copyProperties(a, av); //转换对象
 			// 为每个文章添加图片列表
-			a.setImgList(articleImageMapper.getArticleImgs(a.getId()));
+			av.setImgList(articleImageMapper.getArticleImgs(av.getId()));
 			// 添加和关于用户的点赞关系
-			a.setIsLike(isUserLikeArticle(userId, a.getId()));
+			av.setIsLike(isUserLikeArticle(userId, av.getId()));
 			// 添加标签list
-			String[] tagList = a.getTags().split("#");
+			String[] tagList = av.getTags().split("#");
 			List<String> finalTagList = new ArrayList<String>();
 			for (String tag : tagList) {
 				if (!StringUtils.isBlank(tag)) {
 					finalTagList.add(tag);
 				}
 			}
-			a.setTagList(finalTagList);
+			av.setTagList(finalTagList);
+			listVo.add(av);
 		}
+		pageInfoVo.setList(listVo);
 		
-		
-		PageInfo<ArticleVO> pageList = new PageInfo<>(list);
-
+		//为最终返回对象 pagedResult 添加属性
 		PagedResult pagedResult = new PagedResult();
-		pagedResult.setPage(page);
-		pagedResult.setTotal(pageList.getPages());
-		pagedResult.setRows(list);
-		pagedResult.setRecords(pageList.getTotal());
+		pagedResult.setPage(pageInfoVo.getPageNum());
+		pagedResult.setTotal(pageInfoVo.getPages());
+		pagedResult.setRows(pageInfoVo.getList());
+		pagedResult.setRecords(pageInfoVo.getTotal());
 
 		return pagedResult;
 	}
@@ -316,17 +339,17 @@ public class ArticleServiceImpl implements ArticleService {
 
 		return id;
 	}
-	
+
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public void deleteArticle(String articleId, String userId) {
-		// 1. 删除文章图片数据库路径 
+		// 1. 删除文章图片数据库路径
 		// 1.1 删除实际图片
 		// 2. 删除文章评论
 		// 2.1 删除文章评论的点赞
 		// 3. 删除文章的点赞
 		// 4. 删除文章
-		
+
 		// 删除文章图片
 		String fileSpace = "/Users/xudeyan/Desktop/JumboX/nuoquanTmp";
 		String uploadDB = "/" + userId + "/article" + "/" + articleId;
@@ -334,7 +357,7 @@ public class ArticleServiceImpl implements ArticleService {
 		String path1 = "/Users/xudeyan/Desktop/JUMBOX/nuoquanTmp/oDwsO5Btm6HsoGie6E8qB7WN9aYQ/article/191003BSB10GYWM8/0.jpg";
 		File file = new File(path1);
 		deletefile(file);
-		
+
 		// 删除数据库中的路径
 		Example exampleDelImg = new Example(ArticleImage.class);
 		Criteria criteria1 = exampleDelImg.createCriteria();
@@ -342,7 +365,7 @@ public class ArticleServiceImpl implements ArticleService {
 		articleImageMapper.deleteByExample(exampleDelImg);
 
 //		System.out.println(articleId);
-		
+
 		// 删除文章评论的点赞
 		// 先在userArticleComment里找到articleId对应的评论id, 该id为userLikeComment中的commentId
 		Example exampleToFindCommentId = new Example(UserArticleComment.class);
@@ -359,24 +382,24 @@ public class ArticleServiceImpl implements ArticleService {
 			userLikeCommentMapper.deleteByExample(exampleToDelCommentLikeExample);
 		}
 		// 删除目标文章所有评论
-		 Example exampleDelComment = new Example(UserArticleComment.class);
-		 Criteria criteria2 = exampleDelComment.createCriteria();
-		 criteria2.andEqualTo("articleId", articleId);
+		Example exampleDelComment = new Example(UserArticleComment.class);
+		Criteria criteria2 = exampleDelComment.createCriteria();
+		criteria2.andEqualTo("articleId", articleId);
 		userArticleCommentMapper.deleteByExample(exampleToFindCommentId);
-		
+
 		// 删除文章的点赞
 		Example exampleDelArticleLike = new Example(UserLikeArticle.class);
 		Criteria criteria4 = exampleDelArticleLike.createCriteria();
 		criteria4.andEqualTo("articleId", articleId);
 		userLikeArticleMapper.deleteByExample(exampleDelArticleLike);
-			
+
 		// 删除文章
 		Example exampleDelArticle = new Example(Article.class);
 		Criteria criteria3 = exampleDelArticle.createCriteria();
 		criteria3.andEqualTo("id", articleId);
 		articleMapper.deleteByExample(exampleDelArticle);
 	}
-	
+
 //	private static void deletefile(File file) {
 //		// TODO Auto-generated method stub
 //		if(file.isDirectory()) {
@@ -393,7 +416,7 @@ public class ArticleServiceImpl implements ArticleService {
 //	}
 
 	private void deletefile(File file) {
-		
+
 		System.out.println(file.getAbsolutePath());
 		if (file.isFile()) {
 			// 判断是否为文件--Y
@@ -407,15 +430,15 @@ public class ArticleServiceImpl implements ArticleService {
 			boolean t = file.delete();
 			System.out.println(t);
 			System.out.println("exist? " + file.exists());
-			System.out.println("canExecute? " +file.canExecute());
-			System.out.println("canWrite? "+ file.canWrite());
+			System.out.println("canExecute? " + file.canExecute());
+			System.out.println("canWrite? " + file.canWrite());
 			System.out.println("parent is " + file.getParent());
 		} else {
 			String[] childFilePathStrings = file.list();
-			
+
 			System.out.println(childFilePathStrings[1]);
 			System.out.println(childFilePathStrings.length);
-			
+
 			for (String path : childFilePathStrings) {
 				System.out.println(path);
 				File childFile = new File(file.getAbsoluteFile() + "/" + path);
@@ -437,13 +460,13 @@ public class ArticleServiceImpl implements ArticleService {
 		comment.setCreateDate(new Date());
 		comment.setCommentNum(0);
 		userArticleCommentMapper.insertSelective(comment);
-		//文章评论数累加
+		// 文章评论数累加
 		articleMapperCustom.addArticleCommentCount(comment.getArticleId());
 		if (!StringUtils.isBlank(comment.getUnderCommentId())) {
-			//主评论的评论数累加
+			// 主评论的评论数累加
 			userArticleCommentMapperCustom.addCommentCount(comment.getUnderCommentId());
 		}
-		
+
 		return id;
 	}
 
@@ -459,7 +482,7 @@ public class ArticleServiceImpl implements ArticleService {
 		ulc.setCommentId(commentId);
 		ulc.setSignFlag(signFlag);
 		ulc.setCreateDate(new Date());
-		
+
 		userLikeCommentMapper.insertSelective(ulc);
 		// 评论喜欢数量累加
 		userArticleCommentMapperCustom.addCommentLikeCount(commentId);
@@ -473,7 +496,7 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public void userUnLikeComment(String userId, String commentId, String createrId) {
 		boolean isLike = isUserLikeComment(userId, commentId);
-		if(isLike) {
+		if (isLike) {
 			// 1.删除用户和文章的点赞关联关系表
 			Example example = new Example(UserLikeComment.class);
 			// 创造条件
@@ -491,7 +514,7 @@ public class ArticleServiceImpl implements ArticleService {
 			userMapper.reduceReceiveLikeCount(createrId);
 		}
 	}
-	
+
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
 	public boolean isUserLikeArticle(String userId, String articleId) {
@@ -499,7 +522,7 @@ public class ArticleServiceImpl implements ArticleService {
 		Criteria criteria = example.createCriteria();
 		criteria.andEqualTo("userId", userId);
 		criteria.andEqualTo("articleId", articleId);
-		
+
 		List<UserLikeArticle> list = userLikeArticleMapper.selectByExample(example);
 		if (list != null && !list.isEmpty()) {
 			return true;
@@ -514,14 +537,14 @@ public class ArticleServiceImpl implements ArticleService {
 		Criteria criteria = example.createCriteria();
 		criteria.andEqualTo("userId", userId);
 		criteria.andEqualTo("commentId", commentId);
-		
+
 		List<UserLikeComment> list = userLikeCommentMapper.selectByExample(example);
 		if (list != null && !list.isEmpty()) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
 	public PagedResult getMainComments(Integer page, Integer pageSize, String articleId, String userId) {
@@ -547,14 +570,14 @@ public class ArticleServiceImpl implements ArticleService {
 
 		return grid;
 	}
-	
+
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
 	public PagedResult getSonComments(Integer page, Integer pageSize, String underCommentId, String userId) {
-		
+
 		PageHelper.startPage(page, pageSize);
 		List<UserArticleCommentVO> list = userArticleCommentMapperCustom.querySonComments(underCommentId);
-		
+
 		for (UserArticleCommentVO c : list) {
 //			String timeAgo = TimeAgoUtils.format(c.getCreateDate());
 //			c.setTimeAgo(timeAgo);
@@ -563,7 +586,7 @@ public class ArticleServiceImpl implements ArticleService {
 			// 设置回复人昵称
 			c.setToNickname(userService.queryUserById(c.getToUserId()).getNickname());
 		}
-		
+
 		PageInfo<UserArticleCommentVO> pageList = new PageInfo<>(list);
 
 		PagedResult grid = new PagedResult();
@@ -599,7 +622,7 @@ public class ArticleServiceImpl implements ArticleService {
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
 	public List<ArticleVO> getTop3ByPopularity(String userId) {
-		List<ArticleVO> list =  articleMapperCustom.getTop3ByPopularity();
+		List<ArticleVO> list = articleMapperCustom.getTop3ByPopularity();
 		for (ArticleVO a : list) {
 			// 为每个文章添加图片列表
 			a.setImgList(articleImageMapper.getArticleImgs(a.getId()));
@@ -619,7 +642,7 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 		return list;
 	}
-	
+
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public void updateLikeArticleSigned(List<String> msgIdList) {
@@ -635,7 +658,7 @@ public class ArticleServiceImpl implements ArticleService {
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public void updateCommentSigned(List<String> msgIdList) {
-		userArticleCommentMapperCustom.batchUpdateMsgSigned(msgIdList);		
+		userArticleCommentMapperCustom.batchUpdateMsgSigned(msgIdList);
 	}
 
 	@Transactional(propagation = Propagation.SUPPORTS)
@@ -651,7 +674,7 @@ public class ArticleServiceImpl implements ArticleService {
 		List<UserArticleCommentVO> commentVOs = userArticleCommentMapperCustom.getUnsignedCommentMsg(userId);
 		return commentVOs;
 	}
-	
+
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public void fDeleteArticle(String articleId) {
@@ -662,7 +685,7 @@ public class ArticleServiceImpl implements ArticleService {
 		a.setStatus(StatusEnum.UNREADABLE.type);
 		articleMapper.updateByExampleSelective(a, example);
 	}
-	
+
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public void banArticle(String articleId) {
@@ -704,15 +727,15 @@ public class ArticleServiceImpl implements ArticleService {
 		criteria.andEqualTo("id", commentId);
 		UserArticleComment commentHelper = new UserArticleComment();
 		commentHelper.setStatus(StatusEnum.READABLE.type);
-		userArticleCommentMapper.updateByExampleSelective(commentHelper, example);	
+		userArticleCommentMapper.updateByExampleSelective(commentHelper, example);
 	}
 
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
 	public PagedResult getAllMyHisArticle(Integer page, Integer pageSize, String userId) {
-		
+
 		PageHelper.startPage(page, pageSize);
-		
+
 		List<ArticleVO> list = articleMapperCustom.queryAllMyHisArticle(userId);
 		for (ArticleVO a : list) {
 			// 为每篇文章添加图片列表
@@ -724,7 +747,7 @@ public class ArticleServiceImpl implements ArticleService {
 				String[] tagList = a.getTags().split("#");
 				List<String> finalTagList = new ArrayList<String>();
 				for (String tag : tagList) {
-					if(!StringUtils.isBlank(tag)) {
+					if (!StringUtils.isBlank(tag)) {
 						finalTagList.add(tag);
 					}
 				}
@@ -733,21 +756,21 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 		System.out.print(list.size());
 		PageInfo<ArticleVO> pageList = new PageInfo<>(list);
-		
+
 		PagedResult pagedResult = new PagedResult();
 		pagedResult.setPage(page);
 		pagedResult.setTotal(pageList.getPages());
 		pagedResult.setRows(list);
 		pagedResult.setRecords(pageList.getTotal());
-		
+
 		return pagedResult;
-		
+
 	}
 
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
 	public PagedResult gerOtherslegalHisArticle(Integer page, Integer pageSize, String userId, String targetId) {
-		
+
 		PageHelper.startPage(page, pageSize);
 		List<ArticleVO> list = articleMapperCustom.queryOthersLegalHisArticle(targetId);
 		for (ArticleVO a : list) {
@@ -760,7 +783,7 @@ public class ArticleServiceImpl implements ArticleService {
 				String[] tagList = a.getTags().split("#");
 				List<String> finalTagList = new ArrayList<String>();
 				for (String tag : tagList) {
-					if(!StringUtils.isBlank(tag)) {
+					if (!StringUtils.isBlank(tag)) {
 						finalTagList.add(tag);
 					}
 				}
@@ -768,16 +791,16 @@ public class ArticleServiceImpl implements ArticleService {
 			}
 		}
 		PageInfo<ArticleVO> pageList = new PageInfo<>(list);
-		
+
 		PagedResult pagedResult = new PagedResult();
 		pagedResult.setPage(page);
 		pagedResult.setTotal(pageList.getPages());
 		pagedResult.setRows(list);
 		pagedResult.setRecords(pageList.getTotal());
-		
+
 		return pagedResult;
 	}
-	
+
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public void addViewCount(String articleId) {
@@ -790,9 +813,9 @@ public class ArticleServiceImpl implements ArticleService {
 		if (StringUtils.isEmpty(articleIds)) {
 			return -1;
 		}
-		
+
 		List<String> listId = Convert.toListStrArray(articleIds);
-		
+
 		Example example = new Example(Article.class);
 		example.createCriteria().andIn("id", listId);
 		Article a = new Article();

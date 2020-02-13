@@ -46,6 +46,7 @@ public interface ArticleMapperCustom extends MyMapper<Article> {
 	public void addArticleCommentCount(String articleId);
 	
 	/**
+	 * @deprecated
 	 * 搜索文章内容
 	 * @param articleContent
 	 * @return

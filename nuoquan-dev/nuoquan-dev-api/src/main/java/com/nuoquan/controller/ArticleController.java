@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -222,14 +223,14 @@ public class ArticleController extends BasicController {
 	 */
 	@ApiOperation(value = "按文章内容搜索")
 	@PostMapping(value = "/searchArticleYANG")
-	public JSONResult searchArticleYang(@RequestBody Article article, Integer isSaveRecord, Integer page, String userId)
+	public JSONResult searchArticleYang(String searchText, Integer isSaveRecord, Integer page, String userId)
 			throws Exception {
 
 		if (page == null) {
 			page = 1;
 		}
 		
-		PagedResult result = articleService.searchYangArticlesContent(isSaveRecord, page, PAGE_SIZE, article, userId);
+		PagedResult result = articleService.searchYangArticlesContent(isSaveRecord, page, PAGE_SIZE, searchText, userId);
 		return JSONResult.ok(result);
 	}
 

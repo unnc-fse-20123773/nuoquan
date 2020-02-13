@@ -1,7 +1,7 @@
 package com.nuoquan.enums;
 
 /**
- * Article 和 Comment 的状态枚举类
+ * Article
  * @author jerrio
  */
 public enum StatusEnum {

@@ -108,9 +108,10 @@
 										class="btn btn-warning">
 										<span class="entypo-list"></span>&nbsp;&nbsp;批量审核
 									</button>
+									<!-- 这个组件onchange会触发两次 -->
 									自动过审
-									<!-- <div class="make-switch" data-on="info" data-off="success" >
-	                                   	<input id="swtich" name="swtich" type="checkbox" value="on" onchange="toggleAutoCheck(this)">
+									<!-- <div class="make-switch" data-on="info" data-off="success">
+	                                   	<input id="switch" name="switch" type="checkbox" onchange="toggleAutoCheck(this)">
 	                               	</div> -->
 									<input id="switch" name="switch" type="checkbox" onchange="toggleAutoCheck(this)">
 								</div>
@@ -308,6 +309,7 @@
         })
 	}
 	
+	var oldCheck;
 	function getAutoCheck(){
         url = rootPath+"/CheckArticle/getAutoCheck";
         $.ajax({
@@ -316,6 +318,7 @@
             data: "",
             success: function(result) {
     			document.getElementById('switch').checked=result;
+    			oldCheck = result;
             },
         	error:function(jqXHR, textStatus, errorThrown){
         		
@@ -325,20 +328,22 @@
 	
 	function toggleAutoCheck(e){
         var url = rootPath+"/CheckArticle/toggleAutoCheck";
-        console.log("修改autoCheckArticle为"+e.checked);
-        $.ajax({
-            url: url,
-            type: "post",
-            data: {
-            	status: e.checked
-            },
-            success: function(result) {
-				
-            },
-        	error:function(jqXHR, textStatus, errorThrown){
-        		
-        	}
-        });
+        if(oldCheck!=e.checked){
+        	console.log("修改autoCheckArticle为"+e.checked);
+            $.ajax({
+                url: url,
+                type: "post",
+                data: {
+                	status: e.checked
+                },
+                success: function(result) {
+                	oldCheck=e.checked;
+                },
+            	error:function(jqXHR, textStatus, errorThrown){
+            		
+            	}
+            });
+        }
 	}
 	</script>
 
