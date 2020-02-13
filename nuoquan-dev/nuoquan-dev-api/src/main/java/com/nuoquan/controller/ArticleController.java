@@ -230,7 +230,7 @@ public class ArticleController extends BasicController {
 			page = 1;
 		}
 		
-		PagedResult result = articleService.searchYangArticlesContent(isSaveRecord, page, PAGE_SIZE, searchText, userId);
+		PagedResult result = articleService.searchArticleYang(isSaveRecord, page, PAGE_SIZE, searchText, userId);
 		return JSONResult.ok(result);
 	}
 

@@ -261,7 +261,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public PagedResult searchYangArticlesContent(Integer isSaveRecord, Integer page, Integer pageSize,
+	public PagedResult searchArticleYang(Integer isSaveRecord, Integer page, Integer pageSize,
 			String searchText, String userId) {
 		
 		String[] texts = searchText.split(" ");
