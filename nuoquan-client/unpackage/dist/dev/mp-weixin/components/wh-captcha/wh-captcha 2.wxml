@@ -1,1 +1,0 @@
-<view data-event-opts="{{[['tap',[['clickAction',['$event']]]]]}}" class="{{['data-v-7f15a1ee',state==='normal'?normalClass:disabledClass]}}" bindtap="__e">{{''+(state==='normal'?title:$root.g0)}}</view>
