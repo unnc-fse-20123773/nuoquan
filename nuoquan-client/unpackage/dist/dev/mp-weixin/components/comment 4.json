@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "re-comment": "/components/reComment"
+  },
+  "component": true
+}

@@ -25,6 +25,23 @@
     
   </resultMap>
   
+  <select id="list" resultMap="BaseResultMap">
+ 	select v.*, u.nickname as nickname, u.face_img, u.face_img_thumb from nuoquan.vote v
+   	left join nuoquan.user u on u.id = v.user_id
+  	where
+  		1 = 1
+  	order by v.create_date desc
+  </select>
+  
+  <select id="listCheckOnly" resultMap="BaseResultMap">
+ 	select v.*, u.nickname as nickname, u.face_img, u.face_img_thumb from nuoquan.vote v
+   	left join nuoquan.user u on u.id = v.user_id
+  	where
+  		1 = 1
+  		and a.status = 2
+  	order by v.create_date desc
+  </select>
+  
   <select id="queryAllVotes" resultMap="BaseResultMap">
  	select v.*, u.nickname as nickname, u.face_img, u.face_img_thumb from nuoquan.vote v
    	left join nuoquan.user u on u.id = v.user_id

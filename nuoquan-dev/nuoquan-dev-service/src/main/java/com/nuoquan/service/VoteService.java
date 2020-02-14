@@ -32,7 +32,7 @@ public interface VoteService {
 	public void saveVoteOption(VoteOption voteOption);
 
 	/**
-	 * 分页查询全部文章
+	 * 分页查询全部投票
 	 * @param page
 	 * @param pageSize
 	 * @param userId
@@ -55,7 +55,7 @@ public interface VoteService {
 	public UserVoteCommentVO getCommentById(String commentId, String userId);
 
 	/**
-	 * 按 voteId 获取文章
+	 * 按 voteId 获取投票
 	 * @param page
 	 * @param pageSize
 	 * @return
@@ -117,5 +117,21 @@ public interface VoteService {
 	public PagedResult getSingleVote(Integer page, Integer pageSize, String userId, String voteId);
 
 	boolean isUserVoted(String userId, String voteId);
+	
+	/**
+	 * 分页查询所有状态的投票
+	 */
+	public PagedResult list(Integer page, Integer pageSize);
+	
+	/**
+	 * 列出所有等待审核的投票
+	 * @return
+	 */
+	public PagedResult listCheckOnly(Integer page, Integer pageSize);
+	
+	/**
+	 * 修改投票状态(可批量)
+	 */
+	public int updateVoteStatus(String voteIds, int status);
 	
 }

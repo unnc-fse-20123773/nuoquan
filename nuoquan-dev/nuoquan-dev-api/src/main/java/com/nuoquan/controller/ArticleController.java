@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -130,7 +131,7 @@ public class ArticleController extends BasicController {
 			@ApiImplicitParam(name = "articleCreaterId", value = "文章作者id", required = true, dataType = "String", paramType = "form") })
 	@PostMapping(value = "/userLikeArticle")
 	public JSONResult userLikeArticle(String userId, String articleId, String articleCreaterId) throws Exception {
-		
+	
 		if (userId.equals(articleCreaterId)) {
 			// 点赞自己，标记已签收存入数据
 			articleService.userLikeArticle(userId, articleId, articleCreaterId, MsgSignFlagEnum.SIGNED.type);
@@ -222,14 +223,14 @@ public class ArticleController extends BasicController {
 	 */
 	@ApiOperation(value = "按文章内容搜索")
 	@PostMapping(value = "/searchArticleYANG")
-	public JSONResult searchArticleYang(@RequestBody Article article, Integer isSaveRecord, Integer page, String userId)
+	public JSONResult searchArticleYang(String searchText, Integer isSaveRecord, Integer page, String userId)
 			throws Exception {
 
 		if (page == null) {
 			page = 1;
 		}
 		
-		PagedResult result = articleService.searchYangArticlesContent(isSaveRecord, page, PAGE_SIZE, article, userId);
+		PagedResult result = articleService.searchArticleYang(isSaveRecord, page, PAGE_SIZE, searchText, userId);
 		return JSONResult.ok(result);
 	}
 
@@ -266,7 +267,11 @@ public class ArticleController extends BasicController {
 			&& weChatService.msgSecCheck(articleContent)) {
 			// 合法
 			isLegal = true;
-			article.setStatus(StatusEnum.READABLE.type);
+			if (resourceConfig.getAutoCheckArticle()) { //查看是否设置自动过审
+				article.setStatus(StatusEnum.READABLE.type);
+			}else {
+				article.setStatus(StatusEnum.CHECKING.type);
+			}
 		}else {
 			// 非法，尽管非法也保存到数据库
 			article.setStatus(StatusEnum.UNREADABLE.type);

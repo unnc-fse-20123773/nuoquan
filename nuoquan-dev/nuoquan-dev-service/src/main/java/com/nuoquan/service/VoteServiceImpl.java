@@ -1,5 +1,6 @@
 package com.nuoquan.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,6 +25,7 @@ import com.nuoquan.mapper.VoteMapper;
 import com.nuoquan.mapper.VoteMapperCustom;
 import com.nuoquan.mapper.VoteOptionMapper;
 import com.nuoquan.mapper.VoteUserMapper;
+import com.nuoquan.pojo.Article;
 import com.nuoquan.pojo.UserLikeComment;
 import com.nuoquan.pojo.UserLikeCommentVote;
 import com.nuoquan.pojo.UserVoteComment;
@@ -31,8 +33,10 @@ import com.nuoquan.pojo.Vote;
 import com.nuoquan.pojo.VoteImage;
 import com.nuoquan.pojo.VoteOption;
 import com.nuoquan.pojo.VoteUser;
+import com.nuoquan.pojo.vo.ArticleVO;
 import com.nuoquan.pojo.vo.UserVoteCommentVO;
 import com.nuoquan.pojo.vo.VoteVO;
+import com.nuoquan.support.Convert;
 import com.nuoquan.utils.PagedResult;
 
 import tk.mybatis.mapper.entity.Example;
@@ -107,7 +111,60 @@ public class VoteServiceImpl implements VoteService {
 			voteOptionMapper.insertSelective(voteOption);
 		}
 	}
+	
 
+	@Transactional(propagation = Propagation.SUPPORTS)
+	@Override
+	public PagedResult list(Integer page, Integer pageSize) {
+
+		// 从controller中获取page和pageSize (经实验，PageHelper 只拦截下一次查询)
+		PageHelper.startPage(page, pageSize);
+
+		List<VoteVO> list = voteMapperCustom.list();
+		for (VoteVO v : list) {
+			// 为每个文章添加图片列表
+			v.setImgList(voteImageMapper.getVoteImgs(v.getId()));
+			// 为每个投票添加选项列表
+			v.setOptionList(voteOptionMapper.getOptions(v.getId()));
+		}
+		
+		PageInfo<VoteVO> pageList = new PageInfo<>(list);
+
+		PagedResult pagedResult = new PagedResult();
+		pagedResult.setPage(page);
+		pagedResult.setTotal(pageList.getPages());
+		pagedResult.setRows(list);
+		pagedResult.setRecords(pageList.getTotal());
+
+		return pagedResult;
+	}
+	
+	@Transactional(propagation = Propagation.SUPPORTS)
+	@Override
+	public PagedResult listCheckOnly(Integer page, Integer pageSize) {
+
+		// 从controller中获取page和pageSize (经实验，PageHelper 只拦截下一次查询)
+		PageHelper.startPage(page, pageSize);
+
+		List<VoteVO> list = voteMapperCustom.listCheckOnly();
+		for (VoteVO v : list) {
+			// 为每个文章添加图片列表
+			v.setImgList(voteImageMapper.getVoteImgs(v.getId()));
+			// 为每个投票添加选项列表
+			v.setOptionList(voteOptionMapper.getOptions(v.getId()));
+		}
+		
+		PageInfo<VoteVO> pageList = new PageInfo<>(list);
+
+		PagedResult pagedResult = new PagedResult();
+		pagedResult.setPage(page);
+		pagedResult.setTotal(pageList.getPages());
+		pagedResult.setRows(list);
+		pagedResult.setRecords(pageList.getTotal());
+
+		return pagedResult;
+	}
+	
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
 	public PagedResult getAllVotes(Integer page, Integer pageSize, String userId) {
@@ -359,6 +416,23 @@ public class VoteServiceImpl implements VoteService {
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
+	public int updateVoteStatus(String voteIds, int status) {
+		if (StringUtils.isEmpty(voteIds)) {
+			return -1;
+		}
+		
+		List<String> listId = Convert.toListStrArray(voteIds);
+		
+		Example example = new Example(Vote.class);
+		example.createCriteria().andIn("id", listId);
+		Vote a = new Vote();
+		a.setStatus(status);
+		return voteMapper.updateByExampleSelective(a, example);
+	}
+
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Override
 	public void selectOption(VoteUser voteUser) {
 		// 1.将投票信息存入数据库
 		String id = sid.nextShort();
@@ -381,9 +455,9 @@ public class VoteServiceImpl implements VoteService {
 		List<VoteOption> list = voteOptionMapper.selectByExample(example);
 		for (VoteOption vu : list) {
 			Integer optionTotalCount = vu.getCount();
-			System.out.println(optionTotalCount);
+//			System.out.println(optionTotalCount);
 			Double percent =((double)optionTotalCount/totalVoteNum);
-			System.out.println(percent);
+//			System.out.println(percent);
 			voteOptionMapper.updatePercent(vu.getId(), percent);
 		}
 	}

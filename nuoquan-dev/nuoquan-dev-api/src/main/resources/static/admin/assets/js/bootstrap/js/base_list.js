@@ -51,7 +51,15 @@
 			                tableName: '报表导出',
 			                excelstyles: ['background-color', 'color', 'font-size', 'font-weight']
 			            },
-
+			            responseHandler: function(res){
+			                var result = {total:0,rows:[]};
+			                //console.log(res);
+			                if(res.records > 0){
+			                    result.total = res.records;
+			                    result.rows = res.rows;
+			                }
+			                return result;
+			            },
 			            //导出excel表格设置<<<<<<<<<<<<<<<<
 			            
 			            onLoadSuccess: function(){  //加载成功时执行
