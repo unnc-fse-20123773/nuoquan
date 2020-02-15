@@ -241,5 +241,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ })
 
+<<<<<<< HEAD
 },[[166,"common/runtime","common/vendor"]]]);
+=======
+},[[170,"common/runtime","common/vendor"]]]);
+>>>>>>> master
 //# sourceMappingURL=../../../.sourcemap/mp-weixin/pages/about/about.js.map

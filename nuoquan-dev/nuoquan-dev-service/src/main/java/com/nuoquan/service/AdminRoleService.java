@@ -77,8 +77,8 @@ public class AdminRoleService {
 	 */
 	@Transactional(propagation = Propagation.REQUIRED)
 	public int deleteByPrimaryKey(String ids) {
-		System.out.println("adminRoleService.deleteByPrimaryKey.ids:"+ids);
-		
+//		System.out.println("adminRoleService.deleteByPrimaryKey.ids:"+ids);
+	
 		List<String> lista = Convert.toListStrArray(ids);
 		// 先删除角色下面的所有权限
 		Example rolePermissionExample = new Example(AdminRolePermission.class);

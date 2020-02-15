@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 .touxiang.data-v-16ee2e71 {
 		width: 60rpx;
 		height: 60rpx;
@@ -22,6 +23,28 @@
 		-webkit-justify-content: inherit;
 		    -ms-flex-pack: inherit;
 		        justify-content: inherit;
+=======
+.touxiang.data-v-d203d3ca {
+	width: 60rpx;
+	height: 60rpx;
+	border-radius: 60rpx;
+}
+.bottomBar.data-v-d203d3ca {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	width: 400rpx;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	    -ms-flex-align: center;
+	        align-items: center;
+	height: 18px;
+	-webkit-box-pack: inherit;
+	-webkit-justify-content: inherit;
+	    -ms-flex-pack: inherit;
+	        justify-content: inherit;
+>>>>>>> master
 }
 
 

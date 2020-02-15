@@ -8,6 +8,22 @@ import org.apache.ibatis.annotations.Param;
 
 public interface ArticleMapperCustom extends MyMapper<Article> {
 	
+	/**
+	 * @Description: 直接列出所有文章
+	 * @return
+	 */
+	public List<ArticleVO> list();
+	
+	/**
+	 * @Description: 直接列出所有等待审核的文章
+	 * @return
+	 */
+	public List<ArticleVO> listCheckOnly();
+	
+	/**
+	 * @Description: 获取所有状态为发布中的文章(status==1)
+	 * @return
+	 */
 	public List<ArticleVO> queryAllArticles();
 	
 	/**
@@ -18,7 +34,7 @@ public interface ArticleMapperCustom extends MyMapper<Article> {
 	
 	
 	/**
-	 * @description: 对文章喜欢的数量进行累减
+	 * @Description: 对文章喜欢的数量进行累减
 	 * @param articleId
 	 */
 	public void reduceArticleLikeCount(String articleId);
@@ -30,6 +46,7 @@ public interface ArticleMapperCustom extends MyMapper<Article> {
 	public void addArticleCommentCount(String articleId);
 	
 	/**
+	 * @deprecated
 	 * 搜索文章内容
 	 * @param articleContent
 	 * @return

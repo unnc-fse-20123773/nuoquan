@@ -77,14 +77,16 @@ Current Dev Verion: `v1.0.3`
 - 微信授权登陆->若有记录，无需认证，显示欢迎回来。
 
 ## [Recent Update](./updateLog.md): ##
-**v20.2.7 更新**
-1. 优化 部分后端代码，合并 resource.properties 到 application.properties
-2. 新增 后台管理中用户-角色-权限关联操作
+**v20.2.13 更新**
+1. 新增 文章自动过审开关
+2. 新增 文章多关键词搜索，以空格分割
+3. 小改 数据库并修改记录方式为倒叙，详情见 sqlRecord.sql（是后台管理页面-权限相关值的变动，各位重新刷一下）
+
+**v20.2.12 更新**
+1. 新增 投票人工审核
+
+**v20.2.11 更新**
+1. 整合 deyan
+2. 新增 投票相关接口（deyan）
 3. 中改 数据库，详情见 sqlRecord.sql
-4. 删除 resource.properties配置文件, Administors相关类及数据库表(实际是改名了)
-
-**v20.1.30 更新**
-1. 新增 后台管理模板代码
-2. 修复 后端热部署与 mybatis 依赖的冲突，现可正常使用热部署
-3. 新增 admin.controller
-
+4. 新增 文章人工审核

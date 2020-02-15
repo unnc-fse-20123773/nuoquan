@@ -26,14 +26,14 @@ import springfox.documentation.spring.web.json.Json;
  * @author jerrio
  */
 @RestController
-public class HelloController {
+public class HelloController extends BasicController{
 	
 	@Autowired
 	private EmailTool emailTool;
 	
 	@GetMapping("/hello")
 	public String Hello() {
-		return "hello!";
+		return "hello!"+resourceConfig.getName();
 	}
 	
 	@GetMapping("/sendWsMsg")

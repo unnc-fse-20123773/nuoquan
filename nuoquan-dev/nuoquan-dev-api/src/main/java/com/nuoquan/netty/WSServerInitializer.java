@@ -1,9 +1,13 @@
 package com.nuoquan.netty;
 
+import javax.annotation.PostConstruct;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLEngine;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.nuoquan.config.ResourceConfig;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -15,7 +19,9 @@ import io.netty.handler.ssl.SslHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.handler.timeout.IdleStateHandler;
 
+@Component
 public class WSServerInitializer extends ChannelInitializer<SocketChannel>{
+<<<<<<< HEAD
 
 	public String type = "JKS";
 	public String password = "5701k96a1fxz51v";
@@ -33,11 +39,27 @@ public class WSServerInitializer extends ChannelInitializer<SocketChannel>{
 //	public String path = "F:\\codingWorkspace\\nuoquan\\nuoquan-dev\\ssl_cert\\www.checkchack.cn.jks";	
 >>>>>>> master
 //	public String path = "/home/ubuntu/apache-tomcat-8.5.42/conf/www.checkchack.cn.jks"; // 服务器证书地址，勿动
+=======
+	//1. 声明本类和构造方法
+	private static WSServerInitializer wsServerInitializer;
+	
+	@Autowired ResourceConfig resourceConfig;
+	
+	//2. @PostContruct是spring框架的注解，在方法上加该注解会在项目启动的时候执行该方法，
+	//	也可以理解为在spring容器初始化的时候执行该方法。用这种方式获取@Autowired的值
+	@PostConstruct 
+    public void init(){
+		wsServerInitializer = this;
+    }
+>>>>>>> master
 	
 	@Override
 	protected void initChannel(SocketChannel ch) throws Exception {
 		ChannelPipeline pipeline = ch.pipeline();
 		
+		String type = wsServerInitializer.resourceConfig.getSsl().getType();
+		String password = wsServerInitializer.resourceConfig.getSsl().getPassword();
+		String path = wsServerInitializer.resourceConfig.getSsl().getPath();
 		// 添加ssl认证
 //		System.out.println(type + "-" + path + "-" + password);
 		SSLContext sslContext = SslUtil.createSSLContext(type, path, password); ///SslUtil自定义类

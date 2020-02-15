@@ -118,4 +118,19 @@
     from admin_permission a
     where id = #{id,jdbcType=VARCHAR}
   </select>
+  
+  <update id="updateByPrimaryKey" parameterType="com.nuoquan.pojo.AdminPermission">
+    update admin_permission
+    set name = #{name,jdbcType=VARCHAR},
+      descripion = #{descripion,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      is_blank = #{isBlank,jdbcType=INTEGER},
+      pid = #{pid,jdbcType=VARCHAR},
+      perms = #{perms,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      icon = #{icon,jdbcType=VARCHAR},
+      order_num = #{orderNum,jdbcType=INTEGER},
+      visible = #{visible,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
 </mapper>

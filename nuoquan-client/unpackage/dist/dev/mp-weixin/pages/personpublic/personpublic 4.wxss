@@ -1,0 +1,354 @@
+
+page {
+	width: 100%;
+}
+#public-container {
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+}
+
+/* 黄色头部 */
+#yellowTopBox {
+	width: 100%;
+	position: relative;
+	z-index: -30;
+}
+.yellowTop {
+	position: absolute; /* 此处采用 absolote 定位，以保证页面流可以正常显示。层级设为 -10，以保证其显示在页面最底部。 */
+	left: -430rpx;
+	height: 1600rpx;
+	width: 1600rpx;
+	z-index: -10;
+	border-radius: 3000rpx;
+	background-color: #ffc95a;
+}
+
+/* 简介块 */
+#public-infoBox {
+	width: 100%;
+}
+.publicTouxiang {
+	width: 74px;
+	height: 74px;
+	border-radius: 120px;
+	border: 4px solid white;
+	display: inline-block;
+	vertical-align: middle;
+}
+.idCard {
+	margin-top: 64px;
+	margin-left: 13px;
+	border-radius: 8px;
+	min-height: 140px;
+	background-color: rgba(255, 255, 255, 1);
+	-webkit-box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+	        box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+}
+.nameBox {
+	margin-top: 8px;
+	width: 100%;
+}
+.nameBox .name-text {
+	font-size: 17px;
+	font-weight: 600;
+}
+.introBox {
+	margin-top: 12px;
+	width: 100%;
+}
+.introBox-text {
+	max-width: 61%;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 13px;
+	color: rgba(136, 136, 136, 1);
+	opacity: 1;
+	word-break: keep-all;
+	word-wrap: break-word;
+}
+.guanzhuLine {
+	margin-top: 17px;
+	height: 26px;
+	width: 100%;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+}
+.guanzhuButton {
+	/* margin-left: 35.2%; */
+	margin-right: 0px;
+	width: 68px;
+	height: 26px;
+	background-color: rgba(255, 201, 90, 1);
+	-webkit-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
+	        box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
+	opacity: 1;
+	border-radius: 4px;
+}
+.guanzhuButton-after {
+	/* margin-left: 31.2%; */
+	margin-right: 0px;
+	width: 82px;
+	height: 26px;
+	opacity: 1;
+	border-radius: 4px;
+}
+.guanzhuButton-text {
+	font-size: 14px;
+	font-family: Source Han Sans CN;
+	font-weight: 400;
+	color: rgba(255, 255, 255, 1);
+	opacity: 1;
+}
+.guanzhuButton-text-after {
+	font-size: 14px;
+	font-family: Source Han Sans CN;
+	font-weight: 400;
+	line-height: 13px;
+	color: rgba(255, 201, 90, 1);
+	opacity: 1;
+}
+.messageButton {
+	margin-left: 8px;
+	margin-top: -1px;
+	width: 28px;
+	height: 28px;
+	background: rgba(255, 241, 213, 1);
+	border-radius: 14px;
+	opacity: 1;
+}
+.operationLine {
+	margin: 17px 3.2%;
+	width: 93.6%;
+	height: 43px;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	    -ms-flex-pack: justify;
+	        justify-content: space-between;
+}
+.operationCard {
+	width: 33.3%;
+	height: 43px;
+}
+.operationNum {
+	width: 100%;
+	height: 17px;
+	overflow: visible;
+}
+.operationNum-text {
+	font-size: 17px;
+	font-family: Source Han Sans CN;
+	font-weight: 800;
+	opacity: 1;
+}
+.operationTitle {
+	margin-top: 11px;
+	width: 100%;
+	height: 11px;
+	overflow: visible;
+}
+.operationTitle-text {
+	font-size: 10px;
+	font-family: Source Han Sans CN;
+	font-weight: 500;
+	color: rgba(178, 178, 178, 1);
+	opacity: 1;
+}
+
+/* 标题 */
+#public-titleBox {
+	width: 100%;
+	margin-top: 20px;
+	margin-bottom: 12px;
+}
+.public-title-text {
+	margin-left: 13px;
+	font-size: 17px;
+	font-family: Source Han Sans CN;
+	font-weight: bold;
+	color: rgba(136, 136, 136, 1);
+	opacity: 1;
+	letter-spacing: 1px;
+}
+
+/* 他的信息块 */
+#publix-profileLine {
+	margin-left: 13px;
+	border-radius: 8px;
+	background-color: rgba(255, 255, 255, 1);
+	-webkit-box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+	        box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	    -ms-flex-pack: justify;
+	        justify-content: space-between;
+}
+.profileCard {
+	width: 50%;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	    -ms-flex-direction: column;
+	        flex-direction: column;
+}
+.profile-content-text {
+	margin-top: 16px;
+	margin-left: 38px;
+	font-size: 17px;
+	font-family: Source Han Sans CN;
+	font-weight: 500;
+	color: rgba(53, 53, 53, 1);
+	opacity: 1;
+}
+.profile-title-text {
+	margin-bottom: 16px;
+	margin-top: 8px;
+	margin-left: 38px;
+	font-size: 10px;
+	font-family: Source Han Sans CN;
+	font-weight: 500;
+	color: rgba(178, 178, 178, 1);
+	opacity: 1;
+}
+
+/* 他的发布文章块 */
+#public-articleCard {
+	margin-bottom: 8px;
+	max-height: 114px;
+	margin-left: 13px;
+	padding: 12px 0px;
+	border-radius: 8px;
+	background-color: rgba(255, 255, 255, 1);
+	-webkit-box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+	        box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+}
+.articleTitle {
+	width: calc(100% - 32px);
+	margin-left: 16px;
+	font-size: 15px;
+	font-family: Source Han Sans CN;
+	font-weight: 550;
+	color: rgba(74, 74, 74, 1);
+	opacity: 1;
+	white-space: nowrap;
+	overflow: hidden;
+	-o-text-overflow: ellipsis;
+	   text-overflow: ellipsis;
+	line-height: 17px;
+}
+.articleContentLine {
+	margin-top: 12px;
+	width: calc(100% - 32px);
+	margin-left: 16px;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+}
+
+/* 定高 */
+.textareaCard {
+	position: relative;
+	height: 63px;
+	width: 100%;
+}
+.textareaCard-img {
+	position: relative;
+	height: 63px;
+	width: calc(100% - 61px);
+	margin-right: 12px;
+}
+.textContent {
+	position: absolute;
+	top: 0;
+	width: 100%;
+	max-height: 39px;
+	font-size: 12px;
+	font-family: Source Han Sans CN;
+	font-weight: 400;
+	line-height: 13px;
+	color: rgba(53, 53, 53, 1);
+	opacity: 1;
+
+	word-break: break-all;
+	-o-text-overflow: ellipsis;
+	   text-overflow: ellipsis;
+	/**文字隐藏后添加省略号*/
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+	overflow: hidden;
+}
+.bottomBar {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 12px;
+}
+.bottomBar image {
+	height: 12px;
+	width: 12px;
+}
+.bottomBar text {
+	margin-left: 4px;
+	font-size: 10px;
+	font-family: Source Han Sans CN;
+	font-weight: 400;
+	color: rgba(136, 136, 136, 1);
+	opacity: 1;
+}
+.bottom-time {
+	position: absolute;
+	width: 84px;
+	height: 12px;
+}
+.bottomBar .bottom-time text {
+	margin-left: 0px;
+	font-size: 10px;
+	font-family: Source Han Sans CN;
+	font-weight: 400;
+	color: rgba(155, 155, 155, 1);
+	opacity: 1;
+	white-space: nowrap;
+}
+.view {
+	position: absolute;
+	width: 43px;
+	height: 12px;
+	right: 86px;
+}
+.comment {
+	position: absolute;
+	width: 43px;
+	height: 12px;
+	right: 43px;
+}
+.like {
+	position: absolute;
+	width: 43px;
+	height: 12px;
+	right: 0;
+}
+.imgBox {
+	width: 61px;
+	height: 61px;
+}
+.imgBox image {
+	width: 61px;
+	height: 61px;
+}
+

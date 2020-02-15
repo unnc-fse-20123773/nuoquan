@@ -1,0 +1,56 @@
+
+
+page {
+}
+.index {
+	background-color: #000000;
+	height:100%;
+	width:100%;
+}
+.displayArea {
+	width: 87.2%;
+	margin-top: 5px;
+	margin: auto;
+}
+.search {
+	font-size: 15px;
+	display: inline-block;
+	width: 190px;
+	height: 28px;
+	vertical-align: middle;
+	border-radius: 8px;
+	background: white;
+	letter-spacing: 1px;
+	color: #b2b2b2;
+	font-family: MicrosoftYaHei;
+	line-height: 10px;
+	min-height: 28px;
+}
+.timing {
+	height: 86px;
+	width: 100%;
+}
+.timing view {
+	display: inline-block;
+	color: #b2b2b2;
+	margin-top: 27px;
+	margin-bottom: 25px;
+}
+.timingHour,
+.timingMin {
+	font-size: 25px;
+	height: 35px;
+	width: 37px;
+border-radius: 5PX;
+ 	background: -webkit-gradient(linear, left top, left bottom, color-stop(49%, #4D4D4D), color-stop(49%, #5F5F5F));
+ 	background: -o-linear-gradient(#4D4D4D 49%, #5F5F5F 49%);
+ 	background: linear-gradient(#4D4D4D 49%, #5F5F5F 49%);
+	text-align: center;
+}
+.timingHourText,
+.timingMinText {
+	font-size: 10px;
+	height: 10px;
+	margin: 0 5px;
+}
+
