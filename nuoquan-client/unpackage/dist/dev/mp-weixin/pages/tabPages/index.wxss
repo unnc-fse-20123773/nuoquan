@@ -37,8 +37,7 @@ image {
 		/* 保证文章正常显示 */
 		word-break: break-all;
 		white-space: pre-line;
-		-o-text-overflow: ellipsis;
-		   text-overflow: ellipsis;
+		text-overflow: ellipsis;
 		/**文字隐藏后添加省略号*/
 		display: -webkit-box;
 		-webkit-box-orient: vertical;
@@ -50,8 +49,7 @@ image {
 		color: #3D3D3D;
 		white-space: pre-line;
 		overflow: hidden;
-		-o-text-overflow: ellipsis;
-		   text-overflow: ellipsis;
+		text-overflow: ellipsis;
 		/**文字隐藏后添加省略号*/
 }
 .tags.data-v-2881634c {
@@ -108,8 +106,7 @@ image {
 		height:17.5px;
 		white-space:nowrap; 
 		overflow: hidden;
-		-o-text-overflow: ellipsis;
-		   text-overflow: ellipsis;
+		text-overflow: ellipsis;
 }
 .time.data-v-2881634c {
 		display: inline-block;
@@ -162,7 +159,6 @@ image {
 		/* margin: auto; */
 		display: -webkit-box;
 		display: -webkit-flex;
-		display: -ms-flexbox;
 		display: flex;
 		width: 94%;
 		margin-left: 3%;
@@ -172,7 +168,6 @@ image {
 		margin: auto;
 		display: -webkit-box;
 		display: -webkit-flex;
-		display: -ms-flexbox;
 		display: flex;
 		/* 在此设置图片区域宽度 */
 		width: 94%;
@@ -206,8 +201,7 @@ image.data-v-5b2a1da0 {
 .search.data-v-5b2a1da0 {
 	display: inline-block;
 	width: 70%;
-	-webkit-box-shadow: inset 0 0 20px #ccc;
-	        box-shadow: inset 0 0 20px #ccc;
+	box-shadow: inset 0 0 20px #ccc;
 	border-radius: 20rpx;
 	margin-left: 50rpx;
 }
@@ -220,8 +214,7 @@ image.data-v-5b2a1da0 {
 	background: white;
 	height: 27px;
 	border-color: rgb(255, 255, 255);
-	-webkit-box-shadow: rgb(170, 170, 170) 0px 0px 5px 0px;
-	        box-shadow: rgb(170, 170, 170) 0px 0px 5px 0px;
+	box-shadow: rgb(170, 170, 170) 0px 0px 5px 0px;
 	font-size: 14px;
 	padding: 0px;
 	border-width: 1px;

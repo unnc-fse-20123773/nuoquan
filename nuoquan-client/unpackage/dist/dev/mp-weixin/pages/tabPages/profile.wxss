@@ -24,8 +24,7 @@ page {
 	height: 300rpx;
 	background-color: white;
 	border-radius: 20rpx;
-	-webkit-box-shadow: 0rpx 0rpx 11rpx 1rpx #A6A6A6;
-	        box-shadow: 0rpx 0rpx 11rpx 1rpx #A6A6A6;
+	box-shadow: 0rpx 0rpx 11rpx 1rpx #A6A6A6;
 }
 .profileTouxiang {
 	margin-left: 6%;
@@ -141,8 +140,7 @@ page {
 	width: 86%;
 	background-color: white;
 	border-radius: 20rpx;
-	-webkit-box-shadow: 0rpx 0rpx 11rpx 1rpx #A6A6A6;
-	        box-shadow: 0rpx 0rpx 11rpx 1rpx #A6A6A6;
+	box-shadow: 0rpx 0rpx 11rpx 1rpx #A6A6A6;
 }
 .profilemoreText-box {
 	position: relative;
@@ -191,10 +189,8 @@ page {
 	height: 30%;
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-justify-content: space-around;
-	    -ms-flex-pack: distribute;
 	        justify-content: space-around;
 }
 .genderPicker-button {
@@ -204,11 +200,9 @@ page {
 	background-color: #dedede;
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-box-pack: center;
 	-webkit-justify-content: center;
-	    -ms-flex-pack: center;
 	        justify-content: center;
 	font-size: medium;
 	font-weight: 550;
@@ -221,11 +215,9 @@ page {
 	background-color: #FDD041;
 	-webkit-box-pack: center;
 	-webkit-justify-content: center;
-	    -ms-flex-pack: center;
 	        justify-content: center;
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	align-item: center;
 }
@@ -257,11 +249,9 @@ page {
 	height: 30px; /* 保证内容剧中 */
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-box-pack: justify;
 	-webkit-justify-content: space-between;
-	    -ms-flex-pack: justify;
 	        justify-content: space-between;
 }
 .yearPicker-button {
@@ -271,11 +261,9 @@ page {
 	background-color: #dedede;
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-box-pack: center;
 	-webkit-justify-content: center;
-	    -ms-flex-pack: center;
 	        justify-content: center;
 	align-item: center;
 	position: relative;
@@ -308,11 +296,9 @@ page {
 	height: 30px; /* 保证内容剧中 */
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-box-pack: justify;
 	-webkit-justify-content: space-between;
-	    -ms-flex-pack: justify;
 	        justify-content: space-between;
 }
 .degree-pick-style {

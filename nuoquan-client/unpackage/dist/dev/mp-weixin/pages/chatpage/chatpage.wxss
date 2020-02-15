@@ -2,8 +2,21 @@
 page {
 	height: 100%;
 	width: 100%;
-	background-color: #f5f5f5;
+	background-color: #FEFBFF;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -263,11 +276,9 @@ page {
 .messageArea.data-v-0318fac1 {
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	/* margin-top: 30upx; */
 	margin-bottom: 90rpx;
-	background: #f5f5f5;
 	width: 100%;
 	/* height: 94%; */
 }
@@ -275,26 +286,23 @@ page {
 	position: fixed;
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-box-align: center;
 	-webkit-align-items: center;
-	    -ms-flex-align: center;
 	        align-items: center;
 	bottom: 0;
 	min-height: 48px;
 	width: 100%;
 	margin: 0;
 	padding: 0;
-	-webkit-box-shadow: 0px -2px 2px 0px rgba(130, 130, 130, 0.2);
-	        box-shadow: 0px -2px 2px 0px rgba(130, 130, 130, 0.2);
+	box-shadow: 0px -2px 2px 0px rgba(130, 130, 130, 0.2);
 	background: #ffffff;
 }
 .bottomBar textarea.data-v-0318fac1 {
 	display: inline-block;
 	height: 16px;
 	line-height: 16px;
-	width: 558rpx;
+	width: 438rpx;
 	max-height: 75px;
 	border-radius: 24rpx;
 	border: solid 1px #c6c6c6;
@@ -305,48 +313,51 @@ page {
 .icons.data-v-0318fac1 {
 	display: -webkit-inline-box;
 	display: -webkit-inline-flex;
-	display: -ms-inline-flexbox;
 	display: inline-flex;
-	width: 90rpx;
-	height: 90rpx;
+	width: 200rpx;
 	margin-left: 18rpx;
 	margin-right: 24rpx;
 	-webkit-box-pack: justify;
 	-webkit-justify-content: space-between;
-	    -ms-flex-pack: justify;
 	        justify-content: space-between;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	    -ms-flex-align: center;
-	        align-items: center;
+	position: absolute;
+	bottom: 13px;
+	right:0;
 }
 .icons image.data-v-0318fac1 {
 	display: block;
-	width: 34rpx;
-	height: 34rpx;
-	vertical-align: middle;
+	width: 48rpx;
+	height: 24px;
+	vertical-align: bottom;
 }
 .icons button.button-hover.data-v-0318fac1 {
 	position: relative;
 	top: 3rpx;
-	-webkit-box-shadow: 0px 0px 8px #999 inset;
-	        box-shadow: 0px 0px 8px #999 inset;
+	box-shadow: 0px 0px 8px #999 inset;
 }
 button.data-v-0318fac1 {
 	display: inline-block;
 	margin: 0;
 	padding: 0;
-	width: 34rpx;
-	height: 34rpx;
-	vertical-align: middle;
+	width: 48rpx;
+	height: 48rpx;
+	vertical-align: bottom;
 	background: #ffffff;
 }
 button.data-v-0318fac1::after {
 	border: none;
 }
+.sendText.data-v-0318fac1{
+	line-height: 46rpx;
+	width:68rpx;
+	height:46rpx;
+	font-size:17px;
+	font-weight:500;
+	color:rgba(252,192,65,1);
+}
 .marginHelper.data-v-0318fac1 {
 	height: 40rpx;
 	width: 100%;
-	background-color: #f5f5f5;
+	background-color: #FEFBFF;
 }
 

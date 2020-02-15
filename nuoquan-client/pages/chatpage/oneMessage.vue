@@ -1,46 +1,49 @@
 <template>
 	<view>
 		<view>
-		<view class="send" v-if="thisMessage.flag == ME">
-			<view @tap="goToPersonPublic(userInfo.id)">
-				<image class="touxiang" :src="userInfo.faceImg"></image>
-			</view>
-			<view class="content">
-				<view class="contentText-send">
-					{{thisMessage.msg}}
+			<view class="send" v-if="thisMessage.flag == ME">
+				<view @tap="goToPersonPublic(userInfo.id)">
+					<image class="touxiang-send" :src="userInfo.faceImg"></image>
 				</view>
-				<view class="bottomBar">
-					<view class="time-send">
-						{{thisMessage.createDate}}
+				<view class="content">
+					<view class="contentText-send">
+						{{thisMessage.msg}}
 					</view>
-					<view class="status-send" v-if="!thisMessage.isRead">
-						<!-- ... -->
+					<image src="../../static/icon/logo_name.png" mode="widthFix" class="picMessage"></image>
+					<view class="bottomBar">
+						<!-- 					
+					<view class="status-send" v-if="!thisMessage.isRead == UNREAD">
+						...
 					</view>
 					<view class="status-send" style="color:#3FC24A" v-if="thisMessage.messageStatus">
 						√
+					</view>  代码保留，目前没有精力加后端 -->
+						<view class="time-send">
+							{{ timeDeal(thisMessage.createDate)}}
+						</view>
 					</view>
 				</view>
 			</view>
-		</view>
 		</view>
 
 		<view>
-		<view class="recieve" v-if="thisMessage.flag == FRIEND">
-			<view @tap="goToPersonPublic(friendInfo.id)">
-				<image class="touxiang" :src="friendInfo.faceImg"></image>
-			</view>
-			<view class="content">
-				<view class="contentText-recieve">
-					{{thisMessage.msg}}
+			<view class="recieve" v-if="thisMessage.flag == FRIEND">
+				<view @tap="goToPersonPublic(friendInfo.id)">
+					<image class="touxiang" :src="friendInfo.faceImg"></image>
 				</view>
-				<view class="bottomBar">
-					<view class="time-recieve">
-						{{thisMessage.createDate}}
+				<view class="content">
+					<view class="contentText-recieve">
+						{{thisMessage.msg}}
 					</view>
+					<image src="../../static/icon/logo_name.png" mode="widthFix" class="picMessage"></image>
+					<view class="bottomBar">
+						<view class="time-recieve">
+							{{timeDeal(thisMessage.createDate)}}
+						</view>
 
+					</view>
 				</view>
 			</view>
-		</view>
 		</view>
 	</view>
 </template>
@@ -59,12 +62,13 @@
 			};
 		},
 		onReady: function() {
+			console.log(this.chat);
 			// console.log(this.thisMessage);
 		},
 		methods: {
 			goToPersonPublic(userId) {
 				uni.redirectTo({ // 关闭页面再跳转，防止页面栈满, 无法返回
-					url: '../personpublic/personpublic?userId='+ userId,
+					url: '../personpublic/personpublic?userId=' + userId,
 				});
 			}
 		},
@@ -77,7 +81,9 @@
 		height: 60upx;
 		border-radius: 60upx;
 	}
-
+    .picMessage{
+		max-width: 428upx;
+	}
 	.bottomBar {
 		display: flex;
 		width: 400upx;
@@ -85,27 +91,36 @@
 		height: 18px;
 		justify-content: inherit;
 	}
-
 </style>
 <style>
 	.send {
 		display: flex;
 		flex-direction: row-reverse;
 		margin-right: 20upx;
+		position: relative;
+		margin-bottom: 12px;
+	}
+
+	.touxiang-send {
+		width: 60upx;
+		height: 60upx;
+		border-radius: 60upx;
+		position: absolute;
+		bottom: 0;
+		right: 0;
 	}
 
 	.send .content {
 		display: inline-flex;
 		flex-direction: column;
-		width: 400upx;
+		width: 428upx;
 		background: #FCCB2E;
-		border-radius: 6pt 0pt 6pt 6pt;
-		margin-top: 30upx;
-		margin-right: 20upx;
-		padding: 16upx 14upx 0upx 16upx;
-		box-shadow: 0px 0px 3px 1px #CCCCCC;
+		border-radius: 8pt 8pt 0pt 8pt;
+		margin-right: 80upx;
+		margin-bottom: 30upx;
+		padding: 16upx 16upx 0upx 16upx;
 	}
-	
+
 	.time-send {
 		display: inline-flex;
 		font-size: 7px;
@@ -131,8 +146,8 @@
 		width: 400upx;
 		font-size: 12px;
 		color: white;
-		word-break:break-all;
-		white-space:pre-line;
+		word-break: break-all;
+		white-space: pre-line;
 	}
 </style>
 
@@ -141,21 +156,21 @@
 		display: flex;
 		flex-direction: row;
 		margin-left: 20upx;
+		margin-bottom: 12px;
 	}
 
 	.recieve .content {
 		display: inline-flex;
 		flex-direction: column;
-		width: 400upx;
-		background: #FFFFFF;
-		border-radius: 0pt 6pt 6pt 6pt;
+		width: 428upx;
+		background: #FFF4DE;
+		border-radius: 0pt 8pt 8pt 8pt;
 		margin-top: 30upx;
 		margin-left: 20upx;
-		padding: 16upx 16upx 0upx 14upx;
+		padding: 16upx 16upx 0upx 16upx;
 		justify-content: flex-end;
-		box-shadow: 0px 0px 3px 1px #CCCCCC;
 	}
-	
+
 	.time-recieve {
 		display: inline-flex;
 		font-size: 7px;
@@ -170,7 +185,7 @@
 	.contentText-recieve {
 		width: 400upx;
 		font-size: 12px;
-		word-break:break-all;
-		white-space:pre-line;
+		word-break: break-all;
+		white-space: pre-line;
 	}
 </style>

@@ -29,15 +29,12 @@ page {
 #msglist-likecommentnum {
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-box-orient: vertical;
 	-webkit-box-direction: normal;
 	-webkit-flex-direction: column;
-	    -ms-flex-direction: column;
 	        flex-direction: column;
 	-webkit-justify-content: space-around;
-	    -ms-flex-pack: distribute;
 	        justify-content: space-around;
 	position: fixed;
 	width: 88%;
@@ -46,8 +43,7 @@ page {
 	top: 65rpx;
 	background-color: white;
 	border-radius: 25rpx;
-	-webkit-box-shadow: 0rpx 0rpx 8rpx 0rpx #888888;
-	        box-shadow: 0rpx 0rpx 8rpx 0rpx #888888;
+	box-shadow: 0rpx 0rpx 8rpx 0rpx #888888;
 }
 .msglist-like {
 	position: relative;
@@ -161,8 +157,7 @@ page {
 	height: 120rpx;
 	background-color: white;
 	border-radius: 12rpx;
-	-webkit-box-shadow: 0rpx 0rpx 14rpx 0rpx #B2B2B2;
-	        box-shadow: 0rpx 0rpx 14rpx 0rpx #B2B2B2;
+	box-shadow: 0rpx 0rpx 14rpx 0rpx #B2B2B2;
 }
 .msglist-card-read {
 	width: 88%;

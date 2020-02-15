@@ -257,6 +257,7 @@
 						});
 					}, // end of login success
 					fail: (res) => {
+						console.log(res);
 						isLoding = false;
 						uni.hideLoading();
 						uni.showToast({
