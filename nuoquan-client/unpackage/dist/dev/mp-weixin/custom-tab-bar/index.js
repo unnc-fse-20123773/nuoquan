@@ -26,7 +26,7 @@ Component({
 				selectedIconPath: '../static/icon/comment_dots_ffffff.png',
 				text: '动态'
 			},{
-				pagePath: 'profile',
+				pagePath: 'mine',
 				iconPath: '../static/icon/user_d4d4d4.png',
 				selectedIconPath: '../static/icon/user_ffffff.png',
 				text: '我的'

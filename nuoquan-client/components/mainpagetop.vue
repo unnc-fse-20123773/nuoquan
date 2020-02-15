@@ -25,7 +25,7 @@
 			<view class="hotestBox">
 				<view class="hotestCard">
 					<!-- 左侧图标 -->
-					<view class="iconBox">
+					<view class="iconBox" @click="jumpTohot">
 						<image src="../static/BG/hotest.png" mode="aspectFit" class="fireIcon"></image>
 						<image src="../static/icon/hotText.png" mode="aspectFit" class="hotText"></image>
 					</view>
@@ -107,6 +107,11 @@ export default {
 			uni.navigateTo({
 				url: '/pages/detail/detail?data=' + JSON.stringify(article)
 			});
+		},
+		jumpTohot() {
+			uni.navigateTo({
+				url: '/pages/hot/hot'
+			})
 		}
 	}
 };
