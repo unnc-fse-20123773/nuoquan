@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App'
 import store from './store' // 引入 vuex 的 store 对象
-// import {mapMutations} from 'vuex';
+import router from 'common/router.js'
 
 const app = new Vue({
 	store,

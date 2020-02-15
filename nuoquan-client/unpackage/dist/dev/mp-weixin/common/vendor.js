@@ -9671,6 +9671,30 @@ module.exports = g;
 
 /***/ }),
 
+/***/ 349:
+/*!*******************************************************************************!*\
+  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/common/router.js ***!
+  \*******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /**
+                                                                                                      * 页面跳转方法
+                                                                                                      */
+
+function goToPersonPublic(userId) {
+  uni.navigateTo({
+    url: '/pages/personpublic/personpublic?userId=' + userId });
+
+}var _default =
+
+{
+  goToPersonPublic: goToPersonPublic };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
 /***/ 4:
 /*!*************************************************************************!*\
   !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/pages.json ***!
@@ -10589,7 +10613,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@alpha","_id":"@dcloudio/uni-stat@2
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/tabPages/index": {}, "pages/tabPages/votePage": {}, "pages/tabPages/messagelist": {}, "pages/tabPages/profile": {}, "pages/detail/detail": {}, "pages/submit/submit": {}, "pages/chatpage/chatpage": {}, "pages/followlist/followlist": {}, "pages/personpublic/personpublic": {}, "pages/search/search": {}, "pages/black-index/black-index": {}, "pages/signin/signin": {}, "components/articlebrief": {}, "pages/wechatLogin/wechatLogin": {}, "pages/cmt-likedetail/cmt-likedetail": {}, "pages/comment-detail/comment-detail": {}, "pages/userDeal/userDeal": {}, "pages/myPublish/myPublish": {}, "pages/about/about": {} }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "Nottinghome", "navigationBarBackgroundColor": "#fdd041", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/tabPages/index": { "usingComponents": { "articlebrief": "/components/articlebrief", "mainpagetop": "/components/mainpagetop", "mainpageleft": "/components/mainpageleft" }, "usingAutoImportComponents": {} }, "pages/tabPages/votePage": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/tabPages/messagelist": { "usingComponents": { "swipe-action": "/components/swipe-action" }, "usingAutoImportComponents": {} }, "pages/tabPages/profile": { "usingComponents": { "mypicker": "/components/mypicker" }, "usingAutoImportComponents": {} }, "pages/detail/detail": { "usingComponents": { "detail_1_article": "/pages/detail/detail_1_article", "detail_2_comments": "/pages/detail/detail_2_comments" }, "usingAutoImportComponents": {} }, "pages/submit/submit": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/chatpage/chatpage": { "usingComponents": { "onemessage": "/pages/chatpage/oneMessage" }, "usingAutoImportComponents": {} }, "pages/followlist/followlist": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/personpublic/personpublic": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/search/search": { "usingComponents": { "search-result-article": "/components/searchResultArticle" }, "usingAutoImportComponents": {} }, "pages/black-index/black-index": { "usingComponents": { "blackarticlebrief": "/pages/black-index/black-articlebrief", "blackpopup": "/pages/black-index/black-popup" }, "usingAutoImportComponents": {} }, "pages/signin/signin": { "usingComponents": { "wh-captcha": "/components/wh-captcha/wh-captcha", "uni-steps": "/components/uni-steps/uni-steps" }, "usingAutoImportComponents": {} }, "components/articlebrief": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/wechatLogin/wechatLogin": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/cmt-likedetail/cmt-likedetail": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/comment-detail/comment-detail": { "usingComponents": { "son-comment-box": "/pages/comment-detail/sonCommentBox" }, "usingAutoImportComponents": {} }, "pages/userDeal/userDeal": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/myPublish/myPublish": { "usingComponents": { "my-articles": "/pages/myPublish/myArticles", "my-vote": "/pages/myPublish/myVote" }, "usingAutoImportComponents": {} }, "pages/about/about": { "usingComponents": {}, "usingAutoImportComponents": {} }, "components/sharePoster/sharePoster": { "usingComponents": {}, "usingAutoImportComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "Nottinghome", "navigationBarBackgroundColor": "#fdd041", "backgroundColor": "#F8F8F8" } };exports.default = _default;
 
 /***/ }),
 

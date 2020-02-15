@@ -75,7 +75,11 @@
 			"path": "pages/about/about",
 			"style": {}
 		}
-	],
+	    ,{
+            "path" : "components/sharePoster/sharePoster",
+            "style" : {}
+        }
+    ],
 	
 	//微信小程序自定义导航栏custom-tab-bar
 	"tabBar": {
@@ -124,7 +128,11 @@
 				"name": "index", //模式名称
 				"path": "pages/tabPages/index", //启动页面，必选
 				"query": "" //启动参数，在页面的onLoad函数里面得到
-			}, {
+			},{
+				"name": "sharePoster", //模式名称
+				"path": "components/sharePoster/sharePoster", //启动页面，必选
+				"query": "" //启动参数，在页面的onLoad函数里面得到
+			},{
 				"name": "signin", //模式名称
 				"path": "pages/signin/signin", //启动页面，必选
 				"query": "" //启动参数，在页面的onLoad函数里面得到
