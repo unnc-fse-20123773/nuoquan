@@ -12,7 +12,6 @@
 			<view class="topBar">
 				<!-- 头像，备用 <image class="topBarTouxiang" :src='userInfo.faceImg' @click="controlShowLeft(1)"></image> -->
 				<view class="topBarSearch" @click="controlShowSearch(1)">
-					⠀
 					<image src="../static/icon/search_B79144.png" mode="aspectFit"></image>
 				</view>
 				<!-- 新建，备用 <view class="topBarPlus" @click="jumpToSubmit()">
@@ -39,6 +38,12 @@
 							<swiper-item>
 								<view class="itemCard">
 									<view class="hotTitle">{{ topArticles[0].articleTitle }}</view>
+									<view class="userInfo">
+										<image src="../static/icon/logo_app.png" mode="aspectFit"></image>
+										<view class="userid_mainpagetop">
+											陈仅仅一号
+										</view>
+									</view>
 								</view>
 							</swiper-item>
 						</view>
@@ -61,6 +66,7 @@
 				</view>
 			</view> -->
 		</view>
+		<view style="width: 100%;height: 30px;background-color: #007AFF;position: fixed;top: 150px;"></view>
 	</view>
 </template>
 
@@ -256,6 +262,31 @@ page {
 .itemCard{
 	width: 100%;
 	height: 62px;
+}
+
+.userInfo{
+	position: relative;
+	width: 100%;
+	height: 17px;
+	margin-top: 8px;
+}
+
+.userInfo image{
+	position: absolute;
+	width: 17px;
+	height: 17px;
+	border-radius: 50%;
+}
+
+.userid_mainpagetop{
+	position: absolute;
+	left: 25px;
+	height:12px;
+	width: 100%;
+	font-size:12px;
+	font-weight:400;
+	color:rgba(155,155,155,1);
+	opacity:1;
 }
 
 .hotTitle {

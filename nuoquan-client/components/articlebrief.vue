@@ -2,7 +2,17 @@
 	<view class="articlecard" ref="articleCard">
 		<view @click="goToDetail()">
 			<view class="title">{{ thisArticle.articleTitle }}</view>
-			<view class="briefarticleCard">{{ thisArticle.articleContent }}</view>
+			<!-- <view class="briefarticleCard">{{ thisArticle.articleContent }}</view> -->
+		</view>
+		<!-- 用户信息行 -->
+		<view class="userLine hor_center">
+			<image :src="thisArticle.faceImg" class="touxiang" @tap="goToPersonPublic(thisArticle.userId)"></image>
+			<view class="name">{{ thisArticle.nickname }}</view>
+			<view class="time" :style="timeLeft">{{ thisArticle.createDate | timeDeal}}</view>
+		</view>
+		<!-- 标签行 -->
+		<view class="tagsLine" @click="goToDetail()">
+			<view class="tag" :style="{background: tagColorList[index]}" v-for="(i, index) in thisArticle.tagList" v-bind:key="index">{{i}}</view>
 		</view>
 		<view :class="[thisArticle.imgList.length == 1 ? 'picturearea-one' : 'picturearea-mul']">
 			<!-- *******这里是文章配图的位置*******-->
@@ -48,7 +58,9 @@
 		<view class="menubar">
 			<!-- 点赞&评论蒙层，用于优化体验 -->
 			<view style="position: absolute;z-index: 20;height: 30px;width: 80upx;top:0;right: 0;" @tap="swLikeArticle"></view>
-			<view style="position: absolute;z-index: 20;height: 30px;width: 80upx;top:0;right: 40px;" @click="goToDetail()"></view>
+			<view style="position: absolute;z-index: 20;
+			
+			: 30px;width: 80upx;top:0;right: 40px;" @click="goToDetail()"></view>
 			<image :src="thisArticle.faceImg" class="touxiang" @tap="goToPersonPublic(thisArticle.userId)"></image>
 			<view class="name" >{{ thisArticle.nickname }}</view>
 			<view class="time" :style="timeLeft">{{ thisArticle.createDate | timeDeal}}</view>
@@ -278,23 +290,34 @@
 </style>
 <style scoped>
 	.articlecard {
-		width: 650upx;
+		width: 93.07%;
 		border-radius: 8px;
-		margin: 11px auto 0;
-		background-color: #ffffff;
+		margin: 3.47% auto 0;
+		background-color:rgba(255,255,255,1);
+		box-shadow:0px 0px 7px rgba(0,0,0,0.16);
+		opacity:1;
+		border-radius:8px;
 	}
 
 	.title {
-		margin: 16px 25px 0 25px;
-		font-size: 15px;
-		font: MicrosoftYaHei;
+		font-size:17px;
+		font-family:Source Han Sans CN;
+		line-height:21px;
+		color:rgba(74,74,74,1);
+		opacity:1;
 		font-weight: bold;
-		line-height: 19px;
-		margin: 16px 13px 0 15px;
+		margin: 16px 3.44% 0 3.44%;
 		padding-top: 16px;
+		/* 保证文章正常显示 */
 		word-wrap: break-word;
 		word-break: break-all;
-		white-space: normal;
+		white-space: pre-line;
+		text-overflow: ellipsis;
+		/**文字隐藏后添加省略号*/
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+		overflow: hidden;
 	}
 	
 	
@@ -325,21 +348,22 @@
 		/**文字隐藏后添加省略号*/
 	}
 
-	.tags {
-		margin-left: 10px;
-		min-height: 10px;
+	.tagsLine {
+		width: 93.12%;
+		margin-left: 3.44%;
 	}
 
 	.tag {
 		display: inline-block;
-		border-radius: 4px;
-		padding-left: 5px;
-		padding-right: 5px;
-		margin-left: 5px;
-		height: 15px;
+		padding-left: 10px;
+		padding-right: 10px;
 		color: #ffffff;
 		font-size: 10px;
-		background: #621E81;
+		
+		height:23px;
+		background:rgba(84,149,233,1);
+		opacity:1;
+		border-radius:20px;
 	}
 
 	.tag-empty {
@@ -357,48 +381,53 @@
 		height: 25px;
 	}
 	
+	.userLine{
+		position: relative;
+		width: 100%;
+		height: 48px;
+	}
+	
 	.touxiang {
+		position: absolute;
+		left: 3.44%;
 		border-radius: 30px;
-		width: 20px;
-		height: 20px;
-		margin-right: 10px;
+		width: 24px;
+		height: 24px;
 		vertical-align: middle;
 	}
-    .touxiang::after{
+    /* .touxiang::after{
 		content: "";
 		position: absolute;
 		height:30px;
 		width:30px;
 		left:-5px;
 		top:0;
+	} */
 	
-	
-	}
 	.name {
-		display: inline-block;
-		font-size: 13px;
-		color: #888888;
 		position: absolute;
-		bottom:3.75px;
-		left:30px;
+		left: 12.61%;
 		max-width: 24%;
-		height:17.5px;
-		white-space:nowrap; 
+		font-size:14px;
+		font-family:Source Han Sans CN;
+		font-weight:400;
+		line-height:23px;
+		color:rgba(155,155,155,1);
+		opacity:1;
+		white-space:nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
-		
 	}
 
 	.time {
-		display: inline-block;
-		font-size: 12px;
-		color: #888888;
 		position: absolute;
-		left:calc(50% - 47px);
-		bottom: 1.75px;
-		width:78px;
-		height:17.5px;
-		text-align: center;
+		right: 3.44%;
+		font-size:14px;
+		font-family:Source Han Sans CN;
+		font-weight:400;
+		line-height:23px;
+		color:rgba(155,155,155,1);
+		opacity:1;
 	}
 
 	.icons {

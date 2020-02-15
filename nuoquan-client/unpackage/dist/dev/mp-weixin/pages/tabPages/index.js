@@ -146,7 +146,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 23));
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -166,24 +166,24 @@ var _articlebrief = _interopRequireDefault(__webpack_require__(/*! ../../compone
 
 
 
-var _vuex = __webpack_require__(/*! vuex */ 16);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! import() | components/mainpagetop */ "components/mainpagetop").then(__webpack_require__.bind(null, /*! ../../components/mainpagetop.vue */ 194));};var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ 203));};
-
-var loadArticleFlag = false; // 为加载文章加锁
+var _vuex = __webpack_require__(/*! vuex */ 16);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! import() | components/mainpagetop */ "components/mainpagetop").then(__webpack_require__.bind(null, /*! ../../components/mainpagetop.vue */ 194));};var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ 203));};var loadArticleFlag = false; // 为加载文章加锁
 var timer = null; // 为头部做定时器收起
-var _default = {
-  data: function data() {
-    return {
-      title: 'Hello',
-      hottitlelist: ['热门标题111', '热门标题222', '热门标题333'],
-      showlist: [],
-      topArticles: '',
-      topHeight: 160,
-
-      userInfo: '',
-      totalPage: 1,
-      currentPage: 1,
-      scrollTop: 0,
-      old: {
+var _default = { data: function data() {return { title: 'Hello', hottitlelist: ['热门标题111', '热门标题222', '热门标题333'], showlist: [], topArticles: '', topHeight: 139, userInfo: '', totalPage: 1, currentPage: 1, scrollTop: 0, old: {
         scrollTop: 0 } };
 
 
@@ -369,43 +369,7 @@ var _default = {
           }
         } });
 
-    },
-
-    linkageWithTop: function () {var _linkageWithTop = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(e) {var y, that;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
-                y = e.detail.scrollTop; //获取 scrollTop
-                // console.log( y + "scrollTop" )
-                // console.log(timer + "//  timer");
-                that = this;
-                clearInterval(timer); //清空 timer
-                if (that.topHeight > 160) {
-                  that.topHeight = 160; //保证高度值正确
-                }
-
-                if (y >= 100 && that.topHeight !== 40) {
-                  timer = setInterval(function () {
-                    //设置计时器
-                    if (that.topHeight == 40) {
-                      //在 topHeight 为 40 时清空计时器
-                      clearInterval(timer);
-                    } else {
-                      that.topHeight = that.topHeight - 10;
-                      // console.log(that.topHeight +"//  topHeight收起");
-                    }
-                  }, 1);
-                } else {
-                  if (y < 100 && that.topHeight !== 160 || y == 0) {
-                    timer = setInterval(function () {
-                      //设置计时器
-                      if (that.topHeight == 160) {
-                        //在 topHeight 为 160 时清空计时器
-                        clearInterval(timer);
-                      } else {
-                        that.topHeight = that.topHeight + 10;
-                        // console.log(that.topHeight + "//  topHeight展开");
-                      }
-                    }, 1);
-                  }
-                }case 5:case "end":return _context.stop();}}}, _callee, this);}));function linkageWithTop(_x) {return _linkageWithTop.apply(this, arguments);}return linkageWithTop;}() } };exports.default = _default;
+    } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
@@ -497,11 +461,14 @@ var render = function() {
   var _c = _vm._self._c || _h
   var f0 = _vm._f("timeDeal")(_vm.thisArticle.createDate)
 
+  var f1 = _vm._f("timeDeal")(_vm.thisArticle.createDate)
+
   _vm.$mp.data = Object.assign(
     {},
     {
       $root: {
-        f0: f0
+        f0: f0,
+        f1: f1
       }
     }
   )
@@ -537,6 +504,18 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //

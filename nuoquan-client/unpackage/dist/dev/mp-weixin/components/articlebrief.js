@@ -104,11 +104,14 @@ var render = function() {
   var _c = _vm._self._c || _h
   var f0 = _vm._f("timeDeal")(_vm.thisArticle.createDate)
 
+  var f1 = _vm._f("timeDeal")(_vm.thisArticle.createDate)
+
   _vm.$mp.data = Object.assign(
     {},
     {
       $root: {
-        f0: f0
+        f0: f0,
+        f1: f1
       }
     }
   )
@@ -146,6 +149,18 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
