@@ -360,6 +360,7 @@ var _default = { data: function data() {return { title: 'Hello', hottitlelist: [
           'content-type': 'application/x-www-form-urlencoded' },
 
         success: function success(res) {
+          console.log(res);
           if (res.data.status == 200) {
             var user = res.data.data;
             var finalUser = _this2.myUser(user); // 分割邮箱地址, 重构 user
@@ -461,14 +462,11 @@ var render = function() {
   var _c = _vm._self._c || _h
   var f0 = _vm._f("timeDeal")(_vm.thisArticle.createDate)
 
-  var f1 = _vm._f("timeDeal")(_vm.thisArticle.createDate)
-
   _vm.$mp.data = Object.assign(
     {},
     {
       $root: {
-        f0: f0,
-        f1: f1
+        f0: f0
       }
     }
   )
@@ -581,6 +579,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 var _default =
 {
   name: 'aticlebrief',
@@ -598,7 +601,7 @@ var _default =
       imgList: [],
       thisArticle: this.articleCard, // 转为局部变量
       tagColorList: [], // 储存每个tag的颜色
-      timeLeft: "" };
+      timeLeft: '' };
 
   },
 
@@ -622,44 +625,14 @@ var _default =
       }
     }
 
-    uni.$on("updateArticle", function (article) {// from detail
+    uni.$on('updateArticle', function (article) {
+      // from detail
       if (article.id == _this.thisArticle.id) {
-        console.log("get");
+        console.log('get');
         _this.thisArticle = article;
       }
     });
   },
-
-  filters: {
-    timeDeal: function timeDeal(timediff) {
-      console.log(timediff);
-      timediff = new Date(timediff);
-      console.log(timediff);
-      var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(),
-      timediff.getSeconds()];
-
-      var oldTime = timediff.getTime();
-      var now = new Date();
-      var newTime = now.getTime();
-      var milliseconds = 0;
-      var timeSpanStr;
-      milliseconds = newTime - oldTime;
-      if (milliseconds <= 1000 * 60 * 1) {
-        timeSpanStr = '刚刚';
-      } else if (1000 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60) {
-        timeSpanStr = Math.round(milliseconds / (1000 * 60)) + '分钟前';
-      } else if (1000 * 60 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24) {
-        timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
-      } else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
-        timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
-
-      } else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && parts[0] == now.getFullYear()) {
-        timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
-      } else {
-        timeSpanStr = parts[0] + '-' + parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
-      }
-      return timeSpanStr;
-    } },
 
   methods: {
     singleImgeFit: function singleImgeFit(e) {
@@ -690,7 +663,6 @@ var _default =
       // console.log(e.detail);
     },
 
-
     swLikeArticle: function swLikeArticle() {
       if (this.thisArticle.isLike) {
         this.unLikeArticle();
@@ -703,10 +675,10 @@ var _default =
     },
 
     likeArticle: function likeArticle() {
-      console.log("点赞文章");
+      console.log('点赞文章');
       var that = this;
       uni.request({
-        method: "POST",
+        method: 'POST',
         url: that.$serverUrl + '/article/userLikeArticle',
         data: {
           userId: that.userInfo.id,
@@ -723,10 +695,10 @@ var _default =
     },
 
     unLikeArticle: function unLikeArticle() {
-      console.log("取消点赞文章");
+      console.log('取消点赞文章');
       var that = this;
       uni.request({
-        method: "POST",
+        method: 'POST',
         url: that.$serverUrl + '/article/userUnLikeArticle',
         data: {
           userId: that.userInfo.id,
@@ -772,11 +744,9 @@ var _default =
 
     },
 
-
     buttomCaculation: function buttomCaculation(timeWidth) {
       var bottmWidth = this.$refs.articleCard.offsetWidth;
       console.log(bottmWidth);
-      debugger;
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

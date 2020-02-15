@@ -133,7 +133,27 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var myArticles = function myArticles() {return __webpack_require__.e(/*! import() | pages/myPublish/myArticles */ "pages/myPublish/myArticles").then(__webpack_require__.bind(null, /*! ./myArticles.vue */ 277));};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var myArticles = function myArticles() {return __webpack_require__.e(/*! import() | pages/myPublish/myArticles */ "pages/myPublish/myArticles").then(__webpack_require__.bind(null, /*! ./myArticles.vue */ 284));};var myVote = function myVote() {return __webpack_require__.e(/*! import() | pages/myPublish/myVote */ "pages/myPublish/myVote").then(__webpack_require__.bind(null, /*! ./myVote.vue */ 291));};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -152,7 +172,8 @@ __webpack_require__.r(__webpack_exports__);
 var loadArticleFlag = false;var _default =
 {
   components: {
-    myArticles: myArticles },
+    myArticles: myArticles,
+    myVote: myVote },
 
   data: function data() {
     return {
@@ -162,7 +183,8 @@ var loadArticleFlag = false;var _default =
       totalPage: 1,
       currentPage: 1,
       totalNum: '0',
-      myArticleList: '' };
+      myArticleList: '',
+      swiperViewing: "vote" };
 
   },
 
@@ -274,6 +296,9 @@ var loadArticleFlag = false;var _default =
         var page = currentPage + 1;
         that.showArticles(page);
       }
+    },
+    switchSwiper: function switchSwiper(a) {
+      this.swiperViewing = a;
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

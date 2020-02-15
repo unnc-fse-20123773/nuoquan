@@ -87,12 +87,13 @@ export default {
 		searchpage
 	},
 
-	data() {
-		return {
-			showMainPageLeft: 0,
-			showSearch: 0
-		};
-	},
+		data() {
+			return {
+				showMainPageLeft: 0,
+				showSearch: 0,
+			};
+		},
+
 
 	methods: {
 		controlShowLeft(a) {

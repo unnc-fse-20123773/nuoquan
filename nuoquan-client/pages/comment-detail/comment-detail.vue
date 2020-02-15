@@ -1,81 +1,76 @@
 <template>
-	<view>
+	<view class="comment-detail-page">
 		<!-- 主评论区域 -->
-		<view class="commentBox">
-			<view class="cmtdetail-IDline">
-				<view class="cmtdetail-IDrel">
-					<view class="cmtdetail-profilePic">
-						<image :src="mainComment.faceImg" mode="aspectFill" class="profilePic" @tap="goToPersonPublic"></image>
-					</view>
-					<view class="cmtdetail-middle">
-						<view class="cmtdetail-IDtext">
-							{{mainComment.nickname}}
-						</view>
-						<view class="cmtdetail-time">
-							{{mainComment.timeAgo}}
-						</view>
-					</view>
-					<view class="cmtdetail-right">
-						<view class="cmtdetail-rightrel">
-							<view @tap="swLikeComment(mainComment)">
-								<image v-if="!mainComment.isLike" src="../../static/icon/like.png" mode="aspectFill" class="likeIcon"></image>
-								<image v-if="mainComment.isLike" src="../../static/icon/liked-red.png" mode="aspectFill" class="likeIcon"></image>
-								<!-- 此处点赞数量最长5位数，如超出样式出错 -->
-								<text class="likeNum" :class="{'liked':mainComment.isLike}">{{mainComment.likeNum}}</text>
-							</view>
-							<!-- <image src="../../static/icon/message.png" mode="aspectFill" class="commentIcon"></image> -->
-						</view>
-					</view>
-				</view>
+
+		<view class="comment-Box">
+			<view class="comment-info">
+				<image :src="mainComment.faceImg" @tap="goToPersonPublic(mainComment.fromUserId)"></image>
+				<view class="name_text">{{ mainComment.nickname }}</view>
+				<view class="time_text">{{ mainComment.timeAgo }}</view>
 			</view>
-			<view class="cmtdetail-contentBox" id="contentBox" @click="controlInput(1)">
-				{{mainComment.comment}}
+			<view class="comment-content" @tap="controlInput(mainComment)">{{ mainComment.comment }}</view>
+			<view class="comment-menu">
+				<view class="son-comment-num" @tap="controlInput(mainComment)">{{mainComment.commentNum}}</view>
+				<view class="like-num" :class="{liked:mainComment.isLike}" @tap="swLikeComment(mainComment)">{{ mainComment.likeNum }}</view>
 			</view>
-			<!-- <view class="cmtdetail-loadmore column_center">
-				<view class="loadmore-text">
-					查看全部
-				</view>
-			</view> -->
-			<!-- <view style="height: 2px;width: 74%;margin-left: 62px;background-color: #E4E4E4;margin-top: 10px;"></view> -->
 		</view>
+
+
 		<!-- 子评论区域 -->
 		<view style="width: 100%;">
 			<!--移到了sonCommentBox组件，考虑评论之间的点赞方程容易混淆，做了组件，就互不影响了-->
 			<sonCommentBox v-for="i in commentList" :key="i.id" :reCommentDetail="i" @controlInputSignal="controlInput"
-			@swLikeComment="swLikeComment" @goToPersonPublic="goToPersonPublic"></sonCommentBox>
+			 @swLikeComment="swLikeComment" @goToPersonPublic="goToPersonPublic"></sonCommentBox>
 			<!-- 占位块 -->
-			<view style="width: 100%; height: 40px;"></view> 
+			<view style="width: 100%; height: 40px;"></view>
 		</view>
-		
-		<view class="bottomLayerOfSubmit">
-			<view class="submitComment" @click="controlInput(1)">发 表 评 论</view>
+
+
+
+
+
+		<!--触底提示和功能  start   COPY FROM DETAIL-->
+		<view class="comment-bottom">
+			<view class="comment-bottom-notice">划到底部啦</view>
+			<view class="comment-bottom-buttons">
+				<image class="back" @tap="backToLastPage" src="../../static/icon/arrow-left-fcc041.png" mode="aspectFit"></image>
+				<image class="to-top" @tap="scrollToTop" src="../../static/icon/arrow-left-fcc041.png"></image>
+				<view class="active-input-button" @click="controlInput(1)">发表评论</view>
+			</view>
 		</view>
+		<!--触底提示和功能  END-->
+
+		<!-- 旧输入框
+			<view class="bottomLayerOfSubmit">
+				<view class="submitComment" @click="controlInput(1)">发 表 评 论</view>
+			</view>
+-->
+
+
+
+
+
 		<!-- 输入框 -->
 		<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)">
 			<view class="commentPart" @click.stop="" :style="{bottom: textAreaAdjust }">
 				<view class="emoji"></view>
 				<view class="submit" @click="saveComment()"></view>
 				<textarea class="commentSth" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
-				 adjust-position="false" v-model="commentContent" @click.stop="" :show-confirm-bar="false"  cursor-spacing='20'/>
-			</view>
+				 adjust-position="false" v-model="commentContent" @click.stop="" :show-confirm-bar="false" cursor-spacing='20' />
+				</view>
 		</view>
+		<!-- 输入框  End-->
 	</view>
 </template>
 
 <script>
-	import sonCommentBox from '../detail/sonCommentBox.vue'
+	import sonCommentBox from './sonCommentBox.vue'
 	export default {
 		components: {
 			sonCommentBox,
 		},
 		
 		data() {
-			// 我抄了一小部分代码过来，还没改 -Guetta
-			// O(∩_∩)O
-			// 😄
-			// 🤭
-			// (●'◡'●)
-			// 页面有点丑（高仿微博），回头让仅仅优化一下
 			return {
 				mainComment:'',    //用于接受跳转传过来的underCommentId,然后申请获取sonComment  yaoyao 9.16 
 				userInfo: '',
@@ -132,12 +127,7 @@
 							that.commentList = oldCommentList.concat(newCommentList);
 							that.currentPage = page;
 							that.totalPage = res.data.data.total;
-							
-							// that.commentList = "";
-							// that.$nextTick(function(){
-							// 	that.commentList =  res.data.data.rows;	
-							// });
-							// console.log(that.commentList);
+
 						}
 					}
 				});
@@ -289,160 +279,109 @@
 					url: '/pages/personpublic/personpublic?userId=' + this.mainComment.fromUserId,
 				})
 			},
-		}
+			backToLastPage(){
+				uni.navigateBack({
+				})
+			},//COPY FROM DETAIL -- YAO
+			scrollToTop(){
+				uni.pageScrollTo({
+				    scrollTop: 0,
+				    duration: 300
+				});
+			},//COPY FROM DETAIL -- YAO
+		}//method --妖
 	}
 </script>
 
-<style>
+<style scoped>
+	 @import url("../detail/oneComment.css");
 	page {
 		width: 100%;
 		background-color: #F3F3F3;
 	}
+.comment-detail-page{
+	padding: 0 15px;
+	width: calc(100% - 30px);
+	margin-top:15px;
+}
 
-	.commentBox {
-		width: 100%;
-		min-height: 200upx;
-		background-color: white;
+.son-comment-num{
+	background:linear-gradient(313deg,rgba(255,184,32,0.84) 0%,rgba(240,240,122,1) 100%);
+}
+
+/* 滑到底了等提示
+ */.comment-bottom{
+		height:160px;
+		width:calc(202px + 80upx);
+		margin: auto;
+		}
+		
+	.comment-bottom-notice{
+		width:71px;
+		height:14px;
+		line-height: 14px;
+		font-size:14px;
+		color:#B2B2B2;
+		margin:37px auto 27px;
 	}
-
-	.son-commentBox {
-		width: 100%;
-		min-height: 200upx;
-	}
-
-	/* ID 行 */
-	.cmtdetail-IDline {
+	.comment-bottom-buttons{
 		display: flex;
-		height: 50px;
-		width: 100%;
+			justify-content: space-between;
+		
 	}
-
-	.cmtdetail-IDrel {
-		height: 100%;
-		width: 100%;
+	.comment-bottom-buttons .back{
+		width:16px;
+		height:16px;
+		padding:14px;
+		background: #FFF1D5;
+		border-radius: 22px;
+	}
+	.comment-bottom-buttons .to-top{
+		width:18px;
+		height:12px;
+		background: #FFF1D5;
+		border-radius: 22px;
+		padding: 16px 11px 16px 15px;
 		position: relative;
+		transform: rotate(90deg);
 	}
+	.comment-bottom-buttons .to-top::after{
+content: "";
+position: absolute;
+top: 14px;
+left: 12px;
+width: 2px;
+height: 16px;
+background: #FCC041;
+border-radius: 2px;
 
-	.cmtdetail-profilePic {
-		position: absolute;
-		top: 8px;
-		left: 10px;
-		width: 42px;
-		height: 42px;
-		border-radius: 200px;
 	}
-
-	.son-cmtdetail-profilePic {
-		position: absolute;
-		top: 8px;
-		left: 16px;
-		width: 36px;
-		height: 36px;
-		border-radius: 200px;
+	.active-input-button{
+		color:#FFFFFF;
+		width:76px;
+		height:17px;
+		font-size:17px;
+		font-family:Source Han Sans CN;
+		font-weight:400;
+		line-height:17px;
+		color:rgba(255,255,255,1);
+		padding:10px 22px;
+		border-radius: 10px;
+		box-shadow:  0px 0px 8px rgba(0,0,0,0.16);
+		background: #FCC041;
+		letter-spacing:2px;
 	}
-
-	.profilePic {
-		width: 42px;
-		height: 42px;
-		border-radius: 200px;
-	}
-
-	.son-profilePic {
-		width: 36px;
-		height: 36px;
-		border-radius: 200px;
-	}
-
-	.cmtdetail-middle {
-		position: absolute;
-		top: 10px;
-		left: 62px;
-		display: flex;
-		flex-direction: column;
-		width: 60%;
-		height: 42px;
-	}
-
-	.cmtdetail-IDtext {
-		width: 100%;
-		height: 50%;
-		color: #3d3d3d;
-		font-size: 15px;
-	}
-
-	.cmtdetail-time {
-		width: 100%;
-		height: 50%;
-		color: #888888;
-		font-size: 12px;
-	}
-
-	.cmtdetail-right {
-		position: absolute;
-		right: 10px;
-		display: flex;
-		min-width: 24%;
-		height: 100%;
-	}
-
-	.cmtdetail-rightrel {
-		position: relative;
-		width: 100%;
-		height: 100%;
-	}
-
-	.likeIcon {
-		position: absolute;
-		left: 40%;
-		width: 18px;
-		height: 18px;
-		top: 8px;
-	}
-
-	.likeNum {
-		position: absolute;
-		top: 10px;
-		left: 65%;
-		font-size: 12px;
-		color: #888888;
-	}
-	.liked{
-		color: #FDD041;
-	}
-	.son-likeIcon{
-		position: absolute;
-		right: 40%;
-		width: 18px;
-		height: 18px;
-		top: 8px;
-	}
-	
-	.son-likeNum{
-		position: absolute;
-		top: 10px;
-		left: 65%;
-		font-size: 12px;
-		color: #888888;
-	}
-	
-	.commentIcon {
-		position: absolute;
-		right: 5%;
-		width: 18px;
-		height: 18px;
-		top: 8px;
-	}
+	/* 滑到底了等提示
+	 */
 
 
-	.cmtdetail-contentBox {
-		width: 74%;
-		margin-left: 62px;
-		margin-top: 10px;
-		min-height: 20px;
-		color: #3D3D3D;
-		font-size: 15px;
-		font-weight: 500;
-	}
+
+
+
+
+
+
+/* 
 
 	.cmtdetail-loadmore {
 		margin-left: 62px;
@@ -453,7 +392,7 @@
 	.loadmore-text {
 		color: #888888;
 		font-size: 12px;
-	}
+	} */
 	
 	.bottomLayerOfSubmit{
 		display: flex;

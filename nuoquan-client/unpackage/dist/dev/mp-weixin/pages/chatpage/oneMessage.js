@@ -87,6 +87,17 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var m0 = _vm.timeDeal(_vm.thisMessage.createDate)
+  var m1 = _vm.timeDeal(_vm.thisMessage.createDate)
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        m0: m0,
+        m1: m1
+      }
+    }
+  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -167,6 +178,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 var _default =
 {
   props: {
@@ -181,6 +195,7 @@ var _default =
 
   },
   onReady: function onReady() {
+    console.log(this.chat);
     // console.log(this.thisMessage);
   },
   methods: {

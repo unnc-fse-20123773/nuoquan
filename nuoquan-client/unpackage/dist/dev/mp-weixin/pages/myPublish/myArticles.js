@@ -84,11 +84,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   var l0 = _vm.__map(_vm.myArticleList, function(thisArticle, __i0__) {
-    var f0 = _vm._f("timeDeal")(thisArticle.createDate)
-
+    var m0 = _vm.timeDeal(thisArticle.createDate)
     return {
       $orig: _vm.__get_orig(thisArticle),
-      f0: f0
+      m0: m0
     }
   })
 
@@ -195,7 +194,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 var _default =
 {
   name: 'aticlebrief',
@@ -210,35 +208,6 @@ var _default =
       direction: '' };
 
   },
-
-  filters: {
-    timeDeal: function timeDeal(timediff) {
-      //console.log(timediff);
-      timediff = new Date(timediff);
-      //console.log(timediff);
-      var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(), timediff.getSeconds()];
-      var oldTime = timediff.getTime();
-      var now = new Date();
-      var newTime = now.getTime();
-      var milliseconds = 0;
-      var timeSpanStr;
-      milliseconds = newTime - oldTime;
-      if (milliseconds <= 1000 * 60 * 1) {
-        timeSpanStr = '刚刚';
-      } else if (1000 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60) {
-        timeSpanStr = Math.round(milliseconds / (1000 * 60)) + '分钟前';
-      } else if (1000 * 60 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24) {
-        timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
-      } else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
-        timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
-      } else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && parts[0] == now.getFullYear()) {
-        timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
-      } else {
-        timeSpanStr = parts[0] + '-' + parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
-      }
-      return timeSpanStr;
-    } },
-
   onPageScroll: function onPageScroll() {
     this.messageIndex = -1;
   },
@@ -285,7 +254,6 @@ var _default =
 
     endMove: function endMove(event) {
       if (this.direction === 'Y') {
-        debugger;
         this.direction = '';
         this.messageIndex = -1;
         return;

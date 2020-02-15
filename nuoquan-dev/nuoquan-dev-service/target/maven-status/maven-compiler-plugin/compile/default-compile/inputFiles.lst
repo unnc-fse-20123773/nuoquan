@@ -1,0 +1,20 @@
+<<<<<<< HEAD
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-service/src/main/java/com/nuoquan/service/ArticleServiceImpl.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-service/src/main/java/com/nuoquan/service/UserService.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-service/src/main/java/com/nuoquan/service/WeChatService.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-service/src/main/java/com/nuoquan/service/UserServiceImpl.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-service/src/main/java/com/nuoquan/service/WeChatServiceImpl.java
+/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-service/src/main/java/com/nuoquan/service/ArticleService.java
+=======
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-service/src/main/java/com/nuoquan/service/ArticleServiceImpl.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-service/src/main/java/com/nuoquan/service/UserServiceImpl.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-service/src/main/java/com/nuoquan/service/UserService.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-service/src/main/java/com/nuoquan/service/AdminRoleService.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-service/src/main/java/com/nuoquan/service/AdminServiceImpl.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-service/src/main/java/com/nuoquan/service/WeChatServiceImpl.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-service/src/main/java/com/nuoquan/service/AdminUserService.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-service/src/main/java/com/nuoquan/service/ArticleService.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-service/src/main/java/com/nuoquan/service/AdminPermissionService.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-service/src/main/java/com/nuoquan/service/AdminService.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-service/src/main/java/com/nuoquan/service/WeChatService.java
+>>>>>>> master

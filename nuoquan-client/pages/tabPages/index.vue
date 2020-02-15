@@ -212,6 +212,7 @@ export default {
 					'content-type': 'application/x-www-form-urlencoded'
 				},
 				success: res => {
+					console.log(res);
 					if (res.data.status == 200) {
 						var user = res.data.data;
 						var finalUser = this.myUser(user); // 分割邮箱地址, 重构 user

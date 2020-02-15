@@ -979,9 +979,7 @@ _vue.default.prototype.netty = {
      * @param {Object} timediff
      */ };
 _vue.default.prototype.timeDeal = function (timediff) {
-  console.log(timediff);
   timediff = new Date(timediff);
-  console.log(timediff);
   var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(),
   timediff.getSeconds()];
 
