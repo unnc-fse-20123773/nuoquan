@@ -1,0 +1,332 @@
+<template>
+	<view id="public-container">
+		<!-- 黄色头部 -->
+		<view id="yellowTopBox">
+			<view class="yellowTop" :style="{ bottom: yellowBottom }"></view>
+			<!-- <view class="yellowTop" style="bottom: -240rpx"></view> -->
+		</view>
+		<!-- 简介块 -->
+		<view id="public-infoBox" class="column_center">
+			<!-- 基本信息内容 -->
+			<view id="idCard" class="idCard" :style="{ width: cardWidth }">
+				<view style="width: 100%;height: 74px;margin-top: -46px;" class="super_center">
+					<image class="publicTouxiang" mode="aspectFill" :src="thisUserInfo.faceImg"></image>
+				</view>
+				<!-- ID -->
+				<view class="nameBox super_center">
+					<text class="name-text">{{ thisUserInfo.nickname }}</text>
+				</view>
+				<!-- 个人简介 -->
+				<view class="introBox super_center"><text class="introBox-text">个人简介：这个人很懒，什么都没写哦...</text></view>
+			
+				<!-- 操作行 -->
+				<view class="operationLine">
+					<!-- 粉丝 -->
+					<view class="operationCard" @tap="goToFansFollow(1)">
+						<view class="operationNum super_center">
+							<text class="operationNum-text" style="color:color:rgba(53,53,53,1);">{{ thisUserInfo.fansNum }}</text>
+						</view>
+						<view class="operationTitle super_center"><text class="operationTitle-text">粉丝</text></view>
+					</view>
+					<!-- 影响力 -->
+					<view class="operationCard">
+						<view class="operationNum super_center"><text class="operationNum-text" style="color:rgba(254,95,85,1);">999999</text></view>
+						<view class="operationTitle super_center"><text class="operationTitle-text">影响力</text></view>
+					</view>
+					<!-- 关注 -->
+					<view class="operationCard" @tap="goToFansFollow(0)">
+						<view class="operationNum super_center">
+							<text class="operationNum-text" style="color:color:rgba(53,53,53,1);">{{ thisUserInfo.followNum }}</text>
+						</view>
+						<view class="operationTitle super_center"><text class="operationTitle-text">关注</text></view>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="pagejump_box">
+			<view class="item1" @click="jumpToProfile()">个人信息</view>
+			<view class="line1"></view>
+			<view class="item2" @click="jumpToMyPublish()">我的发布</view>
+			<view class="line2"></view>
+			<view class="item3" @click="jumpToAbout()">关于</view>
+		</view>
+	</view>
+</template>
+
+<script>
+	import {mapState} from 'vuex';
+
+
+export default {
+	data() {
+		return {
+			screenWidth: 350,
+			serverUrl: this.$serverUrl,
+
+			thisUserInfo: '',
+			windowHeight: 0,
+			windowWidth: 0,
+			yellowBottom: '',
+			cardWidth: '',
+
+		};
+	},
+
+	onLoad() {
+		
+
+		 this.thisUserInfo= this.getGlobalUserInfo();
+	
+
+		var screenWidth = uni.getSystemInfoSync().screenWidth;
+		this.screenWidth = screenWidth;
+
+		// 获取当前分页
+		var page = this.page;
+
+
+		//获取屏幕宽高
+		var that = this;
+		uni.getSystemInfo({
+			success: function(res) {
+				that.windowHeight = res.windowHeight;
+				that.windowWidth = res.windowWidth;
+			}
+		});
+		//获取黄色头部位置
+		if (that.windowHeight <= 1000) {
+			if (that.windowHeight < 667) {
+				that.yellowBottom = -that.windowHeight * 0.25 + 'px';
+				// console.log("超小屏幕，黄色头部上移了" + that.yellowBottom);
+			} else {
+				that.yellowBottom = -that.windowHeight * 0.22 + 'px';
+				// console.log("手机屏幕，黄色头部上移了" + that.yellowBottom);
+			}
+		} else {
+			that.yellowBottom = -that.windowHeight * 0.2 + 'px';
+			// console.log("平板屏幕，黄色头部上移了" + that.yellowBottom);
+		}
+
+		// 获取卡片宽度
+		that.cardWidth = that.windowWidth - 26 + 'px';
+
+	},
+
+	onPullDownRefresh() {
+		console.log('refresh');
+		setTimeout(function() {
+			uni.stopPullDownRefresh();
+		}, 1000);
+	},
+
+	methods: {
+		
+		jumpToAbout:function() {
+			uni.navigateTo({
+				url: '../about/about',
+			});
+		},
+		jumpToMyPublish:function() {
+			uni.navigateTo({
+				url: '../myPublish/myPublish',
+			});
+		},
+		jumpToProfile:function() {
+			uni.navigateTo({
+				url: '../profile/profile',
+			});
+		},
+		goToChatPage: function() {
+			var encodeData = encodeURIComponent(JSON.stringify(this.thisUserInfo)); // 对数据字符串化并转码，防止特殊字符影响传参
+			uni.navigateTo({
+				url: '../chatpage/chatpage?friendInfo=' + encodeData,
+			});
+		},
+
+		
+
+		
+	}
+};
+</script>
+
+<style>
+page {
+	width: 100%;
+	height: 100%;
+}
+
+#public-container {
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+}
+
+/* 黄色头部 */
+#yellowTopBox {
+	width: 100%;
+	position: relative;
+	z-index: -30;
+}
+
+.yellowTop {
+	position: absolute; /* 此处采用 absolote 定位，以保证页面流可以正常显示。层级设为 -10，以保证其显示在页面最底部。 */
+	left: -430upx;
+	height: 1600upx;
+	width: 1600upx;
+	z-index: -10;
+	border-radius: 3000upx;
+	background-color: #ffc95a;
+}
+
+/* 简介块 */
+#public-infoBox {
+	width: 100%;
+}
+
+.publicTouxiang {
+	width: 74px;
+	height: 74px;
+	border-radius: 120px;
+	border: 4px solid white;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.idCard {
+	margin-top: 64px;
+	margin-left: 13px;
+	border-radius: 8px;
+	min-height: 140px;
+	background-color: rgba(255, 255, 255, 1);
+	box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+}
+
+.nameBox {
+	margin-top: 8px;
+	width: 100%;
+}
+
+.nameBox .name-text {
+	font-size: 17px;
+	font-weight: 600;
+}
+
+.introBox {
+	margin-top: 12px;
+	width: 100%;
+}
+
+.introBox-text {
+	max-width: 61%;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 13px;
+	color: rgba(136, 136, 136, 1);
+	opacity: 1;
+	word-break: keep-all;
+	word-wrap: break-word;
+}
+
+.operationLine {
+	margin: 17px 3.2%;
+	width: 93.6%;
+	height: 43px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.operationCard {
+	width: 33.3%;
+	height: 43px;
+}
+
+.operationNum {
+	width: 100%;
+	height: 17px;
+	overflow: visible;
+}
+
+.operationNum-text {
+	font-size: 17px;
+	font-family: Source Han Sans CN;
+	font-weight: 800;
+	opacity: 1;
+}
+
+.operationTitle {
+	margin-top: 11px;
+	width: 100%;
+	height: 11px;
+	overflow: visible;
+}
+
+.operationTitle-text {
+	font-size: 10px;
+	font-family: Source Han Sans CN;
+	font-weight: 500;
+	color: rgba(178, 178, 178, 1);
+	opacity: 1;
+}
+.pagejump_box{
+	margin-top:30px;
+	margin-left:13px;
+	width:349px;
+	height:170px;
+	background:rgba(255,255,255,1);
+	box-shadow:0px 0px 3px 
+	rgba(0,0,0,0.16);
+	opacity:1;
+	border-radius:8px;
+	
+}
+.item1{
+	width:84px;
+	height:14px;
+	margin-left:41px ;
+	padding-top: 20px;
+	font-size:14px;
+	font-family:Source Han Sans CN;
+	font-weight:400;
+	line-height:16px;
+	color:rgba(53,53,53,1);
+	opacity:1;
+}
+.line1{
+	margin:20px auto ;
+	width:309px;
+	height:0px;
+	border:1px solid rgba(236,236,236,1);
+	opacity:1;
+}
+.item2{
+	margin-left:41px ;
+	width:56px;
+	height:14px;
+	font-size:14px;
+	font-family:Source Han Sans CN;
+	font-weight:400;
+	line-height:16px;
+	color:rgba(53,53,53,1);
+	opacity:1;
+}
+.line2{
+	margin:20px auto ;
+	width:309px;
+	height:0px;
+	border:1px solid rgba(236,236,236,1);
+	opacity:1;
+}
+.item3{
+	margin-left:41px ;
+	width:28px;
+	height:14px;
+	font-size:14px;
+	font-family:Source Han Sans CN;
+	font-weight:400;
+	line-height:16px;
+	color:rgba(53,53,53,1);
+	opacity:1;
+}
+
+</style>

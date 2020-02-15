@@ -222,7 +222,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _vuex = __webpack_require__(/*! vuex */ 16);function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var swipeAction = function swipeAction() {return __webpack_require__.e(/*! import() | components/swipe-action */ "components/swipe-action").then(__webpack_require__.bind(null, /*! ../../components/swipe-action.vue */ 194));};
+var _vuex = __webpack_require__(/*! vuex */ 16);function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var swipeAction = function swipeAction() {return __webpack_require__.e(/*! import() | components/swipe-action */ "components/swipe-action").then(__webpack_require__.bind(null, /*! ../../components/swipe-action.vue */ 219));};
 
 
 var userInfo;
@@ -292,7 +292,7 @@ var socketOpen = false;var _default =
   },
 
   onShow: function onShow() {
-    this.setTabBarIndex(2); //index为当前tab的索引
+    this.setTabBarIndex(3); //index为当前tab的索引
     this.loadingChatSnapshot(); // 载入聊天快照
   },
 
