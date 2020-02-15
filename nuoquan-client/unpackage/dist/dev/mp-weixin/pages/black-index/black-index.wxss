@@ -42,8 +42,7 @@ page {
 	height: 35px;
 	width: 37px;
 border-radius: 5PX;
- 	background: -webkit-gradient(linear, left top, left bottom, color-stop(49%, #4D4D4D), color-stop(49%, #5F5F5F));
- 	background: -o-linear-gradient(#4D4D4D 49%, #5F5F5F 49%);
+ 	background: -webkit-linear-gradient(#4D4D4D 49%, #5F5F5F 49%);
  	background: linear-gradient(#4D4D4D 49%, #5F5F5F 49%);
 	text-align: center;
 }

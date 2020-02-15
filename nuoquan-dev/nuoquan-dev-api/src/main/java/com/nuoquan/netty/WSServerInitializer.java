@@ -21,25 +21,6 @@ import io.netty.handler.timeout.IdleStateHandler;
 
 @Component
 public class WSServerInitializer extends ChannelInitializer<SocketChannel>{
-<<<<<<< HEAD
-
-	public String type = "JKS";
-	public String password = "5701k96a1fxz51v";
-<<<<<<< HEAD
-//	public String path = "/Users/jerrio/Downloads/www.checkchack.cn/Tomcat/www.checkchack.cn.jks"; // 改成你的证书地址, 证书在项目目录 /ssl_cert 里 -Jerrio
-<<<<<<< HEAD
-	public String path = "/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/ssl_cert/www.checkchack.cn.jks"; 
-=======
-//	public String path = "/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/ssl_cert/www.checkchack.cn.jks";
-	public String path = "F:\\codingWorkspace\\nuoquan\\nuoquan-dev\\ssl_cert\\www.checkchack.cn.jks";	
->>>>>>> guetta-new
-=======
-	public String path = "/Users/jerrio/Downloads/www.checkchack.cn/Tomcat/www.checkchack.cn.jks"; // 改成你的证书地址, 证书在项目目录 /ssl_cert 里 -Jerrio
-//	public String path = "/Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/ssl_cert/www.checkchack.cn.jks";
-//	public String path = "F:\\codingWorkspace\\nuoquan\\nuoquan-dev\\ssl_cert\\www.checkchack.cn.jks";	
->>>>>>> master
-//	public String path = "/home/ubuntu/apache-tomcat-8.5.42/conf/www.checkchack.cn.jks"; // 服务器证书地址，勿动
-=======
 	//1. 声明本类和构造方法
 	private static WSServerInitializer wsServerInitializer;
 	
@@ -51,7 +32,6 @@ public class WSServerInitializer extends ChannelInitializer<SocketChannel>{
     public void init(){
 		wsServerInitializer = this;
     }
->>>>>>> master
 	
 	@Override
 	protected void initChannel(SocketChannel ch) throws Exception {

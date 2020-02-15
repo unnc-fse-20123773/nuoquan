@@ -6,7 +6,11 @@ image {
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 .articlecard.data-v-56ccba95 {
+=======
+.articlecard.data-v-4ca5e5aa {
+>>>>>>> master
 =======
 .articlecard.data-v-4ca5e5aa {
 >>>>>>> master
@@ -16,7 +20,11 @@ image {
 	background-color: #FDFDFD;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 .title.data-v-56ccba95 {
+=======
+.title.data-v-4ca5e5aa {
+>>>>>>> master
 =======
 .title.data-v-4ca5e5aa {
 >>>>>>> master
@@ -28,6 +36,7 @@ image {
 	line-height: 19px;
 	padding-top: 10px;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 }
 .briefarticleCard.data-v-4ca5e5aa {
@@ -37,12 +46,13 @@ image {
 	line-height: 15px;
 	margin-bottom: 15px;
 >>>>>>> master
+=======
+>>>>>>> master
 	word-break: break-all;
 	overflow: hidden;
-	-o-text-overflow: ellipsis;
-	   text-overflow: ellipsis;
+	text-overflow: ellipsis;
 }
-.briefarticleCard.data-v-56ccba95 {
+.briefarticleCard.data-v-4ca5e5aa {
 	max-height: 51px;
 	margin: 10px 25px 15px;
 	font-size: 14px;
@@ -55,15 +65,21 @@ image {
 	overflow: hidden;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 .tags.data-v-56ccba95 {
 	margin-left: 21px;
 }
 .tag.data-v-56ccba95 {
 =======
+=======
+>>>>>>> master
 .tags.data-v-4ca5e5aa {
 	margin-left: 21px;
 }
 .tag.data-v-4ca5e5aa {
+<<<<<<< HEAD
+>>>>>>> master
+=======
 >>>>>>> master
 	display: inline-block;
 	border-radius: 4px;
@@ -76,7 +92,11 @@ image {
 	background: #621E81;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 .menubar.data-v-56ccba95 {
+=======
+.menubar.data-v-4ca5e5aa {
+>>>>>>> master
 =======
 .menubar.data-v-4ca5e5aa {
 >>>>>>> master
@@ -85,7 +105,11 @@ image {
 	margin:0 25px;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 .touxiang.data-v-56ccba95 {
+=======
+.touxiang.data-v-4ca5e5aa {
+>>>>>>> master
 =======
 .touxiang.data-v-4ca5e5aa {
 >>>>>>> master
@@ -96,7 +120,11 @@ image {
 	vertical-align: middle;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 .name.data-v-56ccba95 {
+=======
+.name.data-v-4ca5e5aa {
+>>>>>>> master
 =======
 .name.data-v-4ca5e5aa {
 >>>>>>> master
@@ -106,11 +134,14 @@ image {
 	color: #888888;
 	padding-bottom: 5px;
 	max-width: 85px;
-	-o-text-overflow: ellipsis;
-	   text-overflow: ellipsis;
+	text-overflow: ellipsis;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 .time.data-v-56ccba95 {
+=======
+.time.data-v-4ca5e5aa {
+>>>>>>> master
 =======
 .time.data-v-4ca5e5aa {
 >>>>>>> master
@@ -122,26 +153,31 @@ image {
 	margin-left: 25px;
 	color: #888888;
 	max-width: 84px;
-	-o-text-overflow: ellipsis;
-	   text-overflow: ellipsis;
+	text-overflow: ellipsis;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 .picturearea.data-v-56ccba95 {
+=======
+.picturearea.data-v-4ca5e5aa {
+>>>>>>> master
 =======
 .picturearea.data-v-4ca5e5aa {
 >>>>>>> master
 	margin: auto;
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-box-pack: center;
 	-webkit-justify-content: center;
-	    -ms-flex-pack: center;
 	        justify-content: center;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 image.data-v-56ccba95 {
+=======
+image.data-v-4ca5e5aa {
+>>>>>>> master
 =======
 image.data-v-4ca5e5aa {
 >>>>>>> master

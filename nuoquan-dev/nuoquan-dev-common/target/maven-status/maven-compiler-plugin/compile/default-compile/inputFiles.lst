@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/utils/PagedResult.java
 /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/utils/RedisOperator.java
 /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/utils/FileUtils.java
@@ -29,7 +29,7 @@
 /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/utils/UrlUtil.java
 /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/utils/MD5Utils.java
 /Users/xudeyan/Documents/GitHub/nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/IdWorker.java
-=======
+
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/utils/FastDFSClient.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/support/KaptchaTextCreator.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/utils/Utils.java
@@ -41,6 +41,7 @@
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/support/CharsetKit.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/InvalidSystemClock.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/strategy/FileLock.java
+/Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/utils/PageUtils.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/Code.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/strategy/DefaultRandomCodeStrategy.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/utils/StringUtils.java
@@ -66,4 +67,4 @@
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/utils/HttpReq.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/org/n3r/idworker/strategy/DayPrefixRandomCodeStrategy.java
 /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-dev/nuoquan-dev-common/src/main/java/com/nuoquan/utils/TimeAgoUtils.java
->>>>>>> master
+

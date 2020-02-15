@@ -143,8 +143,8 @@
 				uni.showLoading({
 					title: "搜索中..."
 				})
-				setTimeout(()=>{
-					if(isSearching){
+				setTimeout(() => {
+					if (isSearching) {
 						isSearching = false // 解锁
 						uni.hideLoading();
 						uni.showToast({
@@ -153,8 +153,8 @@
 							duration: 1000
 						})
 					}
-				}, 5000); // 延时5s timeout	
-				
+				}, 5000); // 延时5s timeout
+
 				uni.request({
 					url: that.$serverUrl + '/article/searchArticleYANG',
 					method: "POST",

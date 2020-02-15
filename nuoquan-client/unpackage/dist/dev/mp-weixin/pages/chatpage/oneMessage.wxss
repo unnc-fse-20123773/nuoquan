@@ -1,28 +1,30 @@
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 .touxiang.data-v-16ee2e71 {
+=======
+.touxiang.data-v-d203d3ca {
+>>>>>>> master
 		width: 60rpx;
 		height: 60rpx;
 		border-radius: 60rpx;
 }
-.picMessage.data-v-16ee2e71{
+.picMessage.data-v-d203d3ca{
 		max-width: 428rpx;
 }
-.bottomBar.data-v-16ee2e71 {
+.bottomBar.data-v-d203d3ca {
 		display: -webkit-box;
 		display: -webkit-flex;
-		display: -ms-flexbox;
 		display: flex;
 		width: 400rpx;
 		-webkit-box-align: center;
 		-webkit-align-items: center;
-		    -ms-flex-align: center;
 		        align-items: center;
 		height: 18px;
 		-webkit-box-pack: inherit;
 		-webkit-justify-content: inherit;
-		    -ms-flex-pack: inherit;
 		        justify-content: inherit;
+<<<<<<< HEAD
 =======
 .touxiang.data-v-d203d3ca {
 	width: 60rpx;
@@ -45,18 +47,18 @@
 	    -ms-flex-pack: inherit;
 	        justify-content: inherit;
 >>>>>>> master
+=======
+>>>>>>> master
 }
 
 
 .send {
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-box-orient: horizontal;
 	-webkit-box-direction: reverse;
 	-webkit-flex-direction: row-reverse;
-	    -ms-flex-direction: row-reverse;
 	        flex-direction: row-reverse;
 	margin-right: 20rpx;
 	position: relative;
@@ -73,12 +75,10 @@
 .send .content {
 	display: -webkit-inline-box;
 	display: -webkit-inline-flex;
-	display: -ms-inline-flexbox;
 	display: inline-flex;
 	-webkit-box-orient: vertical;
 	-webkit-box-direction: normal;
 	-webkit-flex-direction: column;
-	    -ms-flex-direction: column;
 	        flex-direction: column;
 	width: 428rpx;
 	background: #FCCB2E;
@@ -90,7 +90,6 @@
 .time-send {
 	display: -webkit-inline-box;
 	display: -webkit-inline-flex;
-	display: -ms-inline-flexbox;
 	display: inline-flex;
 	font-size: 7px;
 	font-weight: light;
@@ -103,7 +102,6 @@
 .status-send {
 	display: -webkit-inline-box;
 	display: -webkit-inline-flex;
-	display: -ms-inline-flexbox;
 	display: inline-flex;
 	font-size: 7px;
 	font-weight: light;
@@ -124,12 +122,10 @@
 .recieve {
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-box-orient: horizontal;
 	-webkit-box-direction: normal;
 	-webkit-flex-direction: row;
-	    -ms-flex-direction: row;
 	        flex-direction: row;
 	margin-left: 20rpx;
 	margin-bottom: 12px;
@@ -137,12 +133,10 @@
 .recieve .content {
 	display: -webkit-inline-box;
 	display: -webkit-inline-flex;
-	display: -ms-inline-flexbox;
 	display: inline-flex;
 	-webkit-box-orient: vertical;
 	-webkit-box-direction: normal;
 	-webkit-flex-direction: column;
-	    -ms-flex-direction: column;
 	        flex-direction: column;
 	width: 428rpx;
 	background: #FFF4DE;
@@ -152,13 +146,11 @@
 	padding: 16rpx 16rpx 0rpx 16rpx;
 	-webkit-box-pack: end;
 	-webkit-justify-content: flex-end;
-	    -ms-flex-pack: end;
 	        justify-content: flex-end;
 }
 .time-recieve {
 	display: -webkit-inline-box;
 	display: -webkit-inline-flex;
-	display: -ms-inline-flexbox;
 	display: inline-flex;
 	font-size: 7px;
 	font-weight: light;

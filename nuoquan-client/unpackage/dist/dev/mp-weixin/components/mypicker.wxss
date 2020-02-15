@@ -17,8 +17,7 @@ picker-view {
 		position: absolute;
 		top: 0px;
 		left: 0px;
-		-webkit-box-shadow: 0px 0px 10px 1px #A6A6A6;
-		        box-shadow: 0px 0px 10px 1px #A6A6A6;
+		box-shadow: 0px 0px 10px 1px #A6A6A6;
 		background-color: white;
 		border-radius: 15rpx;
 		z-index: 0;

@@ -157,7 +157,7 @@
 		},
 
 		onShow() {
-			this.setTabBarIndex(2) //index为当前tab的索引
+			this.setTabBarIndex(3) //index为当前tab的索引
 			this.loadingChatSnapshot(); // 载入聊天快照
 		},
 

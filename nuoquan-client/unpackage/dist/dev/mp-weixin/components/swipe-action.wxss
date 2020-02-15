@@ -43,20 +43,16 @@
     width: 200%;
     display: -webkit-box;
     display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
     float: left;
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
     -webkit-flex-direction: row;
-        -ms-flex-direction: row;
             flex-direction: row;
     -webkit-flex-wrap: wrap;
-        -ms-flex-wrap: wrap;
             flex-wrap: wrap;
     -webkit-transition: -webkit-transform 350ms cubic-bezier(0.165, 0.84, 0.44, 1);
     transition: -webkit-transform 350ms cubic-bezier(0.165, 0.84, 0.44, 1);
-    -o-transition: transform 350ms cubic-bezier(0.165, 0.84, 0.44, 1);
     transition: transform 350ms cubic-bezier(0.165, 0.84, 0.44, 1);
     transition: transform 350ms cubic-bezier(0.165, 0.84, 0.44, 1), -webkit-transform 350ms cubic-bezier(0.165, 0.84, 0.44, 1);
 }
@@ -66,16 +62,13 @@
 .uni-swipe-action__btn-group {
     display: -webkit-box;
     display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
     -webkit-flex-direction: row;
-        -ms-flex-direction: row;
             flex-direction: row;
     -webkit-box-align: center;
     -webkit-align-items: center;
-        -ms-flex-align: center;
             align-items: center;
     background-color: #4191ea;
 }
@@ -87,17 +80,14 @@
     font-size: 28rpx;
     display: -webkit-inline-box;
     display: -webkit-inline-flex;
-    display: -ms-inline-flexbox;
     display: inline-flex;
     text-align: center;
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
     -webkit-flex-direction: row;
-        -ms-flex-direction: row;
             flex-direction: row;
     -webkit-box-align: center;
     -webkit-align-items: center;
-        -ms-flex-align: center;
             align-items: center;
     margin-left: 20rpx;
     margin-right: 20rpx;
@@ -106,16 +96,13 @@
 .item {
   display: -webkit-box;
   display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
   -webkit-flex-direction: row;
-      -ms-flex-direction: row;
           flex-direction: row;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
-      -ms-flex-pack: justify;
           justify-content: space-between;
   padding: 10rpx 16rpx;
 }
@@ -125,11 +112,9 @@
 .item .item-left {
     display: -webkit-box;
     display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
     -webkit-box-align: center;
     -webkit-align-items: center;
-        -ms-flex-align: center;
             align-items: center;
     text-align: center;
 }
@@ -162,23 +147,18 @@
 .item .item-middle {
     display: -webkit-box;
     display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
     -webkit-box-flex: 1;
     -webkit-flex: 1;
-        -ms-flex: 1;
             flex: 1;
     -webkit-flex-wrap: wrap;
-        -ms-flex-wrap: wrap;
             flex-wrap: wrap;
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
     -webkit-flex-direction: row;
-        -ms-flex-direction: row;
             flex-direction: row;
     -webkit-box-pack: start;
     -webkit-justify-content: flex-start;
-        -ms-flex-pack: start;
             justify-content: flex-start;
     margin-left: 15rpx;
     overflow: hidden;
@@ -193,8 +173,7 @@
       line-height: 60rpx;
       overflow: hidden;
       /*自动隐藏文字*/
-      -o-text-overflow: ellipsis;
-         text-overflow: ellipsis;
+      text-overflow: ellipsis;
       /*文字隐藏后添加省略号*/
       white-space: nowrap;
       /**强制不换行*/
@@ -209,8 +188,7 @@
       line-height: 60rpx;
       overflow: hidden;
       /*自动隐藏文字*/
-      -o-text-overflow: ellipsis;
-         text-overflow: ellipsis;
+      text-overflow: ellipsis;
       /*文字隐藏后添加省略号*/
       white-space: nowrap;
       /**强制不换行*/
@@ -224,8 +202,7 @@
       font-size: 24rpx;
       overflow: hidden;
       /**自动隐藏文字*/
-      -o-text-overflow: ellipsis;
-         text-overflow: ellipsis;
+      text-overflow: ellipsis;
       /**文字隐藏后添加省略号*/
       white-space: nowrap;
       /**强制不换行*/
@@ -239,8 +216,7 @@
       font-size: 24rpx;
       overflow: hidden;
       /**自动隐藏文字*/
-      -o-text-overflow: ellipsis;
-         text-overflow: ellipsis;
+      text-overflow: ellipsis;
       /**文字隐藏后添加省略号*/
       white-space: nowrap;
       /**强制不换行*/
@@ -250,16 +226,13 @@
     overflow: hidden;
     display: -webkit-box;
     display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     -webkit-flex-direction: column;
-        -ms-flex-direction: column;
             flex-direction: column;
     -webkit-box-align: center;
     -webkit-align-items: center;
-        -ms-flex-align: center;
             align-items: center;
 }
 .item .item-right .time {
@@ -269,8 +242,7 @@
       height: 60rpx;
       line-height: 60rpx;
       max-width: 85px;
-      -o-text-overflow: ellipsis;
-         text-overflow: ellipsis;
+      text-overflow: ellipsis;
 }
 .item .item-right .mark {
       position: absolute;

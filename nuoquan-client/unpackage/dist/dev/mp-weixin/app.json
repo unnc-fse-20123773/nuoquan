@@ -3,7 +3,7 @@
     "pages/tabPages/index",
     "pages/tabPages/votePage",
     "pages/tabPages/messagelist",
-    "pages/tabPages/profile",
+    "pages/tabPages/mine",
     "pages/detail/detail",
     "pages/submit/submit",
     "pages/chatpage/chatpage",
@@ -18,14 +18,18 @@
     "pages/comment-detail/comment-detail",
     "pages/userDeal/userDeal",
     "pages/myPublish/myPublish",
-    "pages/about/about"
+    "pages/about/about",
+    "pages/hot/hot",
+    "pages/profile/profile",
+    "components/sharePoster/sharePoster"
   ],
   "subPackages": [],
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "Nottinghome",
     "navigationBarBackgroundColor": "#fdd041",
-    "backgroundColor": "#F8F8F8"
+    "backgroundColor": "#F8F8F8",
+    "navigationStyle": "custom"
   },
   "tabBar": {
     "custom": true,
@@ -53,7 +57,7 @@
         "text": "动态"
       },
       {
-        "pagePath": "pages/tabPages/profile",
+        "pagePath": "pages/tabPages/mine",
         "iconPath": "static/icon/star.png",
         "selectedIconPath": "static/icon/star.png",
         "text": "我的"
@@ -62,8 +66,12 @@
   },
   "permission": {},
 <<<<<<< HEAD
+<<<<<<< HEAD
   "usingComponents": {},
   "sitemapLocation": "sitemap92.json"
+=======
+  "usingComponents": {}
+>>>>>>> master
 =======
   "usingComponents": {}
 >>>>>>> master

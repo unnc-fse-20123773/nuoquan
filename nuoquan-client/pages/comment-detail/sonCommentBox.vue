@@ -10,7 +10,7 @@
 				</view>
 				<view class="time_text">{{ commentDetail.timeAgo }}</view>
 			</view>
-			<view class="comment-content" @tap="controlInputInSonCommentBox()()">{{ commentDetail.comment }}</view>
+			<view class="comment-content" @tap="controlInputInSonCommentBox()">{{ commentDetail.comment }}</view>
 			<view class="comment-menu">
 				<view class="son-comment-num" @tap="controlInputInSonCommentBox()">{{commentDetail.commentNum}}</view>
 				<view class="like-num" :class="{liked:commentDetail.isLike}" @tap="swLikeCommentDetail(commentDetail)">{{ commentDetail.likeNum }}</view>
