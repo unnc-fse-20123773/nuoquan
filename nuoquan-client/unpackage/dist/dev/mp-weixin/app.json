@@ -61,11 +61,6 @@
       }
     ]
   },
-  "permission": {
-    "scope.userLocation": {
-      "desc": ""
-    }
-  },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap15.json"
+  "permission": {},
+  "usingComponents": {}
 }

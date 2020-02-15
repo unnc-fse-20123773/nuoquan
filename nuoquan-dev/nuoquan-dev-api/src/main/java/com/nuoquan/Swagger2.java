@@ -3,8 +3,11 @@ package com.nuoquan;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import com.nuoquan.config.ResourceConfig;
 
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.ParameterBuilder;
@@ -22,6 +25,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2   
 public class Swagger2 {
+	@Autowired
+	private ResourceConfig resourceConfig;
+	
 	/**
 	 * swagger2的配置文件，这里可以配置swagger2的一些基本内容，比如扫描包等等
 	 */
@@ -37,7 +43,7 @@ public class Swagger2 {
         pars.add(userIdHeader.build());
         
 		return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select()
-				.apis(RequestHandlerSelectors.basePackage("com.nuoquan.controller"))
+				.apis(RequestHandlerSelectors.basePackage("com.nuoquan"))
 				.paths(PathSelectors.any()).build()
 				.globalOperationParameters(pars);
 	}
@@ -54,6 +60,6 @@ public class Swagger2 {
 				//描述
 				.description("欢迎访问NQ接口文档，这里是描述信息")
 				// 
-				.version("1.0").build();
+				.version(resourceConfig.getVersion()).build();
 	}
 }

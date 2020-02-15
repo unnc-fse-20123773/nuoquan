@@ -17,6 +17,18 @@ public interface ArticleService {
 	/**
 	 * 分页查询全部文章
 	 */
+	public PagedResult list(Integer page, Integer pageSize);
+	
+
+	/**
+	 * 列出所有等待审核的文章
+	 * @return
+	 */
+	public PagedResult listCheckOnly(Integer page, Integer pageSize);
+	
+	/**
+	 * 分页查询全部发布的文章
+	 */
 	public PagedResult getAllArticles(Integer page, Integer pageSize, String userId);
 	
 	/**
@@ -53,9 +65,10 @@ public interface ArticleService {
 	public boolean isUserLikeArticle(String userId, String articleId);
 	
 	/**
-	 *  查询阳面文章
+	 *  按关键词搜索阳面文章，支持多关键词以空格分割
+	 *  TODO: 可以增加多种排序模式 @author jerrio
 	 */
-	public PagedResult searchYangArticlesContent(Integer isSaveRecord, Integer page, Integer pageSize, Article article, String userId);
+	public PagedResult searchArticleYang(Integer isSaveRecord, Integer page, Integer pageSize, String searchText, String userId);
 	
 	/**
 	 * 获取热搜词
@@ -72,7 +85,7 @@ public interface ArticleService {
 	 * 删除文章
 	 * @param articleId
 	 */
-	public void deleteArticle(String articleId);
+	public void deleteArticle(String articleId, String userId);
 	
 	/**
 	 * 上传评论到数据库
@@ -190,7 +203,6 @@ public interface ArticleService {
 	
 	public void passComment(String commentId);
 	
-	
 	/**
 	 * 操作者本人查看自己发布过的所有文章
 	 * @param page
@@ -210,5 +222,15 @@ public interface ArticleService {
 	 */
 	public PagedResult gerOtherslegalHisArticle(Integer page, Integer pageSize, String userId, String targetId);
 	
+	/**
+	 * 浏览量+1
+	 * @param articleId
+	 */
 	public void addViewCount(String articleId);
+
+	/**
+	 * 修改文章状态(可批量)
+	 */
+	public int updateArticleStatus(String articleIds, int status);
+	
 }

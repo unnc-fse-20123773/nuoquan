@@ -7,13 +7,13 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.nuoquan.SpringUtil;
 import com.nuoquan.enums.MsgActionEnum;
 import com.nuoquan.pojo.netty.ChatMessage;
 import com.nuoquan.pojo.netty.DataContent;
 import com.nuoquan.service.ArticleService;
 import com.nuoquan.service.UserService;
 import com.nuoquan.utils.JsonUtils;
+import com.nuoquan.utils.SpringUtil;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;

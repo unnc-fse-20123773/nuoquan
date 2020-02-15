@@ -284,16 +284,19 @@ var _default = {
             duration: 1000 });
 
         }
-      }, 5000); // 延时5s timeout
+      }, 5000); // 延时5s timeout	
 
       uni.request({
         url: that.$serverUrl + '/article/searchArticleYANG',
         method: "POST",
         data: {
-          articleContent: that.searchKeyWords,
+          searchText: that.searchKeyWords,
           userId: that.userInfo.id,
           isSaveRecord: isSaveRecord,
           page: page },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
 
         success: function success(result) {
           isSearching = false; // 解锁

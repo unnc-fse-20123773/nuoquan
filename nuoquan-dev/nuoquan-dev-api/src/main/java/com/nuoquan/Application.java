@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
+import com.nuoquan.utils.SpringUtil;
+
 import tk.mybatis.spring.annotation.MapperScan;
 
 @SpringBootApplication

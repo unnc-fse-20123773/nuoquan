@@ -24,6 +24,23 @@
     <result column="face_img_thumb" property="faceImgThumb" jdbcType="VARCHAR" />
   </resultMap>
   
+  <select id="list" resultMap="BaseResultMap">
+ 	select a.*, u.nickname as nickname, u.face_img, u.face_img_thumb from nuoquan.article a
+   	left join nuoquan.user u on u.id = a.user_id
+  	where
+  		1 = 1
+  	order by a.create_date desc
+  </select>
+  
+  <select id="listCheckOnly" resultMap="BaseResultMap">
+ 	select a.*, u.nickname as nickname, u.face_img, u.face_img_thumb from nuoquan.article a
+   	left join nuoquan.user u on u.id = a.user_id
+  	where
+  		1 = 1
+  		and a.status = 2
+  	order by a.create_date desc
+  </select>
+  
   <select id="queryAllArticles" resultMap="BaseResultMap">
  	select a.*, u.nickname as nickname, u.face_img, u.face_img_thumb from nuoquan.article a
    	left join nuoquan.user u on u.id = a.user_id

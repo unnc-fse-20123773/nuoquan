@@ -1,10 +1,17 @@
 README
 ======
-Current Verion: `v1.0.3`
+Current Dev Verion: `v1.0.3`
+
+### 开发环境
+- JDK8.0
+- mysql5.7以上
+- eclipse
+
+项目后端采用分层架构：common <- pojo <- mapper(DAO) <- service <- api
 ```
 .
 ├── README.md  
-├── nuoquan-client  
+├── nuoquan-client app 前端代码
 │   ├── App.vue  
 │   ├── common  
 │   ├── components  
@@ -16,32 +23,70 @@ Current Verion: `v1.0.3`
 │   ├── static  
 │   ├── store  
 │   └── uni.scss  
-├── nuoquan-dev  
-│   ├── nuoquan-dev-api  
-│   ├── nuoquan-dev-common  
-│   ├── nuoquan-dev-mapper  
-│   ├── nuoquan-dev-pojo  
-│   ├── nuoquan-dev-service  
-│   ├── nuoquan-mybatisTool  
+├── nuoquan-dev app 后端代码
+│   ├── nuoquan-dev-api 顶层请求模块
+│   │   ├── src
+│   │   │   ├── Application.java 启动类 [运行这个启动]
+│   │   │   ├── Swagger2.java
+│   │   │   ├── WarStartApplication.java tomcat启动类
+│   │   │   ├── admin 后台管理
+│   │   │   ├── config 配置类
+│   │   │   ├── controller 控制类
+│   │   │   ├── email 邮件服务
+│   │   │   ├── netty netty消息队列服务
+│   │   │   └── scheduler 定时任务
+│   │   │
+│   │   └── resources 配置文件夹
+│   │       ├── META-INF
+│   │       ├── application-dev.properties 开发环境配置
+│   │       ├── application-prod.properties 生产环境配置
+│   │       ├── application.properties springboot配置
+│   │       ├── log4j.properties
+│   │       ├── mapper 自动/手写Mapper.xml文件夹
+│   │       ├── resource-dev.properties 资源开发环境配置
+│   │       ├── resource-prod.properties 资源生产环境配置
+│   │       ├── static 静态文件存放文件夹[后台模版就放在此文件夹下面。所有的模版页面都在下面]
+│   │       │   ├── admin 后台目录存放
+│   │       │   │   ├── assets js、css存放路径
+│   │       │   │   ├── assets js、css存放路径
+│   │       │   │   └── bootstarp 后台模板存放路径
+│   │       │   ├── js js存放
+│   │       │   └── login 登录页面js、css、image
+│   │       │
+│   │       └── templates 前台HTML存放文件夹
+│   │           ├── admin 动态后台html模板
+│   │           ├── error 错误页面html模板
+│   │           └── login.html 登录html页面
+│   │
+│   ├── nuoquan-dev-common 公共模块
+│   │   ├── utils 工具类
+│   │   └── pom.xml 项目所有依赖写在这里
+│   │
+│   ├── nuoquan-dev-mapper Dao模块
+│   ├── nuoquan-dev-pojo 对象模块
+│   ├── nuoquan-dev-service 服务层模块
+│   ├── nuoquan-mybatisTool mybatis半自动生成工具 [考虑到自动生成文件会覆盖原有文件，因此把它独立成一个项目，运行后需手动复制文件]
 │   ├── pom.xml  
 │   └── ssl_cert  
-├── sqlRecord.sql  
-├── testBugs  
+├── sqlRecord.sql 数据库更新文档
+├── testBugs Bug记录文档 
 └── updateLog.md  
 ```
 ******
 ## *TODO：* ##
-- 暂无
+- 微信授权登陆->若有记录，无需认证，显示欢迎回来。
 
 ## [Recent Update](./updateLog.md): ##
-**v19.11.8 更新**
-1. 优化 personpublic 页面
-2. 新增 关于页面
-3. 新增 myPublish 页面
+**v20.2.13 更新**
+1. 新增 文章自动过审开关
+2. 新增 文章多关键词搜索，以空格分割
+3. 小改 数据库并修改记录方式为倒叙，详情见 sqlRecord.sql（是后台管理页面-权限相关值的变动，各位重新刷一下）
 
-**v19.10.6 更新**
-1. 优化 登陆逻辑
-2. 修正 自己不接收点赞&评论自己内容的消息
-3. 优化 多个页面视觉体验（guetta）
-4. 优化 邮箱验证逻辑
-5. 新增 按内容&标题&标签搜索（deyan）
+**v20.2.12 更新**
+1. 新增 投票人工审核
+
+**v20.2.11 更新**
+1. 整合 deyan
+2. 新增 投票相关接口（deyan）
+3. 中改 数据库，详情见 sqlRecord.sql
+4. 新增 文章人工审核

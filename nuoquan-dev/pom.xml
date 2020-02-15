@@ -9,6 +9,17 @@
 	
 	<name>诺圈</name>
 	
+	<description>
+		技术栈:
+		uniapp 小程序前端
+		springboot
+		mybatis
+		mybatis-pagehelper
+		redis
+		druid
+		mysql
+	</description>
+	
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>

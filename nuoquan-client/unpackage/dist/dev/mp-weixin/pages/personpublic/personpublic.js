@@ -331,9 +331,9 @@ var loadArticleFlag = false;var _default =
     },
 
     goToChatPage: function goToChatPage() {
-      var friendInfo = this.thisUserInfo;
-      uni.redirectTo({
-        url: '../chatpage/chatpage?friendInfo=' + JSON.stringify(friendInfo) });
+      var encodeData = encodeURIComponent(JSON.stringify(this.thisUserInfo)); // 对数据字符串化并转码，防止特殊字符影响传参
+      uni.navigateTo({
+        url: '../chatpage/chatpage?friendInfo=' + encodeData });
 
     },
 
@@ -346,8 +346,9 @@ var loadArticleFlag = false;var _default =
         currentTab: currentTab,
         thisUserInfo: this.thisUserInfo };
 
-      uni.redirectTo({
-        url: '../followlist/followlist?data=' + JSON.stringify(data) });
+      var encodeData = encodeURIComponent(JSON.stringify(data)); // 对数据字符串化并转码，防止特殊字符影响传参
+      uni.navigateTo({
+        url: '../followlist/followlist?data=' + encodeData });
 
     },
 

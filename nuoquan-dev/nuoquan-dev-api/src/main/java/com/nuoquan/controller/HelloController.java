@@ -3,6 +3,7 @@ package com.nuoquan.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.util.concurrent.Service.State;
@@ -25,14 +26,14 @@ import springfox.documentation.spring.web.json.Json;
  * @author jerrio
  */
 @RestController
-public class HelloController {
+public class HelloController extends BasicController{
 	
 	@Autowired
 	private EmailTool emailTool;
 	
 	@GetMapping("/hello")
 	public String Hello() {
-		return "hello!";
+		return "hello!"+resourceConfig.getName();
 	}
 	
 	@GetMapping("/sendWsMsg")
@@ -130,4 +131,5 @@ public class HelloController {
 			return JSONResult.errorMsg("测试不通过, errcode:" + checkRes.getErrcode() + ", " + checkRes.getErrmsg());
 		}
     }
+    
 }
