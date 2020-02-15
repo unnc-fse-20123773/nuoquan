@@ -16,7 +16,8 @@
 		padding-top: 19px;
 		white-space: nowrap;
 		overflow: hidden;
-		text-overflow: ellipsis;
+		-o-text-overflow: ellipsis;
+		   text-overflow: ellipsis;
 }
 .cardBody {
 		/*position: relative;
@@ -67,7 +68,8 @@
 		font-size: 12px;
 		line-height: 13px;
 		overflow: hidden;
-		text-overflow: ellipsis;
+		-o-text-overflow: ellipsis;
+		   text-overflow: ellipsis;
 }
 .bottomBar {
 		/*width: 100%;

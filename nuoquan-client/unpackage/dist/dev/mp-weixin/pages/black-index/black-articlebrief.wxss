@@ -69,7 +69,8 @@
 	color: #888888;
 	vertical-align: top;
 	max-width: 85px;
-	text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+	   text-overflow: ellipsis;
 }
 .icons {
 	position: absolute;

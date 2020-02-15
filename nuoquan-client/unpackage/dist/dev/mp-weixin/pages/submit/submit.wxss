@@ -46,9 +46,10 @@ page {
 .finish-button {
 		width: 68px;
 		height: 26px;
-		background: -webkit-linear-gradient(132deg, rgba(251, 118, 118, 1) 0%, rgba(254, 192, 77, 1) 100%);
+		background: -o-linear-gradient(132deg, rgba(251, 118, 118, 1) 0%, rgba(254, 192, 77, 1) 100%);
 		background: linear-gradient(318deg, rgba(251, 118, 118, 1) 0%, rgba(254, 192, 77, 1) 100%);
-		box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+		-webkit-box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+		        box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
 		border-radius: 8px;
 		font-size: 14px;
 		line-height: 26px;
@@ -63,9 +64,10 @@ page {
 		margin-top: 8px;
 		width: 99px;
 		height: 26px;
-		background: -webkit-linear-gradient(132deg, rgba(251, 118, 118, 1) 0%, rgba(254, 192, 77, 1) 100%);
+		background: -o-linear-gradient(132deg, rgba(251, 118, 118, 1) 0%, rgba(254, 192, 77, 1) 100%);
 		background: linear-gradient(318deg, rgba(251, 118, 118, 1) 0%, rgba(254, 192, 77, 1) 100%);
-		box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+		-webkit-box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+		        box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
 		border-radius: 8px;
 
 		font-size: 14px;
@@ -164,14 +166,18 @@ page {
 .picturearea {
 		display: -webkit-box;
 		display: -webkit-flex;
+		display: -ms-flexbox;
 		display: flex;
 		-webkit-box-pack: justify;
 		-webkit-justify-content: space-between;
+		    -ms-flex-pack: justify;
 		        justify-content: space-between;
 		-webkit-flex-wrap: wrap;
+		    -ms-flex-wrap: wrap;
 		        flex-wrap: wrap;
 		-webkit-box-flex: 0;
 		-webkit-flex: 0 0 auto;
+		    -ms-flex: 0 0 auto;
 		        flex: 0 0 auto;
 		margin-top: 10px;
 }
@@ -197,7 +203,8 @@ page {
 		width: 558rpx;
 		height: 42px;
 		background: rgba(252, 192, 65, 1);
-		box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+		-webkit-box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+		        box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
 		border-radius: 8px;
 
 		font-size: 18px;

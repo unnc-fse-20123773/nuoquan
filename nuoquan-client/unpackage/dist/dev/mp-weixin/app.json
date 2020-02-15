@@ -65,14 +65,6 @@
     ]
   },
   "permission": {},
-<<<<<<< HEAD
-<<<<<<< HEAD
   "usingComponents": {},
-  "sitemapLocation": "sitemap92.json"
-=======
-  "usingComponents": {}
->>>>>>> master
-=======
-  "usingComponents": {}
->>>>>>> master
+  "sitemapLocation": "sitemap.json"
 }

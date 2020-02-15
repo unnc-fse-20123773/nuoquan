@@ -1,13 +1,5 @@
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 @-webkit-keyframes slidefromleft-data-v-22453d8a {
-=======
-@-webkit-keyframes slidefromleft-data-v-4391a936 {
->>>>>>> master
-=======
-@-webkit-keyframes slidefromleft-data-v-4391a936 {
->>>>>>> master
 from {
 			display: none;
 }
@@ -15,15 +7,7 @@ to {
 			display: block;
 }
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
 @keyframes slidefromleft-data-v-22453d8a {
-=======
-@keyframes slidefromleft-data-v-4391a936 {
->>>>>>> master
-=======
-@keyframes slidefromleft-data-v-4391a936 {
->>>>>>> master
 from {
 			display: none;
 }
@@ -31,115 +15,52 @@ to {
 			display: block;
 }
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
 .bottomLayerCoverScreen.data-v-22453d8a {
-=======
-.bottomLayerCoverScreen.data-v-4391a936 {
->>>>>>> master
-=======
-.bottomLayerCoverScreen.data-v-4391a936 {
->>>>>>> master
 		position: fixed;
 		width: 750rpx;
 		height: 100%;
 		z-index: 5;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
 .mainPageLeft.data-v-22453d8a {
 		background: #fcfcfc;
 		-webkit-animation: slidefromleft-data-v-22453d8a 3s;
 		        animation: slidefromleft-data-v-22453d8a 3s;
-=======
-=======
->>>>>>> master
-.mainPageLeft.data-v-4391a936 {
-		background: #fcfcfc;
-		-webkit-animation: slidefromleft-data-v-4391a936 3s;
-		        animation: slidefromleft-data-v-4391a936 3s;
-<<<<<<< HEAD
->>>>>>> master
-=======
->>>>>>> master
 		width: 174px;
 		height: 100%;
 		position: fixed;
 		left: 0;
 		top: 0;
-		box-shadow: 1px 0px 5px #a6a6a6;
+		-webkit-box-shadow: 1px 0px 5px #a6a6a6;
+		        box-shadow: 1px 0px 5px #a6a6a6;
 		border-bottom-right-radius: 25px;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
 .topInfoArea.data-v-22453d8a {
 		height: 60px;
 		margin-top: 29px;
 }
 .topLeft.data-v-22453d8a {
-=======
-=======
->>>>>>> master
-.topInfoArea.data-v-4391a936 {
-		height: 60px;
-		margin-top: 29px;
-}
-.topLeft.data-v-4391a936 {
-<<<<<<< HEAD
->>>>>>> master
-=======
->>>>>>> master
 		margin-left: 20px;
 		display: inline-block;
 		width: 60px;
 		vertical-align: top;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
 .touxiang.data-v-22453d8a {
-=======
-.touxiang.data-v-4391a936 {
->>>>>>> master
-=======
-.touxiang.data-v-4391a936 {
->>>>>>> master
 		height: 60px;
 		width: 60px;
 		border-radius: 60px;
 		display: block;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
 .topRight.data-v-22453d8a {
-=======
-.topRight.data-v-4391a936 {
->>>>>>> master
-=======
-.topRight.data-v-4391a936 {
->>>>>>> master
 		display: inline-block;
 		margin-left: 8px;
 		height: 60px;
 		width: 80px;
 		vertical-align: bottom;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
 .personData.data-v-22453d8a {
 		padding-top: 17px;
 }
 .hotNum.data-v-22453d8a {
-=======
-=======
->>>>>>> master
-.personData.data-v-4391a936 {
-		padding-top: 17px;
-}
-.hotNum.data-v-4391a936 {
-<<<<<<< HEAD
->>>>>>> master
-=======
->>>>>>> master
 		position: relative;
 		padding-left: 33px;
 		font-size: 15px;
@@ -147,15 +68,7 @@ to {
 		font-weight: bold;
 		font-style: italic;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
 .hotNum.data-v-22453d8a::after {
-=======
-.hotNum.data-v-4391a936::after {
->>>>>>> master
-=======
-.hotNum.data-v-4391a936::after {
->>>>>>> master
 		content: "\5F71\54CD\529B";
 		font-weight: normal;
 		font-style: normal;
@@ -163,15 +76,7 @@ to {
 		color: #000000;
 		padding-left: 9px;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
 .yourFocus.data-v-22453d8a {
-=======
-.yourFocus.data-v-4391a936 {
->>>>>>> master
-=======
-.yourFocus.data-v-4391a936 {
->>>>>>> master
 		position: relative;
 		width:71px;
 		height:43;
@@ -181,15 +86,7 @@ to {
 		font-size: 13px;
 		font-weight: bold;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
 .yourFocus.data-v-22453d8a::before {
-=======
-.yourFocus.data-v-4391a936::before {
->>>>>>> master
-=======
-.yourFocus.data-v-4391a936::before {
->>>>>>> master
 		content: "\4F60\5173\6CE8\7684";
 		position: absolute;
 		top:unset;
@@ -203,15 +100,7 @@ to {
 		line-height: 8px;
 		vertical-align: bottom;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
 .focusYou.data-v-22453d8a {
-=======
-.focusYou.data-v-4391a936 {
->>>>>>> master
-=======
-.focusYou.data-v-4391a936 {
->>>>>>> master
 	position: relative;
 	width:71px;
 	height:43;
@@ -221,15 +110,7 @@ to {
 	font-size: 13px;
 	font-weight: bold;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
 .focusYou.data-v-22453d8a::before {
-=======
-.focusYou.data-v-4391a936::before {
->>>>>>> master
-=======
-.focusYou.data-v-4391a936::before {
->>>>>>> master
 		content: "\5173\6CE8\4F60\7684";
 		position: absolute;
 		top:unset;
@@ -243,8 +124,6 @@ to {
 		line-height: 8px;
 		vertical-align: bottom;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
 .customHover.data-v-22453d8a{
 	background: #F4F5F6;
 }
@@ -255,23 +134,6 @@ to {
 		position: relative;
 }
 .noticeNum.data-v-22453d8a {
-=======
-=======
->>>>>>> master
-.customHover.data-v-4391a936{
-	background: #F4F5F6;
-}
-.personPageList.data-v-4391a936 {
-		margin-top: 56px;
-}
-.pageLine.data-v-4391a936 {
-		position: relative;
-}
-.noticeNum.data-v-4391a936 {
-<<<<<<< HEAD
->>>>>>> master
-=======
->>>>>>> master
 		position: absolute;
 		right: 11px;
 		top: 16px;
@@ -282,23 +144,13 @@ to {
 		border-radius: 3px;
 		padding: 0 2px;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
 button.data-v-22453d8a {
-=======
-button.data-v-4391a936 {
->>>>>>> master
-=======
-button.data-v-4391a936 {
->>>>>>> master
 		background: #fcfcfc;
 		border-radius: 0;
 		text-align: left;
 		margin: 0;
 		padding: 0 33px;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
 button.data-v-22453d8a::after {
 		border: none;
 }
@@ -306,34 +158,12 @@ button-hover.data-v-22453d8a {
 		background: #000000;
 }
 .pageLine image.data-v-22453d8a {
-=======
-=======
->>>>>>> master
-button.data-v-4391a936::after {
-		border: none;
-}
-button-hover.data-v-4391a936 {
-		background: #000000;
-}
-.pageLine image.data-v-4391a936 {
-<<<<<<< HEAD
->>>>>>> master
-=======
->>>>>>> master
 		width: 20px;
 		height: 20px;
 		display: inline-block;
 		vertical-align: middle;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
 .pageLine view.data-v-22453d8a {
-=======
-.pageLine view.data-v-4391a936 {
->>>>>>> master
-=======
-.pageLine view.data-v-4391a936 {
->>>>>>> master
 		display: inline-block;
 		font-size: 13px;
 		font-weight: bold;
