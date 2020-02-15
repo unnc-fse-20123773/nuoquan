@@ -25,7 +25,8 @@
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "Nottinghome",
     "navigationBarBackgroundColor": "#fdd041",
-    "backgroundColor": "#F8F8F8"
+    "backgroundColor": "#F8F8F8",
+    "navigationStyle": "custom"
   },
   "tabBar": {
     "custom": true,
@@ -66,5 +67,5 @@
     }
   },
   "usingComponents": {},
-  "sitemapLocation": "sitemap73.json"
+  "sitemapLocation": "sitemap15.json"
 }

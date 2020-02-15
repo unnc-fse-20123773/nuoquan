@@ -47,6 +47,7 @@ export default {
 	},
 
 	onLoad() {
+		console.log(this);
 		var userInfo = this.getGlobalUserInfo();
 		if (this.isNull(userInfo)) {
 			uni.redirectTo({
@@ -66,6 +67,7 @@ export default {
 			// from submit
 			this.refreshArticle();
 		});
+		this.screenSize(); //获取手机型号
 		// [测试代码块]
 	},
 
@@ -75,8 +77,8 @@ export default {
 	},
 
 	onShow() {
-		 this.setTabBarIndex(0) //index为当前tab的索引
-		
+		this.setTabBarIndex(0); //index为当前tab的索引
+
 		var userInfo = this.getGlobalUserInfo(); // 查看用户是否登录
 		if (!this.isNull(userInfo)) {
 			// 设置 userInfo 传给 mainpagetop 组件
@@ -102,8 +104,6 @@ export default {
 				title: '加载中...'
 			});
 			setTimeout(() => {
-				
-				
 				if (loadArticleFlag) {
 					loadArticleFlag = false; // 解锁
 					uni.hideLoading();
@@ -194,6 +194,7 @@ export default {
 					that.topArticles = res.data.data;
 				}
 			});
+			console.log("topArticles" + this.topArticles);
 		},
 
 		/**

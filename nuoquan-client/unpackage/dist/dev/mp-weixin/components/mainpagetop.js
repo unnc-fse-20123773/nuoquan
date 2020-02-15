@@ -558,6 +558,30 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _search = _interopRequireDefault(__webpack_require__(/*! ../pages/search/search */ 106));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ 187));};var _default =
 {
   props: {
@@ -586,7 +610,7 @@ var _search = _interopRequireDefault(__webpack_require__(/*! ../pages/search/sea
       // console.log(this.showMainPageLeft);
     },
     controlShowSearch: function controlShowSearch(a) {
-      console.log("this is controlShowSearch, receive data will be appied");
+      console.log('this is controlShowSearch, receive data will be appied');
       console.log(a);
       this.showSearch = a;
     },

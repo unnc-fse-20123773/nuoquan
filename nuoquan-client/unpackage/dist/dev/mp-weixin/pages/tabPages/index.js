@@ -195,6 +195,7 @@ var _default = {
 
 
   onLoad: function onLoad() {var _this = this;
+    console.log(this);
     var userInfo = this.getGlobalUserInfo();
     if (this.isNull(userInfo)) {
       uni.redirectTo({
@@ -214,6 +215,7 @@ var _default = {
       // from submit
       _this.refreshArticle();
     });
+    this.screenSize(); //获取手机型号
     // [测试代码块]
   },
 
@@ -250,8 +252,6 @@ var _default = {
         title: '加载中...' });
 
       setTimeout(function () {
-
-
         if (loadArticleFlag) {
           loadArticleFlag = false; // 解锁
           uni.hideLoading();
@@ -342,6 +342,7 @@ var _default = {
           that.topArticles = res.data.data;
         } });
 
+      console.log("topArticles" + this.topArticles);
     },
 
     /**
