@@ -10,8 +10,8 @@
 /* WEBPACK VAR INJECTION */(function(createApp, uni) {__webpack_require__(/*! uni-pages */ 4);__webpack_require__(/*! @dcloudio/uni-stat */ 5);
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
 var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ 9));
-var _store = _interopRequireDefault(__webpack_require__(/*! ./store */ 15));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;} // 引入 vuex 的 store 对象
-// import {mapMutations} from 'vuex';
+var _store = _interopRequireDefault(__webpack_require__(/*! ./store */ 15));
+var _router = _interopRequireDefault(__webpack_require__(/*! common/router.js */ 378));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
 
 var app = new _vue.default(_objectSpread({
   store: _store.default },
@@ -27,21 +27,21 @@ _vue.default.prototype.tagColors = ['#FE5F55', '#40A792', '#FDD041', '#5CA0D3', 
 
 _vue.default.prototype.$store = _store.default;
 
-// Vue.prototype.$serverUrl = "http://127.0.0.1:8080"
-// Vue.prototype.$wsServerUrl = "wss://127.0.0.1:8088/ws"
+_vue.default.prototype.$serverUrl = "http://127.0.0.1:8080";
+_vue.default.prototype.$wsServerUrl = "wss://127.0.0.1:8088/ws";
 
 // 服务器地址
 // Vue.prototype.$serverUrl = "http://129.28.130.27:8080/nottinghome"
 // Vue.prototype.$wsServerUrl = "ws://129.28.130.27:8088/ws"
 
 // 安全服务器地址
-_vue.default.prototype.$serverUrl = "https://www.checkchack.cn:8443/nottinghome";
-_vue.default.prototype.$wsServerUrl = "wss://www.checkchack.cn:8088/ws";
+// Vue.prototype.$serverUrl = "https://www.checkchack.cn:8443/nottinghome"
+// Vue.prototype.$wsServerUrl = "wss://www.checkchack.cn:8088/ws"
 
 /**
-                                                                          * 获取当前用户信息（我）
-                                                                          * @param {Object} user
-                                                                          */
+ * 获取当前用户信息（我）
+ * @param {Object} user
+ */
 _vue.default.prototype.setGlobalUserInfo = function (user) {
   uni.setStorageSync('userInfo', user);
 };

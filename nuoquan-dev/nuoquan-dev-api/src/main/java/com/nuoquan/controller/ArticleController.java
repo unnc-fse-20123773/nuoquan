@@ -46,15 +46,6 @@ import io.swagger.annotations.ApiParam;
 @RequestMapping("/article")
 public class ArticleController extends BasicController {
 
-	@Autowired
-	private ArticleService articleService;
-	
-	@Autowired
-	private UserService userService;
-	
-	@Autowired
-	private WeChatService weChatService;
-
 	@Value("${upload.maxFaceImageSize}")
 	private long MAX_FACE_IMAGE_SIZE;
 
@@ -574,5 +565,4 @@ public class ArticleController extends BasicController {
 		}
 		return JSONResult.ok();
 	}
-	
 }

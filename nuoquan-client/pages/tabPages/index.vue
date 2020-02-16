@@ -47,7 +47,6 @@ export default {
 	},
 
 	onLoad() {
-		console.log(this);
 		var userInfo = this.getGlobalUserInfo();
 		if (this.isNull(userInfo)) {
 			uni.redirectTo({
@@ -77,8 +76,8 @@ export default {
 	},
 
 	onShow() {
-		this.setTabBarIndex(0); //index为当前tab的索引
-
+		 this.setTabBarIndex(0) //index为当前tab的索引
+		
 		var userInfo = this.getGlobalUserInfo(); // 查看用户是否登录
 		if (!this.isNull(userInfo)) {
 			// 设置 userInfo 传给 mainpagetop 组件
@@ -194,7 +193,6 @@ export default {
 					that.topArticles = res.data.data;
 				}
 			});
-			console.log("topArticles" + this.topArticles);
 		},
 
 		/**

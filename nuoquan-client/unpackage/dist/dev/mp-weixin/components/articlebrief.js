@@ -1,6 +1,6 @@
 (global["webpackJsonp"] = global["webpackJsonp"] || []).push([["components/articlebrief"],{
 
-/***/ 133:
+/***/ 131:
 /*!**********************************************************************************!*\
   !*** D:/XMQ/nuoquan/nuoquan-client/main.js?{"page":"components%2Farticlebrief"} ***!
   \**********************************************************************************/
@@ -102,13 +102,12 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var f0 = _vm._f("timeDeal")(_vm.thisArticle.createDate)
-
+  var m0 = _vm.timeDeal(_vm.thisArticle.createDate)
   _vm.$mp.data = Object.assign(
     {},
     {
       $root: {
-        f0: f0
+        m0: m0
       }
     }
   )
@@ -366,9 +365,9 @@ var _default =
 
     },
     goToDetail: function goToDetail() {
-      var encodeData = encodeURIComponent(JSON.stringify(this.thisArticle)); // 对数据字符串化并转码，防止特殊字符影响传参
+      // var encodeData = encodeURIComponent(JSON.stringify(this.thisArticle)); // 对数据字符串化并转码，防止特殊字符影响传参
       uni.navigateTo({
-        url: '/pages/detail/detail?data=' + encodeData });
+        url: '/pages/detail/detail?data=' + this.thisArticle.id });
 
     },
     goToPersonPublic: function goToPersonPublic(userId) {
@@ -458,5 +457,5 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ })
 
-},[[133,"common/runtime","common/vendor"]]]);
+},[[131,"common/runtime","common/vendor"]]]);
 //# sourceMappingURL=../../.sourcemap/mp-weixin/components/articlebrief.js.map

@@ -158,6 +158,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 var _default =
+
 {
   props: {
     commentList: {
@@ -240,7 +241,14 @@ var _default =
       this.order = new_order;
       console.log(new_order);
       console.log(this.order);
+    },
+    goToPersonPublic: function goToPersonPublic(userId) {
+      // router.goToPersonPublic(); // 全局方法
+      uni.navigateTo({
+        url: '/pages/personpublic/personpublic?userId=' + userId });
+
     } }
+
   //method
 };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

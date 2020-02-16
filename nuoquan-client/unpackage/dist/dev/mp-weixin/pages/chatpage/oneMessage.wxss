@@ -1,13 +1,13 @@
 
-.touxiang.data-v-305d6052 {
+.touxiang.data-v-d203d3ca {
 		width: 60rpx;
 		height: 60rpx;
 		border-radius: 60rpx;
 }
-.picMessage.data-v-305d6052{
+.picMessage.data-v-d203d3ca{
 		max-width: 428rpx;
 }
-.bottomBar.data-v-305d6052 {
+.bottomBar.data-v-d203d3ca {
 		display: -webkit-box;
 		display: -webkit-flex;
 		display: flex;

@@ -8,7 +8,7 @@
 		<view class="userLine hor_center">
 			<image :src="thisArticle.faceImg" class="touxiang" @tap="goToPersonPublic(thisArticle.userId)"></image>
 			<view class="name">{{ thisArticle.nickname }}</view>
-			<view class="time" :style="timeLeft">{{ thisArticle.createDate | timeDeal }}</view>
+			<view class="time" :style="timeLeft">{{ timeDeal(thisArticle.createDate) }}</view>
 		</view>
 		<!-- 标签行 -->
 		<view class="tagsLine" @click="goToDetail()">
@@ -219,9 +219,9 @@ export default {
 			});
 		},
 		goToDetail() {
-			var encodeData = encodeURIComponent(JSON.stringify(this.thisArticle)); // 对数据字符串化并转码，防止特殊字符影响传参
+			// var encodeData = encodeURIComponent(JSON.stringify(this.thisArticle)); // 对数据字符串化并转码，防止特殊字符影响传参
 			uni.navigateTo({
-				url: '/pages/detail/detail?data=' + encodeData
+				url: '/pages/detail/detail?data=' + this.thisArticle.id
 			});
 		},
 		goToPersonPublic(userId) {

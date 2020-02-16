@@ -40,6 +40,7 @@
 </template>
 
 <script>
+	
 	export default {
 		props: {
 			commentList: {
@@ -122,7 +123,14 @@
 				this.order = new_order ;
 				console.log(new_order);
 				console.log(this.order);
+			},
+			goToPersonPublic(userId){
+				// router.goToPersonPublic(); // 全局方法
+				uni.navigateTo({
+					url: '/pages/personpublic/personpublic?userId=' + userId,
+				})
 			}
+			
 		}, //method
 
 

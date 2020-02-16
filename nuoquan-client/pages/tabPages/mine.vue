@@ -44,7 +44,7 @@
 			</view>
 		</view>
 		<view class="pagejump_box">
-			<view class="item1" @click="jumpToProfile()">修改个人信息</view>
+			<view class="item1" @click="jumpToProfile()">个人信息</view>
 			<view class="line1"></view>
 			<view class="item2" @click="jumpToMyPublish()">我的发布</view>
 			<view class="line2"></view>
@@ -132,8 +132,8 @@ export default {
 			});
 		},
 		jumpToProfile:function() {
-			uni.switchTab({
-				url: '../tabPages/profile',
+			uni.navigateTo({
+				url: '../profile/profile',
 			});
 		},
 		goToChatPage: function() {

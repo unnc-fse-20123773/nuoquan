@@ -159,7 +159,7 @@
 					url: that.$serverUrl + '/article/searchArticleYANG',
 					method: "POST",
 					data: {
-						articleContent: that.searchKeyWords,
+						searchText: that.searchKeyWords,
 						userId: that.userInfo.id,
 						isSaveRecord: isSaveRecord,
 						page: page,

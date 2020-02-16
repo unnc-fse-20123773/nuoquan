@@ -125,68 +125,77 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var mySharePoster = function mySharePoster() {return Promise.all(/*! import() | components/shareposter/myshareposter */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/shareposter/myshareposter")]).then(__webpack_require__.bind(null, /*! components/shareposter/myshareposter.vue */ 379));};var _default =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {
   name: "detail_1_article",
   props: {
     articleCard: "",
     userInfo: "" },
 
-  components: {},
+  components: {
+    mySharePoster: mySharePoster },
+
   data: function data() {
     return {
       serverUrl: this.$serverUrl,
       singleImgWidth: "", //一图调整宽度
-      tagColorList: [] };
+      tagColorList: [],
 
-
+      share: false // 隐藏/显示share画布
+    };
   },
   mounted: function mounted() {
     // 随机生成颜色
@@ -290,6 +299,10 @@ var _default =
         current: index,
         urls: arr });
 
+    },
+
+    toggleShare: function toggleShare() {
+      this.share = !this.share;
     },
 
     aboutImg: function aboutImg(index) {

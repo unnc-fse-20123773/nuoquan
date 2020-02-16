@@ -267,8 +267,8 @@ var _default = { data: function data() {return { screenWidth: 350, serverUrl: th
 
     },
     jumpToProfile: function jumpToProfile() {
-      uni.switchTab({
-        url: '../tabPages/profile' });
+      uni.navigateTo({
+        url: '../profile/profile' });
 
     },
     goToChatPage: function goToChatPage() {

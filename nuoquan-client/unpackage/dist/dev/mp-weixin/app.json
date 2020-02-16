@@ -20,7 +20,8 @@
     "pages/myPublish/myPublish",
     "pages/about/about",
     "pages/hot/hot",
-    "pages/profile/profile"
+    "pages/profile/profile",
+    "components/shareposter/myshareposter"
   ],
   "subPackages": [],
   "window": {
