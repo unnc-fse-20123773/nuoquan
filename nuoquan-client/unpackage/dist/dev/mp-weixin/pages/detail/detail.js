@@ -107,7 +107,11 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+<<<<<<< HEAD
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var detail_1_article = function detail_1_article() {return __webpack_require__.e(/*! import() | pages/detail/detail_1_article */ "pages/detail/detail_1_article").then(__webpack_require__.bind(null, /*! ./detail_1_article.vue */ 222));};var detail_2_comments = function detail_2_comments() {return __webpack_require__.e(/*! import() | pages/detail/detail_2_comments */ "pages/detail/detail_2_comments").then(__webpack_require__.bind(null, /*! ./detail_2_comments.vue */ 229));};
+=======
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 77));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var detail_1_article = function detail_1_article() {return Promise.all(/*! import() | pages/detail/detail_1_article */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/detail/detail_1_article")]).then(__webpack_require__.bind(null, /*! ./detail_1_article.vue */ 229));};var detail_2_comments = function detail_2_comments() {return __webpack_require__.e(/*! import() | pages/detail/detail_2_comments */ "pages/detail/detail_2_comments").then(__webpack_require__.bind(null, /*! ./detail_2_comments.vue */ 236));};
+>>>>>>> master
 
 
 
@@ -221,20 +225,23 @@ var uploadFlag = false;var _default =
     console.log("返回");
   },
 
-  onLoad: function onLoad(options) {
-    this.articleCard = JSON.parse(decodeURIComponent(options.data));
-    console.log(this.articleCard);
-    var userInfo = this.getGlobalUserInfo();
-    if (!this.isNull(userInfo)) {
-      this.userInfo = this.getGlobalUserInfo();
-    }
-    var page = this.currentPage;
-    this.getComments(page);
+  onLoad: function () {var _onLoad = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(options) {var userInfo, articleId, res, page;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+              //获取全局用户信息
+              userInfo = this.getGlobalUserInfo();
+              if (!this.isNull(userInfo)) {
+                this.userInfo = this.getGlobalUserInfo();
+              }
 
+              articleId = options.data;_context.next = 5;return (
+                this.getArticleById(articleId, this.userInfo.id));case 5:res = _context.sent;
+              // console.log(res);
+              this.articleCard = res;
 
+              page = this.currentPage;
+              this.getComments(page);
 
-    this.addViewCount();
-  },
+              this.addViewCount();case 10:case "end":return _context.stop();}}}, _callee, this);}));function onLoad(_x) {return _onLoad.apply(this, arguments);}return onLoad;}(),
+
 
   onShareAppMessage: function onShareAppMessage(res) {
     if (res.from === 'menu') {// 来自右上角菜单的分享
@@ -248,6 +255,26 @@ var uploadFlag = false;var _default =
   },
 
   methods: {
+    getArticleById: function getArticleById(articleId, userId) {var _this = this;
+      var that = this;
+      return new Promise(function (resolve, reject) {
+        uni.request({
+          url: _this.$serverUrl + '/article/getArticleById',
+          method: 'POST',
+          header: {
+            'content-type': 'application/x-www-form-urlencoded' },
+
+          data: {
+            articleId: articleId,
+            userId: userId },
+
+          success: function success(res) {
+            resolve(res.data.data);
+          } });
+
+      });
+    },
+
     addViewCount: function addViewCount() {
       uni.request({
         url: this.$serverUrl + '/article/addViewCount',
@@ -361,7 +388,7 @@ var uploadFlag = false;var _default =
 
     },
 
-    getComments: function getComments(page) {var _this = this;
+    getComments: function getComments(page) {var _this2 = this;
       var that = this;
       uni.showLoading({
         title: "加载中..." });
@@ -393,7 +420,7 @@ var uploadFlag = false;var _default =
             console.log(res);
           }
           uni.hideLoading();
-          _this.control_scroll_butoon(); //获取评论数据后，生成卡片后，判断总页面高度，控制是否显示回到顶部按钮
+          _this2.control_scroll_butoon(); //获取评论数据后，生成卡片后，判断总页面高度，控制是否显示回到顶部按钮
         } });
 
     },

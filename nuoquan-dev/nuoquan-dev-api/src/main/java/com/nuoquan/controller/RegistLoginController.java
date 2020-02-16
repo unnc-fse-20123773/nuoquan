@@ -25,9 +25,6 @@ import io.swagger.annotations.ApiOperation;
 @Api(value="用户注册登录的接口", tags= {"注册和登录的controller"})
 public class RegistLoginController extends BasicController{
 	
-	@Autowired
-	private UserService userService;
-	
 	@ApiOperation(value="用户注册", notes="用户注册的接口")
 	@PostMapping("/regist")
 	// 因为出传进来是一个json对象，需要RequestBody

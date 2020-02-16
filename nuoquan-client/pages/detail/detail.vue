@@ -112,18 +112,21 @@ import detail_2_comments from "./detail_2_comments.vue"
 			console.log("返回")
 		},
 		
-		onLoad(options) {
-			this.articleCard = JSON.parse(decodeURIComponent(options.data));
-			console.log(this.articleCard);
+		async onLoad(options) {
+			//获取全局用户信息
 			var userInfo = this.getGlobalUserInfo();
 			if (!this.isNull(userInfo)) {
 				this.userInfo = this.getGlobalUserInfo();
 			}
+			
+			var articleId = options.data;
+			var res = await this.getArticleById(articleId, this.userInfo.id);
+			// console.log(res);
+			this.articleCard = res;
+			
 			var page = this.currentPage;
 			this.getComments(page);
 
-			
-			
 			this.addViewCount();
 		},
 
@@ -139,6 +142,26 @@ import detail_2_comments from "./detail_2_comments.vue"
 		},
 		
 		methods: {
+			getArticleById(articleId, userId){
+				var that = this;
+				return new Promise((resolve, reject) => {
+					uni.request({
+						url: this.$serverUrl + '/article/getArticleById',
+						method: 'POST',
+						header: {
+							'content-type': 'application/x-www-form-urlencoded'
+						},
+						data: {
+							articleId: articleId,
+							userId: userId,
+						},
+						success: (res) => {
+							resolve(res.data.data)
+						},
+					})
+				})
+			},
+			
 			addViewCount(){
 				uni.request({
 					url: this.$serverUrl + '/article/addViewCount',

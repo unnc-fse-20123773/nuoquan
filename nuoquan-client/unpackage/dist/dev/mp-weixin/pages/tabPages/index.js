@@ -152,7 +152,11 @@ var _vuex = __webpack_require__(/*! vuex */ 12);function _interopRequireDefault(
 //
 //
 //
+<<<<<<< HEAD
 var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! import() | components/mainpagetop */ "components/mainpagetop").then(__webpack_require__.bind(null, /*! ../../components/mainpagetop.vue */ 199));};var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ 208));};var loadArticleFlag = false; // 为加载文章加锁
+=======
+var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! import() | components/mainpagetop */ "components/mainpagetop").then(__webpack_require__.bind(null, /*! ../../components/mainpagetop.vue */ 206));};var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ 215));};var loadArticleFlag = false; // 为加载文章加锁
+>>>>>>> master
 var timer = null; // 为头部做定时器收起
 var _default = { data: function data() {return { title: 'Hello', hottitlelist: ['热门标题111', '热门标题222', '热门标题333'], showlist: [], topArticles: '', topHeight: 160, userInfo: '', totalPage: 1, currentPage: 1, scrollTop: 0, old: {
         scrollTop: 0 } };
@@ -667,9 +671,9 @@ var _default =
 
     },
     goToDetail: function goToDetail() {
-      var encodeData = encodeURIComponent(JSON.stringify(this.thisArticle)); // 对数据字符串化并转码，防止特殊字符影响传参
+      // var encodeData = encodeURIComponent(JSON.stringify(this.thisArticle)); // 对数据字符串化并转码，防止特殊字符影响传参
       uni.navigateTo({
-        url: '/pages/detail/detail?data=' + encodeData });
+        url: '/pages/detail/detail?data=' + this.thisArticle.id });
 
     },
     goToPersonPublic: function goToPersonPublic(userId) {

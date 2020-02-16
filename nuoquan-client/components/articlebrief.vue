@@ -211,9 +211,9 @@ export default {
 			});
 		},
 		goToDetail() {
-			var encodeData = encodeURIComponent(JSON.stringify(this.thisArticle)); // 对数据字符串化并转码，防止特殊字符影响传参
+			// var encodeData = encodeURIComponent(JSON.stringify(this.thisArticle)); // 对数据字符串化并转码，防止特殊字符影响传参
 			uni.navigateTo({
-				url: '/pages/detail/detail?data=' + encodeData
+				url: '/pages/detail/detail?data=' + this.thisArticle.id
 			});
 		},
 		goToPersonPublic(userId) {

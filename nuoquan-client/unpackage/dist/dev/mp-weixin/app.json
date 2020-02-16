@@ -21,7 +21,7 @@
     "pages/about/about",
     "pages/hot/hot",
     "pages/profile/profile",
-    "components/sharePoster/sharePoster"
+    "components/shareposter/myshareposter"
   ],
   "subPackages": [],
   "window": {

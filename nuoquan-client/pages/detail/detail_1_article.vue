@@ -39,26 +39,35 @@
 		<view class="menu-bar">
 			<view class="like" :class="{liked:articleCard.isLike}" @tap="swLikeArticle()">{{articleCard.likeNum}}</view>
 			<view class="comment" @tap="controlInputInDetailArticle">{{articleCard.commentNum}}</view>
-			<view class="share"></view>
+			<view class="share" @tap="toggleShare()"></view>
 			<view class="back" @tap="menu_back()"></view>
+		</view>
+		
+		<view v-if="share">
+			<mySharePoster :articleCard='articleCard'></mySharePoster>
 		</view>
 	</view>
 </template>
 
 <script>
+	import mySharePoster from 'components/shareposter/myshareposter.vue'
+	
 	export default {
 		name: "detail_1_article",
 		props: {
 			articleCard: "",
 			userInfo:"",
 		},
-		components: {},
+		components: {
+			mySharePoster
+		},
 		data() {
 			return {
 				serverUrl: this.$serverUrl,
 				singleImgWidth:"", //一图调整宽度
 				tagColorList: [],
 				
+				share: false, // 隐藏/显示share画布
 			};
 		},
 		mounted() {
@@ -163,6 +172,10 @@
 					current: index,
 					urls:arr,
 				})
+			},
+			
+			toggleShare(){
+				this.share = !this.share;
 			},
 			
 			aboutImg: function(index){

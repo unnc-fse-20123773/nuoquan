@@ -87,7 +87,7 @@
             "style" : {}
         },
         {
-            "path" : "components/sharePoster/sharePoster",
+            "path" : "components/shareposter/myshareposter",
             "style" : {}
         }
     ],
@@ -141,8 +141,8 @@
 				"path": "pages/tabPages/index", //启动页面，必选
 				"query": "" //启动参数，在页面的onLoad函数里面得到
 			},{
-				"name": "sharePoster", //模式名称
-				"path": "components/sharePoster/sharePoster", //启动页面，必选
+				"name": "shareposter", //模式名称
+				"path": "components/shareposter/myshareposter", //启动页面，必选
 				"query": "" //启动参数，在页面的onLoad函数里面得到
 			},{
 				"name": "signin", //模式名称
