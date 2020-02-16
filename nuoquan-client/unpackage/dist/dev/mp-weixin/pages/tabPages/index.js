@@ -146,7 +146,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 23));
 
 
 
@@ -166,24 +166,24 @@ var _articlebrief = _interopRequireDefault(__webpack_require__(/*! ../../compone
 
 
 
-var _vuex = __webpack_require__(/*! vuex */ 16);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! import() | components/mainpagetop */ "components/mainpagetop").then(__webpack_require__.bind(null, /*! ../../components/mainpagetop.vue */ 194));};var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ 203));};var loadArticleFlag = false; // 为加载文章加锁
+var _vuex = __webpack_require__(/*! vuex */ 16);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! import() | components/mainpagetop */ "components/mainpagetop").then(__webpack_require__.bind(null, /*! ../../components/mainpagetop.vue */ 196));};var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ 205));};
+
+var loadArticleFlag = false; // 为加载文章加锁
 var timer = null; // 为头部做定时器收起
-var _default = { data: function data() {return { title: 'Hello', hottitlelist: ['热门标题111', '热门标题222', '热门标题333'], showlist: [], topArticles: '', topHeight: 139, userInfo: '', totalPage: 1, currentPage: 1, scrollTop: 0, old: {
+var _default = {
+  data: function data() {
+    return {
+      title: 'Hello',
+      hottitlelist: ['热门标题111', '热门标题222', '热门标题333'],
+      showlist: [],
+      topArticles: '',
+      roleup: false,
+
+      userInfo: '',
+      totalPage: 1,
+      currentPage: 1,
+      scrollTop: 0,
+      old: {
         scrollTop: 0 } };
 
 
@@ -370,6 +370,31 @@ var _default = { data: function data() {return { title: 'Hello', hottitlelist: [
           }
         } });
 
+    },
+
+    linkageWithTop: function () {var _linkageWithTop = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(e) {var y, that;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+                y = e.detail.scrollTop; //获取 scrollTop
+                // console.log( y + "scrollTop" )
+                // console.log(timer + "//  timer");
+                that = this;
+                if (y >= 160) {
+                  that.roleup = true,
+                  console.log(that.roleup);
+                } else {
+                  that.roleup = false,
+                  console.log(that.roleup);
+                }case 3:case "end":return _context.stop();}}}, _callee, this);}));function linkageWithTop(_x) {return _linkageWithTop.apply(this, arguments);}return linkageWithTop;}(),
+
+
+    goTop: function goTop(e) {
+      this.scrollTop = this.old.scrollTop;
+      this.$nextTick(function () {
+        this.scrollTop = 0;
+      });
+      uni.showToast({
+        icon: "none",
+        title: "纵向滚动 scrollTop 值已被修改为 0" });
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
@@ -502,6 +527,14 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //

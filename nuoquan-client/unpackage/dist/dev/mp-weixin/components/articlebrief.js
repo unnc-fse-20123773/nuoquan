@@ -1,6 +1,6 @@
 (global["webpackJsonp"] = global["webpackJsonp"] || []).push([["components/articlebrief"],{
 
-/***/ 131:
+/***/ 133:
 /*!**********************************************************************************!*\
   !*** D:/XMQ/nuoquan/nuoquan-client/main.js?{"page":"components%2Farticlebrief"} ***!
   \**********************************************************************************/
@@ -146,6 +146,14 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -450,5 +458,5 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ })
 
-},[[131,"common/runtime","common/vendor"]]]);
+},[[133,"common/runtime","common/vendor"]]]);
 //# sourceMappingURL=../../.sourcemap/mp-weixin/components/articlebrief.js.map
