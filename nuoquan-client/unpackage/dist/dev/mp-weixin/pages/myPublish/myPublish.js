@@ -133,7 +133,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var myArticles = function myArticles() {return __webpack_require__.e(/*! import() | pages/myPublish/myArticles */ "pages/myPublish/myArticles").then(__webpack_require__.bind(null, /*! ./myArticles.vue */ 293));};var myVote = function myVote() {return __webpack_require__.e(/*! import() | pages/myPublish/myVote */ "pages/myPublish/myVote").then(__webpack_require__.bind(null, /*! ./myVote.vue */ 300));};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var myArticles = function myArticles() {return __webpack_require__.e(/*! import() | pages/myPublish/myArticles */ "pages/myPublish/myArticles").then(__webpack_require__.bind(null, /*! ./myArticles.vue */ 296));};var myVote = function myVote() {return __webpack_require__.e(/*! import() | pages/myPublish/myVote */ "pages/myPublish/myVote").then(__webpack_require__.bind(null, /*! ./myVote.vue */ 303));};
 
 
 

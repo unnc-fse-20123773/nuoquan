@@ -1,4 +1,12 @@
 
+.posters-layer {
+  position: fixed;
+  background-color: #007AFF;
+  top: 200rpx;
+  left: 100rpx;
+}
+
+
 .detail-article {
 		width: 100%;
 		background: #FCFCFC;
