@@ -73,7 +73,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var l0 = _vm.__map(_vm.myArticleList, function(thisArticle, __i0__) {
+  var l0 = _vm.__map(_vm.myArticleList, function(thisArticle, index) {
     var m0 = _vm.timeDeal(thisArticle.createDate)
     return {
       $orig: _vm.__get_orig(thisArticle),
@@ -122,6 +122,19 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //

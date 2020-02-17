@@ -2,7 +2,10 @@
 	<view style="width:100%;height:100%;margin:auto;">
 		<view class = "top">
 			<text class="topleft">下次更新 {{minute}}分{{second}}秒</text>
-			<button class="topright" @click="reload()"><text class="refresh">刷新</text></button>
+			<button class="topright" @click="reload()">
+				<text class="refresh">刷新</text>
+				<image class="icon" src="../../static/icon/refresh-ffffff.png"></image>
+			</button>
 		</view>
 		<view class="mainbody">
 			<articleInfo :myArticleList="myArticleList"></articleInfo>
@@ -159,6 +162,7 @@ import articleInfo from './articleInfo.vue';
 		display:flex;
 		align-items:center;
 		position:static;
+		margin-bottom: 10px;
 	}
 	.topleft{
 		font-size:14px;
@@ -174,17 +178,28 @@ import articleInfo from './articleInfo.vue';
 		display:inline-block;
 		position:absolute;
 		right:10px;
-		width: 60px;
+		width: 65px;
 		height: 20px;
-		line-height:15px;
+		line-height:20px;
 		background-color: #FFCF3C;
 		border-width: 1upx;
-		border-radius: 10upx;
+		border-radius: 1px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	
 	}
 
 	.refresh{
-		font-size:13px;
+		font-size:10px;
 		color: white;
-	}
 
+	}
+.icon{
+	width: 15px;
+	height: 15px;
+	padding-left: 2px;
+	
+
+}
 </style>

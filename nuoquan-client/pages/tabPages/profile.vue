@@ -32,7 +32,7 @@
 				<!-- 修改时状态 -->
 				<view class="profileText-box" v-if="isEdit == true">
 					<view class="nickname">
-						<text class="left-profileText1 ">昵称<text class="right-remind " >  最长 8 位</text></text>
+						<text class="left-profileText1 ">昵称<text class="right-remind " >   最长 8 位</text></text>
 						<input class="right-profileText1-1" style="text-align:left;min-height: 1upx;height:26px;" maxlength="8" :value="userInfo.nickname" name="nickname" />
 						<view class="input-border"></view>
 					</view>
@@ -41,6 +41,7 @@
 						<view class="genderPicker">
 							<view :class="[gender == 1 ? 'genderPicker-buttonclick' : 'genderPicker-button']" @click="genderChanger(1)">
 								<text class="gender-text">男</text></view>
+							
 							<view :class="[gender == 0 ? 'genderPicker-buttonclick' : 'genderPicker-button']" @click="genderChanger(0)">
 								<text class="gender-text">女</text></view>
 						</view>
@@ -53,9 +54,10 @@
 							<view class="year-pointer">
 								<image class="year-pointerIcon" src="../../static/icon/angle-down.png" mode="scaleToFill"></image>
 							</view>
+							<mypicker class="year-pick-style" v-if="yearPicker == true" :dataList="years" :value="yearPickerVal" @change="yearChange"
+							 @tapBackground="yearPickerChanger()" ></mypicker>
 						</view>
-						<mypicker class="year-pick-style" v-if="yearPicker == true" :dataList="years" :value="yearPickerVal" @change="yearChange"
-						 @tapBackground="yearPickerChanger()" ></mypicker>
+		
 					</view>
 	
 					</view>
@@ -357,15 +359,17 @@
 	}
 
 	.profile-basicinfo-card {
-		position: fixed;
-		top: 8%;
-		left: 7%;
+		position: relative;
 		width: 86%;
-		height: 500upx;
+		height: 300px;
 		background-color: white;
 		border-radius: 20upx;
 		box-shadow: 0upx 0upx 11upx 1upx #A6A6A6;
 	    justify-content: center;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: 50px;
+		margin-bottom: 10px;
 	}
 
 	.profileTouxiang {
@@ -386,8 +390,8 @@
 	}
 	.left-profileText1 {
 		color: #888888;
-		font-size: 30upx;
-		font-weight: 550;
+		font-size: 11px;
+		font-weight: 500;
 		display: block;
 	}
 	
@@ -399,8 +403,8 @@
 
 	.left-profileTexta {
 		color: #3D3D3D;
-		font-size: 32upx;
-		font-weight: 550;
+		font-size: 17px;
+		font-weight: 500;
 		display: block;
 	}
 	.gender {
@@ -412,15 +416,15 @@
 	/* 在这里修改输入框样式 */
 	.right-profileText1 {
 		color: #888888;
-		font-size: 30upx;
-		font-weight: 550;
+		font-size: 11px;
+		font-weight: 500;
 		display: block;
 	}
 
 	.right-profileTexta {
 		color: #3D3D3D;
-		font-size: 32upx;
-		font-weight: 550;
+		font-size: 17px;
+		font-weight: 500;
 		display: block;
 	}
 	.graduationYear {
@@ -431,14 +435,14 @@
 	}
 	.left-profileText2 {
 		color: #888888;
-		font-size: 30upx;
-		font-weight: 550;
+		font-size: 11px;
+		font-weight: 500;
 	}
 	.right-profileText2 {
 		color: #888888;
-		font-size: 30upx;
+		font-size: 11px;
 		/*margin-top: 210upx;*/
-		font-weight: 550;
+		font-weight: 500;
 	}
 	.major {
 		width:128upx;
@@ -448,14 +452,14 @@
 	}
 	.left-profileTextb {
 		color: #3D3D3D;
-		font-size: 32upx;
-		font-weight: 550;
+		font-size: 17px;
+		font-weight: 500;
 		display:block;
 	}
 	.right-profileTextb {
 		color: #3D3D3D;
-		font-size: 32upx;
-		font-weight: 550;
+		font-size: 17px;
+		font-weight: 500;
 		display:block;
 	}
 	.degree {
@@ -466,13 +470,11 @@
 	}
 	
 	.input-border {
-		margin-top: -10upx;
 		border-bottom: 1upx solid #C0C0C0;
 		width: 80%;
 	}
 
 	.input-border2 {
-		margin-top: -15upx;
 		border-bottom: 1upx solid #C0C0C0;
 		width: 260px;
 	}
@@ -487,7 +489,6 @@
 
 	.profile-moreinfo-card {
 		height: 200upx;
-		margin-top:calc(8% + 500upx + 10%);
 		margin-left:7%;
 		position:relative;
 		width: 86%;
@@ -502,36 +503,36 @@
 	}
 	.profilemoreText1 {
 		color: #888888;
-		font-size: 30upx;
-		font-weight: 550;
+		font-size: 11px;
+		font-weight: 500;
 		display: block;
 	}
 	.profilemoreTexta {
 		color:  #3D3D3D;
-		font-size: 30upx;
-		font-weight: 550;
+		font-size: 17px;
+		font-weight: 500;
 		display: block;	
 	}
 	.editProfile {
 		position:absolute;
 		right:10%;
-		top:10%;
-		width: 15%;
-		height: 3%;
-		background-color: #FFCF3C;
-		border-width: 1upx;
-		border-radius: 20upx;
+		top:10%;		
+		width:68px;
+		height:26px;
+		background:rgba(255,201,90,1);
+		opacity:1;
+		border-radius:4px;
 	}
 
 	.editProfile-edit {
 		position:absolute;
 		right:10%;
 		top:10%;
-		width: 15%;
-		height: 3%;
-		background-color:white;
-		border-radius: 20upx;
-		border:solid #FFCF3C 1upx;
+		width:68px;
+		height:26px;
+		border:1px solid rgba(255,201,90,1);
+		opacity:1;
+		border-radius:4px;
 	}
 
 	.editProfile-text {
@@ -553,25 +554,31 @@
 	}
 
 	.genderPicker-button {
-		height: 100%;
-		width: 96upx;
-		border-radius: 8upx;
-		background-color: #dedede;
+		width:41px;
+		height:23px;
+		border:1px solid rgba(255,93,93,1);
+		opacity:1;
+		border-radius:4px;
+		margin-right: 6px;
 		display: flex;
 		justify-content: center;
 		font-size: medium;
-		font-weight: 550;
+		font-weight: 500;
 		align-item: center;
 	}
 
 	.genderPicker-buttonclick {
-		height: 100%;
-		width: 96upx;
-		border-radius: 8upx;
-		background-color: #FDD041;
+		width:41px;
+		height:23px;
+		margin-right: 6px;
+		border:1px solid blue;
+		border-radius: 4px;
+		background-color:blue;
 		justify-content: center;
 		display: flex;
 		align-item: center;
+		font-size: medium;
+		font-weight: 500;
 	}
 
 	.gender-text {
@@ -583,15 +590,22 @@
 	.year-pick-style {
 		position: absolute;
 		z-index: 999;
-		top: -148upx;
+		margin-top: 25px;
 	}
 
 	.major-pick-style {
 		position: absolute;
-		z-index: 999;
-		margin-top: 146upx;
-		top: -148upx;
+		z-index:999;
+
+/* 	top:30px;
 		right: -20upx;
+		width:72px;
+		height:69px; */
+		/* background:rgba(255,255,255,1);
+		box-shadow:0px 0px 6px rgba(0,0,0,0.16);
+		opacity:1;
+		border-radius:8px;
+		overflow:auto; */
 	}
 
 	.yearPicker {
@@ -606,10 +620,8 @@
 	.yearPicker-button {
 		height: 100%;
 		width: 122upx;
-		border-radius: 16upx;
-		background-color: #dedede;
 		display: flex;
-		justify-content: center;
+		justify-content: left;
 		align-item: center;
 		position: relative;
 	}
@@ -623,13 +635,12 @@
 		width: 36upx;
 		height: 36upx;
 		margin-top: 10upx;
-		margin-left: -8upx;
 	}
 
 	.yearPicker-text {
 		margin-top: 3px;
 		font-size: 16px;
-		font-weight: 550;
+		font-weight: 500;
 		color: #888888;
 	}
 
@@ -643,8 +654,12 @@
 	.degree-pick-style {
 		position: absolute;
 		z-index: 999;
-		margin-top: 200upx;
-		top: -100upx;
-		right: -20upx;
+		/* width:72px;
+		height:69px;
+		background:rgba(255,255,255,1);
+		box-shadow:0px 0px 6px rgba(0,0,0,0.16);
+		opacity:1;
+		border-radius:8px;
+		overflow:auto; */
 	}
 </style>

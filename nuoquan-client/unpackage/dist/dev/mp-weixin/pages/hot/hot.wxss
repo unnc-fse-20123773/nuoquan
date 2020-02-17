@@ -15,6 +15,7 @@ page{
 		    -ms-flex-align:center;
 		        align-items:center;
 		position:static;
+		margin-bottom: 10px;
 }
 .topleft{
 		font-size:14px;
@@ -30,16 +31,32 @@ page{
 		display:inline-block;
 		position:absolute;
 		right:10px;
-		width: 60px;
+		width: 65px;
 		height: 20px;
-		line-height:15px;
+		line-height:20px;
 		background-color: #FFCF3C;
 		border-width: 1rpx;
-		border-radius: 10rpx;
+		border-radius: 1px;
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-pack: center;
+		-webkit-justify-content: center;
+		    -ms-flex-pack: center;
+		        justify-content: center;
+		-webkit-box-align: center;
+		-webkit-align-items: center;
+		    -ms-flex-align: center;
+		        align-items: center;
 }
 .refresh{
-		font-size:13px;
+		font-size:10px;
 		color: white;
 }
-
+.icon{
+	width: 15px;
+	height: 15px;
+	padding-left: 2px;
+}
 
