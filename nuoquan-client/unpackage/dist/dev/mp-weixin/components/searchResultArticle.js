@@ -170,10 +170,9 @@ var _default =
   },
 
   methods: {
-    jumpToDetail: function jumpToDetail() {
-      var navData = JSON.stringify(this.articleCard); // 这里转换成 字符串
+    goToDetail: function goToDetail() {
       uni.navigateTo({
-        url: '/pages/detail/detail?data=' + navData });
+        url: '/pages/detail/detail?data=' + this.articleCard.id });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

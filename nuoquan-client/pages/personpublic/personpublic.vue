@@ -404,9 +404,8 @@ export default {
 		},
 		
 		jumpToDetail(thisArticle) {
-			var navData = JSON.stringify(thisArticle); // 这里转换成 字符串
 			uni.navigateTo({
-				url: '/pages/detail/detail?data=' + navData
+				url: '/pages/detail/detail?data=' + thisArticle.id
 			});
 		},
 	}

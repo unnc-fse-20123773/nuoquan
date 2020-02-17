@@ -555,9 +555,8 @@ var loadArticleFlag = false;var _default =
     },
 
     jumpToDetail: function jumpToDetail(thisArticle) {
-      var navData = JSON.stringify(thisArticle); // 这里转换成 字符串
       uni.navigateTo({
-        url: '/pages/detail/detail?data=' + navData });
+        url: '/pages/detail/detail?data=' + thisArticle.id });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
