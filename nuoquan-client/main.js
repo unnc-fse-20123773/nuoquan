@@ -970,7 +970,7 @@ Vue.prototype.netty = {
  */
 Vue.prototype.timeDeal = function(timediff) {
 	timediff = new Date(timediff);
-	var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(),
+	var parts = [timediff.getFullYear(), timediff.getMonth() + 1, timediff.getDate(), timediff.getHours(), timediff.getMinutes(),
 		timediff.getSeconds()
 	];
 	var oldTime = timediff.getTime();

@@ -63,20 +63,28 @@
 				<image mode="aspectFill" style="height: 200upx" :src="serverUrl + item.imagePath" @tap="previewImage(index)"></image>
 			</view>
 		</view>
+		<!-- 操作行 -->
 		<view class="menubar">
 			<view class="menubar_rel">
-				<!-- 点赞&评论蒙层，用于优化体验 -->
-				<view style="position: absolute;z-index: 20;height: 30px;width: 80upx;top:0;right: 0;" @tap="swLikeArticle"></view>
-				<view style="position: absolute;z-index: 20;: 30px;width: 80upx;top:0;right: 40px;" @click="goToDetail()"></view>
-
-				<view class="icons">
-					<image class="comment" src="../static/icon/comment.png" style="right: 65px;"></image>
-					<view class="icon" style="right:49px;">{{ thisArticle.commentNum }}</view>
-					<image v-if="!thisArticle.isLike" class="like" src="../static/icon/like.png" style="right:22px;bottom:3.75px;"></image>
-					<image v-if="thisArticle.isLike" class="like" src="../static/icon/liked-red.png" style="right:22px;bottom:3.75px;"></image>
-					<view class="icon" style="right:6px;">{{ thisArticle.likeNum }}</view>
+				<!-- 分享 -->
+				<image class="menubar_share" src="../static/icon/share-alt-353535.png" mode="aspectFit"></image>
+				<!-- 评论和点赞 -->
+				<view class="operationBar column_center">
+					<view class="commentBar column_center" @click="goToDetail()">
+						<image src="../static/icon/comment.png" mode="aspectFit"></image>
+						<text>{{ thisArticle.commentNum }}</text>
+					</view>
+					<view v-if="!thisArticle.isLike" class="likeBar column_center" @click="swLikeArticle">
+						<image src="../static/icon/heart_353535.png" mode="aspectFit"></image>
+						<text>{{ thisArticle.likeNum }}</text>
+					</view>
+					
+					<view v-else class="likedBar column_center" @click="swLikeArticle">
+						<image src="../static/icon/heart_ffffff.png" mode="aspectFit"></image>
+						<text>{{ thisArticle.likeNum }}</text>
+					</view>
 				</view>
-			</view>
+			</view> 
 		</view>
 	</view>
 </template>
@@ -392,50 +400,96 @@ image {
 }
 
 .menubar {
-	height: 18px;
-	width: 100%;
-	margin: 16px 0 18px 0;
+	height: 36px;
+	width: 93.12%;
+	margin: 16px 0 0 3.44%;
 }
 
 .menubar_rel {
 	position: relative;
 	width: 100%;
+	height: 100%;
 }
 
-.icons {
+.menubar_share{
+	position: absolute;
+	left: 2.12%;
+	width:18px;
+	height:18px;
+	opacity:1;
+}
+
+.operationBar{
 	position: absolute;
 	right: 0;
-	bottom: 0;
-	z-index: 10;
-	width: 100px;
-	height: 25px;
-	text-align: right;
-	vertical-align: bottom;
-	display: inline-block;
-	overflow: hidden;
-	border-bottom-right-radius: 8px;
+	min-width: 94px;
+	display: flex;
+	height: 18px;
 }
 
-.icons image {
-	position: absolute;
-	/* G添加相对位置 */
-	width: 16px;
-	height: 17.5px;
-	vertical-align: bottom;
-	bottom: 2px;
+.commentBar{
+	height: 100%;
 }
 
-.icon {
-	position: absolute;
-	bottom: 2.75px;
-	display: inline-block;
-	color: #353535;
-	font-size: 13px;
-	text-align: center;
-	width: 16px;
-	height: 17.5px;
-	text-align: center;
-	vertical-align: bottom;
+.commentBar image{
+	width:13px;
+	height:12px;
+	margin-right: 8px;
+}
+
+.commentBar text{
+	font-size:14px;
+	font-family:Source Han Sans CN;
+	font-weight:400;
+	line-height:23px;
+	color:rgba(53,53,53,1);
+}
+
+.likeBar{
+	margin-left: 19px;
+	height:22px;
+	opacity:1;
+	border-radius:50px;
+}
+
+.likeBar image{
+	width:13px;
+	height:12px;
+	margin-left: 8px;
+}
+
+.likeBar text{
+	margin-left: 8px;
+	margin-right: 8px;
+	font-size:14px;
+	font-family:Source Han Sans CN;
+	font-weight:400;
+	line-height:23px;
+	color:rgba(53,53,53,1);
+}
+
+.likedBar{
+	margin-left: 19px;
+	height:22px;
+	background:linear-gradient(131deg,rgba(255,161,161,1) 0%,rgba(245,60,60,1) 100%);
+	opacity:1;
+	border-radius:50px;
+}
+
+.likedBar image{
+	width:13px;
+	height:12px;
+	margin-left: 8px;
+}
+
+.likedBar text{
+	margin-left: 8px;
+	margin-right: 8px;
+	font-size:14px;
+	font-family:Source Han Sans CN;
+	font-weight:400;
+	line-height:23px;
+	color:rgba(255,255,255,1);
 }
 
 .picturearea-one {

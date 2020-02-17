@@ -621,6 +621,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 var _search = _interopRequireDefault(__webpack_require__(/*! ../pages/search/search */ 109));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ 215));};var _default =
 {
   props: {
@@ -629,7 +641,7 @@ var _search = _interopRequireDefault(__webpack_require__(/*! ../pages/search/sea
       faceImg: '../static/touxiang.jpg' },
 
     topArticles: '',
-    topHeight: '' },
+    roleup: false },
 
   components: {
     mainpageleft: mainpageleft,
@@ -639,7 +651,9 @@ var _search = _interopRequireDefault(__webpack_require__(/*! ../pages/search/sea
   data: function data() {
     return {
       showMainPageLeft: 0,
-      showSearch: 0 };
+      showSearch: 0,
+      order1: "all",
+      order2: "time" };
 
   },
 
@@ -668,6 +682,16 @@ var _search = _interopRequireDefault(__webpack_require__(/*! ../pages/search/sea
       uni.navigateTo({
         url: '/pages/hot/hot' });
 
+    },
+
+    change_article_order1: function change_article_order1(new_order) {
+      this.order1 = new_order;
+      console.log(this.order1);
+    },
+
+    change_article_order2: function change_article_order2(new_order) {
+      this.order2 = new_order;
+      console.log(this.order2);
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

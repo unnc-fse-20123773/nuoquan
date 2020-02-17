@@ -117,6 +117,11 @@ import detail_2_comments from "./detail_2_comments.vue"
 			var userInfo = this.getGlobalUserInfo();
 			if (!this.isNull(userInfo)) {
 				this.userInfo = this.getGlobalUserInfo();
+			}else{
+				uni.redirectTo({
+				    url: '../signin/signin'
+				});
+				return;
 			}
 			
 			var articleId = options.data;

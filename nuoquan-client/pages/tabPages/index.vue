@@ -1,10 +1,10 @@
 <template>
 	<view class="index">
-		<mainpagetop :userInfo="userInfo" :topArticles="topArticles" :topHeight="topHeight" style="position: fixed;z-index: 30;height:100%;"></mainpagetop>
-
+		<mainpagetop :userInfo="userInfo" :topArticles="topArticles" :roleup="roleup" style="position: fixed;z-index: 30;height:100%;"></mainpagetop>
+		<!-- <button type="primary" @click="goTop" style="position: fixed;top: 200px;z-index: 88;">gotop</button> -->
 		<view class="indexSelf" style="height:100%;">
-			<scroll-view class="indexArticleArea" scroll-y="true" @scrolltolower="loadMore" @scrolltoupper="refreshArticle" upper-threshold="5">
-				<view style="height:160px;width:100%;"></view>
+			<scroll-view @scroll="linkageWithTop" class="indexArticleArea" :scroll-top="scrollTop" scroll-y="true" @scrolltolower="loadMore" @scrolltoupper="refreshArticle" upper-threshold="5">
+				<view style="height:172px;width:100%;"></view>
 				<articlebrief v-for="i in showlist" :key="i.id" v-bind:articleCard="i"></articlebrief>
 				<!-- 用于添加底部空白 by Guetta 9.10 -->
 				<view class="marginHelper"></view>
@@ -29,8 +29,8 @@ export default {
 			hottitlelist: ['热门标题111', '热门标题222', '热门标题333'],
 			showlist: [],
 			topArticles: '',
-			topHeight: 160,
-
+			roleup: false,
+			
 			userInfo: '',
 			totalPage: 1,
 			currentPage: 1,
@@ -66,6 +66,7 @@ export default {
 			// from submit
 			this.refreshArticle();
 		});
+		this.screenSize(); //获取手机型号
 		// [测试代码块]
 	},
 
@@ -223,43 +224,30 @@ export default {
 			});
 		},
 
-		//动态调整顶部高度
-	// 	linkageWithTop: async function(e) {
-	// 		var y = e.detail.scrollTop; //获取 scrollTop
-	// 		// console.log( y + "scrollTop" )
-	// 		// console.log(timer + "//  timer");
-	// 		var that = this;
-	// 		clearInterval(timer); //清空 timer
-	// 		if (that.topHeight > 160) {
-	// 			that.topHeight = 160; //保证高度值正确
-	// 		}
-
-	// 		if (y >= 100 && that.topHeight !== 40) {
-	// 			timer = setInterval(function() {
-	// 				//设置计时器
-	// 				if (that.topHeight == 40) {
-	// 					//在 topHeight 为 40 时清空计时器
-	// 					clearInterval(timer);
-	// 				} else {
-	// 					that.topHeight = that.topHeight - 10;
-	// 					// console.log(that.topHeight +"//  topHeight收起");
-	// 				}
-	// 			}, 1);
-	// 		} else {
-	// 			if ((y < 100 && that.topHeight !== 160) || y == 0) {
-	// 				timer = setInterval(function() {
-	// 					//设置计时器
-	// 					if (that.topHeight == 160) {
-	// 						//在 topHeight 为 160 时清空计时器
-	// 						clearInterval(timer);
-	// 					} else {
-	// 						that.topHeight = that.topHeight + 10;
-	// 						// console.log(that.topHeight + "//  topHeight展开");
-	// 					}
-	// 				}, 1);
-	// 			}
-	// 		}
-	// 	}
+		linkageWithTop: async function(e) {
+			var y = e.detail.scrollTop; //获取 scrollTop
+			// console.log( y + "scrollTop" )
+			// console.log(timer + "//  timer");
+			var that = this;
+			if(y >= 160){
+				that.roleup = true,
+				console.log(that.roleup);
+			}else{
+				that.roleup = false,
+				console.log(that.roleup);
+			}
+		},
+		
+		goTop: function(e) {
+		            this.scrollTop = this.old.scrollTop
+		            this.$nextTick(function() {
+		                this.scrollTop = 0
+		            });
+		            uni.showToast({
+		                icon:"none",
+		                title:"纵向滚动 scrollTop 值已被修改为 0"
+		            })
+		}
 	}
 };
 </script>
@@ -273,7 +261,7 @@ page {
 .index {
 	/* 页面高度由内容扩充，最低值为100%（page 定义的）- by Guetta */
 	height: 100%;
-	background-color: #f3f3f3;
+	background-color: #fdfdfd;
 }
 
 .indexArticleArea {
