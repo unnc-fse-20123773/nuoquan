@@ -70,7 +70,7 @@ export default {
 	},
 
 	onUnload() {
-		// 移除监听事件
+		// 移除监听刷新事件
 		uni.$off('flash');
 	},
 
@@ -85,6 +85,8 @@ export default {
 		}
 
 		this.getTop3Articles(); // 获取热度榜
+		
+		this.getScreenSize();
 	},
 
 	// onPullDownRefresh() {

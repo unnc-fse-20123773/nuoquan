@@ -1011,15 +1011,15 @@ Vue.mixin({
 })
 
 //判断屏幕尺寸并分类,实现兼容不同设备
-// vue.prototype.screenSize = function(){
-// 	uni.getSystemInfo({
-// 		success: function (res) {
-// 		        console.log(res.model);
-// 		        console.log(res.pixelRatio);
-// 		        console.log(res.windowWidth);
-// 		        console.log(res.windowHeight);
-// 		        console.log(res.language);
-// 		        console.log(res.platform);
-// 		    }
-// 	})
-// }
+Vue.prototype.getScreenSize = function(){
+	uni.getSystemInfo({
+		success: function (res) {
+			console.log(res.model);
+			console.log(res.pixelRatio);
+			console.log(res.windowWidth);
+			console.log(res.windowHeight);
+			console.log(res.language);
+			console.log(res.platform);
+		}
+	})
+}

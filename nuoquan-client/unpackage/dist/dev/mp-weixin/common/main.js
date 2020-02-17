@@ -1021,18 +1021,18 @@ _vue.default.mixin({
 
 
 //判断屏幕尺寸并分类,实现兼容不同设备
-// vue.prototype.screenSize = function(){
-// 	uni.getSystemInfo({
-// 		success: function (res) {
-// 		        console.log(res.model);
-// 		        console.log(res.pixelRatio);
-// 		        console.log(res.windowWidth);
-// 		        console.log(res.windowHeight);
-// 		        console.log(res.language);
-// 		        console.log(res.platform);
-// 		    }
-// 	})
-// }
+_vue.default.prototype.getScreenSize = function () {
+  uni.getSystemInfo({
+    success: function success(res) {
+      console.log(res.model);
+      console.log(res.pixelRatio);
+      console.log(res.windowWidth);
+      console.log(res.windowHeight);
+      console.log(res.language);
+      console.log(res.platform);
+    } });
+
+};
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createApp"], __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

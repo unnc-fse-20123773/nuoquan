@@ -201,7 +201,7 @@ var _default = { data: function data() {return { title: 'Hello', hottitlelist: [
   },
 
   onUnload: function onUnload() {
-    // 移除监听事件
+    // 移除监听刷新事件
     uni.$off('flash');
   },
 
@@ -216,6 +216,8 @@ var _default = { data: function data() {return { title: 'Hello', hottitlelist: [
     }
 
     this.getTop3Articles(); // 获取热度榜
+
+    this.getScreenSize();
   },
 
   // onPullDownRefresh() {
