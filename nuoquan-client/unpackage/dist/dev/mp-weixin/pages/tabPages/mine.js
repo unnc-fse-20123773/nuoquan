@@ -251,10 +251,7 @@ var _default = { data: function data() {return { screenWidth: 350, serverUrl: th
       } else {that.yellowBottom = -that.windowHeight * 0.22 + 'px'; // console.log("手机屏幕，黄色头部上移了" + that.yellowBottom);
       }} else {that.yellowBottom = -that.windowHeight * 0.2 + 'px'; // console.log("平板屏幕，黄色头部上移了" + that.yellowBottom);
     } // 获取卡片宽度
-    that.cardWidth = that.windowWidth - 26 + 'px';}, onPullDownRefresh: function onPullDownRefresh() {console.log('refresh');setTimeout(function () {uni.stopPullDownRefresh();}, 1000);
-  },
-
-  methods: {
+    that.cardWidth = that.windowWidth - 26 + 'px';}, onPullDownRefresh: function onPullDownRefresh() {console.log('refresh');setTimeout(function () {uni.stopPullDownRefresh();}, 1000);}, methods: {
 
     jumpToAbout: function jumpToAbout() {
       uni.navigateTo({
@@ -275,6 +272,21 @@ var _default = { data: function data() {return { screenWidth: 350, serverUrl: th
       var encodeData = encodeURIComponent(JSON.stringify(this.thisUserInfo)); // 对数据字符串化并转码，防止特殊字符影响传参
       uni.navigateTo({
         url: '../chatpage/chatpage?friendInfo=' + encodeData });
+
+    },
+
+    /**
+        * @param {Object} currentTab 0: 关注 1: 粉丝
+        */
+    goToFansFollow: function goToFansFollow(currentTab) {
+      console.log('goToFansFollow...');
+      var data = {
+        currentTab: currentTab,
+        thisUserInfo: this.thisUserInfo };
+
+      var encodeData = encodeURIComponent(JSON.stringify(data)); // 对数据字符串化并转码，防止特殊字符影响传参
+      uni.navigateTo({
+        url: '../followlist/followlist?data=' + encodeData });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

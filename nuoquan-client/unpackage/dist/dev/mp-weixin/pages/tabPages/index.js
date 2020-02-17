@@ -197,7 +197,7 @@ var _default = {
       // from submit
       _this.refreshArticle();
     });
-    this.screenSize(); //获取手机型号
+    // this.screenSize(); //获取手机型号
     // [测试代码块]
   },
 

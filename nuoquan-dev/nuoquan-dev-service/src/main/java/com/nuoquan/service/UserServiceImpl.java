@@ -1,8 +1,10 @@
 package com.nuoquan.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.n3r.idworker.Sid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -175,18 +177,26 @@ public class UserServiceImpl implements UserService {
 	public List<UserVO> queryUserFollow(String userId, String myId) {
 		
 		List<UserVO> list = UserFansMapperCustom.queryFollowInfo(userId);
+		List<UserVO> newList = new ArrayList<UserVO>();
 		for (UserVO u : list) {
 			// 逐个查询我是否关注
-			Boolean isFollow = queryIfFollow(u.getId(), myId);
-			u.setFollow(isFollow);
+			if (u!=null) { //移除空对象，提高容错
+				Boolean isFollow = queryIfFollow(u.getId(), myId);
+				u.setFollow(isFollow);
+				newList.add(u);
+			}
 		}
 		
-		return list;
+		return newList;
 	}
 	
 	@Transactional(propagation = Propagation.SUPPORTS) 
 	@Override
 	public boolean queryIfFollow(String userId, String fanId) {
+		if (StringUtils.isEmpty(userId)||StringUtils.isEmpty(fanId)) {
+			return false;
+		}
+		
 		Example example = new Example(UserFans.class);
 		Criteria criteria = example.createCriteria();
 		criteria.andEqualTo("userId", userId);

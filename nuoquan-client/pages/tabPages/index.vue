@@ -66,7 +66,7 @@ export default {
 			// from submit
 			this.refreshArticle();
 		});
-		this.screenSize(); //获取手机型号
+		// this.screenSize(); //获取手机型号
 		// [测试代码块]
 	},
 
