@@ -7,7 +7,7 @@
 
 		<searchpage v-if="showSearch" class="searchPage" @exitSearchSignal="controlShowSearch"></searchpage>
 
-		<view class="mainPageTop" style="max-height: 160px;" :style="{ height: topHeight + 'px;' }">
+		<view :class="[roleup == false ? 'mainPageTop' : 'mainPageTop_roled']">
 			<!-- 搜索行 -->
 			<view class="topBar">
 				<!-- 头像，备用 <image class="topBarTouxiang" :src='userInfo.faceImg' @click="controlShowLeft(1)"></image> -->
@@ -21,24 +21,24 @@
 			</view>
 
 			<!-- 热门卡片 -->
-			<view class="hotestBox">
-				<view class="hotestCard">
+			<view class="hotestBox" :style="{'height':roleup == false ? '62px;' :'33px' ,}">
+				<view :class="[roleup == false ? 'hotestCard' : 'hotestCard_roled']">
 					<!-- 左侧图标 -->
-					<view class="iconBox" @click="jumpTohot">
-						<image src="../static/BG/hotest.png" mode="aspectFit" class="fireIcon"></image>
-						<image src="../static/icon/hotText.png" mode="aspectFit" class="hotText"></image>
+					<view class="iconBox" @click="jumpTohot" :style="{'height':roleup == false ? '62px;' :'33px' ,}">
+						<image v-if="roleup == false" src="../static/BG/hotest.png" mode="aspectFit" class="fireIcon"></image>
+						<image :class="[roleup == false ? 'hotText' : 'hotText_roled']" src="../static/icon/hotText.png" mode="aspectFit"></image>
 					</view>
 					
 					<!-- 分割线 -->
-					<view class="grayline"></view>
+					<view v-if="roleup == false" class="grayline"></view>
 					
 					<!-- 热门标题 -->
 					<swiper class="swiperCard" :indicator-dots="false" :autoplay="true" :interval="3000" :vertical="true" :duration="1000">
 						<view >
 							<swiper-item>
-								<view class="itemCard">
-									<view class="hotTitle">{{ topArticles[0].articleTitle }}</view>
-									<view class="userInfo">
+								<view class="itemCard" :style="{'height':roleup == false ? '62px;' :'33px' ,}">
+									<view :class="[roleup == false ? 'hotTitle' : 'hotTitle_roled']">{{ topArticles[0].articleTitle }}</view>
+									<view v-if="roleup == false" class="userInfo">
 										<image src="../static/icon/logo_app.png" mode="aspectFit"></image>
 										<view class="userid_mainpagetop">
 											陈仅仅一号
@@ -50,23 +50,35 @@
 					</swiper>
 				</view>
 			</view>
-
-			<!-- <view class="topicArea">
-				<view class="hot1">
-					<view class="hotNum1" style="font-size: 21px;margin-bottom: 14px;">1</view>
-					<view class="hotContent1" style="font-size: 15px;margin-bottom: 14px;" @tap="goToDetail(topArticles[0])">{{topArticles[0].articleTitle}}</view>
-				</view>
-				<view class="hot2">
-					<view class="hotNum2" style="font-size: 17px;margin-bottom: 12px;">2</view>
-					<view class="hotContent2" style="font-size: 13px;margin-bottom: 12px;" @tap="goToDetail(topArticles[1])">{{topArticles[1].articleTitle}}</view>
-				</view>
-				<view class="hot3">
-					<view class="hotNum3" style="font-size: 15px;">3</view>
-					<view class="hotContent3" style="font-size: 13px;" @tap="goToDetail(topArticles[2])">{{topArticles[2].articleTitle}}</view>
-				</view>
-			</view> -->
 		</view>
-		<view style="width: 100%;height: 30px;background-color: #007AFF;position: fixed;top: 150px;"></view>
+		<!-- 主页操作行 -->
+		<view v-if="roleup == false" style="display: flex;justify-content: space-between;width: 93.07%;left: 3.47%;height: 30px;position: fixed;top: 150px;" class="column_center">
+			<!-- 标签选择 -->
+			<view class="tagchoose column_center">
+				<text>标签</text>
+				<image class="tagicon" src="../static/icon/angle-down.png" mode="aspectFit"></image>
+			</view>
+			<!-- 排序方式1-->
+			<view class="comments-order">
+			       <view class="order-in-time" :class="{ chosen : order1 == 'all'}" @tap="change_article_order1('all')">
+					   所有
+				   </view>
+				   <view class="order-in-hot" :class="{ chosen : order1 != 'all'}" @tap="change_article_order1('attention')">
+				   	   关注
+				   </view>
+				   <view class="bg-of-order" :style="{'left':order1 == 'all' ? '-13px;' :'41px' ,}"></view>
+			</view>
+			<!-- 排序方式2 -->
+			<view class="comments-order">
+			       <view class="order-in-time" :class="{ chosen : order2 == 'time'}" @tap="change_article_order2('time')">
+					   时间
+				   </view>
+				   <view class="order-in-hot" :class="{ chosen : order2 != 'time'}" @tap="change_article_order2('hot')">
+				   	   热度
+				   </view>
+				   <view class="bg-of-order" :style="{'left':order2 == 'time' ? '-13px;' :'41px' ,}"></view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -80,7 +92,7 @@ export default {
 			faceImg: '../static/touxiang.jpg'
 		},
 		topArticles: '',
-		topHeight: ''
+		roleup: false,
 	},
 	components: {
 		mainpageleft,
@@ -91,6 +103,8 @@ export default {
 			return {
 				showMainPageLeft: 0,
 				showSearch: 0,
+				order1: "all",
+				order2: "time",
 			};
 		},
 
@@ -112,13 +126,23 @@ export default {
 		},
 		goToDetail(article) {
 			uni.navigateTo({
-				url: '/pages/detail/detail?data=' + JSON.stringify(article)
+				url: '/pages/detail/detail?data=' + article.id
 			});
 		},
 		jumpTohot() {
 			uni.navigateTo({
 				url: '/pages/hot/hot'
 			})
+		},
+		
+		change_article_order1(new_order){
+			this.order1 = new_order ;
+			console.log(this.order1);
+		},
+		
+		change_article_order2(new_order){
+			this.order2 = new_order ;
+			console.log(this.order2);
 		}
 	}
 };
@@ -148,6 +172,20 @@ page {
 
 .mainPageTop {
 	padding-top: 4px;
+	height: 139px;
+	position: fixed;
+	left: 0;
+	top: 0;
+	overflow: hidden;
+	width: 100%;
+	background-size: 100% 100%;
+	box-shadow: 0px 0px 10px 1px #c0c0c0;
+	background-image: linear-gradient(#ffc95a, #f89d4d);
+}
+
+.mainPageTop_roled{
+	padding-top: 4px;
+	height: 110px;
 	position: fixed;
 	left: 0;
 	top: 0;
@@ -209,14 +247,13 @@ page {
 
 /* 热门话题卡片 */
 .hotestBox {
-	height: 62px;
 	width: 100%;
 }
 
 .hotestCard {
 	display: flex;
+	height:62px;
 	width: 93.07%;
-	height: 62px;
 	background: rgba(252, 252, 252, 1);
 	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 	opacity: 1;
@@ -225,10 +262,21 @@ page {
 	margin-left: 3.47%;
 }
 
+.hotestCard_roled {
+	display: flex;
+	width: 93.07%;
+	background: rgba(252, 252, 252, 1);
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+	opacity: 1;
+	margin-top: 12px;
+	margin-left: 3.47%;
+	height:33px;
+	border-radius:8px;
+}
+
 .iconBox {
 	position: relative;
 	width: 62px;
-	height: 62px;
 }
 
 .fireIcon {
@@ -242,6 +290,15 @@ page {
 	position: absolute;
 	top: 8px;
 	left: 29px;
+	height: 14px;
+	width: 26px;
+	z-index: 20;
+}
+
+.hotText_roled {
+	position: absolute;
+	top: 11px;
+	left: 12px;
 	height: 14px;
 	width: 26px;
 	z-index: 20;
@@ -262,7 +319,6 @@ page {
 
 .itemCard{
 	width: 100%;
-	height: 62px;
 }
 
 .userInfo{
@@ -301,4 +357,99 @@ page {
 	color: rgba(74, 74, 74, 1);
 	opacity: 1;
 }
+
+.hotTitle_roled {
+	width: 100%;
+	height: 17px;
+	margin-top: 8px;
+	font-size: 17px;
+	font-family: Source Han Sans CN;
+	font-weight: 500;
+	line-height: 21px;
+	color: rgba(74, 74, 74, 1);
+	opacity: 1;
+}
+
+.tagchoose{
+	width:74px;
+	height:26px;
+	background:rgba(236,236,236,1);
+	opacity:1;
+	/* margin-left: 3.47%; */
+	border-radius: 20px;
+}
+
+.tagchoose text{
+	margin-left: 12px;
+	height:26px;
+	font-size:14px;
+	font-family:Source Han Sans CN;
+	font-weight:500;
+	line-height:28px;
+	color:rgba(53,53,53,1);
+	opacity:1;
+}
+
+.tagicon{
+	margin-left: 3px;
+	width:24px;
+	height:16px;
+	opacity:1;
+}
+
+.comments-order {
+		/* margin-left: 14.8%; */
+		height: 22px;
+		background: #ECECEC;
+		border-radius: 75px;
+		width: 82px;
+		line-height: 28px;
+		display: flex;
+		vertical-align: middle;
+		position: relative;
+		justify-content: space-between;
+		
+	}
+	
+	.order-in-hot ,.order-in-time{
+		color:#9B9B9B;
+		font-size: 10px;
+		line-height: 22px;
+		display: inline-block;
+		align-items: center;
+		padding-right:10.5px;
+		padding-left: 10.5px;
+		z-index: 30;
+		width:28px;
+		text-align: center;
+		transition: padding-left 200ms,
+		padding-right 200ms,
+		font-size  200ms,
+		color 200ms;
+		 transition-delay: 0ms;
+	}
+	.bg-of-order{
+		height:28px;
+		width:54px;
+		background: #FFFFFF;
+		border-radius: 75px;
+		box-shadow: 0px 0px 10px rgba(0,0,0,0.16);
+		z-index: 20;
+		position: absolute;
+		left:-13px;
+		top:-3px;
+		transition: left 500ms ease;
+	}
+	.chosen{
+		font-size: 14px;
+		color:#353535;
+		width:28px;
+		padding-left: 0;
+		padding-right: 0;
+		transition: padding-left 300ms,
+		padding-right 300ms,
+		font-size  300ms,
+		color 300ms;
+		 transition-delay: 100ms;
+	}
 </style>

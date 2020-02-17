@@ -195,13 +195,7 @@ var _default = {
     search: function search(page) {
       if (isSearching) {
         return;
-      }
-      isSearching = true;
-
-      var that = this;
-      var isSaveRecord = 1;
-      // console.log(page);
-      if (this.searchKeyWords == '' || this.searchKeyWords == null) {
+      } else if (this.searchKeyWords == '' || this.searchKeyWords == null) {
         uni.showToast({
           title: '搜索内容不能为空',
           duration: 1000,
@@ -209,6 +203,13 @@ var _default = {
 
         return;
       }
+
+      isSearching = true;
+
+      var that = this;
+      var isSaveRecord = 1;
+      // console.log(page);
+
 
       uni.getStorage({
         key: 'search_history',
@@ -307,22 +308,18 @@ var _default = {
     },
 
     loadMore: function loadMore() {
-      var that = this;
-      var currentPage = that.currentPage;
-      console.log('currentpage is ' + currentPage);
-      var totalPage = that.totalPage;
-      console.log('totalpage is ' + totalPage);
+      console.log('currentpage is ' + this.currentPage);
+      console.log('totalpage is ' + this.totalPage);
       // 判断当前页数和总页数是否相等
-      if (currentPage == totalPage) {
-        // that.showArticles(1);
+      if (this.currentPage == this.totalPage) {
         uni.showToast({
           title: "没有更多文章了",
           icon: "none",
           duration: 1000 });
 
       } else {
-        var page = currentPage + 1;
-        that.search(page);
+        this.currentPage += 1;
+        this.search(this.currentPage);
       }
     },
 
@@ -599,7 +596,23 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+<<<<<<< HEAD
 var _search = _interopRequireDefault(__webpack_require__(/*! ../pages/search/search */ 105));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ 211));};var _default =
+=======
+
+
+
+
+
+
+
+
+
+
+
+
+var _search = _interopRequireDefault(__webpack_require__(/*! ../pages/search/search */ 109));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ 215));};var _default =
+>>>>>>> master
 {
   props: {
     // 渲染时候替换默认值会被替换
@@ -607,7 +620,7 @@ var _search = _interopRequireDefault(__webpack_require__(/*! ../pages/search/sea
       faceImg: '../static/touxiang.jpg' },
 
     topArticles: '',
-    topHeight: '' },
+    roleup: false },
 
   components: {
     mainpageleft: mainpageleft,
@@ -617,7 +630,9 @@ var _search = _interopRequireDefault(__webpack_require__(/*! ../pages/search/sea
   data: function data() {
     return {
       showMainPageLeft: 0,
-      showSearch: 0 };
+      showSearch: 0,
+      order1: "all",
+      order2: "time" };
 
   },
 
@@ -639,13 +654,23 @@ var _search = _interopRequireDefault(__webpack_require__(/*! ../pages/search/sea
     },
     goToDetail: function goToDetail(article) {
       uni.navigateTo({
-        url: '/pages/detail/detail?data=' + JSON.stringify(article) });
+        url: '/pages/detail/detail?data=' + article.id });
 
     },
     jumpTohot: function jumpTohot() {
       uni.navigateTo({
         url: '/pages/hot/hot' });
 
+    },
+
+    change_article_order1: function change_article_order1(new_order) {
+      this.order1 = new_order;
+      console.log(this.order1);
+    },
+
+    change_article_order2: function change_article_order2(new_order) {
+      this.order2 = new_order;
+      console.log(this.order2);
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

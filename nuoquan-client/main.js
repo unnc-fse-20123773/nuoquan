@@ -970,7 +970,7 @@ Vue.prototype.netty = {
  */
 Vue.prototype.timeDeal = function(timediff) {
 	timediff = new Date(timediff);
-	var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(),
+	var parts = [timediff.getFullYear(), timediff.getMonth() + 1, timediff.getDate(), timediff.getHours(), timediff.getMinutes(),
 		timediff.getSeconds()
 	];
 	var oldTime = timediff.getTime();
@@ -1011,15 +1011,15 @@ Vue.mixin({
 })
 
 //判断屏幕尺寸并分类,实现兼容不同设备
-// vue.prototype.screenSize = function(){
-// 	uni.getSystemInfo({
-// 		success: function (res) {
-// 		        console.log(res.model);
-// 		        console.log(res.pixelRatio);
-// 		        console.log(res.windowWidth);
-// 		        console.log(res.windowHeight);
-// 		        console.log(res.language);
-// 		        console.log(res.platform);
-// 		    }
-// 	})
-// }
+Vue.prototype.getScreenSize = function(){
+	uni.getSystemInfo({
+		success: function (res) {
+			console.log(res.model);
+			console.log(res.pixelRatio);
+			console.log(res.windowWidth);
+			console.log(res.windowHeight);
+			console.log(res.language);
+			console.log(res.platform);
+		}
+	})
+}

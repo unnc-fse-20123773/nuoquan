@@ -134,9 +134,8 @@ export default {
 			//控制滑动结束，以下控制跳转detail
 			goToDetail(thisArticle){
 				//thisArticle用函数传入，因为v-for使用了ID为键名，所以无法筛选数据，就直接block传进来好了
-				var navData = JSON.stringify(thisArticle); // 这里转换成 字符串
 				uni.navigateTo({
-					url: '/pages/detail/detail?data=' + navData
+					url: '/pages/detail/detail?data=' + thisArticle.id
 				});
 			},
 			

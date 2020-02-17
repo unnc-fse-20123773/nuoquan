@@ -65,6 +65,10 @@
     ]
   },
   "permission": {},
+<<<<<<< HEAD
   "usingComponents": {},
   "sitemapLocation": "sitemap37.json"
+=======
+  "usingComponents": {}
+>>>>>>> master
 }

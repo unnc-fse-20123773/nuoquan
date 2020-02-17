@@ -37,9 +37,8 @@
 		},
 		methods: {
 			jumpToDetail() {
-				var navData = JSON.stringify(this.articleCard); // 这里转换成 字符串
 				uni.navigateTo({
-					url: '/pages/detail/detail?data=' + navData
+					url: '/pages/detail/detail?data=' + this.articleCard.id
 				});
 			}
 		}

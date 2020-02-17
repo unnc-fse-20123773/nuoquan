@@ -30,6 +30,7 @@ import com.nuoquan.mapper.UserMapper;
 import com.nuoquan.pojo.Article;
 import com.nuoquan.pojo.ArticleImage;
 import com.nuoquan.pojo.SearchRecord;
+import com.nuoquan.pojo.User;
 import com.nuoquan.pojo.UserArticleComment;
 import com.nuoquan.pojo.UserLikeArticle;
 import com.nuoquan.pojo.UserLikeComment;
@@ -276,7 +277,8 @@ public class ArticleServiceImpl implements ArticleService {
 			}
 		}
 		
-		//开启分页查询并转换为vo对象
+		// 开启分页查询并转换为vo对象
+		// 在Example中的每一个Criteria相当于一个括号，把里面的内容当成一个整体
 		Example articleExample = new Example(Article.class);
 		articleExample.setOrderByClause("create_date desc");
 		Criteria criteria = articleExample.createCriteria();
@@ -285,7 +287,10 @@ public class ArticleServiceImpl implements ArticleService {
 			criteria.orLike("articleContent", "%" + text + "%");
 			criteria.orLike("tags", "%" + text + "%");
 		}
-		criteria.andEqualTo("status", StatusEnum.READABLE);
+		
+		Criteria criteria2 = articleExample.createCriteria();
+		criteria2.andEqualTo("status", StatusEnum.READABLE.type);
+		articleExample.and(criteria2);
 		
 		PageHelper.startPage(page, pageSize);
 		List<Article> list = articleMapperCustom.selectByExample(articleExample);
@@ -296,6 +301,13 @@ public class ArticleServiceImpl implements ArticleService {
 		for (Article a : list) {
 			ArticleVO av = new ArticleVO();
 			BeanUtils.copyProperties(a, av); //转换对象
+			// 添加作者信息
+			User user= userMapper.selectByPrimaryKey(av.getUserId());
+			if (user!=null) {
+				av.setNickname(user.getNickname());
+				av.setFaceImg(user.getFaceImg());
+				av.setFaceImgThumb(user.getFaceImgThumb());
+			}
 			// 为每个文章添加图片列表
 			av.setImgList(articleImageMapper.getArticleImgs(av.getId()));
 			// 添加和关于用户的点赞关系

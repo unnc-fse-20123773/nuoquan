@@ -73,11 +73,8 @@ export default {
 	},
 
 	onLoad() {
-		
-
-		 this.thisUserInfo= this.getGlobalUserInfo();
+		this.thisUserInfo= this.getGlobalUserInfo();
 	
-
 		var screenWidth = uni.getSystemInfoSync().screenWidth;
 		this.screenWidth = screenWidth;
 
@@ -143,8 +140,20 @@ export default {
 			});
 		},
 
-		
-
+		/**
+		 * @param {Object} currentTab 0: 关注 1: 粉丝
+		 */
+		goToFansFollow: function(currentTab) {
+			console.log('goToFansFollow...');
+			var data = {
+				currentTab: currentTab,
+				thisUserInfo: this.thisUserInfo
+			};
+			var encodeData = encodeURIComponent(JSON.stringify(data)); // 对数据字符串化并转码，防止特殊字符影响传参
+			uni.navigateTo({
+				url: '../followlist/followlist?data=' + encodeData,
+			});
+		},
 		
 	}
 };

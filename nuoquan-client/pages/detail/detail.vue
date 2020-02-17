@@ -117,6 +117,11 @@ import detail_2_comments from "./detail_2_comments.vue"
 			var userInfo = this.getGlobalUserInfo();
 			if (!this.isNull(userInfo)) {
 				this.userInfo = this.getGlobalUserInfo();
+			}else{
+				uni.redirectTo({
+				    url: '../signin/signin'
+				});
+				return;
 			}
 			
 			var articleId = options.data;
@@ -132,11 +137,9 @@ import detail_2_comments from "./detail_2_comments.vue"
 
 		onShareAppMessage(res) {
 			if (res.from === 'menu') {// 来自右上角菜单的分享
-				var navData = JSON.stringify(this.articleCard);
-				console.log(navData)
 				return {
 					title: '来，给老子看！',
-					path: '/pages/detail/detail?data=' + navData
+					path: '/pages/detail/detail?data=' + this.articleCard.id
 				}
 			}
 		},

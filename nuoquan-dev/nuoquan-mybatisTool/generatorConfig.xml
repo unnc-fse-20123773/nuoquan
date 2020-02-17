@@ -29,7 +29,6 @@
         type="XMLMAPPER"/>
 
 
-		<table tableName="admin_notice"></table>
-		<table tableName="admin_user_notice"></table>
+		<table tableName="tags"></table>
     </context>
 </generatorConfiguration>
