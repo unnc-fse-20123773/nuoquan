@@ -18,6 +18,7 @@ import com.nuoquan.pojo.vo.TitleVo;
 import com.nuoquan.pojo.vo.UserLikeVO;
 import com.nuoquan.pojo.vo.UserVO;
 import com.nuoquan.service.ArticleService;
+import com.nuoquan.service.TagsService;
 import com.nuoquan.service.UserService;
 import com.nuoquan.service.VoteService;
 import com.nuoquan.service.WeChatService;
@@ -39,6 +40,9 @@ public class BasicController {
 	
 	@Autowired
 	public WeChatService weChatService;
+	
+	@Autowired
+	public TagsService tagsService;
 	
 	@Value("${fdfs.groupName}")
 	public String fdfsGroupName;

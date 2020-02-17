@@ -565,4 +565,9 @@ public class ArticleController extends BasicController {
 		}
 		return JSONResult.ok();
 	}
+	
+	@PostMapping("/getTagsList")
+	public JSONResult getTagsList() {
+		return JSONResult.ok(tagsService.getTagsList());
+	}
 }
