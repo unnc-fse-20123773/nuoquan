@@ -21,7 +21,8 @@
     "pages/about/about",
     "pages/hot/hot",
     "pages/profile/profile",
-    "components/shareposter/myshareposter"
+    "components/shareposter/myshareposter",
+    "pages/submitVote/submitVote"
   ],
   "subPackages": [],
   "window": {
@@ -65,10 +66,5 @@
     ]
   },
   "permission": {},
-<<<<<<< HEAD
-  "usingComponents": {},
-  "sitemapLocation": "sitemap37.json"
-=======
   "usingComponents": {}
->>>>>>> master
 }

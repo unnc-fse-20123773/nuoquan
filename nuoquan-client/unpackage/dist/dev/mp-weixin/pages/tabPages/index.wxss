@@ -135,87 +135,60 @@ image {
 	color: rgba(155, 155, 155, 1);
 	opacity: 1;
 }
-<<<<<<< HEAD
 .menubar.data-v-0734f7a0 {
-	height: 18px;
-	width: 100%;
-	margin: 16px 0 18px 0;
-=======
-.menubar.data-v-2881634c {
 	height: 36px;
 	width: 93.12%;
 	margin: 16px 0 0 3.44%;
->>>>>>> master
 }
 .menubar_rel.data-v-0734f7a0 {
 	position: relative;
 	width: 100%;
 	height: 100%;
 }
-<<<<<<< HEAD
-.icons.data-v-0734f7a0 {
-=======
-.menubar_share.data-v-2881634c{
->>>>>>> master
+.menubar_share.data-v-0734f7a0{
 	position: absolute;
 	left: 2.12%;
 	width:18px;
 	height:18px;
 	opacity:1;
 }
-<<<<<<< HEAD
-.icons image.data-v-0734f7a0 {
-=======
-.operationBar.data-v-2881634c{
->>>>>>> master
+.operationBar.data-v-0734f7a0{
 	position: absolute;
 	right: 0;
 	min-width: 94px;
 	display: -webkit-box;
 	display: -webkit-flex;
+	display: -ms-flexbox;
 	display: flex;
 	height: 18px;
 }
-<<<<<<< HEAD
-.icon.data-v-0734f7a0 {
-	position: absolute;
-	bottom: 2.75px;
-	display: inline-block;
-	color: #353535;
-	font-size: 13px;
-	text-align: center;
-	width: 16px;
-	height: 17.5px;
-	text-align: center;
-	vertical-align: bottom;
-=======
-.commentBar.data-v-2881634c{
+.commentBar.data-v-0734f7a0{
 	height: 100%;
 }
-.commentBar image.data-v-2881634c{
+.commentBar image.data-v-0734f7a0{
 	width:13px;
 	height:12px;
 	margin-right: 8px;
 }
-.commentBar text.data-v-2881634c{
+.commentBar text.data-v-0734f7a0{
 	font-size:14px;
 	font-family:Source Han Sans CN;
 	font-weight:400;
 	line-height:23px;
 	color:rgba(53,53,53,1);
 }
-.likeBar.data-v-2881634c{
+.likeBar.data-v-0734f7a0{
 	margin-left: 19px;
 	height:22px;
 	opacity:1;
 	border-radius:50px;
 }
-.likeBar image.data-v-2881634c{
+.likeBar image.data-v-0734f7a0{
 	width:13px;
 	height:12px;
 	margin-left: 8px;
 }
-.likeBar text.data-v-2881634c{
+.likeBar text.data-v-0734f7a0{
 	margin-left: 8px;
 	margin-right: 8px;
 	font-size:14px;
@@ -224,20 +197,20 @@ image {
 	line-height:23px;
 	color:rgba(53,53,53,1);
 }
-.likedBar.data-v-2881634c{
+.likedBar.data-v-0734f7a0{
 	margin-left: 19px;
 	height:22px;
-	background:-webkit-linear-gradient(319deg,rgba(255,161,161,1) 0%,rgba(245,60,60,1) 100%);
+	background:-o-linear-gradient(319deg,rgba(255,161,161,1) 0%,rgba(245,60,60,1) 100%);
 	background:linear-gradient(131deg,rgba(255,161,161,1) 0%,rgba(245,60,60,1) 100%);
 	opacity:1;
 	border-radius:50px;
 }
-.likedBar image.data-v-2881634c{
+.likedBar image.data-v-0734f7a0{
 	width:13px;
 	height:12px;
 	margin-left: 8px;
 }
-.likedBar text.data-v-2881634c{
+.likedBar text.data-v-0734f7a0{
 	margin-left: 8px;
 	margin-right: 8px;
 	font-size:14px;
@@ -245,7 +218,6 @@ image {
 	font-weight:400;
 	line-height:23px;
 	color:rgba(255,255,255,1);
->>>>>>> master
 }
 .picturearea-one.data-v-0734f7a0 {
 	/* margin: auto; */
@@ -274,17 +246,10 @@ page {
 }
 
 
-<<<<<<< HEAD
 .index.data-v-4c967b1a {
 	/* 页面高度由内容扩充，最低值为100%（page 定义的）- by Guetta */
 	height: 100%;
-	background-color: #f3f3f3;
-=======
-.index.data-v-5b2a1da0 {
-	/* 页面高度由内容扩充，最低值为100%（page 定义的）- by Guetta */
-	height: 100%;
 	background-color: #fdfdfd;
->>>>>>> master
 }
 .indexArticleArea.data-v-4c967b1a {
 	height: 100%;

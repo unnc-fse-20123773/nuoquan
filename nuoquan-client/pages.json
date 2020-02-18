@@ -90,6 +90,10 @@
             "path" : "components/shareposter/myshareposter",
             "style" : {}
         }
+        ,{
+            "path" : "pages/submitVote/submitVote",
+            "style" : {}
+        }
     ],
         
 	
@@ -220,6 +224,11 @@
 			{
 				"name": "mine",
 				"path": "pages/tabPages/mine",
+				"query": "" //启动参数，在页面的onLoad函数里面得到
+			},
+			{
+				"name": "新建投票",
+				"path": "pages/submitVote/submitVote",
 				"query": "" //启动参数，在页面的onLoad函数里面得到
 			}
 		]

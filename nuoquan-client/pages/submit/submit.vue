@@ -527,7 +527,7 @@
 		border-radius: 20px;
 	}
 
-	/* 待选部分结束*/
+	/* 待选部分结束*
 
 	.content {
 		min-height: 51px;
