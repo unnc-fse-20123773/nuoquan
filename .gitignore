@@ -1,8 +1,5 @@
 .DS_Store
-
 HELP.md
-/target/
-!.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
 .apt_generated
@@ -29,3 +26,15 @@ HELP.md
 
 ### VS Code ###
 .vscode/
+
+### uniapp ###
+unpackage/
+
+### JAVA ###
+*.class
+
+### Package Files ###
+*.jar
+*.war
+!.mvn/wrapper/maven-wrapper.jar
+*.ear
