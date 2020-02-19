@@ -1,13 +1,11 @@
 package com.nuoquan.controller;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.UUID;
-import java.util.stream.IntStream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +17,19 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nuoquan.utils.FastDFSClient;
-import com.github.pagehelper.util.StringUtil;
 import com.nuoquan.email.EmailTool;
-import com.nuoquan.mapper.UserMapper;
+import com.nuoquan.enums.MsgActionEnum;
+import com.nuoquan.enums.ReputeWeight;
 import com.nuoquan.pojo.ChatMsg;
 import com.nuoquan.pojo.User;
-import com.nuoquan.pojo.UserFans;
+import com.nuoquan.pojo.netty.DataContent;
+import com.nuoquan.pojo.netty.NoticeCard;
+import com.nuoquan.pojo.vo.ArticleVO;
 import com.nuoquan.pojo.vo.FansFollow;
+import com.nuoquan.pojo.vo.UserArticleCommentVO;
+import com.nuoquan.pojo.vo.UserLikeVO;
 import com.nuoquan.pojo.vo.UserVO;
 import com.nuoquan.pojo.vo.WxRes;
-import com.nuoquan.service.UserService;
 import com.nuoquan.utils.JSONResult;
 import com.nuoquan.utils.JsonUtils;
 import com.nuoquan.utils.UrlUtil;
@@ -105,7 +106,10 @@ public class UserController extends BasicController {
 		}
 
 		userService.saveUserFanRelation(userId, fanId);
-
+		
+		//被关注者影响力++
+		userService.updateReputation(userId, ReputeWeight.FOLLOW.weight, 1);
+		
 		return JSONResult.ok("Follow success");
 	}
 
@@ -120,6 +124,9 @@ public class UserController extends BasicController {
 		}
 
 		userService.deleteUserFanRelation(userId, fanId);
+		
+		//被关注者影响力--
+		userService.updateReputation(userId, ReputeWeight.FOLLOW.weight, -1);
 
 		return JSONResult.ok("Cancle follow success");
 	}
@@ -213,7 +220,7 @@ public class UserController extends BasicController {
 		return JSONResult.ok(userVO);
 	}
 	
-	@ApiOperation(value = "Get the user's unread msg")
+	@ApiOperation(value = "Get the user's unread chat msg")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "userId", required = true, dataType = "String", paramType = "form"), })
 	@PostMapping("/getUnsignedMsg")
@@ -229,6 +236,68 @@ public class UserController extends BasicController {
 		return JSONResult.ok(unreadMsgList);
 	}
 	
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "userId", required = true, dataType = "String", paramType = "form") })
+	@PostMapping("/getUnsignedLikeMsg")
+	public JSONResult getUnsignedLikeMsg(String userId) {
+		List<UserLikeVO> likeVOs = userService.getUnsignedLikeMsg(userId);
+		List<DataContent> dataList = new LinkedList<>();
+		for (UserLikeVO like : likeVOs) {
+			DataContent dataContent = new DataContent();
+			if (!StringUtils.isBlank(like.getArticleId())) {
+				//System.out.println("点赞文章");
+				ArticleVO articleVO = articleService.getArticleById(like.getArticleId(), userId);
+				
+				dataContent.setAction(MsgActionEnum.LIKEARTICLE.type);
+				dataContent.setData(new NoticeCard(like, articleVO));
+				
+				dataList.add(dataContent);
+			} else {
+				//System.out.println("点赞评论");
+				UserArticleCommentVO commentVO = articleService.getCommentById(like.getCommentId(), userId);
+				
+				dataContent.setAction(MsgActionEnum.LIKECOMMENT.type);
+				dataContent.setData(new NoticeCard(like, commentVO));
+				
+				dataList.add(dataContent);
+			}
+		}
+		return JSONResult.ok(dataList);
+	}
+	
+	/**
+	 * TODO: 该接口最多返回100个对象...并造成卡顿 解决方法：分页并自动累加页数
+	 * @param userId
+	 * @return
+	 */
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "userId", required = true, dataType = "String", paramType = "form") })
+	@PostMapping("/getUnsignedCommentMsg")
+	public JSONResult getUnsignedCommentMsg(String userId) {
+		List<UserArticleCommentVO> commentVOs = userService.getUnsignedCommentMsg(userId);
+		List<DataContent> dataList = new LinkedList<>();
+		for (UserArticleCommentVO comment : commentVOs) {
+			DataContent dataContent = new DataContent();
+			if (StringUtils.isBlank(comment.getFatherCommentId())) {
+				//System.out.println("评论文章");
+				ArticleVO targetArticle = articleService.getArticleById(comment.getArticleId(), userId);
+				
+				dataContent.setData(new NoticeCard(comment, targetArticle));
+				dataContent.setAction(MsgActionEnum.COMMENTARTICLE.type);
+				
+				dataList.add(dataContent);
+			} else {
+				//System.out.println("评论评论");
+				UserArticleCommentVO targetComment = articleService.getCommentById(comment.getFatherCommentId(), userId);
+				
+				dataContent.setData(new NoticeCard(comment, targetComment));
+				dataContent.setAction(MsgActionEnum.COMMENTCOMMENT.type);
+				
+				dataList.add(dataContent);
+			}
+		}
+		return JSONResult.ok(dataList);
+	}
 	
 	/**
 	 * 微信登陆获取openId

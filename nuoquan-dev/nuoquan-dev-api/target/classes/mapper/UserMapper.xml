@@ -20,6 +20,7 @@
     <result column="degree" property="degree" jdbcType="TINYINT" />
     <result column="receive_like_counts" property="receiveLikeCounts" jdbcType="INTEGER" />
     <result column="cid" property="cid" jdbcType="VARCHAR" />
+    <result column="reputation" property="reputation" jdbcType="INTEGER" />
   </resultMap>
   
   <update id="addReceiveLikeCount" parameterType="String">

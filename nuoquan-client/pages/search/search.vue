@@ -38,6 +38,7 @@
 		<!-- 搜索结果显示区域 -->
 		<scroll-view class="searchResult" v-show="!searching" scroll-y="true" @scrolltolower="loadMore()">
 			<searchResultArticle v-for="i in searchedArticleList" :key="i.id" v-bind:articleCard="i"></searchResultArticle>
+			<view style="height:140px;width: 100%;"></view>
 		</scroll-view>
 	</view>
 </template>

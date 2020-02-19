@@ -83,6 +83,15 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var m0 = _vm.timeDeal(_vm.vote.createDate)
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        m0: m0
+      }
+    }
+  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -148,58 +157,28 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
-//
-//
-//
-//
 var _default =
 {
-  components: {},
-
+  props: {
+    vote: "" },
 
   data: function data() {
     return {
-      optionList: [{
-        id: "123qwe",
-        text: "撒地方666",
-        voteRate: "18%",
-        voteNum: "1233" },
-
-      {
-        id: "1w23",
-        text: "6士大夫234 324432 66",
-        voteRate: "75%",
-        voteNum: "1233" },
-
-      {
-        id: "1qwe23",
-        text: "66斯科拉回复6",
-        voteRate: "66%",
-        voteNum: "1233" },
-
-      {
-        id: "1234dsf3",
-        text: "6士大夫山豆根66",
-        voteRate: "66%",
-        voteNum: "1233" },
-
-      {
-        id: "123f",
-        text: "6士大夫###$dskjfhk多少了解客户凯撒记录和法律框架的话山豆根66",
-
-        voteRate: "3%",
-        voteNum: "1233" }],
-
-
-
-
-
-      vote: {
-        status: "1" } };
+      maxPercent: '' };
 
 
   },
-  methods: {} };exports.default = _default;
+  methods: {},
+
+
+  mounted: function mounted() {
+    for (var i = 0; i < this.vote.optionList.length; i++) {
+      if (this.vote.optionList[i].percent > this.maxPercent) {
+        this.maxPercent = 90 / this.vote.optionList[i].percent;
+      }
+
+    }
+  } };exports.default = _default;
 
 /***/ }),
 

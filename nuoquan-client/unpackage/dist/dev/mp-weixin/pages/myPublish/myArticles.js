@@ -278,7 +278,7 @@ var _default =
       this.messageIndex = -1;
     },
 
-    banArticle: function banArticle(articleId) {
+    fDeleteArticle: function fDeleteArticle(articleId) {
       uni.request({
         url: this.$serverUrl + '/article/fDeleteArticle',
         method: 'POST',

@@ -158,38 +158,6 @@ public interface ArticleService {
 	public List<ArticleVO> getTop3ByPopularity(String userId);
 	
 	/**
-	 * 批量签收点赞文章消息
-	 * @param msgIdList
-	 */
-	public void updateLikeArticleSigned(List<String> msgIdList);
-	
-	/**
-	 * 批量签收点赞评论消息
-	 * @param msgIdList
-	 */
-	public void updateLikeCommentSigned(List<String> msgIdList);
-	
-	/**
-	 * 批量签收评论消息
-	 * @param msgIdList
-	 */
-	public void updateCommentSigned(List<String> msgIdList);
-	
-	/**
-	 * 按作者id获取未签收的点赞消息
-	 * @param userId
-	 * @return
-	 */
-	public List<UserLikeVO> getUnsignedLikeMsg(String userId);
-	
-	/**
-	 * 按作者id获取未签收的评论消息
-	 * @param userId
-	 * @return
-	 */
-	public List<UserArticleCommentVO> getUnsignedCommentMsg(String userId);
-	
-	/**
 	 * Set the status to unreadable
 	 * @param articleId
 	 */

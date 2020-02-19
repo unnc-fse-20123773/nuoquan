@@ -46,7 +46,7 @@
 				</view>
 
 				<view class="menu-area" v-if="messageIndex == thisArticle.id">
-					<view style="background: #FE5F55;" @click="banArticle(thisArticle.id)">
+					<view style="background: #FE5F55;" @click="fDeleteArticle(thisArticle.id)">
 						<image src="../../static/icon/bin.png"></image>
 						<text>删除</text>
 					</view>
@@ -144,7 +144,7 @@ export default {
 				this.messageIndex = -1;
 			},
 		
-		banArticle(articleId){
+		fDeleteArticle(articleId){
 			uni.request({
 				url: this.$serverUrl + '/article/fDeleteArticle',
 				method: 'POST',
@@ -247,7 +247,7 @@ export default {
 }
 
 .time {
-	width: 77px;
+	width: 84px;
 	/* 暂时,到  月-日 时:分*/
 	height: 10px;
 	line-height: 10px;

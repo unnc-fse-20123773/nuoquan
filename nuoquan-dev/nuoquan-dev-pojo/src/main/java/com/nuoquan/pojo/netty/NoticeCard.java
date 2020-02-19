@@ -1,7 +1,7 @@
 package com.nuoquan.pojo.netty;
 
 /**
- * 评论通知卡片内容
+ * 通知卡片内容
  * @author jerrio
  */
 public class NoticeCard {

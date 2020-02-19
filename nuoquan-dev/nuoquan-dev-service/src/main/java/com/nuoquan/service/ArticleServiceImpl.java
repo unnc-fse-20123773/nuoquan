@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.nuoquan.enums.StatusEnum;
@@ -509,7 +508,7 @@ public class ArticleServiceImpl implements ArticleService {
 	public void userUnLikeComment(String userId, String commentId, String createrId) {
 		boolean isLike = isUserLikeComment(userId, commentId);
 		if (isLike) {
-			// 1.删除用户和文章的点赞关联关系表
+			// 1.删除用户和评论的点赞关联关系表
 			Example example = new Example(UserLikeComment.class);
 			// 创造条件
 			Criteria criteria = example.createCriteria();
@@ -653,38 +652,6 @@ public class ArticleServiceImpl implements ArticleService {
 			}
 		}
 		return list;
-	}
-
-	@Transactional(propagation = Propagation.REQUIRED)
-	@Override
-	public void updateLikeArticleSigned(List<String> msgIdList) {
-		userLikeArticleMapper.batchUpdateMsgSigned(msgIdList);
-	}
-
-	@Transactional(propagation = Propagation.REQUIRED)
-	@Override
-	public void updateLikeCommentSigned(List<String> msgIdList) {
-		userLikeCommentMapper.batchUpdateMsgSigned(msgIdList);
-	}
-
-	@Transactional(propagation = Propagation.REQUIRED)
-	@Override
-	public void updateCommentSigned(List<String> msgIdList) {
-		userArticleCommentMapperCustom.batchUpdateMsgSigned(msgIdList);
-	}
-
-	@Transactional(propagation = Propagation.SUPPORTS)
-	@Override
-	public List<UserLikeVO> getUnsignedLikeMsg(String userId) {
-		List<UserLikeVO> userLikeVOs = userLikeMapperCustom.getUnsignedLikeMsg(userId);
-		return userLikeVOs;
-	}
-
-	@Transactional(propagation = Propagation.SUPPORTS)
-	@Override
-	public List<UserArticleCommentVO> getUnsignedCommentMsg(String userId) {
-		List<UserArticleCommentVO> commentVOs = userArticleCommentMapperCustom.getUnsignedCommentMsg(userId);
-		return commentVOs;
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)

@@ -133,16 +133,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var myArticles = function myArticles() {return __webpack_require__.e(/*! import() | pages/myPublish/myArticles */ "pages/myPublish/myArticles").then(__webpack_require__.bind(null, /*! ./myArticles.vue */ 296));};var myVote = function myVote() {return __webpack_require__.e(/*! import() | pages/myPublish/myVote */ "pages/myPublish/myVote").then(__webpack_require__.bind(null, /*! ./myVote.vue */ 303));};
-
-
-
-
-
-
-
-
-
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var myArticles = function myArticles() {return __webpack_require__.e(/*! import() | pages/myPublish/myArticles */ "pages/myPublish/myArticles").then(__webpack_require__.bind(null, /*! ./myArticles.vue */ 304));};var myVote = function myVote() {return __webpack_require__.e(/*! import() | pages/myPublish/myVote */ "pages/myPublish/myVote").then(__webpack_require__.bind(null, /*! ./myVote.vue */ 311));};
 
 
 
@@ -184,7 +175,9 @@ var loadArticleFlag = false;var _default =
       currentPage: 1,
       totalNum: '0',
       myArticleList: '',
-      swiperViewing: "vote" };
+
+      myVoteList: '',
+      swiperViewing: "article" };
 
   },
 
@@ -203,6 +196,7 @@ var loadArticleFlag = false;var _default =
     this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
     var page = this.currentPage;
     this.showArticles(page);
+    this.showVotes();
 
     uni.$on("refresh", function () {
       _this.showArticles(1);
@@ -212,8 +206,6 @@ var loadArticleFlag = false;var _default =
   methods: {
     // 锁
     showArticles: function showArticles(page) {
-      console.log(loadArticleFlag);
-
       if (loadArticleFlag) {
         loadArticleFlag = false;
       }
@@ -236,7 +228,6 @@ var loadArticleFlag = false;var _default =
       }, 5000); //延时五秒timeout
 
       var that = this;
-      console.log(that.userInfo);
       uni.request({
         url: that.$serverUrl + '/article/queryPublishHistory',
         method: 'POST',
@@ -249,8 +240,6 @@ var loadArticleFlag = false;var _default =
           'content-type': 'application/x-www-form-urlencoded' },
 
         success: function success(res) {
-          console.log(res);
-
           setTimeout(function () {
             //延时加载
             uni.hideLoading();
@@ -272,18 +261,14 @@ var loadArticleFlag = false;var _default =
         fail: function fail(res) {
           uni.hideLoading();
           loadArticleFlag = false;
-
           console.log('index unirequest fail');
-          console.log(res);
         } });
 
     },
     loadMore: function loadMore() {
       var that = this;
       var currentPage = that.currentPage;
-      console.log(currentPage);
       var totalPage = that.totalPage;
-      console.log(totalPage);
       // 判断当前页数和总页数是否相等
       if (currentPage == totalPage) {
         // that.showArticles(1);
@@ -299,6 +284,33 @@ var loadArticleFlag = false;var _default =
     },
     switchSwiper: function switchSwiper(a) {
       this.swiperViewing = a;
+    },
+    showVotes: function showVotes(page) {
+      var that = this;
+      uni.request({
+        url: that.$serverUrl + '/vote/queryAllVotes',
+        method: 'POST',
+        data: {
+          page: 1,
+          userId: that.userInfo.id,
+          pagesize: '10' },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          console.log(res);
+          that.myVoteList = res.data.data.rows;
+
+        },
+        fail: function fail(res) {
+          uni.hideLoading();
+          loadArticleFlag = false;
+
+          console.log('index unirequest fail');
+          console.log(res);
+        } });
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
