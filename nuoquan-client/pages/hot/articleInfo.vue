@@ -1,8 +1,21 @@
 <template>
 	<view style="width:100%;">
-		<block v-for="thisArticle in myArticleList" :key="thisArticle.id" >
+		<view class="pics">
+			<image src="../../static/icon/1.png"></image>
+			<image src="../../static/icon/2.png"></image>
+			<image src="../../static/icon/3.png"></image>
+			<image src="../../static/icon/4.png"></image>
+			<image src="../../static/icon/5.png"></image>
+			<image src="../../static/icon/6.png"></image>
+			<image src="../../static/icon/7.png"></image>
+			<image src="../../static/icon/8.png"></image>
+			<image src="../../static/icon/9.png"></image>
+			<image src="../../static/icon/10.png"></image>
+		</view>	
+		<block v-for="(thisArticle,index) in myArticleList" :key="thisArticle.id" >
 			<view class="oneArticle">
-				<view class="title">{{ thisArticle.articleTitle }}</view>
+				<image class="index" :src="'../../static/icon/' + (index+1) + '.png'"></image>
+				<view class="title"> {{ thisArticle.articleTitle }}</view>
 				<view class="cardBody">
 					<view class="left-body" :class="{ leftBodyWithPic : thisArticle.imgList.length!=0 }">
 						<view class="content">{{ thisArticle.articleContent }}</view>
@@ -48,9 +61,28 @@
 </script>
 
 <style>
+	.pics{
+		display: none;
+	}
 	.oneArticle {
-		width: 100%;
+		width: 98%;
+		height: 136.4px;
 		position:relative;
+		box-shadow:0px 0px 4px rgba(0,0,0,0.16);
+		opacity:1;
+		border-radius:8px;
+		margin-bottom: 8px;
+		margin-left: auto;
+		margin-right: auto;
+		
+}
+.index {
+	width: 24px;
+	height: 58.78px;
+	position:absolute;
+	
+	left:16px;
+	
 }
 	.title {
 		/*font-size: 15px;
@@ -61,6 +93,7 @@
 		overflow: hidden;
 		text-overflow: ellipsis;*/
 		font-size: 17px;
+		margin-left: 17px;
 		color: #4a4a4a;
 		padding-top: 19px;
 		white-space: nowrap;
@@ -74,9 +107,10 @@
 		/* height:83px; */
 		/*padding-top:10px;*/
 		position: relative;
-		width: 100%;
+		width: 317px;
 		height:83px; 
 		padding-top: 12px;
+		margin-left: 16px;
 	}
 
 	.picArea {

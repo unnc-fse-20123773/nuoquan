@@ -23,6 +23,8 @@
 	"libVersion": "2.9.2",
 	"appid": "wxebb29e9646be657f",
 	"projectname": "nuoquan",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,
