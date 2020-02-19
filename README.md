@@ -81,7 +81,7 @@ Current Dev Verion: `v1.0.3`
 1. 新增 影响力计算和显示
 2. 修改 获取未签收消息从ArticleController移至UserController
 3. 小改 数据库，添加用户影响力（reputation）属性，详情见 sqlRecord.sql
-4. 整合 yaoyao & zike
+4. 整合 yaoyao & zike & deyan
 
 **v20.2.13 更新**
 1. 新增 文章自动过审开关

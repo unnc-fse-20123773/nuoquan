@@ -5,6 +5,7 @@ import com.nuoquan.pojo.UserVoteComment;
 import com.nuoquan.pojo.Vote;
 import com.nuoquan.pojo.VoteImage;
 import com.nuoquan.pojo.VoteOption;
+import com.nuoquan.pojo.VoteUser;
 import com.nuoquan.pojo.vo.UserVoteCommentVO;
 import com.nuoquan.pojo.vo.VoteVO;
 import com.nuoquan.utils.PagedResult;
@@ -110,6 +111,12 @@ public interface VoteService {
 	public void banComment(String commentId);
 
 	public void passComment(String commentId);
+
+	public void selectOption(VoteUser voteUser);
+
+	public PagedResult getSingleVote(Integer page, Integer pageSize, String userId, String voteId);
+
+	boolean isUserVoted(String userId, String voteId);
 	
 	/**
 	 * 分页查询所有状态的投票

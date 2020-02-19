@@ -10,6 +10,10 @@
 		"minified": true,
 		"newFeature": true,
 		"autoAudits": false,
+<<<<<<< HEAD
+		"scopeDataCheck": false,
+=======
+>>>>>>> 849a53ff7c6da0c067ad799d0c7d2b95f21a0a8c
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,

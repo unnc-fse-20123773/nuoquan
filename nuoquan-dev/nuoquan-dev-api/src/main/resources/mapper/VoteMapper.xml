@@ -19,4 +19,15 @@
     <result column="view_num" property="viewNum" jdbcType="INTEGER" />
     <result column="vote_content" property="voteContent" jdbcType="LONGVARCHAR" />
   </resultMap>
+  
+  <update id="addTotalVoteNum" parameterType="String">
+  	update nuoquan.vote set sum_vote=sum_vote+1 where id=#{voteId}
+  </update>
+  
+  <select id="getTotalVoteNum" resultMap="BaseResultMap">
+ 	select sum_vote from nuoquan.vote 
+  	where
+  		1 = 1
+  		and id=#{voteId}
+  </select>
 </mapper>

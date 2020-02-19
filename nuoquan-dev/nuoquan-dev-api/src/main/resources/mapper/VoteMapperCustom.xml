@@ -48,6 +48,7 @@
   	where
   		1 = 1
   		and v.status = 1
+  		and (TO_DAYS(NOW()) &lt;= TO_DAYS(v.expiry_date))
   	order by v.create_date desc
   </select>
   
@@ -62,4 +63,26 @@
   		1 = 1
   		and v.id = #{voteId}
   </select>
+  
+  <select id="getSpecifiedVote" resultMap="BaseResultMap">
+ 	select v.*, u.nickname as nickname, u.face_img, u.face_img_thumb from nuoquan.vote v
+   	left join nuoquan.user u on u.id = v.user_id
+  	where
+  		1 = 1
+  		and v.status = 1
+  		and v.id = #{voteId}
+  	order by v.create_date desc
+  </select>
+  
+  <!-- <update id="addTotalVoteNum" parameterType="String">
+  	update nuoquan.vote set sum_vote=sum_vote+1 where id=#{voteId}
+  </update>
+  
+  <select id="getTotalVoteNum" resultMap="BaseResultMap">
+ 	select sum_vote from nuoquan.vote 
+  	where
+  		1 = 1
+  		and id=#{voteId}
+  </select> -->
+  
 </mapper>

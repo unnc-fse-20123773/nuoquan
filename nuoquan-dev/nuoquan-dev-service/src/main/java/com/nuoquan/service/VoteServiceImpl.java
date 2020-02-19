@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
 import org.apache.commons.lang3.StringUtils;
 import org.n3r.idworker.Sid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import com.nuoquan.mapper.VoteImageMapper;
 import com.nuoquan.mapper.VoteMapper;
 import com.nuoquan.mapper.VoteMapperCustom;
 import com.nuoquan.mapper.VoteOptionMapper;
+import com.nuoquan.mapper.VoteUserMapper;
 import com.nuoquan.pojo.Article;
 import com.nuoquan.pojo.UserLikeComment;
 import com.nuoquan.pojo.UserLikeCommentVote;
@@ -30,6 +32,7 @@ import com.nuoquan.pojo.UserVoteComment;
 import com.nuoquan.pojo.Vote;
 import com.nuoquan.pojo.VoteImage;
 import com.nuoquan.pojo.VoteOption;
+import com.nuoquan.pojo.VoteUser;
 import com.nuoquan.pojo.vo.ArticleVO;
 import com.nuoquan.pojo.vo.UserVoteCommentVO;
 import com.nuoquan.pojo.vo.VoteVO;
@@ -71,6 +74,9 @@ public class VoteServiceImpl implements VoteService {
 	
 	@Autowired
 	private UserMapper userMapper;
+	
+	@Autowired
+	private VoteUserMapper voteUserMapper;
 	
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
@@ -172,6 +178,8 @@ public class VoteServiceImpl implements VoteService {
 			v.setImgList(voteImageMapper.getVoteImgs(v.getId()));
 			// 为每个投票添加选项列表
 			v.setOptionList(voteOptionMapper.getOptions(v.getId()));
+			// 为每个投票添加用户是否投过票的布尔值
+			v.setIsUserVoted(isUserVoted(userId, v.getId()));
 		}
 		
 		PageInfo<VoteVO> pageList = new PageInfo<>(list);
@@ -183,6 +191,21 @@ public class VoteServiceImpl implements VoteService {
 		pagedResult.setRecords(pageList.getTotal());
 		
 		return pagedResult;
+	}
+	
+	@Transactional(propagation = Propagation.SUPPORTS)
+	@Override
+	public boolean isUserVoted(String userId, String voteId) {
+		Example example = new Example(VoteUser.class);
+		Criteria criteria = example.createCriteria();
+		criteria.andEqualTo("userId", userId);
+		criteria.andEqualTo("voteId", voteId);
+		List<VoteUser> list = voteUserMapper.selectByExample(example);
+		
+		if (list != null && !list.isEmpty()) {
+			return true;
+		}
+		return false;
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -407,20 +430,64 @@ public class VoteServiceImpl implements VoteService {
 		return voteMapper.updateByExampleSelective(a, example);
 	}
 
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Override
+	public void selectOption(VoteUser voteUser) {
+		// 1.将投票信息存入数据库
+		String id = sid.nextShort();
+		Date createDate = new Date();
+		voteUser.setCreateDate(createDate);
+		voteUser.setId(id);
+		voteUserMapper.insertSelective(voteUser);
+		// 2.1 vote的sum_vote(总投票数)+1
+		voteMapper.addTotalVoteNum(voteUser.getVoteId());
+		// 2.2 得到vote中的总票
+		VoteVO voteVO = voteMapperCustom.getVoteById(voteUser.getVoteId());
+		Integer totalVoteNum = voteVO.getSumVote();
+//		System.out.println(totalVoteNum);
+		// 3.vote_option表中的对应选项的count+1
+		voteOptionMapper.addCoorespondingOptionCount(voteUser.getOptionId());
+		// 4.更新vote_option表中该投票的每个选项的percent值
+		Example example = new Example(VoteOption.class);
+		Criteria criteria = example.createCriteria();
+		criteria.andEqualTo("vote_id");
+		List<VoteOption> list = voteOptionMapper.selectByExample(example);
+		for (VoteOption vu : list) {
+			Integer optionTotalCount = vu.getCount();
+//			System.out.println(optionTotalCount);
+			Double percent =((double)optionTotalCount/totalVoteNum);
+//			System.out.println(percent);
+			voteOptionMapper.updatePercent(vu.getId(), percent);
+		}
+	}
+
+	@Transactional(propagation = Propagation.SUPPORTS)
+	@Override
+	public PagedResult getSingleVote(Integer page, Integer pageSize, String userId, String voteId) {
+
+		PageHelper.startPage(page, pageSize);
+		
+		List<VoteVO> list = voteMapperCustom.getSpecifiedVote(voteId);
+		for(VoteVO v : list) {
+			// 为每个投票添加图片列表
+			v.setImgList(voteImageMapper.getVoteImgs(v.getId()));
+			// 为每个投票添加选项列表
+			v.setOptionList(voteOptionMapper.getOptions(v.getId()));
+		}
+		
+		PageInfo<VoteVO> pageList = new PageInfo<>(list);
+		
+		PagedResult pagedResult = new PagedResult();
+		pagedResult.setPage(page);
+		pagedResult.setTotal(pageList.getPages());
+		pagedResult.setRows(list);
+		pagedResult.setRecords(pageList.getTotal());
+		
+		return pagedResult;
+	}
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

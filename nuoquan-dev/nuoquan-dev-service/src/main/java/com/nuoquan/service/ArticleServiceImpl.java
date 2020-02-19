@@ -33,6 +33,7 @@ import com.nuoquan.pojo.User;
 import com.nuoquan.pojo.UserArticleComment;
 import com.nuoquan.pojo.UserLikeArticle;
 import com.nuoquan.pojo.UserLikeComment;
+import com.nuoquan.pojo.UserVoteComment;
 import com.nuoquan.pojo.vo.ArticleVO;
 import com.nuoquan.pojo.vo.UserArticleCommentVO;
 import com.nuoquan.pojo.vo.UserLikeVO;
@@ -802,3 +803,15 @@ public class ArticleServiceImpl implements ArticleService {
 		return articleMapper.updateByExampleSelective(a, example);
 	}
 }
+
+//
+//@Transactional(propagation = Propagation.REQUIRED)
+//@Override
+//public void passComment(String commentId) {
+//	Example example = new Example(UserVoteComment.class);
+//	Criteria criteria = example.createCriteria();
+//	criteria.andEqualTo("id", commentId);
+//	
+//	UserVoteComment userVoteCommentHelper = new UserVoteComment();
+//	userVoteCommentHelper.setStatus(StatusEnum.READABLE.type);
+//	userVoteCommentMapper.updateByExampleSelective(userVoteCommentHelper, example);

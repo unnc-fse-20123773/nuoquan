@@ -65,6 +65,7 @@ public class VoteVO {
     // new parameters
     private List<VoteImage> imgList; // 投票图片列表
     private List<VoteOption> optionList;
+    private Boolean isUserVoted;
     
     
     
@@ -301,5 +302,13 @@ public class VoteVO {
 
 	public void setFaceImgThumb(String faceImgThumb) {
 		this.faceImgThumb = faceImgThumb;
+	}
+
+	public Boolean getIsUserVoted() {
+		return isUserVoted;
+	}
+
+	public void setIsUserVoted(Boolean isUserVoted) {
+		this.isUserVoted = isUserVoted;
 	}
 }

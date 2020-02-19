@@ -22,6 +22,7 @@ import com.nuoquan.pojo.UserVoteComment;
 import com.nuoquan.pojo.Vote;
 import com.nuoquan.pojo.VoteImage;
 import com.nuoquan.pojo.VoteOption;
+import com.nuoquan.pojo.VoteUser;
 import com.nuoquan.pojo.netty.DataContent;
 import com.nuoquan.pojo.netty.NoticeCard;
 import com.nuoquan.pojo.vo.UserLikeVO;
@@ -355,6 +356,48 @@ public class VoteController extends BasicController{
 		voteService.passComment(commentId);
 		return JSONResult.ok();
 	}
+	
+	@ApiOperation(value = "选择某个选项")
+	@PostMapping(value="/selectOption")
+	public JSONResult selectOption(@RequestBody VoteUser voteUser) throws Exception {
+		
+		if (StringUtils.isBlank(voteUser.getUserId()) || StringUtils.isEmpty(voteUser.getUserId())) {
+			return JSONResult.errorMsg("UserId can't be null!");
+		}
+		
+		if (StringUtils.isBlank(voteUser.getOptionId()) || StringUtils.isEmpty(voteUser.getOptionId())) {
+			return JSONResult.errorMsg("OptionId can't be null!");
+		}
+		
+		if (StringUtils.isBlank(voteUser.getVoteId()) || StringUtils.isEmpty(voteUser.getVoteId())) {
+			return JSONResult.errorMsg("VoteId can't be null!");
+		}
+		voteService.selectOption(voteUser);
+		return JSONResult.ok();
+	}
+	
+	@ApiOperation(value = "查询单个投票", notes = "在确认选择后刷新单个投票")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "userId", value = "操作者id", required = true, dataType = "String", paramType = "form"),
+		@ApiImplicitParam(name = "voteId", value = "投票id", required = true, dataType = "String", paramType = "form"),
+		@ApiImplicitParam(name = "page", value = "页数", required = true, dataType = "String", paramType = "form"),
+		@ApiImplicitParam(name = "pageSize", value = "每页大小", required = true, dataType = "String", paramType = "form") 
+		})
+	@PostMapping("/querySingleVote")
+	public JSONResult querySingleVote(Integer page, Integer pageSize, String userId, String voteId) throws Exception {
+		
+		if (page == null) {
+			page = 1;
+		}
+		if (pageSize == null) {
+			pageSize = PAGE_SIZE;
+		}
+		
+		PagedResult result = voteService.getSingleVote(page, pageSize, userId, voteId);
+		
+		return JSONResult.ok(result);
+	}
+	
 }
 
 
