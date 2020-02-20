@@ -1534,17 +1534,10 @@ uni$1;exports.default = _default;
 
 /***/ }),
 
-<<<<<<< HEAD
-/***/ 121:
+/***/ 122:
 /*!***********************************************************************!*\
   !*** D:/XMQ/nuoquan/nuoquan-client/pages/black-index/black-index.css ***!
   \***********************************************************************/
-=======
-/***/ 122:
-/*!************************************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/pages/black-index/black-index.css ***!
-  \************************************************************************************************/
->>>>>>> 52e0402cc154be12838941e8afa82d725905a01c
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1552,17 +1545,10 @@ uni$1;exports.default = _default;
 
 /***/ }),
 
-<<<<<<< HEAD
-/***/ 130:
+/***/ 131:
 /*!****************************************************!*\
   !*** D:/XMQ/nuoquan/nuoquan-client/common/util.js ***!
   \****************************************************/
-=======
-/***/ 131:
-/*!*****************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/common/util.js ***!
-  \*****************************************************************************/
->>>>>>> 52e0402cc154be12838941e8afa82d725905a01c
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1800,9 +1786,9 @@ function normalizeComponent (
 /***/ }),
 
 /***/ 15:
-/*!*****************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/store/index.js ***!
-  \*****************************************************************************/
+/*!****************************************************!*\
+  !*** D:/XMQ/nuoquan/nuoquan-client/store/index.js ***!
+  \****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2832,9 +2818,9 @@ var index_esm = {
 /***/ }),
 
 /***/ 17:
-/*!*******************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/common/router.js ***!
-  \*******************************************************************************/
+/*!******************************************************!*\
+  !*** D:/XMQ/nuoquan/nuoquan-client/common/router.js ***!
+  \******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8886,16 +8872,10 @@ internalMixin(Vue);
 
 /***/ }),
 
-<<<<<<< HEAD
-/***/ 23:
-/*!**********************************************************!*\
-  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
-  \**********************************************************/
-=======
 /***/ 203:
-/*!******************************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/common/image-tools/index.js ***!
-  \******************************************************************************************/
+/*!*****************************************************************!*\
+  !*** D:/XMQ/nuoquan/nuoquan-client/common/image-tools/index.js ***!
+  \*****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9050,20 +9030,19 @@ function base64ToPath(base64) {
 
 /***/ }),
 
-/***/ 3:
-/*!***********************************!*\
-  !*** (webpack)/buildin/global.js ***!
-  \***********************************/
->>>>>>> 52e0402cc154be12838941e8afa82d725905a01c
+/***/ 24:
+/*!**********************************************************!*\
+  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
+  \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! regenerator-runtime */ 24);
+module.exports = __webpack_require__(/*! regenerator-runtime */ 25);
 
 
 /***/ }),
 
-/***/ 24:
+/***/ 25:
 /*!************************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime-module.js ***!
   \************************************************************/
@@ -9088,22 +9067,13 @@ var g = (function() {
 var hadRuntime = g.regeneratorRuntime &&
   Object.getOwnPropertyNames(g).indexOf("regeneratorRuntime") >= 0;
 
-<<<<<<< HEAD
 // Save the old regeneratorRuntime in case it needs to be restored later.
 var oldRuntime = hadRuntime && g.regeneratorRuntime;
-=======
-/***/ 4:
-/*!*************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/pages.json ***!
-  \*************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
->>>>>>> 52e0402cc154be12838941e8afa82d725905a01c
 
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(/*! ./runtime */ 25);
+module.exports = __webpack_require__(/*! ./runtime */ 26);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -9120,7 +9090,7 @@ if (hadRuntime) {
 
 /***/ }),
 
-/***/ 25:
+/***/ 26:
 /*!*****************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime.js ***!
   \*****************************************************/
@@ -9670,20 +9640,8 @@ if (hadRuntime) {
       }
     },
 
-<<<<<<< HEAD
     stop: function() {
       this.done = true;
-=======
-    }
-    /**
-       * h5 请求
-       */ }, { key: "imageRequest", value: function imageRequest(
-    data) {
-      var image = new Image();
-      var options = getSgin(GetEncodeURIComponentOptions(data)).options;
-      image.src = STAT_H5_URL + '?' + options;
-    } }, { key: "sendEvent", value: function sendEvent(
->>>>>>> 52e0402cc154be12838941e8afa82d725905a01c
 
       var rootEntry = this.tryEntries[0];
       var rootRecord = rootEntry.completion;
@@ -9878,7 +9836,6 @@ g = (function() {
 	return this;
 })();
 
-<<<<<<< HEAD
 try {
 	// This works if eval is allowed (see CSP)
 	g = g || new Function("return this")();
@@ -9904,43 +9861,14 @@ module.exports = g;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-=======
-/***/ 7:
-/*!******************************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/pages.json?{"type":"style"} ***!
-  \******************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/tabPages/index": {}, "pages/tabPages/votePage": {}, "pages/tabPages/messagelist": {}, "pages/tabPages/mine": {}, "pages/detail/detail": {}, "pages/submit/submit": {}, "pages/chatpage/chatpage": {}, "pages/followlist/followlist": {}, "pages/personpublic/personpublic": {}, "pages/search/search": {}, "pages/black-index/black-index": {}, "pages/signin/signin": {}, "components/articlebrief": {}, "pages/wechatLogin/wechatLogin": {}, "pages/cmt-likedetail/cmt-likedetail": {}, "pages/comment-detail/comment-detail": {}, "pages/userDeal/userDeal": {}, "pages/myPublish/myPublish": {}, "pages/about/about": {}, "pages/hot/hot": {}, "pages/profile/profile": {}, "components/shareposter/myshareposter": {} }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "Nottinghome", "navigationBarBackgroundColor": "#fdd041", "backgroundColor": "#F8F8F8", "navigationStyle": "custom" } };exports.default = _default;
-
-/***/ }),
-
-/***/ 77:
-/*!**********************************************************!*\
-  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
-  \**********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(/*! regenerator-runtime */ 78);
->>>>>>> 52e0402cc154be12838941e8afa82d725905a01c
 
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 5:
 /*!*******************************************************!*\
   !*** ./node_modules/@dcloudio/uni-stat/dist/index.js ***!
   \*******************************************************/
-=======
-/***/ 78:
-/*!************************************************************!*\
-  !*** ./node_modules/regenerator-runtime/runtime-module.js ***!
-  \************************************************************/
->>>>>>> 52e0402cc154be12838941e8afa82d725905a01c
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9957,7 +9885,6 @@ var OPERATING_TIME = 10;
 var UUID_KEY = '__DC_STAT_UUID';
 var UUID_VALUE = '__DC_UUID_VALUE';
 
-<<<<<<< HEAD
 function getUuid() {
   var uuid = '';
   if (getPlatformName() === 'n') {
@@ -9968,9 +9895,6 @@ function getUuid() {
     }
     return uuid;
   }
-=======
-module.exports = __webpack_require__(/*! ./runtime */ 79);
->>>>>>> 52e0402cc154be12838941e8afa82d725905a01c
 
   try {
     uuid = uni.getStorageSync(UUID_KEY);
@@ -10007,7 +9931,6 @@ var getSgin = function getSgin(statData) {
 
 };
 
-<<<<<<< HEAD
 var getSplicing = function getSplicing(data) {
   var str = '';
   for (var i in data) {
@@ -10043,14 +9966,6 @@ var getPackName = function getPackName() {
   }
   return packName;
 };
-=======
-/***/ 79:
-/*!*****************************************************!*\
-  !*** ./node_modules/regenerator-runtime/runtime.js ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
->>>>>>> 52e0402cc154be12838941e8afa82d725905a01c
 
 var getVersion = function getVersion() {
   return getPlatformName() === 'n' ? plus.runtime.version : '';
@@ -10856,14 +10771,14 @@ module.exports = {"_from":"@dcloudio/uni-stat@alpha","_id":"@dcloudio/uni-stat@2
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/tabPages/index": {}, "pages/tabPages/votePage": {}, "pages/tabPages/messagelist": {}, "pages/tabPages/mine": {}, "pages/detail/detail": {}, "pages/submit/submit": {}, "pages/chatpage/chatpage": {}, "pages/followlist/followlist": {}, "pages/personpublic/personpublic": {}, "pages/search/search": {}, "pages/black-index/black-index": {}, "pages/signin/signin": {}, "components/articlebrief": {}, "pages/wechatLogin/wechatLogin": {}, "pages/cmt-likedetail/cmt-likedetail": {}, "pages/comment-detail/comment-detail": {}, "pages/userDeal/userDeal": {}, "pages/myPublish/myPublish": {}, "pages/about/about": {}, "pages/hot/hot": {}, "pages/profile/profile": {} }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "Nottinghome", "navigationBarBackgroundColor": "#fdd041", "backgroundColor": "#F8F8F8", "navigationStyle": "custom" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/tabPages/index": {}, "pages/tabPages/votePage": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/tabPages/messagelist": {}, "pages/tabPages/mine": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/detail/detail": {}, "pages/submit/submit": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/chatpage/chatpage": {}, "pages/followlist/followlist": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/personpublic/personpublic": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/search/search": {}, "pages/black-index/black-index": {}, "pages/signin/signin": {}, "components/articlebrief": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/wechatLogin/wechatLogin": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/cmt-likedetail/cmt-likedetail": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/comment-detail/comment-detail": {}, "pages/userDeal/userDeal": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/myPublish/myPublish": {}, "pages/about/about": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/hot/hot": {}, "pages/profile/profile": {}, "components/shareposter/myshareposter": {} }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "Nottinghome", "navigationBarBackgroundColor": "#fdd041", "backgroundColor": "#F8F8F8", "navigationStyle": "custom" } };exports.default = _default;
 
 /***/ }),
 
 /***/ 8:
-/*!*****************************************************************************************!*\
-  !*** /Users/jerrio/Desktop/JumboX/诺圈/Nuoquan/nuoquan-client/pages.json?{"type":"stat"} ***!
-  \*****************************************************************************************/
+/*!****************************************************************!*\
+  !*** D:/XMQ/nuoquan/nuoquan-client/pages.json?{"type":"stat"} ***!
+  \****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 

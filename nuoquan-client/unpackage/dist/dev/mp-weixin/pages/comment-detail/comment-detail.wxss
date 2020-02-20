@@ -1,18 +1,18 @@
 /* 一条卡片的CSS开始， HTML见末尾
  */
-.comment-info.data-v-239902c1 {
+.comment-info.data-v-29f39790 {
 		height: 24px;
 		width: 100%;
 		position: relative;
 		margin-top: 8px;
 }
-.comment-info image.data-v-239902c1 {
+.comment-info image.data-v-29f39790 {
 		width: 24px;
 		height: 24px;
 		border-radius: 12px;
 		vertical-align: middle;
 }
-.name_text.data-v-239902c1 {
+.name_text.data-v-29f39790 {
 		font-size: 12px;
 		font-family: Source Han Sans CN;
 		font-weight: 400;
@@ -26,7 +26,7 @@
 		max-width: 96px;
 		margin-left: 8px;
 }
-.time_text.data-v-239902c1 {
+.time_text.data-v-29f39790 {
 		position: absolute;
 		right: 0;
 		top: 0;
@@ -36,7 +36,7 @@
 		line-height: 24px;
 		width: 102px;
 }
-.comment-content.data-v-239902c1 {
+.comment-content.data-v-29f39790 {
 		padding-top: 12px;
 		padding-bottom: 8px;
 		font-size: 14px;
@@ -45,13 +45,13 @@
 		line-height: 18px;
 		color: rgba(53, 53, 53, 1);
 }
-.comment-menu.data-v-239902c1 {
+.comment-menu.data-v-29f39790 {
 		height: 20px;
 		position: relative;
 		padding-bottom: 9px;
 		border-bottom: 1px solid rgba(236, 236, 236, 1);
 }
-.son-comment-num.data-v-239902c1 {
+.son-comment-num.data-v-29f39790 {
 		width:14px;
 		height: 14px;	
 		font-size: 12px;
@@ -67,7 +67,7 @@
 		text-align: center;
 		border-radius: 50px;
 }
-.like-num.data-v-239902c1 {
+.like-num.data-v-29f39790 {
 		width: 14px;
 		height: 14px;
 		font-size: 12px;
@@ -80,7 +80,7 @@
 		 border-radius:50px;
 		 text-align: center;
 }
-.son-comment-num.data-v-239902c1::after {
+.son-comment-num.data-v-29f39790::after {
 		position: absolute;
 		width: 14px;
 		height: 14px;
@@ -91,7 +91,7 @@
 		background-size: 14px 14px;
 		background-repeat: no-repeat;
 }
-.like-num.data-v-239902c1::after {
+.like-num.data-v-29f39790::after {
 		position: absolute;
 		width: 14px;
 		height: 14px;
@@ -102,7 +102,7 @@
 		background-size: 14px 14px;
 		background-repeat: no-repeat;
 }
-.liked.data-v-239902c1 {
+.liked.data-v-29f39790 {
 		background: -webkit-linear-gradient(320deg, rgba(254, 110, 110, 0.84) 0%, rgba(245, 60, 60, 1) 100%);
 		background: linear-gradient(130deg, rgba(254, 110, 110, 0.84) 0%, rgba(245, 60, 60, 1) 100%);
 }
@@ -120,27 +120,27 @@
 				<view class="like-num" :class="{liked:commentDetail.isLike}" @tap="swLikeCommentDetail(commentDetail)">{{ commentDetail.likeNum }}</view>
 			</view>
 		</view> */
-page.data-v-239902c1 {
+page.data-v-29f39790 {
 		width: 100%;
 		background-color: #F3F3F3;
 }
-.comment-detail-page.data-v-239902c1{
+.comment-detail-page.data-v-29f39790{
 	padding: 0 15px;
 	width: calc(100% - 30px);
 	margin-top:15px;
 }
-.son-comment-num.data-v-239902c1{
+.son-comment-num.data-v-29f39790{
 	background:-webkit-linear-gradient(137deg,rgba(255,184,32,0.84) 0%,rgba(240,240,122,1) 100%);
 	background:linear-gradient(313deg,rgba(255,184,32,0.84) 0%,rgba(240,240,122,1) 100%);
 }
 /* 滑到底了等提示
  */
-.comment-bottom.data-v-239902c1{
+.comment-bottom.data-v-29f39790{
 		height:160px;
 		width:calc(202px + 80rpx);
 		margin: auto;
 }
-.comment-bottom-notice.data-v-239902c1{
+.comment-bottom-notice.data-v-29f39790{
 		width:71px;
 		height:14px;
 		line-height: 14px;
@@ -148,7 +148,7 @@ page.data-v-239902c1 {
 		color:#B2B2B2;
 		margin:37px auto 27px;
 }
-.comment-bottom-buttons.data-v-239902c1{
+.comment-bottom-buttons.data-v-29f39790{
 		display: -webkit-box;
 		display: -webkit-flex;
 		display: flex;
@@ -156,14 +156,14 @@ page.data-v-239902c1 {
 			-webkit-justify-content: space-between;
 			        justify-content: space-between;
 }
-.comment-bottom-buttons .back.data-v-239902c1{
+.comment-bottom-buttons .back.data-v-29f39790{
 		width:16px;
 		height:16px;
 		padding:14px;
 		background: #FFF1D5;
 		border-radius: 22px;
 }
-.comment-bottom-buttons .to-top.data-v-239902c1{
+.comment-bottom-buttons .to-top.data-v-29f39790{
 		width:18px;
 		height:12px;
 		background: #FFF1D5;
@@ -173,7 +173,7 @@ page.data-v-239902c1 {
 		-webkit-transform: rotate(90deg);
 		        transform: rotate(90deg);
 }
-.comment-bottom-buttons .to-top.data-v-239902c1::after{
+.comment-bottom-buttons .to-top.data-v-29f39790::after{
 content: "";
 position: absolute;
 top: 14px;
@@ -183,7 +183,7 @@ height: 16px;
 background: #FCC041;
 border-radius: 2px;
 }
-.active-input-button.data-v-239902c1{
+.active-input-button.data-v-29f39790{
 		color:#FFFFFF;
 		width:76px;
 		height:17px;
@@ -212,7 +212,7 @@ border-radius: 2px;
 		color: #888888;
 		font-size: 12px;
 	} */
-.bottomLayerOfSubmit.data-v-239902c1{
+.bottomLayerOfSubmit.data-v-29f39790{
 		display: -webkit-box;
 		display: -webkit-flex;
 		display: flex;
@@ -229,7 +229,7 @@ border-radius: 2px;
 		-webkit-align-items: center;
 		        align-items: center;
 }
-.submitComment.data-v-239902c1 {
+.submitComment.data-v-29f39790 {
 		background: #FFCC30;
 		border-radius: 5px;
 		width: 32%;
@@ -240,7 +240,7 @@ border-radius: 2px;
 		text-align: center;
 		line-height: 30px;
 }
-.submitComment.data-v-239902c1::before{
+.submitComment.data-v-29f39790::before{
 		content: "";
 		position: absolute;
 		top:-9px;
@@ -251,7 +251,7 @@ border-radius: 2px;
 		z-index: -1;
 }
 /* 以下五条为底部输入框样式 */
-.bottoLayerOfInput.data-v-239902c1{
+.bottoLayerOfInput.data-v-29f39790{
 		position: fixed;
 		width: 750rpx;
 		height: 1000px;
@@ -259,7 +259,7 @@ border-radius: 2px;
 		left:0;
 		z-index: 3;
 }
-.commentPart.data-v-239902c1 {
+.commentPart.data-v-29f39790 {
 		box-shadow: 0px 1px 5px 0px rgba(139, 139, 139, 0.32);
 		position:fixed;
 		bottom: 0;
@@ -269,7 +269,7 @@ border-radius: 2px;
 		min-height: 50px;
 		background: #FFFFFF;
 }
-.emoji.data-v-239902c1 {
+.emoji.data-v-29f39790 {
 		background-repeat: no-repeat;
 		background-position: center;
 		border: none;
@@ -279,7 +279,7 @@ border-radius: 2px;
 		margin-bottom: 7px;
 		display: inline-block;
 }
-.submit.data-v-239902c1{
+.submit.data-v-29f39790{
 		display: inline-block;
 		width: 21px;
 		height:21px;
@@ -289,7 +289,7 @@ border-radius: 2px;
 		background-position:center;
 		float:right;
 }
-.commentSth.data-v-239902c1 {
+.commentSth.data-v-29f39790 {
 		width: calc(670rpx - 20px);
 		border: solid 1px #FCC041;
 		border-radius: 10px;

@@ -1,143 +1,159 @@
 {
-  "description": "项目配置文件。",
-  "packOptions": {
-    "ignore": []
-  },
-  "setting": {
-    "urlCheck": true,
-    "postcss": true,
-    "minified": true,
-    "es6": false
-  },
-  "compileType": "miniprogram",
-  "libVersion": "2.9.2",
-  "appid": "wxebb29e9646be657f",
-  "projectname": "nuoquan",
-  "condition": {
-    "search": {
-      "current": -1,
-      "list": []
-    },
-    "conversation": {
-      "current": -1,
-      "list": []
-    },
-    "game": {
-      "current": -1,
-      "list": []
-    },
-    "miniprogram": {
-      "current": 0,
-      "list": [
-        {
-          "name": "index",
-          "query": "",
-          "id": 0,
-          "pathName": "pages/tabPages/index"
-        },
-        {
-          "name": "shareposter",
-          "query": "",
-          "id": 1,
-          "pathName": "components/shareposter/myshareposter"
-        },
-        {
-          "name": "signin",
-          "query": "",
-          "id": 2,
-          "pathName": "pages/signin/signin"
-        },
-        {
-          "name": "submit",
-          "query": "",
-          "id": 3,
-          "pathName": "pages/submit/submit"
-        },
-        {
-          "name": "chatpage",
-          "query": "",
-          "id": 4,
-          "pathName": "pages/chatpage/chatpage"
-        },
-        {
-          "name": "followlist",
-          "query": "",
-          "id": 5,
-          "pathName": "pages/followlist/followlist"
-        },
-        {
-          "name": "messagelist",
-          "query": "",
-          "id": 6,
-          "pathName": "pages/tabPages/messagelist"
-        },
-        {
-          "name": "profile",
-          "query": "",
-          "id": 7,
-          "pathName": "pages/tabPages/profile"
-        },
-        {
-          "name": "personpublic",
-          "query": "userId=test-id123",
-          "id": 8,
-          "pathName": "pages/personpublic/personpublic"
-        },
-        {
-          "name": "wechatLogin",
-          "query": "",
-          "id": 9,
-          "pathName": "pages/wechatLogin/wechatLogin"
-        },
-        {
-          "name": "detail",
-          "query": "",
-          "id": 10,
-          "pathName": "pages/detail/detail"
-        },
-        {
-          "name": "search",
-          "query": "",
-          "id": 11,
-          "pathName": "pages/search/search"
-        },
-        {
-          "name": "cmtdetail",
-          "query": "",
-          "id": 12,
-          "pathName": "pages/comment-detail/comment-detail"
-        },
-        {
-          "name": "test",
-          "query": "",
-          "id": 13,
-          "pathName": "pages/test/test"
-        },
-        {
-          "name": "hot",
-          "query": "",
-          "id": 14,
-          "pathName": "pages/hot/hot"
-        },
-        {
-          "name": "myPublish",
-          "query": "",
-          "id": 15,
-          "pathName": "pages/myPublish/myPublish"
-        },
-        {
-          "name": "关于",
-          "query": "",
-          "id": 16,
-          "pathName": "pages/about/about"
-        },
-        {
-          "name": "mine",
-          "query": "",
-          "id": 17,
-          "pathName": "pages/tabPages/mine"
-        }
-      ]
-    }
-  }
+	"description": "项目配置文件。",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": true,
+		"postcss": true,
+		"minified": true,
+		"es6": false
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.9.2",
+	"appid": "wxebb29e9646be657f",
+	"projectname": "nuoquan",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"current": -1,
+			"list": []
+		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 0,
+			"list": [
+				{
+					"id": 0,
+					"name": "index",
+					"pathName": "pages/tabPages/index",
+					"query": ""
+				},
+				{
+					"id": 1,
+					"name": "shareposter",
+					"pathName": "components/shareposter/myshareposter",
+					"query": ""
+				},
+				{
+					"id": 2,
+					"name": "signin",
+					"pathName": "pages/signin/signin",
+					"query": ""
+				},
+				{
+					"id": 3,
+					"name": "submit",
+					"pathName": "pages/submit/submit",
+					"query": ""
+				},
+				{
+					"id": 4,
+					"name": "chatpage",
+					"pathName": "pages/chatpage/chatpage",
+					"query": ""
+				},
+				{
+					"id": 5,
+					"name": "followlist",
+					"pathName": "pages/followlist/followlist",
+					"query": ""
+				},
+				{
+					"id": 6,
+					"name": "messagelist",
+					"pathName": "pages/tabPages/messagelist",
+					"query": ""
+				},
+				{
+					"id": 7,
+					"name": "profile",
+					"pathName": "pages/tabPages/profile",
+					"query": ""
+				},
+				{
+					"id": 8,
+					"name": "personpublic",
+					"pathName": "pages/personpublic/personpublic",
+					"query": "userId=test-id123"
+				},
+				{
+					"id": 9,
+					"name": "wechatLogin",
+					"pathName": "pages/wechatLogin/wechatLogin",
+					"query": ""
+				},
+				{
+					"id": 10,
+					"name": "detail",
+					"pathName": "pages/detail/detail",
+					"query": ""
+				},
+				{
+					"id": 11,
+					"name": "search",
+					"pathName": "pages/search/search",
+					"query": ""
+				},
+				{
+					"id": 12,
+					"name": "cmtdetail",
+					"pathName": "pages/comment-detail/comment-detail",
+					"query": ""
+				},
+				{
+					"id": 13,
+					"name": "test",
+					"pathName": "pages/test/test",
+					"query": ""
+				},
+				{
+					"id": 14,
+					"name": "hot",
+					"pathName": "pages/hot/hot",
+					"query": ""
+				},
+				{
+					"id": 15,
+					"name": "myPublish",
+					"pathName": "pages/myPublish/myPublish",
+					"query": ""
+				},
+				{
+					"id": 16,
+					"name": "关于",
+					"pathName": "pages/about/about",
+					"query": ""
+				},
+				{
+					"id": 17,
+					"name": "mine",
+					"pathName": "pages/tabPages/mine",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "votePage",
+					"pathName": "pages/tabPages/votePage",
+					"scene": null
+				}
+			]
+		}
+	}
 }
