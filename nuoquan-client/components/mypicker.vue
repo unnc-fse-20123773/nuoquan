@@ -135,7 +135,7 @@ pickerIndex:  选项编号，用于控制显示哪一个选项
 
 	.item {
 		text-align: right;
-		width: 32px;
+		width: 100%;
 		height: 18px;
 		font-size: 14px;
 		font-weight: 800;
