@@ -30,7 +30,7 @@
 					</view>
 					<!-- 影响力 -->
 					<view class="operationCard">
-						<view class="operationNum super_center"><text class="operationNum-text" style="color:rgba(254,95,85,1);">999999</text></view>
+						<view class="operationNum super_center"><text class="operationNum-text" style="color:rgba(254,95,85,1);">{{ thisUserInfo.reputation }}</text></view>
 						<view class="operationTitle super_center"><text class="operationTitle-text">影响力</text></view>
 					</view>
 					<!-- 关注 -->
@@ -73,11 +73,8 @@ export default {
 	},
 
 	onLoad() {
-		
-
-		 this.thisUserInfo= this.getGlobalUserInfo();
+		this.thisUserInfo= this.getGlobalUserInfo();
 	
-
 		var screenWidth = uni.getSystemInfoSync().screenWidth;
 		this.screenWidth = screenWidth;
 
@@ -111,6 +108,12 @@ export default {
 		that.cardWidth = that.windowWidth - 26 + 'px';
 
 	},
+	
+	onShow() {
+		//更新用户数据
+		console.log("更新用户数据");
+		queryUserInfo(this.thisUserInfo.id);
+	},
 
 	onPullDownRefresh() {
 		console.log('refresh');
@@ -120,6 +123,38 @@ export default {
 	},
 
 	methods: {
+		/**
+		 * 查询用户信息，并分割邮箱更新到缓存
+		 */
+		queryUserInfo(userId) {
+			var that = this;
+			uni.request({
+				url: that.$serverUrl + '/user/queryUser',
+				method: 'POST',
+				data: {
+					userId: userId
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					console.log(res);
+					if (res.data.status == 200) {
+						var user = res.data.data;
+						var finalUser = this.myUser(user); // 分割邮箱地址, 重构 user
+						this.setGlobalUserInfo(finalUser); // 把用户信息写入缓存
+						this.userInfo = finalUser; // 更新页面用户数据
+						// console.log(this.userInfo);
+					}
+				}
+			});
+		},
+		
+		//粉丝数是否改变
+		isFansNumChange(){
+			//TODO: 多了就加小红点获其他动效
+		},
+		
 		
 		jumpToAbout:function() {
 			uni.navigateTo({
@@ -143,8 +178,20 @@ export default {
 			});
 		},
 
-		
-
+		/**
+		 * @param {Object} currentTab 0: 关注 1: 粉丝
+		 */
+		goToFansFollow: function(currentTab) {
+			console.log('goToFansFollow...');
+			var data = {
+				currentTab: currentTab,
+				thisUserInfo: this.thisUserInfo
+			};
+			var encodeData = encodeURIComponent(JSON.stringify(data)); // 对数据字符串化并转码，防止特殊字符影响传参
+			uni.navigateTo({
+				url: '../followlist/followlist?data=' + encodeData,
+			});
+		},
 		
 	}
 };

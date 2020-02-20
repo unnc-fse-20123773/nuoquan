@@ -9,8 +9,8 @@
 					<view class="contentText-send">
 						{{thisMessage.msg}}
 					</view>
-					<image src="../../static/icon/logo_name.png" mode="widthFix" class="picMessage"></image>
-					<view class="bottomBar">
+<!-- 					<image src="../../static/icon/logo_name.png" mode="widthFix" class="picMessage"></image>
+ -->					<view class="bottomBar">
 						<!-- 					
 					<view class="status-send" v-if="!thisMessage.isRead == UNREAD">
 						...
@@ -35,8 +35,8 @@
 					<view class="contentText-recieve">
 						{{thisMessage.msg}}
 					</view>
-					<image src="../../static/icon/logo_name.png" mode="widthFix" class="picMessage"></image>
-					<view class="bottomBar">
+<!-- 					<image src="../../static/icon/logo_name.png" mode="widthFix" class="picMessage"></image>
+ -->					<view class="bottomBar">
 						<view class="time-recieve">
 							{{timeDeal(thisMessage.createDate)}}
 						</view>

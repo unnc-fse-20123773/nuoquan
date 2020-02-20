@@ -135,7 +135,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 24));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var detail_1_article = function detail_1_article() {return Promise.all(/*! import() | pages/detail/detail_1_article */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/detail/detail_1_article")]).then(__webpack_require__.bind(null, /*! ./detail_1_article.vue */ 229));};var detail_2_comments = function detail_2_comments() {return __webpack_require__.e(/*! import() | pages/detail/detail_2_comments */ "pages/detail/detail_2_comments").then(__webpack_require__.bind(null, /*! ./detail_2_comments.vue */ 236));};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 24));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var detail_1_article = function detail_1_article() {return Promise.all(/*! import() | pages/detail/detail_1_article */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/detail/detail_1_article")]).then(__webpack_require__.bind(null, /*! ./detail_1_article.vue */ 237));};var detail_2_comments = function detail_2_comments() {return __webpack_require__.e(/*! import() | pages/detail/detail_2_comments */ "pages/detail/detail_2_comments").then(__webpack_require__.bind(null, /*! ./detail_2_comments.vue */ 244));};
 
 
 
@@ -251,29 +251,32 @@ var uploadFlag = false;var _default =
 
   onLoad: function () {var _onLoad = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(options) {var userInfo, articleId, res, page;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
               //获取全局用户信息
-              userInfo = this.getGlobalUserInfo();
-              if (!this.isNull(userInfo)) {
-                this.userInfo = this.getGlobalUserInfo();
-              }
+              userInfo = this.getGlobalUserInfo();if (
+              this.isNull(userInfo)) {_context.next = 5;break;}
+              this.userInfo = this.getGlobalUserInfo();_context.next = 7;break;case 5:
 
-              articleId = options.data;_context.next = 5;return (
-                this.getArticleById(articleId, this.userInfo.id));case 5:res = _context.sent;
+              uni.redirectTo({
+                url: '../signin/signin' });return _context.abrupt("return");case 7:
+
+
+
+
+              articleId = options.data;_context.next = 10;return (
+                this.getArticleById(articleId, this.userInfo.id));case 10:res = _context.sent;
               // console.log(res);
               this.articleCard = res;
 
               page = this.currentPage;
               this.getComments(page);
 
-              this.addViewCount();case 10:case "end":return _context.stop();}}}, _callee, this);}));function onLoad(_x) {return _onLoad.apply(this, arguments);}return onLoad;}(),
+              this.addViewCount();case 15:case "end":return _context.stop();}}}, _callee, this);}));function onLoad(_x) {return _onLoad.apply(this, arguments);}return onLoad;}(),
 
 
   onShareAppMessage: function onShareAppMessage(res) {
     if (res.from === 'menu') {// 来自右上角菜单的分享
-      var navData = JSON.stringify(this.articleCard);
-      console.log(navData);
       return {
         title: '来，给老子看！',
-        path: '/pages/detail/detail?data=' + navData };
+        path: '/pages/detail/detail?data=' + this.articleCard.id };
 
     }
   },

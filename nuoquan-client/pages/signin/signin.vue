@@ -394,9 +394,10 @@
 				this.setGlobalUserInfo(this.userInfo);
 
 				setTimeout(() => {
+					console.log("完成登录,正在进入")
 					uni.hideLoading();
-					uni.redirectTo({
-						url: "../index/index"
+					uni.switchTab({
+						url: "../tabPages/index"
 					});
 				}, 1000)
 			},

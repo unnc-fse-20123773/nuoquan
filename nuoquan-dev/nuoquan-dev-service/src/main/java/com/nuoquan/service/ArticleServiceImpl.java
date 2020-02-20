@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.nuoquan.enums.StatusEnum;
@@ -30,9 +29,11 @@ import com.nuoquan.mapper.UserMapper;
 import com.nuoquan.pojo.Article;
 import com.nuoquan.pojo.ArticleImage;
 import com.nuoquan.pojo.SearchRecord;
+import com.nuoquan.pojo.User;
 import com.nuoquan.pojo.UserArticleComment;
 import com.nuoquan.pojo.UserLikeArticle;
 import com.nuoquan.pojo.UserLikeComment;
+import com.nuoquan.pojo.UserVoteComment;
 import com.nuoquan.pojo.vo.ArticleVO;
 import com.nuoquan.pojo.vo.UserArticleCommentVO;
 import com.nuoquan.pojo.vo.UserLikeVO;
@@ -276,7 +277,8 @@ public class ArticleServiceImpl implements ArticleService {
 			}
 		}
 		
-		//开启分页查询并转换为vo对象
+		// 开启分页查询并转换为vo对象
+		// 在Example中的每一个Criteria相当于一个括号，把里面的内容当成一个整体
 		Example articleExample = new Example(Article.class);
 		articleExample.setOrderByClause("create_date desc");
 		Criteria criteria = articleExample.createCriteria();
@@ -285,7 +287,10 @@ public class ArticleServiceImpl implements ArticleService {
 			criteria.orLike("articleContent", "%" + text + "%");
 			criteria.orLike("tags", "%" + text + "%");
 		}
-		criteria.andEqualTo("status", StatusEnum.READABLE);
+		
+		Criteria criteria2 = articleExample.createCriteria();
+		criteria2.andEqualTo("status", StatusEnum.READABLE.type);
+		articleExample.and(criteria2);
 		
 		PageHelper.startPage(page, pageSize);
 		List<Article> list = articleMapperCustom.selectByExample(articleExample);
@@ -296,6 +301,13 @@ public class ArticleServiceImpl implements ArticleService {
 		for (Article a : list) {
 			ArticleVO av = new ArticleVO();
 			BeanUtils.copyProperties(a, av); //转换对象
+			// 添加作者信息
+			User user= userMapper.selectByPrimaryKey(av.getUserId());
+			if (user!=null) {
+				av.setNickname(user.getNickname());
+				av.setFaceImg(user.getFaceImg());
+				av.setFaceImgThumb(user.getFaceImgThumb());
+			}
 			// 为每个文章添加图片列表
 			av.setImgList(articleImageMapper.getArticleImgs(av.getId()));
 			// 添加和关于用户的点赞关系
@@ -497,7 +509,7 @@ public class ArticleServiceImpl implements ArticleService {
 	public void userUnLikeComment(String userId, String commentId, String createrId) {
 		boolean isLike = isUserLikeComment(userId, commentId);
 		if (isLike) {
-			// 1.删除用户和文章的点赞关联关系表
+			// 1.删除用户和评论的点赞关联关系表
 			Example example = new Example(UserLikeComment.class);
 			// 创造条件
 			Criteria criteria = example.createCriteria();
@@ -641,38 +653,6 @@ public class ArticleServiceImpl implements ArticleService {
 			}
 		}
 		return list;
-	}
-
-	@Transactional(propagation = Propagation.REQUIRED)
-	@Override
-	public void updateLikeArticleSigned(List<String> msgIdList) {
-		userLikeArticleMapper.batchUpdateMsgSigned(msgIdList);
-	}
-
-	@Transactional(propagation = Propagation.REQUIRED)
-	@Override
-	public void updateLikeCommentSigned(List<String> msgIdList) {
-		userLikeCommentMapper.batchUpdateMsgSigned(msgIdList);
-	}
-
-	@Transactional(propagation = Propagation.REQUIRED)
-	@Override
-	public void updateCommentSigned(List<String> msgIdList) {
-		userArticleCommentMapperCustom.batchUpdateMsgSigned(msgIdList);
-	}
-
-	@Transactional(propagation = Propagation.SUPPORTS)
-	@Override
-	public List<UserLikeVO> getUnsignedLikeMsg(String userId) {
-		List<UserLikeVO> userLikeVOs = userLikeMapperCustom.getUnsignedLikeMsg(userId);
-		return userLikeVOs;
-	}
-
-	@Transactional(propagation = Propagation.SUPPORTS)
-	@Override
-	public List<UserArticleCommentVO> getUnsignedCommentMsg(String userId) {
-		List<UserArticleCommentVO> commentVOs = userArticleCommentMapperCustom.getUnsignedCommentMsg(userId);
-		return commentVOs;
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -823,3 +803,15 @@ public class ArticleServiceImpl implements ArticleService {
 		return articleMapper.updateByExampleSelective(a, example);
 	}
 }
+
+//
+//@Transactional(propagation = Propagation.REQUIRED)
+//@Override
+//public void passComment(String commentId) {
+//	Example example = new Example(UserVoteComment.class);
+//	Criteria criteria = example.createCriteria();
+//	criteria.andEqualTo("id", commentId);
+//	
+//	UserVoteComment userVoteCommentHelper = new UserVoteComment();
+//	userVoteCommentHelper.setStatus(StatusEnum.READABLE.type);
+//	userVoteCommentMapper.updateByExampleSelective(userVoteCommentHelper, example);

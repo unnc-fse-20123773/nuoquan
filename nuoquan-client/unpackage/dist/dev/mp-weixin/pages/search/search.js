@@ -133,7 +133,8 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var searchResultArticle = function searchResultArticle() {return __webpack_require__.e(/*! import() | components/searchResultArticle */ "components/searchResultArticle").then(__webpack_require__.bind(null, /*! ../../components/searchResultArticle.vue */ 254));};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var searchResultArticle = function searchResultArticle() {return __webpack_require__.e(/*! import() | components/searchResultArticle */ "components/searchResultArticle").then(__webpack_require__.bind(null, /*! ../../components/searchResultArticle.vue */ 262));};
+
 
 
 
@@ -223,13 +224,7 @@ var _default = {
     search: function search(page) {
       if (isSearching) {
         return;
-      }
-      isSearching = true;
-
-      var that = this;
-      var isSaveRecord = 1;
-      // console.log(page);
-      if (this.searchKeyWords == '' || this.searchKeyWords == null) {
+      } else if (this.searchKeyWords == '' || this.searchKeyWords == null) {
         uni.showToast({
           title: '搜索内容不能为空',
           duration: 1000,
@@ -237,6 +232,13 @@ var _default = {
 
         return;
       }
+
+      isSearching = true;
+
+      var that = this;
+      var isSaveRecord = 1;
+      // console.log(page);
+
 
       uni.getStorage({
         key: 'search_history',
@@ -335,22 +337,18 @@ var _default = {
     },
 
     loadMore: function loadMore() {
-      var that = this;
-      var currentPage = that.currentPage;
-      console.log('currentpage is ' + currentPage);
-      var totalPage = that.totalPage;
-      console.log('totalpage is ' + totalPage);
+      console.log('currentpage is ' + this.currentPage);
+      console.log('totalpage is ' + this.totalPage);
       // 判断当前页数和总页数是否相等
-      if (currentPage == totalPage) {
-        // that.showArticles(1);
+      if (this.currentPage == this.totalPage) {
         uni.showToast({
           title: "没有更多文章了",
           icon: "none",
           duration: 1000 });
 
       } else {
-        var page = currentPage + 1;
-        that.search(page);
+        this.currentPage += 1;
+        this.search(this.currentPage);
       }
     },
 

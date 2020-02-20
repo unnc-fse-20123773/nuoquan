@@ -1,7 +1,24 @@
 
+.pics{
+		display: none;
+}
 .oneArticle {
-		width: 100%;
+		width: 98%;
+		height: 136.4px;
 		position:relative;
+		box-shadow:0px 0px 4px rgba(0,0,0,0.16);
+		opacity:1;
+		border-radius:8px;
+		margin-bottom: 8px;
+		margin-left: auto;
+		margin-right: auto;
+}
+.index {
+	width: 24px;
+	height: 58.78px;
+	position:absolute;
+	
+	left:16px;
 }
 .title {
 		/*font-size: 15px;
@@ -12,6 +29,7 @@
 		overflow: hidden;
 		text-overflow: ellipsis;*/
 		font-size: 17px;
+		margin-left: 17px;
 		color: #4a4a4a;
 		padding-top: 19px;
 		white-space: nowrap;
@@ -24,9 +42,10 @@
 		/* height:83px; */
 		/*padding-top:10px;*/
 		position: relative;
-		width: 100%;
+		width: 317px;
 		height:83px; 
 		padding-top: 12px;
+		margin-left: 16px;
 }
 .picArea {
 		/*position: absolute;

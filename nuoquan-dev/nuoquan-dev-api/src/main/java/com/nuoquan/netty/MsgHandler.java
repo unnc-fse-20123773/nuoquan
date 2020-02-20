@@ -109,7 +109,7 @@ public class MsgHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> 
 
 			if (msgIdList != null && !msgIdList.isEmpty() && msgIdList.size() > 0) {
 				// 批量签收
-				articleService.updateLikeArticleSigned(msgIdList);
+				userService.updateLikeArticleSigned(msgIdList);
 			}
 		} else if (action == MsgActionEnum.LIKECOMMENT_SIGN.type) {
 			// 2.5 签收点赞评论消息类型，修改数据库对应消息的签收状态[已签收]
@@ -128,7 +128,7 @@ public class MsgHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> 
 
 			if (msgIdList != null && !msgIdList.isEmpty() && msgIdList.size() > 0) {
 				// 批量签收
-				articleService.updateLikeCommentSigned(msgIdList);
+				userService.updateLikeCommentSigned(msgIdList);
 			}
 		} else if (action == MsgActionEnum.COMMENT_SIGN.type) {
 			// 2.6 签收评论消息类型，修改数据库对应消息的签收状态[已签收]
@@ -147,7 +147,7 @@ public class MsgHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> 
 
 			if (msgIdList != null && !msgIdList.isEmpty() && msgIdList.size() > 0) {
 				// 批量签收
-				articleService.updateCommentSigned(msgIdList);
+				userService.updateCommentSigned(msgIdList);
 			}
 		} else if (action == MsgActionEnum.KEEPALIVE.type) {
 			// 2.4 心跳类型消息

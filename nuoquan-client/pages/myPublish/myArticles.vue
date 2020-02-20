@@ -46,7 +46,7 @@
 				</view>
 
 				<view class="menu-area" v-if="messageIndex == thisArticle.id">
-					<view style="background: #FE5F55;" @click="banArticle(thisArticle.id)">
+					<view style="background: #FE5F55;" @click="fDeleteArticle(thisArticle.id)">
 						<image src="../../static/icon/bin.png"></image>
 						<text>删除</text>
 					</view>
@@ -134,9 +134,8 @@ export default {
 			//控制滑动结束，以下控制跳转detail
 			goToDetail(thisArticle){
 				//thisArticle用函数传入，因为v-for使用了ID为键名，所以无法筛选数据，就直接block传进来好了
-				var navData = JSON.stringify(thisArticle); // 这里转换成 字符串
 				uni.navigateTo({
-					url: '/pages/detail/detail?data=' + navData
+					url: '/pages/detail/detail?data=' + thisArticle.id
 				});
 			},
 			
@@ -145,7 +144,7 @@ export default {
 				this.messageIndex = -1;
 			},
 		
-		banArticle(articleId){
+		fDeleteArticle(articleId){
 			uni.request({
 				url: this.$serverUrl + '/article/fDeleteArticle',
 				method: 'POST',
@@ -248,7 +247,7 @@ export default {
 }
 
 .time {
-	width: 77px;
+	width: 84px;
 	/* 暂时,到  月-日 时:分*/
 	height: 10px;
 	line-height: 10px;

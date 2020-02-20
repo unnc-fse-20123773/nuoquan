@@ -149,7 +149,7 @@ var _articlebrief = _interopRequireDefault(__webpack_require__(/*! ../../compone
 
 
 
-var _vuex = __webpack_require__(/*! vuex */ 16);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! import() | components/mainpagetop */ "components/mainpagetop").then(__webpack_require__.bind(null, /*! ../../components/mainpagetop.vue */ 206));};var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ 215));};
+var _vuex = __webpack_require__(/*! vuex */ 16);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var mainpagetop = function mainpagetop() {return __webpack_require__.e(/*! import() | components/mainpagetop */ "components/mainpagetop").then(__webpack_require__.bind(null, /*! ../../components/mainpagetop.vue */ 214));};var mainpageleft = function mainpageleft() {return __webpack_require__.e(/*! import() | components/mainpageleft */ "components/mainpageleft").then(__webpack_require__.bind(null, /*! @/components/mainpageleft.vue */ 223));};
 
 var loadArticleFlag = false; // 为加载文章加锁
 var timer = null; // 为头部做定时器收起
@@ -159,6 +159,7 @@ var _default = {
       title: 'Hello',
       hottitlelist: ['热门标题111', '热门标题222', '热门标题333'],
       showlist: [],
+      tagsList: [],
       topArticles: '',
       roleup: false,
 
@@ -168,6 +169,7 @@ var _default = {
       scrollTop: 0,
       old: {
         scrollTop: 0 } };
+
 
 
   },
@@ -190,19 +192,21 @@ var _default = {
 
     this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
 
-    var page = this.currentPage;
-    this.showArticles(page); // 显示文章流
+    this.getScreenSize(); //获取手机型号
+
+    this.showArticles(this.currentPage); // 显示文章流
 
     uni.$on('flash', function () {
       // from submit
       _this.refreshArticle();
     });
-    this.screenSize(); //获取手机型号
+
+    this.getTagsList(); //获取标签列表
     // [测试代码块]
   },
 
   onUnload: function onUnload() {
-    // 移除监听事件
+    // 移除监听刷新事件
     uni.$off('flash');
   },
 
@@ -216,7 +220,9 @@ var _default = {
       this.queryUserInfo(userInfo.id);
     }
 
-    this.getTop3Articles(); // 获取热度榜
+    this.getTop3Articles(); // 获取热度榜（刷新）
+
+
   },
 
   // onPullDownRefresh() {
@@ -348,6 +354,27 @@ var _default = {
             _this2.setGlobalUserInfo(finalUser); // 把用户信息写入缓存
             _this2.userInfo = finalUser; // 更新页面用户数据
             // console.log(this.userInfo);
+          }
+        } });
+
+    },
+
+    /**
+        * 获取标签列表
+        */
+    getTagsList: function getTagsList() {
+      var that = this;
+      uni.request({
+        url: that.$serverUrl + '/article/getTagsList',
+        method: 'POST',
+        data: {},
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          if (res.data.status == 200) {
+            that.tagsList = res.data.data;
+            console.log(that.tagsList);
           }
         } });
 

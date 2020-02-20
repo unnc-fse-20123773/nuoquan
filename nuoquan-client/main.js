@@ -17,16 +17,16 @@ Vue.prototype.tagColors = ['#FE5F55','#40A792','#FDD041','#5CA0D3','#621E81','#7
 
 Vue.prototype.$store = store
 
-// Vue.prototype.$serverUrl = "http://127.0.0.1:8080"
-// Vue.prototype.$wsServerUrl = "wss://127.0.0.1:8088/ws"
+Vue.prototype.$serverUrl = "http://127.0.0.1:8080"
+Vue.prototype.$wsServerUrl = "wss://127.0.0.1:8088/ws"
 
 // 服务器地址
 // Vue.prototype.$serverUrl = "http://129.28.130.27:8080/nottinghome"
 // Vue.prototype.$wsServerUrl = "ws://129.28.130.27:8088/ws"
 
 // 安全服务器地址
-Vue.prototype.$serverUrl = "https://www.checkchack.cn:8443/nottinghome"
-Vue.prototype.$wsServerUrl = "wss://www.checkchack.cn:8088/ws"
+// Vue.prototype.$serverUrl = "https://www.checkchack.cn:8443/nottinghome"
+// Vue.prototype.$wsServerUrl = "wss://www.checkchack.cn:8088/ws"
 
 /**
  * 获取当前用户信息（我）
@@ -970,7 +970,7 @@ Vue.prototype.netty = {
  */
 Vue.prototype.timeDeal = function(timediff) {
 	timediff = new Date(timediff);
-	var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(),
+	var parts = [timediff.getFullYear(), timediff.getMonth() + 1, timediff.getDate(), timediff.getHours(), timediff.getMinutes(),
 		timediff.getSeconds()
 	];
 	var oldTime = timediff.getTime();
@@ -1011,17 +1011,15 @@ Vue.mixin({
 })
 
 //判断屏幕尺寸并分类,实现兼容不同设备
-// Vue.prototype.screenSize = async function(){
-// 	var systemInfo;
-// 	uni.getSystemInfo({
-// 		success: function (res) {
-// 		        console.log(res.model);
-// 		        console.log(res.pixelRatio);
-// 		        console.log(res.windowWidth);
-// 		        console.log(res.windowHeight);
-// 		        console.log(res.language);
-// 		        console.log(res.platform);
-// 				systemInfo = res;
-// 		    }
-// 	});
-// }
+Vue.prototype.getScreenSize = function(){
+	uni.getSystemInfo({
+		success: function (res) {
+			console.log(res.model);
+			console.log(res.pixelRatio);
+			console.log(res.windowWidth);
+			console.log(res.windowHeight);
+			console.log(res.language);
+			console.log(res.platform);
+		}
+	})
+}

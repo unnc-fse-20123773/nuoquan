@@ -21,4 +21,12 @@
   		and vote_id = #{voteId}
   </select>
   
+  <update id="addCoorespondingOptionCount" parameterType="String">
+  	update nuoquan.vote_option set count=count+1 where id=#{optionId}
+  </update>
+  
+  <update id="updatePercent">
+  	update nuoquan.vote_option set percent=#{percent} where id=#{id}
+  </update>
+  
 </mapper>

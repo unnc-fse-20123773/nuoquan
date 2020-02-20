@@ -1,5 +1,5 @@
 <template>
-	<view class="articlecard" id="'+articleCard.id+'" @click="jumpToDetail()">
+	<view class="articlecard" id="'+articleCard.id+'" @click="goToDetail()">
 		<view class="title" v-html="articleCard.articleTitle"></view>
 		<view class="briefarticleCard" v-html="articleCard.articleContent"></view>
 		<view class="picturearea">
@@ -41,10 +41,9 @@
 		},
 		
 		methods: {
-			jumpToDetail() {
-				var navData = JSON.stringify(this.articleCard); // 这里转换成 字符串
+			goToDetail() {
 				uni.navigateTo({
-					url: '/pages/detail/detail?data=' + navData
+					url: '/pages/detail/detail?data=' + this.articleCard.id
 				});
 			}
 		},

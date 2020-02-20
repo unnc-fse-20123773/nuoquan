@@ -126,7 +126,7 @@ export default {
 		},
 		goToDetail(article) {
 			uni.navigateTo({
-				url: '/pages/detail/detail?data=' + JSON.stringify(article)
+				url: '/pages/detail/detail?data=' + article.id
 			});
 		},
 		jumpTohot() {

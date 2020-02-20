@@ -62,7 +62,8 @@ public class User {
      * Client-id 设备id，用于消息推送
      */
     private String cid;
-
+    
+    private Integer reputation;
     /**
      * @return id
      */
@@ -300,4 +301,12 @@ public class User {
     public void setCid(String cid) {
         this.cid = cid;
     }
+
+	public Integer getReputation() {
+		return reputation;
+	}
+
+	public void setReputation(Integer reputation) {
+		this.reputation = reputation;
+	}
 }

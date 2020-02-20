@@ -1,29 +1,20 @@
 <template>
 	<view style="width: 100%;height: 100%;">
 		<view class="swiperMenu">
-			<view :class="[swiperViewing == 'all' ? 'swiperChoosen' : 'swiperNormal']" @tap="switchSwiper('all')">全部 20</view>
 			<view :class="[swiperViewing == 'article' ? 'swiperChoosen' : 'swiperNormal']" @tap="switchSwiper('article')">文章 19</view>
 			<view :class="[swiperViewing == 'vote' ? 'swiperChoosen' : 'swiperNormal']" @tap="switchSwiper('vote')">投票 1</view>
 		</view>
 		<swiper style="width:100%;height:100%;" :current-item-id="swiperViewing">
-			<swiper-item @touchmove.stop item-id="all">
+			<swiper-item item-id="article" @touchmove.stop>
 				<view style="width:100%;height:100%;margin:auto;background: #FFFFFF;">
-					<!-- <view class="top-bar">
-						<view class="totalNum">{{ totalNum }}篇文章</view>
-						<view class="bin">
-							<image src="../../static/icon/bin.png"></image>
-							<view>回收站  {{binNum}}</view>
-						</view>
-					</view> -->
 					<view class="mainbody">
 						<view style="height:20px;width:100%;"></view>
 						<myArticles v-bind:myArticleList="myArticleList"></myArticles>
 					</view>
 				</view>
 			</swiper-item>
-			<swiper-item item-id="article"></swiper-item>
-			<swiper-item item-id="vote">
-				<myVote></myVote>
+			<swiper-item item-id="vote" @touchmove.stop>
+				<myVote v-for="vote in myVoteList" :key="vote.id" :vote = 'vote' ></myVote>
 			</swiper-item>
 		</swiper>
 	</view>
@@ -49,7 +40,9 @@
 				currentPage: 1,
 				totalNum: '0',
 				myArticleList: '',
-				swiperViewing: "vote",
+				
+				myVoteList:'',
+				swiperViewing: "article",
 			};
 		},
 
@@ -68,6 +61,7 @@
 			this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
 			var page = this.currentPage;
 			this.showArticles(page);
+			this.showVotes();
 
 			uni.$on("refresh", () => {
 				this.showArticles(1);
@@ -77,8 +71,6 @@
 		methods: {
 			// 锁
 			showArticles: function(page) {
-				console.log(loadArticleFlag);
-
 				if (loadArticleFlag) {
 					loadArticleFlag = false;
 				}
@@ -101,7 +93,6 @@
 				}, 5000); //延时五秒timeout
 
 				var that = this;
-				console.log(that.userInfo);
 				uni.request({
 					url: that.$serverUrl + '/article/queryPublishHistory',
 					method: 'POST',
@@ -114,8 +105,6 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: res => {
-						console.log(res);
-
 						setTimeout(() => {
 							//延时加载
 							uni.hideLoading();
@@ -137,18 +126,14 @@
 					fail: res => {
 						uni.hideLoading();
 						loadArticleFlag = false;
-
 						console.log('index unirequest fail');
-						console.log(res);
 					}
 				});
 			},
 			loadMore: function() {
 				var that = this;
 				var currentPage = that.currentPage;
-				console.log(currentPage);
 				var totalPage = that.totalPage;
-				console.log(totalPage);
 				// 判断当前页数和总页数是否相等
 				if (currentPage == totalPage) {
 					// that.showArticles(1);
@@ -164,6 +149,33 @@
 			},
 			switchSwiper(a){
 				this.swiperViewing = a ;
+			},
+			showVotes: function(page) {	
+				var that = this;
+				uni.request({
+					url: that.$serverUrl + '/vote/queryAllVotes',
+					method: 'POST',
+					data: {
+						page: 1,
+						userId: that.userInfo.id,
+						pagesize:'10',
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: res => {
+						console.log(res);
+						that.myVoteList = res.data.data.rows;
+
+					},
+					fail: res => {
+						uni.hideLoading();
+						loadArticleFlag = false;
+			
+						console.log('index unirequest fail');
+						console.log(res);
+					}
+				});
 			},
 		}
 	};

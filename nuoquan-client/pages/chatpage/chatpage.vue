@@ -14,7 +14,7 @@
 				<button @click="showToast()"><image src="../../static/icon/viewLocalPic.png"></image></button>
 				<!-- 				<button><image src="../../static/icon/emoji.png"></image></button>
  -->
-				<button @click="showEmoji()"><image src="../../static/icon/emoji.png"></image></button>
+				<button @click="showToast()"><image src="../../static/icon/emoji.png"></image></button>
 				<button @click="sendText(textMsg)" class="sendText">发送</image></button>
 
 			</view>

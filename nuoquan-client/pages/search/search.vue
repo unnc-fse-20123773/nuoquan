@@ -38,6 +38,7 @@
 		<!-- 搜索结果显示区域 -->
 		<scroll-view class="searchResult" v-show="!searching" scroll-y="true" @scrolltolower="loadMore()">
 			<searchResultArticle v-for="i in searchedArticleList" :key="i.id" v-bind:articleCard="i"></searchResultArticle>
+			<view style="height:140px;width: 100%;"></view>
 		</scroll-view>
 	</view>
 </template>
@@ -88,13 +89,7 @@
 			search: function(page) {
 				if (isSearching) {
 					return;
-				}
-				isSearching = true;
-
-				var that = this;
-				var isSaveRecord = 1;
-				// console.log(page);
-				if (this.searchKeyWords == '' || this.searchKeyWords == null) {
+				}else if (this.searchKeyWords == '' || this.searchKeyWords == null) {
 					uni.showToast({
 						title: '搜索内容不能为空',
 						duration: 1000,
@@ -102,6 +97,13 @@
 					})
 					return;
 				}
+				
+				isSearching = true;
+
+				var that = this;
+				var isSaveRecord = 1;
+				// console.log(page);
+				
 
 				uni.getStorage({
 					key: 'search_history',
@@ -200,22 +202,18 @@
 			},
 
 			loadMore: function() {
-				var that = this;
-				var currentPage = that.currentPage;
-				console.log('currentpage is ' + currentPage);
-				var totalPage = that.totalPage;
-				console.log('totalpage is ' + totalPage);
+				console.log('currentpage is ' + this.currentPage);
+				console.log('totalpage is ' + this.totalPage);
 				// 判断当前页数和总页数是否相等
-				if (currentPage == totalPage) {
-					// that.showArticles(1);
+				if (this.currentPage == this.totalPage) {
 					uni.showToast({
 						title: "没有更多文章了",
 						icon: "none",
 						duration: 1000
 					})
 				} else {
-					var page = currentPage + 1;
-					that.search(page);
+					this.currentPage += 1;
+					this.search(this.currentPage);
 				}
 			},
 

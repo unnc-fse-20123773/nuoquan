@@ -9,22 +9,13 @@ public class UserVO {
  
     private String id;
     private String email;
-    @JsonIgnore
+    @JsonIgnore //不返回密码
     private String password;
     private String nickname;
     private Date createDate;
     private String faceImg;
-    /**
-     * 小头像
-     */
     private String faceImgThumb;
-    /**
-     * 关注数
-     */
     private Integer followNum;
-    /**
-     * 粉丝数
-     */
     private Integer fansNum;
     /**
      * 0 = female, 1 = male, 2 = others
@@ -44,6 +35,7 @@ public class UserVO {
      * Client-id 设备id，用于消息推送
      */
     private String cid;
+    private Integer reputation;
 
     private boolean isFollow; // 是否关注该用户
     
@@ -292,5 +284,13 @@ public class UserVO {
 
 	public void setFollow(boolean isFollow) {
 		this.isFollow = isFollow;
+	}
+
+	public Integer getReputation() {
+		return reputation;
+	}
+
+	public void setReputation(Integer reputation) {
+		this.reputation = reputation;
 	}
 }

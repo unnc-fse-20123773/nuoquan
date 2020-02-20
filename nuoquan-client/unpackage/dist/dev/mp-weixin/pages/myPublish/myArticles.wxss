@@ -69,7 +69,7 @@
 	color: #9b9b9b;
 }
 .time {
-	width: 77px;
+	width: 84px;
 	/* 暂时,到  月-日 时:分*/
 	height: 10px;
 	line-height: 10px;
