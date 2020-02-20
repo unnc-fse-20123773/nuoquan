@@ -59,7 +59,7 @@
 					</view>
 					<!-- 影响力 -->
 					<view class="operationCard">
-						<view class="operationNum super_center"><text class="operationNum-text" style="color:rgba(254,95,85,1);">999999</text></view>
+						<view class="operationNum super_center"><text class="operationNum-text" style="color:rgba(254,95,85,1);">{{ thisUserInfo.reputation }}</text></view>
 						<view class="operationTitle super_center"><text class="operationTitle-text">影响力</text></view>
 					</view>
 					<!-- 关注 -->

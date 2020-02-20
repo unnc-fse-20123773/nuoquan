@@ -223,7 +223,45 @@ var _default = { data: function data() {return { screenWidth: 350, serverUrl: th
       } else {that.yellowBottom = -that.windowHeight * 0.22 + 'px'; // console.log("手机屏幕，黄色头部上移了" + that.yellowBottom);
       }} else {that.yellowBottom = -that.windowHeight * 0.2 + 'px'; // console.log("平板屏幕，黄色头部上移了" + that.yellowBottom);
     } // 获取卡片宽度
-    that.cardWidth = that.windowWidth - 26 + 'px';}, onPullDownRefresh: function onPullDownRefresh() {console.log('refresh');setTimeout(function () {uni.stopPullDownRefresh();}, 1000);}, methods: {
+    that.cardWidth = that.windowWidth - 26 + 'px';}, onShow: function onShow() {//更新用户数据
+    console.log("更新用户数据");queryUserInfo(this.thisUserInfo.id);}, onPullDownRefresh: function onPullDownRefresh() {console.log('refresh');setTimeout(function () {
+      uni.stopPullDownRefresh();
+    }, 1000);
+  },
+
+  methods: {
+    /**
+              * 查询用户信息，并分割邮箱更新到缓存
+              */
+    queryUserInfo: function queryUserInfo(userId) {var _this = this;
+      var that = this;
+      uni.request({
+        url: that.$serverUrl + '/user/queryUser',
+        method: 'POST',
+        data: {
+          userId: userId },
+
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' },
+
+        success: function success(res) {
+          console.log(res);
+          if (res.data.status == 200) {
+            var user = res.data.data;
+            var finalUser = _this.myUser(user); // 分割邮箱地址, 重构 user
+            _this.setGlobalUserInfo(finalUser); // 把用户信息写入缓存
+            _this.userInfo = finalUser; // 更新页面用户数据
+            // console.log(this.userInfo);
+          }
+        } });
+
+    },
+
+    //粉丝数是否改变
+    isFansNumChange: function isFansNumChange() {
+      //TODO: 多了就加小红点获其他动效
+    },
+
 
     jumpToAbout: function jumpToAbout() {
       uni.navigateTo({

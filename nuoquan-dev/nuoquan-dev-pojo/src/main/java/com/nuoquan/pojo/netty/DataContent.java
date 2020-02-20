@@ -6,7 +6,7 @@ public class DataContent implements Serializable {
 
 	private static final long serialVersionUID = 2530446680896211117L;
 	
-	private Integer action = -1;							// 动作类型
+	private Integer action = -1;							// 动作类型(枚举在MsgActionEnum)
 	private Object data;
 //	private ChatMessage chatMessage = new ChatMessage();	// 用户的聊天内容 entity
 	private String extand = "";								// 扩展字段

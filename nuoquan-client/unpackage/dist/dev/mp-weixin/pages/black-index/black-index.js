@@ -105,7 +105,11 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+<<<<<<< HEAD
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var blackarticlebrief = function blackarticlebrief() {return __webpack_require__.e(/*! import() | pages/black-index/black-articlebrief */ "pages/black-index/black-articlebrief").then(__webpack_require__.bind(null, /*! ./black-articlebrief */ 259));};var blackpopup = function blackpopup() {return __webpack_require__.e(/*! import() | pages/black-index/black-popup */ "pages/black-index/black-popup").then(__webpack_require__.bind(null, /*! ./black-popup */ 266));};var _default =
+=======
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var blackarticlebrief = function blackarticlebrief() {return __webpack_require__.e(/*! import() | pages/black-index/black-articlebrief */ "pages/black-index/black-articlebrief").then(__webpack_require__.bind(null, /*! ./black-articlebrief */ 271));};var blackpopup = function blackpopup() {return __webpack_require__.e(/*! import() | pages/black-index/black-popup */ "pages/black-index/black-popup").then(__webpack_require__.bind(null, /*! ./black-popup */ 278));};var _default =
+>>>>>>> 1e7beb2fce32b4e10d994c748d3bb924a8ed356e
 
 
 

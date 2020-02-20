@@ -16,7 +16,7 @@ public enum MsgActionEnum {
 	COMMENTCOMMENT(8, "评论评论通知"),
 	LIKEARTICLE_SIGN(9, "签收点赞文章通知"),
 	LIKECOMMENT_SIGN(10, "签收点赞评论通知"),
-	COMMENT_SIGN(11, "签收评论文章通知");
+	COMMENT_SIGN(11, "签收评论文章/评论通知"); //在同一个表
 	
 	public final Integer type;
 	public final String content;

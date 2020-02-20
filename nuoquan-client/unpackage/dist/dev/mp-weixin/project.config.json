@@ -10,7 +10,6 @@
 		"minified": true,
 		"newFeature": true,
 		"autoAudits": false,
-		"scopeDataCheck": false,
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
@@ -149,6 +148,12 @@
 					"query": "",
 					"id": 17,
 					"pathName": "pages/tabPages/mine"
+				},
+				{
+					"name": "新建投票",
+					"query": "",
+					"id": 18,
+					"pathName": "pages/submitVote/submitVote"
 				}
 			]
 		}

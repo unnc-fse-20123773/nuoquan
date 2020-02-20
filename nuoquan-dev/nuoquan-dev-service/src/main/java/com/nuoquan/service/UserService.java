@@ -5,6 +5,8 @@ import java.util.List;
 import com.nuoquan.pojo.ChatMsg;
 import com.nuoquan.pojo.User;
 import com.nuoquan.pojo.netty.ChatMessage;
+import com.nuoquan.pojo.vo.UserArticleCommentVO;
+import com.nuoquan.pojo.vo.UserLikeVO;
 import com.nuoquan.pojo.vo.UserVO;
 
 public interface UserService {
@@ -104,41 +106,45 @@ public interface UserService {
 	 */
 	public List<ChatMsg> getUnsignedChat(String acceptUserId);
 	
-	/**
-	 * @Description 批量签收点赞文章消息
-	 */
-	public void updateLikeArtSigned(List<String> msgIdList);
 	
 	/**
-	 * 获取未签收点赞评论消息列表
-	 * @param acceptUserId
+	 * 批量签收点赞文章消息
+	 * @param msgIdList
+	 */
+	public void updateLikeArticleSigned(List<String> msgIdList);
+	
+	/**
+	 * 批量签收点赞评论消息
+	 * @param msgIdList
+	 */
+	public void updateLikeCommentSigned(List<String> msgIdList);
+	
+	/**
+	 * 批量签收评论消息
+	 * @param msgIdList
+	 */
+	public void updateCommentSigned(List<String> msgIdList);
+	
+	/**
+	 * 按作者id获取未签收的点赞消息
+	 * @param userId
 	 * @return
 	 */
-	public List<ChatMsg> getUnsignedLikeArt(String acceptUserId);
+	public List<UserLikeVO> getUnsignedLikeMsg(String userId);
 	
 	/**
-	 * @Description 批量签收点赞评论消息
-	 */
-	public void updateLikeComSigned(List<String> msgIdList);
-	
-	/**
-	 * 获取未签收点赞评论消息列表
-	 * @param acceptUserId
+	 * 按作者id获取未签收的评论消息
+	 * @param userId
 	 * @return
 	 */
-	public List<ChatMsg> getUnsignedLikeCom(String acceptUserId);
+	public List<UserArticleCommentVO> getUnsignedCommentMsg(String userId);
 	
 	/**
-	 * @Description 批量签收评论消息
-	 */
-	public void updateComSigned(List<String> msgIdList);
-	
-	/**
-	 * 获取未签收评论消息列表
-	 * @param acceptUserId
+	 * 更新用户的影响力数值
+	 * @param userId
+	 * @param value ReputeWeight枚举类
+	 * @param op 1=增加 -1=减少 
 	 * @return
 	 */
-	public List<ChatMsg> getUnsignedCom(String acceptUserId);
-	
-
+	public boolean updateReputation(String userId, Integer value, int op);
 }

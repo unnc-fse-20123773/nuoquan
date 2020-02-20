@@ -105,7 +105,14 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+<<<<<<< HEAD
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var articleInfo = function articleInfo() {return __webpack_require__.e(/*! import() | pages/hot/articleInfo */ "pages/hot/articleInfo").then(__webpack_require__.bind(null, /*! ./articleInfo.vue */ 306));};var _default =
+=======
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var articleInfo = function articleInfo() {return __webpack_require__.e(/*! import() | pages/hot/articleInfo */ "pages/hot/articleInfo").then(__webpack_require__.bind(null, /*! ./articleInfo.vue */ 318));};var _default =
+
+
+
+>>>>>>> 1e7beb2fce32b4e10d994c748d3bb924a8ed356e
 
 
 

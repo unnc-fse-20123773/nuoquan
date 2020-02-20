@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.nuoquan.enums.MsgActionEnum;
 import com.nuoquan.enums.MsgSignFlagEnum;
+import com.nuoquan.enums.ReputeWeight;
 import com.nuoquan.enums.StatusEnum;
 import com.nuoquan.netty.MsgHandler;
 import com.nuoquan.pojo.Article;
@@ -164,6 +165,9 @@ public class ArticleController extends BasicController {
 			MsgHandler.sendMsgTo(articleCreaterId, dataContent);
 		}
 		
+		//作者影响力++
+		userService.updateReputation(articleCreaterId, ReputeWeight.LIKE.weight, 1);
+		
 		return JSONResult.ok();
 	}
 
@@ -196,7 +200,10 @@ public class ArticleController extends BasicController {
 			
 			MsgHandler.sendMsgTo(createrId, dataContent);
 		}
-	
+		
+		//作者影响力++
+		userService.updateReputation(createrId, ReputeWeight.LIKE.weight, 1);
+		
 		return JSONResult.ok();
 	}
 
@@ -209,6 +216,9 @@ public class ArticleController extends BasicController {
 	@PostMapping(value = "/userUnLikeArticle")
 	public JSONResult userUnLikeArticle(String userId, String articleId, String articleCreaterId) throws Exception {
 		articleService.userUnLikeArticle(userId, articleId, articleCreaterId);
+		
+		//文章作者影响力--
+		userService.updateReputation(articleCreaterId, ReputeWeight.LIKE.weight, -1);
 		return JSONResult.ok();
 	}
 
@@ -220,6 +230,9 @@ public class ArticleController extends BasicController {
 	@PostMapping(value = "/userUnLikeComment")
 	public JSONResult userUnLikeComment(String userId, String commentId, String createrId) throws Exception {
 		articleService.userUnLikeComment(userId, commentId, createrId);
+		
+		//作者影响力--
+		userService.updateReputation(createrId, ReputeWeight.LIKE.weight, -1);
 		return JSONResult.ok();
 	}
 
@@ -441,8 +454,11 @@ public class ArticleController extends BasicController {
 					dataContent.setData(new NoticeCard(commentVO, targetComment));
 					dataContent.setAction(MsgActionEnum.COMMENTCOMMENT.type);
 				}
-				
 				MsgHandler.sendMsgTo(comment.getToUserId(), dataContent);
+				
+				//文章作者影响力++
+				String author = articleService.getArticleById(comment.getArticleId(), null).getUserId();
+				userService.updateReputation(author, ReputeWeight.COMMENT.weight, 1);
 			}
 
 			return JSONResult.ok();
@@ -523,11 +539,12 @@ public class ArticleController extends BasicController {
 		return JSONResult.ok(result);
 	}
 	
+	@Deprecated //该接口移动到UserController
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "userId", required = true, dataType = "String", paramType = "form") })
 	@PostMapping("/getUnsignedLikeMsg")
 	public JSONResult getUnsignedLikeMsg(String userId) {
-		List<UserLikeVO> likeVOs = articleService.getUnsignedLikeMsg(userId);
+		List<UserLikeVO> likeVOs = userService.getUnsignedLikeMsg(userId);
 		List<DataContent> dataList = new LinkedList<>();
 		for (UserLikeVO like : likeVOs) {
 			DataContent dataContent = new DataContent();
@@ -557,11 +574,12 @@ public class ArticleController extends BasicController {
 	 * @param userId
 	 * @return
 	 */
+	@Deprecated //该接口移动到UserController
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "userId", required = true, dataType = "String", paramType = "form") })
 	@PostMapping("/getUnsignedCommentMsg")
 	public JSONResult getUnsignedCommentMsg(String userId) {
-		List<UserArticleCommentVO> commentVOs = articleService.getUnsignedCommentMsg(userId);
+		List<UserArticleCommentVO> commentVOs = userService.getUnsignedCommentMsg(userId);
 		List<DataContent> dataList = new LinkedList<>();
 		for (UserArticleCommentVO comment : commentVOs) {
 			DataContent dataContent = new DataContent();
@@ -586,6 +604,12 @@ public class ArticleController extends BasicController {
 		return JSONResult.ok(dataList);
 	}
 	
+	/**
+	 * 文章浏览量+1
+	 * @param userId
+	 * @param articleId
+	 * @return
+	 */
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "userId", required = true, dataType = "String", paramType = "form"),
 		@ApiImplicitParam(name = "articleId", required = true, dataType = "String", paramType = "form") })
@@ -596,6 +620,9 @@ public class ArticleController extends BasicController {
 		if (StringUtils.isBlank(value)) {
 			redis.set(key, "ture", 7200); //两小时内不重复计算浏览量
 			articleService.addViewCount(articleId);
+			//作者影响力++
+			String author = articleService.getArticleById(articleId, null).getUserId();
+			userService.updateReputation(author, ReputeWeight.VIEW.weight, 1);
 		}
 		return JSONResult.ok();
 	}

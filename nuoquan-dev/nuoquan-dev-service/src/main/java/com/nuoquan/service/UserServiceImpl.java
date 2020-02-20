@@ -13,14 +13,21 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.nuoquan.enums.MsgSignFlagEnum;
 import com.nuoquan.mapper.ChatMsgMapper;
+import com.nuoquan.mapper.UserArticleCommentMapper;
+import com.nuoquan.mapper.UserArticleCommentMapperCustom;
 import com.nuoquan.mapper.UserFansMapper;
 import com.nuoquan.mapper.UserFansMapperCustom;
+import com.nuoquan.mapper.UserLikeArticleMapper;
+import com.nuoquan.mapper.UserLikeCommentMapper;
+import com.nuoquan.mapper.UserLikeMapperCustom;
 import com.nuoquan.mapper.UserMapper;
 import com.nuoquan.mapper.UserMapperCustom;
 import com.nuoquan.pojo.ChatMsg;
 import com.nuoquan.pojo.User;
 import com.nuoquan.pojo.UserFans;
 import com.nuoquan.pojo.netty.ChatMessage;
+import com.nuoquan.pojo.vo.UserArticleCommentVO;
+import com.nuoquan.pojo.vo.UserLikeVO;
 import com.nuoquan.pojo.vo.UserVO;
 
 import tk.mybatis.mapper.entity.Example;
@@ -32,19 +39,20 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserMapper userMapper;
-	
-	@Autowired
-	private UserMapperCustom userMapperCustom;
-	
 	@Autowired
 	private UserFansMapper userFansMapper;
-	
 	@Autowired
-	private UserFansMapperCustom UserFansMapperCustom;
-	
+	private UserFansMapperCustom userFansMapperCustom;
+	@Autowired
+	private UserLikeMapperCustom userLikeMapperCustom;
+	@Autowired
+	private UserArticleCommentMapperCustom userArticleCommentMapperCustom;
+	@Autowired
+	private UserLikeArticleMapper userLikeArticleMapper;
+	@Autowired
+	private UserLikeCommentMapper userLikeCommentMapper;
 	@Autowired 
 	private Sid sid;
-	
 	@Autowired
 	private ChatMsgMapper chatMsgMapper;
 	
@@ -162,7 +170,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<UserVO> queryUserFans(String userId, String myId) {
 		
-		List<UserVO> list = UserFansMapperCustom.queryFansInfo(userId);
+		List<UserVO> list = userFansMapperCustom.queryFansInfo(userId);
 		for (UserVO u : list) {
 			// 逐个查询我是否关注
 			Boolean isFollow = queryIfFollow(u.getId(), myId);
@@ -176,7 +184,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<UserVO> queryUserFollow(String userId, String myId) {
 		
-		List<UserVO> list = UserFansMapperCustom.queryFollowInfo(userId);
+		List<UserVO> list = userFansMapperCustom.queryFollowInfo(userId);
 		List<UserVO> newList = new ArrayList<UserVO>();
 		for (UserVO u : list) {
 			// 逐个查询我是否关注
@@ -245,40 +253,55 @@ public class UserServiceImpl implements UserService {
 		return result;
 	}
 
+
+	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public void updateLikeArtSigned(List<String> msgIdList) {
-		// TODO Auto-generated method stub
-		
+	public void updateLikeArticleSigned(List<String> msgIdList) {
+		userLikeArticleMapper.batchUpdateMsgSigned(msgIdList);
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public List<ChatMsg> getUnsignedLikeArt(String acceptUserId) {
-		// TODO Auto-generated method stub
-		return null;
+	public void updateLikeCommentSigned(List<String> msgIdList) {
+		userLikeCommentMapper.batchUpdateMsgSigned(msgIdList);
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public void updateLikeComSigned(List<String> msgIdList) {
-		// TODO Auto-generated method stub
-		
+	public void updateCommentSigned(List<String> msgIdList) {
+		userArticleCommentMapperCustom.batchUpdateMsgSigned(msgIdList);
 	}
 
+	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
-	public List<ChatMsg> getUnsignedLikeCom(String acceptUserId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<UserLikeVO> getUnsignedLikeMsg(String userId) {
+		List<UserLikeVO> userLikeVOs = userLikeMapperCustom.getUnsignedLikeMsg(userId);
+		return userLikeVOs;
 	}
 
+	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
-	public void updateComSigned(List<String> msgIdList) {
-		// TODO Auto-generated method stub
-		
+	public List<UserArticleCommentVO> getUnsignedCommentMsg(String userId) {
+		List<UserArticleCommentVO> commentVOs = userArticleCommentMapperCustom.getUnsignedCommentMsg(userId);
+		return commentVOs;
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public List<ChatMsg> getUnsignedCom(String acceptUserId) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean updateReputation(String userId, Integer value, int op) {
+		User user = queryUserById(userId);
+		Integer reputation = user.getReputation();
+		//仅更新reputation
+		User userNew = new User();
+		if (op>0) {
+			reputation += value;
+		}else {
+			reputation -= value;
+		}
+		userNew.setId(userId);
+		userNew.setReputation(reputation);
+		userMapper.updateByPrimaryKeySelective(userNew);
+		return true;
 	}
 
 }

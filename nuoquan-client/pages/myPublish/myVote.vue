@@ -1,88 +1,56 @@
 <template>
 	<view class="voteCard">
-		<view class="voteProjectName">小程序的所有页面包括水水水水上的花费卡号发拉回家</view>
-		<block class="voteOptions" v-for="option in optionList" :key="option.id">
+		<view class="voteProjectName">{{vote.voteContent}}</view>
+		<block class="voteOptions" v-for="option in vote.optionList" :key="option.index">
 			<view class="options">
-				<view class="optionText">{{option.text}}</view>
-				<view class="voteNum">{{option.voteNum}}</view>
-				<view class="voteRate">{{option.voteRate}}</view>
-
-				<view class="progressBar" :style="{width: option.voteRate}"></view>
+				<view class="optionText">{{option.optionContent}}</view>
+				<view class="voteNum">{{option.count}}</view>
+				<view class="voteRate">{{option.percent}}%</view>
+				<view class="progressBar" :style="{width: option.percent * maxPercent +'%'}"></view>
 			</view>
 		</block>
-		
-		
-		
-		
-		
+
+
 		<view class="bottomBar">
-			<view class="time">2020.20.20 10:12</view>
+			<view class="time">{{timeDeal(vote.createDate)}}</view>
 			<view class="comment">
 				<image src="../../static/icon/comment-alt.png"></image>
-				<view>99</view>
+				<view>{{vote.commentNum}}</view>
 			</view>
 			<view class="view">
 				<image src="../../static/icon/eye-888888.png"></image>
-				<view>99</view>
+				<view>{{vote.viewNum}}</view>
 			</view>
 		</view>
 		<!-- 审核状态 -->
 		<view class="status pass" style="width:49px;background: #09BB07;" v-if="vote.status == 1">审核通过</view>
 		<view class="status pending" style="width:36px;background: #3370FF;" v-if="vote.status == 2">审核中</view>
 		<view class="status fail" style="width:49px;background: #888888;" v-if="vote.status == 3">审核失败</view>
-		
+
 	</view>
 </template>
 
 <script>
 	export default {
-		components: {
-
+		props: {
+			vote: "",
 		},
 		data() {
 			return {
-				optionList: [{
-						id: "123qwe",
-						text: "撒地方666",
-						voteRate: "18%",
-						voteNum: "1233",
+				maxPercent: '',
 
-					}, {
-						id: "1w23",
-						text: "6士大夫234 324432 66",
-						voteRate: "75%",
-						voteNum: "1233",
-
-					}, {
-						id: "1qwe23",
-						text: "66斯科拉回复6",
-						voteRate: "66%",
-						voteNum: "1233",
-
-					}, {
-						id: "1234dsf3",
-						text: "6士大夫山豆根66",
-						voteRate: "66%",
-						voteNum: "1233",
-
-					}, {
-						id: "123f",
-						text: "6士大夫###$dskjfhk多少了解客户凯撒记录和法律框架的话山豆根66",
-
-						voteRate: "3%",
-						voteNum: "1233",
-
-					}
-
-
-				],
-				vote:{
-					status:"1",
-				}
 			};
 		},
 		methods: {
 
+		},
+		mounted() {
+			for (var i = 0; i < this.vote.optionList.length; i++) {
+				if(this.vote.optionList[i].percent > this.maxPercent){
+					this.maxPercent = 90/this.vote.optionList[i].percent;
+				}
+
+			}
 		}
 	};
 </script>
@@ -91,9 +59,9 @@
 	.voteCard {
 		width: calc(100% - 26px);
 		margin: auto;
-		box-shadow:0px 0px 4px rgba(0,0,0,0.16);
+		box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
 		border-radius: 8px;
-		margin-top:20px;
+		margin-top: 20px;
 		position: relative;
 	}
 
@@ -150,10 +118,10 @@
 		right: 0;
 		bottom: 9px;
 	}
-	
-	
-	
-	
+
+
+
+
 	.bottomBar {
 		width: calc(100% - 32px);
 		margin: auto;
@@ -162,9 +130,9 @@
 		padding-bottom: 12px;
 		position: relative;
 		color: #9b9b9b;
-		
+
 	}
-	
+
 	.time {
 		width: 84px;
 		/* 暂时,到  月-日 时:分*/
@@ -175,16 +143,17 @@
 		left: 0;
 		bottom: 12px;
 	}
-	
+
 	.comment {
 		position: absolute;
-		bottom: 12px; /* bottom, 对于comment time like view ,数值应等于menu-area的padding-bottom: ; */
+		bottom: 12px;
+		/* bottom, 对于comment time like view ,数值应等于menu-area的padding-bottom: ; */
 		right: 0;
 		width: 25px;
 		height: 10px;
 		line-height: 10px;
 	}
-	
+
 	.view {
 		position: absolute;
 		bottom: 12px;
@@ -192,6 +161,7 @@
 		width: 25px;
 		height: 11px;
 	}
+
 	.comment image,
 	.view image {
 		width: 11px;
@@ -199,7 +169,7 @@
 		right: 14px;
 		position: absolute;
 	}
-	
+
 	.comment view,
 	.view view {
 		position: absolute;
@@ -209,7 +179,7 @@
 		width: 9px;
 		display: inline-block;
 	}
-	
+
 	.status {
 		padding: 4px 14px 4px 35px;
 		font-size: 12px;
@@ -222,6 +192,7 @@
 		border-radius: 25px;
 		box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
 	}
+
 	.pass::after {
 		content: '';
 		position: absolute;
@@ -233,6 +204,7 @@
 		top: 4px;
 		left: 14px;
 	}
+
 	.pending::after {
 		content: '';
 		position: absolute;
@@ -244,6 +216,7 @@
 		top: 8px;
 		left: 14px;
 	}
+
 	.fail::after {
 		content: '';
 		position: absolute;
@@ -255,5 +228,4 @@
 		top: 4px;
 		left: 14px;
 	}
-	
 </style>

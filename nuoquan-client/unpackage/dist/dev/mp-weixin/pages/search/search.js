@@ -105,7 +105,12 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+<<<<<<< HEAD
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var searchResultArticle = function searchResultArticle() {return __webpack_require__.e(/*! import() | components/searchResultArticle */ "components/searchResultArticle").then(__webpack_require__.bind(null, /*! ../../components/searchResultArticle.vue */ 250));};
+=======
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var searchResultArticle = function searchResultArticle() {return __webpack_require__.e(/*! import() | components/searchResultArticle */ "components/searchResultArticle").then(__webpack_require__.bind(null, /*! ../../components/searchResultArticle.vue */ 262));};
+
+>>>>>>> 1e7beb2fce32b4e10d994c748d3bb924a8ed356e
 
 
 

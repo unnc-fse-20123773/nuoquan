@@ -11097,12 +11097,7 @@ createPage(_chatpage.default);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _followlist = _interopRequireDefault(__webpack_require__(/*! ./pages/followlist/followlist.vue */ 89));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_followlist.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/tabPages/index": {}, "pages/tabPages/votePage": {}, "pages/tabPages/messagelist": {}, "pages/tabPages/mine": {}, "pages/detail/detail": {}, "pages/submit/submit": {}, "pages/chatpage/chatpage": {}, "pages/followlist/followlist": {}, "pages/personpublic/personpublic": {}, "pages/search/search": {}, "pages/black-index/black-index": {}, "pages/signin/signin": {}, "components/articlebrief": {}, "pages/wechatLogin/wechatLogin": {}, "pages/cmt-likedetail/cmt-likedetail": {}, "pages/comment-detail/comment-detail": {}, "pages/userDeal/userDeal": {}, "pages/myPublish/myPublish": {}, "pages/about/about": {}, "pages/hot/hot": {}, "pages/profile/profile": {}, "components/shareposter/myshareposter": {}, "pages/submitVote/submitVote": {} }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "Nottinghome", "navigationBarBackgroundColor": "#fdd041", "backgroundColor": "#F8F8F8", "navigationStyle": "custom" } };exports.default = _default;
 
 /***/ }),
 
