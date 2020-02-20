@@ -34,8 +34,8 @@
 		
 		
 		<view class="menu">
-			<!-- 			<mypicker class="major-pick-style" :dataList="majors" :value="majorPickerVal" @change="majorChange" @tapBackground="majorPickerChanger()"></mypicker>
- -->
+		<mypicker class="major-pick-style" :mode="pickerMode" :range="pickerRange" :value="pickerValue" @change="pickerChange"></mypicker>
+
 			<view style="display:inline-block;height:12px;font-size:12px;font-weight:400;color:rgba(154,154,154,1);">天后截止</view>
 			<view style="display:inline-block;height:12px;font-size:12px;font-weight:400;color:rgba(154,154,154,1);">最多是个选项，每个选项限制20字</view>
 		</view>
@@ -46,7 +46,7 @@
 		<view class="submitVoteButton">提交</view>
 
 
-
+@tapBackground
 	</view>
 </template>
 
@@ -62,6 +62,10 @@
 				voteContent: "",
 				votePeriod: "",
 				voteOptions: [''],
+				
+				pickerMode:"submitVote",
+				pickerRange:['1','2','3','a','b','c','d'],
+				pickerValue:'3',
 				
 				
 				//图片相关？DY看一下不需要的变量删掉。
@@ -94,20 +98,11 @@
 					})
 				}
 			},
-			majorChange: function(e) {
-				var major = this.majors[e];
-				this.major = major;
-				// 给组件赋值回去，更改起始值
-				this.majorPickerVal[0] = e;
-			},
-			degreePickerChanger: function() {
-				if (this.degreePicker == false) {
-					this.degreePicker = true;
-				} else {
-					this.degreePicker = false;
-				}
-				// console.log(this.degreePicker);
-			},
+pickerChange(res){
+	console.log(res);
+	this.pickerValue = res.newPickerValue;
+	
+}
 		}
 	}
 </script>

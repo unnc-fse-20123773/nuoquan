@@ -10,10 +10,6 @@
 		"minified": true,
 		"newFeature": true,
 		"autoAudits": false,
-<<<<<<< HEAD
-		"scopeDataCheck": false,
-=======
->>>>>>> 849a53ff7c6da0c067ad799d0c7d2b95f21a0a8c
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
@@ -27,6 +23,8 @@
 	"libVersion": "2.9.2",
 	"appid": "wxebb29e9646be657f",
 	"projectname": "nuoquan",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,

@@ -150,6 +150,12 @@ export default {
 			});
 		},
 		
+		//粉丝数是否改变
+		isFansNumChange(){
+			//TODO: 多了就加小红点获其他动效
+		},
+		
+		
 		jumpToAbout:function() {
 			uni.navigateTo({
 				url: '../about/about',

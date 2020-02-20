@@ -285,6 +285,12 @@ var _default = { data: function data() {return { screenWidth: 350, serverUrl: th
 
     },
 
+    //粉丝数是否改变
+    isFansNumChange: function isFansNumChange() {
+      //TODO: 多了就加小红点获其他动效
+    },
+
+
     jumpToAbout: function jumpToAbout() {
       uni.navigateTo({
         url: '../about/about' });

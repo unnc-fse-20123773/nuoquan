@@ -5,7 +5,7 @@ package com.nuoquan.enums;
  * @author jerrio
  */
 public enum ReputeWeight {
-	//影响力 = 𝚺(文章获赞数+评论数+浏览量+粉丝数)
+	//影响力 = 𝚺(浏览量+3*获赞数+5*文章评论数+12*粉丝数)
 	VIEW(1),
 	LIKE(3),
 	COMMENT(5),

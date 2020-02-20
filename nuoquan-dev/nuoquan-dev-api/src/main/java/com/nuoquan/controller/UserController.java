@@ -355,7 +355,7 @@ public class UserController extends BasicController {
 		boolean isIdExist = userService.checkIdIsExist(userData.getId());
 		// 3. 注册信息
 		if (!isIdExist) {
-			// 只添加用户id（openId）头像和昵称
+			// 3.1 只添加用户id（openId）头像和昵称
 			user.setId(userData.getId());
 			user.setNickname(userData.getNickname());
 			user.setFaceImg(userData.getFaceImg());
@@ -366,8 +366,12 @@ public class UserController extends BasicController {
 			user.setCreateDate(new Date());
 			user = userService.saveUserDirectly(user);
 		} else {
-			// 3.1 查询信息
-			user = userService.queryUserById(userData.getId());
+			// 3.2 更新头像
+			user.setId(userData.getId());
+			user.setFaceImg(userData.getFaceImg());
+			user.setFaceImgThumb(userData.getFaceImgThumb());
+			
+			user = userService.updateUserInfo(user);
 		}
 		// 将 user 对象转换为 userVO 输出，userVO 中不返回密码，且可加上其他属性。
 		UserVO userVO = ConvertUserToUserVO(user);
