@@ -9,10 +9,10 @@
 		</view>
 
 		<!--已选标签部分，会周围彩色光圈的那个-->
-		<view class="selectedTagsArea" :class="{'selectedTagsAreaEditing':editingTag}">
-			<view class="finish-button" @tap="editTag(false)" v-if="editingTag">完成</view>
+		<view class="selectedTagsArea">
 			<view class="selectedTag" v-for="(item,index) in selectedTags" :key="index" @click="deleteTag(index)" :style="{ 'box-shadow' : '0px 0px 6px '+ selectedTagColorList[index],}">{{item}}</view>
 			<button class="editTagsButton" @tap="editTag(true)" v-if="!editingTag">添加标签 + </button>
+			<view class="finish-button" @tap="editTag(false)" v-if="editingTag">完成</view>
 
 
 		</view>
@@ -84,7 +84,7 @@
 				showTagArea: 0,
 				editingTag: false,
 
-				tagList: ["12", "###", "sdk肯定就好看f", "时刻监督和",'实际到货付款'],
+				tagList: ["12", "###", "sdk肯定就好看f", "时刻监督和", '实际到货付款'],
 				tagColorList: [], // 储存每个备选tag的颜色
 				selectedTags: ["12", "###", "sdkjhf", "时刻监督和"],
 				selectedTagColorList: [], // 储存每个已选tag的颜色
@@ -342,11 +342,11 @@
 					icon: 'none',
 				})
 			},
-			
-			addTag(index){
+
+			addTag(index) {
 				debugger;
 				this.selectedTags.push(index);
-				
+
 			},
 			deleteTag: function(index) {
 				console.log(index);
@@ -414,11 +414,8 @@
 		position: relative;
 	}
 
-	.selectedTagsAreaEditing {
-		width: calc(100% - 73px);
-	}
-
 	.finish-button {
+		margin-top: 8px;
 		width: 68px;
 		height: 26px;
 		background: linear-gradient(318deg, rgba(251, 118, 118, 1) 0%, rgba(254, 192, 77, 1) 100%);
@@ -428,9 +425,6 @@
 		line-height: 26px;
 		color: rgba(255, 255, 255, 1);
 		text-align: center;
-		position: absolute;
-		right: -73px;
-		top: 8px;
 	}
 
 	.editTagsButton {

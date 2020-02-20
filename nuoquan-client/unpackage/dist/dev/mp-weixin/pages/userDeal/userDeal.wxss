@@ -18,7 +18,8 @@ page {
 .icon-logoBox {
 	height: 80px;
 	width: 80px;
-	box-shadow: 0px 0px 10px 1px #C0C0C0;
+	-webkit-box-shadow: 0px 0px 10px 1px #C0C0C0;
+	        box-shadow: 0px 0px 10px 1px #C0C0C0;
 	border-radius: 30rpx;
 }
 .icon-logo {

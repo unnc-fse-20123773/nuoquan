@@ -8,9 +8,11 @@ page{
 		height:40px;
 		display:-webkit-box;
 		display:-webkit-flex;
+		display:-ms-flexbox;
 		display:flex;
 		-webkit-box-align:center;
 		-webkit-align-items:center;
+		    -ms-flex-align:center;
 		        align-items:center;
 		position:static;
 		margin-bottom: 10px;
@@ -37,12 +39,15 @@ page{
 		border-radius: 1px;
 		display: -webkit-box;
 		display: -webkit-flex;
+		display: -ms-flexbox;
 		display: flex;
 		-webkit-box-pack: center;
 		-webkit-justify-content: center;
+		    -ms-flex-pack: center;
 		        justify-content: center;
 		-webkit-box-align: center;
 		-webkit-align-items: center;
+		    -ms-flex-align: center;
 		        align-items: center;
 }
 .refresh{

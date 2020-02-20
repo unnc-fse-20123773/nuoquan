@@ -9,7 +9,8 @@
 	padding-left: 16px;
 	padding-right: 16px;
 	height: 121px;
-	box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
+	-webkit-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
+	        box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
 	border-radius: 8px;
 	margin-bottom: 20px;
 	z-index: 10;
@@ -21,7 +22,8 @@
 	padding-top: 19px;
 	white-space: nowrap;
 	overflow: hidden;
-	text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+	   text-overflow: ellipsis;
 }
 .cardBody {
 	position: relative;
@@ -58,7 +60,8 @@
 	font-size: 12px;
 	line-height: 13px;
 	overflow: hidden;
-	text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+	   text-overflow: ellipsis;
 }
 .bottomBar {
 	width: 100%;
@@ -161,7 +164,8 @@
 	left: 16px;
 	color: #ffffff;
 	border-radius: 25px;
-	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+	        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
 }
 .pass::after {
 	content: '';
