@@ -7,11 +7,13 @@
 		{
 			"path": "pages/tabPages/votePage",
 			"style": {}
-		},{
+		},
+		{
 			"path": "pages/tabPages/messagelist",
 			"style": {}
-		},{
-			"path": "pages/tabPages/profile",
+		},
+		{
+			"path": "pages/tabPages/mine",
 			"style": {}
 		},
 		{
@@ -69,13 +71,27 @@
 			"style": {}
 		},
 		{
-			"path": "pages/myPublish/myPublish",
-			"style": {}
-		}, {
-			"path": "pages/about/about",
-			"style": {}
-		}
-	],
+			"path" : "pages/myPublish/myPublish",
+			"style" : {}
+		},
+		{
+            "path" : "pages/about/about",
+            "style" : {}
+        },
+        {
+		    "path" : "pages/hot/hot",
+		    "style" : {}
+		},
+		{
+            "path" : "pages/profile/profile",
+            "style" : {}
+        },
+        {
+            "path" : "components/shareposter/myshareposter",
+            "style" : {}
+        }
+    ],
+        
 	
 	//微信小程序自定义导航栏custom-tab-bar
 	"tabBar": {
@@ -101,7 +117,7 @@
 				"selectedIconPath": "static/icon/star.png",
 				"text": "动态"
 			},{
-				"pagePath": "pages/tabPages/profile",
+				"pagePath": "pages/tabPages/mine",
 				"iconPath": "static/icon/star.png",
 				"selectedIconPath": "static/icon/star.png",
 				"text": "我的"
@@ -113,8 +129,8 @@
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "Nottinghome",
 		"navigationBarBackgroundColor": "#fdd041",
-		"backgroundColor": "#F8F8F8"
-		// "navigationStyle": "custom" // 取消原生导航栏
+		"backgroundColor": "#F8F8F8",
+		"navigationStyle": "custom" // 取消原生导航栏
 	},
 
 	"condition": {
@@ -124,7 +140,11 @@
 				"name": "index", //模式名称
 				"path": "pages/tabPages/index", //启动页面，必选
 				"query": "" //启动参数，在页面的onLoad函数里面得到
-			}, {
+			},{
+				"name": "shareposter", //模式名称
+				"path": "components/shareposter/myshareposter", //启动页面，必选
+				"query": "" //启动参数，在页面的onLoad函数里面得到
+			},{
 				"name": "signin", //模式名称
 				"path": "pages/signin/signin", //启动页面，必选
 				"query": "" //启动参数，在页面的onLoad函数里面得到
@@ -183,13 +203,23 @@
 				"query": "" //启动参数，在页面的onLoad函数里面得到
 			},
 			{
-				"name": "我的发布",
+				"name": "hot", //模式名称
+				"path": "pages/hot/hot", //启动页面，必选
+				"query": "" //启动参数，在页面的onLoad函数里面得到
+			},
+			{
+				"name": "myPublish",
 				"path": "pages/myPublish/myPublish",
 				"query": "" //启动参数，在页面的onLoad函数里面得到
 			},
 			{
 				"name": "关于",
 				"path": "pages/about/about",
+				"query": "" //启动参数，在页面的onLoad函数里面得到
+			},
+			{
+				"name": "mine",
+				"path": "pages/tabPages/mine",
 				"query": "" //启动参数，在页面的onLoad函数里面得到
 			}
 		]

@@ -6,125 +6,204 @@
 		</view>
 
 		<searchpage v-if="showSearch" class="searchPage" @exitSearchSignal="controlShowSearch"></searchpage>
-		<!-- 		<image class="back" src="../static/icon/angle-left.png" 
-		@tap="controlShowSearch(0)" style="display: inline-block;width: 32px;
-		height: 32px;background: #FDD041;border-radius: 8px;position: fixed;
-		top:10px;left:23px"></image>	备用，返回按钮在组件内和组件外两个方案		-->
 
-		<view class="mainPageTop" style="max-height: 160px;" :style="{height: topHeight +'px;'}">
-			<view class="topBar" style="width: 100%;">
-				<image class="topBarTouxiang" :src='userInfo.faceImg' @click="controlShowLeft(1)"></image>
-				<view class="topBarSearch" @click="controlShowSearch(1)" >⠀搜索</view>
-				<view class="topBarPlus" @click="jumpToSubmit()">
-					<view style="font-size: 20px;color:#FDD041;border-radius: 3px;">+</view>
+		<view :class="[roleup == false ? 'mainPageTop' : 'mainPageTop_roled']">
+			<!-- 搜索行 -->
+			<view class="topBar">
+				<!-- 头像，备用 <image class="topBarTouxiang" :src='userInfo.faceImg' @click="controlShowLeft(1)"></image> -->
+				<view class="topBarSearch" @click="controlShowSearch(1)">
+					<image src="../static/icon/search_B79144.png" mode="aspectFit"></image>
 				</view>
+				<!-- 新建，备用 <view class="topBarPlus" @click="jumpToSubmit()">
+					<view style="font-size: 20px;color:#FDD041;border-radius: 3px;">+</view>
+				</view> -->
 				<view class="topBarwaiting"></view>
 			</view>
-			<view class="topicTitle">话题榜</view>
 
-			<view class="topicArea">
-				<view class="hot1">
-					<view class="hotNum1" style="font-size: 21px;margin-bottom: 14px;">1</view>
-					<view class="hotContent1" style="font-size: 15px;margin-bottom: 14px;" @tap="goToDetail(topArticles[0])">{{topArticles[0].articleTitle}}</view>
+			<!-- 热门卡片 -->
+			<view class="hotestBox" :style="{'height':roleup == false ? '62px;' :'33px' ,}">
+				<view :class="[roleup == false ? 'hotestCard' : 'hotestCard_roled']">
+					<!-- 左侧图标 -->
+					<view class="iconBox" @click="jumpTohot" :style="{'height':roleup == false ? '62px;' :'33px' ,}">
+						<image v-if="roleup == false" src="../static/BG/hotest.png" mode="aspectFit" class="fireIcon"></image>
+						<image :class="[roleup == false ? 'hotText' : 'hotText_roled']" src="../static/icon/hotText.png" mode="aspectFit"></image>
+					</view>
+					
+					<!-- 分割线 -->
+					<view v-if="roleup == false" class="grayline"></view>
+					
+					<!-- 热门标题 -->
+					<swiper class="swiperCard" :indicator-dots="false" :autoplay="true" :interval="3000" :vertical="true" :duration="1000">
+						<view >
+							<swiper-item>
+								<view class="itemCard" :style="{'height':roleup == false ? '62px;' :'33px' ,}">
+									<view :class="[roleup == false ? 'hotTitle' : 'hotTitle_roled']">{{ topArticles[0].articleTitle }}</view>
+									<view v-if="roleup == false" class="userInfo">
+										<image src="../static/icon/logo_app.png" mode="aspectFit"></image>
+										<view class="userid_mainpagetop">
+											陈仅仅一号
+										</view>
+									</view>
+								</view>
+							</swiper-item>
+						</view>
+					</swiper>
 				</view>
-				<view class="hot2">
-					<view class="hotNum2" style="font-size: 17px;margin-bottom: 12px;">2</view>
-					<view class="hotContent2" style="font-size: 13px;margin-bottom: 12px;" @tap="goToDetail(topArticles[1])">{{topArticles[1].articleTitle}}</view>
-				</view>
-				<view class="hot3">
-					<view class="hotNum3" style="font-size: 15px;">3</view>
-					<view class="hotContent3" style="font-size: 13px;" @tap="goToDetail(topArticles[2])">{{topArticles[2].articleTitle}}</view>
-				</view>
+			</view>
+		</view>
+		<!-- 主页操作行 -->
+		<view v-if="roleup == false" style="display: flex;justify-content: space-between;width: 93.07%;left: 3.47%;height: 30px;position: fixed;top: 150px;" class="column_center">
+			<!-- 标签选择 -->
+			<view class="tagchoose column_center">
+				<text>标签</text>
+				<image class="tagicon" src="../static/icon/angle-down.png" mode="aspectFit"></image>
+			</view>
+			<!-- 排序方式1-->
+			<view class="comments-order">
+			       <view class="order-in-time" :class="{ chosen : order1 == 'all'}" @tap="change_article_order1('all')">
+					   所有
+				   </view>
+				   <view class="order-in-hot" :class="{ chosen : order1 != 'all'}" @tap="change_article_order1('attention')">
+				   	   关注
+				   </view>
+				   <view class="bg-of-order" :style="{'left':order1 == 'all' ? '-13px;' :'41px' ,}"></view>
+			</view>
+			<!-- 排序方式2 -->
+			<view class="comments-order">
+			       <view class="order-in-time" :class="{ chosen : order2 == 'time'}" @tap="change_article_order2('time')">
+					   时间
+				   </view>
+				   <view class="order-in-hot" :class="{ chosen : order2 != 'time'}" @tap="change_article_order2('hot')">
+				   	   热度
+				   </view>
+				   <view class="bg-of-order" :style="{'left':order2 == 'time' ? '-13px;' :'41px' ,}"></view>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
-	import mainpageleft from '@/components/mainpageleft.vue';
-	import searchpage from '../pages/search/search'
-	export default {
-		props: {
-			// 渲染时候替换默认值会被替换
-			userInfo: {
-				faceImg: '../static/touxiang.jpg',
-			},
-			topArticles: '',
-			topHeight: '',
+import mainpageleft from '@/components/mainpageleft.vue';
+import searchpage from '../pages/search/search';
+export default {
+	props: {
+		// 渲染时候替换默认值会被替换
+		userInfo: {
+			faceImg: '../static/touxiang.jpg'
 		},
-		components: {
-			mainpageleft,
-			searchpage,
-		},
+		topArticles: '',
+		roleup: false,
+	},
+	components: {
+		mainpageleft,
+		searchpage
+	},
 
 		data() {
 			return {
 				showMainPageLeft: 0,
 				showSearch: 0,
+				order1: "all",
+				order2: "time",
 			};
 		},
 
-		methods: {
-			controlShowLeft(a) {
-				this.showMainPageLeft = a;
-				// console.log(this.showMainPageLeft);
-			},
-			controlShowSearch(a) {
-				console.log("this is controlShowSearch, receive data will be appied");
-				console.log(a);
-				this.showSearch = a;
-			},
-			jumpToSubmit() {
-				uni.navigateTo({
-					url: '/pages/submit/submit'
-				});
-			},
-			goToDetail(article){
-				uni.navigateTo({
-					url: '/pages/detail/detail?data=' + JSON.stringify(article)
-				});
-			}
+
+	methods: {
+		controlShowLeft(a) {
+			this.showMainPageLeft = a;
+			// console.log(this.showMainPageLeft);
+		},
+		controlShowSearch(a) {
+			console.log('this is controlShowSearch, receive data will be appied');
+			console.log(a);
+			this.showSearch = a;
+		},
+		jumpToSubmit() {
+			uni.navigateTo({
+				url: '/pages/submit/submit'
+			});
+		},
+		goToDetail(article) {
+			uni.navigateTo({
+				url: '/pages/detail/detail?data=' + article.id
+			});
+		},
+		jumpTohot() {
+			uni.navigateTo({
+				url: '/pages/hot/hot'
+			})
+		},
+		
+		change_article_order1(new_order){
+			this.order1 = new_order ;
+			console.log(this.order1);
+		},
+		
+		change_article_order2(new_order){
+			this.order2 = new_order ;
+			console.log(this.order2);
 		}
-	};
+	}
+};
 </script>
 <style>
-	page {
-		width: 100%;
-	}
+page {
+	width: 100%;
+}
 </style>
 <style scoped>
-	.searchPage {
-		height: 100%;
-		width: 100%;
-		position: fixed;
-		top: 0;
-		left: 0;
-		background: #FFFFFF;
-		z-index: 10;
-	}
+.searchPage {
+	height: 100%;
+	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background: #ffffff;
+	z-index: 10;
+}
 
-	.bottomLayerOfLeft {
+.bottomLayerOfLeft {
+	position: fixed;
+	width: 750upx;
+	height: 1000px;
+	z-index: 3;
+}
 
-		position: fixed;
-		width: 750upx;
-		height: 1000px;
-		z-index: 3;
-	}
+.mainPageTop {
+	padding-top: 4px;
+	height: 139px;
+	position: fixed;
+	left: 0;
+	top: 0;
+	overflow: hidden;
+	width: 100%;
+	background-size: 100% 100%;
+	box-shadow: 0px 0px 10px 1px #c0c0c0;
+	background-image: linear-gradient(#ffc95a, #f89d4d);
+}
 
-	.mainPageTop {
-		padding-top: 4px;
-		position: fixed;
-		left: 0;
-		top: 0;
-		overflow: hidden;
-		width: 100%;
-		background: url(../static/BG/indexBG2.png), url(../static/BG/indexBG.png);
-		background-size: 100% 100%;
-		box-shadow: 0px 0px 10px 1px #C0C0C0;
-		border-bottom-right-radius: 25px;
-		border-bottom-left-radius: 25px;
-	}
+.mainPageTop_roled{
+	padding-top: 4px;
+	height: 110px;
+	position: fixed;
+	left: 0;
+	top: 0;
+	overflow: hidden;
+	width: 100%;
+	background-size: 100% 100%;
+	box-shadow: 0px 0px 10px 1px #c0c0c0;
+	background-image: linear-gradient(#ffc95a, #f89d4d);
+}
 
+.topBar {
+	width: 100%;
+	height: 30px;
+	margin-top: 23px;
+	/* 此处需要兼容性处理 47px */
+}
+
+/* 头像,备用
 	.topBarTouxiang {
 		width: 30px;
 		height: 30px;
@@ -132,77 +211,245 @@
 		display: inline-block;
 		vertical-align: middle;
 		margin-left: 12px;
-	}
+	} */
 
-	.topBarSearch {
-		font-size: 15px;
-		display: inline-block;
-		width: 70%;
-		height: 28px;
+.topBarSearch {
+	width: 256px;
+	height: 30px;
+	background: rgba(255, 247, 231, 1);
+	opacity: 1;
+	border-radius: 75px;
+	font-size: 15px;
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 3.47%;
+}
+
+.topBarSearch image {
+	width: 16px;
+	height: 16px;
+	opacity: 1;
+	margin: 7px 3px;
+}
+
+.topBarPlus {
+	font-size: 25px;
+	background: #ffffff;
+	display: inline-block;
+	height: 25px;
+	width: 25px;
+	vertical-align: middle;
+	text-align: center;
+	margin-left: 10px;
+	border-radius: 3px;
+	line-height: 23px;
+}
+
+/* 热门话题卡片 */
+.hotestBox {
+	width: 100%;
+}
+
+.hotestCard {
+	display: flex;
+	height:62px;
+	width: 93.07%;
+	background: rgba(252, 252, 252, 1);
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+	opacity: 1;
+	border-radius: 16px;
+	margin-top: 12px;
+	margin-left: 3.47%;
+}
+
+.hotestCard_roled {
+	display: flex;
+	width: 93.07%;
+	background: rgba(252, 252, 252, 1);
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+	opacity: 1;
+	margin-top: 12px;
+	margin-left: 3.47%;
+	height:33px;
+	border-radius:8px;
+}
+
+.iconBox {
+	position: relative;
+	width: 62px;
+}
+
+.fireIcon {
+	position: absolute;
+	z-index: 10;
+	height: 62px;
+	width: 62px;
+}
+
+.hotText {
+	position: absolute;
+	top: 8px;
+	left: 29px;
+	height: 14px;
+	width: 26px;
+	z-index: 20;
+}
+
+.hotText_roled {
+	position: absolute;
+	top: 11px;
+	left: 12px;
+	height: 14px;
+	width: 26px;
+	z-index: 20;
+}
+
+.grayline {
+	height: 41px;
+	width: 2px;
+	background-color: #ececec;
+	margin-top: 14px;
+}
+
+.swiperCard{
+	width: 74.21%;
+	height: 62px;
+	margin-left: 11px;
+}
+
+.itemCard{
+	width: 100%;
+}
+
+.userInfo{
+	position: relative;
+	width: 100%;
+	height: 17px;
+	margin-top: 8px;
+}
+
+.userInfo image{
+	position: absolute;
+	width: 17px;
+	height: 17px;
+	border-radius: 50%;
+}
+
+.userid_mainpagetop{
+	position: absolute;
+	left: 25px;
+	height:12px;
+	width: 100%;
+	font-size:12px;
+	font-weight:400;
+	color:rgba(155,155,155,1);
+	opacity:1;
+}
+
+.hotTitle {
+	width: 100%;
+	height: 17px;
+	margin-top: 12px;
+	font-size: 17px;
+	font-family: Source Han Sans CN;
+	font-weight: 500;
+	line-height: 21px;
+	color: rgba(74, 74, 74, 1);
+	opacity: 1;
+}
+
+.hotTitle_roled {
+	width: 100%;
+	height: 17px;
+	margin-top: 8px;
+	font-size: 17px;
+	font-family: Source Han Sans CN;
+	font-weight: 500;
+	line-height: 21px;
+	color: rgba(74, 74, 74, 1);
+	opacity: 1;
+}
+
+.tagchoose{
+	width:74px;
+	height:26px;
+	background:rgba(236,236,236,1);
+	opacity:1;
+	/* margin-left: 3.47%; */
+	border-radius: 20px;
+}
+
+.tagchoose text{
+	margin-left: 12px;
+	height:26px;
+	font-size:14px;
+	font-family:Source Han Sans CN;
+	font-weight:500;
+	line-height:28px;
+	color:rgba(53,53,53,1);
+	opacity:1;
+}
+
+.tagicon{
+	margin-left: 3px;
+	width:24px;
+	height:16px;
+	opacity:1;
+}
+
+.comments-order {
+		/* margin-left: 14.8%; */
+		height: 22px;
+		background: #ECECEC;
+		border-radius: 75px;
+		width: 82px;
+		line-height: 28px;
+		display: flex;
 		vertical-align: middle;
-		border-radius: 8px;
-		margin-left: 13px;
-		background: white;
-		letter-spacing: 1px;
-		color: #b2b2b2;
-		font-family: MicrosoftYaHei;
-		line-height: 30px;
-
+		position: relative;
+		justify-content: space-between;
+		
 	}
-
-	.topBarPlus {
-		font-size: 25px;
-		background: #ffffff;
+	
+	.order-in-hot ,.order-in-time{
+		color:#9B9B9B;
+		font-size: 10px;
+		line-height: 22px;
 		display: inline-block;
-		height: 25px;
-		width: 25px;
-		vertical-align: middle;
+		align-items: center;
+		padding-right:10.5px;
+		padding-left: 10.5px;
+		z-index: 30;
+		width:28px;
 		text-align: center;
-		margin-left: 10px;
-		border-radius: 3px;
-		line-height: 23px;
+		transition: padding-left 200ms,
+		padding-right 200ms,
+		font-size  200ms,
+		color 200ms;
+		 transition-delay: 0ms;
 	}
-
-	.topicTitle {
-		color: #ffffff;
-		margin-left: 29px;
-		font-size: 13px;
-		font-weight: bold;
-		margin-top: 16px;
-		margin-bottom: 10px;
+	.bg-of-order{
+		height:28px;
+		width:54px;
+		background: #FFFFFF;
+		border-radius: 75px;
+		box-shadow: 0px 0px 10px rgba(0,0,0,0.16);
+		z-index: 20;
+		position: absolute;
+		left:-13px;
+		top:-3px;
+		transition: left 500ms ease;
 	}
-
-	.hot1,
-	.hot2,
-	.hot3 {
-		height: 17px;
-		line-height: 17px;
-		/* margin-bottom: 10px;
- */
-		padding-bottom: 10px;
-	}
-
-	.hotNum1,
-	.hotNum2,
-	.hotNum3 {
-		color: #ffffff;
-		width: 77px;
-		font-weight: bold;
-		text-align: center;
-		vertical-align: middle;
-		display: inline-block;
-	}
-
-	.hotContent1,
-	.hotContent2,
-	.hotContent3 {
-		display: inline-block;
-		vertical-align: middle;
-		color: #ffffff;
-		overflow: hidden;
-		/* max-width: calc(750upx - 77px); */
-		max-width: calc(700upx - 77px);
-		text-overflow: ellipsis;
-		white-space: nowrap;
+	.chosen{
+		font-size: 14px;
+		color:#353535;
+		width:28px;
+		padding-left: 0;
+		padding-right: 0;
+		transition: padding-left 300ms,
+		padding-right 300ms,
+		font-size  300ms,
+		color 300ms;
+		 transition-delay: 100ms;
 	}
 </style>

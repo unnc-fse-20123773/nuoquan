@@ -10,10 +10,7 @@
 		"minified": true,
 		"newFeature": true,
 		"autoAudits": false,
-<<<<<<< HEAD
 		"scopeDataCheck": false,
-=======
->>>>>>> 849a53ff7c6da0c067ad799d0c7d2b95f21a0a8c
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
@@ -27,6 +24,8 @@
 	"libVersion": "2.7.0",
 	"appid": "wxebb29e9646be657f",
 	"projectname": "nuoquan",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,
@@ -50,88 +49,106 @@
 					"pathName": "pages/tabPages/index"
 				},
 				{
-					"name": "signin",
+					"name": "shareposter",
 					"query": "",
 					"id": 1,
+					"pathName": "components/shareposter/myshareposter"
+				},
+				{
+					"name": "signin",
+					"query": "",
+					"id": 2,
 					"pathName": "pages/signin/signin"
 				},
 				{
 					"name": "submit",
 					"query": "",
-					"id": 2,
+					"id": 3,
 					"pathName": "pages/submit/submit"
 				},
 				{
 					"name": "chatpage",
 					"query": "",
-					"id": 3,
+					"id": 4,
 					"pathName": "pages/chatpage/chatpage"
 				},
 				{
 					"name": "followlist",
 					"query": "",
-					"id": 4,
+					"id": 5,
 					"pathName": "pages/followlist/followlist"
 				},
 				{
 					"name": "messagelist",
 					"query": "",
-					"id": 5,
+					"id": 6,
 					"pathName": "pages/tabPages/messagelist"
 				},
 				{
 					"name": "profile",
 					"query": "",
-					"id": 6,
+					"id": 7,
 					"pathName": "pages/tabPages/profile"
 				},
 				{
 					"name": "personpublic",
 					"query": "userId=test-id123",
-					"id": 7,
+					"id": 8,
 					"pathName": "pages/personpublic/personpublic"
 				},
 				{
 					"name": "wechatLogin",
 					"query": "",
-					"id": 8,
+					"id": 9,
 					"pathName": "pages/wechatLogin/wechatLogin"
 				},
 				{
 					"name": "detail",
 					"query": "",
-					"id": 9,
+					"id": 10,
 					"pathName": "pages/detail/detail"
 				},
 				{
 					"name": "search",
 					"query": "",
-					"id": 10,
+					"id": 11,
 					"pathName": "pages/search/search"
 				},
 				{
 					"name": "cmtdetail",
 					"query": "",
-					"id": 11,
+					"id": 12,
 					"pathName": "pages/comment-detail/comment-detail"
 				},
 				{
 					"name": "test",
 					"query": "",
-					"id": 12,
+					"id": 13,
 					"pathName": "pages/test/test"
 				},
 				{
-					"name": "我的发布",
+					"name": "hot",
 					"query": "",
-					"id": 13,
+					"id": 14,
+					"pathName": "pages/hot/hot"
+				},
+				{
+					"name": "myPublish",
+					"query": "",
+					"id": 15,
 					"pathName": "pages/myPublish/myPublish"
 				},
 				{
 					"name": "关于",
 					"query": "",
-					"id": 14,
+					"id": 16,
 					"pathName": "pages/about/about"
+				},
+				{
+					"name": "mine",
+					"query": "",
+					"id": 17,
+					"pathName": "pages/tabPages/mine"
 				}
 			]
 		}

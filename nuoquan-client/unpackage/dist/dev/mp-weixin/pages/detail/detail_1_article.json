@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "my-share-poster": "/components/shareposter/myshareposter"
+  },
+  "component": true
+}

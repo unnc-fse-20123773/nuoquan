@@ -1,30 +1,59 @@
 
 page {
-	background: #FFFFFF;
-	/* background: #f8f8f8; */
+		background: #FFFFFF;
+		width: 100%;
+		height: 100%;
+		/* background: #f8f8f8; */
 }
 .top-bar {
-	width: calc(100% - 58px);
-	height: 30px;
-	padding: 24px 0;
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: -ms-flexbox;
-	display: flex;
-	-webkit-box-pack: justify;
-	-webkit-justify-content: space-between;
-	    -ms-flex-pack: justify;
-	        justify-content: space-between;
-	font: Source Han Sans CN;
-	margin: auto;
+		width: calc(100% - 58px);
+		height: 30px;
+		padding: 24px 0;
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-pack: justify;
+		-webkit-justify-content: space-between;
+		    -ms-flex-pack: justify;
+		        justify-content: space-between;
+		font: Source Han Sans CN;
+		margin: auto;
 }
 .totalNum {
-	color: #888888;
-	font-size: 18px;
-	-ms-text-spacing: 80;
-	    text-spacing: 80;
+		color: #888888;
+		font-size: 18px;
+		-ms-text-spacing: 80;
+		    text-spacing: 80;
 }
-/* .bin{
+.swiperMenu{
+		padding:17px 0 17px 13px;
+}
+.swiperNormal{
+		display: inline-block;
+		height:14px;
+		width:45px;
+		margin: 0 16px;
+		font-size:11px;
+		font-weight:500;
+		color:rgba(136,136,136,1);
+		text-align: center;
+}
+.swiperChoosen{
+		display: inline-block;
+		height:14px;
+		width: 45px;
+		text-align: center;
+		font-size:11px;
+		font-weight:500;
+		color:#FFFFFF;
+		background: #FFC95A;
+		padding: 5px 12px;
+		margin: 0 4px;
+		border-radius:25px;
+}
+
+	/* .bin{
 	position: relative;
 	display: inline-flex;
 	background: #888888;
@@ -51,7 +80,7 @@ page {
 	line-height: 30px;
 } */
 .mainbody {
-	width: calc(100% - 26px);
-	margin: auto;
+		width: calc(100% - 26px);
+		margin: auto;
 }
 

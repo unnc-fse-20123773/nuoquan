@@ -15,9 +15,9 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 	
 	@Autowired
 	private ResourceConfig resourceconfig;
-	@Override
-	
+
 	// 设置虚拟路径
+	@Override
 	protected void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/**")
 				.addResourceLocations("classpath:/")

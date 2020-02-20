@@ -32,7 +32,7 @@
 								</view>
 								
 								<view class="item-right">
-									<view class="time">{{it.createDate}}</view>
+									<view class="time">{{timeDeal(it.createDate)}}</view>
 									<view class="mark" v-if="it.isRead==UNREAD">{{it.count}}</view>									
 								</view>
 							</block>

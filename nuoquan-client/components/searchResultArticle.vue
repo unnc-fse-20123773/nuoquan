@@ -1,18 +1,18 @@
 <template>
-	<view class="articlecard" id="'+articleCard.id+'" @click="jumpToDetail()">
-		<view class="title">{{ articleCard.articleTitle }}</view>
-		<view class="briefarticleCard">{{ articleCard.articleContent }}</view>
+	<view class="articlecard" id="'+articleCard.id+'" @click="goToDetail()">
+		<view class="title" v-html="articleCard.articleTitle"></view>
+		<view class="briefarticleCard" v-html="articleCard.articleContent"></view>
 		<view class="picturearea">
 			<!-- 这里是文章配图的位置 -->
 			
 		</view>
-		<view class="tags">
+<!-- 		<view class="tags">
 			<view class="tag" :style="{background: tagColorList[index]}" v-for="(i, index) in articleCard.tagList" v-bind:key="index">{{ i}}</view>
-		</view>
+		</view> -->
 		<view class="menubar">
 			<image :src="articleCard.faceImg" class="touxiang"></image>
 			<view class="name">{{ articleCard.nickname }}</view>
-			<view class="time">{{ articleCard.createDate | timeDeal}}</view>
+			<view class="time">{{ timeDeal(articleCard.createDate) }}</view>
 		</view>
 		<view style="margin:0 25px;border-top:1px solid #DCDCDC;"></view>
 	</view>
@@ -39,37 +39,11 @@
 				}
 			}
 		},
-		filters: {
-			timeDeal(timediff) {
-				timediff = new Date(timediff);
-				var parts = [timediff.getFullYear(), timediff.getMonth()+1, timediff.getDate(), timediff.getHours(), timediff.getMinutes(),timediff.getSeconds()];
-				var oldTime = timediff.getTime();
-				var now = new Date();
-				var newTime = now.getTime();
-				var milliseconds = 0;
-				var timeSpanStr;
-				milliseconds = newTime - oldTime;
-				if (milliseconds <= 1000 * 60 * 1) {
-					timeSpanStr = '刚刚';
-				} else if (1000 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60) {
-					timeSpanStr = Math.round((milliseconds / (1000 * 60))) + '分钟前';
-				} else if (1000 * 60 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24) {
-					timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
-				} else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
-					timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
-				} else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && parts[0] == now.getFullYear()) {
-					timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
-				} else {
-					timeSpanStr = parts[0] + '-' + parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
-				}
-				return timeSpanStr;
-			}
-		},
+		
 		methods: {
-			jumpToDetail() {
-				var navData = JSON.stringify(this.articleCard); // 这里转换成 字符串
+			goToDetail() {
 				uni.navigateTo({
-					url: '/pages/detail/detail?data=' + navData
+					url: '/pages/detail/detail?data=' + this.articleCard.id
 				});
 			}
 		},
@@ -87,30 +61,32 @@
 		width: 750upx;
 		border-radius: 8px;
 		margin: 0 auto ;
-		background-color: #ffffff;
+		background-color: #FDFDFD;
 	}
 	.title {
 		margin: 0px 25px 0 25px;
-		font-size: 15px;
+		font-size:17px;
+		max-height: 38px;
 		font: MicrosoftYaHei;
 		font-weight: bold;
 		line-height: 19px;
 		padding-top: 10px;
+		word-break: break-all;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 	.briefarticleCard {
-		max-height: 500upx;
+		max-height: 51px;
 		margin: 10px 25px 15px;
-		font-size: 13px;
-		line-height: 15px;
+		font-size: 14px;
+		line-height: 17px;
 		margin-bottom: 15px;
-		word-break: break-all;
-		white-space: pre-line;
-		text-overflow: ellipsis;
 		/**文字隐藏后添加省略号*/
 		display: -webkit-box;
 		-webkit-box-orient: vertical;
-		-webkit-line-clamp: 15;
+		-webkit-line-clamp: 3;
 		overflow: hidden;
+
 	}
 	.tags {
 		margin-left: 21px;
@@ -155,7 +131,7 @@
 		font-size: 10px;
 		margin-left: 25px;
 		color: #888888;
-		max-width: 80px;
+		max-width: 84px;
 		text-overflow: ellipsis;
 	}
 	

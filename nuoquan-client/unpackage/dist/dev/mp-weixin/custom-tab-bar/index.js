@@ -5,24 +5,30 @@ Component({
 		selectedColor: "#3cc51f",
 		list: [{
 				pagePath: 'index',
-				iconPath: '../static/icon/star.png',
-				selectedIconPath: '../static/icon/star.png',
+				iconPath: '../static/icon/home_d4d4d4.png',
+				selectedIconPath: '../static/icon/home_ffffff.png',
 				text: '主页'
 			},
 			{
 				pagePath: 'votePage',
-				iconPath: '../static/icon/star.png',
-				selectedIconPath: '../static/icon/star.png',
+				iconPath: '../static/icon/chartbar_d4d4d4.png',
+				selectedIconPath: '../static/icon/chartbar_ffffff.png',
 				text: '投票'
 			},{
+				pagePath: '',
+				iconPath: '../static/icon/comment_dots_d4d4d4.png',
+				selectedIconPath: '../static/icon/comment_dots_ffffff.png',
+				isSpecial: 'true',
+				text: ''
+			},{
 				pagePath: 'messagelist',
-				iconPath: '../static/icon/star.png',
-				selectedIconPath: '../static/icon/star.png',
+				iconPath: '../static/icon/comment_dots_d4d4d4.png',
+				selectedIconPath: '../static/icon/comment_dots_ffffff.png',
 				text: '动态'
 			},{
-				pagePath: 'profile',
-				iconPath: '../static/icon/star.png',
-				selectedIconPath: '../static/icon/star.png',
+				pagePath: 'mine',
+				iconPath: '../static/icon/user_d4d4d4.png',
+				selectedIconPath: '../static/icon/user_ffffff.png',
 				text: '我的'
 			}
 		]

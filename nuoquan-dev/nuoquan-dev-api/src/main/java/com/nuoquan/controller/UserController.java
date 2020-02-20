@@ -45,9 +45,6 @@ import io.swagger.annotations.ApiParam;
 public class UserController extends BasicController {
 	@Autowired
 	private FastDFSClient fastDFSClient;
-
-	@Autowired
-	private UserService userService;
 	
 	@Autowired
 	private EmailTool emailTool;

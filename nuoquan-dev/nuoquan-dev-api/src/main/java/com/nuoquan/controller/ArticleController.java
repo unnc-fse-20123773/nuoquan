@@ -46,15 +46,6 @@ import io.swagger.annotations.ApiParam;
 @RequestMapping("/article")
 public class ArticleController extends BasicController {
 
-	@Autowired
-	private ArticleService articleService;
-	
-	@Autowired
-	private UserService userService;
-	
-	@Autowired
-	private WeChatService weChatService;
-
 	@Value("${upload.maxFaceImageSize}")
 	private long MAX_FACE_IMAGE_SIZE;
 
@@ -75,6 +66,26 @@ public class ArticleController extends BasicController {
 			pageSize = PAGE_SIZE;
 		}
 		PagedResult result = articleService.getAllArticles(page, pageSize, userId);
+
+		return JSONResult.ok(result);
+	}
+	
+	@ApiOperation(value = "查询我关注的人的全部文章", notes = "查询我关注的人的全部文章的接口")
+	@ApiImplicitParams({
+		// userId 查询用户和文章的点赞关系
+		// dataType 为 String, 应该改为 Integer
+		@ApiImplicitParam(name = "userId", value = "操作者id", required = true, dataType = "String", paramType = "form"),
+		@ApiImplicitParam(name = "page", value = "页数", required = true, dataType = "String", paramType = "form"),
+		@ApiImplicitParam(name = "pageSize", value = "每页大小", required = true, dataType = "String", paramType = "form") })
+	@PostMapping("/queryAllSubscribedAuthorArticles")
+	public JSONResult queryAllSubscribedAuthorArticles(Integer page, Integer pageSize, String userId) throws Exception {
+		if (page == null) {
+			page = 1;
+		}
+		if (pageSize == null) {
+			pageSize = PAGE_SIZE;
+		}
+		PagedResult result = articleService.getAllSubscribedAuthorArticles(page, pageSize, userId);
 
 		return JSONResult.ok(result);
 	}
@@ -444,10 +455,11 @@ public class ArticleController extends BasicController {
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "page", required = false, dataType = "Integer", paramType = "form"),
 			@ApiImplicitParam(name = "pageSize", required = false, dataType = "Integer", paramType = "form"),
+			@ApiImplicitParam(name = "type", required = true, dataType = "Integer", paramType = "form"),
 			@ApiImplicitParam(name = "articleId", required = true, dataType = "String", paramType = "form"),
 			@ApiImplicitParam(name = "userId", required = false, dataType = "String", paramType = "form")})
 	@PostMapping("/getMainComments")
-	public JSONResult getFatherArticleComments(Integer page, Integer pageSize, String articleId, String userId) throws Exception {
+	public JSONResult getFatherArticleComments(Integer page, Integer pageSize, Integer type, String articleId, String userId) throws Exception {
 
 		if (StringUtils.isBlank(articleId)) {
 			return JSONResult.errorMsg("articleId can't be null");
@@ -461,17 +473,20 @@ public class ArticleController extends BasicController {
 			pageSize = PAGE_SIZE;
 		}
 
-		PagedResult list = articleService.getMainComments(page, pageSize, articleId, userId);
+		// type: 0 -- 按时间查询, 1 -- 按热度查询
+		PagedResult list = articleService.getMainComments(page, pageSize, type, articleId, userId);
 
 		return JSONResult.ok(list);
 	}
 	
+	
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "underCommentId", required = true, dataType = "String", paramType = "form"),
 		@ApiImplicitParam(name = "page", required = false, dataType = "Integer", paramType = "form"),
+		@ApiImplicitParam(name = "type", required = true, dataType = "Integer", paramType = "form"),
 		@ApiImplicitParam(name = "pageSize", required = false, dataType = "Integer", paramType = "form") })
 	@PostMapping("/getSubComments")
-	public JSONResult getSonArticleComments(Integer page, Integer pageSize, String underCommentId, String userId) throws Exception {
+	public JSONResult getSonArticleComments(Integer page, Integer pageSize, Integer type, String underCommentId, String userId) throws Exception {
 		
 		if (StringUtils.isBlank(underCommentId)) {
 			return JSONResult.errorMsg("underCommentId can't be null");
@@ -485,17 +500,27 @@ public class ArticleController extends BasicController {
 			pageSize = PAGE_SIZE;
 		}
 		
-		PagedResult reCommentList = articleService.getSonComments(page, pageSize, underCommentId, userId);
+		// type: 0 -- 按时间查询, 1 -- 按热度查询
+		PagedResult reCommentList = articleService.getSonComments(page, pageSize, type, underCommentId, userId);
 		
 		return JSONResult.ok(reCommentList);
 	}
+	
 
-	@ApiOperation(value = "Get the top 3 hot article")
-	@PostMapping("/getHotTop3")
-	public JSONResult getHotTop3(String userId) throws Exception {
+	@ApiOperation(value = "Get the top 10 hot article")
+	@PostMapping("/getHotTop10")
+	public JSONResult getHotTop10(Integer page, Integer pageSize, String userId) throws Exception {
 
-		List<ArticleVO> list = articleService.getTop3ByPopularity(userId);
-		return JSONResult.ok(list);
+		if(page == null) {
+			page = 1;
+		}
+		if(pageSize == null) {
+			pageSize = PAGE_SIZE;
+		}
+		
+		PagedResult result = articleService.getTop3ByPopularity(page, pageSize, userId);
+//		List<ArticleVO> list = articleService.getTop3ByPopularity(userId);
+		return JSONResult.ok(result);
 	}
 	
 	@ApiImplicitParams({
@@ -575,4 +600,8 @@ public class ArticleController extends BasicController {
 		return JSONResult.ok();
 	}
 	
+	@PostMapping("/getTagsList")
+	public JSONResult getTagsList() {
+		return JSONResult.ok(tagsService.getTagsList());
+	}
 }

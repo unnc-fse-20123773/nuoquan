@@ -1,5 +1,5 @@
 {
   "usingComponents": {
-    "son-comment-box": "/pages/detail/sonCommentBox"
+    "son-comment-box": "/pages/comment-detail/sonCommentBox"
   }
 }

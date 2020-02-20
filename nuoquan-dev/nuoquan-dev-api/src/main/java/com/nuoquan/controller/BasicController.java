@@ -17,12 +17,32 @@ import com.nuoquan.pojo.User;
 import com.nuoquan.pojo.vo.TitleVo;
 import com.nuoquan.pojo.vo.UserLikeVO;
 import com.nuoquan.pojo.vo.UserVO;
+import com.nuoquan.service.ArticleService;
+import com.nuoquan.service.TagsService;
+import com.nuoquan.service.UserService;
+import com.nuoquan.service.VoteService;
+import com.nuoquan.service.WeChatService;
 import com.nuoquan.utils.RedisOperator;
 
 public class BasicController {
 
 	@Autowired
 	public RedisOperator redis;
+	
+	@Autowired
+	public ArticleService articleService;
+	
+	@Autowired
+	public UserService userService;
+	
+	@Autowired
+	public VoteService voteService;
+	
+	@Autowired
+	public WeChatService weChatService;
+	
+	@Autowired
+	public TagsService tagsService;
 	
 	@Value("${fdfs.groupName}")
 	public String fdfsGroupName;

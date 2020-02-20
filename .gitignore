@@ -33,6 +33,7 @@ unpackage/
 ### JAVA ###
 *.class
 
+
 ### Package Files ###
 *.jar
 *.war

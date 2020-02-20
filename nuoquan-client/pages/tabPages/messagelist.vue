@@ -157,7 +157,7 @@
 		},
 
 		onShow() {
-			this.setTabBarIndex(2) //index为当前tab的索引
+			this.setTabBarIndex(3) //index为当前tab的索引
 			this.loadingChatSnapshot(); // 载入聊天快照
 		},
 
@@ -172,7 +172,7 @@
 				// 拼接信息: 根据 friendId 获取用户信息
 				var sendCount = 0; // 网络请求为异步，计数返回结果判断是否全部完成
 				var receiveCount = 0;
-				console.log(chatSnapShotList)
+				console.log(chatSnapShotList);
 				for (var i = 0; i < chatSnapShotList.length; i++) {
 					var thisFrindId = chatSnapShotList[i].friendId;
 					// 查看缓存
@@ -181,6 +181,7 @@
 						// 不在缓存中, 向服务器请求
 						sendCount++;
 						var that = this;
+						console.log(thisFrindId);
 						uni.request({
 							url: that.$serverUrl + '/user/queryUser',
 							method: "POST",

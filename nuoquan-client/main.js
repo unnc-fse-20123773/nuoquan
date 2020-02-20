@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App'
 import store from './store' // 引入 vuex 的 store 对象
-// import {mapMutations} from 'vuex';
+import router from 'common/router.js'
 
 const app = new Vue({
 	store,
@@ -969,10 +969,8 @@ Vue.prototype.netty = {
  * @param {Object} timediff
  */
 Vue.prototype.timeDeal = function(timediff) {
-	console.log(timediff);
 	timediff = new Date(timediff);
-	console.log(timediff);
-	var parts = [timediff.getFullYear(), timediff.getMonth(), timediff.getDate(), timediff.getHours(), timediff.getMinutes(),
+	var parts = [timediff.getFullYear(), timediff.getMonth() + 1, timediff.getDate(), timediff.getHours(), timediff.getMinutes(),
 		timediff.getSeconds()
 	];
 	var oldTime = timediff.getTime();
@@ -1005,9 +1003,23 @@ Vue.mixin({
       if (typeof this.$mp.page.getTabBar === 'function' &&
         this.$mp.page.getTabBar()) {
         this.$mp.page.getTabBar().setData({
-          selected:index
+			selected:index
         })
       }
     }
   }
 })
+
+//判断屏幕尺寸并分类,实现兼容不同设备
+Vue.prototype.getScreenSize = function(){
+	uni.getSystemInfo({
+		success: function (res) {
+			console.log(res.model);
+			console.log(res.pixelRatio);
+			console.log(res.windowWidth);
+			console.log(res.windowHeight);
+			console.log(res.language);
+			console.log(res.platform);
+		}
+	})
+}

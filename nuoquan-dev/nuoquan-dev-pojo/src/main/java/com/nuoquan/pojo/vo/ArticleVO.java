@@ -15,7 +15,7 @@ public class ArticleVO {
     private Integer dislikeNum;
     private Integer commentNum;
     private Integer popularity;
-    private Byte status;
+    private Integer status;
     private Date createDate;
     private Byte isAnonymous;
     private Integer viewNum;
@@ -159,7 +159,7 @@ public class ArticleVO {
      *
      * @return status - 0 = unreadable, 1 = readable, 2 = checking
      */
-    public Byte getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
@@ -168,7 +168,7 @@ public class ArticleVO {
      *
      * @param status 0 = unreadable, 1 = readable, 2 = checking
      */
-    public void setStatus(Byte status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
