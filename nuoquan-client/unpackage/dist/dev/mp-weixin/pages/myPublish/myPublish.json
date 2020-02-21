@@ -1,6 +1,0 @@
-{
-  "usingComponents": {
-    "my-articles": "/pages/myPublish/myArticles",
-    "my-vote": "/pages/myPublish/myVote"
-  }
-}
