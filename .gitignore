@@ -28,7 +28,7 @@ HELP.md
 .vscode/
 
 ### uniapp ###
-unpackage/*
+unpackage/
 
 ### JAVA ###
 *.class

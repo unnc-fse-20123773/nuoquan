@@ -1,1 +1,0 @@
-<view><canvas class="posters-layer" style="{{'width:'+(width+'px')+';'+('height:'+(height+'px')+';')}}" canvas-id="canvasdrawer"></canvas></view>
