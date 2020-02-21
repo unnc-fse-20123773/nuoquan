@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.nuoquan.enums.StatusEnum;
@@ -22,6 +21,7 @@ import com.nuoquan.mapper.ArticleMapperCustom;
 import com.nuoquan.mapper.SearchRecordMapper;
 import com.nuoquan.mapper.UserArticleCommentMapper;
 import com.nuoquan.mapper.UserArticleCommentMapperCustom;
+import com.nuoquan.mapper.UserFansMapper;
 import com.nuoquan.mapper.UserLikeArticleMapper;
 import com.nuoquan.mapper.UserLikeCommentMapper;
 import com.nuoquan.mapper.UserLikeMapperCustom;
@@ -31,12 +31,14 @@ import com.nuoquan.pojo.ArticleImage;
 import com.nuoquan.pojo.SearchRecord;
 import com.nuoquan.pojo.User;
 import com.nuoquan.pojo.UserArticleComment;
+import com.nuoquan.pojo.UserFans;
 import com.nuoquan.pojo.UserLikeArticle;
 import com.nuoquan.pojo.UserLikeComment;
 import com.nuoquan.pojo.UserVoteComment;
 import com.nuoquan.pojo.vo.ArticleVO;
 import com.nuoquan.pojo.vo.UserArticleCommentVO;
 import com.nuoquan.pojo.vo.UserLikeVO;
+import com.nuoquan.pojo.vo.VoteVO;
 import com.nuoquan.support.Convert;
 import com.nuoquan.utils.PageUtils;
 import com.nuoquan.utils.PagedResult;
@@ -82,6 +84,9 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private UserFansMapper userFansMapper;
 
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
@@ -323,7 +328,6 @@ public class ArticleServiceImpl implements ArticleService {
 				}
 				av.setTagList(finalTagList);
 			}
-			
 			listVo.add(av);
 		}
 		pageInfoVo.setList(listVo);
@@ -562,17 +566,30 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
-	public PagedResult getMainComments(Integer page, Integer pageSize, String articleId, String userId) {
+	public PagedResult getMainComments(Integer page, Integer pageSize, Integer type, String articleId, String userId) {
 
 		PageHelper.startPage(page, pageSize);
-
-		List<UserArticleCommentVO> list = userArticleCommentMapperCustom.queryComments(articleId);
-		for (UserArticleCommentVO c : list) {
-			// 对时间格式进行处理
-//			String timeAgo = TimeAgoUtils.format(c.getCreateDate());
-//			c.setTimeAgo(timeAgo);
-			// 查询并设置关于用户的点赞关系
-			c.setIsLike(isUserLikeComment(userId, c.getId()));
+		List<UserArticleCommentVO> list = null;
+		if (type == 0) {
+			list = userArticleCommentMapperCustom.queryComments(articleId);
+			for (UserArticleCommentVO c : list) {
+				// 对时间格式进行处理
+//				String timeAgo = TimeAgoUtils.format(c.getCreateDate());
+//				c.setTimeAgo(timeAgo);
+				// 查询并设置关于用户的点赞关系
+				c.setIsLike(isUserLikeComment(userId, c.getId()));
+			}
+		}
+		
+		if (type == 1) {
+			list = userArticleCommentMapperCustom.queryCommentsByPopularity(articleId);
+			for (UserArticleCommentVO c : list) {
+				// 对时间格式进行处理
+//				String timeAgo = TimeAgoUtils.format(c.getCreateDate());
+//				c.setTimeAgo(timeAgo);
+				// 查询并设置关于用户的点赞关系
+				c.setIsLike(isUserLikeComment(userId, c.getId()));
+			}
 		}
 
 		PageInfo<UserArticleCommentVO> pageList = new PageInfo<>(list);
@@ -588,19 +605,36 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
-	public PagedResult getSonComments(Integer page, Integer pageSize, String underCommentId, String userId) {
+	public PagedResult getSonComments(Integer page, Integer pageSize, Integer type, String underCommentId, String userId) {
 
 		PageHelper.startPage(page, pageSize);
-		List<UserArticleCommentVO> list = userArticleCommentMapperCustom.querySonComments(underCommentId);
+		List<UserArticleCommentVO> list = null;
+		if (type == 0) {
+			list = userArticleCommentMapperCustom.querySonComments(underCommentId);
 
-		for (UserArticleCommentVO c : list) {
-//			String timeAgo = TimeAgoUtils.format(c.getCreateDate());
-//			c.setTimeAgo(timeAgo);
-			// 查询并设置关于用户的点赞关系
-			c.setIsLike(isUserLikeComment(userId, c.getId()));
-			// 设置回复人昵称
-			c.setToNickname(userService.queryUserById(c.getToUserId()).getNickname());
+			for (UserArticleCommentVO c : list) {
+//				String timeAgo = TimeAgoUtils.format(c.getCreateDate());
+//				c.setTimeAgo(timeAgo);
+				// 查询并设置关于用户的点赞关系
+				c.setIsLike(isUserLikeComment(userId, c.getId()));
+				// 设置回复人昵称
+				c.setToNickname(userService.queryUserById(c.getToUserId()).getNickname());
+			}
 		}
+		
+		if (type == 1) {
+			list = userArticleCommentMapperCustom.querySonCommentsByPopularity(underCommentId);
+
+			for (UserArticleCommentVO c : list) {
+//				String timeAgo = TimeAgoUtils.format(c.getCreateDate());
+//				c.setTimeAgo(timeAgo);
+				// 查询并设置关于用户的点赞关系
+				c.setIsLike(isUserLikeComment(userId, c.getId()));
+				// 设置回复人昵称
+				c.setToNickname(userService.queryUserById(c.getToUserId()).getNickname());
+			}
+		}
+		
 
 		PageInfo<UserArticleCommentVO> pageList = new PageInfo<>(list);
 
@@ -636,7 +670,8 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
-	public List<ArticleVO> getTop3ByPopularity(String userId) {
+	public PagedResult getTop3ByPopularity(Integer page, Integer pageSize, String userId) {
+		PageHelper.startPage(page, pageSize);
 		List<ArticleVO> list = articleMapperCustom.getTop3ByPopularity();
 		for (ArticleVO a : list) {
 			// 为每个文章添加图片列表
@@ -655,7 +690,16 @@ public class ArticleServiceImpl implements ArticleService {
 				a.setTagList(finalTagList);
 			}
 		}
-		return list;
+		PageInfo<ArticleVO> pageList = new PageInfo<>(list);
+		
+		PagedResult pagedResult = new PagedResult();
+		pagedResult.setPage(page);
+		pagedResult.setTotal(pageList.getPages());
+		pagedResult.setRows(list);
+		pagedResult.setRecords(pageList.getTotal());
+		
+		return pagedResult;
+		
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -805,7 +849,72 @@ public class ArticleServiceImpl implements ArticleService {
 		a.setStatus(status);
 		return articleMapper.updateByExampleSelective(a, example);
 	}
+
+	@Transactional(propagation = Propagation.SUPPORTS)
+	@Override
+	public PagedResult getAllSubscribedAuthorArticles(Integer page, Integer pageSize, String userId) {
+		// 查询全部我(操作者)关注的用户
+		Example example = new Example(UserFans.class);
+		Criteria criteria = example.createCriteria();
+		// 此处userId为操作者id
+		criteria.andEqualTo("fansId", userId);
+		List<UserFans> userList = userFansMapper.selectByExample(example);
+		
+		Example example2 = new Example(Article.class);
+		example2.setOrderByClause("create_date desc");
+		Criteria criteria2 = example2.createCriteria();
+		for (UserFans userFans : userList) {
+//			System.out.println(userFans.getUserId());
+			criteria2.orEqualTo("userId", userFans.getUserId());
+		}
+
+		List<Article> list = articleMapper.selectByExample(example2);
+		PageInfo<Article> pageInfo = new PageInfo<>(list);
+		PageInfo<ArticleVO> pageInfoVO = PageUtils.PageInfo2PageInfoVo(pageInfo);
+		
+		List<ArticleVO> listVO = new ArrayList<>();
+		for (Article a : list) {
+			ArticleVO av = new ArticleVO();
+			BeanUtils.copyProperties(a, av); //转换对象
+			// 添加作者信息
+			User user= userMapper.selectByPrimaryKey(av.getUserId());
+			if (user!=null) {
+				av.setNickname(user.getNickname());
+				av.setFaceImg(user.getFaceImg());
+				av.setFaceImgThumb(user.getFaceImgThumb());
+			}
+			// 为每个文章添加图片列表
+			av.setImgList(articleImageMapper.getArticleImgs(av.getId()));
+			// 添加和关于用户的点赞关系
+			av.setIsLike(isUserLikeArticle(userId, av.getId()));
+			// 添加标签list
+			if (!StringUtils.isBlank(av.getTags())) {
+				String[] tagList = av.getTags().split("#");
+				List<String> finalTagList = new ArrayList<String>();
+				for (String tag : tagList) {
+					if (!StringUtils.isBlank(tag)) {
+						finalTagList.add(tag);
+					}
+				}
+				av.setTagList(finalTagList);
+			}
+			
+			listVO.add(av);
+		}
+		pageInfoVO.setList(listVO);
+		System.out.println("1");
+		
+		//为最终返回对象 pagedResult 添加属性
+		PagedResult pagedResult = new PagedResult();
+		pagedResult.setPage(pageInfoVO.getPageNum());
+		pagedResult.setTotal(pageInfoVO.getPages());
+		pagedResult.setRows(pageInfoVO.getList());
+		pagedResult.setRecords(pageInfoVO.getTotal());
+
+		return pagedResult;
+	}
 }
+
 
 //
 //@Transactional(propagation = Propagation.REQUIRED)

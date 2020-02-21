@@ -133,7 +133,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -207,6 +207,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
+
+
+var loadVoteFlag = false; //为加载投票加锁
 var _default =
 {
   data: function data() {
@@ -253,7 +256,33 @@ var _default =
         // console.log(this.singleImgWidth);
       }
       // console.log(e.detail);
+    },
+
+    showVotes: function showVotes(page) {
+      if (loadVoteFlag) {
+        return;
+      }
+      loadVoteFlag = true;
+
+      uni.showLoading({
+        title: '加载中...' });
+
+      setTimeout(function () {
+        if (loadVoteFlag) {
+          loadVoteFlag = false; //解锁
+          uni.hideLoading();
+          uni.showToast({
+            title: '网络未知错误',
+            icon: 'none',
+            duration: 1000 });
+
+        }
+      }, 5000); // 延时5s timeout
+
+      var that = this;
+
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

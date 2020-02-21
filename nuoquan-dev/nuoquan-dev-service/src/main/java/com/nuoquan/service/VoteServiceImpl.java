@@ -148,7 +148,7 @@ public class VoteServiceImpl implements VoteService {
 
 		List<VoteVO> list = voteMapperCustom.listCheckOnly();
 		for (VoteVO v : list) {
-			// 为每个文章添加图片列表
+			// 为每个投票添加图片列表
 			v.setImgList(voteImageMapper.getVoteImgs(v.getId()));
 			// 为每个投票添加选项列表
 			v.setOptionList(voteOptionMapper.getOptions(v.getId()));
@@ -485,6 +485,55 @@ public class VoteServiceImpl implements VoteService {
 		pagedResult.setRecords(pageList.getTotal());
 		
 		return pagedResult;
+	}
+
+	@Transactional(propagation = Propagation.SUPPORTS)
+	@Override
+	public PagedResult getAllMyHisVote(Integer page, Integer pageSize, String userId) {
+
+		PageHelper.startPage(page, pageSize);
+		
+		List<VoteVO> list = voteMapperCustom.queryAllMyHisArticle(userId);
+		for (VoteVO v : list) {
+			// 为每个投票添加图片列表
+			v.setImgList(voteImageMapper.getVoteImgs(v.getId()));
+			// 为每个投票添加选项列表
+			v.setOptionList(voteOptionMapper.getOptions(v.getId()));
+		}
+		PageInfo<VoteVO> voteList = new PageInfo<>(list);
+		
+		PagedResult pagedResult = new PagedResult();
+		pagedResult.setPage(page);
+		pagedResult.setTotal(voteList.getPages());
+		pagedResult.setRows(list);
+		pagedResult.setRecords(voteList.getTotal());
+
+		return pagedResult;
+		
+	}
+
+	@Transactional(propagation = Propagation.SUPPORTS)
+	@Override
+	public PagedResult getOtherslegalHisVote(Integer page, Integer pageSize, String userId, String targetId) {
+		
+		PageHelper.startPage(page, pageSize);
+		List<VoteVO> list = voteMapperCustom.queryOthersLegalHisVote(targetId);
+		for (VoteVO v : list) {
+			// 为每个投票添加图片列表
+			v.setImgList(voteImageMapper.getVoteImgs(v.getId()));
+			// 为每个投票添加选项列表
+			v.setOptionList(voteOptionMapper.getOptions(v.getId()));
+		}
+		PageInfo<VoteVO> voteList = new PageInfo<>(list);
+		
+		PagedResult pagedResult = new PagedResult();
+		pagedResult.setPage(page);
+		pagedResult.setTotal(voteList.getPages());
+		pagedResult.setRows(list);
+		pagedResult.setRecords(voteList.getTotal());
+
+		return pagedResult;
+		
 	}
 
 }

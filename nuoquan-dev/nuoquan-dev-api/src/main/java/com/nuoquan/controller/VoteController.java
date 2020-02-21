@@ -1,21 +1,31 @@
 package com.nuoquan.controller;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.nuoquan.enums.MsgActionEnum;
 import com.nuoquan.enums.MsgSignFlagEnum;
 import com.nuoquan.enums.StatusEnum;
 import com.nuoquan.netty.MsgHandler;
+import com.nuoquan.pojo.Article;
+import com.nuoquan.pojo.SearchRecord;
 import com.nuoquan.pojo.User;
 import com.nuoquan.pojo.UserLikeCommentVote;
 import com.nuoquan.pojo.UserVoteComment;
@@ -25,6 +35,7 @@ import com.nuoquan.pojo.VoteOption;
 import com.nuoquan.pojo.VoteUser;
 import com.nuoquan.pojo.netty.DataContent;
 import com.nuoquan.pojo.netty.NoticeCard;
+import com.nuoquan.pojo.vo.ArticleVO;
 import com.nuoquan.pojo.vo.UserLikeVO;
 import com.nuoquan.pojo.vo.UserVoteCommentVO;
 import com.nuoquan.pojo.vo.VoteVO;
@@ -32,6 +43,7 @@ import com.nuoquan.service.UserService;
 import com.nuoquan.service.VoteService;
 import com.nuoquan.service.WeChatService;
 import com.nuoquan.utils.JSONResult;
+import com.nuoquan.utils.PageUtils;
 import com.nuoquan.utils.PagedResult;
 
 import io.swagger.annotations.Api;
@@ -39,6 +51,8 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.entity.Example.Criteria;
 
 @RestController
 @Api(value = "投票相关接口", tags = {"Vote-Controller"})
@@ -398,6 +412,37 @@ public class VoteController extends BasicController{
 		return JSONResult.ok(result);
 	}
 	
+	@ApiOperation(value = "查询我的发布的投票和他人发布的投票", notes = "查看他人时只能查看status为1的, 查询自己时,可显示所有status")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "page", value = "页数", required = true, dataType = "Integer", paramType = "form"),
+		@ApiImplicitParam(name = "pageSize", value = "每页大小", required = true, dataType = "Integer", paramType = "form"),
+		@ApiImplicitParam(name = "userId", value = "操作者id", required = true, dataType = "String", paramType = "form"),
+		@ApiImplicitParam(name = "targetId", value = "目标查询者id", required = true, dataType = "String", paramType = "form")
+	})
+	@PostMapping("/queryPublishedVoteHistory")
+	public JSONResult queryPublishedVoteHistory(Integer page, Integer pageSize, String userId, String targetId) {
+		
+		PagedResult finalResult = new PagedResult();
+		
+		if(page == null) {
+			page = 1;
+		}
+		if(pageSize == null) {
+			pageSize = PAGE_SIZE;
+		}
+		if(userId.equals(targetId)) {
+			// 查询所有状态的文章
+			PagedResult result = voteService.getAllMyHisVote(page, pageSize, userId);
+			finalResult = result;
+		} else if (!userId.equals(targetId)) {
+			// 查询他人文章状态为1的文章
+			PagedResult result = voteService.getOtherslegalHisVote(page, pageSize, userId, targetId);
+			finalResult = result;
+		}
+		
+		
+		return JSONResult.ok(finalResult);
+	}
 }
 
 

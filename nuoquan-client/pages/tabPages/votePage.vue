@@ -73,6 +73,9 @@
 </template>
 
 <script>
+	
+var loadVoteFlag = false; //为加载投票加锁
+	
 export default {
 	data() {
 		return {
@@ -118,7 +121,33 @@ export default {
 				// console.log(this.singleImgWidth);
 			}
 			// console.log(e.detail);
+		},
+		
+		showVotes: function(page) {
+			if (loadVoteFlag) {
+				return;
+			}
+			loadVoteFlag = true;
+			
+			uni.showLoading({
+				title: '加载中...'
+			});
+			setTimeout(() => {
+				if(loadVoteFlag){
+					loadVoteFlag = false; //解锁
+					uni.hideLoading();
+					uni.showToast({
+						title: '网络未知错误',
+						icon: 'none',
+						duration: 1000
+					});
+				}
+			}, 5000) // 延时5s timeout
+			
+			var that = this;
+			
 		}
+		
 	}
 };
 </script>

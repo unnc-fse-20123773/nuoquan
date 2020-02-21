@@ -123,16 +123,18 @@ public interface ArticleService {
 	 * 留言分页  父评论
 	 * @param page
 	 * @param pageSize
+	 * @param type 
 	 * @param articleId
 	 * @param userId
 	 * @return
 	 */
-	public PagedResult getMainComments(Integer page, Integer pageSize, String articleId, String userId);
+	public PagedResult getMainComments(Integer page, Integer pageSize, Integer type, String articleId, String userId);
 	
 	/**
 	 * 留言分页 子评论
+	 * @param type 
 	 */
-	public PagedResult getSonComments(Integer page, Integer pageSize, String underCommentId, String userId);
+	public PagedResult getSonComments(Integer page, Integer pageSize, Integer type, String underCommentId, String userId);
 	
 	/**
 	 * 根据 commentId 获取评论
@@ -153,9 +155,11 @@ public interface ArticleService {
 	
 	/**
 	 * 获取热度值前三的文章
+	 * @param pageSize 
+	 * @param page 
 	 * @return
 	 */
-	public List<ArticleVO> getTop3ByPopularity(String userId);
+	public PagedResult getTop3ByPopularity(Integer page, Integer pageSize, String userId);
 	
 	/**
 	 * Set the status to unreadable
@@ -200,5 +204,28 @@ public interface ArticleService {
 	 * 修改文章状态(可批量)
 	 */
 	public int updateArticleStatus(String articleIds, int status);
+
+
+	public PagedResult getAllSubscribedAuthorArticles(Integer page, Integer pageSize, String userId);
+
+//	/**
+//	 * 通过热度查询评论主
+//	 * @param page
+//	 * @param pageSize
+//	 * @param articleId
+//	 * @param userId
+//	 * @return
+//	 */
+//	public PagedResult getMainCommentsByPopilarity(Integer page, Integer pageSize, String articleId, String userId);
+//
+//	/**
+//	 * 通过热度查询次ping
+//	 * @param page
+//	 * @param pageSize
+//	 * @param underCommentId
+//	 * @param userId
+//	 * @return
+//	 */
+//	public PagedResult getSonCommentsByPopularity(Integer page, Integer pageSize, String underCommentId, String userId);
 	
 }
