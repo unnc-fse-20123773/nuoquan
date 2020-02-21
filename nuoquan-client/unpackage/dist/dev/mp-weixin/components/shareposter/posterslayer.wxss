@@ -1,0 +1,8 @@
+.posters-layer {
+  position: fixed;
+  top: -5000rpx;
+  left: -5000rpx;
+  /* top: 0;
+  left: 0; */
+}
+
