@@ -276,7 +276,6 @@ page {
 .messageArea.data-v-cd242d9a {
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	/* margin-top: 30upx; */
 	margin-bottom: 90rpx;
@@ -287,19 +286,16 @@ page {
 	position: fixed;
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-box-align: center;
 	-webkit-align-items: center;
-	    -ms-flex-align: center;
 	        align-items: center;
 	bottom: 0;
 	min-height: 48px;
 	width: 100%;
 	margin: 0;
 	padding: 0;
-	-webkit-box-shadow: 0px -2px 2px 0px rgba(130, 130, 130, 0.2);
-	        box-shadow: 0px -2px 2px 0px rgba(130, 130, 130, 0.2);
+	box-shadow: 0px -2px 2px 0px rgba(130, 130, 130, 0.2);
 	background: #ffffff;
 }
 .bottomBar textarea.data-v-cd242d9a {
@@ -317,14 +313,12 @@ page {
 .icons.data-v-cd242d9a {
 	display: -webkit-inline-box;
 	display: -webkit-inline-flex;
-	display: -ms-inline-flexbox;
 	display: inline-flex;
 	width: 200rpx;
 	margin-left: 18rpx;
 	margin-right: 24rpx;
 	-webkit-box-pack: justify;
 	-webkit-justify-content: space-between;
-	    -ms-flex-pack: justify;
 	        justify-content: space-between;
 	position: absolute;
 	bottom: 13px;
@@ -339,8 +333,7 @@ page {
 .icons button.button-hover.data-v-cd242d9a {
 	position: relative;
 	top: 3rpx;
-	-webkit-box-shadow: 0px 0px 8px #999 inset;
-	        box-shadow: 0px 0px 8px #999 inset;
+	box-shadow: 0px 0px 8px #999 inset;
 }
 button.data-v-cd242d9a {
 	display: inline-block;

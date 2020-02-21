@@ -15,8 +15,7 @@ image {
 	border-radius: 8px;
 	margin: 3.47% auto 0;
 	background-color: rgba(255, 255, 255, 1);
-	-webkit-box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.16);
-	        box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.16);
+	box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.16);
 	opacity: 1;
 	border-radius: 8px;
 }
@@ -34,8 +33,7 @@ image {
 	word-wrap: break-word;
 	word-break: break-all;
 	white-space: pre-line;
-	-o-text-overflow: ellipsis;
-	   text-overflow: ellipsis;
+	text-overflow: ellipsis;
 	/**文字隐藏后添加省略号*/
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
@@ -55,8 +53,7 @@ image {
 	word-wrap: break-word;
 	word-break: break-all;
 	white-space: pre-line;
-	-o-text-overflow: ellipsis;
-	   text-overflow: ellipsis;
+	text-overflow: ellipsis;
 	/**文字隐藏后添加省略号*/
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
@@ -122,8 +119,7 @@ image {
 	opacity: 1;
 	white-space: nowrap;
 	overflow: hidden;
-	-o-text-overflow: ellipsis;
-	   text-overflow: ellipsis;
+	text-overflow: ellipsis;
 }
 .time.data-v-fbd78668 {
 	position: absolute;
@@ -158,7 +154,6 @@ image {
 	min-width: 94px;
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	height: 18px;
 }
@@ -200,7 +195,7 @@ image {
 .likedBar.data-v-fbd78668{
 	margin-left: 19px;
 	height:22px;
-	background:-o-linear-gradient(319deg,rgba(255,161,161,1) 0%,rgba(245,60,60,1) 100%);
+	background:-webkit-linear-gradient(319deg,rgba(255,161,161,1) 0%,rgba(245,60,60,1) 100%);
 	background:linear-gradient(131deg,rgba(255,161,161,1) 0%,rgba(245,60,60,1) 100%);
 	opacity:1;
 	border-radius:50px;
@@ -223,7 +218,6 @@ image {
 	/* margin: auto; */
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	width: 95.6%;
 	margin-left: 2.2%;
@@ -233,7 +227,6 @@ image {
 	margin: auto;
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	/* 在此设置图片区域宽度 */
 	width: 95.6%;
@@ -265,8 +258,7 @@ image.data-v-02703004 {
 .search.data-v-02703004 {
 	display: inline-block;
 	width: 70%;
-	-webkit-box-shadow: inset 0 0 20px #ccc;
-	        box-shadow: inset 0 0 20px #ccc;
+	box-shadow: inset 0 0 20px #ccc;
 	border-radius: 20rpx;
 	margin-left: 50rpx;
 }
@@ -279,8 +271,7 @@ image.data-v-02703004 {
 	background: white;
 	height: 27px;
 	border-color: rgb(255, 255, 255);
-	-webkit-box-shadow: rgb(170, 170, 170) 0px 0px 5px 0px;
-	        box-shadow: rgb(170, 170, 170) 0px 0px 5px 0px;
+	box-shadow: rgb(170, 170, 170) 0px 0px 5px 0px;
 	font-size: 14px;
 	padding: 0px;
 	border-width: 1px;

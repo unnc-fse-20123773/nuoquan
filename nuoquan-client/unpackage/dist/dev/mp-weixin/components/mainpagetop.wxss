@@ -103,8 +103,7 @@
 		max-width: 48%;
 		white-space: nowrap;
 		overflow: hidden;
-		-o-text-overflow: ellipsis;
-		   text-overflow: ellipsis;
+		text-overflow: ellipsis;
 }
 .SearchHistoryItem icon.data-v-5a44fe13 {
 		position: absolute;
@@ -142,10 +141,8 @@ page {
 	overflow: hidden;
 	width: 100%;
 	background-size: 100% 100%;
-	-webkit-box-shadow: 0px 0px 10px 1px #c0c0c0;
-	        box-shadow: 0px 0px 10px 1px #c0c0c0;
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#ffc95a), to(#f89d4d));
-	background-image: -o-linear-gradient(#ffc95a, #f89d4d);
+	box-shadow: 0px 0px 10px 1px #c0c0c0;
+	background-image: -webkit-linear-gradient(#ffc95a, #f89d4d);
 	background-image: linear-gradient(#ffc95a, #f89d4d);
 }
 .mainPageTop_roled.data-v-7a6267b5{
@@ -157,10 +154,8 @@ page {
 	overflow: hidden;
 	width: 100%;
 	background-size: 100% 100%;
-	-webkit-box-shadow: 0px 0px 10px 1px #c0c0c0;
-	        box-shadow: 0px 0px 10px 1px #c0c0c0;
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#ffc95a), to(#f89d4d));
-	background-image: -o-linear-gradient(#ffc95a, #f89d4d);
+	box-shadow: 0px 0px 10px 1px #c0c0c0;
+	background-image: -webkit-linear-gradient(#ffc95a, #f89d4d);
 	background-image: linear-gradient(#ffc95a, #f89d4d);
 }
 .topBar.data-v-7a6267b5 {
@@ -216,13 +211,11 @@ page {
 .hotestCard.data-v-7a6267b5 {
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	height:62px;
 	width: 93.07%;
 	background: rgba(252, 252, 252, 1);
-	-webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-	        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 	opacity: 1;
 	border-radius: 16px;
 	margin-top: 12px;
@@ -231,12 +224,10 @@ page {
 .hotestCard_roled.data-v-7a6267b5 {
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	width: 93.07%;
 	background: rgba(252, 252, 252, 1);
-	-webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-	        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 	opacity: 1;
 	margin-top: 12px;
 	margin-left: 3.47%;
@@ -360,13 +351,11 @@ page {
 		line-height: 28px;
 		display: -webkit-box;
 		display: -webkit-flex;
-		display: -ms-flexbox;
 		display: flex;
 		vertical-align: middle;
 		position: relative;
 		-webkit-box-pack: justify;
 		-webkit-justify-content: space-between;
-		    -ms-flex-pack: justify;
 		        justify-content: space-between;
 }
 .order-in-hot.data-v-7a6267b5,.order-in-time.data-v-7a6267b5{
@@ -376,7 +365,6 @@ page {
 		display: inline-block;
 		-webkit-box-align: center;
 		-webkit-align-items: center;
-		    -ms-flex-align: center;
 		        align-items: center;
 		padding-right:10.5px;
 		padding-left: 10.5px;
@@ -387,16 +375,11 @@ page {
 		padding-right 200ms,
 		font-size  200ms,
 		color 200ms;
-		-o-transition: padding-left 200ms,
-		padding-right 200ms,
-		font-size  200ms,
-		color 200ms;
 		transition: padding-left 200ms,
 		padding-right 200ms,
 		font-size  200ms,
 		color 200ms;
 		 -webkit-transition-delay: 0ms;
-		      -o-transition-delay: 0ms;
 		         transition-delay: 0ms;
 }
 .bg-of-order.data-v-7a6267b5{
@@ -404,14 +387,12 @@ page {
 		width:54px;
 		background: #FFFFFF;
 		border-radius: 75px;
-		-webkit-box-shadow: 0px 0px 10px rgba(0,0,0,0.16);
-		        box-shadow: 0px 0px 10px rgba(0,0,0,0.16);
+		box-shadow: 0px 0px 10px rgba(0,0,0,0.16);
 		z-index: 20;
 		position: absolute;
 		left:-13px;
 		top:-3px;
 		-webkit-transition: left 500ms ease;
-		-o-transition: left 500ms ease;
 		transition: left 500ms ease;
 }
 .chosen.data-v-7a6267b5{
@@ -424,16 +405,11 @@ page {
 		padding-right 300ms,
 		font-size  300ms,
 		color 300ms;
-		-o-transition: padding-left 300ms,
-		padding-right 300ms,
-		font-size  300ms,
-		color 300ms;
 		transition: padding-left 300ms,
 		padding-right 300ms,
 		font-size  300ms,
 		color 300ms;
 		 -webkit-transition-delay: 100ms;
-		      -o-transition-delay: 100ms;
 		         transition-delay: 100ms;
 }
 

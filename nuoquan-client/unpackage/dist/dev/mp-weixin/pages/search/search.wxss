@@ -103,8 +103,7 @@
 		max-width: 48%;
 		white-space: nowrap;
 		overflow: hidden;
-		-o-text-overflow: ellipsis;
-		   text-overflow: ellipsis;
+		text-overflow: ellipsis;
 }
 .SearchHistoryItem icon.data-v-5a44fe13 {
 		position: absolute;

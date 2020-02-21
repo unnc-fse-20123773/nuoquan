@@ -21,8 +21,7 @@ image {
 	padding-top: 10px;
 	word-break: break-all;
 	overflow: hidden;
-	-o-text-overflow: ellipsis;
-	   text-overflow: ellipsis;
+	text-overflow: ellipsis;
 }
 .briefarticleCard.data-v-52534b0e {
 	max-height: 51px;
@@ -69,8 +68,7 @@ image {
 	color: #888888;
 	padding-bottom: 5px;
 	max-width: 85px;
-	-o-text-overflow: ellipsis;
-	   text-overflow: ellipsis;
+	text-overflow: ellipsis;
 }
 .time.data-v-52534b0e {
 	position: absolute;
@@ -81,18 +79,15 @@ image {
 	margin-left: 25px;
 	color: #888888;
 	max-width: 84px;
-	-o-text-overflow: ellipsis;
-	   text-overflow: ellipsis;
+	text-overflow: ellipsis;
 }
 .picturearea.data-v-52534b0e {
 	margin: auto;
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-box-pack: center;
 	-webkit-justify-content: center;
-	    -ms-flex-pack: center;
 	        justify-content: center;
 }
 image.data-v-52534b0e {

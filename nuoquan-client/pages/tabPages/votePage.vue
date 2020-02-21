@@ -84,14 +84,32 @@ export default {
 			data: {
 				toView: `card_${DEFAULT_PAGE}`,
 				list: ['Javascript', 'Typescript', 'Java', 'PHP', 'Go']
-			}
+			},
+			showList: [],
+			userInfo: '',
+			totalPage: 1,
+			currentPage: 1
 		};
 	},
 
-	onLoad: function() {},
+	onLoad(){
+		var userInfo = this.getGlobalUserInfo();
+		if (this.isNull(userInfo)){
+			uni.redirectTo({
+				url: '../signin/signin'
+			})
+			return;
+		} else {
+			this.userInfo = userInfo;
+		}
+		this.getScreenSize(); //获取手机型号
+		
+		this.showVotes(this.currentPage);
+	},
 
 	onShow() {
 		this.setTabBarIndex(1); //index为当前tab的索引
+		
 	},
 
 	methods: {
@@ -145,6 +163,23 @@ export default {
 			}, 5000) // 延时5s timeout
 			
 			var that = this;
+			console.log(1);
+			uni.request({
+				url: that.$serverUrl + '/vote/queryAllVotes',
+				method: 'POST',
+				data:{
+					page: page,
+					userId: that.userInfo.id
+				},
+				header:{
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					uni.hideLoading();
+					// loadArticleFlag = false;
+					console.log(res);
+				}
+			})
 			
 		}
 		

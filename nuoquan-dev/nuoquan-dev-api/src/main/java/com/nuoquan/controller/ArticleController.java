@@ -468,6 +468,16 @@ public class ArticleController extends BasicController {
 		
 	}
 
+	/**
+	 * 
+	 * @param page
+	 * @param pageSize
+	 * @param type  0 -- 按时间查询, 1 -- 按热度查询
+	 * @param articleId
+	 * @param userId
+	 * @return
+	 * @throws Exception
+	 */
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "page", required = false, dataType = "Integer", paramType = "form"),
 			@ApiImplicitParam(name = "pageSize", required = false, dataType = "Integer", paramType = "form"),
@@ -495,7 +505,16 @@ public class ArticleController extends BasicController {
 		return JSONResult.ok(list);
 	}
 	
-	
+	/**
+	 * 
+	 * @param page
+	 * @param pageSize
+	 * @param type  0 -- 按时间查询, 1 -- 按热度查询
+	 * @param underCommentId
+	 * @param userId
+	 * @return
+	 * @throws Exception
+	 */
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "underCommentId", required = true, dataType = "String", paramType = "form"),
 		@ApiImplicitParam(name = "page", required = false, dataType = "Integer", paramType = "form"),

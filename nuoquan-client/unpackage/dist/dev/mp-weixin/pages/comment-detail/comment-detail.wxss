@@ -103,7 +103,7 @@
 		background-repeat: no-repeat;
 }
 .liked.data-v-3b5c539a {
-		background: -o-linear-gradient(320deg, rgba(254, 110, 110, 0.84) 0%, rgba(245, 60, 60, 1) 100%);
+		background: -webkit-linear-gradient(320deg, rgba(254, 110, 110, 0.84) 0%, rgba(245, 60, 60, 1) 100%);
 		background: linear-gradient(130deg, rgba(254, 110, 110, 0.84) 0%, rgba(245, 60, 60, 1) 100%);
 }
 /* 一条卡片的CSS结束
@@ -130,7 +130,7 @@ page.data-v-3b5c539a {
 	margin-top:15px;
 }
 .son-comment-num.data-v-3b5c539a{
-	background:-o-linear-gradient(137deg,rgba(255,184,32,0.84) 0%,rgba(240,240,122,1) 100%);
+	background:-webkit-linear-gradient(137deg,rgba(255,184,32,0.84) 0%,rgba(240,240,122,1) 100%);
 	background:linear-gradient(313deg,rgba(255,184,32,0.84) 0%,rgba(240,240,122,1) 100%);
 }
 /* 滑到底了等提示
@@ -151,11 +151,9 @@ page.data-v-3b5c539a {
 .comment-bottom-buttons.data-v-3b5c539a{
 		display: -webkit-box;
 		display: -webkit-flex;
-		display: -ms-flexbox;
 		display: flex;
 			-webkit-box-pack: justify;
 			-webkit-justify-content: space-between;
-			    -ms-flex-pack: justify;
 			        justify-content: space-between;
 }
 .comment-bottom-buttons .back.data-v-3b5c539a{
@@ -173,7 +171,6 @@ page.data-v-3b5c539a {
 		padding: 16px 11px 16px 15px;
 		position: relative;
 		-webkit-transform: rotate(90deg);
-		    -ms-transform: rotate(90deg);
 		        transform: rotate(90deg);
 }
 .comment-bottom-buttons .to-top.data-v-3b5c539a::after{
@@ -197,8 +194,7 @@ border-radius: 2px;
 		color:rgba(255,255,255,1);
 		padding:10px 22px;
 		border-radius: 10px;
-		-webkit-box-shadow:  0px 0px 8px rgba(0,0,0,0.16);
-		        box-shadow:  0px 0px 8px rgba(0,0,0,0.16);
+		box-shadow:  0px 0px 8px rgba(0,0,0,0.16);
 		background: #FCC041;
 		letter-spacing:2px;
 }
@@ -219,7 +215,6 @@ border-radius: 2px;
 .bottomLayerOfSubmit.data-v-3b5c539a{
 		display: -webkit-box;
 		display: -webkit-flex;
-		display: -ms-flexbox;
 		display: flex;
 		position: fixed;
 		height: 48px;
@@ -229,11 +224,9 @@ border-radius: 2px;
 		background: #FFFFff;
 		-webkit-box-pack: center;
 		-webkit-justify-content: center;
-		    -ms-flex-pack: center;
 		        justify-content: center;
 		-webkit-box-align: center;
 		-webkit-align-items: center;
-		    -ms-flex-align: center;
 		        align-items: center;
 }
 .submitComment.data-v-3b5c539a {
@@ -267,8 +260,7 @@ border-radius: 2px;
 		z-index: 3;
 }
 .commentPart.data-v-3b5c539a {
-		-webkit-box-shadow: 0px 1px 5px 0px rgba(139, 139, 139, 0.32);
-		        box-shadow: 0px 1px 5px 0px rgba(139, 139, 139, 0.32);
+		box-shadow: 0px 1px 5px 0px rgba(139, 139, 139, 0.32);
 		position:fixed;
 		bottom: 0;
 		left: 0;

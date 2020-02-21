@@ -42,8 +42,7 @@ page {
 	border-radius: 8px;
 	min-height: 140px;
 	background-color: rgba(255, 255, 255, 1);
-	-webkit-box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
-	        box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+	box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
 }
 .nameBox {
 	margin-top: 8px;
@@ -73,7 +72,6 @@ page {
 	width: 100%;
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 }
 .guanzhuButton {
@@ -82,8 +80,7 @@ page {
 	width: 68px;
 	height: 26px;
 	background-color: rgba(255, 201, 90, 1);
-	-webkit-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
-	        box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
+	box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
 	opacity: 1;
 	border-radius: 4px;
 }
@@ -125,11 +122,9 @@ page {
 	height: 43px;
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-box-pack: justify;
 	-webkit-justify-content: space-between;
-	    -ms-flex-pack: justify;
 	        justify-content: space-between;
 }
 .operationCard {
@@ -182,27 +177,22 @@ page {
 	margin-left: 13px;
 	border-radius: 8px;
 	background-color: rgba(255, 255, 255, 1);
-	-webkit-box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
-	        box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+	box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-box-pack: justify;
 	-webkit-justify-content: space-between;
-	    -ms-flex-pack: justify;
 	        justify-content: space-between;
 }
 .profileCard {
 	width: 50%;
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-box-orient: vertical;
 	-webkit-box-direction: normal;
 	-webkit-flex-direction: column;
-	    -ms-flex-direction: column;
 	        flex-direction: column;
 }
 .profile-content-text {
@@ -233,8 +223,7 @@ page {
 	padding: 12px 0px;
 	border-radius: 8px;
 	background-color: rgba(255, 255, 255, 1);
-	-webkit-box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
-	        box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+	box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
 }
 .articleTitle {
 	width: calc(100% - 32px);
@@ -246,8 +235,7 @@ page {
 	opacity: 1;
 	white-space: nowrap;
 	overflow: hidden;
-	-o-text-overflow: ellipsis;
-	   text-overflow: ellipsis;
+	text-overflow: ellipsis;
 	line-height: 17px;
 }
 .articleContentLine {
@@ -256,7 +244,6 @@ page {
 	margin-left: 16px;
 	display: -webkit-box;
 	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 }
 
@@ -285,8 +272,7 @@ page {
 	opacity: 1;
 
 	word-break: break-all;
-	-o-text-overflow: ellipsis;
-	   text-overflow: ellipsis;
+	text-overflow: ellipsis;
 	/**文字隐藏后添加省略号*/
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
