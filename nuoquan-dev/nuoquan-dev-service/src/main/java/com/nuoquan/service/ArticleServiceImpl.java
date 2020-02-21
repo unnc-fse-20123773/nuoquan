@@ -260,7 +260,7 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 	}
 
-	@Transactional(propagation = Propagation.REQUIRED)
+	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
 	public PagedResult searchArticleYang(Integer isSaveRecord, Integer page, Integer pageSize,
 			String searchText, String userId) {
@@ -293,7 +293,7 @@ public class ArticleServiceImpl implements ArticleService {
 		articleExample.and(criteria2);
 		
 		PageHelper.startPage(page, pageSize);
-		List<Article> list = articleMapperCustom.selectByExample(articleExample);
+		List<Article> list = articleMapper.selectByExample(articleExample);
 		PageInfo<Article> pageInfo = new PageInfo<>(list);
 		PageInfo<ArticleVO> pageInfoVo = PageUtils.PageInfo2PageInfoVo(pageInfo);
 		
@@ -313,14 +313,17 @@ public class ArticleServiceImpl implements ArticleService {
 			// 添加和关于用户的点赞关系
 			av.setIsLike(isUserLikeArticle(userId, av.getId()));
 			// 添加标签list
-			String[] tagList = av.getTags().split("#");
-			List<String> finalTagList = new ArrayList<String>();
-			for (String tag : tagList) {
-				if (!StringUtils.isBlank(tag)) {
-					finalTagList.add(tag);
+			if(!StringUtils.isBlank(av.getTags())) {
+				String[] tagList = av.getTags().split("#");
+				List<String> finalTagList = new ArrayList<String>();
+				for (String tag : tagList) {
+					if (!StringUtils.isBlank(tag)) {
+						finalTagList.add(tag);
+					}
 				}
+				av.setTagList(finalTagList);
 			}
-			av.setTagList(finalTagList);
+			
 			listVo.add(av);
 		}
 		pageInfoVo.setList(listVo);
