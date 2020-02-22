@@ -52,35 +52,19 @@ export default {
 	
     methods: {
 		async myPoster(){
-			/* 测试案例，一个笑脸 */
-			// context.setStrokeStyle("#00ff00")
-			// context.setLineWidth(5)
-			// context.rect(0, 0, 200, 200)
-			// context.stroke()
-			// context.setStrokeStyle("#ff0000")
-			// context.setLineWidth(2)
-			// context.moveTo(160, 100)
-			// context.arc(100, 100, 60, 0, 2 * Math.PI, true)
-			// context.moveTo(140, 100)
-			// context.arc(100, 100, 40, 0, Math.PI, false)
-			// context.moveTo(85, 80)
-			// context.arc(80, 80, 5, 0, 2 * Math.PI, true)
-			// context.moveTo(125, 80)
-			// context.arc(120, 80, 5, 0, 2 * Math.PI, true)
-			// context.stroke()
-			// context.draw()
-			
 			if(this.isNull(this.articleCard)){
 				console.log("没有文章数据，无法生成画布")
 				return;
 			}
-			
+			debugger;
 			var prompt = "我推荐了 Nottinghome 的一篇文章，扫码查看完整内容"
 			
 			this.context.setFontSize(14);
 			this.context.setFillStyle("#FEEDBB");
 			this.context.fillText(this.articleCard.nickname, 60, 50); //作者昵称
 			this.context.fillText(this.articleCard.articleTitle, 100, 100); //文章标题
+			this.context.setFontSize(18);
+			this.context.setFillStyle("#FEEDBB");
 			this.context.fillText(this.articleCard.articleContent, 80, 130); //文章内容
 			this.context.fillText(prompt, 100, 200); //分享提示语
 			// 作者获取头像

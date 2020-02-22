@@ -170,39 +170,23 @@ var _index = __webpack_require__(/*! ../../common/image-tools/index.js */ 203);f
 
   methods: {
     myPoster: function () {var _myPoster = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var prompt, that;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:if (!
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 this.isNull(this.articleCard)) {_context.next = 3;break;}
                 console.log("没有文章数据，无法生成画布");return _context.abrupt("return");case 3:
 
 
-
+                debugger;
                 prompt = "我推荐了 Nottinghome 的一篇文章，扫码查看完整内容";
 
                 this.context.setFontSize(14);
                 this.context.setFillStyle("#FEEDBB");
                 this.context.fillText(this.articleCard.nickname, 60, 50); //作者昵称
                 this.context.fillText(this.articleCard.articleTitle, 100, 100); //文章标题
+                this.context.setFontSize(18);
+                this.context.setFillStyle("#FEEDBB");
                 this.context.fillText(this.articleCard.articleContent, 80, 130); //文章内容
                 this.context.fillText(prompt, 100, 200); //分享提示语
                 // 作者获取头像
-                that = this;_context.next = 13;return (
+                that = this;_context.next = 16;return (
                   new Promise(function (resolve, reject) {
                     uni.getImageInfo({ //获取图片信息
                       src: that.articleCard.faceImg,
@@ -216,16 +200,16 @@ var _index = __webpack_require__(/*! ../../common/image-tools/index.js */ 203);f
                         reject('err');
                       } });
 
-                  }));case 13:
+                  }));case 16:
 
                 console.log("开始画二维码");
                 // 对数据字符串化并转码，防止特殊字符影响传参
                 // console.log(encodeData)
-                _context.next = 16;return this.getQrcodeUnlimit("pages/detail/detail", "data=" + this.articleCard.id, 200, true);case 16:
+                _context.next = 19;return this.getQrcodeUnlimit("pages/detail/detail", "data=" + this.articleCard.id, 200, true);case 19:
                 this.context.drawImage(this.QrCode, 25, 200, 75, 75);
                 console.log("结束画二维码");
                 this.context.draw(); //生成图像
-              case 19:case "end":return _context.stop();}}}, _callee, this);}));function myPoster() {return _myPoster.apply(this, arguments);}return myPoster;}(),
+              case 22:case "end":return _context.stop();}}}, _callee, this);}));function myPoster() {return _myPoster.apply(this, arguments);}return myPoster;}(),
 
     /**
                                                                                                                                                                     * 对应微信小程序生成二维码的场景B

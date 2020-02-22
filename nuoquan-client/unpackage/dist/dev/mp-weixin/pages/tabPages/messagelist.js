@@ -257,7 +257,8 @@ var socketOpen = false;var _default =
   (0, _vuex.mapState)([
   'chatMessageCard',
   'likeMsgCount',
-  'commentMsgCount'])),
+  'commentMsgCount',
+  'lang'])),
 
 
 
@@ -299,10 +300,12 @@ var socketOpen = false;var _default =
     this.loadingChatSnapshot(); // 载入聊天快照
   },
 
-  methods: {
+  methods: _objectSpread({},
+  (0, _vuex.mapMutations)(['changeLang']), { //引用vuex中的方法
+
     /**
-              * 展示聊天快照，渲染列表.
-              */
+     * 展示聊天快照，渲染列表.
+     */
     loadingChatSnapshot: function loadingChatSnapshot() {
       var chatSnapShotList = this.chat.getUserChatSnapShot(userInfo.id);
       // 提前渲染
@@ -398,7 +401,7 @@ var socketOpen = false;var _default =
       uni.navigateTo({
         url: '../cmt-likedetail/cmt-likedetail?currentTab=' + JSON.stringify(currentTab) });
 
-    } } };exports.default = _default;
+    } }) };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

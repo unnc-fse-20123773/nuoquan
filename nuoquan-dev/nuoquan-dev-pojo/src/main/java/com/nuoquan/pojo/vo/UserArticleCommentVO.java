@@ -20,7 +20,6 @@ public class UserArticleCommentVO {
     
     private String faceImg;
     private String nickname;
-    private String timeAgo;
     private String toNickname;
     
     private Boolean isLike; // 该用户是否点赞该评论
@@ -137,14 +136,6 @@ public class UserArticleCommentVO {
 
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
-	}
-
-	public String getTimeAgo() {
-		return timeAgo;
-	}
-
-	public void setTimeAgo(String timeAgo) {
-		this.timeAgo = timeAgo;
 	}
 
 	public Integer getCommentNum() {

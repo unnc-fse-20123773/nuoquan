@@ -32,8 +32,6 @@ import onemessage from './oneMessage';
 import { mapState } from 'vuex';
 import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
 
-var query = wx.createSelectorQuery();
-
 var page = 1; // PS: 非显示属性不放在渲染层
 var chatKey;
 var chatHistory;

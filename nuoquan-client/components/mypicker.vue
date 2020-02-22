@@ -54,18 +54,6 @@ pickerIndex:  选项编号，用于控制显示哪一个选项
 			},
 		},
 		mounted() {
-			// if(this.range != ""){
-			// 	this.dataList = this.range;
-			// }else{
-			// 	switch (this.mode){
-			// 		case 'submitVote':
-			// this.dataList = ['1','2','3','4','5','6','7'];
-			// console.log('switch ggg');
-			// 			break;
-			// 		default:
-			// 			break;
-			// 	}
-			// }
 			this.transferValueToIndex();
 		},
 		methods: {
@@ -147,7 +135,7 @@ pickerIndex:  选项编号，用于控制显示哪一个选项
 
 	.item {
 		text-align: right;
-		width: 32px;
+		width: 100%;
 		height: 18px;
 		font-size: 14px;
 		font-weight: 800;

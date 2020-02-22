@@ -40,11 +40,11 @@
 					<textarea class="comment-text" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
 					 adjust-position="false" v-model="commentContent" @click.stop="" :show-confirm-bar="false" @focus="popTextArea"
 					 @blur="unpopTextArea" cursor-spacing='20' />
-					<view class="comment-pic-area">
+					<!-- <view class="comment-pic-area">
 						<image src="../../static/BG/indexBG.png"></image>
 						<image src="../../static/icon/about.png"></image>
 						<image src="../../static/icon/1575235531(1).png"></image>
-					</view>
+					</view> -->
 					 <view class="word-count-left">{{wordNotice}}</view>
 				
 				</view>

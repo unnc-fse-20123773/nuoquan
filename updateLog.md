@@ -1,4 +1,13 @@
 # Update Log: #
+**v20.2.22 更新**
+1. 新增 语言切换功能，目前仅在“我的”页面实现
+
+**v20.2.21 更新**
+1. 整合 guetta 先锋版
+2. 新增 投票展示页面（guetta）
+3. 小改 数据库，详情见 sqlRecord.sql，补充tags数据表
+4. 优化 部分后端接口
+
 **v20.2.19 更新**
 1. 新增 影响力计算和显示
 2. 修改 获取未签收消息从ArticleController移至UserController

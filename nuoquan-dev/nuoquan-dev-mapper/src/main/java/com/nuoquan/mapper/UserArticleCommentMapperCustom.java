@@ -44,4 +44,10 @@ public interface UserArticleCommentMapperCustom extends MyMapper<UserArticleComm
 	 * @return
 	 */
 	public List<UserArticleCommentVO> getUnsignedCommentMsg(String userId);
+
+	public List<UserArticleCommentVO> queryCommentsByPopularity(String articleId);
+
+	public List<UserArticleCommentVO> querySonCommentsByPopularity(String underCommentId);
+
+	
 }

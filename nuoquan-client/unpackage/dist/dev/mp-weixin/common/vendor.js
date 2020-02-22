@@ -1805,18 +1805,46 @@ var isNull = function isNull(str) {// 数字0会被判定为true
   return false;
 };
 
+// 消息提示相关变量
 var sMyMsg = uni.getStorageSync('myMsgCount'); // 其实返回 null 会被当成 0
 var sLikeMsg = uni.getStorageSync('likeMsgCount');
 var sCommentMsg = uni.getStorageSync('commentMsgCount');
+
+// 国际化相关代码
+try {
+  var langList = ['简体中文', 'English'];
+  var langCode = ['zh-CN', 'en'];
+  // 1. 分析用户已经选择的语言 
+  var userLang = uni.getStorageSync("userLang");
+  // 2. 如果用户没有选择过获取用户手机的语言
+  if (!userLang) {
+    var sys = uni.getSystemInfoSync();
+    userLang = sys.language;
+  }
+  console.log(userLang);
+  // 以中英文切换为例, 其他语言请使用 getSystemInfoSync 获取语言对应的字符串
+  // 然后扩展语言包即可
+  if (userLang.substring(0, 2) == 'zh') {
+    var lang = __webpack_require__(/*! ../common/language/zh.js */ 431);
+  } else {
+    var lang = __webpack_require__(/*! ../common/language/en.js */ 432);
+  }
+} catch (e) {
+  // error
+}
+
 var store = new _vuex.default.Store({
   state: {
     chatMessageCard: '', // 暂存一条socket接收的聊天消息 & 刷新消息列表的条件
     flashChatPage: "doFlash", // 作为触发 chatPage 刷新的条件
     myMsgCount: sMyMsg == null ? 0 : sMyMsg, // 左侧栏通用未读消息计数
     likeMsgCount: sLikeMsg == null ? 0 : sLikeMsg, // 点赞未读消息计数
-    commentMsgCount: sCommentMsg == null ? 0 : sCommentMsg // 评论未读消息计数
+    commentMsgCount: sCommentMsg == null ? 0 : sCommentMsg, // 评论未读消息计数
+
+    lang: lang //语言
   },
   mutations: {
+    // 消息提示相关
     setChatMessageCard: function setChatMessageCard(state, value) {
       state.chatMessageCard = value;
     },
@@ -1856,6 +1884,25 @@ var store = new _vuex.default.Store({
         state.commentMsgCount = value;
         uni.setStorageSync('commentMsgCount', state.commentMsgCount);
       }
+    },
+
+    /**
+        * 更改语言包
+        * @param {Object} state
+        */
+    changeLang: function changeLang(state) {
+      uni.showActionSheet({
+        itemList: langList,
+        success: function success(e) {
+          if (e.tapIndex == 0) {
+            lang = __webpack_require__(/*! ../common/language/zh.js */ 431);
+          } else {
+            lang = __webpack_require__(/*! ../common/language/en.js */ 432);
+          }
+          state.lang = lang;
+          uni.setStorageSync('userLang', langCode[e.tapIndex]);
+        } });
+
     } } });var _default =
 
 
@@ -9971,6 +10018,54 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
+/***/ 431:
+/*!***********************************************************!*\
+  !*** D:/XMQ/nuoquan/nuoquan-client/common/language/zh.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+module.exports = {
+  // langType 属性为语言包标识，请勿删除
+  langType: 'zh-CN',
+  // 以下为示例内容，请根据项目需求自行更改
+  profile: "个人信息",
+  myPublish: "我的发布",
+  about: "关于我们",
+  changeLang: "切换语言",
+  follow: "关注",
+  fans: "粉丝",
+  reputation: "影响力",
+  like: "点赞",
+  comment: "评论" };
+
+/***/ }),
+
+/***/ 432:
+/*!***********************************************************!*\
+  !*** D:/XMQ/nuoquan/nuoquan-client/common/language/en.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+module.exports = {
+  // langType 属性为语言包标识，请勿删除
+  langType: 'en',
+  // 以下为示例内容，请根据项目需求自行更改
+  profile: "Profile",
+  myPublish: "Publish",
+  about: "About Us",
+  changeLang: "Language",
+  follow: "Follow",
+  fans: "Follower",
+  reputation: "Peputation",
+  like: "Like",
+  comment: "Comment" };
+
+/***/ }),
+
 /***/ 5:
 /*!*******************************************************!*\
   !*** ./node_modules/@dcloudio/uni-stat/dist/index.js ***!
@@ -10877,7 +10972,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@alpha","_id":"@dcloudio/uni-stat@2
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/tabPages/index": {}, "pages/tabPages/votePage": {}, "pages/tabPages/messagelist": {}, "pages/tabPages/mine": {}, "pages/detail/detail": {}, "pages/submit/submit": {}, "pages/chatpage/chatpage": {}, "pages/followlist/followlist": {}, "pages/personpublic/personpublic": {}, "pages/search/search": {}, "pages/black-index/black-index": {}, "pages/signin/signin": {}, "components/articlebrief": {}, "pages/wechatLogin/wechatLogin": {}, "pages/cmt-likedetail/cmt-likedetail": {}, "pages/comment-detail/comment-detail": {}, "pages/userDeal/userDeal": {}, "pages/myPublish/myPublish": {}, "pages/about/about": {}, "pages/hot/hot": {}, "pages/profile/profile": {}, "components/shareposter/myshareposter": {}, "pages/submitVote/submitVote": {} }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "Nottinghome", "navigationBarBackgroundColor": "#fdd041", "backgroundColor": "#F8F8F8", "navigationStyle": "custom" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/tabPages/index": { "usingComponents": { "articlebrief": "/components/articlebrief", "mainpagetop": "/components/mainpagetop", "mainpageleft": "/components/mainpageleft" }, "usingAutoImportComponents": {} }, "pages/tabPages/votePage": { "usingComponents": { "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar" }, "usingAutoImportComponents": {} }, "pages/tabPages/messagelist": { "usingComponents": { "swipe-action": "/components/swipe-action", "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar" }, "usingAutoImportComponents": {} }, "pages/tabPages/mine": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/detail/detail": { "usingComponents": { "detail_1_article": "/pages/detail/detail_1_article", "detail_2_comments": "/pages/detail/detail_2_comments" }, "usingAutoImportComponents": {} }, "pages/submit/submit": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/chatpage/chatpage": { "usingComponents": { "onemessage": "/pages/chatpage/oneMessage", "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar" }, "usingAutoImportComponents": {} }, "pages/followlist/followlist": { "usingComponents": { "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar" }, "usingAutoImportComponents": {} }, "pages/personpublic/personpublic": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/search/search": { "usingComponents": { "search-result-article": "/components/searchResultArticle" }, "usingAutoImportComponents": {} }, "pages/black-index/black-index": { "usingComponents": { "blackarticlebrief": "/pages/black-index/black-articlebrief", "blackpopup": "/pages/black-index/black-popup" }, "usingAutoImportComponents": {} }, "pages/signin/signin": { "usingComponents": { "wh-captcha": "/components/wh-captcha/wh-captcha", "uni-steps": "/components/uni-steps/uni-steps" }, "usingAutoImportComponents": {} }, "components/articlebrief": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/wechatLogin/wechatLogin": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/cmt-likedetail/cmt-likedetail": { "usingComponents": { "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar" }, "usingAutoImportComponents": {} }, "pages/comment-detail/comment-detail": { "usingComponents": { "son-comment-box": "/pages/comment-detail/sonCommentBox", "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar" }, "usingAutoImportComponents": {} }, "pages/userDeal/userDeal": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/myPublish/myPublish": { "usingComponents": { "my-articles": "/pages/myPublish/myArticles", "my-vote": "/pages/myPublish/myVote" }, "usingAutoImportComponents": {} }, "pages/about/about": { "usingComponents": { "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar" }, "usingAutoImportComponents": {} }, "pages/hot/hot": { "usingComponents": { "article-info": "/pages/hot/articleInfo" }, "usingAutoImportComponents": {} }, "pages/profile/profile": { "usingComponents": { "mypicker": "/components/mypicker" }, "usingAutoImportComponents": {} }, "components/shareposter/myshareposter": { "usingComponents": { "posters-layer": "/components/shareposter/posterslayer" }, "usingAutoImportComponents": {} }, "pages/submitVote/submitVote": { "usingComponents": { "mypicker": "/components/mypicker" }, "usingAutoImportComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "Nottinghome", "navigationBarBackgroundColor": "#fdd041", "backgroundColor": "#F8F8F8", "navigationStyle": "custom" } };exports.default = _default;
 
 /***/ }),
 

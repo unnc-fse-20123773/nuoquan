@@ -31,7 +31,17 @@
   		1=1
   		and c.article_id = #{articleId}
   		and c.under_comment_id is null
-  	order by c.create_date desc
+  	order by c.create_date asc
+  </select>
+  
+  <select id="queryCommentsByPopularity" resultMap="BaseResultMap" parameterType="String">
+  	select c.*, u.nickname, u.face_img, u.face_img_thumb from nuoquan.user_article_comment c
+  	left join nuoquan.user u on c.from_user_id = u.id
+  	where
+  		1=1
+  		and c.article_id = #{articleId}
+  		and c.under_comment_id is null
+  	order by c.like_num desc
   </select>
   
   <select id="getCommentById" resultMap="BaseResultMap" parameterType="String">
@@ -48,7 +58,16 @@
   	where
   		1=1
   		and c.under_comment_id = #{underCommentId}
-  	order by c.create_date desc
+  	order by c.create_date asc
+  </select>
+  
+  <select id="querySonCommentsByPopularity" resultMap="BaseResultMap" parameterType="String">
+  	select c.*, u.nickname, u.face_img, u.face_img_thumb from nuoquan.user_article_comment c
+  	left join nuoquan.user u on c.from_user_id = u.id
+  	where
+  		1=1
+  		and c.under_comment_id = #{underCommentId}
+  	order by c.like_num desc
   </select>
   
   <update id="addCommentLikeCount" parameterType="String">

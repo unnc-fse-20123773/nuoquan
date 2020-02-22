@@ -133,5 +133,9 @@ public interface VoteService {
 	 * 修改投票状态(可批量)
 	 */
 	public int updateVoteStatus(String voteIds, int status);
+
+	public PagedResult getAllMyHisVote(Integer page, Integer pageSize, String userId);
+
+	public PagedResult getOtherslegalHisVote(Integer page, Integer pageSize, String userId, String targetId);
 	
 }

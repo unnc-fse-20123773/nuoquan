@@ -225,6 +225,7 @@ export default {
 				}
 			}, 12);
 		}
+		
 	}
 };
 </script>
