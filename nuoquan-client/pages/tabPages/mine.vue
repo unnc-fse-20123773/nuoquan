@@ -26,19 +26,19 @@
 						<view class="operationNum super_center">
 							<text class="operationNum-text" style="color:color:rgba(53,53,53,1);">{{ thisUserInfo.fansNum }}</text>
 						</view>
-						<view class="operationTitle super_center"><text class="operationTitle-text">粉丝</text></view>
+						<view class="operationTitle super_center"><text class="operationTitle-text">{{lang.fans}}</text></view>
 					</view>
 					<!-- 影响力 -->
 					<view class="operationCard">
 						<view class="operationNum super_center"><text class="operationNum-text" style="color:rgba(254,95,85,1);">{{ thisUserInfo.reputation }}</text></view>
-						<view class="operationTitle super_center"><text class="operationTitle-text">影响力</text></view>
+						<view class="operationTitle super_center"><text class="operationTitle-text">{{lang.reputation}}</text></view>
 					</view>
 					<!-- 关注 -->
 					<view class="operationCard" @tap="goToFansFollow(0)">
 						<view class="operationNum super_center">
 							<text class="operationNum-text" style="color:color:rgba(53,53,53,1);">{{ thisUserInfo.followNum }}</text>
 						</view>
-						<view class="operationTitle super_center"><text class="operationTitle-text">关注</text></view>
+						<view class="operationTitle super_center"><text class="operationTitle-text">{{lang.follow}}</text></view>
 					</view>
 				</view>
 			</view>

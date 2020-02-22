@@ -3,7 +3,12 @@ module.exports = {
 	langType : 'en',
 	// 以下为示例内容，请根据项目需求自行更改
 	profile : "Profile",
-	myPublish : "My Publish",
+	myPublish : "Publish",
 	about : "About Us",
-	changeLang : "Change Language"
+	changeLang : "Language",
+	follow : "Follow",
+	fans : "Follower",
+	reputation : "Peputation",
+	like : "Like",
+	comment : "Comment"
 }
