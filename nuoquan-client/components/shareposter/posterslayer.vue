@@ -1,4 +1,4 @@
-<style lang="less">
+<style>
 .posters-layer {
   position: fixed;
   top: -5000rpx;
