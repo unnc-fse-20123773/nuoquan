@@ -32,10 +32,10 @@ unpackage/
 
 ### JAVA ###
 *.class
-
-
-### Package Files ###
 *.jar
 *.war
 !.mvn/wrapper/maven-wrapper.jar
 *.ear
+
+### nuoquan ###
+!ueditor-1.1.2.jar

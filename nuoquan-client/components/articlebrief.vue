@@ -11,11 +11,11 @@
 			<view class="time" :style="timeLeft">{{ timeDeal(thisArticle.createDate) }}</view>
 		</view>
 		<!-- 标签行 -->
-		<view class="tagsLine" @click="goToDetail()">
+		<view class="tagsLine">
 			<view class="tag" :style="{ background: tagColorList[index] }" v-for="(i, index) in thisArticle.tagList" v-bind:key="index">{{ i }}</view>
 		</view>
 		<!-- 内容 -->
-		<view class="briefarticleCard">{{ thisArticle.articleContent }}</view>
+		<view class="briefarticleCard" @click="goToDetail()">{{ thisArticle.articleContent }}</view>
 		<view :class="[thisArticle.imgList.length == 1 ? 'picturearea-one' : 'picturearea-mul']">
 			<!-- *******这里是文章配图的位置*******-->
 

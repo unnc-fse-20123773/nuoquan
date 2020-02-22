@@ -33,7 +33,7 @@
 					<view v-if="roleup == false" class="grayline"></view>
 					
 					<!-- 热门标题 -->
-					<swiper class="swiperCard" :indicator-dots="false" :autoplay="true" :interval="3000" :vertical="true" :duration="1000">
+					<swiper :class="[roleup == false ? 'swiperCard' : 'swiperCard_roled']" :indicator-dots="false" :autoplay="true" :interval="3000" :vertical="true" :duration="1000">
 						<view >
 							<swiper-item>
 								<view class="itemCard" :style="{'height':roleup == false ? '62px;' :'33px' ,}">
@@ -314,6 +314,12 @@ page {
 .swiperCard{
 	width: 74.21%;
 	height: 62px;
+	margin-left: 11px;
+}
+
+.swiperCard_roled{
+	width: 74.21%;
+	height: 33px;
 	margin-left: 11px;
 }
 

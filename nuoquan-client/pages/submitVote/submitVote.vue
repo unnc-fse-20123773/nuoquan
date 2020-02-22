@@ -67,7 +67,6 @@
 				pickerRange:['1','2','3','a','b','c','d'],
 				pickerValue:'3',
 				
-				
 				//图片相关？DY看一下不需要的变量删掉。
 				imageList: [],
 				sourceTypeIndex: 2,
