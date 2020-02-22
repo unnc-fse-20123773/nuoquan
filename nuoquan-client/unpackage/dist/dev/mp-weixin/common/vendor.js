@@ -1534,7 +1534,7 @@ uni$1;exports.default = _default;
 
 /***/ }),
 
-/***/ 122:
+/***/ 133:
 /*!***********************************************************************!*\
   !*** D:/XMQ/nuoquan/nuoquan-client/pages/black-index/black-index.css ***!
   \***********************************************************************/
@@ -1542,125 +1542,6 @@ uni$1;exports.default = _default;
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-
-/***/ }),
-
-/***/ 131:
-/*!****************************************************!*\
-  !*** D:/XMQ/nuoquan/nuoquan-client/common/util.js ***!
-  \****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-function formatTime(time) {
-  if (typeof time !== 'number' || time < 0) {
-    return time;
-  }
-
-  var hour = parseInt(time / 3600);
-  time = time % 3600;
-  var minute = parseInt(time / 60);
-  time = time % 60;
-  var second = time;
-
-  return [hour, minute, second].map(function (n) {
-    n = n.toString();
-    return n[1] ? n : '0' + n;
-  }).join(':');
-}
-
-function formatLocation(longitude, latitude) {
-  if (typeof longitude === 'string' && typeof latitude === 'string') {
-    longitude = parseFloat(longitude);
-    latitude = parseFloat(latitude);
-  }
-
-  longitude = longitude.toFixed(2);
-  latitude = latitude.toFixed(2);
-
-  return {
-    longitude: longitude.toString().split('.'),
-    latitude: latitude.toString().split('.') };
-
-}
-var dateUtils = {
-  UNITS: {
-    '年': 31557600000,
-    '月': 2629800000,
-    '天': 86400000,
-    '小时': 3600000,
-    '分钟': 60000,
-    '秒': 1000 },
-
-  humanize: function humanize(milliseconds) {
-    var humanize = '';
-    for (var key in this.UNITS) {
-      if (milliseconds >= this.UNITS[key]) {
-        humanize = Math.floor(milliseconds / this.UNITS[key]) + key + '前';
-        break;
-      }
-    }
-    return humanize || '刚刚';
-  },
-  format: function format(dateStr) {
-    var date = this.parse(dateStr);
-    var diff = Date.now() - date.getTime();
-    if (diff < this.UNITS['天']) {
-      return this.humanize(diff);
-    }
-    var _format = function _format(number) {
-      return number < 10 ? '0' + number : number;
-    };
-    return date.getFullYear() + '/' + _format(date.getMonth() + 1) + '/' + _format(date.getDay()) + '-' +
-    _format(date.getHours()) + ':' + _format(date.getMinutes());
-  },
-  parse: function parse(str) {//将"yyyy-mm-dd HH:MM:ss"格式的字符串，转化为一个Date对象
-    var a = str.split(/[^0-9]/);
-    return new Date(a[0], a[1] - 1, a[2], a[3], a[4], a[5]);
-  } };
-
-
-
-//工具包
-//正则匹配
-//匹配帐号
-var regUid = function regUid(str) {
-  return !RegExp(/^\w{6,12}$/).test(str);
-};
-
-var regName = function regName(str) {
-  return !RegExp(/^[\u4e00-\u9fa5]{2,5}$/).test(str);
-};
-
-//匹配身份证
-var regIDC = function regIDC(str) {
-  return !RegExp(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/).test(str);
-};
-//匹配手机号
-var regPhone = function regPhone(str) {
-  return !RegExp(/^1[34578]\d{9}$/).test(str);
-};
-//匹配验证码
-var regCheckNum = function regCheckNum(str) {
-  return !RegExp(/^\d{4}$/).test(str);
-};
-
-//匹配邮箱格式 true: 不匹配，false: 匹配
-var regEmail = function regEmail(str) {
-  return !RegExp(/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/).test(str);
-};
-
-module.exports = {
-  formatTime: formatTime,
-  formatLocation: formatLocation,
-  dateUtils: dateUtils,
-  regUid: regUid,
-  regPhone: regPhone,
-  regName: regName,
-  regIDC: regIDC,
-  regEmail: regEmail,
-  regCheckNum: regCheckNum };
 
 /***/ }),
 
@@ -1785,6 +1666,125 @@ function normalizeComponent (
 
 /***/ }),
 
+/***/ 142:
+/*!****************************************************!*\
+  !*** D:/XMQ/nuoquan/nuoquan-client/common/util.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+function formatTime(time) {
+  if (typeof time !== 'number' || time < 0) {
+    return time;
+  }
+
+  var hour = parseInt(time / 3600);
+  time = time % 3600;
+  var minute = parseInt(time / 60);
+  time = time % 60;
+  var second = time;
+
+  return [hour, minute, second].map(function (n) {
+    n = n.toString();
+    return n[1] ? n : '0' + n;
+  }).join(':');
+}
+
+function formatLocation(longitude, latitude) {
+  if (typeof longitude === 'string' && typeof latitude === 'string') {
+    longitude = parseFloat(longitude);
+    latitude = parseFloat(latitude);
+  }
+
+  longitude = longitude.toFixed(2);
+  latitude = latitude.toFixed(2);
+
+  return {
+    longitude: longitude.toString().split('.'),
+    latitude: latitude.toString().split('.') };
+
+}
+var dateUtils = {
+  UNITS: {
+    '年': 31557600000,
+    '月': 2629800000,
+    '天': 86400000,
+    '小时': 3600000,
+    '分钟': 60000,
+    '秒': 1000 },
+
+  humanize: function humanize(milliseconds) {
+    var humanize = '';
+    for (var key in this.UNITS) {
+      if (milliseconds >= this.UNITS[key]) {
+        humanize = Math.floor(milliseconds / this.UNITS[key]) + key + '前';
+        break;
+      }
+    }
+    return humanize || '刚刚';
+  },
+  format: function format(dateStr) {
+    var date = this.parse(dateStr);
+    var diff = Date.now() - date.getTime();
+    if (diff < this.UNITS['天']) {
+      return this.humanize(diff);
+    }
+    var _format = function _format(number) {
+      return number < 10 ? '0' + number : number;
+    };
+    return date.getFullYear() + '/' + _format(date.getMonth() + 1) + '/' + _format(date.getDay()) + '-' +
+    _format(date.getHours()) + ':' + _format(date.getMinutes());
+  },
+  parse: function parse(str) {//将"yyyy-mm-dd HH:MM:ss"格式的字符串，转化为一个Date对象
+    var a = str.split(/[^0-9]/);
+    return new Date(a[0], a[1] - 1, a[2], a[3], a[4], a[5]);
+  } };
+
+
+
+//工具包
+//正则匹配
+//匹配帐号
+var regUid = function regUid(str) {
+  return !RegExp(/^\w{6,12}$/).test(str);
+};
+
+var regName = function regName(str) {
+  return !RegExp(/^[\u4e00-\u9fa5]{2,5}$/).test(str);
+};
+
+//匹配身份证
+var regIDC = function regIDC(str) {
+  return !RegExp(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/).test(str);
+};
+//匹配手机号
+var regPhone = function regPhone(str) {
+  return !RegExp(/^1[34578]\d{9}$/).test(str);
+};
+//匹配验证码
+var regCheckNum = function regCheckNum(str) {
+  return !RegExp(/^\d{4}$/).test(str);
+};
+
+//匹配邮箱格式 true: 不匹配，false: 匹配
+var regEmail = function regEmail(str) {
+  return !RegExp(/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/).test(str);
+};
+
+module.exports = {
+  formatTime: formatTime,
+  formatLocation: formatLocation,
+  dateUtils: dateUtils,
+  regUid: regUid,
+  regPhone: regPhone,
+  regName: regName,
+  regIDC: regIDC,
+  regEmail: regEmail,
+  regCheckNum: regCheckNum };
+
+/***/ }),
+
 /***/ 15:
 /*!****************************************************!*\
   !*** D:/XMQ/nuoquan/nuoquan-client/store/index.js ***!
@@ -1825,9 +1825,9 @@ try {
   // 以中英文切换为例, 其他语言请使用 getSystemInfoSync 获取语言对应的字符串
   // 然后扩展语言包即可
   if (userLang.substring(0, 2) == 'zh') {
-    var lang = __webpack_require__(/*! ../common/language/zh.js */ 431);
+    var lang = __webpack_require__(/*! ../common/language/zh.js */ 17);
   } else {
-    var lang = __webpack_require__(/*! ../common/language/en.js */ 432);
+    var lang = __webpack_require__(/*! ../common/language/en.js */ 18);
   }
 } catch (e) {
   // error
@@ -1895,9 +1895,9 @@ var store = new _vuex.default.Store({
         itemList: langList,
         success: function success(e) {
           if (e.tapIndex == 0) {
-            lang = __webpack_require__(/*! ../common/language/zh.js */ 431);
+            lang = __webpack_require__(/*! ../common/language/zh.js */ 17);
           } else {
-            lang = __webpack_require__(/*! ../common/language/en.js */ 432);
+            lang = __webpack_require__(/*! ../common/language/en.js */ 18);
           }
           state.lang = lang;
           uni.setStorageSync('userLang', langCode[e.tapIndex]);
@@ -2865,6 +2865,54 @@ var index_esm = {
 /***/ }),
 
 /***/ 17:
+/*!***********************************************************!*\
+  !*** D:/XMQ/nuoquan/nuoquan-client/common/language/zh.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+module.exports = {
+  // langType 属性为语言包标识，请勿删除
+  langType: 'zh-CN',
+  // 以下为示例内容，请根据项目需求自行更改
+  profile: "个人信息",
+  myPublish: "我的发布",
+  about: "关于我们",
+  changeLang: "切换语言",
+  follow: "关注",
+  fans: "粉丝",
+  reputation: "影响力",
+  like: "点赞",
+  comment: "评论" };
+
+/***/ }),
+
+/***/ 18:
+/*!***********************************************************!*\
+  !*** D:/XMQ/nuoquan/nuoquan-client/common/language/en.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+module.exports = {
+  // langType 属性为语言包标识，请勿删除
+  langType: 'en',
+  // 以下为示例内容，请根据项目需求自行更改
+  profile: "Profile",
+  myPublish: "Publish",
+  about: "About Us",
+  changeLang: "Language",
+  follow: "Follow",
+  fans: "Follower",
+  reputation: "Peputation",
+  like: "Like",
+  comment: "Comment" };
+
+/***/ }),
+
+/***/ 19:
 /*!******************************************************!*\
   !*** D:/XMQ/nuoquan/nuoquan-client/common/router.js ***!
   \******************************************************/
@@ -8919,7 +8967,7 @@ internalMixin(Vue);
 
 /***/ }),
 
-/***/ 203:
+/***/ 214:
 /*!*****************************************************************!*\
   !*** D:/XMQ/nuoquan/nuoquan-client/common/image-tools/index.js ***!
   \*****************************************************************/
@@ -9077,19 +9125,19 @@ function base64ToPath(base64) {
 
 /***/ }),
 
-/***/ 24:
+/***/ 26:
 /*!**********************************************************!*\
   !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
   \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! regenerator-runtime */ 25);
+module.exports = __webpack_require__(/*! regenerator-runtime */ 27);
 
 
 /***/ }),
 
-/***/ 25:
+/***/ 27:
 /*!************************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime-module.js ***!
   \************************************************************/
@@ -9120,7 +9168,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(/*! ./runtime */ 26);
+module.exports = __webpack_require__(/*! ./runtime */ 28);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -9137,7 +9185,113 @@ if (hadRuntime) {
 
 /***/ }),
 
-/***/ 26:
+/***/ 274:
+/*!*******************************************************************!*\
+  !*** D:/XMQ/nuoquan/nuoquan-client/components/uni-icons/icons.js ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  'contact': "\uE100",
+  'person': "\uE101",
+  'personadd': "\uE102",
+  'contact-filled': "\uE130",
+  'person-filled': "\uE131",
+  'personadd-filled': "\uE132",
+  'phone': "\uE200",
+  'email': "\uE201",
+  'chatbubble': "\uE202",
+  'chatboxes': "\uE203",
+  'phone-filled': "\uE230",
+  'email-filled': "\uE231",
+  'chatbubble-filled': "\uE232",
+  'chatboxes-filled': "\uE233",
+  'weibo': "\uE260",
+  'weixin': "\uE261",
+  'pengyouquan': "\uE262",
+  'chat': "\uE263",
+  'qq': "\uE264",
+  'videocam': "\uE300",
+  'camera': "\uE301",
+  'mic': "\uE302",
+  'location': "\uE303",
+  'mic-filled': "\uE332",
+  'speech': "\uE332",
+  'location-filled': "\uE333",
+  'micoff': "\uE360",
+  'image': "\uE363",
+  'map': "\uE364",
+  'compose': "\uE400",
+  'trash': "\uE401",
+  'upload': "\uE402",
+  'download': "\uE403",
+  'close': "\uE404",
+  'redo': "\uE405",
+  'undo': "\uE406",
+  'refresh': "\uE407",
+  'star': "\uE408",
+  'plus': "\uE409",
+  'minus': "\uE410",
+  'circle': "\uE411",
+  'checkbox': "\uE411",
+  'close-filled': "\uE434",
+  'clear': "\uE434",
+  'refresh-filled': "\uE437",
+  'star-filled': "\uE438",
+  'plus-filled': "\uE439",
+  'minus-filled': "\uE440",
+  'circle-filled': "\uE441",
+  'checkbox-filled': "\uE442",
+  'closeempty': "\uE460",
+  'refreshempty': "\uE461",
+  'reload': "\uE462",
+  'starhalf': "\uE463",
+  'spinner': "\uE464",
+  'spinner-cycle': "\uE465",
+  'search': "\uE466",
+  'plusempty': "\uE468",
+  'forward': "\uE470",
+  'back': "\uE471",
+  'left-nav': "\uE471",
+  'checkmarkempty': "\uE472",
+  'home': "\uE500",
+  'navigate': "\uE501",
+  'gear': "\uE502",
+  'paperplane': "\uE503",
+  'info': "\uE504",
+  'help': "\uE505",
+  'locked': "\uE506",
+  'more': "\uE507",
+  'flag': "\uE508",
+  'home-filled': "\uE530",
+  'gear-filled': "\uE532",
+  'info-filled': "\uE534",
+  'help-filled': "\uE535",
+  'more-filled': "\uE537",
+  'settings': "\uE560",
+  'list': "\uE562",
+  'bars': "\uE563",
+  'loop': "\uE565",
+  'paperclip': "\uE567",
+  'eye': "\uE568",
+  'arrowup': "\uE580",
+  'arrowdown': "\uE581",
+  'arrowleft': "\uE582",
+  'arrowright': "\uE583",
+  'arrowthinup': "\uE584",
+  'arrowthindown': "\uE585",
+  'arrowthinleft': "\uE586",
+  'arrowthinright': "\uE587",
+  'pulldown': "\uE588",
+  'closefill': "\uE589",
+  'sound': "\uE590",
+  'scan': "\uE612" };exports.default = _default;
+
+/***/ }),
+
+/***/ 28:
 /*!*****************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime.js ***!
   \*****************************************************/
@@ -9900,112 +10054,6 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 360:
-/*!*******************************************************************!*\
-  !*** D:/XMQ/nuoquan/nuoquan-client/components/uni-icons/icons.js ***!
-  \*******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
-  'contact': "\uE100",
-  'person': "\uE101",
-  'personadd': "\uE102",
-  'contact-filled': "\uE130",
-  'person-filled': "\uE131",
-  'personadd-filled': "\uE132",
-  'phone': "\uE200",
-  'email': "\uE201",
-  'chatbubble': "\uE202",
-  'chatboxes': "\uE203",
-  'phone-filled': "\uE230",
-  'email-filled': "\uE231",
-  'chatbubble-filled': "\uE232",
-  'chatboxes-filled': "\uE233",
-  'weibo': "\uE260",
-  'weixin': "\uE261",
-  'pengyouquan': "\uE262",
-  'chat': "\uE263",
-  'qq': "\uE264",
-  'videocam': "\uE300",
-  'camera': "\uE301",
-  'mic': "\uE302",
-  'location': "\uE303",
-  'mic-filled': "\uE332",
-  'speech': "\uE332",
-  'location-filled': "\uE333",
-  'micoff': "\uE360",
-  'image': "\uE363",
-  'map': "\uE364",
-  'compose': "\uE400",
-  'trash': "\uE401",
-  'upload': "\uE402",
-  'download': "\uE403",
-  'close': "\uE404",
-  'redo': "\uE405",
-  'undo': "\uE406",
-  'refresh': "\uE407",
-  'star': "\uE408",
-  'plus': "\uE409",
-  'minus': "\uE410",
-  'circle': "\uE411",
-  'checkbox': "\uE411",
-  'close-filled': "\uE434",
-  'clear': "\uE434",
-  'refresh-filled': "\uE437",
-  'star-filled': "\uE438",
-  'plus-filled': "\uE439",
-  'minus-filled': "\uE440",
-  'circle-filled': "\uE441",
-  'checkbox-filled': "\uE442",
-  'closeempty': "\uE460",
-  'refreshempty': "\uE461",
-  'reload': "\uE462",
-  'starhalf': "\uE463",
-  'spinner': "\uE464",
-  'spinner-cycle': "\uE465",
-  'search': "\uE466",
-  'plusempty': "\uE468",
-  'forward': "\uE470",
-  'back': "\uE471",
-  'left-nav': "\uE471",
-  'checkmarkempty': "\uE472",
-  'home': "\uE500",
-  'navigate': "\uE501",
-  'gear': "\uE502",
-  'paperplane': "\uE503",
-  'info': "\uE504",
-  'help': "\uE505",
-  'locked': "\uE506",
-  'more': "\uE507",
-  'flag': "\uE508",
-  'home-filled': "\uE530",
-  'gear-filled': "\uE532",
-  'info-filled': "\uE534",
-  'help-filled': "\uE535",
-  'more-filled': "\uE537",
-  'settings': "\uE560",
-  'list': "\uE562",
-  'bars': "\uE563",
-  'loop': "\uE565",
-  'paperclip': "\uE567",
-  'eye': "\uE568",
-  'arrowup': "\uE580",
-  'arrowdown': "\uE581",
-  'arrowleft': "\uE582",
-  'arrowright': "\uE583",
-  'arrowthinup': "\uE584",
-  'arrowthindown': "\uE585",
-  'arrowthinleft': "\uE586",
-  'arrowthinright': "\uE587",
-  'pulldown': "\uE588",
-  'closefill': "\uE589",
-  'sound': "\uE590",
-  'scan': "\uE612" };exports.default = _default;
-
-/***/ }),
-
 /***/ 4:
 /*!************************************************!*\
   !*** D:/XMQ/nuoquan/nuoquan-client/pages.json ***!
@@ -10015,54 +10063,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 "use strict";
 
-
-/***/ }),
-
-/***/ 431:
-/*!***********************************************************!*\
-  !*** D:/XMQ/nuoquan/nuoquan-client/common/language/zh.js ***!
-  \***********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-module.exports = {
-  // langType 属性为语言包标识，请勿删除
-  langType: 'zh-CN',
-  // 以下为示例内容，请根据项目需求自行更改
-  profile: "个人信息",
-  myPublish: "我的发布",
-  about: "关于我们",
-  changeLang: "切换语言",
-  follow: "关注",
-  fans: "粉丝",
-  reputation: "影响力",
-  like: "点赞",
-  comment: "评论" };
-
-/***/ }),
-
-/***/ 432:
-/*!***********************************************************!*\
-  !*** D:/XMQ/nuoquan/nuoquan-client/common/language/en.js ***!
-  \***********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-module.exports = {
-  // langType 属性为语言包标识，请勿删除
-  langType: 'en',
-  // 以下为示例内容，请根据项目需求自行更改
-  profile: "Profile",
-  myPublish: "Publish",
-  about: "About Us",
-  changeLang: "Language",
-  follow: "Follow",
-  fans: "Follower",
-  reputation: "Peputation",
-  like: "Like",
-  comment: "Comment" };
 
 /***/ }),
 
@@ -10972,7 +10972,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@alpha","_id":"@dcloudio/uni-stat@2
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/tabPages/index": { "usingComponents": { "articlebrief": "/components/articlebrief", "mainpagetop": "/components/mainpagetop", "mainpageleft": "/components/mainpageleft" }, "usingAutoImportComponents": {} }, "pages/tabPages/votePage": { "usingComponents": { "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar" }, "usingAutoImportComponents": {} }, "pages/tabPages/messagelist": { "usingComponents": { "swipe-action": "/components/swipe-action", "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar" }, "usingAutoImportComponents": {} }, "pages/tabPages/mine": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/detail/detail": { "usingComponents": { "detail_1_article": "/pages/detail/detail_1_article", "detail_2_comments": "/pages/detail/detail_2_comments" }, "usingAutoImportComponents": {} }, "pages/submit/submit": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/chatpage/chatpage": { "usingComponents": { "onemessage": "/pages/chatpage/oneMessage", "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar" }, "usingAutoImportComponents": {} }, "pages/followlist/followlist": { "usingComponents": { "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar" }, "usingAutoImportComponents": {} }, "pages/personpublic/personpublic": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/search/search": { "usingComponents": { "search-result-article": "/components/searchResultArticle" }, "usingAutoImportComponents": {} }, "pages/black-index/black-index": { "usingComponents": { "blackarticlebrief": "/pages/black-index/black-articlebrief", "blackpopup": "/pages/black-index/black-popup" }, "usingAutoImportComponents": {} }, "pages/signin/signin": { "usingComponents": { "wh-captcha": "/components/wh-captcha/wh-captcha", "uni-steps": "/components/uni-steps/uni-steps" }, "usingAutoImportComponents": {} }, "components/articlebrief": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/wechatLogin/wechatLogin": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/cmt-likedetail/cmt-likedetail": { "usingComponents": { "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar" }, "usingAutoImportComponents": {} }, "pages/comment-detail/comment-detail": { "usingComponents": { "son-comment-box": "/pages/comment-detail/sonCommentBox", "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar" }, "usingAutoImportComponents": {} }, "pages/userDeal/userDeal": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/myPublish/myPublish": { "usingComponents": { "my-articles": "/pages/myPublish/myArticles", "my-vote": "/pages/myPublish/myVote" }, "usingAutoImportComponents": {} }, "pages/about/about": { "usingComponents": { "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar" }, "usingAutoImportComponents": {} }, "pages/hot/hot": { "usingComponents": { "article-info": "/pages/hot/articleInfo" }, "usingAutoImportComponents": {} }, "pages/profile/profile": { "usingComponents": { "mypicker": "/components/mypicker" }, "usingAutoImportComponents": {} }, "components/shareposter/myshareposter": { "usingComponents": { "posters-layer": "/components/shareposter/posterslayer" }, "usingAutoImportComponents": {} }, "pages/submitVote/submitVote": { "usingComponents": { "mypicker": "/components/mypicker" }, "usingAutoImportComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "Nottinghome", "navigationBarBackgroundColor": "#fdd041", "backgroundColor": "#F8F8F8", "navigationStyle": "custom" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/tabPages/index": {}, "pages/tabPages/votePage": {}, "pages/tabPages/messagelist": {}, "pages/tabPages/mine": {}, "pages/detail/detail": {}, "pages/submit/submit": {}, "pages/chatpage/chatpage": {}, "pages/followlist/followlist": {}, "pages/personpublic/personpublic": {}, "pages/search/search": {}, "pages/black-index/black-index": {}, "pages/signin/signin": {}, "components/articlebrief": {}, "pages/wechatLogin/wechatLogin": {}, "pages/cmt-likedetail/cmt-likedetail": {}, "pages/comment-detail/comment-detail": {}, "pages/userDeal/userDeal": {}, "pages/myPublish/myPublish": {}, "pages/about/about": {}, "pages/hot/hot": {}, "pages/profile/profile": {}, "components/shareposter/myshareposter": {}, "pages/submitVote/submitVote": {} }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "Nottinghome", "navigationBarBackgroundColor": "#fdd041", "backgroundColor": "#F8F8F8", "navigationStyle": "custom" } };exports.default = _default;
 
 /***/ }),
 
