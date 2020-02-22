@@ -14,7 +14,6 @@
 
 
 
-
 /* uni.css - 通用组件、模板样式库，可以当作一套ui库应用 */
 @font-face {
 	font-family: uniicons;
@@ -1518,6 +1517,13 @@ radio-group label, checkbox-group label{
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
+}
+.navigationBar{
+	width: 100%;
+	position: fixed;
+	z-index: 9999;
+	left: 0;
+	top: 0;
 }
 .column_center {
 	display: -webkit-box;

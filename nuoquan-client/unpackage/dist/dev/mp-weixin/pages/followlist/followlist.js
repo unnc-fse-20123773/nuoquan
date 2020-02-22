@@ -100,6 +100,17 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var g0 = this.getnavbarHeight()
+  var g1 = this.getnavbarHeight()
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        g0: g0,
+        g1: g1
+      }
+    }
+  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -186,11 +197,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 var me; // 表示本人用户，区别于查询的用户
-var _default = {
+var uniNavBar = function uniNavBar() {return __webpack_require__.e(/*! import() | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then(__webpack_require__.bind(null, /*! @/components/uni-nav-bar/uni-nav-bar.vue */ 237));};var _default =
+
+{
+  components: {
+    uniNavBar: uniNavBar },
+
   data: function data() {
     return {
+      pageTitle: '关注和粉丝列表',
       scrollLeft: 0,
       isClickChange: false,
       currentTab: '', // 切换 list 0/1

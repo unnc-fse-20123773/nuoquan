@@ -100,6 +100,17 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var g0 = this.getnavbarHeight()
+  var g1 = this.getnavbarHeight()
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        g0: g0,
+        g1: g1
+      }
+    }
+  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -278,12 +289,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 var DEFAULT_PAGE = 0;
 var timer = null; //进度条生长
-var _default = {
+var uniNavBar = function uniNavBar() {return __webpack_require__.e(/*! import() | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then(__webpack_require__.bind(null, /*! @/components/uni-nav-bar/uni-nav-bar.vue */ 237));};var _default =
+
+{
+  components: {
+    uniNavBar: uniNavBar },
+
   data: function data() {
     return {
+      pageTitle: '投票',
       list: ['Javascript', 'Typescript', 'Java', 'PHP', 'Go'],
       voteCardHeight: 0, //单个投票卡片高度
       ischosen: false, //判断选项是否选中
@@ -297,12 +319,10 @@ var _default = {
 
   onLoad: function onLoad() {
     //获取导航栏高度
-    var info = this.menuButtonInfo;
-    var height;
-    info = uni.getMenuButtonBoundingClientRect();
-    height = info.bottom;
+    var height = this.getnavbarHeight().bottom + 5;
     this.navigationBarHeight = height;
     console.log('导航栏高度=' + this.navigationBarHeight);
+    //计算投票卡片高度
     this.calculateHeight();
   },
 

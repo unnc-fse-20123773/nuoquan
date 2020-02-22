@@ -1,6 +1,9 @@
 <template>
 	<view class="detail-page">
-
+		<!-- 导航栏 -->
+		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" left-icon="back" left-text="返回"
+		:title="pageTitle" 
+		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
 		<!-- 第一个大块二，文章本体 -->
 		<detail_1_article class="article-area" :articleCard='articleCard' @controlInputSignal="controlInput" :userInfo="userInfo"
 		 @swLikeArticleSignal="changeLikeStatus" @backToLastPage="backToLastPage()"></detail_1_article>
@@ -67,10 +70,13 @@
 <script>
 import detail_1_article from "./detail_1_article.vue"
 import detail_2_comments from "./detail_2_comments.vue"
+import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
+
 	var uploadFlag = false;
 	export default {
 		data() {
 			return {  
+				pageTitle: '详情',
 				imgList: [],				
 				userInfo: {},
 				articleCard: "",  //detail的主角，由index传过来的单个文章信息

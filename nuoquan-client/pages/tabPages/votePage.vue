@@ -1,6 +1,11 @@
 <template>
 	<view style="width: 100%;height: 100%;">
 		<!-- 导航栏 -->
+		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" left-icon="back" left-text="返回"
+		:title="pageTitle" 
+		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
+		
+		<!-- 导航栏 -->
 		<view class="navigatorBar_votePage super_center" :style="{ height: navigationBarHeight + 'px' }">NavigatorBar</view>
 		<!-- 左侧按钮 -->
 		<view class="tapLeft super_center" :style="{ top: navigationBarHeight + 46 + 'px' }"><image src="../../static/icon/angle-left-353535.png" mode="aspectFit"></image></view>
@@ -146,9 +151,15 @@
 <script>
 const DEFAULT_PAGE = 0;
 var timer = null;//进度条生长
+import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
+
 export default {
+	components:{
+		uniNavBar
+	},
 	data() {
 		return {
+			pageTitle: '投票',
 			list: ['Javascript', 'Typescript', 'Java', 'PHP', 'Go'],
 			voteCardHeight: 0,//单个投票卡片高度
 			ischosen: false,//判断选项是否选中
@@ -162,12 +173,10 @@ export default {
 
 	onLoad: function() {
 		//获取导航栏高度
-		var info = this.menuButtonInfo;
-		var height;
-		info = uni.getMenuButtonBoundingClientRect();
-		height = info.bottom;
+		var height = this.getnavbarHeight().bottom + 5;
 		this.navigationBarHeight = height;
 		console.log('导航栏高度=' + this.navigationBarHeight);
+		//计算投票卡片高度
 		this.calculateHeight();
 	},
 

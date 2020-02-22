@@ -100,6 +100,17 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var g0 = this.getnavbarHeight()
+  var g1 = this.getnavbarHeight()
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        g0: g0,
+        g1: g1
+      }
+    }
+  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -133,7 +144,13 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var sonCommentBox = function sonCommentBox() {return __webpack_require__.e(/*! import() | pages/comment-detail/sonCommentBox */ "pages/comment-detail/sonCommentBox").then(__webpack_require__.bind(null, /*! ./sonCommentBox.vue */ 297));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var sonCommentBox = function sonCommentBox() {return __webpack_require__.e(/*! import() | pages/comment-detail/sonCommentBox */ "pages/comment-detail/sonCommentBox").then(__webpack_require__.bind(null, /*! ./sonCommentBox.vue */ 306));};var uniNavBar = function uniNavBar() {return __webpack_require__.e(/*! import() | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then(__webpack_require__.bind(null, /*! @/components/uni-nav-bar/uni-nav-bar.vue */ 237));};var _default =
+
+
+
+
+
+
 
 
 
@@ -202,11 +219,13 @@ __webpack_require__.r(__webpack_exports__);
 
 {
   components: {
-    sonCommentBox: sonCommentBox },
+    sonCommentBox: sonCommentBox,
+    uniNavBar: uniNavBar },
 
 
   data: function data() {
     return {
+      pageTitle: '评论详情',
       mainComment: '', //用于接受跳转传过来的underCommentId,然后申请获取sonComment  yaoyao 9.16 
       userInfo: '',
       commentContent: '', //用户准备提交的评论内容

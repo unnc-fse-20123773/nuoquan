@@ -102,6 +102,17 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var g0 = this.getnavbarHeight()
+  var g1 = this.getnavbarHeight()
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        g0: g0,
+        g1: g1
+      }
+    }
+  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -161,7 +172,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _vuex = __webpack_require__(/*! vuex */ 16);function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var onemessage = function onemessage() {return __webpack_require__.e(/*! import() | pages/chatpage/oneMessage */ "pages/chatpage/oneMessage").then(__webpack_require__.bind(null, /*! ./oneMessage */ 251));};
+
+
+
+
+
+var _vuex = __webpack_require__(/*! vuex */ 16);function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var onemessage = function onemessage() {return __webpack_require__.e(/*! import() | pages/chatpage/oneMessage */ "pages/chatpage/oneMessage").then(__webpack_require__.bind(null, /*! ./oneMessage */ 260));};var uniNavBar = function uniNavBar() {return __webpack_require__.e(/*! import() | components/uni-nav-bar/uni-nav-bar */ "components/uni-nav-bar/uni-nav-bar").then(__webpack_require__.bind(null, /*! @/components/uni-nav-bar/uni-nav-bar.vue */ 237));};
+
 
 var query = wx.createSelectorQuery();
 
@@ -170,7 +187,8 @@ var chatKey;
 var chatHistory;var _default =
 {
   components: {
-    onemessage: onemessage },
+    onemessage: onemessage,
+    uniNavBar: uniNavBar },
 
   data: function data() {
     return {
@@ -184,7 +202,7 @@ var chatHistory;var _default =
              		this.creatTime = creatTime; // 显示 flag
              	},
              	*/
-
+      pageTitle: 'Message', //这里要换成聊天对象的昵称
       chatContent: [],
 
       socketMsgQueue: [], // 未发送的消息队列
