@@ -52,8 +52,8 @@
 					<!-- 确定投票前的选项展示 -->
 					<view v-if="finishVote == false" class="voteCard">
 						<!-- 双层嵌套，可适应以后扩展选项内容 -->
-						<view v-for="(option, index2) in item.optionList" :key="index2"  :class="[ischosen == false ? 'oneVoteCard' : 'oneVoteCard_chosen']" @click="switchChoose(option.id, index)">
-							<text :class="[ischosen == false ? 'oneVote_text' : 'oneVote_text_chosen']">{{(option.id)}}</text>
+						<view v-for="(option, index2) in item.optionList" :key="index2"  :class="[option.id != selectedOptionId ? 'oneVoteCard' : 'oneVoteCard_chosen']" @click="switchChoose(option.id, index)">
+							<text :class="[option.id != selectedOptionId ? 'oneVote_text' : 'oneVote_text_chosen']">{{(option.id)}}</text>
 						</view>
 					</view>
 					<!-- 确定投票后的选项展示 -->
@@ -212,9 +212,15 @@
 				
 				// console.log("传进来的选项id= "+ selectedOptionId);
 				var that = this;
-				this.ischosen = !this.ischosen;
-				that.selectedOptionId = selectedOptionId;
-				that.currentVoteIndex = index;
+					
+				if (selectedOptionId == that.selectedOptionId){
+					that.selectedOptionId = '';
+					this.ischosen = false;
+				} else {
+					this.ischosen = true;
+					that.selectedOptionId = selectedOptionId;
+					that.currentVoteIndex = index;
+				}
 				console.log("赋值后的选项id= "+ that.selectedOptionId);
 				console.log(that.currentVoteIndex);
 				
