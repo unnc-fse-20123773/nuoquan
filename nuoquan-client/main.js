@@ -15,7 +15,7 @@ Vue.config.productionTip = false
 Vue.prototype.version = "v1.0.3 - 公测版"
 Vue.prototype.tagColors = ['#FE5F55','#40A792','#FDD041','#5CA0D3','#621E81','#738598','#F3AE4B']
 
-Vue.prototype.$store = store
+Vue.prototype.$store = store // 挂载 vueX
 
 Vue.prototype.$serverUrl = "http://127.0.0.1:8080"
 Vue.prototype.$wsServerUrl = "wss://127.0.0.1:8088/ws"

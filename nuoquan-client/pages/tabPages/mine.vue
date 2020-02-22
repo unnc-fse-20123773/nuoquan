@@ -44,18 +44,20 @@
 			</view>
 		</view>
 		<view class="pagejump_box">
-			<view class="item1" @click="jumpToProfile()">个人信息</view>
+			<!-- TODO:这里应该有更灵活优雅的写法 @jerrio -->
+			<view class="item1" @click="jumpToProfile()">{{lang.profile}}</view>
 			<view class="line1"></view>
-			<view class="item2" @click="jumpToMyPublish()">我的发布</view>
+			<view class="item2" @click="jumpToMyPublish()">{{lang.myPublish}}</view>
 			<view class="line2"></view>
-			<view class="item3" @click="jumpToAbout()">关于</view>
+			<view class="item3" @click="jumpToAbout()">{{lang.about}}</view>
+			<!-- 临时添加的设置语言按钮 @jerrio -->
+			<button @tap="changeLang">{{lang.changeLang}}</button>
 		</view>
 	</view>
 </template>
 
 <script>
-	import {mapState} from 'vuex';
-
+import {mapState, mapMutations} from 'vuex';  
 
 export default {
 	data() {
@@ -71,7 +73,13 @@ export default {
 
 		};
 	},
-
+	
+	computed: {
+		...mapState([
+			'lang'
+		])
+	},
+	
 	onLoad() {
 		this.thisUserInfo= this.getGlobalUserInfo();
 	
@@ -106,7 +114,6 @@ export default {
 
 		// 获取卡片宽度
 		that.cardWidth = that.windowWidth - 26 + 'px';
-
 	},
 	
 	onShow() {
@@ -123,6 +130,8 @@ export default {
 	},
 
 	methods: {
+		...mapMutations(['changeLang']),
+		
 		/**
 		 * 查询用户信息，并分割邮箱更新到缓存
 		 */

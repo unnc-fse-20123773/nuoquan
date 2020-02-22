@@ -26,8 +26,6 @@
 import onemessage from './oneMessage';
 import { mapState } from 'vuex';
 
-var query = wx.createSelectorQuery();
-
 var page = 1; // PS: 非显示属性不放在渲染层
 var chatKey;
 var chatHistory;
