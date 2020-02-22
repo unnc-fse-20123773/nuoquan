@@ -77,6 +77,9 @@ Current Dev Verion: `v1.0.3`
 - 微信授权登陆->若有记录，无需认证，显示欢迎回来。
 
 ## [Recent Update](./updateLog.md): ##
+**v20.2.22 更新**
+1. 新增 语言切换功能，目前仅在“我的”页面实现
+
 **v20.2.21 更新**
 1. 整合 guetta 先锋版
 2. 新增 投票展示页面（guetta）
@@ -88,9 +91,3 @@ Current Dev Verion: `v1.0.3`
 2. 修改 获取未签收消息从ArticleController移至UserController
 3. 小改 数据库，添加用户影响力（reputation）属性，详情见 sqlRecord.sql
 4. 整合 yaoyao & zike & deyan
-
-**v20.2.13 更新**
-1. 新增 文章自动过审开关
-2. 新增 文章多关键词搜索，以空格分割
-3. 小改 数据库并修改记录方式为倒叙，详情见 sqlRecord.sql（是后台管理页面-权限相关值的变动，各位重新刷一下）
-

@@ -17,6 +17,8 @@ var sCommentMsg = uni.getStorageSync('commentMsgCount');
 
 // 国际化相关代码
 try {
+	var langList = ['简体中文', 'English'];
+	var langCode = ['zh-CN', 'en'];
 	// 1. 分析用户已经选择的语言 
 	var userLang = uni.getStorageSync("userLang");
 	// 2. 如果用户没有选择过获取用户手机的语言
@@ -95,7 +97,7 @@ const store = new Vuex.Store({
 		 */
 		changeLang: function(state){
 			uni.showActionSheet({
-				itemList:['简体中文', 'English'],
+				itemList: langList,
 				success:function(e){
 					if(e.tapIndex == 0){
 						lang = require('../common/language/zh.js');
@@ -103,6 +105,7 @@ const store = new Vuex.Store({
 						lang = require('../common/language/en.js');
 					}
 					state.lang = lang;
+					uni.setStorageSync('userLang', langCode[e.tapIndex]);
 				}
 			})
 		}
