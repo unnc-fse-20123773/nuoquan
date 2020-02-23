@@ -21,7 +21,6 @@ public class VoteOption {
 
     private Double percent;
     
-    private Boolean hasSelected;
     
 
     @Column(name = "option_content")
@@ -124,12 +123,4 @@ public class VoteOption {
     public void setOptionContent(String optionContent) {
         this.optionContent = optionContent;
     }
-
-	public Boolean getHasSelected() {
-		return hasSelected;
-	}
-
-	public void setHasSelected(Boolean hasSelected) {
-		this.hasSelected = hasSelected;
-	}
 }

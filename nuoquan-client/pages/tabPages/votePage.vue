@@ -31,26 +31,35 @@
 					<!--图片区域-->
 					<view>
 						<!-- 单图显示 -->
-						<view v-if="articleCard.imgList.length == 1" class="detailpics" style="width:100%;height:124px;display: flex;margin-left: 0;">
-							<image v-for="(i, index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath" mode="aspectFill"
-							 :style="{ width: singleImgWidth + 'px', height: '124px' }" @tap="previewImg(index)" @longpress="aboutImg(index)"
-							 @load="singleImgeFit"></image>
+						<view v-if="item.imgList.length == 1" class="detailpics" style="width:100%;height:124px;display: flex;margin-left: 0;">
+							<image v-for="(i, imageIndex) in item.imgList" :key="imageIndex" 
+							 :src="serverUrl + i.imagePath" mode="aspectFill"
+							 :style="{ width: singleImgWidth + 'px', height: '124px' }" 
+							 @tap="previewImage(index, imageIndex)" 
+							 @longpress="aboutImg(index, imageIndex)"
+							 @load="singleImgeFit"
+							 ></image>
 						</view>
 						<!-- 其他数量 -->
-						<view v-else-if="articleCard.imgList.length == 4" class="detailpics" style="max-width: 400upx;margin-left: 0;">
-							<image class="detailpic" v-for="(i, index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath"
-							 mode="aspectFill" @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
+						<view v-else-if="item.imgList.length == 4" class="detailpics" style="max-width: 400upx;margin-left: 0;">
+							<image class="detailpic" v-for="(i, imageIndex) in item.imgList" :key="imageIndex"
+							 :src="serverUrl + i.imagePath"
+							 mode="aspectFill" 
+							 @tap="previewImage(index,imageIndex)" 
+							 @longpress="aboutImg(imageIndex)"
+							 ></image>
 						</view>
-
+						
+						<!-- 这里是干嘛的? (Deyan) -->
 						<view v-else class="detailpics">
-							<image class="detailpic" v-for="(i, index) in articleCard.imgList" :key="index" :src="serverUrl + i.imagePath"
-							 mode="aspectFill" @tap="previewImg(index)" @longpress="aboutImg(index)"></image>
-							<view v-if="articleCard.imgList.length == 2 || imageList.length == 5 || imageList.length == 8" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
+							<image class="detailpic" v-for="(i, imageIndex) in item.imgList" :key="imageIndex" :src="serverUrl + i.imagePath"
+							 mode="aspectFill" @tap="previewImage(index,imageIndex)" @longpress="aboutImg(imageIndex)"></image>
+							<view v-if="item.imgList.length == 2 || item.length == 5 || item.length == 8" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
 						</view>
 					</view>
 					<!-- 投票选项 -->
 					<!-- 确定投票前的选项展示 -->
-					<view v-if="finishVote == false" class="voteCard">
+					<view v-if="finishVote[index] == false" class="voteCard">
 						<!-- 双层嵌套，可适应以后扩展选项内容 -->
 						<view v-for="(option, index2) in item.optionList" :key="index2"  :class="[option.id != selectedOptionId ? 'oneVoteCard' : 'oneVoteCard_chosen']" @click="switchChoose(option.id, index)">
 							<text :class="[option.id != selectedOptionId ? 'oneVote_text' : 'oneVote_text_chosen']">{{(option.id)}}</text>
@@ -75,7 +84,7 @@
 									</view>
 									<view class="resultBarCard">
 										<view class="resultBar_border"></view>
-										<view class="resultBar_bgclr" :style="{ width: persentBarWidth + '%' }"></view>
+										<view class="resultBar_bgclr" :style="{ width: reserveTwoDecimal(result.percent * 100) + '%' }"></view>
 									</view>
 								</view>
 								<!-- 用户选项结果 -->
@@ -92,7 +101,7 @@
 									</view>
 									<view class="resultBarCard">
 										<view class="resultBar_border_chosen"></view>
-										<view class="resultBar_bgclr_chosen" :style="{ width: persentBarWidth + '%' }"></view>
+										<view class="resultBar_bgclr_chosen" :style="{ width: reserveTwoDecimal(result.percent * 100) + '%' }"></view>
 									</view>
 								</view>
 							</view>
@@ -119,9 +128,9 @@
 						</view>
 					</view>
 					<!-- 确认投票 -->
-					<view v-if="finishVote == false" class="alertandconfirm super_center">
-						<text v-if="ischosen == false">完成投票后才可查看评论哦</text>
-						<button v-else class="confirmButton_votePage super_center" @click="confirmVote(item.id)">确认投票</button>
+					<view v-if="finishVote[index] == false" class="alertandconfirm super_center">
+						<text v-if="ischosen[index] == false">完成投票后才可查看评论哦</text>
+						<button v-else class="confirmButton_votePage super_center" @click="confirmVote(item.id, index)">确认投票</button>
 					</view>
 				</scroll-view>
 			</swiper-item>
@@ -138,20 +147,26 @@
 	export default {
 		data() {
 			return {
+				serverUrl: this.$serverUrl,
 				list: ['Javascript', 'Typescript', 'Java', 'PHP', 'Go'],
 				voteCardHeight: 0, //单个投票卡片高度
-				ischosen: false, //判断选项是否选中
-				isChosenArray: [],
+				ischosen: [], //判断选项是否选中
+				ischosenFlag: '',
 				menuButtonInfo: '',
 				navigationBarHeight: 0, //导航栏高度
 				ifShowComment: false, //判断是否展示评论区域
-				finishVote: false, //判断是否展示投票结果条形图
+				finishVote: [], //判断是否展示投票结果条形图
 				persentBarWidth: 0, //条形图宽度
 				
 				showList: ['1','2'],
 				userInfo: '',
 				totalPage: 1,
 				currentPage: 1,
+				
+				singleImgHeight: 0,
+				singleImgWidth: 0,
+				heightWidthRate: 0,
+				imgList: [],
 				
 				currentVoteIndex: 0,
 				
@@ -190,11 +205,59 @@
 			this.setTabBarIndex(1); //index为当前tab的索引
 			
 			//Test 
-			console.log(this.showList);
-			console.log(this.list);
+			// console.log(this.showList);
+			// console.log(this.list);
 		},
 
 		methods: {
+			singleImgeFit(e) {
+				var height = e.detail.height;
+				var width = e.detail.width;
+				var rate;
+				if (height >= width) {
+					this.singleImgState = 0;
+					this.singleImgHeight = 400;
+					rate = width / height;
+					this.heightWidthRate = rate;
+					this.singleImgWidth = 400 * rate;
+					// console.log(this.singleImgState);
+					// console.log(rate);
+					// console.log(this.singleImgHeight);
+					// console.log(this.singleImgWidth);
+				} else {
+					this.singleImgState = 1;
+					this.singleImgWidth = 400;
+					rate = height / width;
+					this.heightWidthRate = rate;
+					this.singleImgHeight = 400 * rate;
+					// console.log(this.singleImgState);
+					// console.log(rate);
+					// console.log(this.singleImgHeight);
+					// console.log(this.singleImgWidth);
+				}
+				// console.log(e.detail);
+			},
+			
+			previewImage: function(voteIndex, imageIndex) {
+				// var imgIndex = index;
+				// console.log(res)
+				// 获取全部图片路径
+				var imgList = this.showList[voteIndex].imgList;
+				var arr = [];
+				var path;
+				for (var i = 0; i < imgList.length; i++) {
+					// console.log(imgList[i].imagePath);
+					path = this.$serverUrl + imgList[i].imagePath;
+					arr = arr.concat(path);
+				}
+				// console.log(arr);
+				uni.previewImage({
+					current: imageIndex,
+					urls: arr
+				});
+				arr = [];
+			},
+			
 			calculateHeight() {
 				var that = this;
 				var pageHeight;
@@ -208,27 +271,52 @@
 				// console.log(this.voteCardHeight);
 			},
 
-			switchChoose(selectedOptionId, index) {
+			switchChoose(selectedOptionId, voteIndex) {
 				
 				// console.log("传进来的选项id= "+ selectedOptionId);
 				var that = this;
-					
-				if (selectedOptionId == that.selectedOptionId){
-					that.selectedOptionId = '';
-					this.ischosen = false;
-				} else {
-					this.ischosen = true;
-					that.selectedOptionId = selectedOptionId;
-					that.currentVoteIndex = index;
-				}
-				console.log("赋值后的选项id= "+ that.selectedOptionId);
-				console.log(that.currentVoteIndex);
 				
+				// 如果记录的index和传进来的voteIndex相同, 则继续操作
+				// 如果记录的index和传进来的voteIndex不同, 则将所有inchosen变为false再进行操作
+				if(that.ischosenFlag == voteIndex){
+					if (selectedOptionId == that.selectedOptionId){
+						that.selectedOptionId = '';
+						that.ischosen[voteIndex] = false;
+					} else {
+						this.ischosen[voteIndex] = true;
+						that.selectedOptionId = selectedOptionId;
+						that.currentVoteIndex = voteIndex;
+					}
+				} else {
+					// 不相等时
+					for(var i = 0; i < that.ischosen.length; i++){
+						that.ischosen[i] = false;
+					}
+					// console.log("改变页面后"+that.ischosen);
+					if (selectedOptionId == that.selectedOptionId){
+						that.selectedOptionId = '';
+						that.ischosen[voteIndex] = false;
+					} else {
+						this.ischosen[voteIndex] = true;
+						that.selectedOptionId = selectedOptionId;
+						that.currentVoteIndex = voteIndex;
+					}
+				}
+				// 记录是在第几个vote进行操作
+				that.ischosenFlag = voteIndex;
+				
+				console.log("赋值后的选项id= "+ that.selectedOptionId);
+				// console.log(that.currentVoteIndex);
+				// console.log(that.ischosen);
 			},
 
-			confirmVote(voteId) {
+			/**
+			 * @param {Object} voteId 投票的id
+			 * @param {Object} voteIndex 投票的index, 用来控制下面的确认投票键
+			 */
+			confirmVote(voteId, voteIndex) {
 				this.ifShowComment = !this.ifShowComment;
-				this.finishVote = !this.finishVote;
+				this.finishVote[voteIndex] = !this.finishVote[voteIndex];
 				// console.log('确认投票');
 				this.onePersentBarGrow();
 				this.voteCardHeight = 3000; //确认投票后or该投票状态为已投，改变卡片高度
@@ -258,6 +346,7 @@
 						console.log(that.afterSelectedResult);
 						that.afterSelectedOptionList = that.afterSelectedResult.optionList;
 						console.log(that.afterSelectedOptionList);
+						// that.ischosen[voteIndex] = true;
 					}
 				})
 			},
@@ -325,7 +414,12 @@
 								that.showList = oldVoteList.concat(newVoteList);
 								that.currentPage = page;
 								that.totalPage = res.data.data.total;
-								console.log(that.showList);
+								console.log(res.data.data.rows.length);
+								for(var i = 0; i < res.data.data.rows.length; i++){
+									that.ischosen[i] = false;
+									that.finishVote[i] = false;
+								}
+								console.log(that.ischosen);
 							}
 						}, 300);
 					},

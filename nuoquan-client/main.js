@@ -996,6 +996,7 @@ Vue.prototype.timeDeal = function(timediff) {
 	return timeSpanStr;
 }
 
+// 计算多少天后xxx样的方法
 Vue.prototype.reTimeDeal = function(timediff) {
 	timediff = new Date(timediff);
 	var parts = [timediff.getFullYear(), timediff.getMonth() + 1, timediff.getDate(), timediff.getHours(), timediff.getMinutes(),
@@ -1052,6 +1053,7 @@ Vue.prototype.getScreenSize = function(){
 	})
 }
 
+// 保留两位小数的方法
 Vue.prototype.reserveTwoDecimal = function(number){
 	var floatNum = parseFloat(number);
 	if(isNaN(floatNum)){
