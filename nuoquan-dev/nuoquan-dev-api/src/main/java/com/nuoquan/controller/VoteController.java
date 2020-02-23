@@ -387,7 +387,8 @@ public class VoteController extends BasicController{
 			return JSONResult.errorMsg("VoteId can't be null!");
 		}
 		voteService.selectOption(voteUser);
-		return JSONResult.ok();
+		
+		return JSONResult.ok(voteService.getSingleVote(1, 10, voteUser.getUserId(), voteUser.getVoteId()));
 	}
 	
 	@ApiOperation(value = "查询单个投票", notes = "在确认选择后刷新单个投票")

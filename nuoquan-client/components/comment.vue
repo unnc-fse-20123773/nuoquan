@@ -8,7 +8,7 @@
 			<view style="position: absolute;z-index: 20;height: 100%;width: 80upx;right: 106upx;" @tap="goToCommentDetail(mainComment)"></view>
 			<!-- 蒙层结束 -->
 			<view class="touxiang column_center">
-				<image :src="mainComment.faceImg" class="touxiang_pic" @tap="goToPersonPublic(mainComment.fromUserId)"></image>
+				<image :src="pathFilter(mainComment.faceImg)" class="touxiang_pic" @tap="goToPersonPublic(mainComment.fromUserId)"></image>
 			</view>
 			<view class="text_line">
 				<view class="text_line_rel">

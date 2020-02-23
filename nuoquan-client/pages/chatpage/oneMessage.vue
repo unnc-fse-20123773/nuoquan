@@ -3,7 +3,7 @@
 		<view>
 			<view class="send" v-if="thisMessage.flag == ME">
 				<view @tap="goToPersonPublic(userInfo.id)">
-					<image class="touxiang-send" :src="userInfo.faceImg"></image>
+					<image class="touxiang-send" :src="pathFilter(userInfo.faceImg)"></image>
 				</view>
 				<view class="content">
 					<view class="contentText-send">

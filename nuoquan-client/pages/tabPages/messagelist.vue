@@ -39,7 +39,7 @@
 
 				<!-- <view v-for="(item, index) in chatSnapShotList" :key="index">
 					<view class="msglist-card column_center" v-if="item.isRead == UNREAD" @tap="goToChatpage(item)">
-						<image class="msglist-Touxiang" mode="aspectFill" :src="item.friendInfo.faceImg"></image>
+						<image class="msglist-Touxiang" mode="aspectFill" :src="pathFilter(item.friendInfo.faceImg)"></image>
 						<view class="msglist-content">
 							<view class="msglist-id font-family">
 								{{item.friendInfo.nickname}}

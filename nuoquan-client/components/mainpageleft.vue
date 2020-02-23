@@ -4,7 +4,7 @@
 	<view class="mainPageLeft" @click.stop="">
 		<view class="topInfoArea">
 			<view class="topLeft">
-				<image class="touxiang" :src='userInfo.faceImg' @tap="goToProfile"></image>
+				<image class="touxiang" :src='pathFilter(userInfo.faceImg)' @tap="goToProfile"></image>
 			</view>
 			<view class="topRight">
 				<view style="font-size: 13px;margin-bottom:9px;width:100%;vertical-align: bottom;overflow:hidden; text-overflow: ellipsis;max-height: 20px;white-space: nowrap;">{{userInfo.nickname}}</view>

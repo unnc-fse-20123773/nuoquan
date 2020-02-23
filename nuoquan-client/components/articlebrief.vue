@@ -6,7 +6,7 @@
 		</view>
 		<!-- 用户信息行 -->
 		<view class="userLine hor_center">
-			<image :src="thisArticle.faceImg" class="touxiang" @tap="goToPersonPublic(thisArticle.userId)"></image>
+			<image :src="pathFilter(thisArticle.faceImg)" class="touxiang" @tap="goToPersonPublic(thisArticle.userId)"></image>
 			<view class="name">{{ thisArticle.nickname }}</view>
 			<view class="time" :style="timeLeft">{{ timeDeal(thisArticle.createDate) }}</view>
 		</view>
