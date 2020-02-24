@@ -64,8 +64,8 @@
 				voteOptions: [''],
 				
 				pickerMode:"submitVote",
-				pickerRange:['1','2','3','a','b','c','d'],
-				pickerValue:'3',
+				pickerRange:['1','2','3','4','5','6','7','8','9','10'],
+				pickerValue:'1',
 				
 				//图片相关？DY看一下不需要的变量删掉。
 				imageList: [],

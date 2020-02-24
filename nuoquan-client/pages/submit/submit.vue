@@ -13,17 +13,17 @@
 			<view class="selectedTag" v-for="(item,index) in selectedTags" :key="index" @click="deleteTag(index)" :style="{ 'box-shadow' : '0px 0px 6px '+ selectedTagColorList[index],}">{{item}}</view>
 			<button class="editTagsButton" @tap="editTag(true)" v-if="!editingTag">添加标签 + </button>
 			<view class="finish-button" @tap="editTag(false)" v-if="editingTag">完成</view>
-
-
 		</view>
 
 		<view class="tagsArea" v-if="editingTag">
 			<!-- TO DO 为啥有俩标签这个东西，目前用着同一个列表，是不是还需要改，我们提供标签的那个请求-->
 			<!-- 展示待选标签区域 -->
-			<text>最近选择</text>
+			<text>所有标签</text>
 			<view class="tag" v-for="(item,index) in tagList" :key="index" :style="{background: tagColorList[index]}" @tap="addTag(item)">{{item}}</view>
-			<text>最近选择</text>
+			<!-- <text>最近选择</text>
 			<view class="tag" v-for="(item,index) in tagList" :key="index" :style="{background: tagColorList[index]}" @tap="addTag(item)">{{item}}</view>
+			 -->
+			
 			<!-- 			<view style="width: 750upx;height: 1000px;position: absolute;top:-1000px;z-index: 50;" @click="editTag(false)" v-if="editingTag"></view>
 			<view style="width: 750upx;height: 1000px;position: absolute;bottom:-1000px;z-index: 50;" @click="editTag(false)" v-if="editingTag"></view> -->
 
@@ -84,9 +84,9 @@
 				showTagArea: 0,
 				editingTag: false,
 
-				tagList: ["12", "###", "sdk肯定就好看f", "时刻监督和", '实际到货付款'],
+				tagList: [],
 				tagColorList: [], // 储存每个备选tag的颜色
-				selectedTags: ["12", "###", "sdkjhf", "时刻监督和"],
+				selectedTags: [],
 				selectedTagColorList: [], // 储存每个已选tag的颜色
 
 
@@ -123,7 +123,7 @@
 
 			// 随机生成颜色
 			var tagColors = this.tagColors;
-			for (var i = 0; i < this.tagList.length; i++) {
+			for (var i = 0; i < 6; i++) {
 				var random_1 = Math.floor(Math.random() * tagColors.length);
 				var random_2 = Math.floor(Math.random() * tagColors.length);
 				// 0~tagColors.length-1
@@ -131,9 +131,31 @@
 				this.selectedTagColorList.push(tagColors[random_2]);
 
 			}
+			this.getTagsList()
 
 		},
 		methods: {
+			getTagsList(){
+				var that = this;
+				uni.request({
+					url: that.$serverUrl + '/article/getTagsList',
+					method: 'POST',
+					data: {},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: res => {
+						if (res.data.status == 200) {
+							var i=0
+							for(i;i<res.data.data.length;i++){
+							
+								that.tagList[i] = res.data.data[i].tag;
+							}
+							console.log(that.tagsList);
+						}
+					}
+				});
+			},
 			// 检查tagList的数量
 			checkInput: function(res) {
 				var that = this;
@@ -481,7 +503,7 @@
 		margin-top: 13px;
 		padding-bottom: 16px;
 		vertical-align: bottom;
-		min-height: 130px;
+		min-height: 110px;
 		max-height: 192px;
 		overflow: hidden;
 		position: relative;

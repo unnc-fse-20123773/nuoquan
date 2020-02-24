@@ -22,7 +22,7 @@
 			<sonCommentBox v-for="i in commentList" :key="i.id" :reCommentDetail="i" @controlInputSignal="controlInput"
 			 @swLikeComment="swLikeComment" @goToPersonPublic="goToPersonPublic"></sonCommentBox>
 			<!-- 占位块 -->
-			<view style="width: 100%; height: 40px;"></view>
+			<view style="width: 100%; height: 100px;"></view>
 		</view>
 
 
