@@ -20,10 +20,10 @@
 		<view class="tagsArea" v-if="editingTag">
 			<!-- TO DO 为啥有俩标签这个东西，目前用着同一个列表，是不是还需要改，我们提供标签的那个请求-->
 			<!-- 展示待选标签区域 -->
-			<text>最近选择</text>
+			<text>所有标签</text>
 			<view class="tag" v-for="(item,index) in tagList" :key="index" :style="{background: tagColorList[index]}" @tap="addTag(item)">{{item}}</view>
-			<text>最近选择</text>
-			<view class="tag" v-for="(item,index) in tagList" :key="index" :style="{background: tagColorList[index]}" @tap="addTag(item)">{{item}}</view>
+			<!-- <text>最近选择</text>
+			<view class="tag" v-for="(item,index) in tagList" :key="index" :style="{background: tagColorList[index]}" @tap="addTag(item)">{{item}}</view> -->
 			<!-- 			<view style="width: 750upx;height: 1000px;position: absolute;top:-1000px;z-index: 50;" @click="editTag(false)" v-if="editingTag"></view>
 			<view style="width: 750upx;height: 1000px;position: absolute;bottom:-1000px;z-index: 50;" @click="editTag(false)" v-if="editingTag"></view> -->
 
@@ -41,7 +41,7 @@
 				<view style="position: relative;">
 					<!-- todo 预览图片缩放 -->
 					<image :src="image" :data-src="image" @tap="previewImage" mode="aspectFill"></image>
-					<view style="width:15px;height: 15px;font-size: 10px;line-height: 10px;border-bottom-left-radius: 3px;background: rgba(166, 169, 168,0.3);color:#FFFFFF;position: absolute;top:6px;right:0;text-align: center;"
+					<view style="width:15px;height: 15px;font-size: 10px;line-height: 15px;border-bottom-left-radius: 3px;background: rgba(166, 169, 168,0.3);color:#FFFFFF;position: absolute;top:6px;right:0;text-align: center;"
 					 @click="deleteImg(index)">✕</view>
 				</view>
 			</block>
@@ -84,9 +84,9 @@
 				showTagArea: 0,
 				editingTag: false,
 
-				tagList: ["12", "###", "sdk肯定就好看f", "时刻监督和", '实际到货付款'],
+				tagList: [],
 				tagColorList: [], // 储存每个备选tag的颜色
-				selectedTags: ["12", "###", "sdkjhf", "时刻监督和"],
+				selectedTags: [],
 				selectedTagColorList: [], // 储存每个已选tag的颜色
 
 
@@ -120,20 +120,52 @@
 					that.windowHeight = res.windowHeight;
 				}
 			});
+			this.getTagsList();
 
 			// 随机生成颜色
 			var tagColors = this.tagColors;
-			for (var i = 0; i < this.tagList.length; i++) {
+			for (var i = 0; i < 6; i++) {
 				var random_1 = Math.floor(Math.random() * tagColors.length);
 				var random_2 = Math.floor(Math.random() * tagColors.length);
 				// 0~tagColors.length-1
 				this.tagColorList.push(tagColors[random_1]);
 				this.selectedTagColorList.push(tagColors[random_2]);
-
 			}
 
 		},
 		methods: {
+			getTagsList() {
+				var that = this;
+				uni.request({
+					url: that.$serverUrl + '/article/getTagsList',
+					method: 'POST',
+					data: {},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: res => {
+						if (res.data.status == 200) {
+							this.tagManager(res.data.data);
+						}
+					}
+				});
+			},
+			tagManager(a) {
+				for (var i = 0; i < a.length; i++) {
+					this.tagList[i] = a[i].tag;
+				}
+
+				// 随机生成颜色
+				var tagColors = this.tagColors;
+				for (var i = 0; i < 6; i++) {
+					var random_1 = Math.floor(Math.random() * tagColors.length);
+					var random_2 = Math.floor(Math.random() * tagColors.length);
+					// 0~tagColors.length-1
+					this.tagColorList.push(tagColors[random_1]);
+					this.selectedTagColorList.push(tagColors[random_2]);
+
+				}
+			},
 			// 检查tagList的数量
 			checkInput: function(res) {
 				var that = this;
@@ -157,10 +189,11 @@
 			},
 
 			combineTagToString: function(res) {
-				var that = this;
-				for (var i = 0; i < that.tagList.length; i++) {
-					that.finalTag = that.finalTag + '#' + that.tagList[i];
+				var finalTag;
+				for (var i = 0; i < this.selectedTags.length; i++) {
+					finalTag = this.finalTag + '#' + this.selectedTags[i];
 				}
+				return finalTag;
 			},
 
 			sourceTypeChange: function(e) {
@@ -251,7 +284,7 @@
 				}, 5000); // 延时5s timeout
 
 				setTimeout(() => {
-					me.combineTagToString();
+					var finalTag = this.combineTagToString();
 
 					var serverUrl = me.$serverUrl;
 					requestTask = uni.request({
@@ -259,7 +292,7 @@
 						method: 'POST',
 						data: {
 							userId: me.userInfo.id,
-							articleTag: me.finalTag,
+							articleTag: finalTag,
 							articleTitle: me.articleTitle,
 							articleContent: me.articleContent
 						},
@@ -268,7 +301,6 @@
 						},
 						success: (res) => {
 							// console.log(res);
-							me.finalTag = ""; // 清空组装tag
 							if (res.data.status == 200) {
 								if (me.imageList.length > 0) {
 									const articleId = res.data.data;
@@ -315,10 +347,15 @@
 					delta: 1
 				})
 				uni.showToast({
-					title: '已提交审核',
-					duration: 2000,
-					icon: 'success',
-				})
+						title: '已提交审核',
+						duration: 2000,
+						icon: 'success',
+					}),
+					setTimeout(() => {
+						uni.switchTab({
+							url: '/pages/tabPages/index'
+						});
+					}, 1800)
 			},
 
 			uploadFail() {
@@ -343,17 +380,13 @@
 				})
 			},
 
-			addTag(index) {
-				debugger;
-				this.selectedTags.push(index);
-
+			addTag(item) {
+				this.selectedTags.push(item);
 			},
 			deleteTag: function(index) {
 				console.log(index);
-				var targetTag = this.tagList[index];
-				this.tagList.splice(index, 1);
-				console.log(this.tagList.length);
-				this.tagIndex = this.tagList.length;
+				this.selectedTags.splice(index, 1);
+				console.log(this.selectedTags.length);
 			},
 			deleteImg: function(index) {
 				// console.log(index);
@@ -514,7 +547,6 @@
 		margin-top: 6px;
 		padding-right: 12px;
 		padding-left: 12px;
-		pointer-events: none;
 		/* 用于解决空格换行问题 */
 		white-space: nowrap;
 
@@ -524,7 +556,8 @@
 	/* 待选部分结束*/
 
 
-	.content {	/* 待选部分结束*/
+	.content {
+		/* 待选部分结束*/
 		min-height: 51px;
 		max-height: 300px;
 		margin-top: 13px;
