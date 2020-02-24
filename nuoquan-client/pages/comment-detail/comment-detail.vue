@@ -112,7 +112,8 @@
 					data: {
 						underCommentId: that.mainComment.id,
 						userId: that.userInfo.id,
-						page: page
+						page: page,
+						type: 0,
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'

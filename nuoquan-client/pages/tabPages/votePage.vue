@@ -4,16 +4,16 @@
 		<view class="navigatorBar_votePage super_center" :style="{ height: navigationBarHeight + 'px' }">NavigatorBar</view>
 		<!-- 左侧按钮 -->
 		<view class="tapLeft super_center" :style="{ top: navigationBarHeight + 46 + 'px' }">
-			<image src="../../static/icon/angle-left-353535.png" mode="aspectFit"></image>
+			<image src="../../static/icon/angle-left-gradient.png" mode="aspectFit"></image>
 		</view>
 		<!-- 右侧按钮 -->
 		<view class="tapRight super_center" :style="{ top: navigationBarHeight + 46 + 'px' }">
-			<image src="../../static/icon/angle-left-353535.png" mode="aspectFit"></image>
+			<image src="../../static/icon/angle-right-gradient.png" mode="aspectFit"></image>
 		</view>
 		<!-- 投票卡片 -->
 		<swiper class="scroll-box" :indicator-dots="false" :autoplay="false">
 			<swiper-item v-for="(item, index) in showList" :key="index" class="card-box" id="card_{index}">
-				<scroll-view class="card" scroll-y="true" :style="{height: voteCardHeight + 'px'}">
+				<scroll-view class="card" scroll-y="true" show-scrollbar="false" :style="{height: voteCardHeight + 'px'}">
 					<!-- 标题行 -->
 					<view @click="goToDetail()">
 						<view class="title">{{item.voteTitle}}</view>
@@ -31,16 +31,29 @@
 					<!--图片区域-->
 					<view>
 						<!-- 单图显示 -->
-						<view v-if="item.imgList.length == 1" class="detailpics" style="width:100%;height:124px;display: flex;margin-left: 0;">
-							<image v-for="(i, imageIndex) in item.imgList" :key="imageIndex" 
-							 :src="serverUrl + i.imagePath" mode="aspectFill"
-							 :style="{ width: singleImgWidth + 'px', height: '124px' }" 
-							 @tap="previewImage(index, imageIndex)" 
-							 @longpress="aboutImg(index, imageIndex)"
-							 @load="singleImgeFit"
-							 ></image>
+						<view v-if="item.imgList.length == 1" class="detailpics" style="width:91.8%;margin-left: 4.1%; max-height: 400upx; display: flex;">
+							<!-- 高 > 宽 -->
+							<view v-if="singleImgState == 0">
+								<image v-for="(i, imageIndex) in item.imgList" :key="imageIndex"
+								 :src="serverUrl + i.imagePath" mode="aspectFill"
+								 :style="{ width: singleImgWidth + 'rpx', height: singleImgHeight + 'rpx' }" 
+								 @tap="previewImage(index, imageIndex)" 
+								 @longpress="aboutImg(index, imageIndex)"
+								 @load="singleImgeFit"
+								 ></image>
+							</view>
+							<!-- 宽 > 高 -->
+							<view v-else style="width: 100%;">
+								<image v-for="(i, imageIndex) in item.imgList" :key="imageIndex"
+								 :src="serverUrl + i.imagePath" mode="aspectFill"
+								 :style="{ width: singleImgWidth + 'rpx', height: singleImgHeight + 'rpx' }" 
+								 @tap="previewImage(index, imageIndex)" 
+								 @longpress="aboutImg(index, imageIndex)"
+								 @load="singleImgeFit"
+								 ></image>
+							</view>
 						</view>
-						<!-- 其他数量 -->
+						<!-- 4宫格 -->
 						<view v-else-if="item.imgList.length == 4" class="detailpics" style="max-width: 400upx;margin-left: 0;">
 							<image class="detailpic" v-for="(i, imageIndex) in item.imgList" :key="imageIndex"
 							 :src="serverUrl + i.imagePath"
@@ -50,7 +63,7 @@
 							 ></image>
 						</view>
 						
-						<!-- 这里是干嘛的? (Deyan) -->
+						<!-- 其他数量 -->
 						<view v-else class="detailpics">
 							<image class="detailpic" v-for="(i, imageIndex) in item.imgList" :key="imageIndex" :src="serverUrl + i.imagePath"
 							 mode="aspectFill" @tap="previewImage(index,imageIndex)" @longpress="aboutImg(imageIndex)"></image>
@@ -163,9 +176,11 @@
 				totalPage: 1,
 				currentPage: 1,
 				
+				// singleImgState: ,
 				singleImgHeight: 0,
 				singleImgWidth: 0,
 				heightWidthRate: 0,
+				
 				imgList: [],
 				
 				currentVoteIndex: 0,
@@ -216,20 +231,20 @@
 				var rate;
 				if (height >= width) {
 					this.singleImgState = 0;
-					this.singleImgHeight = 400;
+					this.singleImgHeight = 360;
 					rate = width / height;
 					this.heightWidthRate = rate;
-					this.singleImgWidth = 400 * rate;
+					this.singleImgWidth = 360 * rate;
 					// console.log(this.singleImgState);
 					// console.log(rate);
 					// console.log(this.singleImgHeight);
 					// console.log(this.singleImgWidth);
 				} else {
 					this.singleImgState = 1;
-					this.singleImgWidth = 400;
+					this.singleImgWidth = 360;
 					rate = height / width;
 					this.heightWidthRate = rate;
-					this.singleImgHeight = 400 * rate;
+					this.singleImgHeight = 360 * rate;
 					// console.log(this.singleImgState);
 					// console.log(rate);
 					// console.log(this.singleImgHeight);
@@ -607,15 +622,16 @@
 		flex: 0 0 auto;
 		align-items: center;
 		flex-wrap: wrap;
-		width: calc(648upx + 12px);
+		width: 91.8%;
+		margin-left: 4.1%;
 		margin: 0 auto;
 		margin-bottom: 9px;
 	}
 
 	.detailpic {
 		/* 			width: calc((100% - 12px) / 3);*/
-		width: 216upx;
-		height: 216upx;
+		width: 180upx;
+		height: 180upx;
 		margin: 6px 0;
 	}
 

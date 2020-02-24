@@ -5,13 +5,13 @@
 		<view class="comments-menu">
 			<view class="comments-num">{{mainCommentList.length}}条评论</view>
 			<view class="comments-order">
-                   <view class="order-in-time" :class="{ chosen : order == 'time'}" @tap="change_comment_order('time')">
+                   <view class="order-in-time" :class="{ chosen : order == 0}" @tap="change_comment_order(0)">
 					   时间
 				   </view>
-				   <view class="order-in-hot" :class="{ chosen : order != 'time'}" @tap="change_comment_order('hot')">
+				   <view class="order-in-hot" :class="{ chosen : order != 0}" @tap="change_comment_order(1)">
 				   	   热度
 				   </view>
-				   <view class="bg-of-order" :style="{'left':order == 'time' ? '-13px;' :'41px' ,}"></view>
+				   <view class="bg-of-order" :style="{'left':order == 0 ? '-13px;' :'41px' ,}"></view>
 			</view>
 		</view>
 
@@ -51,7 +51,7 @@
 		data() {
 			return {
 				mainCommentList: this.commentList,
-				order:"time",//评论排序方式
+				order: 0, //评论排序方式 0：按时间查询, 1：按热度查询
 			}
 		},
 		watch: {
@@ -121,8 +121,7 @@
 			},
 			change_comment_order(new_order){
 				this.order = new_order ;
-				console.log(new_order);
-				console.log(this.order);
+				this.$emit("onChange", {type: new_order});
 			},
 			goToPersonPublic(userId){
 				// router.goToPersonPublic(); // 全局方法
