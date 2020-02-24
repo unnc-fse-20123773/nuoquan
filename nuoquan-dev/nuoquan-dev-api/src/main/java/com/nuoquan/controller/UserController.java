@@ -20,6 +20,7 @@ import com.nuoquan.utils.FastDFSClient;
 import com.nuoquan.email.EmailTool;
 import com.nuoquan.enums.MsgActionEnum;
 import com.nuoquan.enums.ReputeWeight;
+import com.nuoquan.pojo.ArticleImage;
 import com.nuoquan.pojo.ChatMsg;
 import com.nuoquan.pojo.User;
 import com.nuoquan.pojo.netty.DataContent;
@@ -53,15 +54,16 @@ public class UserController extends BasicController {
 	/**
 	 * Description 上传文件到 fdfs 文件服务器 的实例方法
 	 *
-	 * PS：目前还是根据短视频里的储存逻辑，储存在本地。fdfs较为复杂，等我弄清楚了再做调整，本方法仅供参考。
+	 * PS：目前文件储存在本地。fdfs较为复杂，将来业务如果偏向图片/视频储存，可考虑启用，本方法仅供参考。
 	 * 
 	 * @author jerrio
 	 */
-	@ApiOperation(value = "User uploads face image")
+	@Deprecated
+	@ApiOperation(value = "An example for user uploading face image")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "userId", required = true, dataType = "String", paramType = "form"), })
-	@PostMapping("/uploadFace")
-	public JSONResult uploadFace(String userId, @ApiParam(value = "face image", required = true) MultipartFile file)
+	@PostMapping("/uploadFaceExample")
+	public JSONResult uploadFaceExample(String userId, @ApiParam(value = "face image", required = true) MultipartFile file)
 			throws Exception {
 
 		// 删除用户旧头像
@@ -94,6 +96,45 @@ public class UserController extends BasicController {
 		fastDFSClient.deleteFile(fdfsGroupName, url);
 		fastDFSClient.deleteFile(fdfsGroupName, thumbUrl);
 	}
+	
+	@ApiOperation(value = "User uploading face image")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "userId", required = true, dataType = "String", paramType = "form"), })
+	@PostMapping("/uploadFace")
+	public JSONResult uploadFace(String userId, @ApiParam(value = "face image", required = true) MultipartFile file)
+			throws Exception {
+				
+		if (StringUtils.isNoneBlank(userId) && file != null) {
+			// 判断是否超出大小限制
+			if (file.getSize() > MAX_FACE_IMAGE_SIZE) {
+				return JSONResult.errorException("Uploaded file size exceed server's limit (10MB)");
+			}
+			// 暂时不用删除用户旧头像 @Jerrio
+			
+			// 上传文件
+			String fileName = file.getOriginalFilename();
+			if (StringUtils.isNotBlank(fileName)) {
+				// 保存到数据库中的相对路径
+				String uploadPathDB = "/" + userId + "/face" + "/" + fileName;
+				String fileSpace = resourceConfig.getFileSpace();	// 文件保存空间地址
+				// 文件上传的最终保存路径
+				String finalVideoPath = fileSpace + uploadPathDB;
+				// 保存图片
+				uploadFile(file, finalVideoPath);	// 调用 BasicController 里的方法
+
+				User user = new User();
+				user.setId(userId);
+				user.setFaceImg(uploadPathDB);
+				userService.updateUserInfo(user);
+				return JSONResult.ok(uploadPathDB);
+			}else {
+				return JSONResult.errorMsg("File name is blank");
+			}	
+		}else {
+			return JSONResult.errorMsg("Upload error");
+		}
+	}
+
 
 	@ApiOperation(value = "Be the fans")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "userId", required = true, dataType = "String", paramType = "form"),
@@ -366,12 +407,8 @@ public class UserController extends BasicController {
 			user.setCreateDate(new Date());
 			user = userService.saveUserDirectly(user);
 		} else {
-			// 3.2 更新头像
-			user.setId(userData.getId());
-			user.setFaceImg(userData.getFaceImg());
-			user.setFaceImgThumb(userData.getFaceImgThumb());
-			
-			user = userService.updateUserInfo(user);
+			// 3.2 查询信息
+			user = userService.queryUserById(userData.getId());
 		}
 		// 将 user 对象转换为 userVO 输出，userVO 中不返回密码，且可加上其他属性。
 		UserVO userVO = ConvertUserToUserVO(user);

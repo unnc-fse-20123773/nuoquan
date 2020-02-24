@@ -234,5 +234,6 @@ export default {
   background-color: #007AFF;
   top: 200rpx;
   left: 100rpx;
+  z-index: 30;
 }
 </style>

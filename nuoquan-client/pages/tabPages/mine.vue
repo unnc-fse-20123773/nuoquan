@@ -10,7 +10,7 @@
 			<!-- 基本信息内容 -->
 			<view id="idCard" class="idCard" :style="{ width: cardWidth }">
 				<view style="width: 100%;height: 74px;margin-top: -46px;" class="super_center">
-					<image class="publicTouxiang" mode="aspectFill" :src="thisUserInfo.faceImg"></image>
+					<image class="publicTouxiang" mode="aspectFill" :src="pathFilter(thisUserInfo.faceImg)"></image>
 				</view>
 				<!-- ID -->
 				<view class="nameBox super_center">

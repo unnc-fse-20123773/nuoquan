@@ -9,7 +9,8 @@
 		 @controlInputSignal="controlInput">这是分割线</view>
 		<!--第一个大块二，评论区域-->
 
-		<detail_2_comments class="comment-area" :commentList='commentList' @controlInputSignal="controlInput" :userInfo="userInfo"></detail_2_comments>
+		<detail_2_comments class="comment-area" :commentList='commentList' @controlInputSignal="controlInput" :userInfo="userInfo"
+		@onChange="changeType" ></detail_2_comments>
 
 
 
@@ -93,6 +94,7 @@ import detail_2_comments from "./detail_2_comments.vue"
 				
 				totalPage: 1,
 				currentPage: 1,
+				type: 0, //查询评论接口参数，0：按时间查询, 1：按热度查询
 				control_scroll_button_flag:0,
 			};
 		},
@@ -278,7 +280,12 @@ import detail_2_comments from "./detail_2_comments.vue"
 				})
 			},
 			
-			getComments: function(page) {		
+			changeType(e){
+				this.type = e.type;
+				this.getComments(1);
+			},
+			
+			getComments: function(page) {
 				var that = this;
 				uni.showLoading({
 					title:"加载中..."
@@ -290,6 +297,7 @@ import detail_2_comments from "./detail_2_comments.vue"
 						articleId: that.articleCard.id,
 						userId: that.userInfo.id,
 						page: page,
+						type: that.type
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'

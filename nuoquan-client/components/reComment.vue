@@ -3,7 +3,7 @@
 		<view class="contentarea" @tap="goToCommentDetail()">回复@{{subComment.toNickname}}: {{subComment.comment}}</view>
 		<view class="bottombar">
 			<view style="width:70%;display:inline-block;">
-				<image :src="subComment.faceImg" class="touxiang" @tap="goToPersonPublic"></image>
+				<image :src="pathFilter(subComment.faceImg)" class="touxiang" @tap="goToPersonPublic"></image>
 				<text class="name">{{ subComment.nickname }}</text>
 				<text class="time">{{ subComment.timeAgo }}</text>
 			</view>

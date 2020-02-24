@@ -117,7 +117,7 @@
 
 		/* <view class="comment">
 			<view class="comment-info">
-				<image :src="commentDetail.faceImg" @tap="goToPersonPublic(commentDetail.fromUserId)"></image>
+				<image :src="pathFilter(commentDetail.faceImg)" @tap="goToPersonPublic(commentDetail.fromUserId)"></image>
 				<view class="name_text">{{ commentDetail.nickname }}</view>
 				<view class="time_text">{{ commentDetail.timeAgo }}</view>
 			</view>

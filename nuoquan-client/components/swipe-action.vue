@@ -22,7 +22,7 @@
 								<view class="item-left">
 									<!-- <avator-group :type="it.type" :avator="it.url"></avator-group> -->
 									<view class="avator">
-										<image class="img" :src="it.friendInfo.faceImg"></image>
+										<image class="img" :src="pathFilter(it.friendInfo.faceImg)"></image>
 									</view>
 									
 								</view>

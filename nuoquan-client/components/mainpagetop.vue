@@ -10,7 +10,7 @@
 		<view :class="[roleup == false ? 'mainPageTop' : 'mainPageTop_roled']">
 			<!-- 搜索行 -->
 			<view class="topBar">
-				<!-- 头像，备用 <image class="topBarTouxiang" :src='userInfo.faceImg' @click="controlShowLeft(1)"></image> -->
+				<!-- 头像，备用 <image class="topBarTouxiang" :src='pathFilter(userInfo.faceImg)' @click="controlShowLeft(1)"></image> -->
 				<view class="topBarSearch" @click="controlShowSearch(1)">
 					<image src="../static/icon/search_B79144.png" mode="aspectFit"></image>
 				</view>

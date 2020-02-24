@@ -4,7 +4,7 @@
 		<view class="detail-title">{{ articleCard.articleTitle }}</view>
 		<!--作者信息，头像名字时间-->
 		<view class="author-info-bar">
-			<image :src="articleCard.faceImg" class="touxiang" @click="goToPersonPublic()"></image>
+			<image :src="pathFilter(articleCard.faceImg)" class="touxiang" @click="goToPersonPublic()"></image>
 			<view class="name" @tap="goToPersonPublic()">{{ articleCard.nickname }}</view>
 			<view class="time">{{ timeDeal(articleCard.createDate)}}</view>
 		</view>
@@ -67,7 +67,7 @@
 				singleImgWidth:"", //一图调整宽度
 				tagColorList: [],
 				
-				share: false, // 隐藏/显示share画布
+				share: true, // 隐藏/显示share画布
 			};
 		},
 		mounted() {

@@ -3,7 +3,10 @@
 		<view id="yellow-box"></view>
 		<form @submit="formSubmit" @reset="formReset">
 			<view class="profile-basicinfo-card column_center">
-				<image class="profileTouxiang" mode="aspectFill" :src="userInfo.faceImg" height:160upx width:160upx></image>
+				<avatar class="profileTouxiang"
+					selWidth="200px" selHeight="400upx" @upload="uploadFace" :avatarSrc="pathFilter(userInfo.faceImg)"
+					avatarStyle="width: 160upx; height: 160upx; border-radius: 100%;">
+				</avatar>
 				<!-- 一般状态 -->
 				<view class="profileText-box" v-if="isEdit == false">
 					<view class="nickname">
@@ -28,7 +31,7 @@
 						<text class="right-profileText2">学位</text>
 						<text class="right-profileTextb">{{degrees[userInfo.degree]}}</text>
 					</view>
-				</view>
+				</view>	
 				<!-- 修改时状态 -->
 				<view class="profileText-box" v-show="isEdit == true">
 					<view class="nickname">
@@ -104,8 +107,10 @@
 		</form>
 	</view>
 </template>
+
 <script>
 	import mypicker from '../../components/mypicker.vue';
+    import avatar from "../../components/yq-avatar/yq-avatar.vue";
 
 	export default {
 		data() {
@@ -152,6 +157,7 @@
 
 		components: {
 			mypicker,
+			avatar
 		},
 
 		onLoad: function() {
@@ -259,9 +265,8 @@
 					degree: this.degreeDB
 				};
 				console.log(data);
-				var that = this;
 				uni.request({
-					url: that.$serverUrl + '/user/updateUser',
+					url: this.$serverUrl + '/user/updateUser',
 					method: "POST",
 					data: JSON.stringify(data),
 					header: {
@@ -273,7 +278,7 @@
 							var finalUser = this.myUser(user); // 分割邮箱地址, 重构 user
 							this.setGlobalUserInfo(finalUser); // 把用户信息写入缓存
 							this.userInfo = finalUser; // 更新页面用户数据
-							console.log(this.userInfo);
+							// console.log(this.userInfo);
 						}
 					},
 				});
@@ -281,18 +286,27 @@
 				// 完成修改，更改 isEdit 为 false
 				this.editProfile(this.isEdit);
 			},
-
-			getIndex(list, item) {
-				for (var i = 0; i < list.length; i++) {
-					if (list[i] == item) {
-						return i;
+			/**
+			 * 上传头像
+			 * @param {Object} e
+			 */
+			uploadFace(rsp) {
+				var path = rsp.path;
+				uni.uploadFile({
+					url: this.$serverUrl + '/user/uploadFace',
+					filePath: path,
+					name: 'file',
+					formData: {
+						userId: this.userInfo.id,
+					},
+					success: (res) => {
+						// uploadFile 返回的 res.data 是 String
+						var data = JSON.parse(res.data);
+						if (data.status == 200) {
+							this.userInfo.faceImg = data.data;
+						}
 					}
-				}
-				return -1;
-			},
-
-			test(e) {
-				console.log(e);
+				});
 			}
 		}
 	}
