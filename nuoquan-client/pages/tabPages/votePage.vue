@@ -89,6 +89,7 @@
 										<view class="voteContent">{{result.optionContent}}</view>
 										<view class="voteresultNum">
 											<text>{{result.count}}</text>
+											<!-- <text>{{result.barWidth}}</text> -->
 											<view class="percentLine">
 												<view class="percentNum">{{reserveTwoDecimal(result.percent * 100)}}</view>
 												<text>%</text>
@@ -97,7 +98,7 @@
 									</view>
 									<view class="resultBarCard">
 										<view class="resultBar_border"></view>
-										<view class="resultBar_bgclr" :style="{ width: reserveTwoDecimal(result.percent * 100) + '%' }"></view>
+										<view class="resultBar_bgclr" :style="{ width: result.barWidth + '%' }"></view>
 									</view>
 								</view>
 								<!-- 用户选项结果 -->
@@ -106,6 +107,7 @@
 										<view class="voteContent_chosen">{{result.optionContent}}</view>
 										<view class="voteresultNum_chosen">
 											<text>{{result.count}}</text>
+											<!-- <text>{{result.barWidth}}</text> -->
 											<view class="percentLine_chosen">
 												<view class="percentNum_chosen">{{reserveTwoDecimal(result.percent * 100)}}</view>
 												<text>%</text>
@@ -114,7 +116,7 @@
 									</view>
 									<view class="resultBarCard">
 										<view class="resultBar_border_chosen"></view>
-										<view class="resultBar_bgclr_chosen" :style="{ width: reserveTwoDecimal(result.percent * 100) + '%' }"></view>
+										<view class="resultBar_bgclr_chosen" :style="{ width:  result.barWidth + '%' }"></view>
 									</view>
 								</view>
 							</view>
@@ -153,7 +155,7 @@
 
 <script>
 	const DEFAULT_PAGE = 0;
-	var timer = null; //进度条生长
+	// var timer = null; //进度条生长
 	
 	var loadVoteFlag = false;
 	
@@ -169,7 +171,8 @@
 				navigationBarHeight: 0, //导航栏高度
 				ifShowComment: false, //判断是否展示评论区域
 				finishVote: [], //判断是否展示投票结果条形图
-				persentBarWidth: 0, //条形图宽度
+				persentBarWidth: [0,0,0,0], //条形图宽度
+				widthTarget: [], // 进度条的宽度目标值
 				
 				showList: ['1','2'],
 				userInfo: '',
@@ -333,8 +336,7 @@
 				this.ifShowComment = !this.ifShowComment;
 				this.finishVote[voteIndex] = !this.finishVote[voteIndex];
 				// console.log('确认投票');
-				this.onePersentBarGrow();
-				this.voteCardHeight = 3000; //确认投票后or该投票状态为已投，改变卡片高度
+				
 				
 				var that = this;
 				uni.request({
@@ -358,29 +360,63 @@
 						// 如果两个相等, 放在用户选择区, 其余放在非用户选择区
 						that.afterSelectedResult = res.data.data.rows[0];
 						that.showList[that.currentVoteIndex] = that.afterSelectedResult;
-						console.log(that.afterSelectedResult);
+						// console.log(that.afterSelectedResult);
 						that.afterSelectedOptionList = that.afterSelectedResult.optionList;
-						console.log(that.afterSelectedOptionList);
+						// console.log(that.afterSelectedOptionList);
 						// that.ischosen[voteIndex] = true;
+						console.log(that.showList[voteIndex]);
+						
+						// 进度条伸长
+						for (let option of that.showList[voteIndex].optionList){
+							this.onePersentBarGrow(option);
+						}
+						
+						this.voteCardHeight = 3000; //确认投票后or该投票状态为已投，改变卡片高度
 					}
 				})
 			},
 
-			onePersentBarGrow: function() {
-				var that = this;
-				//var width = this.persentBarWidth;//赋值宽度
-				clearInterval(timer); //清空 timer
-				timer = setInterval(function() {
+			/**
+			 * 为选项添加进度条的长度
+			 * @param {Object} option 选项
+			 * @description 监听对象 --> 在地址上进行更改(类似指针), 避免多线程操作一个地址时: 获取数据失败/混乱等问题
+			 */
+			onePersentBarGrow(option){
+				var widthTarget = (this.reserveTwoDecimal(option.percent * 100));
+				this.$set(option, 'barWidth', 0); // 为选项添加barWidth属性
+				var timer = setInterval(function() {
 					//设置计时器
-					if (that.persentBarWidth == 100) {
+					if ( option.barWidth >= widthTarget) {
 						//在 persentBarWidth 为目标值时清空计时器，暂以100代替
+						console.log(option);
 						clearInterval(timer);
 					} else {
-						that.persentBarWidth = that.persentBarWidth + 1;
-						console.log("进度条拉长");
+						option.barWidth += 0.5;
 					}
-				}, 12);
+				}, 6);
 			},
+			
+			// onePersentBarGrow: function(index) {
+			// 	var that = this;
+			// 	console.log(that.persentBarWidth);
+			// 	// var width = that.persentBarWidth[index];//赋值宽度
+			// 	var widthTarget = (this.reserveTwoDecimal(that.widthTarget[index] * 100));
+			// 	console.log("widthTarget: "+widthTarget);
+			// 	// clearInterval(timer); //清空 timer
+			// 	var timer = setInterval(function() {
+			// 		//设置计时器
+			// 		if ( that.persentBarWidth[index] >= widthTarget) {
+			// 			console.log("-----");
+			// 			//在 persentBarWidth 为目标值时清空计时器，暂以100代替
+			// 			console.log(that.persentBarWidth);
+			// 			clearInterval(timer);
+			// 		} else {
+			// 			that.persentBarWidth[index] += 1;
+			// 			// console.log("width:" + width);
+			// 		}
+			// 	}, 12);
+				
+			// },
 
 			showVotes: function(page) {
 				if (loadVoteFlag) {
