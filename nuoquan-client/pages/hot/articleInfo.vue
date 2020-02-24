@@ -1,5 +1,5 @@
 <template>
-	<view style="width:100%;">
+	<view  style="width:100%;">
 		<view class="pics">
 			<image src="../../static/icon/1.png"></image>
 			<image src="../../static/icon/2.png"></image>
@@ -12,8 +12,8 @@
 			<image src="../../static/icon/9.png"></image>
 			<image src="../../static/icon/10.png"></image>
 		</view>	
-		<block v-for="(thisArticle,index) in myArticleList" :key="thisArticle.id" >
-			<view class="oneArticle">
+		<block v-for="(thisArticle,index) in myArticleList" :key="thisArticle.id">
+			<view class="oneArticle" @click="goToDetail(thisArticle)">
 				<image class="index" :src="'../../static/icon/' + (index+1) + '.png'"></image>
 				<view class="title"> {{ thisArticle.articleTitle }}</view>
 				<view class="cardBody">
@@ -57,6 +57,16 @@
 				
 			};
 		},
+	
+		methods:{
+				goToDetail:function(thisArticle){
+					//thisArticle用函数传入，因为v-for使用了ID为键名，所以无法筛选数据，就直接block传进来好了
+					uni.navigateTo({
+						url: '/pages/detail/detail?data=' + thisArticle.id
+					});
+				},
+			
+		}
 }
 </script>
 
@@ -99,6 +109,7 @@
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
+		font-weight: 600;
 	}
 
 	.cardBody {
@@ -107,10 +118,11 @@
 		/* height:83px; */
 		/*padding-top:10px;*/
 		position: relative;
-		width: 317px;
 		height:83px; 
 		padding-top: 12px;
 		margin-left: 16px;
+		margin-right: 16px;
+		font-weight: 400;
 	}
 
 	.picArea {

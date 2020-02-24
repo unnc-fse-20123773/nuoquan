@@ -30,7 +30,7 @@
 					</view>
 				</view>
 				<!-- 修改时状态 -->
-				<view class="profileText-box" v-if="isEdit == true">
+				<view class="profileText-box" v-show="isEdit == true">
 					<view class="nickname">
 						<text class="left-profileText1 ">昵称<text class="right-remind "> 最长 8 位</text></text>
 						<input class="right-profileText1-1" style="text-align:left;min-height: 1upx;height:26px;" maxlength="8" :value="userInfo.nickname"
@@ -358,8 +358,9 @@
 	}
 
 	.right-remind {
+		margin-left: 10px;
 		color: #888888;
-		font-size: 20upx;
+		font-size: 8px;
 		font-weight: 500;
 	}
 
@@ -539,27 +540,28 @@
 		opacity: 1;
 		border-radius: 4px;
 		color: rgba(255, 93, 93, 1);
-		;
 		font-weight: 500;
 		text-align: center;
-		line-height: 16px;
+
+		line-height: 19px;
 	}
 
 	.genderPicker-buttonclick {
 		width: 41px;
 		height: 23px;
-
 		border: 1px solid blue;
 		border-radius: 4px;
 		background-color: blue;
 		color: rgba(255, 255, 255, 1);
 		text-align: center;
+	
 		font-weight: 500;
-		line-height: 16px;
+		line-height: 19px;
+	
 	}
 
 	.gender-text {
-		margin-top: 3px;
+
 		font-size: 16px;
 		font-weight: 550;
 	}
