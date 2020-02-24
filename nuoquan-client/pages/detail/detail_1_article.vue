@@ -4,7 +4,7 @@
 		<view class="detail-title">{{ articleCard.articleTitle }}</view>
 		<!--作者信息，头像名字时间-->
 		<view class="author-info-bar">
-			<image :src="articleCard.faceImg" class="touxiang" @click="goToPersonPublic()"></image>
+			<image :src="pathFilter(articleCard.faceImg)" class="touxiang" @click="goToPersonPublic()"></image>
 			<view class="name" @tap="goToPersonPublic()">{{ articleCard.nickname }}</view>
 			<view class="time">{{ timeDeal(articleCard.createDate)}}</view>
 		</view>

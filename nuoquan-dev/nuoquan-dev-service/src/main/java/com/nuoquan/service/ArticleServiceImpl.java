@@ -578,6 +578,9 @@ public class ArticleServiceImpl implements ArticleService {
 //				c.setTimeAgo(timeAgo);
 				// 查询并设置关于用户的点赞关系
 				c.setIsLike(isUserLikeComment(userId, c.getId()));
+				// 查询并设置toNickName
+				User user= userMapper.selectByPrimaryKey(c.getToUserId());
+				c.setToNickname(user.getNickname());
 			}
 		}
 		
@@ -589,6 +592,9 @@ public class ArticleServiceImpl implements ArticleService {
 //				c.setTimeAgo(timeAgo);
 				// 查询并设置关于用户的点赞关系
 				c.setIsLike(isUserLikeComment(userId, c.getId()));
+				// 查询并设置toNickName
+				User user= userMapper.selectByPrimaryKey(c.getToUserId());
+				c.setToNickname(user.getNickname());
 			}
 		}
 
@@ -619,6 +625,9 @@ public class ArticleServiceImpl implements ArticleService {
 				c.setIsLike(isUserLikeComment(userId, c.getId()));
 				// 设置回复人昵称
 				c.setToNickname(userService.queryUserById(c.getToUserId()).getNickname());
+				// 查询并设置toNickName
+				User user= userMapper.selectByPrimaryKey(c.getToUserId());
+				c.setToNickname(user.getNickname());
 			}
 		}
 		
@@ -632,6 +641,9 @@ public class ArticleServiceImpl implements ArticleService {
 				c.setIsLike(isUserLikeComment(userId, c.getId()));
 				// 设置回复人昵称
 				c.setToNickname(userService.queryUserById(c.getToUserId()).getNickname());
+				// 查询并设置toNickName
+				User user= userMapper.selectByPrimaryKey(c.getToUserId());
+				c.setToNickname(user.getNickname());
 			}
 		}
 		

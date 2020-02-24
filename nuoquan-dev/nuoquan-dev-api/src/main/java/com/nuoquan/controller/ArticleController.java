@@ -5,12 +5,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,9 +28,6 @@ import com.nuoquan.pojo.netty.DataContent;
 import com.nuoquan.pojo.vo.ArticleVO;
 import com.nuoquan.pojo.vo.UserArticleCommentVO;
 import com.nuoquan.pojo.vo.UserLikeVO;
-import com.nuoquan.service.ArticleService;
-import com.nuoquan.service.UserService;
-import com.nuoquan.service.WeChatService;
 import com.nuoquan.utils.JSONResult;
 import com.nuoquan.utils.PagedResult;
 
@@ -46,9 +41,6 @@ import io.swagger.annotations.ApiParam;
 @Api(value = "文章相关接口", tags = { "Article-Controller" })
 @RequestMapping("/article")
 public class ArticleController extends BasicController {
-
-	@Value("${upload.maxFaceImageSize}")
-	private long MAX_FACE_IMAGE_SIZE;
 
 	@ApiOperation(value = "查询全部文章", notes = "查询全部文章的接口")
 	@ApiImplicitParams({
@@ -320,36 +312,36 @@ public class ArticleController extends BasicController {
 	@PostMapping(value="/uploadArticleImg")
 	public JSONResult uploadArticleImg(String userId ,String articleId, String order, @ApiParam(value="file", required=true) MultipartFile file) throws Exception {
 
-		ArticleImage articleImage = new ArticleImage();
-		
-		if (file != null) {
+		if (StringUtils.isNoneBlank(userId) && file != null) {
 			// 判断是否超出大小限制
 			if (file.getSize() > MAX_FACE_IMAGE_SIZE) {
 				return JSONResult.errorException("Uploaded file size exceed server's limit (10MB)");
 			}
-			// 保存图片
-			String fileSpace = resourceConfig.getFileSpace();	// 文件保存空间地址
-			// 获取文件后缀
 			String fileName = file.getOriginalFilename();
-			String[] strList = fileName.split("\\.");
-	
-			String newFileName = order + "." + strList[strList.length-1];	// 把顺序 order.原后缀 作为文件名
-			// 保存到数据库中的相对路径
-			String uploadPathDB = "/" + userId + "/article" + "/" + articleId + "/" + newFileName;
-			// 文件上传的最终保存路径
-			String finalVideoPath = "";
-			
-			if (StringUtils.isNotBlank(newFileName)) {
-				finalVideoPath = fileSpace + uploadPathDB;
+			if (StringUtils.isNotBlank(fileName)) {
+				// 获取文件后缀
+				String[] strList = fileName.split("\\.");
+				String newFileName = order + "." + strList[strList.length-1];	// 把顺序 order.原后缀 作为文件名
+				// 保存到数据库中的相对路径
+				String uploadPathDB = "/" + userId + "/article" + "/" + articleId + "/" + newFileName;
+				String fileSpace = resourceConfig.getFileSpace();	// 文件保存空间地址
+				// 文件上传的最终保存路径
+				String finalVideoPath = fileSpace + uploadPathDB;
+				// 保存图片
 				uploadFile(file, finalVideoPath);	// 调用 BasicController 里的方法
+
+				ArticleImage articleImage = new ArticleImage();
 				articleImage.setImagePath(uploadPathDB);
 				articleImage.setArticleId(articleId);
+				articleService.saveArticleImages(articleImage);
+				
+				return JSONResult.ok();
+			}else {
+				return JSONResult.errorMsg("File name is blank");
 			}
-			articleService.saveArticleImages(articleImage);
-			
+		}else {
+			return JSONResult.errorMsg("Upload error");
 		}
-		
-		return JSONResult.ok();
 	}
 
 	@ApiOperation(value = "删除文章")
@@ -468,6 +460,16 @@ public class ArticleController extends BasicController {
 		
 	}
 
+	/**
+	 * 
+	 * @param page
+	 * @param pageSize
+	 * @param type  0 -- 按时间查询, 1 -- 按热度查询
+	 * @param articleId
+	 * @param userId
+	 * @return
+	 * @throws Exception
+	 */
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "page", required = false, dataType = "Integer", paramType = "form"),
 			@ApiImplicitParam(name = "pageSize", required = false, dataType = "Integer", paramType = "form"),
@@ -495,7 +497,16 @@ public class ArticleController extends BasicController {
 		return JSONResult.ok(list);
 	}
 	
-	
+	/**
+	 * 
+	 * @param page
+	 * @param pageSize
+	 * @param type  0 -- 按时间查询, 1 -- 按热度查询
+	 * @param underCommentId
+	 * @param userId
+	 * @return
+	 * @throws Exception
+	 */
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "underCommentId", required = true, dataType = "String", paramType = "form"),
 		@ApiImplicitParam(name = "page", required = false, dataType = "Integer", paramType = "form"),

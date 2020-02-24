@@ -15,7 +15,7 @@ Vue.config.productionTip = false
 Vue.prototype.version = "v1.0.3 - 公测版"
 Vue.prototype.tagColors = ['#FE5F55','#40A792','#FDD041','#5CA0D3','#621E81','#738598','#F3AE4B']
 
-Vue.prototype.$store = store
+Vue.prototype.$store = store // 挂载 vueX
 
 Vue.prototype.$serverUrl = "http://127.0.0.1:8080"
 Vue.prototype.$wsServerUrl = "wss://127.0.0.1:8088/ws"
@@ -996,6 +996,46 @@ Vue.prototype.timeDeal = function(timediff) {
 	return timeSpanStr;
 }
 
+// 计算多少天后xxx样的方法
+Vue.prototype.reTimeDeal = function(timediff) {
+	timediff = new Date(timediff);
+	var parts = [timediff.getFullYear(), timediff.getMonth() + 1, timediff.getDate(), timediff.getHours(), timediff.getMinutes(),
+		timediff.getSeconds()
+	];
+	var oldTime = timediff.getTime();
+	var now = new Date();
+	var newTime = now.getTime();
+	var milliseconds = 0;
+	var timeSpanStr;
+	milliseconds = newTime - oldTime;
+	if (milliseconds > 1000 * 60 * 1) {
+		timeSpanStr = '刚刚';
+	} else if (1000 * 60 * 1 >= milliseconds && milliseconds > 1000 * 60 * 60) {
+		timeSpanStr = Math.round((milliseconds / (1000 * 60))) + '分钟后';
+	} else if (1000 * 60 * 60 * 1 >= milliseconds && milliseconds > 1000 * 60 * 60 * 24) {
+		timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时后';
+	} else if (1000 * 60 * 60 * 24 >= milliseconds && milliseconds > 1000 * 60 * 60 * 24 * 15) {
+		timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天后';
+		
+	} else if (milliseconds <= 1000 * 60 * 60 * 24 * 15 && parts[0] == now.getFullYear()) {
+		timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
+	} else {
+		timeSpanStr = parts[0] + '-' + parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
+	}
+	return timeSpanStr;
+}
+
+/**
+ * 如果是相对路径为之添加全局服务器地址
+ * @param {Object} path
+ */
+Vue.prototype.pathFilter = function(path){
+	if(path.startsWith("/")){
+		path = app.$serverUrl + path;
+	}
+	return path;
+}
+
 // 封装tabbar索引，避免重复书写
 Vue.mixin({
   methods:{
@@ -1022,4 +1062,14 @@ Vue.prototype.getScreenSize = function(){
 			console.log(res.platform);
 		}
 	})
+}
+
+// 保留两位小数的方法
+Vue.prototype.reserveTwoDecimal = function(number){
+	var floatNum = parseFloat(number);
+	if(isNaN(floatNum)){
+		return;
+	}
+	floatNum = Math.round(number*100)/100;
+	return floatNum;
 }

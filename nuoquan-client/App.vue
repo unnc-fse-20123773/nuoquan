@@ -3,8 +3,9 @@
 		onLaunch: function() {
 			console.log('App Launch')
 		},
-		onShow: function() {
+		onShow: function(options) {
 			console.log('App Show')
+			console.log(options)
 		},
 		onHide: function() {
 			console.log('App Hide')

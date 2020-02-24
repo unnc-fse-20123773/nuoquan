@@ -282,7 +282,7 @@
 			 * true: 不匹配, false: 匹配
 			 */
 			checkUNNCEmail(str) {
-				return !RegExp(/^\w+([-+.]\w+)*@nottingham\.edu\.cn+$/).test(str);
+				return !RegExp(/^\w+([-+.]\w+)*@nottingham\.[edu\.cn,ac\.uk,alumni]+$/).test(str);
 			},
 
 			getCaptcha() {

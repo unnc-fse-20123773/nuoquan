@@ -4,7 +4,7 @@
 
 		<view class="comment-Box">
 			<view class="comment-info">
-				<image :src="mainComment.faceImg" @tap="goToPersonPublic(mainComment.fromUserId)"></image>
+				<image :src="pathFilter(mainComment.faceImg)" @tap="goToPersonPublic(mainComment.fromUserId)"></image>
 				<view class="name_text">{{ mainComment.nickname }}</view>
 				<view class="time_text">{{ mainComment.timeAgo }}</view>
 			</view>
@@ -22,7 +22,7 @@
 			<sonCommentBox v-for="i in commentList" :key="i.id" :reCommentDetail="i" @controlInputSignal="controlInput"
 			 @swLikeComment="swLikeComment" @goToPersonPublic="goToPersonPublic"></sonCommentBox>
 			<!-- 占位块 -->
-			<view style="width: 100%; height: 100px;"></view>
+			<view style="width: 100%; height: 40px;"></view>
 		</view>
 
 
@@ -112,7 +112,8 @@
 					data: {
 						underCommentId: that.mainComment.id,
 						userId: that.userInfo.id,
-						page: page
+						page: page,
+						type: 0,
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
