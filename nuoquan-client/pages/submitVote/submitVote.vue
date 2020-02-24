@@ -139,6 +139,7 @@ export default {
 		pickerChange(res) {
 			console.log(res);
 			this.pickerValue = res.newPickerValue;
+			// console.log("选择的天数: "+ this.pickerValue);
 
 		},
 
@@ -165,11 +166,13 @@ export default {
 		},
 		
 		chooseImg: async function(){
+			console.log("choose");
 			uni.chooseImage({
 				sourceType: sourceType[this.sourceTypeIndex],
 				sizeType: sizeType[this.sizeType],
 				count: this.imageList.length + this.count[this.countIndex] > 9 ? 9 - this.imageList.length : this.count[this.countIndex],
 				success: (res) => {
+					console.log("success choose");
 					this.imageList = this.imageList.concat(res.tempFilePaths);
 					console.log(res);
 				}
@@ -279,7 +282,8 @@ export default {
 						userId: that.userInfo.id,
 						voteTitle: that.voteTitle,
 						voteContent: that.voteContent,
-						optionContent: that.optionString
+						optionContent: that.optionString,
+						duration: that.pickerValue
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
