@@ -34,6 +34,7 @@
 				</view>
 
 			</block>
+			<view style="height: 100px;width: 100%;"></view>
 		</view>
 
 	</view>
