@@ -1,150 +1,3 @@
-@charset "UTF-8";
-/**
- * 这里是uni-app内置的常用样式变量
- *
- * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
- * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
- *
- */
-/**
- * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
- *
- * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
- */
-/* 颜色变量 */
-/* 行为相关颜色 */
-/* 文字基本颜色 */
-/* 背景颜色 */
-/* 边框颜色 */
-/* 尺寸变量 */
-/* 文字尺寸 */
-/* 图片尺寸 */
-/* Border Radius */
-/* 水平间距 */
-/* 垂直间距 */
-/* 透明度 */
-/* 文章场景相关 */
-.uni-nav-bar-text.data-v-557ad20c {
-  font-size: 32rpx;
-}
-.uni-nav-bar-right-text.data-v-557ad20c {
-  font-size: 28rpx;
-}
-.uni-navbar.data-v-557ad20c {
-  width: 750rpx;
-}
-.uni-navbar__content.data-v-557ad20c {
-  position: relative;
-  width: 750rpx;
-  background-color: #ffffff;
-  overflow: hidden;
-}
-.uni-navbar__content_view.data-v-557ad20c {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-          flex-direction: row;
-}
-.uni-navbar__header.data-v-557ad20c {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-          flex-direction: row;
-  width: 750rpx;
-  height: 44px;
-  line-height: 44px;
-  font-size: 16px;
-}
-.uni-navbar__header-btns.data-v-557ad20c {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-wrap: nowrap;
-          flex-wrap: nowrap;
-  width: 120rpx;
-  padding: 0 6px;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-}
-.uni-navbar__header-btns-left.data-v-557ad20c {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  width: 150rpx;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-          justify-content: flex-start;
-}
-.uni-navbar__header-btns-right.data-v-557ad20c {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  width: 150rpx;
-  padding-right: 30rpx;
-  -webkit-box-pack: end;
-  -webkit-justify-content: flex-end;
-          justify-content: flex-end;
-}
-.uni-navbar__header-container.data-v-557ad20c {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-          flex: 1;
-}
-.uni-navbar__header-container-inner.data-v-557ad20c {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-          flex: 1;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  font-size: 28rpx;
-}
-.uni-navbar__placeholder-view.data-v-557ad20c {
-  height: 44px;
-}
-.uni-navbar--fixed.data-v-557ad20c {
-  position: fixed;
-  z-index: 998;
-}
-.uni-navbar--shadow.data-v-557ad20c {
-  box-shadow: 0 1px 6px #ccc;
-}
-.uni-navbar--border.data-v-557ad20c {
-  border-bottom-width: 1rpx;
-  border-bottom-style: solid;
-  border-bottom-color: #c8c7cc;
-}
-
-
-.navigationBar_Line{
-	position: absolute;
-	width: 100%;
-	bottom: 0;
-	height: 38px;
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: flex;
-}
-
 
 page {
 	height: 100%;
@@ -152,7 +5,7 @@ page {
 	background: #FCFCFC;
 }
 
-.detail-page.data-v-5abf75f8{
+.detail-page.data-v-0dddf152{
 		width: calc(100% - 32px);
 		margin:auto;
 		background: #FCFCFC;
@@ -160,12 +13,12 @@ page {
 	
 /* 滑到底了等提示
  */
-.comment-bottom.data-v-5abf75f8{
+.comment-bottom.data-v-0dddf152{
 		height:160px;
 		width:calc(88px + 40rpx);
 		margin: auto;
 }
-.comment-bottom-notice.data-v-5abf75f8{
+.comment-bottom-notice.data-v-0dddf152{
 		width:71px;
 		height:14px;
 		line-height: 14px;
@@ -173,22 +26,24 @@ page {
 		color:#B2B2B2;
 		margin:37px auto 27px;
 }
-.comment-bottom-buttons.data-v-5abf75f8{
+.comment-bottom-buttons.data-v-0dddf152{
 		display: -webkit-box;
 		display: -webkit-flex;
+		display: -ms-flexbox;
 		display: flex;
 			-webkit-box-pack: justify;
 			-webkit-justify-content: space-between;
+			    -ms-flex-pack: justify;
 			        justify-content: space-between;
 }
-.comment-bottom-buttons .back.data-v-5abf75f8{
+.comment-bottom-buttons .back.data-v-0dddf152{
 		width:16px;
 		height:16px;
 		padding:14px;
 		background: #FFF1D5;
 		border-radius: 22px;
 }
-.comment-bottom-buttons .to-top.data-v-5abf75f8{
+.comment-bottom-buttons .to-top.data-v-0dddf152{
 		width:18px;
 		height:12px;
 		background: #FFF1D5;
@@ -196,9 +51,10 @@ page {
 		padding: 16px 11px 16px 15px;
 		position: relative;
 		-webkit-transform: rotate(90deg);
+		    -ms-transform: rotate(90deg);
 		        transform: rotate(90deg);
 }
-.comment-bottom-buttons .to-top.data-v-5abf75f8::after{
+.comment-bottom-buttons .to-top.data-v-0dddf152::after{
 content: "";
 position: absolute;
 top: 14px;
@@ -208,7 +64,7 @@ height: 16px;
 background: #FCC041;
 border-radius: 2px;
 }
-.active-input-button.data-v-5abf75f8{
+.active-input-button.data-v-0dddf152{
 		color:#FFFFFF;
 		width:76px;
 		height:17px;
@@ -219,15 +75,17 @@ border-radius: 2px;
 		color:rgba(255,255,255,1);
 		padding:10px 22px;
 		border-radius: 10px;
-		box-shadow:  0px 0px 8px rgba(0,0,0,0.16);
+		-webkit-box-shadow:  0px 0px 8px rgba(0,0,0,0.16);
+		        box-shadow:  0px 0px 8px rgba(0,0,0,0.16);
 		background: #FCC041;
 		letter-spacing:2px;
 }
 	
 /* 底部栏 */
-.bottomLayerOfSubmit.data-v-5abf75f8{
+.bottomLayerOfSubmit.data-v-0dddf152{
 		display: -webkit-box;
 		display: -webkit-flex;
+		display: -ms-flexbox;
 		display: flex;
 		position: absolute;
 		height: 48px;
@@ -237,13 +95,15 @@ border-radius: 2px;
 		background: #FFFFff;
 		-webkit-box-pack: center;
 		-webkit-justify-content: center;
+		    -ms-flex-pack: center;
 		        justify-content: center;
 		-webkit-box-align: center;
 		-webkit-align-items: center;
+		    -ms-flex-align: center;
 		        align-items: center;
 		z-index: 30;
 }
-.submitComment.data-v-5abf75f8 {
+.submitComment.data-v-0dddf152 {
 		background: #FFCC30;
 		border-radius: 5px;
 		width: 32%;
@@ -254,7 +114,7 @@ border-radius: 2px;
 		text-align: center;
 		line-height: 30px;
 }
-.submitComment.data-v-5abf75f8::before{
+.submitComment.data-v-0dddf152::before{
 		content: "";
 		position: absolute;
 		top:-9px;
@@ -266,7 +126,7 @@ border-radius: 2px;
 }
 	
 /* 以下五条为底部输入框样式 */
-.bottoLayerOfInput.data-v-5abf75f8{
+.bottoLayerOfInput.data-v-0dddf152{
 		position: absolute;
 		width: 750rpx;
 		height: 1000px;
@@ -274,8 +134,9 @@ border-radius: 2px;
 		left:0;
 		z-index: 40;
 }
-.commentPart.data-v-5abf75f8 {
-		box-shadow: 0px 1px 5px 0px rgba(139, 139, 139, 0.32);
+.commentPart.data-v-0dddf152 {
+		-webkit-box-shadow: 0px 1px 5px 0px rgba(139, 139, 139, 0.32);
+		        box-shadow: 0px 1px 5px 0px rgba(139, 139, 139, 0.32);
 		position:absolute;
 		bottom: 0;
 		z-index: 999;
@@ -285,7 +146,7 @@ border-radius: 2px;
 		min-height: 50px;
 		background: white;
 }
-.emoji.data-v-5abf75f8{
+.emoji.data-v-0dddf152{
 		background-repeat: no-repeat;
 		background-position: center;
 		border: none;
@@ -295,7 +156,7 @@ border-radius: 2px;
 		margin-bottom: 7px;
 		display: inline-block;
 }
-.add-pic.data-v-5abf75f8{
+.add-pic.data-v-0dddf152{
 		background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKgAAACICAYAAABz56CCAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAhdEVYdENyZWF0aW9uIFRpbWUAMjAxOToxMTowNyAwMjo1OTo1Mvi1GO8AAA1eSURBVHhe7Z0LcFTVGcdhWRJiO9oizChYbSuV0UKnU6sFqaRCKrVYxmGA9MHQhxUpiG0IIRsCTbdJ9mFEGhXx0dZ2LK0SHYcppTySEbAgKDPQB1AcR1sdYcYHOE5rSIZs+v/u/e42MRuy2XvOuWez32/mzjnf2ezde/f+9jvn7N7cO0wQbGY4l0qJx+OTUVw1fPjwS7u7u8dRiXgcliJ6XBgydGI5iWN8CsfYKcPh8PGqqqpj7sP+USZoLBa7ORQK3YrqLVgmOI1CQQJRj6J4OpVKtdXW1j7vtuaGL0Hr6upGFxcXL4OYixCKlEIfIOsJLJs6Ojo2RKPR09ycNTkJCjGLRo0atQxpfSlCEVPIhlcg6kNnz54lUWlokBWDFhRdeTkyZgTVz7stgjAojiCx3VtdXb2J4/MygsusSCaTP8DKn0D1ErdFEAYNuTO3rKxsWGtr6x63qX+yzqCYmVdAzvs4FATf0Ni0pqZmIYcZyUrQRCKxGcV8NxIEdUDSnZB0Fod9GLCLh5xPoljgRoKgFvTKV6K7vwjd/Q5u6kWIy4ygW29AUe5GgqCNCiTCjEmw3y4eT5iHosWNBEE/6O5L0d3v5dAhYwatr6//BIqkGwmCMR5l99JkFDQcDq9E8Wk3EgQzYDw6kd1L06eLx7jzK/jD5zgUBOOgq78JXf1uqmfKoL0MFoQASDvYS1D+pWg2h4IQCOQguUj1XoIitX6Nq4IQKHCRTt3sPQZNJBJvoRjrRkrYiRc6nEqlDnR2du6ORqPvcbswBGhubr6wvb19KqpTcJynIvP1+4tQDrwbiUTGpAWNxWJTQ6HQfg5VUI4XoJ9IhQIBCa4WBf24owSaLKUFxcrpFLq4G+UOVvp3zMA+x6FQgMTj8YPIptdzmDNwKdpzDKokPWPDnLGDULgUFRXRv/34Bi6VpgWFreO56ockuvXXuS4UKJWVlafh090c5gw5mRYUtvoSFCt7HXLSMEEQhmGY9wCcOMlhTpCTjqAYM3wcxQVU94HKCZYwBIBgL3E1Vy5wBE2lUr67d2zMPq4KgsdfuMwZR9BQKDTGiXyAdP4PrgqCA5w4xNWcSY9BBcFGRFDBakRQwWpEUMFqRFDBakRQwWpEUMFqRFDBakRQwWpEUMFqRFDBakRQwWpEUMFqRFDBakRQwWpEUMFqnH87VnHBsO4eF3wyQWNj46RQKDQR293rbnaov4/6m7R0dXWdpNLkdgn/R4VXeSUoXVwC23kbqt9AebXbmhVvY/tasOwYOXJkW1VV1X+5XdCICq/yoovHji7GcpCufIIdXjVIOYmxeM5SPH8LsupriURiY1NT0yR+TLAYqwUlMSHTIcj1CBbfV6pg6NpTS86dO/ci1t9UX1//KbdZsBErBUVX/i1PTITXuq1qwbpLsKxEl38Qov6MmwXLsE5QyFKBrvj3qGoRMwPU/dfhA7GFY8EirBIUkvwKsgR1N7s5+HC8geWTHAsWYIWgdXV1Icj5NqrOVXWDAh+Oy7C8lkwmS7lJCJjABcVs+iMlJSVdqPq+eIQquru7dzc2Nt7IoRAggQqKydDFXV1d/+HQKkaMGLEXWf0GDoWACExQHPzLMBl6h0Nb2YftnMJ1IQACERRjvM+geMONrOcFZPrruC4YxrigmCVPxhjvZQ7zAmR6+lLf1NdeQg+MCoru8nrMkv/GYV6B7T4kmdQ8xgTFrJi+ujnoRvkJZVJI+iUOBQMYERSZcxZmxUPilDdIegCS0r2BBANoFxQTIjo9brsbaeUMFrrk9KtOpBFIuh89wjQOBY1oPR8U652P9eq8mddLeN1GlH/Fa//LbXJ+mfpYSUnJNXisAq8/j5t1cGMkEvF9mWs/0LFDQQudtE2Xch+P/abyQsQnUT/llWh7GR+undXV1SdQ144Kr7QJqltOvF5jUVFRY2VlZTs3ZQTDiztQ0B3QrnAaFIPtKMV+7+VQO+iRvoDXLMMyHWEp3uOPuo9kD557HMUuPHefzrsBqvBKSxdvQM4FkGLNQHISOACPYfz7dTznKDcpBfu5hw4Eh9qAmBPxOs2pVOpFCvG6s7EMWk4Cz7saC93H6Cl8gA9hvYvdR+xDuaCG5GzhMCuqqqqOhcPhBRolfQ77PYNDpTQ0NIyHRI3Ydrq94N1YRvBDqrgW63zEVlGVCmqjnB4GJG3D/pdxqASsbzqyfxuqq7Fc5DTqwxE1FovtwjKB2wJHpaB04q+VcnoYkHQXMtFXOfQF1rMA69uDZSI3GQGTqDL6Kg2vr+R+m35RJqjtcnrolhTsxMH1dWNePJ9O2n7KjQLhYizbkMGXu2FwaJkkqUSlnB4GJN2eawbC8+gbgQo3ChYknfsh6U85DASrBdUhp4cBSSkDzeZ6VkBO+qHBqhOlIWkU+0Fj4ECwVlCdcnoYGJNuTSaTWd0/HxK8gOKLbmQX2I9GfHhWcWgUKwU1IaeHbkmx3j9C0jkcZgQHnyZDtp8YncR2ruC6MawT1KScHgYk3cLnJPQBmbMVBf0qlA+sg6T0Bb8xrBI0CDk9DEj6LA7uXA4dIOc2ZM6ZHOYLzfiwLeW6dqwRNEg5PQxMnJ6BpM7JK5BzC+S04rvGwYL3ZwP2404OtWKFoDbI6WFA0hbI2QI5zzsuzQMeRiZdwnVtBC6oTXJ66JYUcuo8BdAYeH824sO2jEMtBCqojXJ6GMikysG2nkRB15iqQn0OFjpXliZh72PRAj5sD+qcOCk7H3Sw2CxnT5qamq45d+7cZrw/n+Um68B72Y7ta4xEIiRkH+rr66/Ah60Wf0PnxmoB27ACx3M9hw4qvAokg+aLnEQeZNIt2LbS/uQk1q5d+2+834tDodA8XfsBEe9DJl3JoTKMC5pPcnpYLGkLxLxt9erV9BPpgKxateoZzfvRBEmV/uJkVNB8lNPDQklJzgVczxoD+0G/ONVw3TfGBM1nOT0skjQnOT0M7EcM4881XPeFEUGHgpweFkjqS04P3fuBMWk9Ft/XWdUu6FCS0yNASZXI6WFgP3xf+1+roENRTo8AJFUqp4cFPcJ50SboUJbTw+DB1SKnh82SahG0EOT0MHFwse5urmrDVkmVC1pIcnroPriYbCxIJBJPcqgNGyVVKmghyulh4OCWx+PxP3BdG7ZJqkzQQpbTw0Am/SYk3cShNmySVGUGpfscFTwGJP02JP0dh9qwRVItk6RCx4Ck38GY9AkOtWGDpCKoJgwc3IWQ9Ldc10bQkoqgGjFwcBehu/8N17URpKQiqGZ0H1x0999FJn2cQ20EJakIagADB/d7yKS/5ro2gpBUBDWEgUz6fUj6Sw61YVpSEdQgBiS9Hd39Yxxqw6SkIqhhDBzcHyKTPsp1bZiSVAQNAAOZ9A5I+jCH2jAhqQgaEAYkvROSbuRQG7r3QwQNEAOSLoGkD3GoDZ37IYIGjAFJf4SJ04McakPXfoigFqBbUrAMmfQBrmtDx36IoJZgIJPehUx6P4faUL0fIqhFGMikyyHpL7iuDZX7IYJahgFJf4zuvtdFvnRA+4HiLjfKHRHUQnRLiu7+J8ikdLMw6xFBLcVAJq2ApPdy3VpEUIsxIGkluvsmrluJI2gqlXrHiXyAbmMSVwWFGOjuV8ZisXs4VArW7fvGZI6goVDoTSfyAd7AaVwVFKNbUhz/KnT3CQ5V8mUuc8YRtKam5gyKD6jugxu4FDRgoLuvRncf57oSsK3XcTVXPkiPQbEyX1kU6fxyTZ9CgTHQ3UfgaIxDX2A9y7G+cRzmBDmZFhQr893Ng2o4ejnXBQ0YkLQGcjVwmBPr1q0bjfX4/tWKnEwLCnZw6Qu8cVu5KmjCgKS1SDT1HA6azs7OP3PVF9i/Pc5taAjM5KZisLyfQxWURyKRzVwXNGDgFjk/xzGs4/qAQOpaFL6yb08g6E1pQQm8wFsoxrqREnbiRQ6nUqkD+FTtjkaj73G7oAjdkuL4RTGJznil5Obm5gvb29unojoFfzcV2zDLfUQJ7+LDMebDglLGm+9GghAoz0LQuT3HoDT22M5VQQgUuOjMZXplUAIzuK14cDaHgmAcDBf+hGHFrVTvlUEZ608gEIY8aQf7CApzd8Ng7WdeC0ImyD1ykMOMGXQYZoVk8KtuJAhmgJwn2L00fcagHpjR0033C/qS3oJZIGgpsudeDh1GcNmH1tbWYzNnzhyJCdN0bhIEnZRDzm1cT9NvBvVAJqXbn5S7kSBoYX0kElnB9V4MKCghX+ALukC3vhOZs99foDJOkj4M7KYTEzIaLgi5Aqc2nU9OIitBCaxoPcajt3MoCL6AnPQb/0IO+6XfSVImMHE6PGPGjH9C1AkIL3FbBWFQHIE/K9ErZ3UpnkEJSrS1tR2dNm3a4+Fw+Axe6Eo0jXYfEYTz8gqyZsPZs2cXr1mz5gi3DUhWk6T+qKurG11cXLwsFAotQkhZVRB6ASlP0Fizo6NjQzQaPc3NWeNL0J7EYrGbISr9wH8LFpG1gIGQdKb/06lUqq22tvZ5tzU3lAnak3g8PhnFVRgCXIqNHUclYvoHqiJ6XBgydGI5iWN8CsfYKTH0O07/kuI+LAhDmmHD/geP4ccMWzukiwAAAABJRU5ErkJggg==);
 		background-repeat: no-repeat;
 		background-position: center;
@@ -307,7 +168,7 @@ border-radius: 2px;
 		margin-left: 11px;
 		display: inline-block;
 }
-.submit.data-v-5abf75f8{
+.submit.data-v-0dddf152{
 	display: inline-block;
 	width: 42px;
 	position: relative;
@@ -321,7 +182,7 @@ border-radius: 2px;
 	font-size: 14px;
 	color: #FCC041;
 }
-.commentSth.data-v-5abf75f8 {
+.commentSth.data-v-0dddf152 {
 		
 		border: solid 2px #FCC041;
 		border-radius: 8px;
@@ -329,24 +190,24 @@ border-radius: 2px;
 		padding:12px 12px 0px;
 		position: relative;
 }
-.comment-text.data-v-5abf75f8{
-		width: calc(670rpx - 20px);	
+.comment-text.data-v-0dddf152{
+		width: calc(670rpx - 60px);	
 		font-size: 14px;
 		max-height: 95px;
 		line-height: 20px;
 		max-height: 100px;
 		padding-bottom: 14px;
 }
-.comment-pic-area.data-v-5abf75f8{
+.comment-pic-area.data-v-0dddf152{
 		position: relative;
 		height:45px;
 }
-.comment-pic-area image.data-v-5abf75f8{
+.comment-pic-area image.data-v-0dddf152{
 		width:35px;
 		height:35px;
 		margin-right: 18px;
 }
-.word-count-left.data-v-5abf75f8{
+.word-count-left.data-v-0dddf152{
 	position: absolute;
 		width:15px;
 		height:11px;
@@ -357,24 +218,27 @@ border-radius: 2px;
 		bottom:8px;
 		line-height: 11px;
 }
-.permanent_input_BG.data-v-5abf75f8{
+.permanent_input_BG.data-v-0dddf152{
 		position: fixed;
 		bottom: 0px;
 		left: 0;
 		width: 100%;
 		height:58px;
-	    box-shadow:0px 0px 10px rgba(0,0,0,0.16);
+	    -webkit-box-shadow:0px 0px 10px rgba(0,0,0,0.16);
+	            box-shadow:0px 0px 10px rgba(0,0,0,0.16);
 		background: #FFFFFF;
 line-height: 14px;
 }
-.permanent_input.data-v-5abf75f8{
+.permanent_input.data-v-0dddf152{
 	height:30px ;
 	display: -webkit-box;
 	display: -webkit-flex;
+	display: -ms-flexbox;
 	display: flex;
 	vertical-align: top;
 	color:#888888;overflow: hidden;
-	text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+	   text-overflow: ellipsis;
 	width:calc(100% - 48px);
 	
 	padding: 3px 12px 4px;
