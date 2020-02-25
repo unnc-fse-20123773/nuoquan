@@ -44,26 +44,25 @@
 		</view>
 		<!--触底提示和功能  END-->
 
-		<!-- 旧输入框
-			<view class="bottomLayerOfSubmit">
-				<view class="submitComment" @click="controlInput(1)">发 表 评 论</view>
-			</view>
--->
 
-
-
-
-
-		<!-- 输入框 -->
-		<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)">
-			<view class="commentPart" @click.stop="" :style="{bottom: textAreaAdjust }">
-				<view class="emoji"></view>
-				<view class="submit" @click="saveComment()"></view>
-				<textarea class="commentSth" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
-				 adjust-position="false" v-model="commentContent" @click.stop="" :show-confirm-bar="false" cursor-spacing='20' />
+		<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)" >
+			<view class="commentPart"  :style="{bottom: textAreaAdjust }">
+				<!--<view class="emoji"></view><view class="add-pic"></view>-->
+				<view class="submit" @tap="saveComment()">发送</view>
+				<view class="commentSth">
+					<textarea class="comment-text" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
+					 adjust-position="false" v-model="commentContent"  :show-confirm-bar="false" @focus="popTextArea"
+					 @blur="unpopTextArea" cursor-spacing='20' />
+					<!-- <view class="comment-pic-area"><image src="../../static/BG/indexBG.png"></image><image src="../../static/icon/about.png"></image><image src="../../static/icon/1575235531(1).png"></image></view> -->
+					 <view class="word-count-left">{{wordNotice}}</view>
 				</view>
-		</view>
-		<!-- 输入框  End-->
+            </view>
+		</view> 
+		
+<!--常驻input--> 
+     <view class="permanent_input_BG" v-if="!showInput" @click="controlInput(1)">
+        <input class="permanent_input" :placeholder="placeholderText" v-model="commentContent" disabled="true" min-height="10px" />
+     </view>
 	</view>
 </template>
 
@@ -86,8 +85,10 @@
 				commentList: '',  //返回值，获取评论列表信息,循环展示的东西，sonComment
 				showInput:false,  //控制输入框，true时显示输入框
 				writingComment:false,  //控制输入框，true时自动获取焦点，拉起输入法
+				wordNotice:"48",
 				submitData:{},
 				placeholderText: '评论点什么吧......',
+                textAreaAdjust:"",
 				
 				totalPage: 1,
 				currentPage: 1,
@@ -120,7 +121,8 @@
 					data: {
 						underCommentId: that.mainComment.id,
 						userId: that.userInfo.id,
-						page: page
+						page: page,
+						type: 0,
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
@@ -186,6 +188,20 @@
 					this.writingComment =false;
 				}
 			},
+			popTextArea(e){
+				console.log("展开");
+				console.log(e);
+				console.log(e.detail.height);
+				this.textAreaAdjust =  e.detail.height/3 + 'px' ;
+				// this.textAreaAdjust = '0' ;
+			},
+			unpopTextArea(e){
+				console.log("收起");
+				console.log(e);
+				
+				this.textAreaAdjust = "";
+			},
+
 			
 			/**
 			 * fromUserId 必填
@@ -198,6 +214,7 @@
 			 *     子级评论有 fatherCommentId, underCommentId;
 			 */
 			saveComment: function() {
+				console.log('tragger savecomment');
 				this.submitData.comment=this.commentContent;
 				this.submitData.fromUserId=this.userInfo.id;
 				this.submitData.articleId=this.mainComment.articleId;
@@ -354,14 +371,14 @@
 		transform: rotate(90deg);
 	}
 	.comment-bottom-buttons .to-top::after{
-content: "";
-position: absolute;
-top: 14px;
-left: 12px;
-width: 2px;
-height: 16px;
-background: #FCC041;
-border-radius: 2px;
+		content: "";
+		position: absolute;
+		top: 14px;
+		left: 12px;
+		width: 2px;
+		height: 16px;
+		background: #FCC041;
+		border-radius: 2px;
 
 	}
 	.active-input-button{
@@ -389,73 +406,29 @@ border-radius: 2px;
 
 
 
-/* 
-
-	.cmtdetail-loadmore {
-		margin-left: 62px;
-		height: 30px;
-		width: 80%;
-	}
-
-	.loadmore-text {
-		color: #888888;
-		font-size: 12px;
-	} */
-	
-	.bottomLayerOfSubmit{
-		display: flex;
-		position: fixed;
-		height: 48px;
-		width:750upx;
-		left:0;
-		bottom: 0;
-		background: #FFFFff;
-		justify-content: center;
-		align-items: center;
-	}
-	.submitComment {
-		background: #FFCC30;
-		border-radius: 5px;
-		width: 32%;
-		height: 30px;
-		font-size: 10px;
-		font-weight: bold;
-		color: #FFFFFF;
-		text-align: center;
-		line-height: 30px;
-	}
-	.submitComment::before{
-		content: "";
-		position: absolute;
-		top:-9px;
-		left: -294%;
-		width:750upx;
-		height:48px;
-		background: #F3FFFF;
-		z-index: -1;
-	}
-	
 	/* 以下五条为底部输入框样式 */
 	.bottoLayerOfInput{
-		position: fixed;
+		position: absolute;
 		width: 750upx;
 		height: 1000px;
-		top:0;
+		bottom:0;
 		left:0;
-		z-index: 3;
-	}
-	.commentPart {
-		box-shadow: 0px 1px 5px 0px rgba(139, 139, 139, 0.32);
-		position:fixed;
-		bottom: 0;
-		left: 0;
-		width: 670upx;
-		padding:11px 40upx;
-		min-height: 50px;
-		background: #FFFFFF;
+		z-index: 40;
 	}
 	
-	.emoji {
+	.commentPart {
+		box-shadow: 0px 1px 5px 0px rgba(139, 139, 139, 0.32);
+		position:absolute;
+		bottom: 0;
+		z-index: 900;
+		left: 0;
+		width: 702upx;
+		padding:10px 24upx 4px;
+		min-height: 50px;
+		background: white;
+	}
+
+	.emoji{
 		background-repeat: no-repeat;
 		background-position: center;
 		border: none;
@@ -465,22 +438,98 @@ border-radius: 2px;
 		margin-bottom: 7px;
 		display: inline-block;
 	}
-	.submit{
-		display: inline-block;
-		width: 21px;
-		height:21px;
-		background: url(../../static/icon/arrow-right.png);
-		background-size: 14px 14px;
+	.add-pic{
+		background: url(../../static/icon/image-888888.png);
 		background-repeat: no-repeat;
-		background-position:center;
-		float:right;
+		background-position: center;
+		border: none;
+		width: 21px;
+		height: 21px;
+		background-size: 20px 16px;
+		margin-bottom: 7px;
+		margin-left: 11px;
+		display: inline-block;
 	}
+.submit{
+	display: inline-block;
+	width: 42px;
+	position: absolute;
+	top:15px;
+	right:15px;
+	height:21px;
+/* 	background: url(../../static/icon/arrow-right.png);
+ */	background-size: 14px 14px;
+	background-repeat: no-repeat;
+	background-position:center;
+	float:right;
+	font-size: 14px;
+	color: #FCC041;
+	z-index: 999;
+}
 	.commentSth {
-		width: calc(670upx - 20px);
-		border: solid 1px #FCC041;
-		border-radius: 10px;
+		
+		border: solid 2px #FCC041;
+		border-radius: 8px;
 		line-height: 20px;
-		font-size: 14px;
-		padding:8px 10px;
+		padding:12px 12px 0px;
+		position: relative;
+
 	}
+	.comment-text{
+		width: calc(670upx - 60px);	
+		font-size: 14px;
+		max-height: 95px;
+		line-height: 20px;
+		max-height: 100px;
+		padding-bottom: 14px;
+		
+	}
+	.comment-pic-area{ 
+		position: relative;
+		height:45px;
+	}
+	.comment-pic-area image{
+		width:35px;
+		height:35px;
+		margin-right: 18px;
+
+	}
+
+	.word-count-left{
+	position: absolute;
+		width:15px;
+		height:11px;
+		font-size: 11px;
+		font-weight: 400;
+		color:#9B9B9B;
+		right:11px;
+		bottom:8px;
+		line-height: 11px;
+	}
+	.permanent_input_BG{
+		position: fixed;
+		bottom: 0px;
+		left: 0;
+		width: 100%;
+		height:58px;
+	    box-shadow:0px 0px 10px rgba(0,0,0,0.16);
+		background: #FFFFFF;
+		line-height: 14px;
+	}
+	.permanent_input{
+		height:30px ;
+		display: flex;
+		vertical-align: top;
+		color:#888888;overflow: hidden;
+		text-overflow: ellipsis;
+		width:calc(100% - 48px);
+		
+		padding: 3px 12px 4px;
+		margin:12px auto 0;
+		border-radius:8px;
+		border:2px solid rgba(252,192,65,1);
+	    font-size: 12px;
+		line-height: 30px;
+	}
+
 </style>

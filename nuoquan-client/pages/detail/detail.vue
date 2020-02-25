@@ -30,38 +30,24 @@
 
 
 
-		<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)">
-			<view class="commentPart" @click.stop="" :style="{bottom: textAreaAdjust }">
-				<!-- 					<view class="emoji"></view>
- -->
-				<view class="add-pic"></view>
-
-				<view class="submit" @click="saveComment()">发送</view>
+		<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)" >
+			<view class="commentPart"  :style="{bottom: textAreaAdjust }">
+				<!--<view class="emoji"></view><view class="add-pic"></view>-->
+				<view class="submit" @tap="saveComment()">发送</view>
 				<view class="commentSth">
 					<textarea class="comment-text" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
-					 adjust-position="false" v-model="commentContent" @click.stop="" :show-confirm-bar="false" @focus="popTextArea"
+					 adjust-position="false" v-model="commentContent"  :show-confirm-bar="false" @focus="popTextArea"
 					 @blur="unpopTextArea" cursor-spacing='20' />
-					<!-- <view class="comment-pic-area">
-						<image src="../../static/BG/indexBG.png"></image>
-						<image src="../../static/icon/about.png"></image>
-						<image src="../../static/icon/1575235531(1).png"></image>
-					</view> -->
-					<view class="word-count-left">{{wordNotice}}</view>
-				
+					<!-- <view class="comment-pic-area"><image src="../../static/BG/indexBG.png"></image><image src="../../static/icon/about.png"></image><image src="../../static/icon/1575235531(1).png"></image></view> -->
+					 <view class="word-count-left">{{wordNotice}}</view>
 				</view>
             </view>
 		</view> 
-<!-- 		常驻input
- --> 
- <view class="permanent_input_BG" v-if="!showInput" @click="controlInput(1)">
+		
+<!--常驻input--> 
+    <view class="permanent_input_BG" v-if="!showInput" @click="controlInput(1)">
         <input class="permanent_input" :placeholder="placeholderText" v-model="commentContent" disabled="true" min-height="10px" />
- </view>
- 
- 
- 
- 
- 
- 
+    </view>
  
  
  
@@ -226,6 +212,7 @@ import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
 			 *     子级评论有 fatherCommentId, underCommentId;
 			 */
 			saveComment: function() {
+				console.log('tragger savecomment');
 				if (uploadFlag) {
 					console.log("正在上传...")
 					return;
@@ -259,7 +246,6 @@ import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
 								that.writingComment = false;
 								that.commentContent = "";
 								that.showInput = false;
-								
 								// 强制子组件重新刷新
 								that.commentList = '';
 								that.$nextTick(function() {
@@ -498,41 +484,6 @@ border-radius: 2px;
 
 
 	
-	/* 底部栏 */
-    .bottomLayerOfSubmit{
-		display: flex;
-		position: absolute;
-		height: 48px;
-		width: 750upx;
-		left:0;
-		bottom: 0;
-		background: #FFFFff;
-		justify-content: center;
-		align-items: center;
-		z-index: 30;
-	}
-	.submitComment {
-		background: #FFCC30;
-		border-radius: 5px;
-		width: 32%;
-		height: 30px;
-		font-size: 10px;
-		font-weight: bold;
-		color: #FFFFFF;
-		text-align: center;
-		line-height: 30px;
-	}
-	.submitComment::before{
-		content: "";
-		position: absolute;
-		top:-9px;
-		left: -294%;
-		width:750upx;
-		height:48px;
-		background: #F3FFFF;
-		z-index: -1;
-	}
-	
 	/* 以下五条为底部输入框样式 */
 	.bottoLayerOfInput{
 		position: absolute;
@@ -549,7 +500,7 @@ border-radius: 2px;
 		bottom: 0;
 		z-index: 999;
 		left: 0;
-		width: 670upx;
+		width: 702upx;
 		padding:10px 24upx 4px;
 		min-height: 50px;
 		background: white;
@@ -580,9 +531,10 @@ border-radius: 2px;
 .submit{
 	display: inline-block;
 	width: 42px;
-	position: relative;
-	top:3px;
+	position: absolute;
+	top:15px;
 	height:21px;
+	right: 15px;
 /* 	background: url(../../static/icon/arrow-right.png);
  */	background-size: 14px 14px;
 	background-repeat: no-repeat;
@@ -590,6 +542,7 @@ border-radius: 2px;
 	float:right;
 	font-size: 14px;
 	color: #FCC041;
+	z-index: 50;
 }
 	.commentSth {
 		
@@ -601,7 +554,7 @@ border-radius: 2px;
 
 	}
 	.comment-text{
-		width: calc(670upx - 20px);	
+		width: calc(670upx - 60px);	
 		font-size: 14px;
 		max-height: 95px;
 		line-height: 20px;

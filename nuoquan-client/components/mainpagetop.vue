@@ -59,25 +59,9 @@
 				<image class="tagicon" src="../static/icon/angle-down.png" mode="aspectFit"></image>
 			</view>
 			<!-- 排序方式1-->
-			<view class="comments-order">
-			       <view class="order-in-time" :class="{ chosen : order1 == 'all'}" @tap="change_article_order1('all')">
-					   所有
-				   </view>
-				   <view class="order-in-hot" :class="{ chosen : order1 != 'all'}" @tap="change_article_order1('attention')">
-				   	   关注
-				   </view>
-				   <view class="bg-of-order" :style="{'left':order1 == 'all' ? '-13px;' :'41px' ,}"></view>
-			</view>
+			<nqSwitch :options='options1' @onChange="change_article_order1"></nqSwitch>
 			<!-- 排序方式2 -->
-			<view class="comments-order">
-			       <view class="order-in-time" :class="{ chosen : order2 == 'time'}" @tap="change_article_order2('time')">
-					   时间
-				   </view>
-				   <view class="order-in-hot" :class="{ chosen : order2 != 'time'}" @tap="change_article_order2('hot')">
-				   	   热度
-				   </view>
-				   <view class="bg-of-order" :style="{'left':order2 == 'time' ? '-13px;' :'41px' ,}"></view>
-			</view>
+			<nqSwitch :options='options2' @onChange="change_article_order2"></nqSwitch>
 		</view>
 	</view>
 </template>
@@ -85,6 +69,8 @@
 <script>
 import mainpageleft from '@/components/mainpageleft.vue';
 import searchpage from '../pages/search/search';
+import nqSwitch from "@/components/nq-switch.vue"
+
 export default {
 	props: {
 		// 渲染时候替换默认值会被替换
@@ -96,15 +82,16 @@ export default {
 	},
 	components: {
 		mainpageleft,
-		searchpage
+		searchpage,
+		nqSwitch
 	},
 
 		data() {
 			return {
 				showMainPageLeft: 0,
 				showSearch: 0,
-				order1: "all",
-				order2: "time",
+				options1: ["所有","关注"],
+				options2: ["时间","热度"],
 			};
 		},
 
@@ -135,14 +122,12 @@ export default {
 			})
 		},
 		
-		change_article_order1(new_order){
-			this.order1 = new_order ;
-			console.log(this.order1);
+		change_article_order1(e){
+			console.log(e.status);
 		},
 		
-		change_article_order2(new_order){
-			this.order2 = new_order ;
-			console.log(this.order2);
+		change_article_order2(e){
+			console.log(e.status);
 		}
 	}
 };
