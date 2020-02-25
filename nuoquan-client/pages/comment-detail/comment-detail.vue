@@ -484,7 +484,7 @@ border-radius: 2px;
 		padding-bottom: 14px;
 		
 	}
-	.comment-pic-area{
+	.comment-pic-area{ 
 		position: relative;
 		height:45px;
 	}
