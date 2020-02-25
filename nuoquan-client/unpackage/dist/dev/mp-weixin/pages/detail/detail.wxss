@@ -81,50 +81,6 @@ border-radius: 2px;
 		letter-spacing:2px;
 }
 	
-/* 底部栏 */
-.bottomLayerOfSubmit.data-v-0dddf152{
-		display: -webkit-box;
-		display: -webkit-flex;
-		display: -ms-flexbox;
-		display: flex;
-		position: absolute;
-		height: 48px;
-		width: 750rpx;
-		left:0;
-		bottom: 0;
-		background: #FFFFff;
-		-webkit-box-pack: center;
-		-webkit-justify-content: center;
-		    -ms-flex-pack: center;
-		        justify-content: center;
-		-webkit-box-align: center;
-		-webkit-align-items: center;
-		    -ms-flex-align: center;
-		        align-items: center;
-		z-index: 30;
-}
-.submitComment.data-v-0dddf152 {
-		background: #FFCC30;
-		border-radius: 5px;
-		width: 32%;
-		height: 30px;
-		font-size: 10px;
-		font-weight: bold;
-		color: #FFFFFF;
-		text-align: center;
-		line-height: 30px;
-}
-.submitComment.data-v-0dddf152::before{
-		content: "";
-		position: absolute;
-		top:-9px;
-		left: -294%;
-		width:750rpx;
-		height:48px;
-		background: #F3FFFF;
-		z-index: -1;
-}
-	
 /* 以下五条为底部输入框样式 */
 .bottoLayerOfInput.data-v-0dddf152{
 		position: absolute;
@@ -141,7 +97,7 @@ border-radius: 2px;
 		bottom: 0;
 		z-index: 999;
 		left: 0;
-		width: 670rpx;
+		width: 702rpx;
 		padding:10px 24rpx 4px;
 		min-height: 50px;
 		background: white;
@@ -181,6 +137,7 @@ border-radius: 2px;
 	float:right;
 	font-size: 14px;
 	color: #FCC041;
+	z-index: 50;
 }
 .commentSth.data-v-0dddf152 {
 		

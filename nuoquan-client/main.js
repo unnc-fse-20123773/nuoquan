@@ -996,6 +996,17 @@ Vue.prototype.timeDeal = function(timediff) {
 	return timeSpanStr;
 }
 
+/**
+ * 如果是相对路径为之添加全局服务器地址
+ * @param {Object} path
+ */
+Vue.prototype.pathFilter = function(path){
+	if(path.startsWith("/")){
+		path = app.$serverUrl + path;
+	}
+	return path;
+}
+
 // 封装tabbar索引，避免重复书写
 Vue.mixin({
   methods:{

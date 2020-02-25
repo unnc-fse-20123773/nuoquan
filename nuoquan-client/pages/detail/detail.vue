@@ -34,7 +34,7 @@
 
 
 
-		<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)" :style="{'bottom':textAreaAdjust}">
+		<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)" >
 			<view class="commentPart"  :style="{bottom: textAreaAdjust }">
 				<!--<view class="emoji"></view><view class="add-pic"></view>-->
 				<view class="submit" @tap="saveComment()">发送</view>
@@ -248,7 +248,6 @@ import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
 								that.writingComment = false;
 								that.commentContent = "";
 								that.showInput = false;
-								
 								// 强制子组件重新刷新
 								that.commentList = '';
 								that.$nextTick(function() {
@@ -487,41 +486,6 @@ border-radius: 2px;
 
 
 	
-	/* 底部栏 */
-    .bottomLayerOfSubmit{
-		display: flex;
-		position: absolute;
-		height: 48px;
-		width: 750upx;
-		left:0;
-		bottom: 0;
-		background: #FFFFff;
-		justify-content: center;
-		align-items: center;
-		z-index: 30;
-	}
-	.submitComment {
-		background: #FFCC30;
-		border-radius: 5px;
-		width: 32%;
-		height: 30px;
-		font-size: 10px;
-		font-weight: bold;
-		color: #FFFFFF;
-		text-align: center;
-		line-height: 30px;
-	}
-	.submitComment::before{
-		content: "";
-		position: absolute;
-		top:-9px;
-		left: -294%;
-		width:750upx;
-		height:48px;
-		background: #F3FFFF;
-		z-index: -1;
-	}
-	
 	/* 以下五条为底部输入框样式 */
 	.bottoLayerOfInput{
 		position: absolute;
@@ -538,7 +502,7 @@ border-radius: 2px;
 		bottom: 0;
 		z-index: 999;
 		left: 0;
-		width: 670upx;
+		width: 702upx;
 		padding:10px 24upx 4px;
 		min-height: 50px;
 		background: white;
@@ -579,6 +543,7 @@ border-radius: 2px;
 	float:right;
 	font-size: 14px;
 	color: #FCC041;
+	z-index: 50;
 }
 	.commentSth {
 		

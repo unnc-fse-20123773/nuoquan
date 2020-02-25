@@ -368,7 +368,6 @@ var uploadFlag = false;var _default =
               that.writingComment = false;
               that.commentContent = "";
               that.showInput = false;
-
               // 强制子组件重新刷新
               that.commentList = '';
               that.$nextTick(function () {

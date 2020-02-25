@@ -1,13 +1,9 @@
-
 <template>
 	<view class="comment-detail-page">
-	<!-- 导航栏 -->
+		<!-- 导航栏 -->
 
 		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" left-icon="back" left-text="返回"
-
-		:title="pageTitle" 
-
-		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
+		 :title="pageTitle" :height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
 		<!-- 主评论区域 -->
 
 		<view class="comment-Box">
@@ -49,27 +45,24 @@
 		<!--触底提示和功能  END-->
 
 
-
-		<view class="permanent_input_BG" v-if="!showInput" @click="controlInput(1)">
-			<input class="permanent_input" :placeholder="placeholderText" v-model="commentContent" disabled="true" min-height="10px" />
-		</view>
-
-
-		<!-- 输入框 -->
-		<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)">
+		<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)" >
 			<view class="commentPart"  :style="{bottom: textAreaAdjust }">
 				<!--<view class="emoji"></view><view class="add-pic"></view>-->
-				<view class="submit" @click="saveComment()">发送</view>
+				<view class="submit" @tap="saveComment()">发送</view>
 				<view class="commentSth">
 					<textarea class="comment-text" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
-					 adjust-position="false" v-model="commentContent" @click.stop="" :show-confirm-bar="false" @focus="popTextArea"
+					 adjust-position="false" v-model="commentContent"  :show-confirm-bar="false" @focus="popTextArea"
 					 @blur="unpopTextArea" cursor-spacing='20' />
 					<!-- <view class="comment-pic-area"><image src="../../static/BG/indexBG.png"></image><image src="../../static/icon/about.png"></image><image src="../../static/icon/1575235531(1).png"></image></view> -->
 					 <view class="word-count-left">{{wordNotice}}</view>
 				</view>
             </view>
 		</view> 
-		<!-- 输入框  End-->
+		
+<!--常驻input--> 
+     <view class="permanent_input_BG" v-if="!showInput" @click="controlInput(1)">
+        <input class="permanent_input" :placeholder="placeholderText" v-model="commentContent" disabled="true" min-height="10px" />
+     </view>
 	</view>
 </template>
 
@@ -413,75 +406,6 @@ border-radius: 2px;
 
 
 
-	
-	.bottomLayerOfSubmit{
-		display: flex;
-		position: fixed;
-		height: 48px;
-		width:750upx;
-		left:0;
-		bottom: 0;
-		background: #FFFFff;
-		justify-content: center;
-		align-items: center;
-	}
-	.submitComment {
-		background: #FFCC30;
-		border-radius: 5px;
-		width: 32%;
-		height: 30px;
-		font-size: 10px;
-		font-weight: bold;
-		color: #FFFFFF;
-		text-align: center;
-		line-height: 30px;
-	}
-	.submitComment::before{
-		content: "";
-		position: absolute;
-		top:-9px;
-		left: -294%;
-		width:750upx;
-		height:48px;
-		background: #F3FFFF;
-		z-index: -1;
-	}
-	
-	/* 以下五条为底部输入框样式 */
- .bottomLayerOfSubmit{
-		display: flex;
-		position: absolute;
-		height: 48px;
-		width: 750upx;
-		left:0;
-		bottom: 0;
-		background: #FFFFff;
-		justify-content: center;
-		align-items: center;
-		z-index: 30;
-	}
-	.submitComment {
-		background: #FFCC30;
-		border-radius: 5px;
-		width: 32%;
-		height: 30px;
-		font-size: 10px;
-		font-weight: bold;
-		color: #FFFFFF;
-		text-align: center;
-		line-height: 30px;
-	}
-	.submitComment::before{
-		content: "";
-		position: absolute;
-		top:-9px;
-		left: -294%;
-		width:750upx;
-		height:48px;
-		background: #F3FFFF;
-		z-index: -1;
-	}
-	
 	/* 以下五条为底部输入框样式 */
 	.bottoLayerOfInput{
 		position: absolute;
@@ -496,9 +420,9 @@ border-radius: 2px;
 		box-shadow: 0px 1px 5px 0px rgba(139, 139, 139, 0.32);
 		position:absolute;
 		bottom: 0;
-		z-index: 999;
+		z-index: 900;
 		left: 0;
-		width: 670upx;
+		width: 702upx;
 		padding:10px 24upx 4px;
 		min-height: 50px;
 		background: white;
@@ -539,6 +463,7 @@ border-radius: 2px;
 	float:right;
 	font-size: 14px;
 	color: #FCC041;
+	z-index: 999;
 }
 	.commentSth {
 		
@@ -550,7 +475,7 @@ border-radius: 2px;
 
 	}
 	.comment-text{
-		width: calc(670upx - 20px);	
+		width: calc(670upx - 60px);	
 		font-size: 14px;
 		max-height: 95px;
 		line-height: 20px;
@@ -580,34 +505,30 @@ border-radius: 2px;
 		bottom:8px;
 		line-height: 11px;
 	}
-/* 	弹起输入框结束
- */	
-
-/* 	不弹起输入框
- */	.permanent_input_BG{
-			position: fixed;
-			bottom: 0px;
-			left: 0;
-			width: 100%;
-			height:58px;
-		    box-shadow:0px 0px 10px rgba(0,0,0,0.16);
-			background: #FFFFFF;
-	line-height: 14px;
-		}
-		.permanent_input{
-		height:30px ;
-		display: flex;
-		vertical-align: top;
-		color:#888888;overflow: hidden;
-		text-overflow: ellipsis;
-		width:calc(100% - 48px);
-		
-		padding: 3px 12px 4px;
-		margin:12px auto 0;
-		border-radius:8px;
-		border:2px solid rgba(252,192,65,1);
-	    font-size: 12px;
-		line-height: 30px;
+	.permanent_input_BG{
+		position: fixed;
+		bottom: 0px;
+		left: 0;
+		width: 100%;
+		height:58px;
+	    box-shadow:0px 0px 10px rgba(0,0,0,0.16);
+		background: #FFFFFF;
+line-height: 14px;
 	}
-/* 	不弹起输入框结束
- */</style>
+	.permanent_input{
+	height:30px ;
+	display: flex;
+	vertical-align: top;
+	color:#888888;overflow: hidden;
+	text-overflow: ellipsis;
+	width:calc(100% - 48px);
+	
+	padding: 3px 12px 4px;
+	margin:12px auto 0;
+	border-radius:8px;
+	border:2px solid rgba(252,192,65,1);
+    font-size: 12px;
+	line-height: 30px;
+}
+
+</style>
