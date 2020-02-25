@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "onemessage": "/pages/chatpage/oneMessage",
+    "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar"
+  }
+}

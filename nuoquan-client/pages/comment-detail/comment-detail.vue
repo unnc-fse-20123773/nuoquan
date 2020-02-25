@@ -1,5 +1,13 @@
+
 <template>
 	<view class="comment-detail-page">
+	<!-- 导航栏 -->
+
+		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" left-icon="back" left-text="返回"
+
+		:title="pageTitle" 
+
+		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
 		<!-- 主评论区域 -->
 
 		<view class="comment-Box">
@@ -67,13 +75,17 @@
 
 <script>
 	import sonCommentBox from './sonCommentBox.vue'
+	import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
+
 	export default {
 		components: {
 			sonCommentBox,
+			uniNavBar
 		},
 		
 		data() {
 			return {
+			pageTitle: '评论详情',
 				mainComment:'',    //用于接受跳转传过来的underCommentId,然后申请获取sonComment  yaoyao 9.16 
 				userInfo: '',
 				commentContent: '',  //用户准备提交的评论内容

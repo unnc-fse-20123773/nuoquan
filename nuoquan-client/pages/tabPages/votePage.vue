@@ -1,6 +1,11 @@
 <template>
 	<view style="width: 100%;height: 100%;">
 		<!-- 导航栏 -->
+		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" left-icon="back" left-text="返回"
+		:title="pageTitle" 
+		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
+		
+		<!-- 导航栏 -->
 		<view class="navigatorBar_votePage super_center" :style="{ height: navigationBarHeight + 'px' }">NavigatorBar</view>
 		<!-- 左侧按钮 -->
 		<view class="tapLeft super_center" :style="{ top: navigationBarHeight + 46 + 'px' }">
@@ -152,130 +157,45 @@
 </template>
 
 <script>
-	const DEFAULT_PAGE = 0;
-	var timer = null; //进度条生长
-	
-	var loadVoteFlag = false;
-	
-	export default {
-		data() {
-			return {
-				serverUrl: this.$serverUrl,
-				list: ['Javascript', 'Typescript', 'Java', 'PHP', 'Go'],
-				voteCardHeight: 0, //单个投票卡片高度
-				ischosen: [], //判断选项是否选中
-				ischosenFlag: '',
-				menuButtonInfo: '',
-				navigationBarHeight: 0, //导航栏高度
-				ifShowComment: false, //判断是否展示评论区域
-				finishVote: [], //判断是否展示投票结果条形图
-				persentBarWidth: 0, //条形图宽度
-				
-				showList: ['1','2'],
-				userInfo: '',
-				totalPage: 1,
-				currentPage: 1,
-				
-				// singleImgState: ,
-				singleImgHeight: 0,
-				singleImgWidth: 0,
-				heightWidthRate: 0,
-				
-				imgList: [],
-				
-				currentVoteIndex: 0,
-				
-				selectedOptionId: '', // 选择的选项id
-				afterSelectedResult: [], // 确认选择后刷新单个产生的单个vote的所有信息
-				afterSelectedOptionList: [], // 确认选择后刷新单个产生的单个vote的选项信息
-			};
-		},
+const DEFAULT_PAGE = 0;
+var timer = null;//进度条生长
+import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
 
-		onLoad: function() {
-			console.log("还没投票时,selectedOptionId= " + this.selectedOptionId);
-			var userInfo = this.getGlobalUserInfo();
-			if (this.isNull(userInfo)) {
-				uni.redirectTo({
-					url: '../signin/signin'
-				})
-				return;
-			} else {
-				this.userInfo = userInfo;
-			}
-			
-			this.getScreenSize(); //获取手机型号
-			
-			this.showVotes(this.currentPage);
-			//获取导航栏高度
-			var info = this.menuButtonInfo;
-			var height;
-			info = uni.getMenuButtonBoundingClientRect();
-			height = info.bottom;
-			this.navigationBarHeight = height;
-			console.log('导航栏高度=' + this.navigationBarHeight);
-			this.calculateHeight();
-		},
+export default {
+	components:{
+		uniNavBar
+	},
+	data() {
+		return {
+			pageTitle: '投票',
+			list: ['Javascript', 'Typescript', 'Java', 'PHP', 'Go'],
+			voteCardHeight: 0,//单个投票卡片高度
+			ischosen: false,//判断选项是否选中
+			menuButtonInfo: '',
+			navigationBarHeight: 0,//导航栏高度
+			ifShowComment: false, //判断是否展示评论区域
+			finishVote: false, //判断是否展示投票结果条形图
+			persentBarWidth: 0,//条形图宽度
+		};
+	},
 
-		onShow() {
-			this.setTabBarIndex(1); //index为当前tab的索引
-			
-			//Test 
-			// console.log(this.showList);
-			// console.log(this.list);
-		},
+	onLoad: function() {
+		//获取导航栏高度
+		var height = this.getnavbarHeight().bottom + 5;
+		this.navigationBarHeight = height;
+		console.log('导航栏高度=' + this.navigationBarHeight);
+		//计算投票卡片高度
+		this.calculateHeight();
+	},
 
-		methods: {
-			singleImgeFit(e) {
-				var height = e.detail.height;
-				var width = e.detail.width;
-				var rate;
-				if (height >= width) {
-					this.singleImgState = 0;
-					this.singleImgHeight = 360;
-					rate = width / height;
-					this.heightWidthRate = rate;
-					this.singleImgWidth = 360 * rate;
-					// console.log(this.singleImgState);
-					// console.log(rate);
-					// console.log(this.singleImgHeight);
-					// console.log(this.singleImgWidth);
-				} else {
-					this.singleImgState = 1;
-					this.singleImgWidth = 360;
-					rate = height / width;
-					this.heightWidthRate = rate;
-					this.singleImgHeight = 360 * rate;
-					// console.log(this.singleImgState);
-					// console.log(rate);
-					// console.log(this.singleImgHeight);
-					// console.log(this.singleImgWidth);
-				}
-				// console.log(e.detail);
-			},
-			
-			previewImage: function(voteIndex, imageIndex) {
-				// var imgIndex = index;
-				// console.log(res)
-				// 获取全部图片路径
-				var imgList = this.showList[voteIndex].imgList;
-				var arr = [];
-				var path;
-				for (var i = 0; i < imgList.length; i++) {
-					// console.log(imgList[i].imagePath);
-					path = this.$serverUrl + imgList[i].imagePath;
-					arr = arr.concat(path);
-				}
-				// console.log(arr);
-				uni.previewImage({
-					current: imageIndex,
-					urls: arr
-				});
-				arr = [];
-			},
-			
-			calculateHeight() {
-				var that = this;
-				var pageHeight;
+	onShow() {
+		this.setTabBarIndex(1); //index为当前tab的索引
+	},
+
+	methods: {
+		calculateHeight(){
+			var that = this;
+			var pageHeight;
 				uni.getSystemInfo({
 					success: function(res) {
 						pageHeight = res.windowHeight;
