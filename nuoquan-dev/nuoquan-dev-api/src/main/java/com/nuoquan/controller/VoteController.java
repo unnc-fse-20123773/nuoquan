@@ -23,6 +23,7 @@ import com.github.pagehelper.PageInfo;
 import com.nuoquan.enums.MsgActionEnum;
 import com.nuoquan.enums.MsgSignFlagEnum;
 import com.nuoquan.enums.StatusEnum;
+import com.nuoquan.mapper.VoteMapper;
 import com.nuoquan.netty.MsgHandler;
 import com.nuoquan.pojo.Article;
 import com.nuoquan.pojo.SearchRecord;

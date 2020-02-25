@@ -159,7 +159,7 @@ public interface ArticleService {
 	 * @param page 
 	 * @return
 	 */
-	public PagedResult getTop3ByPopularity(Integer page, Integer pageSize, String userId);
+	public PagedResult getArticleByPopurity(Integer page, Integer pageSize, String userId);
 	
 	/**
 	 * Set the status to unreadable
@@ -214,6 +214,16 @@ public interface ArticleService {
 	 * @return
 	 */
 	public PagedResult getAllSubscribedAuthorArticles(Integer page, Integer pageSize, String userId);
+
+
+	/**
+	 * 获取关注的人的文章, 按热度排序
+	 * @param page
+	 * @param pageSize
+	 * @param userId
+	 * @return
+	 */
+	public PagedResult getAllSubscribedAuthorArticlesByPopularity(Integer page, Integer pageSize, String userId);
 
 //	/**
 //	 * 通过热度查询评论主

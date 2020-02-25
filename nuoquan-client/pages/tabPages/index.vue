@@ -91,7 +91,6 @@ export default {
 
 		this.getTop3Articles(); // 获取热度榜（刷新）
 		
-		
 	},
 
 	// onPullDownRefresh() {

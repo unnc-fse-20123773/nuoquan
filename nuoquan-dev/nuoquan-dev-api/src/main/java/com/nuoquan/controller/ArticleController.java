@@ -5,10 +5,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,6 +30,9 @@ import com.nuoquan.pojo.netty.DataContent;
 import com.nuoquan.pojo.vo.ArticleVO;
 import com.nuoquan.pojo.vo.UserArticleCommentVO;
 import com.nuoquan.pojo.vo.UserLikeVO;
+import com.nuoquan.service.ArticleService;
+import com.nuoquan.service.UserService;
+import com.nuoquan.service.WeChatService;
 import com.nuoquan.utils.JSONResult;
 import com.nuoquan.utils.PagedResult;
 
@@ -42,43 +47,102 @@ import io.swagger.annotations.ApiParam;
 @RequestMapping("/article")
 public class ArticleController extends BasicController {
 
+	@Value("${upload.maxFaceImageSize}")
+	private long MAX_FACE_IMAGE_SIZE;
+
+	/**
+	 * 
+	 * @param page
+	 * @param pageSize
+	 * @param queryType 0 -- 按"所有"请求, 1 -- 按"关注"请求
+	 * @param orderType 0 -- 按时间倒序排列, 1 -- 按热度正序排列
+	 * @param userId 操作者id
+	 * @return
+	 * @throws Exception
+	 */
 	@ApiOperation(value = "查询全部文章", notes = "查询全部文章的接口")
 	@ApiImplicitParams({
 		// userId 查询用户和文章的点赞关系
 		// dataType 为 String, 应该改为 Integer
 		@ApiImplicitParam(name = "userId", value = "操作者id", required = true, dataType = "String", paramType = "form"),
 		@ApiImplicitParam(name = "page", value = "页数", required = true, dataType = "String", paramType = "form"),
-		@ApiImplicitParam(name = "pageSize", value = "每页大小", required = true, dataType = "String", paramType = "form") })
-	@PostMapping("/queryAllArticles")
-	public JSONResult shoAllArticles(Integer page, Integer pageSize, String userId) throws Exception {
+		@ApiImplicitParam(name = "pageSize", value = "每页大小", required = true, dataType = "String", paramType = "form"),
+		@ApiImplicitParam(name = "queryType", value = "排列方式", required = true, dataType = "Integer", paramType = "form"),
+		@ApiImplicitParam(name = "orderType", value = "排列方式", required = true, dataType = "Integer", paramType = "form")
+		})
+	@PostMapping("/queryArticles")
+	public JSONResult queryArticles(Integer page, Integer pageSize, Integer queryType, Integer orderType, String userId) throws Exception {
 
+		PagedResult result = new PagedResult();
+		
 		if (page == null) {
 			page = 1;
 		}
 		if (pageSize == null) {
 			pageSize = PAGE_SIZE;
 		}
-		PagedResult result = articleService.getAllArticles(page, pageSize, userId);
-
+		
+		if (queryType == 0) {
+			if (orderType == 0) {
+				result = articleService.getAllArticles(page, pageSize, userId);
+			}
+			
+			if (orderType == 1) {
+				result = articleService.getArticleByPopurity(page, pageSize, userId);
+			}
+		}
+		
+		if (queryType == 1) {
+			if (orderType == 0) {
+				result = articleService.getAllSubscribedAuthorArticles(page, pageSize, userId);
+			}
+			
+			if (orderType == 1) {
+				result = articleService.getAllSubscribedAuthorArticlesByPopularity(page, pageSize, userId);
+			}
+		}
+		
+		
 		return JSONResult.ok(result);
 	}
 	
+	/**
+	 * 
+	 * @param page
+	 * @param pageSize
+	 * @param type 0 -- 按时间倒序排列, 1 -- 按热度正序排列
+	 * @param userId
+	 * @return
+	 * @throws Exception
+	 */
+	@Deprecated
 	@ApiOperation(value = "查询我关注的人的全部文章", notes = "查询我关注的人的全部文章的接口")
 	@ApiImplicitParams({
 		// userId 查询用户和文章的点赞关系
 		// dataType 为 String, 应该改为 Integer
 		@ApiImplicitParam(name = "userId", value = "操作者id", required = true, dataType = "String", paramType = "form"),
 		@ApiImplicitParam(name = "page", value = "页数", required = true, dataType = "String", paramType = "form"),
+		@ApiImplicitParam(name = "type", value = "文章的排列方式", required = true, dataType = "Integer", paramType = "form"),
 		@ApiImplicitParam(name = "pageSize", value = "每页大小", required = true, dataType = "String", paramType = "form") })
 	@PostMapping("/queryAllSubscribedAuthorArticles")
-	public JSONResult queryAllSubscribedAuthorArticles(Integer page, Integer pageSize, String userId) throws Exception {
+	public JSONResult queryAllSubscribedAuthorArticles(Integer page, Integer pageSize, Integer type, String userId) throws Exception {
+		
+		PagedResult result = new PagedResult();
+		
 		if (page == null) {
 			page = 1;
 		}
 		if (pageSize == null) {
 			pageSize = PAGE_SIZE;
 		}
-		PagedResult result = articleService.getAllSubscribedAuthorArticles(page, pageSize, userId);
+		
+		if (type == 0) {
+			result = articleService.getAllSubscribedAuthorArticles(page, pageSize, userId);
+		}
+		
+		if (type == 1) {
+			result = articleService.getAllSubscribedAuthorArticlesByPopularity(page, pageSize, userId);
+		}
 
 		return JSONResult.ok(result);
 	}
@@ -533,7 +597,14 @@ public class ArticleController extends BasicController {
 		return JSONResult.ok(reCommentList);
 	}
 	
-
+	/**
+	 * 根据热度查询文章
+	 * @param page
+	 * @param pageSize
+	 * @param userId
+	 * @return
+	 * @throws Exception
+	 */
 	@ApiOperation(value = "Get the top 10 hot article")
 	@PostMapping("/getHotTop10")
 	public JSONResult getHotTop10(Integer page, Integer pageSize, String userId) throws Exception {
@@ -545,7 +616,7 @@ public class ArticleController extends BasicController {
 			pageSize = PAGE_SIZE;
 		}
 		
-		PagedResult result = articleService.getTop3ByPopularity(page, pageSize, userId);
+		PagedResult result = articleService.getArticleByPopurity(page, pageSize, userId);
 //		List<ArticleVO> list = articleService.getTop3ByPopularity(userId);
 		return JSONResult.ok(result);
 	}
