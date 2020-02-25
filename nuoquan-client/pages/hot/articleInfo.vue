@@ -37,7 +37,7 @@
 						</view>
 					</view>
 					<view class="picArea" v-if="thisArticle.imgList.length">
-						<image :src="serverUrl + thisArticle.imgList[0].imagePath"></image>
+						<image :src="serverUrl + thisArticle.imgList[0].imagePath" mode="aspectFill"></image>
 					</view>	
 				</view>	
 			</view>
@@ -92,6 +92,7 @@
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;*/
+		font-weight: 550;
 		font-size: 17px;
 		margin-left: 17px;
 		color: #4a4a4a;

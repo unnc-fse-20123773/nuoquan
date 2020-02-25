@@ -6,7 +6,7 @@
 			<uni-status-bar v-if="statusBar" />
 			<view :style="{ color: color,backgroundColor: backgroundColor }" class="navigationBar_Line">
 				<!-- 左侧区域 -->
-				<view @tap="onClickLeft" style="height: 38px;" class="uni-navbar__header-btns uni-navbar__header-btns-left uni-navbar__content_view">
+				<view v-if="leftIcon == 'back'" @tap="onClickLeft" style="height: 38px;" class="uni-navbar__header-btns uni-navbar__header-btns-left uni-navbar__content_view">
 					<!-- icon -->
 					<view class="uni-navbar__content_view" v-if="leftIcon == 'back'">
 						<image style="height: 24px;width: 24px;" src="../../static/icon/angle-left.png" mode="aspectFit"></image>
@@ -21,7 +21,7 @@
 				<!-- 标题区域 -->
 				<view class="uni-navbar__header-container uni-navbar__content_view">
 					<view class="uni-navbar__header-container-inner uni-navbar__content_view" v-if="title.length">
-						<text class="uni-nav-bar-text" :style="{color: color }">{{ title }}</text>
+						<text class="uni-nav-bar-text" :style="{color: color,'font-weight': 550 }">{{ title }}</text>
 					</view>
 					<!-- 标题插槽 -->
 					<slot />
@@ -126,7 +126,7 @@
 	$nav-height: 44px;
 	.uni-nav-bar-text {
 		/* #ifdef APP-PLUS */
-		font-size: 34rpx;
+		font-size: 17px;
 		/* #endif */
 		/* #ifndef APP-PLUS */
 		font-size: $uni-font-size-lg;
@@ -135,7 +135,7 @@
 	.uni-nav-bar-right-text {
 		font-size: $uni-font-size-base;
 	}
-
+	
 	.uni-navbar {
 		width: 750rpx;
 	}
@@ -161,7 +161,7 @@
 		display: flex;
 		/* #endif */
 		flex-direction: row;
-		width: 750rpx;
+		width: 100%;
 		height: $nav-height;
 		line-height: $nav-height;
 		font-size: 16px;
@@ -240,4 +240,5 @@
 		height: 38px;
 		display: flex;
 	}
+	
 </style>
