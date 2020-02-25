@@ -1,6 +1,0 @@
-{
-  "usingComponents": {
-    "son-comment-box": "/pages/comment-detail/sonCommentBox",
-    "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar"
-  }
-}
