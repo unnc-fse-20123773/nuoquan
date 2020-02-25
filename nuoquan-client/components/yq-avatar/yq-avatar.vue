@@ -1,5 +1,7 @@
 <!-- 
-	易用的头像裁剪上传、头像美化组件 https://ext.dcloud.net.cn/plugin?id=404
+	易用的头像裁剪上传、头像美化组件 
+	Dcloud: https://ext.dcloud.net.cn/plugin?id=404
+	Github: https://github.com/yqking/uniapp-avatar
  -->
 <template name="yq-avatar">
 	<view>
