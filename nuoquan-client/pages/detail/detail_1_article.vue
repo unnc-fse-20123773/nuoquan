@@ -37,7 +37,7 @@
 		</view>
 		<!--4个ICON, 点赞评论分享返回-->
 		<view class="menu-bar">
-			<view class="like" :class="{liked:articleCard.isLike}" @tap="swLikeArticle()">{{articleCard.likeNum}}</view>
+			<view  :class="[ articleCard.isLike ? 'liked':'like']" @tap="swLikeArticle()">{{articleCard.likeNum}}</view>
 			<view class="comment" @tap="controlInputInDetailArticle">{{articleCard.commentNum}}</view>
 			<view class="share" @tap="toggleShare()"></view>
 			<view class="back" @tap="menu_back()"></view>
@@ -67,7 +67,7 @@
 				singleImgWidth:"", //一图调整宽度
 				tagColorList: [],
 				
-				share: true, // 隐藏/显示share画布
+				share: false, // 隐藏/显示share画布
 			};
 		},
 		mounted() {
@@ -368,12 +368,35 @@
 	}
 	.liked{
 		background: #FE5F55;
+		
+		width: 12px;
+		height: 11px;
+		font-size: 11px;
+		font-family: Source Han Sans CN;
+		font-weight: 400;
+		line-height: 11px;
+		text-align: center;
+		color: #353535;
+		padding: 26px 16px 7px;
+		border-radius: 22px;
+		position: relative;
 	}
 .like::after{
 	content: "";
 	width: 16px;
 	height: 16px;
-	background: url(../../static/icon/like.png);
+	background: url(../../static/icon/heart_353535.png);
+	background-repeat: no-repeat;
+	background-size: contain;
+	position: absolute;
+	left:14px;
+	top:8px;
+}
+.liked::after{
+	content: "";
+	width: 16px;
+	height: 16px;
+	background: url(../../static/icon/heart_ffffff.png);
 	background-repeat: no-repeat;
 	background-size: contain;
 	position: absolute;

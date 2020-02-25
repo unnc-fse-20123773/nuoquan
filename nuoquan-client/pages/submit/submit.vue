@@ -381,7 +381,16 @@
 			},
 
 			addTag(item) {
-				this.selectedTags.push(item);
+				var a=this.selectedTags.indexOf(item);
+				if(a == -1){
+					this.selectedTags.push(item);
+				}else{
+					uni.showToast({
+						icon: 'none',
+						title: '已经添加～',
+						duration: 200
+					});
+				}
 			},
 			deleteTag: function(index) {
 				console.log(index);

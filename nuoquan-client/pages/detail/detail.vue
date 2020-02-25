@@ -10,7 +10,7 @@
 		<!--第一个大块二，评论区域-->
 
 		<detail_2_comments class="comment-area" :commentList='commentList' @controlInputSignal="controlInput" :userInfo="userInfo"
-		@onChange="changeType" ></detail_2_comments>
+		 @onChange="changeType"></detail_2_comments>
 
 
 
@@ -27,38 +27,24 @@
 
 
 
-		<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)">
-			<view class="commentPart" @click.stop="" :style="{bottom: textAreaAdjust }">
-				<!-- 					<view class="emoji"></view>
- -->
-				<view class="add-pic"></view>
-
-				<view class="submit" @click="saveComment()">发送</view>
+		<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)" :style="{'bottom':textAreaAdjust}">
+			<view class="commentPart"  :style="{bottom: textAreaAdjust }">
+				<!--<view class="emoji"></view><view class="add-pic"></view>-->
+				<view class="submit" @tap="saveComment()">发送</view>
 				<view class="commentSth">
 					<textarea class="comment-text" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
-					 adjust-position="false" v-model="commentContent" @click.stop="" :show-confirm-bar="false" @focus="popTextArea"
+					 adjust-position="false" v-model="commentContent"  :show-confirm-bar="false" @focus="popTextArea"
 					 @blur="unpopTextArea" cursor-spacing='20' />
-					<!-- <view class="comment-pic-area">
-						<image src="../../static/BG/indexBG.png"></image>
-						<image src="../../static/icon/about.png"></image>
-						<image src="../../static/icon/1575235531(1).png"></image>
-					</view> -->
+					<!-- <view class="comment-pic-area"><image src="../../static/BG/indexBG.png"></image><image src="../../static/icon/about.png"></image><image src="../../static/icon/1575235531(1).png"></image></view> -->
 					 <view class="word-count-left">{{wordNotice}}</view>
-				
 				</view>
             </view>
 		</view> 
-<!-- 		常驻input
- --> 
- <view class="permanent_input_BG" v-if="!showInput" @click="controlInput(1)">
+		
+<!--常驻input--> 
+     <view class="permanent_input_BG" v-if="!showInput" @click="controlInput(1)">
         <input class="permanent_input" :placeholder="placeholderText" v-model="commentContent" disabled="true" min-height="10px" />
- </view>
- 
- 
- 
- 
- 
- 
+     </view>
  
  
  
@@ -82,7 +68,6 @@ import detail_2_comments from "./detail_2_comments.vue"
 				writingComment:false,  //控制输入框，true时自动获取焦点，拉起输入法
 				placeholderText: "评论点什么吧......",
 				wordNotice:"48",
-				inputData:{},  //localData,用于拼接不同情况下的savecomment请求的数据
 				
 				submitData:{
 					//这个是从子组件传来的数据，回复评论的评论之类
@@ -219,6 +204,7 @@ import detail_2_comments from "./detail_2_comments.vue"
 			 *     子级评论有 fatherCommentId, underCommentId;
 			 */
 			saveComment: function() {
+				console.log('tragger savecomment');
 				if (uploadFlag) {
 					console.log("正在上传...")
 					return;
@@ -594,7 +580,7 @@ border-radius: 2px;
 
 	}
 	.comment-text{
-		width: calc(670upx - 20px);	
+		width: calc(670upx - 60px);	
 		font-size: 14px;
 		max-height: 95px;
 		line-height: 20px;

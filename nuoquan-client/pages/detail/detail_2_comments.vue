@@ -24,7 +24,7 @@
 					<view class="comment-info">
 						<image :src="pathFilter(mainComment.faceImg)" @tap="goToPersonPublic(mainComment.fromUserId)"></image>
 						<view class="name_text">{{ mainComment.nickname }}</view>
-						<view class="time_text">{{ mainComment.timeAgo }}</view>
+						<view class="time_text">{{ timeDeal(mainComment.createDate) }}</view>
 					</view>
 					<view class="comment-content" @tap="goToCommentDetail(mainComment)">{{ mainComment.comment }}</view>
 					<view class="comment-menu">
