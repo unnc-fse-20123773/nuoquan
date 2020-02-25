@@ -1,6 +1,9 @@
 <template>
 	<view class="detail-page">
-
+		<!-- 导航栏 -->
+		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" left-icon="back" left-text="返回"
+		:title="pageTitle" 
+		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
 		<!-- 第一个大块二，文章本体 -->
 		<detail_1_article class="article-area" :articleCard='articleCard' @controlInputSignal="controlInput" :userInfo="userInfo"
 		 @swLikeArticleSignal="changeLikeStatus" @backToLastPage="backToLastPage()"></detail_1_article>
@@ -10,7 +13,7 @@
 		<!--第一个大块二，评论区域-->
 
 		<detail_2_comments class="comment-area" :commentList='commentList' @controlInputSignal="controlInput" :userInfo="userInfo"
-		@onChange="changeType" ></detail_2_comments>
+		@onChange="changeType"></detail_2_comments>
 
 
 
@@ -43,7 +46,7 @@
 						<image src="../../static/icon/about.png"></image>
 						<image src="../../static/icon/1575235531(1).png"></image>
 					</view> -->
-					 <view class="word-count-left">{{wordNotice}}</view>
+					<view class="word-count-left">{{wordNotice}}</view>
 				
 				</view>
             </view>
@@ -68,10 +71,13 @@
 <script>
 import detail_1_article from "./detail_1_article.vue"
 import detail_2_comments from "./detail_2_comments.vue"
+import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
+
 	var uploadFlag = false;
 	export default {
 		data() {
 			return {  
+				pageTitle: '详情',
 				imgList: [],				
 				userInfo: {},
 				articleCard: "",  //detail的主角，由index传过来的单个文章信息
@@ -98,12 +104,13 @@ import detail_2_comments from "./detail_2_comments.vue"
 				control_scroll_button_flag:0,
 			};
 		},
+		
 		components: {
 			detail_1_article,
 			detail_2_comments,
+			uniNavBar
 		},
 
-		
 		onReachBottom() {
 			this.loadMore();
 		},

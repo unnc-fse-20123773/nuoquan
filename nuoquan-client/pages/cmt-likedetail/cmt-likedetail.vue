@@ -1,5 +1,10 @@
 <template>
 	<view id="public-container">
+		<!-- 导航栏 -->
+		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" left-icon="back" left-text="返回"
+		:title="pageTitle" 
+		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
+		
 		<view id="public-message-futherbox">
 			<scroll-view class="top-menu-view" scroll-x="true" scroll-left="scrollLeft">
 				<block v-for="(menuTabs,index) in menuTabs" :key="index">
@@ -207,9 +212,14 @@
 
 <script>
 	// TODO 查询列表分页操作
+	import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
 	export default {
+		components:{
+			uniNavBar
+		},
 		data() {
 			return {
+				pageTitle: '评论详情',
 				scrollLeft: 0,
 				isClickChange: false,
 				currentTab: '', // 切换 list 0/1

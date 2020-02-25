@@ -19,8 +19,6 @@ Vue.prototype.$store = store // 挂载 vueX
 
 Vue.prototype.$serverUrl = "http://127.0.0.1:8080"
 Vue.prototype.$wsServerUrl = "wss://127.0.0.1:8088/ws"
-//Vue.prototype.$serverUrl = "http://192.168.0.27:8080"
-//Vue.prototype.$wsServerUrl = "wss://192.168.0.27:8088/ws"
 // 服务器地址
  //Vue.prototype.$serverUrl = "http://129.28.130.27:8080/nottinghome"
  //Vue.prototype.$wsServerUrl = "ws://129.28.130.27:8088/ws"
@@ -1051,6 +1049,22 @@ Vue.mixin({
   }
 })
 
+// 保留两位小数的方法
+Vue.prototype.reserveTwoDecimal = function(number){
+	var floatNum = parseFloat(number);
+	if(isNaN(floatNum)){
+		return;
+	}
+	floatNum = Math.round(number*100)/100;
+	return floatNum;
+}
+
+//获取导航栏各种信息
+Vue.prototype.getnavbarHeight =  function(){
+	var navbarInfo = uni.getMenuButtonBoundingClientRect();
+	return navbarInfo;
+}
+
 //判断屏幕尺寸并分类,实现兼容不同设备
 Vue.prototype.getScreenSize = function(){
 	uni.getSystemInfo({
@@ -1065,12 +1079,3 @@ Vue.prototype.getScreenSize = function(){
 	})
 }
 
-// 保留两位小数的方法
-Vue.prototype.reserveTwoDecimal = function(number){
-	var floatNum = parseFloat(number);
-	if(isNaN(floatNum)){
-		return;
-	}
-	floatNum = Math.round(number*100)/100;
-	return floatNum;
-}

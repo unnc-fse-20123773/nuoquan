@@ -1,5 +1,5 @@
 <template>
-	<view id="container">
+	<view id="container">、
 		<!-- 由两个超圆，用 fixed 定位做成的背景黄色 -->
 		<view id="msglist-yellowshadowbg">
 		</view>
@@ -89,7 +89,8 @@
 <script>
 	import {mapState, mapMutations} from 'vuex';  
 	import swipeAction from "../../components/swipe-action.vue";
-
+	import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue";
+	
 	var userInfo;
 
 	var socketTask;
@@ -97,7 +98,9 @@
 
 	export default {
 		components: {
-			swipeAction
+			swipeAction,
+			uniNavBar
+			
 		},
 		data() {
 			return {
