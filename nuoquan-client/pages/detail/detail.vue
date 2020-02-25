@@ -533,9 +533,10 @@ border-radius: 2px;
 .submit{
 	display: inline-block;
 	width: 42px;
-	position: relative;
-	top:3px;
+	position: absolute;
+	top:15px;
 	height:21px;
+	right: 15px;
 /* 	background: url(../../static/icon/arrow-right.png);
  */	background-size: 14px 14px;
 	background-repeat: no-repeat;
