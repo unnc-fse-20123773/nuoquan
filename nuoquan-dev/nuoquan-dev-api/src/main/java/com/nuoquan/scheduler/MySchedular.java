@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import com.nuoquan.mapper.ArticleMapper;
 import com.nuoquan.mapper.ArticleMapperCustom;
 import com.nuoquan.service.ArticleService;
+import com.nuoquan.service.VoteService;
 
 /**
  * 热度计算定时任务
@@ -23,17 +24,29 @@ import com.nuoquan.service.ArticleService;
 @Configuration      // 主要用于标记配置类，兼备 Component 的效果。
 @EnableScheduling   // 开启定时任务
 @EnableAsync        // 开启多线程
-public class popularityScheduler {
+public class MySchedular {
 	
 	@Autowired
 	private ArticleService articleService;
 	
+	@Autowired
+	private VoteService voteService;
+	
 	@Async
 	@Scheduled(cron = "0 */10 * * * ?") // 间隔10分钟
-	public void configureTasks() {
+	public void articlePupulorityAutoUpdate() {
 		System.err.println("按公式更新文章热度值... " + LocalDateTime.now());
 		articleService.upadtePopByFunction();
 	}
+	
+	@Async
+	@Scheduled(cron = "0 */8 * * * ?")
+	public void autoUpdateVoteStatus(){
+		System.err.println("自动判断投票是否过期... " + LocalDateTime.now());
+		voteService.autoUpdateVoteStatus();
+	}
+	
+	
 
 //	 Example Code...
 //	 @Async
