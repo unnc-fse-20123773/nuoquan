@@ -16,6 +16,8 @@
 	/* #ifndef APP-PLUS-NVUE */
 	/* uni.css - 通用组件、模板样式库，可以当作一套ui库应用 */
 	@import './common/uni.css';
+	/* css3 */
+	@import url("/components/animate.css");
 	/* #endif*/
 	
 	/*每个页面公共css */
