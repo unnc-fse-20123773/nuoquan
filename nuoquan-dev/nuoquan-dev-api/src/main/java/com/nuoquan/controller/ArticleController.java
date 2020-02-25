@@ -54,8 +54,9 @@ public class ArticleController extends BasicController {
 	 * 
 	 * @param page
 	 * @param pageSize
+	 * @param queryType 0 -- 按"所有"请求, 1 -- 按"关注"请求
 	 * @param type 0 -- 按时间倒序排列, 1 -- 按热度正序排列
-	 * @param userId
+	 * @param userId 操作者id
 	 * @return
 	 * @throws Exception
 	 */
@@ -66,10 +67,11 @@ public class ArticleController extends BasicController {
 		@ApiImplicitParam(name = "userId", value = "操作者id", required = true, dataType = "String", paramType = "form"),
 		@ApiImplicitParam(name = "page", value = "页数", required = true, dataType = "String", paramType = "form"),
 		@ApiImplicitParam(name = "pageSize", value = "每页大小", required = true, dataType = "String", paramType = "form"),
-		@ApiImplicitParam(name = "type", value = "排列方式", required = true, dataType = "Integer", paramType = "form")
+		@ApiImplicitParam(name = "queryType", value = "排列方式", required = true, dataType = "Integer", paramType = "form"),
+		@ApiImplicitParam(name = "orderType", value = "排列方式", required = true, dataType = "Integer", paramType = "form")
 		})
-	@PostMapping("/queryAllArticles")
-	public JSONResult shoAllArticles(Integer page, Integer pageSize, Integer type, String userId) throws Exception {
+	@PostMapping("/queryArticles")
+	public JSONResult queryArticles(Integer page, Integer pageSize, Integer queryType, Integer orderType, String userId) throws Exception {
 
 		PagedResult result = new PagedResult();
 		
@@ -79,13 +81,27 @@ public class ArticleController extends BasicController {
 		if (pageSize == null) {
 			pageSize = PAGE_SIZE;
 		}
-		if (type == 0) {
-			result = articleService.getAllArticles(page, pageSize, userId);
+		
+		if (queryType == 0) {
+			if (orderType == 0) {
+				result = articleService.getAllArticles(page, pageSize, userId);
+			}
+			
+			if (orderType == 1) {
+				result = articleService.getArticleByPopurity(page, pageSize, userId);
+			}
 		}
 		
-		if (type == 1) {
-			result = articleService.getArticleByPopurity(page, pageSize, userId);
+		if (queryType == 1) {
+			if (orderType == 0) {
+				result = articleService.getAllSubscribedAuthorArticles(page, pageSize, userId);
+			}
+			
+			if (orderType == 1) {
+				result = articleService.getAllSubscribedAuthorArticlesByPopularity(page, pageSize, userId);
+			}
 		}
+		
 		
 		return JSONResult.ok(result);
 	}
@@ -99,6 +115,7 @@ public class ArticleController extends BasicController {
 	 * @return
 	 * @throws Exception
 	 */
+	@Deprecated
 	@ApiOperation(value = "查询我关注的人的全部文章", notes = "查询我关注的人的全部文章的接口")
 	@ApiImplicitParams({
 		// userId 查询用户和文章的点赞关系
