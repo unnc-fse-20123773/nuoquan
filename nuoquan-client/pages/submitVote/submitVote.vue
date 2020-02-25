@@ -175,6 +175,9 @@ export default {
 					console.log("success choose");
 					this.imageList = this.imageList.concat(res.tempFilePaths);
 					console.log(res);
+				},
+				fail: err => {
+					console.log("fail");
 				}
 			})
 		},
