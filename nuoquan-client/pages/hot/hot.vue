@@ -98,7 +98,6 @@ import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue";
 					page: 1,
 					pageSize: 10,
 					userId: that.userInfo.id,
-					// targetId: that.userInfo.id //应该为targetId,但缺少publicProfile的数据传输,暂时用userId测试
 				},
 				header: {
 					'content-type': 'application/x-www-form-urlencoded'

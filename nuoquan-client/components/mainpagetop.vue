@@ -35,13 +35,13 @@
 					<!-- 热门标题 -->
 					<swiper :class="[roleup == false ? 'swiperCard' : 'swiperCard_roled']" :indicator-dots="false" :autoplay="true" :interval="3000" :vertical="true" :duration="1000">
 						<view >
-							<swiper-item>
+							<swiper-item v-for="(item, index) in topArticles" :key="index">
 								<view class="itemCard" :style="{'height':roleup == false ? '62px;' :'33px' ,}">
-									<view :class="[roleup == false ? 'hotTitle' : 'hotTitle_roled']">{{ topArticles[0].articleTitle }}</view>
+									<view :class="[roleup == false ? 'hotTitle' : 'hotTitle_roled']">{{ item.articleTitle }}</view>
 									<view v-if="roleup == false" class="userInfo">
-										<image src=pathFilter(topArticles[0].faceImg) mode="aspectFit"></image>
+										<image :src=pathFilter(item.faceImg) mode="aspectFit"></image>
 										<view class="userid_mainpagetop">
-											{{topArticles[0].nickname}}
+											{{item.nickname}}
 										</view>
 									</view>
 								</view>
