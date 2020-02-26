@@ -251,10 +251,11 @@ import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
 								that.commentContent = "";
 								that.showInput = false;
 								// 强制子组件重新刷新
-								that.commentList = '';
-								that.$nextTick(function() {
-									that.getComments(1);
-								});
+								// that.commentList = '';
+								// that.$nextTick(function() {
+								// 	that.getComments(1);
+								// });
+								that.getComments(1);
 								
 								that.articleCard.commentNum++; // 文章评论数累加
 							}else if (res.data.status == 500){
