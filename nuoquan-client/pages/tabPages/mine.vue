@@ -117,11 +117,13 @@ export default {
 	},
 	
 	onShow() {
+		this.setTabBarIndex(4) //index为当前tab的索引
+		
 		//更新用户数据
 		console.log("更新用户数据");
 		queryUserInfo(this.thisUserInfo.id);
 	},
-
+	
 	onPullDownRefresh() {
 		console.log('refresh');
 		setTimeout(function() {

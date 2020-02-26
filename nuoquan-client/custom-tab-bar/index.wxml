@@ -6,22 +6,18 @@
 
 	<cover-view wx:for="{{list}}" wx:key="index" class="tab-bar-item" data-path="{{item.pagePath}}" data-index="{{index}}"
 	 bindtap="switchTab">
-		<cover-view wx:if="{{item.isSpecial}}">{{rotateStatus}}
+		<cover-view wx:if="{{item.isSpecial}}">
 			<cover-view class="midbutton" bindtap="rotate">
-				<cover-image class=" {{ rotateStatus  ? 'midIconBack' : 'midIcon '}}" style="width: 24px;height: 24px;margin: 16px 16px;transition: all 1000ms linear 200ms; transform: {{ rotateStatus == true ? 'rotate(-45deg)' : ''}};" 
+				<cover-image class="{{ rotateStatus ? 'midIcon' : 'midIconBack'}}" style="width: 24px;height: 24px;margin: 16px 16px;transition: all 500ms linear 200ms; transform: rotate({{degree+'deg'}});"
 				src="../static/icon/plus_tab.png"></cover-image>
 			</cover-view>
 		</cover-view>
 	 
 		<cover-view wx:else>
 			<!-- 选中添加橙色背景 -->
-			<cover-view wx:if="{{selected == index}}" class="iconBackground">
-				<cover-image src="{{selected === index ? item.selectedIconPath : item.iconPath}}"></cover-image>
+			<cover-view>
+				<cover-image src="{{selected == index ? item.selectedIconPath : item.iconPath}}"></cover-image>
 			</cover-view>
-			<!-- 未选中取消橙色背景 -->
-			<cover-image wx:if="{{selected !== index}}" src="{{selected === index ? item.selectedIconPath : item.iconPath}}"></cover-image>
-			<!-- 标签页文字 -->
-			<cover-view wx:if="{{selected !== index}}" class="tabbarFont" style="color: {{selected === index ? selectedColor : color}}">{{item.text}}</cover-view>
 		</cover-view>
 	</cover-view>
 

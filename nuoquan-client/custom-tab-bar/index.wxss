@@ -31,18 +31,18 @@
 }
 
 .tab-bar-item cover-image {
-	width: 20px;
-	height: 20px;
-	border-radius: 50%;
+	/* width: 20px; */
+	/* height: 20px; */
+	/* border-radius: 50%; */
 	opacity: 1;
 }
 
 .tab-bar-item cover-view cover-image{
-	margin: 12px 12px;
+/* 	margin: 12px 12px;
 	width: 20px;
 	height: 20px;
 	border-radius: 50%;
-	opacity: 1;
+	opacity: 1; */
 }
 
 .tabbarFont{
@@ -52,8 +52,8 @@
 .iconBackground{
 	width:44px;
 	height:44px;
-	background:rgba(253,169,86,1);
-	border-radius:50%;
+	/* background:rgba(253,169,86,1); */
+	/* border-radius:50%; */
 	opacity:1;
 }
 
@@ -73,22 +73,22 @@
 	opacity:1;
 }
 
-.midIcon{
+/* .midIcon{ */
 	/* 旋转360度 */
-	transform: rotate(0deg);
+	/* transform: rotate(0deg); */
 	/* all表示所有属性,500s表示在0.5秒的时间完成动画 */
-	transition: all 1000ms linear 200ms;
-} 
+	/* transition: all 1000ms linear 200ms; */
+/* } */
 
-.midIconBack{
+/* .midIconBack{ */
 	/* 旋转360度 */
-	transform: rotate(-45deg);
+	/* transform: rotate(-45deg); */
 	/* all表示所有属性,500s表示在0.5秒间完成动画 */
-	transition: all 1000ms linear 200ms;
-}
-
-/* .midIconBack{
-      animation:midIcon 1s linear 1;      
+	/* transition: all 1000ms linear 200ms; */
+/* } */
+	
+.midIcon{
+      animation:midIcon 300ms linear 1;      
     }
     /* 
       midIcon : 定义的动画名称
@@ -96,27 +96,27 @@
       linear : 动画以何种运行轨迹完成一个周期
       infinite :规定动画应该无限次播放
      */
-    /* @keyframes midIcon{
+   @keyframes midIcon{
       0%{-webkit-transform:rotate(0deg);}
       25%{-webkit-transform:rotate(11.25deg);}
       50%{-webkit-transform:rotate(22.5deg);}
       75%{-webkit-transform:rotate(33.75deg);}
       100%{-webkit-transform:rotate(45deg);}
-    } */
-	
-/* .midIcon{
-      animation:midIcon 3s linear 1;      
-    } */
+    }
+
+ .midIconBack{
+      animation:midIconBack 300ms linear 1;      
+    }
     /* 
       midIcon : 定义的动画名称
       1s : 动画时间
       linear : 动画以何种运行轨迹完成一个周期
       infinite :规定动画应该无限次播放
      */
-   /* @keyframes midIcon{
-      0%{-webkit-transform:rotate(-0deg);}
-      25%{-webkit-transform:rotate(-11.25deg);}
-      50%{-webkit-transform:rotate(-22.5deg);}
-      75%{-webkit-transform:rotate(-33.75deg);}
-      100%{-webkit-transform:rotate(-45deg);}
-    } */
+    @keyframes midIconBack{
+      0%{-webkit-transform:rotate(45deg);}
+      25%{-webkit-transform:rotate(33.75deg);}
+      50%{-webkit-transform:rotate(22.5deg);}
+      75%{-webkit-transform:rotate(11.25deg);}
+      100%{-webkit-transform:rotate(0deg);}
+    } 
