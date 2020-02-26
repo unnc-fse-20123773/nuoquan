@@ -1,6 +1,7 @@
 <template>
 	<view style="width:100%;height:100%;margin:auto;">
 		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" left-icon="back" left-text="返回" :title="pageTitle" :height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
+		<view :style="{height: this.getnavbarHeight().bottom + 5 + 'px'}"></view>
 		<view class = "top">
 			<text class="topleft">下次更新 {{minute}}分{{second}}秒</text>
 			<button class="topright" @click="reload()">
@@ -166,7 +167,8 @@ import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue";
 		display:flex;
 		align-items:center;
 		position:static;
-		margin-bottom: 10px;
+		margin-bottom: 10rpx;
+		margin-top: 20rpx;
 	}
 	.topleft{
 		font-size:14px;

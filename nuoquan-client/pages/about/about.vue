@@ -4,6 +4,7 @@
 		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" left-icon="back" left-text="返回"
 		:title="pageTitle" 
 		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
+		<view :style="{height: this.getnavbarHeight().bottom + 5 + 'px'}"></view>
 		<!--顶部名称部分-->
 		<view class="top-picture">
 			<!--logo-->

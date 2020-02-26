@@ -215,6 +215,7 @@ page {
 #public-container {
 	height: 100%;
 	width: 100%;
+	margin-top: 30px;
 	overflow: hidden;
 }
 
