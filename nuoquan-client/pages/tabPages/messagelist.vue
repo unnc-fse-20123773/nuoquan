@@ -1,5 +1,5 @@
 <template>
-	<view id="container">
+	<view id="container">、
 		<!-- 由两个超圆，用 fixed 定位做成的背景黄色 -->
 		<view id="msglist-yellowshadowbg">
 		</view>
@@ -11,7 +11,7 @@
 				<view class="msglist-like-bg super_center">
 					<image src="../../static/icon/like.png" class="msglist-like-icon" mode=""></image>
 				</view>
-				<text class="msglist-like-text font-family">点赞</text>
+				<text class="msglist-like-text font-family">{{lang.like}}</text>
 				<view :class="[uLikeMsgCount > 9 ? 'msglist-like-num-2 super_center' : 'msglist-like-num-1 super_center']" v-if="uLikeMsgCount>0">
 					{{uLikeMsgCount}}
 				</view>
@@ -23,7 +23,7 @@
 				<view class="msglist-comment-bg super_center">
 					<image src="../../static/icon/comment.png" class="msglist-comment-icon" mode=""></image>
 				</view>
-				<text class="msglist-comment-text font-family">评论</text>
+				<text class="msglist-comment-text font-family">{{lang.comment}}</text>
 				<view :class="[uCommentMsgCount > 9 ? 'msglist-comment-num-2 super_center' : 'msglist-comment-num-1 super_center']" v-if="uCommentMsgCount>0">
 					{{uCommentMsgCount}}
 				</view>
@@ -39,7 +39,7 @@
 
 				<!-- <view v-for="(item, index) in chatSnapShotList" :key="index">
 					<view class="msglist-card column_center" v-if="item.isRead == UNREAD" @tap="goToChatpage(item)">
-						<image class="msglist-Touxiang" mode="aspectFill" :src="item.friendInfo.faceImg"></image>
+						<image class="msglist-Touxiang" mode="aspectFill" :src="pathFilter(item.friendInfo.faceImg)"></image>
 						<view class="msglist-content">
 							<view class="msglist-id font-family">
 								{{item.friendInfo.nickname}}
@@ -87,9 +87,10 @@
 </template>
 
 <script>
-	import {mapState} from 'vuex';
+	import {mapState, mapMutations} from 'vuex';  
 	import swipeAction from "../../components/swipe-action.vue";
-
+	import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue";
+	
 	var userInfo;
 
 	var socketTask;
@@ -97,7 +98,9 @@
 
 	export default {
 		components: {
-			swipeAction
+			swipeAction,
+			uniNavBar
+			
 		},
 		data() {
 			return {
@@ -120,6 +123,7 @@
 				'chatMessageCard',
 				'likeMsgCount',
 				'commentMsgCount',
+				'lang'
 			])
 		},
 
@@ -162,6 +166,8 @@
 		},
 
 		methods: {
+			...mapMutations(['changeLang']), //引用vuex中的方法
+			
 			/**
 			 * 展示聊天快照，渲染列表.
 			 */

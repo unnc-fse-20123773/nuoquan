@@ -1,5 +1,10 @@
 <template>
 	<view id="public-container">
+		<!-- 导航栏 -->
+		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" left-icon="back" left-text="返回"
+		:title="pageTitle" 
+		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
+		
 		<view id="public-message-futherbox">
 			<scroll-view class="top-menu-view" scroll-x="true" scroll-left="scrollLeft">
 				<block v-for="(menuTabs,index) in menuTabs" :key="index">
@@ -22,7 +27,7 @@
 							<view class="user-one-line column_center">
 								<!-- 这里方法直接传 item 获取不到，应该是官方的一个Bug -->
 								<view class="touxiangBox" @tap='goToPersonPublic(index1, index2)'>
-									<image class="publicTouxiang" mode="scaleToFill" :src="item.faceImg"></image>
+									<image class="publicTouxiang" mode="scaleToFill" :src="pathFilter(item.faceImg)"></image>
 								</view>
 								<view class="userid">
 									{{item.nickname}}
@@ -53,9 +58,15 @@
 
 <script>
 	var me; // 表示本人用户，区别于查询的用户
+	import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
+	
 	export default {
+		components:{
+			uniNavBar
+		},
 		data() {
 			return {
+				pageTitle: '关注和粉丝列表',
 				scrollLeft: 0,
 				isClickChange: false,
 				currentTab: '', // 切换 list 0/1

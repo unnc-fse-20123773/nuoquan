@@ -15,18 +15,18 @@ Vue.config.productionTip = false
 Vue.prototype.version = "v1.0.3 - 公测版"
 Vue.prototype.tagColors = ['#FE5F55','#40A792','#FDD041','#5CA0D3','#621E81','#738598','#F3AE4B']
 
-Vue.prototype.$store = store
+Vue.prototype.$store = store // 挂载 vueX
 
 Vue.prototype.$serverUrl = "http://127.0.0.1:8080"
 Vue.prototype.$wsServerUrl = "wss://127.0.0.1:8088/ws"
 
 // 服务器地址
-// Vue.prototype.$serverUrl = "http://129.28.130.27:8080/nottinghome"
-// Vue.prototype.$wsServerUrl = "ws://129.28.130.27:8088/ws"
+ //Vue.prototype.$serverUrl = "http://129.28.130.27:8080/nottinghome"
+ //Vue.prototype.$wsServerUrl = "ws://129.28.130.27:8088/ws"
 
 // 安全服务器地址
-// Vue.prototype.$serverUrl = "https://www.checkchack.cn:8443/nottinghome"
-// Vue.prototype.$wsServerUrl = "wss://www.checkchack.cn:8088/ws"
+//Vue.prototype.$serverUrl = "https://www.checkchack.cn:8443/nottinghome"
+//Vue.prototype.$wsServerUrl = "wss://www.checkchack.cn:8088/ws"
 
 /**
  * 获取当前用户信息（我）
@@ -1025,6 +1025,17 @@ Vue.prototype.reTimeDeal = function(timediff) {
 	return timeSpanStr;
 }
 
+/**
+ * 如果是相对路径为之添加全局服务器地址
+ * @param {Object} path
+ */
+Vue.prototype.pathFilter = function(path){
+	if(path.startsWith("/")){
+		path = app.$serverUrl + path;
+	}
+	return path;
+}
+
 // 封装tabbar索引，避免重复书写
 Vue.mixin({
   methods:{
@@ -1038,6 +1049,22 @@ Vue.mixin({
     }
   }
 })
+
+// 保留两位小数的方法
+Vue.prototype.reserveTwoDecimal = function(number){
+	var floatNum = parseFloat(number);
+	if(isNaN(floatNum)){
+		return;
+	}
+	floatNum = Math.round(number*100)/100;
+	return floatNum;
+}
+
+//获取导航栏各种信息
+Vue.prototype.getnavbarHeight =  function(){
+	var navbarInfo = uni.getMenuButtonBoundingClientRect();
+	return navbarInfo;
+}
 
 //判断屏幕尺寸并分类,实现兼容不同设备
 Vue.prototype.getScreenSize = function(){
@@ -1053,12 +1080,3 @@ Vue.prototype.getScreenSize = function(){
 	})
 }
 
-// 保留两位小数的方法
-Vue.prototype.reserveTwoDecimal = function(number){
-	var floatNum = parseFloat(number);
-	if(isNaN(floatNum)){
-		return;
-	}
-	floatNum = Math.round(number*100)/100;
-	return floatNum;
-}

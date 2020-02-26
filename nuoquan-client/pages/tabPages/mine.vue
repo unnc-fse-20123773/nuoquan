@@ -10,7 +10,7 @@
 			<!-- 基本信息内容 -->
 			<view id="idCard" class="idCard" :style="{ width: cardWidth }">
 				<view style="width: 100%;height: 74px;margin-top: -46px;" class="super_center">
-					<image class="publicTouxiang" mode="aspectFill" :src="thisUserInfo.faceImg"></image>
+					<image class="publicTouxiang" mode="aspectFill" :src="pathFilter(thisUserInfo.faceImg)"></image>
 				</view>
 				<!-- ID -->
 				<view class="nameBox super_center">
@@ -26,36 +26,38 @@
 						<view class="operationNum super_center">
 							<text class="operationNum-text" style="color:color:rgba(53,53,53,1);">{{ thisUserInfo.fansNum }}</text>
 						</view>
-						<view class="operationTitle super_center"><text class="operationTitle-text">粉丝</text></view>
+						<view class="operationTitle super_center"><text class="operationTitle-text">{{lang.fans}}</text></view>
 					</view>
 					<!-- 影响力 -->
 					<view class="operationCard">
 						<view class="operationNum super_center"><text class="operationNum-text" style="color:rgba(254,95,85,1);">{{ thisUserInfo.reputation }}</text></view>
-						<view class="operationTitle super_center"><text class="operationTitle-text">影响力</text></view>
+						<view class="operationTitle super_center"><text class="operationTitle-text">{{lang.reputation}}</text></view>
 					</view>
 					<!-- 关注 -->
 					<view class="operationCard" @tap="goToFansFollow(0)">
 						<view class="operationNum super_center">
 							<text class="operationNum-text" style="color:color:rgba(53,53,53,1);">{{ thisUserInfo.followNum }}</text>
 						</view>
-						<view class="operationTitle super_center"><text class="operationTitle-text">关注</text></view>
+						<view class="operationTitle super_center"><text class="operationTitle-text">{{lang.follow}}</text></view>
 					</view>
 				</view>
 			</view>
 		</view>
 		<view class="pagejump_box">
-			<view class="item1" @click="jumpToProfile()">个人信息</view>
+			<!-- TODO:这里应该有更灵活优雅的写法 @jerrio -->
+			<view class="item1" @click="jumpToProfile()">{{lang.profile}}</view>
 			<view class="line1"></view>
-			<view class="item2" @click="jumpToMyPublish()">我的发布</view>
+			<view class="item2" @click="jumpToMyPublish()">{{lang.myPublish}}</view>
 			<view class="line2"></view>
-			<view class="item3" @click="jumpToAbout()">关于</view>
+			<view class="item3" @click="jumpToAbout()">{{lang.about}}</view>
+			<!-- 临时添加的设置语言按钮 @jerrio -->
+			<button class="language" @tap="changeLang">{{lang.changeLang}}</button>
 		</view>
 	</view>
 </template>
 
 <script>
-	import {mapState} from 'vuex';
-
+import {mapState, mapMutations} from 'vuex';  
 
 export default {
 	data() {
@@ -71,7 +73,13 @@ export default {
 
 		};
 	},
-
+	
+	computed: {
+		...mapState([
+			'lang'
+		])
+	},
+	
 	onLoad() {
 		this.thisUserInfo= this.getGlobalUserInfo();
 	
@@ -106,7 +114,6 @@ export default {
 
 		// 获取卡片宽度
 		that.cardWidth = that.windowWidth - 26 + 'px';
-
 	},
 	
 	onShow() {
@@ -123,6 +130,8 @@ export default {
 	},
 
 	methods: {
+		...mapMutations(['changeLang']),
+		
 		/**
 		 * 查询用户信息，并分割邮箱更新到缓存
 		 */
@@ -271,7 +280,6 @@ page {
 	line-height: 13px;
 	color: rgba(136, 136, 136, 1);
 	opacity: 1;
-	word-break: keep-all;
 	word-wrap: break-word;
 }
 
@@ -316,10 +324,10 @@ page {
 	opacity: 1;
 }
 .pagejump_box{
-	margin-top:30px;
-	margin-left:13px;
-	width:349px;
-	height:170px;
+	margin-top:60rpx;
+	margin-left:26rpx;
+	width:700rpx;
+	height:350rpx;
 	background:rgba(255,255,255,1);
 	box-shadow:0px 0px 3px 
 	rgba(0,0,0,0.16);
@@ -328,10 +336,10 @@ page {
 	
 }
 .item1{
-	width:84px;
+	width:100px;
 	height:14px;
-	margin-left:41px ;
-	padding-top: 20px;
+	margin-left:80rpx ;
+	padding-top: 50rpx;
 	font-size:14px;
 	font-family:Source Han Sans CN;
 	font-weight:400;
@@ -340,15 +348,15 @@ page {
 	opacity:1;
 }
 .line1{
-	margin:20px auto ;
-	width:309px;
+	margin:40rpx auto ;
+	width:618rpx;
 	height:0px;
 	border:1px solid rgba(236,236,236,1);
 	opacity:1;
 }
 .item2{
-	margin-left:41px ;
-	width:56px;
+	margin-left:80rpx ;
+	width:100px;
 	height:14px;
 	font-size:14px;
 	font-family:Source Han Sans CN;
@@ -358,15 +366,15 @@ page {
 	opacity:1;
 }
 .line2{
-	margin:20px auto ;
-	width:309px;
+	margin:40rpx auto ;
+	width:618rpx;
 	height:0px;
 	border:1px solid rgba(236,236,236,1);
 	opacity:1;
 }
 .item3{
-	margin-left:41px ;
-	width:28px;
+	margin-left:80rpx ;
+	width:100px;
 	height:14px;
 	font-size:14px;
 	font-family:Source Han Sans CN;
@@ -374,6 +382,13 @@ page {
 	line-height:16px;
 	color:rgba(53,53,53,1);
 	opacity:1;
+	padding-bottom: 50rpx;
 }
-
+.language{
+	margin-top: 20px;
+	font-size: 14px;
+	font-family:Source Han Sans CN;
+	font-weight:400;
+	color:rgba(53,53,53,1);
+}
 </style>

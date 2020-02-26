@@ -376,36 +376,36 @@ public class ArticleController extends BasicController {
 	@PostMapping(value="/uploadArticleImg")
 	public JSONResult uploadArticleImg(String userId ,String articleId, String order, @ApiParam(value="file", required=true) MultipartFile file) throws Exception {
 
-		ArticleImage articleImage = new ArticleImage();
-		
-		if (file != null) {
+		if (StringUtils.isNoneBlank(userId) && file != null) {
 			// 判断是否超出大小限制
 			if (file.getSize() > MAX_FACE_IMAGE_SIZE) {
 				return JSONResult.errorException("Uploaded file size exceed server's limit (10MB)");
 			}
-			// 保存图片
-			String fileSpace = resourceConfig.getFileSpace();	// 文件保存空间地址
-			// 获取文件后缀
 			String fileName = file.getOriginalFilename();
-			String[] strList = fileName.split("\\.");
-	
-			String newFileName = order + "." + strList[strList.length-1];	// 把顺序 order.原后缀 作为文件名
-			// 保存到数据库中的相对路径
-			String uploadPathDB = "/" + userId + "/article" + "/" + articleId + "/" + newFileName;
-			// 文件上传的最终保存路径
-			String finalVideoPath = "";
-			
-			if (StringUtils.isNotBlank(newFileName)) {
-				finalVideoPath = fileSpace + uploadPathDB;
+			if (StringUtils.isNotBlank(fileName)) {
+				// 获取文件后缀
+				String[] strList = fileName.split("\\.");
+				String newFileName = order + "." + strList[strList.length-1];	// 把顺序 order.原后缀 作为文件名
+				// 保存到数据库中的相对路径
+				String uploadPathDB = "/" + userId + "/article" + "/" + articleId + "/" + newFileName;
+				String fileSpace = resourceConfig.getFileSpace();	// 文件保存空间地址
+				// 文件上传的最终保存路径
+				String finalVideoPath = fileSpace + uploadPathDB;
+				// 保存图片
 				uploadFile(file, finalVideoPath);	// 调用 BasicController 里的方法
+
+				ArticleImage articleImage = new ArticleImage();
 				articleImage.setImagePath(uploadPathDB);
 				articleImage.setArticleId(articleId);
+				articleService.saveArticleImages(articleImage);
+				
+				return JSONResult.ok();
+			}else {
+				return JSONResult.errorMsg("File name is blank");
 			}
-			articleService.saveArticleImages(articleImage);
-			
+		}else {
+			return JSONResult.errorMsg("Upload error");
 		}
-		
-		return JSONResult.ok();
 	}
 
 	@ApiOperation(value = "删除文章")

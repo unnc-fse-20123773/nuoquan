@@ -1,6 +1,11 @@
 <!-- 本页面的 websocket 应写在 messagelist 里-->
 <template>
 	<view style="height:100%;width:100%;">
+		<!-- 导航栏 -->
+		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" left-icon="back" left-text="返回"
+		:title="pageTitle" 
+		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
+		
 		<scroll-view class="messageArea" :style="{ height: textareaHeight }" scroll-y="true" @scrolltoupper="loadMore"
 		 @scroll="scroll" :scroll-into-view="scrollToView">
 			<view style="height:20px;width:100%;"></view>
@@ -25,15 +30,15 @@
 <script>
 import onemessage from './oneMessage';
 import { mapState } from 'vuex';
-
-var query = wx.createSelectorQuery();
+import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
 
 var page = 1; // PS: 非显示属性不放在渲染层
 var chatKey;
 var chatHistory;
 export default {
 	components: {
-		onemessage
+		onemessage,
+		uniNavBar
 	},
 	data() {
 		return {
@@ -47,7 +52,7 @@ export default {
 					this.creatTime = creatTime; // 显示 flag
 				},
 				*/
-
+			pageTitle: 'Message',//这里要换成聊天对象的昵称
 			chatContent: [],
 
 			socketMsgQueue: [], // 未发送的消息队列

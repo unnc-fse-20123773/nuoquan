@@ -1,4 +1,4 @@
-<style lang="less">
+<style>
 .posters-layer {
   position: fixed;
   top: -5000rpx;
@@ -20,8 +20,6 @@ const CACHE_KEYS = 'temp_canvasdrawer_pic_cache';
 export default {
     data() {
         return {
-            width: 100,
-            height: 100,
             width: 100,
             height: 100,
             paintingData: { views: [] },
