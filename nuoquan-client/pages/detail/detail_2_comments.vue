@@ -3,7 +3,7 @@
 	<view class="comments-area" :style="{'opacity':mainCommentList.length != undefined ? 1:0}">
 		<!--评论数，排序方式-->
 		<view class="comments-menu">
-			<view class="comments-num">{{mainCommentList.length}}条评论</view>
+			<view class="comments-num">{{articleCardCommentNum}}条评论</view>
 			<nqSwitch style="margin-top: 3px;" :options='options' @onChange="change_comment_order"></nqSwitch>
 			<!-- <view class="comments-order">
                    <view class="order-in-time" :class="{ chosen : order == 0}" @tap="change_comment_order(0)">
@@ -28,36 +28,40 @@
 						<view class="time_text">{{ mainComment.timeAgo }}</view>
 					</view>
 					<view class="comment-content" @tap="goToCommentDetail(mainComment)">{{ mainComment.comment }}</view>
+					<reComment :mainCommentid="mainComment.id"  :mainComment="mainComment"  style='width: 100%;height:100%;'></reComment>
 					<view class="comment-menu">
 						<view class="son-comment-num" @tap="goToCommentDetail(mainComment)">{{mainComment.commentNum}}</view>
 						<view class="like-num" :class="{liked:mainComment.isLike}" @tap="swLikeMainComment(mainComment)">{{ mainComment.likeNum }}</view>
 					</view>
 				</view>
-
 			</block>
 		</view>
+		
 	</view>
-	
+
 </template>
 
 <script>
 	import nqSwitch from "@/components/nq-switch.vue"
-	
+	import reComment from '@/components/reComment.vue'
+
 	export default {
 		props: {
 			commentList: {
 				type: Object,
 			},
 			userInfo: "",
+			articleCardCommentNum:"",
 		},
-		components:{
-			nqSwitch
+		components: {
+			nqSwitch,
+			reComment,
 		},
 		data() {
 			return {
 				mainCommentList: this.commentList,
 				order: 0, //评论排序方式 0：按时间查询, 1：按热度查询
-				options: ["时间", "热度"]
+				options: ["时间", "热度"],
 			}
 		},
 		watch: {
@@ -125,16 +129,18 @@
 					url: '/pages/comment-detail/comment-detail?data=' + JSON.stringify(mainComment),
 				})
 			},
-			change_comment_order(e){
-				this.$emit("onChange", {type: e.status});
+			change_comment_order(e) {
+				this.$emit("onChange", {
+					type: e.status
+				});
 			},
-			goToPersonPublic(userId){
+			goToPersonPublic(userId) {
 				// router.goToPersonPublic(); // 全局方法
 				uni.navigateTo({
 					url: '/pages/personpublic/personpublic?userId=' + userId,
 				})
 			}
-			
+
 		}, //method
 
 

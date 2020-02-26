@@ -6,11 +6,15 @@
             @error="onPostersError">
         </posters-layer> -->
 		
-		<canvas
+		<view style="position: fixed;width:300px;height:330px;left:10%;top:10%;background:#34EE78;">
+			<view style="position: absolute;width:210px;height:240px;left:45px;top:45px;background:#34DF78;"></view>
+		</view>
+		
+		<!-- <canvas
 			canvas-id="canvasdrawer"
 			:style="{width: width + 'px', height: height + 'px'}"
 			class="posters-layer">
-		</canvas>
+		</canvas> -->
 		<!-- <image :src="testImg"></image> -->
 		
 	</view>
@@ -46,8 +50,8 @@ export default {
     },
 	
 	onReady() {
-		this.context = uni.createCanvasContext('canvasdrawer', this)
-		this.myPoster();
+	// 	this.context = uni.createCanvasContext('canvasdrawer', this)
+	// 	this.myPoster();
 	},
 	
     methods: {
