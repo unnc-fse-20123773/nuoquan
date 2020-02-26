@@ -51,8 +51,8 @@
 			<view class="line2"></view>
 			<view class="item3" @click="jumpToAbout()">{{lang.about}}</view>
 			<!-- 临时添加的设置语言按钮 @jerrio -->
-<!-- 			<button class="language" @tap="changeLang">{{lang.changeLang}}</button>
- -->		</view>
+			<button class="language" @tap="changeLang">{{lang.changeLang}}</button>
+		</view>
 	</view>
 </template>
 
@@ -215,7 +215,6 @@ page {
 #public-container {
 	height: 100%;
 	width: 100%;
-	margin-top: 30px;
 	overflow: hidden;
 }
 
@@ -326,10 +325,9 @@ page {
 }
 .pagejump_box{
 	margin-top:60rpx;
-	margin-left:13px;
-	margin-right: 13px;
-
-	height:180px;
+	margin-left:26rpx;
+	width:700rpx;
+	height:350rpx;
 	background:rgba(255,255,255,1);
 	box-shadow:0px 0px 3px 
 	rgba(0,0,0,0.16);
@@ -341,7 +339,7 @@ page {
 	width:100px;
 	height:14px;
 	margin-left:80rpx ;
-	padding-top: 30px;
+	padding-top: 50rpx;
 	font-size:14px;
 	font-family:Source Han Sans CN;
 	font-weight:400;
@@ -350,7 +348,7 @@ page {
 	opacity:1;
 }
 .line1{
-	margin:20px auto ;
+	margin:40rpx auto ;
 	width:618rpx;
 	height:0px;
 	border:1px solid rgba(236,236,236,1);
@@ -368,7 +366,7 @@ page {
 	opacity:1;
 }
 .line2{
-	margin:20px auto ;
+	margin:40rpx auto ;
 	width:618rpx;
 	height:0px;
 	border:1px solid rgba(236,236,236,1);
@@ -384,11 +382,10 @@ page {
 	line-height:16px;
 	color:rgba(53,53,53,1);
 	opacity:1;
-	margin-bottom: 30px;
-	
+	padding-bottom: 50rpx;
 }
 .language{
-	margin-top: 60rpx;
+	margin-top: 20px;
 	font-size: 14px;
 	font-family:Source Han Sans CN;
 	font-weight:400;
