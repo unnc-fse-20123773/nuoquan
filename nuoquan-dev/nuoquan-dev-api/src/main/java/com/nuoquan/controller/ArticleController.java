@@ -55,7 +55,7 @@ public class ArticleController extends BasicController {
 	 * @param page
 	 * @param pageSize
 	 * @param queryType 0 -- 按"所有"请求, 1 -- 按"关注"请求
-	 * @param type 0 -- 按时间倒序排列, 1 -- 按热度正序排列
+	 * @param orderType 0 -- 按时间倒序排列, 1 -- 按热度正序排列
 	 * @param userId 操作者id
 	 * @return
 	 * @throws Exception
