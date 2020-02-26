@@ -56,7 +56,7 @@ Vue.prototype.removeGlobalUserInfo = function() {
  * @param {Object} obj
  * @param {Object} list
  */
-Vue.prototype.setIntoList = function(obj, listName) {
+Vue.prototype.appendIntoList = function(obj, listName) {
 	var listStr = uni.getStorageSync(listName)
 	// 从本地缓存获取列表名是否存在
 	var list;
@@ -780,7 +780,7 @@ Vue.prototype.notification={
 	 * @param {Object} dataContent
 	 */
 	saveLikeMsg(dataContent){
-		app.addIntoList(dataContent, this.LIKEMSG_KEY);
+		app.appendIntoList(dataContent, this.LIKEMSG_KEY);
 	},
 	
 	getLikeMsg(page){
@@ -805,7 +805,7 @@ Vue.prototype.notification={
 	 * @param {Object} dataContent
 	 */
 	saveCommentMsg(dataContent){
-		app.addIntoList(dataContent, this.COMMENTMSG_KEY);
+		app.appendIntoList(dataContent, this.COMMENTMSG_KEY);
 	},
 	
 	getCommentMsg(page){

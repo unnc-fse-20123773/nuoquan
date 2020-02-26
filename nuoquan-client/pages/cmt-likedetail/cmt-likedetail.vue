@@ -43,7 +43,7 @@
 										</view>
 										<!-- 需要获取新消息时间戳 -->
 										<view class="clID-time">
-											{{item.data.source.createDate}}
+											{{timeDeal(item.data.source.createDate)}}
 										</view>
 									</view>
 								</view>
@@ -90,7 +90,7 @@
 										</view>
 										<!-- 需要获取新消息时间戳 -->
 										<view class="clID-time">
-											{{item.data.source.createDate}}
+											{{timeDeal(item.data.source.createDate)}}
 										</view>
 									</view>
 								</view>
@@ -122,7 +122,7 @@
 										</view>
 										<!-- 需要获取新消息时间戳 -->
 										<view class="clID-time">
-											{{item.data.source.createDate}}
+											{{timeDeal(item.data.source.createDate)}}
 										</view>
 									</view>
 								</view>
@@ -178,7 +178,7 @@
 										</view>
 										<!-- 需要获取新消息时间戳 -->
 										<view class="clID-time">
-											{{item.data.source.createDate}}
+											{{timeDeal(item.data.source.createDate)}}
 										</view>
 									</view>
 								</view>
