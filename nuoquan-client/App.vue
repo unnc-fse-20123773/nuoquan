@@ -1,11 +1,9 @@
 <script>
 	export default {
 		onLaunch: function() {
-			console.log('App Launch')
 		},
-		onShow: function(options) {
+		onShow: function() {
 			console.log('App Show')
-			console.log(options)
 		},
 		onHide: function() {
 			console.log('App Hide')
@@ -27,6 +25,14 @@
 		width: 100%;
 		height: auto;
 		display: flex;
+	}
+	
+	.navigationBar{
+		width: 100%;
+		position: fixed;
+		z-index: 9999;
+		left: 0;
+		top: 0;
 	}
 
 	.column_center {

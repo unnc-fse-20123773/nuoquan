@@ -682,7 +682,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
-	public PagedResult getTop3ByPopularity(Integer page, Integer pageSize, String userId) {
+	public PagedResult getArticleByPopurity(Integer page, Integer pageSize, String userId) {
 		PageHelper.startPage(page, pageSize);
 		List<ArticleVO> list = articleMapperCustom.getTop3ByPopularity();
 		for (ArticleVO a : list) {
@@ -876,7 +876,7 @@ public class ArticleServiceImpl implements ArticleService {
 		example2.setOrderByClause("create_date desc");
 		Criteria criteria2 = example2.createCriteria();
 		for (UserFans userFans : userList) {
-//			System.out.println(userFans.getUserId());
+			System.out.println(userFans.getUserId());
 			criteria2.orEqualTo("userId", userFans.getUserId());
 		}
 
@@ -914,7 +914,7 @@ public class ArticleServiceImpl implements ArticleService {
 			listVO.add(av);
 		}
 		pageInfoVO.setList(listVO);
-		System.out.println("1");
+//		System.out.println("1");
 		
 		//为最终返回对象 pagedResult 添加属性
 		PagedResult pagedResult = new PagedResult();
@@ -925,6 +925,72 @@ public class ArticleServiceImpl implements ArticleService {
 
 		return pagedResult;
 	}
+	
+	@Transactional(propagation = Propagation.SUPPORTS)
+	@Override
+	public PagedResult getAllSubscribedAuthorArticlesByPopularity(Integer page, Integer pageSize, String userId) {
+
+		// 查询全部我(操作者)关注的用户
+			Example example = new Example(UserFans.class);
+			Criteria criteria = example.createCriteria();
+			// 此处userId为操作者id
+			criteria.andEqualTo("fansId", userId);
+			List<UserFans> userList = userFansMapper.selectByExample(example);
+			
+			Example example2 = new Example(Article.class);
+			example2.setOrderByClause("popularity desc");
+			Criteria criteria2 = example2.createCriteria();
+			for (UserFans userFans : userList) {
+//					System.out.println(userFans.getUserId());
+				criteria2.orEqualTo("userId", userFans.getUserId());
+			}
+
+			List<Article> list = articleMapper.selectByExample(example2);
+			PageInfo<Article> pageInfo = new PageInfo<>(list);
+			PageInfo<ArticleVO> pageInfoVO = PageUtils.PageInfo2PageInfoVo(pageInfo);
+			
+			List<ArticleVO> listVO = new ArrayList<>();
+			for (Article a : list) {
+				ArticleVO av = new ArticleVO();
+				BeanUtils.copyProperties(a, av); //转换对象
+				// 添加作者信息
+				User user= userMapper.selectByPrimaryKey(av.getUserId());
+				if (user!=null) {
+					av.setNickname(user.getNickname());
+					av.setFaceImg(user.getFaceImg());
+					av.setFaceImgThumb(user.getFaceImgThumb());
+				}
+				// 为每个文章添加图片列表
+				av.setImgList(articleImageMapper.getArticleImgs(av.getId()));
+				// 添加和关于用户的点赞关系
+				av.setIsLike(isUserLikeArticle(userId, av.getId()));
+				// 添加标签list
+				if (!StringUtils.isBlank(av.getTags())) {
+					String[] tagList = av.getTags().split("#");
+					List<String> finalTagList = new ArrayList<String>();
+					for (String tag : tagList) {
+						if (!StringUtils.isBlank(tag)) {
+							finalTagList.add(tag);
+						}
+					}
+					av.setTagList(finalTagList);
+				}
+				
+				listVO.add(av);
+			}
+			pageInfoVO.setList(listVO);
+			System.out.println("1");
+			
+			//为最终返回对象 pagedResult 添加属性
+			PagedResult pagedResult = new PagedResult();
+			pagedResult.setPage(pageInfoVO.getPageNum());
+			pagedResult.setTotal(pageInfoVO.getPages());
+			pagedResult.setRows(pageInfoVO.getList());
+			pagedResult.setRecords(pageInfoVO.getTotal());
+
+			return pagedResult;
+	}
+
 }
 
 

@@ -1,5 +1,9 @@
 <template>
 	<view id="about-container">
+		<!-- 导航栏 -->
+		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" left-icon="back" left-text="返回"
+		:title="pageTitle" 
+		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
 		<!--顶部名称部分-->
 		<view class="top-picture">
 			<!--logo-->
@@ -86,9 +90,16 @@
 </template>
 
 <script>
+import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue";	
+	
 export default {
+	components:{
+		uniNavBar
+	},
+	
 	data() {
 		return {
+			pageTitle: '关于',
 			contentShow1: true,
 			contentShow2: true,
 			contentShow3: true

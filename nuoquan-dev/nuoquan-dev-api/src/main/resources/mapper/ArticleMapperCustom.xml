@@ -115,7 +115,7 @@ select * from (
   	where
   		1 = 1
   		and a.status = 1 
-  	order by a.popularity desc limit 0,10;
+  	order by a.popularity desc
   </select>
   
   <select id="getArticleById" resultMap="BaseResultMap">

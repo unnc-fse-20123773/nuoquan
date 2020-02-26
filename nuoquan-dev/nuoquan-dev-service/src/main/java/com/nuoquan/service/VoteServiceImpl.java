@@ -1,5 +1,6 @@
 package com.nuoquan.service;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,6 +40,7 @@ import com.nuoquan.pojo.vo.VoteVO;
 import com.nuoquan.support.Convert;
 import com.nuoquan.utils.PagedResult;
 
+import javassist.expr.NewArray;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.entity.Example.Criteria;
 
@@ -534,6 +536,23 @@ public class VoteServiceImpl implements VoteService {
 
 		return pagedResult;
 		
+	}
+
+	/**
+	 * 每8分钟跟新文章状态
+	 */
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Override
+	public void autoUpdateVoteStatus() {
+		Example example = new Example(Vote.class);
+		Criteria criteria = example.createCriteria();
+		criteria.andLessThan("expiryDate", new Date());
+		List<Vote> vote = voteMapper.selectByExample(example);
+		
+		for (Vote vote2 : vote) {
+			vote2.setStatus(0);
+			voteMapper.updateByExampleSelective(vote2, example);
+		}
 	}
 
 }

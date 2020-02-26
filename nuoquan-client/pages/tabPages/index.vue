@@ -26,7 +26,7 @@ export default {
 	data() {
 		return {
 			title: 'Hello',
-			hottitlelist: ['热门标题111', '热门标题222', '热门标题333'],
+			hottitlelist: ['热门标题1', '热门标题2', '热门标题3'],
 			showlist: [],
 			tagsList: [],
 			topArticles: '',
@@ -90,7 +90,6 @@ export default {
 		}
 
 		this.getTop3Articles(); // 获取热度榜（刷新）
-		
 		
 	},
 

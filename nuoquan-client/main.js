@@ -1051,6 +1051,22 @@ Vue.mixin({
   }
 })
 
+// 保留两位小数的方法
+Vue.prototype.reserveTwoDecimal = function(number){
+	var floatNum = parseFloat(number);
+	if(isNaN(floatNum)){
+		return;
+	}
+	floatNum = Math.round(number*100)/100;
+	return floatNum;
+}
+
+//获取导航栏各种信息
+Vue.prototype.getnavbarHeight =  function(){
+	var navbarInfo = uni.getMenuButtonBoundingClientRect();
+	return navbarInfo;
+}
+
 //判断屏幕尺寸并分类,实现兼容不同设备
 Vue.prototype.getScreenSize = function(){
 	uni.getSystemInfo({
@@ -1065,12 +1081,3 @@ Vue.prototype.getScreenSize = function(){
 	})
 }
 
-// 保留两位小数的方法
-Vue.prototype.reserveTwoDecimal = function(number){
-	var floatNum = parseFloat(number);
-	if(isNaN(floatNum)){
-		return;
-	}
-	floatNum = Math.round(number*100)/100;
-	return floatNum;
-}

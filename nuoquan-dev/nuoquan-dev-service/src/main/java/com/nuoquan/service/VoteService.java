@@ -137,5 +137,10 @@ public interface VoteService {
 	public PagedResult getAllMyHisVote(Integer page, Integer pageSize, String userId);
 
 	public PagedResult getOtherslegalHisVote(Integer page, Integer pageSize, String userId, String targetId);
+
+	/**
+	 * 每8分钟自动跟新vote状态
+	 */
+	public void autoUpdateVoteStatus();
 	
 }

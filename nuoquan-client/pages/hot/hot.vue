@@ -1,5 +1,6 @@
 <template>
 	<view style="width:100%;height:100%;margin:auto;">
+		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" left-icon="back" left-text="返回" :title="pageTitle" :height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
 		<view class = "top">
 			<text class="topleft">下次更新 {{minute}}分{{second}}秒</text>
 			<button class="topright" @click="reload()">
@@ -15,15 +16,15 @@
 
 <script>
 import articleInfo from './articleInfo.vue';
-//import uniNavBar from "./components/uni-nav-bar/uni-nav-bar.vue";
+import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue";
 	export default {
 		components:{
-			articleInfo
-			//uniNavBar
+			articleInfo,
+			uniNavBar
 		},
 		data() {
 			return {
-				//pageTitle:'hot',
+				pageTitle:'hot',
 				minute:'',
 				second:'',
 				totalPage: 1,
