@@ -116,13 +116,14 @@
 		methods: {
 			getSubComments(page) {
 				var that = this;
-				if (saveCommentFlag) {
+				if (this.saveCommentFlag) {
 					console.log("正在上传...")
 					return;
 				}
-				saveCommentFlag = true;
+				this.saveCommentFlag = true;
 				uni.showLoading({
-					title: "正在提交..."
+					title: "正在提交...",
+					duration:1000,
 				})
 				uni.request({
 					method: "POST",
@@ -137,6 +138,7 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: (res) => {
+						that.saveCommentFlag = false;
 						if (res.data.status == 200) {
 							if (page == 1) {
 								that.commentList = [];
@@ -247,7 +249,8 @@
 							
 							// 强制子组件重新刷新
 							that.commentList = '';
-							that.$nextTick(function() {
+                            this.getSubComments(1);
+                            that.$nextTick(function() {
 								that.getSubComments(1);
 							});
 							uni.$emit('flashSubComment',this.mainComment.id);

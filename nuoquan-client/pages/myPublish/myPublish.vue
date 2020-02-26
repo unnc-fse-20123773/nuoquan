@@ -7,8 +7,8 @@
 		<view :style="{'height': this.getnavbarHeight().bottom + 5 + 'px'}" style="width: 100%;"></view>
 		
 		<view class="swiperMenu">
-			<view :class="[swiperViewing == 'article' ? 'swiperChoosen' : 'swiperNormal']" @tap="switchSwiper('article')">文章 19</view>
-			<view :class="[swiperViewing == 'vote' ? 'swiperChoosen' : 'swiperNormal']" @tap="switchSwiper('vote')">投票 1</view>
+			<view :class="[swiperViewing == 'article' ? 'swiperChoosen' : 'swiperNormal']" @tap="switchSwiper('article')">文章 {{myArticleList.length}}</view>
+			<view :class="[swiperViewing == 'vote' ? 'swiperChoosen' : 'swiperNormal']" @tap="switchSwiper('vote')">投票 {{myVoteList.length}}</view>
 		</view>
 		<swiper style="width:100%;height:100%;" :current-item-id="swiperViewing">
 			<swiper-item item-id="article" @touchmove.stop>
@@ -45,9 +45,9 @@
 				totalPage: 1,
 				currentPage: 1,
 				totalNum: '0',
-				myArticleList: '',
+				myArticleList: [],
 				
-				myVoteList:'',
+				myVoteList:[],
 				swiperViewing: "article",
 			};
 		},

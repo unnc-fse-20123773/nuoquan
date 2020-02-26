@@ -25,8 +25,8 @@ Vue.prototype.$wsServerUrl = "wss://127.0.0.1:8088/ws"
  //Vue.prototype.$wsServerUrl = "ws://129.28.130.27:8088/ws"
 
 // 安全服务器地址
-//Vue.prototype.$serverUrl = "https://www.checkchack.cn:8443/nottinghome"
-//Vue.prototype.$wsServerUrl = "wss://www.checkchack.cn:8088/ws"
+// Vue.prototype.$serverUrl = "https://www.checkchack.cn:8443/nottinghome"
+// Vue.prototype.$wsServerUrl = "wss://www.checkchack.cn:8088/ws"
 
 /**
  * 获取当前用户信息（我）
