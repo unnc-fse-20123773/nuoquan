@@ -173,8 +173,12 @@ page {
 	margin-bottom: 12px;
 }
 .form1-fold {
-	width: 300px;
+	line-height: 35px;
+	width: 100%;
 	height: 35px;
+	display: flex;
+	align-items:center;
+	justify-content: space-between;
 }
 .form1-fold image {
 	width: 30px;
@@ -182,52 +186,35 @@ page {
 	vertical-align: middle;
 }
 .form2-fold {
-	width: 300px;
+	width: 100%;
 	height: 35px;
+	line-height: 35px;
+	display: flex;
+	align-items:center;
+	justify-content: space-between;
 }
 .form2-fold image {
 	width: 30px;
 	height: 35px;
 	vertical-align: middle;
 }
-.form3-fold {
-	width: 300px;
-	height: 35px;
-}
-.form3-fold image {
-	width: 30px;
-	height: 35px;
-	vertical-align: middle;
-}
 .contact-us {
 	height: 35px;
-	width: 260px;
 	display: inline-block;
 	font-family: 'Source Han Sans CN';
 	font-size: 17px;
 	color: #888888;
 	opacity: 1;
-	margin-left: 10px;
+	margin-left: 16px;
 }
 .update-notice {
 	height: 35px;
-	width: 260px;
 	display: inline-block;
 	font-family: 'Source Han Sans CN';
 	font-size: 17px;
 	color: #888888;
 	opacity: 1;
-	margin-left: 10px;
-}
-.tipping {
-	height: 35px;
-	width: 260px;
-	display: inline-block;
-	font-family: 'Source Han Sans CN';
-	font-size: 17px;
-	color: #888888;
-	opacity: 1;
-	margin-left: 10px;
+	margin-left: 16px;
 }
 .subtitle {
 	font-family: 'Source Han Sans CN';
