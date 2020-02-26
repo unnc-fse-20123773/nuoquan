@@ -1,7 +1,7 @@
 <template>
 	<view class="detail-page">
 		<!-- 导航栏 -->
-		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" left-icon="back" left-text="返回"
+		<uni-nav-bar class="navigationBar"  left-icon="back" left-text="返回"
 		:title="pageTitle" 
 		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
 		<view :style="{'height': this.getnavbarHeight().bottom + 5 + 'px'}" style="width: 100%;"></view>
@@ -98,7 +98,7 @@ import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
 		components: {
 			detail_1_article,
 			detail_2_comments,
-			uniNavBar
+			uniNavBar,
 		},
 
 		onReachBottom() {

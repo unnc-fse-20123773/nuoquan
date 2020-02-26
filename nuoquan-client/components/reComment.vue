@@ -11,7 +11,7 @@ padding:4px 24upx 12px;" v-if="subCommentNum > 0">
 			<view class="reComment">
 
 
-				<view class="content">
+				<view class="content" @tap="goToCommentDetail()">
 					<view class="contentarea">{{ subComment.nickname }}</view>
 					<view style="color:#000000;font-size: 12px;display: inline-block;margin: 0 5px 0 0;">回复</view>
 					<view class="contentarea">@{{subComment.toNickname}}</view>
@@ -36,7 +36,7 @@ padding:4px 24upx 12px;" v-if="subCommentNum > 0">
 
 			</view>
 		</block>
-<view class="showMoreSubComment" @tap="goToCommentDetail()">展开剩余评论</view>
+<view class="showMoreSubComment" @tap="goToCommentDetail()" v-if="subCommentNum > 2">展开剩余评论</view>
 	</view>
 
 </template>
@@ -58,6 +58,9 @@ padding:4px 24upx 12px;" v-if="subCommentNum > 0">
 		},
 		mounted() {
 			this.getSubComments(1);
+			uni.$on('flashSubComment', (underCommentId) => {
+					this.getSubComments(1);
+			})
 		},
 		methods: {
 
@@ -80,15 +83,15 @@ padding:4px 24upx 12px;" v-if="subCommentNum > 0">
 						if (res.data.status == 200) {
 							that.subCommentNum = res.data.data.rows.length;
 							
-							if (res.data.data.rows.length < 3) {
+							if (res.data.data.rows.length <= 2) {
 								that.subCommentList = res.data.data.rows
-							} else {
-								that.subCommentList = res.data.data.rows[i].slice(0, 2)
-
+							} else {		
+								that.subCommentList = res.data.data.rows.slice(0, 2)
 							}
 
 						}
-
+console.log(that.subCommentList);
+console.log(that.subCommentNum)
 					}
 				});
 			},
