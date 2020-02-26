@@ -6,9 +6,10 @@
 
 	<cover-view wx:for="{{list}}" wx:key="index" class="tab-bar-item" data-path="{{item.pagePath}}" data-index="{{index}}"
 	 bindtap="switchTab">
-		<cover-view wx:if="{{item.isSpecial}}">
-			<cover-view class="midbutton">
-				<cover-image style="width: 24px;height: 24px;margin: 16px 16px;" src="../static/icon/plus_fedd74.png"></cover-image>
+		<cover-view wx:if="{{item.isSpecial}}">{{rotateStatus}}
+			<cover-view class="midbutton" bindtap="rotate">
+				<cover-image class=" {{ rotateStatus  ? 'midIconBack' : 'midIcon '}}" style="width: 24px;height: 24px;margin: 16px 16px;transition: all 1000ms linear 200ms; transform: {{ rotateStatus == true ? 'rotate(-45deg)' : ''}};" 
+				src="../static/icon/plus_tab.png"></cover-image>
 			</cover-view>
 		</cover-view>
 	 

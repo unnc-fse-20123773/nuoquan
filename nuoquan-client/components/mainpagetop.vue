@@ -414,10 +414,10 @@ page {
 		width:28px;
 		text-align: center;
 		transition: padding-left 200ms,
-		padding-right 200ms,
-		font-size  200ms,
-		color 200ms;
-		 transition-delay: 0ms;
+					padding-right 200ms,
+					font-size  200ms,
+					color 200ms;
+		transition-delay: 0ms;
 	}
 	.bg-of-order{
 		height:28px;
@@ -438,9 +438,9 @@ page {
 		padding-left: 0;
 		padding-right: 0;
 		transition: padding-left 300ms,
-		padding-right 300ms,
-		font-size  300ms,
-		color 300ms;
-		 transition-delay: 100ms;
+					padding-right 300ms,
+					font-size  300ms,
+					color 300ms;
+		transition-delay: 100ms;
 	}
 </style>

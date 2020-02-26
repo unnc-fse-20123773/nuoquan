@@ -3,6 +3,8 @@ Component({
 		selected: 0,
 		color: "#7A7E83",
 		selectedColor: "#3cc51f",
+		rotateStatus: true,//旋转状态,判断静止or顺时针or逆时针
+		midIconClass: "midIcon",//动态icon类名
 		list: [{
 				pagePath: 'index',
 				iconPath: '../static/icon/home_d4d4d4.png',
@@ -54,6 +56,12 @@ Component({
 		          selected:index
 		        })
 		      }
-		    }
+		    },
+			
+		rotate(){
+			this.setData({
+			rotateStatus : false
+			})
+		},
 	}
 })
