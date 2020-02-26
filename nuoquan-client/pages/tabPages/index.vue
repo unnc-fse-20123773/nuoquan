@@ -1,6 +1,6 @@
 <template>
 	<view class="index">
-		<mainpagetop :userInfo="userInfo" :topArticles="topArticles" :roleup="roleup" style="position: fixed;z-index: 30;height:100%;"></mainpagetop>
+		<mainpagetop v-on:transQueryType="changeQueryType" v-on:transOrderType="changeOrderType" :userInfo="userInfo" :topArticles="topArticles" :roleup="roleup" style="position: fixed;z-index: 30;height:100%;"></mainpagetop>
 		<!-- <button type="primary" @click="goTop" style="position: fixed;top: 200px;z-index: 88;">gotop</button> -->
 		<view class="indexSelf" style="height:100%;">
 			<scroll-view @scroll="linkageWithTop" class="indexArticleArea" :scroll-top="scrollTop" scroll-y="true" @scrolltolower="loadMore" @scrolltoupper="refreshArticle" upper-threshold="5">
@@ -31,6 +31,9 @@ export default {
 			tagsList: [],
 			topArticles: '',
 			roleup: false,
+			
+			queryType: 0,
+			orderType: 0,
 			
 			userInfo: '',
 			totalPage: 1,
@@ -89,7 +92,7 @@ export default {
 			this.queryUserInfo(userInfo.id);
 		}
 
-		this.getTop3Articles(); // 获取热度榜（刷新）
+		this.getTop10Articles(); // 获取热度榜（刷新）
 		
 	},
 
@@ -121,12 +124,14 @@ export default {
 
 			var that = this;
 			uni.request({
-				url: that.$serverUrl + '/article/queryAllArticles',
+				url: that.$serverUrl + '/article/queryArticles',
 				method: 'POST',
 				data: {
 					page: page,
 					// pageSize: '',
-					userId: that.userInfo.id
+					userId: that.userInfo.id,
+					queryType: that.queryType,
+					orderType: that.orderType
 				},
 				header: {
 					'content-type': 'application/x-www-form-urlencoded'
@@ -183,19 +188,23 @@ export default {
 			this.showArticles(1);
 			uni.hideNavigationBarLoading();
 		},
-		getTop3Articles() {
+		getTop10Articles() {
 			var that = this;
 			uni.request({
-				url: that.$serverUrl + '/article/getHotTop3',
+				url: that.$serverUrl + '/article/getHotTop10',
 				method: 'POST',
 				data: {
-					userId: that.userInfo.id
+					userId: that.userInfo.id,
+					page: 1,
+					pageSize: 10
 				},
 				header: {
 					'content-type': 'application/x-www-form-urlencoded'
 				},
 				success: res => {
-					that.topArticles = res.data.data;
+					console.log("top articles:");
+					console.log(res);
+					that.topArticles = res.data.data.rows;
 				}
 			});
 		},
@@ -271,7 +280,26 @@ export default {
 		                icon:"none",
 		                title:"纵向滚动 scrollTop 值已被修改为 0"
 		            })
+		},
+		
+		// 接收mainpageTop传过来的queryType并赋值, 一旦调用此方法, 重新刷新页面并获取文章.
+		changeQueryType: function(queryType){
+			this.queryType = queryType;
+			console.log("queryType:" + this.queryType);
+			this.totalPage = 1,
+			this.currentPage = 1,
+			this.showArticles(this.currentPage);
+			
+		},
+		// 接收mainpageTop传过来的orderType并赋值, 一旦调用此方法, 重新刷新页面并获取文章.
+		changeOrderType: function(orderType){
+			this.orderType = orderType;
+			console.log("orderType:" + this.orderType);
+			this.totalPage = 1,
+			this.currentPage = 1
+			this.showArticles(this.currentPage);
 		}
+		
 	}
 };
 </script>

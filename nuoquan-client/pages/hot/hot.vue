@@ -1,6 +1,6 @@
 <template>
 	<view style="width:100%;height:100%;margin:auto;">
-		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" left-icon="back" left-text="返回" :title="pageTitle" :height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
+		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" left-icon="back" left-text="返回" :title="pageTitle" :height="this.getnavbarHeight().bottom + 5" @click="backToMainPage"></uni-nav-bar>
 		<view class = "top">
 			<text class="topleft">下次更新 {{minute}}分{{second}}秒</text>
 			<button class="topright" @click="reload()">
@@ -92,12 +92,13 @@ import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue";
 
 			var that = this;
 			uni.request({
-				url: that.$serverUrl + '/article/queryAllArticles',
+				url: that.$serverUrl + '/article/getHotTop10',
 				method: 'POST',
 				data: {
-					page: page,
+					page: 1,
+					pageSize: 10,
 					userId: that.userInfo.id,
-					targetId: that.userInfo.id //应该为targetId,但缺少publicProfile的数据传输,暂时用userId测试
+					// targetId: that.userInfo.id //应该为targetId,但缺少publicProfile的数据传输,暂时用userId测试
 				},
 				header: {
 					'content-type': 'application/x-www-form-urlencoded'
@@ -149,6 +150,11 @@ import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue";
 				var page = currentPage + 1;
 				that.showArticles(page);
 			}
+		},
+		backToMainPage: function(){
+			uni.navigateBack({
+				
+			})
 		}
 	}
 };

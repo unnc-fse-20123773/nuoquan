@@ -39,9 +39,9 @@
 								<view class="itemCard" :style="{'height':roleup == false ? '62px;' :'33px' ,}">
 									<view :class="[roleup == false ? 'hotTitle' : 'hotTitle_roled']">{{ topArticles[0].articleTitle }}</view>
 									<view v-if="roleup == false" class="userInfo">
-										<image src="../static/icon/logo_app.png" mode="aspectFit"></image>
+										<image src=pathFilter(topArticles[0].faceImg) mode="aspectFit"></image>
 										<view class="userid_mainpagetop">
-											陈仅仅一号
+											{{topArticles[0].nickname}}
 										</view>
 									</view>
 								</view>
@@ -88,6 +88,7 @@ export default {
 
 		data() {
 			return {
+				serverUrl: this.$serverUrl,
 				showMainPageLeft: 0,
 				showSearch: 0,
 				options1: ["所有","关注"],
@@ -123,11 +124,13 @@ export default {
 		},
 		
 		change_article_order1(e){
-			console.log(e.status);
+			// console.log(e.status);
+			this.$emit('transQueryType', e.status);
 		},
 		
 		change_article_order2(e){
-			console.log(e.status);
+			// console.log(e.status);
+			this.$emit('transOrderType', e.status);
 		}
 	}
 };
