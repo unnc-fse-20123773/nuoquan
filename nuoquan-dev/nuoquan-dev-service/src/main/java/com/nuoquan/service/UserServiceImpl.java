@@ -172,9 +172,11 @@ public class UserServiceImpl implements UserService {
 		
 		List<UserVO> list = userFansMapperCustom.queryFansInfo(userId);
 		for (UserVO u : list) {
-			// 逐个查询我是否关注
-			Boolean isFollow = queryIfFollow(u.getId(), myId);
-			u.setFollow(isFollow);
+			if (u != null) {
+				// 逐个查询我是否关注
+				Boolean isFollow = queryIfFollow(u.getId(), myId);
+				u.setFollow(isFollow);
+			}
 		}
 		
 		return list;

@@ -55,6 +55,10 @@ public class BasicController {
 	
 	public static final String USER_EMAIL_CODE = "user-email-code"; //Final 均大写
 	
+
+	@Value("${upload.maxFaceImageSize}")
+	public long MAX_FACE_IMAGE_SIZE;
+	
 	public UserVO ConvertUserToUserVO (User user) {
 		UserVO userVO = new UserVO();
 		BeanUtils.copyProperties(user, userVO);

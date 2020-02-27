@@ -27,7 +27,7 @@
 							<view class="user-one-line column_center">
 								<!-- 这里方法直接传 item 获取不到，应该是官方的一个Bug -->
 								<view class="touxiangBox" @tap='goToPersonPublic(index1, index2)'>
-									<image class="publicTouxiang" mode="scaleToFill" :src="item.faceImg"></image>
+									<image class="publicTouxiang" mode="scaleToFill" :src="pathFilter(item.faceImg)"></image>
 								</view>
 								<view class="userid">
 									{{item.nickname}}

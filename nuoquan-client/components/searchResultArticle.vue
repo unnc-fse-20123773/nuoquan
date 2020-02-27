@@ -10,7 +10,7 @@
 			<view class="tag" :style="{background: tagColorList[index]}" v-for="(i, index) in articleCard.tagList" v-bind:key="index">{{ i}}</view>
 		</view> -->
 		<view class="menubar">
-			<image :src="articleCard.faceImg" class="touxiang"></image>
+			<image :src="pathFilter(articleCard.faceImg)" class="touxiang"></image>
 			<view class="name">{{ articleCard.nickname }}</view>
 			<view class="time">{{ timeDeal(articleCard.createDate) }}</view>
 		</view>

@@ -32,11 +32,14 @@ export default {
 	data() {
 		return {
 			title: 'Hello',
-			hottitlelist: ['热门标题111', '热门标题222', '热门标题333'],
+			hottitlelist: ['热门标题1', '热门标题2', '热门标题3'],
 			showlist: [],
 			tagsList: [],
 			topArticles: '',
 			roleup: false,
+			
+			queryType: 0,
+			orderType: 0,
 			
 			userInfo: '',
 			totalPage: 1,
@@ -97,8 +100,7 @@ export default {
 			this.queryUserInfo(userInfo.id);
 		}
 
-		this.getTop3Articles(); // 获取热度榜（刷新）
-		
+		this.getTop10Articles(); // 获取热度榜（刷新）
 		
 	},
 
@@ -130,12 +132,14 @@ export default {
 
 			var that = this;
 			uni.request({
-				url: that.$serverUrl + '/article/queryAllArticles',
+				url: that.$serverUrl + '/article/queryArticles',
 				method: 'POST',
 				data: {
 					page: page,
 					// pageSize: '',
-					userId: that.userInfo.id
+					userId: that.userInfo.id,
+					queryType: that.queryType,
+					orderType: that.orderType
 				},
 				header: {
 					'content-type': 'application/x-www-form-urlencoded'
@@ -192,19 +196,23 @@ export default {
 			this.showArticles(1);
 			uni.hideNavigationBarLoading();
 		},
-		getTop3Articles() {
+		getTop10Articles() {
 			var that = this;
 			uni.request({
-				url: that.$serverUrl + '/article/getHotTop3',
+				url: that.$serverUrl + '/article/getHotTop10',
 				method: 'POST',
 				data: {
-					userId: that.userInfo.id
+					userId: that.userInfo.id,
+					page: 1,
+					pageSize: 10
 				},
 				header: {
 					'content-type': 'application/x-www-form-urlencoded'
 				},
 				success: res => {
-					that.topArticles = res.data.data;
+					console.log("top articles:");
+					console.log(res);
+					that.topArticles = res.data.data.rows;
 				}
 			});
 		},
@@ -263,11 +271,11 @@ export default {
 			// console.log(timer + "//  timer");
 			var that = this;
 			if(y >= 160){
-				that.roleup = true,
-				console.log(that.roleup);
+				that.roleup = true;
+				// console.log(that.roleup);
 			}else{
-				that.roleup = false,
-				console.log(that.roleup);
+				that.roleup = false;
+				// console.log(that.roleup);
 			}
 		},
 		
@@ -280,7 +288,26 @@ export default {
 		                icon:"none",
 		                title:"纵向滚动 scrollTop 值已被修改为 0"
 		            })
+		},
+		
+		// 接收mainpageTop传过来的queryType并赋值, 一旦调用此方法, 重新刷新页面并获取文章.
+		changeQueryType: function(queryType){
+			this.queryType = queryType;
+			console.log("queryType:" + this.queryType);
+			this.totalPage = 1,
+			this.currentPage = 1,
+			this.showArticles(this.currentPage);
+			
+		},
+		// 接收mainpageTop传过来的orderType并赋值, 一旦调用此方法, 重新刷新页面并获取文章.
+		changeOrderType: function(orderType){
+			this.orderType = orderType;
+			console.log("orderType:" + this.orderType);
+			this.totalPage = 1,
+			this.currentPage = 1
+			this.showArticles(this.currentPage);
 		}
+		
 	}
 };
 </script>

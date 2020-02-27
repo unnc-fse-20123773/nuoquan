@@ -220,7 +220,7 @@ page {
 	} */
 
 .topBarSearch {
-	width: 256px;
+	width: 68.27%;
 	height: 30px;
 	background: rgba(255, 247, 231, 1);
 	opacity: 1;
@@ -232,10 +232,10 @@ page {
 }
 
 .topBarSearch image {
-	width: 16px;
-	height: 16px;
+	width: 20px;
+	height: 20px;
 	opacity: 1;
-	margin: 7px 3px;
+	margin: 5px 13px;
 }
 
 .topBarPlus {

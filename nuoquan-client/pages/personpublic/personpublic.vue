@@ -1,5 +1,12 @@
 <template>
 	<view id="public-container">
+		<!-- 占位块 -->
+		<view :style="{ width: 100 + '%', height: this.getnavbarHeight().bottom + 5 + 'px' , 'background-color': 'white' }">
+		</view>
+		<!-- 导航栏 -->
+		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" left-icon="back" left-text="返回"
+		:title="pageTitle" 
+		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
 		<!-- 黄色头部 -->
 		<view id="yellowTopBox">
 			<view class="yellowTop" :style="{ bottom: yellowBottom }"></view>
@@ -10,7 +17,7 @@
 			<!-- 基本信息内容 -->
 			<view id="idCard" class="idCard" :style="{ width: cardWidth }">
 				<view style="width: 100%;height: 74px;margin-top: -46px;" class="super_center">
-					<image class="publicTouxiang" mode="aspectFill" :src="thisUserInfo.faceImg"></image>
+					<image class="publicTouxiang" mode="aspectFill" :src="pathFilter(thisUserInfo.faceImg)"></image>
 				</view>
 				<!-- ID -->
 				<view class="nameBox super_center">
@@ -137,9 +144,16 @@
 var me;
 var userId; // this user's id
 var loadArticleFlag = false;
+import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
+
 export default {
+	components:{
+		uniNavBar
+	},
+	
 	data() {
 		return {
+			pageTitle: '',
 			screenWidth: 350,
 			serverUrl: this.$serverUrl,
 
@@ -309,9 +323,7 @@ export default {
 						// console.log(that.getListByKey("userList"))
 
 						// 设置title
-						uni.setNavigationBarTitle({
-							title: that.thisUserInfo.nickname + '的主页'
-						});
+						that.pageTitle = that.thisUserInfo.nickname + '的主页'
 					}
 				}
 			});

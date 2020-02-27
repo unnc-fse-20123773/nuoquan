@@ -40,19 +40,25 @@ Component({
 	methods: {
 		switchTab(e) {
 			const data = e.currentTarget.dataset;
-			console.log('-----' + e.currentTarget);
 			const url = data.path;
-			console.log('url' + url);
+			wx.switchTab({
+				url : url,
+				success: (res) => {
+					
+				}
+			})
 			this.setData({
 				selected: data.index
 			})
 			
-			wx.switchTab({
-				url
-			})
+			console.log('-----');
+			console.log(e.currentTarget);
+			console.log('url' + url);
+			console.log(this.data.selected);
 		},
 
 		setTabBarIndex(index) {
+			console.log("get in custom")
 			if (typeof this.$mp.page.getTabBar === 'function' &&
 				this.$mp.page.getTabBar()) {
 				this.$mp.page.getTabBar().setData({

@@ -123,7 +123,7 @@ public interface ArticleService {
 	 * 留言分页  父评论
 	 * @param page
 	 * @param pageSize
-	 * @param type 
+	 * @param type   0 -- 按时间查询, 1 -- 按热度查询
 	 * @param articleId
 	 * @param userId
 	 * @return
@@ -132,7 +132,7 @@ public interface ArticleService {
 	
 	/**
 	 * 留言分页 子评论
-	 * @param type 
+	 * @param type  0 -- 按时间查询, 1 -- 按热度查询
 	 */
 	public PagedResult getSonComments(Integer page, Integer pageSize, Integer type, String underCommentId, String userId);
 	
@@ -159,7 +159,7 @@ public interface ArticleService {
 	 * @param page 
 	 * @return
 	 */
-	public PagedResult getTop3ByPopularity(Integer page, Integer pageSize, String userId);
+	public PagedResult getArticleByPopurity(Integer page, Integer pageSize, String userId);
 	
 	/**
 	 * Set the status to unreadable
@@ -206,7 +206,24 @@ public interface ArticleService {
 	public int updateArticleStatus(String articleIds, int status);
 
 
+	/**
+	 * 请求所有关注的人的文章
+	 * @param page
+	 * @param pageSize
+	 * @param userId
+	 * @return
+	 */
 	public PagedResult getAllSubscribedAuthorArticles(Integer page, Integer pageSize, String userId);
+
+
+	/**
+	 * 获取关注的人的文章, 按热度排序
+	 * @param page
+	 * @param pageSize
+	 * @param userId
+	 * @return
+	 */
+	public PagedResult getAllSubscribedAuthorArticlesByPopularity(Integer page, Integer pageSize, String userId);
 
 //	/**
 //	 * 通过热度查询评论主

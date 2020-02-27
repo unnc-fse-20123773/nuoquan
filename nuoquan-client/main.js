@@ -13,7 +13,7 @@ App.mpType = 'app'
 Vue.config.productionTip = false
 
 Vue.prototype.version = "v1.0.3 - 公测版"
-Vue.prototype.tagColors = ['#FE5F55','#40A792','#FDD041','#5CA0D3','#621E81','#738598','#F3AE4B']
+Vue.prototype.tagColors = ['#FE5F55', '#40A792', '#FDD041', '#5CA0D3', '#621E81', '#738598', '#F3AE4B']
 
 Vue.prototype.$store = store // 挂载 vueX
 
@@ -21,8 +21,8 @@ Vue.prototype.$store = store // 挂载 vueX
 // Vue.prototype.$wsServerUrl = "wss://127.0.0.1:8088/ws"
 
 // 服务器地址
-// Vue.prototype.$serverUrl = "http://129.28.130.27:8080/nottinghome"
-// Vue.prototype.$wsServerUrl = "ws://129.28.130.27:8088/ws"
+//Vue.prototype.$serverUrl = "http://129.28.130.27:8080/nottinghome"
+//Vue.prototype.$wsServerUrl = "ws://129.28.130.27:8088/ws"
 
 // 安全服务器地址
 Vue.prototype.$serverUrl = "https://www.checkchack.cn:8443/nottinghome"
@@ -56,7 +56,7 @@ Vue.prototype.removeGlobalUserInfo = function() {
  * @param {Object} obj
  * @param {Object} list
  */
-Vue.prototype.setIntoList = function(obj, listName) {
+Vue.prototype.appendIntoList = function(obj, listName) {
 	var listStr = uni.getStorageSync(listName)
 	// 从本地缓存获取列表名是否存在
 	var list;
@@ -95,7 +95,7 @@ Vue.prototype.addIntoList = function(obj, listName) {
  * 从缓存中按名字获取改名列表
  * @param {Object} listName
  */
-Vue.prototype.getListByKey = function(listName){
+Vue.prototype.getListByKey = function(listName) {
 	var listStr = uni.getStorageSync(listName);
 	var list;
 	if (app.isNull(listStr)) {
@@ -105,7 +105,7 @@ Vue.prototype.getListByKey = function(listName){
 		// 不为空
 		list = JSON.parse(listStr);
 	}
-	
+
 	return list;
 }
 
@@ -270,7 +270,7 @@ Vue.prototype.mySocket = {
 			that.sendDataContent(dataContent);
 			// 发送未发送的信息
 			for (var i = 0; i < that.socketMsgQueue.length; i++) {
-				if (that.socketMsgQueue[i].action == app.netty.CHAT){
+				if (that.socketMsgQueue[i].action == app.netty.CHAT) {
 					that.sendDataContent(that.socketMsgQueue[i]);
 				}
 			}
@@ -294,28 +294,28 @@ Vue.prototype.mySocket = {
 			console.log(dataContent);
 			var action = dataContent.action;
 
-			if (action == app.netty.CHAT 
-				|| action == app.netty.LIKEARTICLE 
-				|| action == app.netty.LIKECOMMENT
-				|| action == app.netty.COMMENTARTICLE
-				|| action == app.netty.COMMENTCOMMENT) {
-				
+			if (action == app.netty.CHAT ||
+				action == app.netty.LIKEARTICLE ||
+				action == app.netty.LIKECOMMENT ||
+				action == app.netty.COMMENTARTICLE ||
+				action == app.netty.COMMENTCOMMENT) {
+
 				app.$store.commit('setMyMsgCount'); // 累加 msgCount in index.js
-				
-				switch (action){
+
+				switch (action) {
 					case app.netty.CHAT: // 如果消息类型为 CHAT
 						var chatMessage = dataContent.data;
 						// 发送签收消息
 						that.signMsgList(chatMessage.msgId);
-						
+
 						// 保存聊天历史记录到本地缓存
 						var myId = chatMessage.receiverId;
 						var friendId = chatMessage.senderId;
 						var msg = chatMessage.msg;
 						var createDate = chatMessage.createDate; // 对时间戳进行格式化
-						
+
 						app.chat.saveUserChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);
-						
+
 						// 判断当前页面，保存聊天快照
 						var page = app.getCurrentPage();
 						if (page.route == 'pages/chatpage/chatpage') {
@@ -331,11 +331,11 @@ Vue.prototype.mySocket = {
 								// 与该用户在聊天，标记为已读
 								console.log("与该用户在聊天，标记为已读");
 								app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.READ, createDate);
-								
+
 								// 修改 store，发送信号，把消息卡片渲染到对话窗口 和 消息列表
 								var newMessage = new app.chat.ChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);
 								app.$store.commit('setChatMessageCard', newMessage);
-							}else{
+							} else {
 								//不是与该用户聊天，标记为未读
 								console.log("不是与该用户聊天，标记为未读");
 								app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.UNREAD, createDate);
@@ -426,7 +426,7 @@ Vue.prototype.mySocket = {
 			console.log(this.socketMsgQueue);
 		}
 	},
-	
+
 	/**
 	 * 向 netty 服务器发送 DataConten 对象
 	 * @param {Object} dataContent
@@ -436,22 +436,22 @@ Vue.prototype.mySocket = {
 		uni.sendSocketMessage({
 			data: data,
 		});
-		
+
 		if (dataContent.action == app.netty.CHAT) {
 			// 保存聊天历史到本地缓存，保存聊天快照到本地
 			var chatMessage = dataContent.data;
-			
+
 			// console.log("发消息的时间戳：" + createDate);
-			app.chat.saveUserChatHistory(chatMessage.senderId, 
-										 chatMessage.receiverId, 
-										 chatMessage.msg, 
-										 app.chat.ME, 
-										 chatMessage.createDate);
-			app.chat.saveUserChatSnapshot(chatMessage.senderId, 
-										  chatMessage.receiverId, 
-										  chatMessage.msg, 
-										  app.chat.READ, 
-										  chatMessage.createDate);
+			app.chat.saveUserChatHistory(chatMessage.senderId,
+				chatMessage.receiverId,
+				chatMessage.msg,
+				app.chat.ME,
+				chatMessage.createDate);
+			app.chat.saveUserChatSnapshot(chatMessage.senderId,
+				chatMessage.receiverId,
+				chatMessage.msg,
+				app.chat.READ,
+				chatMessage.createDate);
 			// 刷到对话窗口
 			app.$store.commit('doFlashChatPage');
 		}
@@ -465,7 +465,7 @@ Vue.prototype.mySocket = {
 		var dataContent = new app.netty.DataContent(app.netty.SIGNED, null, msgIds);
 		this.sendDataContent(dataContent);
 	},
-	
+
 	/**
 	 * 批量签收点赞文章消息
 	 * @param {Object} msgIds
@@ -474,7 +474,7 @@ Vue.prototype.mySocket = {
 		var dataContent = new app.netty.DataContent(app.netty.LIKEARTICLE_SIGN, null, msgIds);
 		this.sendDataContent(dataContent);
 	},
-	
+
 	/**
 	 * 批量签收点赞评论消息
 	 * @param {Object} msgIds
@@ -483,7 +483,7 @@ Vue.prototype.mySocket = {
 		var dataContent = new app.netty.DataContent(app.netty.LIKECOMMENT_SIGN, null, msgIds);
 		this.sendDataContent(dataContent);
 	},
-	
+
 	/**
 	 * 批量签收评论消息
 	 * @param {Object} msgIds
@@ -571,7 +571,7 @@ Vue.prototype.chat = {
 		uni.setStorageSync(chatKey, JSON.stringify(chatHistoryList));
 
 	},
-	
+
 	/**
 	 * 分页获取聊天历史，从列表尾部开始读取(反取)
 	 * @param {Object} myId
@@ -582,20 +582,20 @@ Vue.prototype.chat = {
 		var chatKey = "chat-" + myId + "-" + friendId;
 		var list = app.getListByKey(chatKey).reverse();
 		var size = 20;
-		var start = (page-1) * size;
+		var start = (page - 1) * size;
 		var newList = [];
-		if (list.length < start){
+		if (list.length < start) {
 			return null;
-		}else{
-			for (var i=0; i<size; i++){
-				if(!app.isNull(list[start+i])){
-					newList.unshift(list[start+i]);
+		} else {
+			for (var i = 0; i < size; i++) {
+				if (!app.isNull(list[start + i])) {
+					newList.unshift(list[start + i]);
 				}
 			}
 			return newList;
 		}
 	},
-	
+
 	/**
 	 * 删除我和朋友的聊天记录
 	 * @param {Object} myId
@@ -772,63 +772,63 @@ Vue.prototype.chat = {
 /**
  * 点赞评论通知
  */
-Vue.prototype.notification={	
-	LIKEMSG_KEY : "likeMsg" + app.getGlobalUserInfo().id,
-	COMMENTMSG_KEY : "commentMsg" + app.getGlobalUserInfo().id,
+Vue.prototype.notification = {
+	LIKEMSG_KEY: "likeMsg" + app.getGlobalUserInfo().id,
+	COMMENTMSG_KEY: "commentMsg" + app.getGlobalUserInfo().id,
 	/**
 	 * 把点赞通知存入缓存
 	 * @param {Object} dataContent
 	 */
-	saveLikeMsg(dataContent){
-		app.addIntoList(dataContent, this.LIKEMSG_KEY);
+	saveLikeMsg(dataContent) {
+		app.appendIntoList(dataContent, this.LIKEMSG_KEY);
 	},
-	
-	getLikeMsg(page){
+
+	getLikeMsg(page) {
 		var size = 10;
 		var list = app.getListByKey(this.LIKEMSG_KEY);
-		var start = (page-1) * size;
+		var start = (page - 1) * size;
 		var newList = [];
-		if (list.length < start){
+		if (list.length < start) {
 			return null;
-		}else{
-			for (var i=0; i<size; i++){
-				if(!app.isNull(list[start+i])){
-					newList.push(list[start+i]);
+		} else {
+			for (var i = 0; i < size; i++) {
+				if (!app.isNull(list[start + i])) {
+					newList.push(list[start + i]);
 				}
 			}
 			return newList;
 		}
 	},
-	
+
 	/**
 	 * 把评论通知存入缓存
 	 * @param {Object} dataContent
 	 */
-	saveCommentMsg(dataContent){
-		app.addIntoList(dataContent, this.COMMENTMSG_KEY);
+	saveCommentMsg(dataContent) {
+		app.appendIntoList(dataContent, this.COMMENTMSG_KEY);
 	},
-	
-	getCommentMsg(page){
+
+	getCommentMsg(page) {
 		var size = 10;
 		var list = app.getListByKey(this.COMMENTMSG_KEY);
-		var start = (page-1) * size;
+		var start = (page - 1) * size;
 		var newList = [];
-		if (list.length < start){
+		if (list.length < start) {
 			return null;
-		}else{
-			for (var i=0; i<size; i++){
-				if(!app.isNull(list[start+i])){
-					newList.push(list[start+i]);
+		} else {
+			for (var i = 0; i < size; i++) {
+				if (!app.isNull(list[start + i])) {
+					newList.push(list[start + i]);
 				}
 			}
 			return newList;
 		}
 	},
-	
+
 	/**
 	 * 获取并签收未签收的点赞通知
 	 */
-	fetchUnsignedLikeMsg(){
+	fetchUnsignedLikeMsg() {
 		var user = app.getGlobalUserInfo();
 		var likeArticleIds = "," // 格式: ,1001,1002,1003,
 		var likeCommentIds = ","
@@ -856,7 +856,7 @@ Vue.prototype.notification={
 							// 逐条存入缓存
 							app.notification.saveLikeMsg(dataContent);
 							// 拼接批量签收id的字符串
-							switch (dataContent.action){
+							switch (dataContent.action) {
 								case app.netty.LIKEARTICLE:
 									likeArticleIds += dataContent.data.source.id + ",";
 									break;
@@ -867,7 +867,7 @@ Vue.prototype.notification={
 									break;
 							}
 						}
-		
+
 						// 调用批量签收方法
 						app.mySocket.signLikeArticleList(likeArticleIds);
 						app.mySocket.signLikeCommentList(likeCommentIds);
@@ -876,11 +876,11 @@ Vue.prototype.notification={
 			}
 		});
 	},
-	
+
 	/**
 	 * 获取并签收未签收的评论通知
 	 */
-	fetchUnsignedCommentMsg(){
+	fetchUnsignedCommentMsg() {
 		var user = app.getGlobalUserInfo();
 		var commentIds = "," // 格式: ,1001,1002,1003,
 		var that = this;
@@ -909,7 +909,7 @@ Vue.prototype.notification={
 							// 拼接批量签收id的字符串
 							commentIds += dataContent.data.source.id + ",";
 						}
-		
+
 						// 调用批量签收方法
 						app.mySocket.signCommentList(commentIds);
 					}
@@ -923,17 +923,17 @@ Vue.prototype.netty = {
 	/**
 	 * 和后端的枚举对应
 	 */
-	CONNECT: 1, 			// 第一次(或重连)初始化连接
-	CHAT: 2,				// 聊天消息
-	SIGNED: 3, 				// 消息签收
-	KEEPALIVE: 4, 			// 客户端保持心跳
-	LIKEARTICLE: 5, 		// 点赞文章通知
-	LIKECOMMENT: 6, 		// 点赞评论通知
-	COMMENTARTICLE: 7, 		// 评论文章通知
-	COMMENTCOMMENT: 8,		// 评论评论通知
-	LIKEARTICLE_SIGN: 9, 	// 签收点赞文章通知
-	LIKECOMMENT_SIGN: 10, 	// 签收点赞评论通知
-	COMMENT_SIGN: 11, 		// 签收评论文章通知
+	CONNECT: 1, // 第一次(或重连)初始化连接
+	CHAT: 2, // 聊天消息
+	SIGNED: 3, // 消息签收
+	KEEPALIVE: 4, // 客户端保持心跳
+	LIKEARTICLE: 5, // 点赞文章通知
+	LIKECOMMENT: 6, // 点赞评论通知
+	COMMENTARTICLE: 7, // 评论文章通知
+	COMMENTCOMMENT: 8, // 评论评论通知
+	LIKEARTICLE_SIGN: 9, // 签收点赞文章通知
+	LIKECOMMENT_SIGN: 10, // 签收点赞评论通知
+	COMMENT_SIGN: 11, // 签收评论文章通知
 
 	/**
 	 * 和后端 ChatMessage 聊天模型的对象保持一致
@@ -950,7 +950,7 @@ Vue.prototype.netty = {
 		this.msgId = msgId; // 前端发送设置null就好
 		this.createDate = createDate;
 	},
-	
+
 	/**
 	 * 构建消息 DataContent 模型对象
 	 * @param {Object} action
@@ -987,7 +987,7 @@ Vue.prototype.timeDeal = function(timediff) {
 		timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
 	} else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
 		timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
-		
+
 	} else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && parts[0] == now.getFullYear()) {
 		timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
 	} else {
@@ -996,29 +996,81 @@ Vue.prototype.timeDeal = function(timediff) {
 	return timeSpanStr;
 }
 
+// 计算多少天后xxx样的方法
+Vue.prototype.reTimeDeal = function(timediff) {
+	timediff = new Date(timediff);
+	var parts = [timediff.getFullYear(), timediff.getMonth() + 1, timediff.getDate(), timediff.getHours(), timediff.getMinutes(),
+		timediff.getSeconds()
+	];
+	var oldTime = timediff.getTime();
+	var now = new Date();
+	var newTime = now.getTime();
+	var milliseconds = 0;
+	var timeSpanStr;
+	milliseconds = newTime - oldTime;
+	if (milliseconds > 1000 * 60 * 1) {
+		timeSpanStr = '刚刚';
+	} else if (1000 * 60 * 1 >= milliseconds && milliseconds > 1000 * 60 * 60) {
+		timeSpanStr = Math.round((milliseconds / (1000 * 60))) + '分钟后';
+	} else if (1000 * 60 * 60 * 1 >= milliseconds && milliseconds > 1000 * 60 * 60 * 24) {
+		timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时后';
+	} else if (1000 * 60 * 60 * 24 >= milliseconds && milliseconds > 1000 * 60 * 60 * 24 * 15) {
+		timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天后';
+
+	} else if (milliseconds <= 1000 * 60 * 60 * 24 * 15 && parts[0] == now.getFullYear()) {
+		timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
+	} else {
+		timeSpanStr = parts[0] + '-' + parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
+	}
+	return timeSpanStr;
+}
+
+/**
+ * 如果是相对路径为之添加全局服务器地址
+ * @param {Object} path
+ */
+Vue.prototype.pathFilter = function(path) {
+	if (path.startsWith("/")) {
+		path = app.$serverUrl + path;
+	}
+	return path;
+}
+
 // 封装tabbar索引，避免重复书写
 Vue.mixin({
-  methods:{
-    setTabBarIndex(index){
-      if (typeof this.$mp.page.getTabBar === 'function' &&
-        this.$mp.page.getTabBar()) {
-        this.$mp.page.getTabBar().setData({
-			selected:index
-        })
-      }
-    }
-  }
+	methods: {
+		setTabBarIndex(index) {
+			console.log("get in main")
+			if (typeof this.$mp.page.getTabBar === 'function' &&
+				this.$mp.page.getTabBar()) {
+				this.$mp.page.getTabBar().setData({
+					selected: index
+				})
+			}
+		}
+	}
 })
+
+// 保留两位小数的方法
+Vue.prototype.reserveTwoDecimal = function(number) {
+	var floatNum = parseFloat(number);
+	if (isNaN(floatNum)) {
+		return;
+	}
+	floatNum = Math.round(number * 100) / 100;
+	return floatNum;
+}
+
 //获取导航栏各种信息
-Vue.prototype.getnavbarHeight =  function(){
+Vue.prototype.getnavbarHeight = function() {
 	var navbarInfo = uni.getMenuButtonBoundingClientRect();
 	return navbarInfo;
 }
 
 //判断屏幕尺寸并分类,实现兼容不同设备
-Vue.prototype.getScreenSize = function(){
+Vue.prototype.getScreenSize = function() {
 	uni.getSystemInfo({
-		success: function (res) {
+		success: function(res) {
 			console.log(res.model);
 			console.log(res.pixelRatio);
 			console.log(res.windowWidth);

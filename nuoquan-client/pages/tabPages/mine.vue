@@ -10,7 +10,7 @@
 			<!-- 基本信息内容 -->
 			<view id="idCard" class="idCard" :style="{ width: cardWidth }">
 				<view style="width: 100%;height: 74px;margin-top: -46px;" class="super_center">
-					<image class="publicTouxiang" mode="aspectFill" :src="thisUserInfo.faceImg"></image>
+					<image class="publicTouxiang" mode="aspectFill" :src="pathFilter(thisUserInfo.faceImg)"></image>
 				</view>
 				<!-- ID -->
 				<view class="nameBox super_center">
@@ -51,8 +51,8 @@
 			<view class="line2"></view>
 			<view class="item3" @click="jumpToAbout()">{{lang.about}}</view>
 			<!-- 临时添加的设置语言按钮 @jerrio -->
-			<button @tap="changeLang">{{lang.changeLang}}</button>
-		</view>
+<!-- 			<button class="language" @tap="changeLang">{{lang.changeLang}}</button>
+ -->		</view>
 	</view>
 </template>
 
@@ -117,11 +117,13 @@ export default {
 	},
 	
 	onShow() {
+		this.setTabBarIndex(4) //index为当前tab的索引
+		
 		//更新用户数据
 		console.log("更新用户数据");
 		queryUserInfo(this.thisUserInfo.id);
 	},
-
+	
 	onPullDownRefresh() {
 		console.log('refresh');
 		setTimeout(function() {
@@ -215,6 +217,7 @@ page {
 #public-container {
 	height: 100%;
 	width: 100%;
+	margin-top: 30px;
 	overflow: hidden;
 }
 
@@ -280,7 +283,6 @@ page {
 	line-height: 13px;
 	color: rgba(136, 136, 136, 1);
 	opacity: 1;
-	word-break: keep-all;
 	word-wrap: break-word;
 }
 
@@ -325,10 +327,11 @@ page {
 	opacity: 1;
 }
 .pagejump_box{
-	margin-top:30px;
+	margin-top:60rpx;
 	margin-left:13px;
-	width:349px;
-	height:170px;
+	margin-right: 13px;
+
+	height:180px;
 	background:rgba(255,255,255,1);
 	box-shadow:0px 0px 3px 
 	rgba(0,0,0,0.16);
@@ -337,10 +340,10 @@ page {
 	
 }
 .item1{
-	width:84px;
+	width:100px;
 	height:14px;
-	margin-left:41px ;
-	padding-top: 20px;
+	margin-left:80rpx ;
+	padding-top: 30px;
 	font-size:14px;
 	font-family:Source Han Sans CN;
 	font-weight:400;
@@ -350,14 +353,14 @@ page {
 }
 .line1{
 	margin:20px auto ;
-	width:309px;
+	width:618rpx;
 	height:0px;
 	border:1px solid rgba(236,236,236,1);
 	opacity:1;
 }
 .item2{
-	margin-left:41px ;
-	width:56px;
+	margin-left:80rpx ;
+	width:100px;
 	height:14px;
 	font-size:14px;
 	font-family:Source Han Sans CN;
@@ -368,14 +371,14 @@ page {
 }
 .line2{
 	margin:20px auto ;
-	width:309px;
+	width:618rpx;
 	height:0px;
 	border:1px solid rgba(236,236,236,1);
 	opacity:1;
 }
 .item3{
-	margin-left:41px ;
-	width:28px;
+	margin-left:80rpx ;
+	width:100px;
 	height:14px;
 	font-size:14px;
 	font-family:Source Han Sans CN;
@@ -383,6 +386,14 @@ page {
 	line-height:16px;
 	color:rgba(53,53,53,1);
 	opacity:1;
+	margin-bottom: 30px;
+	
 }
-
+.language{
+	margin-top: 60rpx;
+	font-size: 14px;
+	font-family:Source Han Sans CN;
+	font-weight:400;
+	color:rgba(53,53,53,1);
+}
 </style>

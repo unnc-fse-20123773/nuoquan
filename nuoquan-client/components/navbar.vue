@@ -6,11 +6,11 @@
 
 <script>
 export default {
-		data() {
-			return {
-				height: 0,
-			};
-		},
+	data() {
+		return {
+			height: 0,
+		};
+	},
 	methods: {
 	
 	}

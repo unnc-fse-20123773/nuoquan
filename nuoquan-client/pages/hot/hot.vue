@@ -1,33 +1,44 @@
 <template>
 	<view style="width:100%;height:100%;margin:auto;">
-		<view class = "top">
-			<text class="topleft">下次更新 {{minute}}分{{second}}秒</text>
+		<uni-nav-bar
+			class="navigationBar"
+			:style="{ height: this.getnavbarHeight() + 'px' }"
+			left-icon="back"
+			left-text="返回"
+			:title="pageTitle"
+			:height="this.getnavbarHeight().bottom + 5"
+			@click="backToMainPage"
+		></uni-nav-bar>
+		<view :style="{ height: this.getnavbarHeight().bottom + 5 + 'px' }"></view>
+		<view class="top">
+			<text class="topleft">下次更新 {{ minute }}分{{ second }}秒</text>
 			<button class="topright" @click="reload()">
 				<text class="refresh">刷新</text>
 				<image class="icon" src="../../static/icon/refresh-ffffff.png"></image>
 			</button>
 		</view>
-		<view class="mainbody">
-			<articleInfo :myArticleList="myArticleList"></articleInfo>
-		</view>
+		<view class="mainbody"><articleInfo :myArticleList="myArticleList"></articleInfo></view>
 	</view>
 </template>
 
 <script>
 import articleInfo from './articleInfo.vue';
-	export default {
-		components:{
-			articleInfo
-		},
-		data() {
-			return {
-				minute:'',
-				second:'',
-				totalPage: 1,
-				currentPage: 1,
-				loadArticleFlag:false,
-				userInfo: '',
-				myArticleList: '',
+import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
+export default {
+	components: {
+		articleInfo,
+		uniNavBar
+	},
+	data() {
+		return {
+			pageTitle: 'hot',
+			minute: '',
+			second: '',
+			totalPage: 1,
+			currentPage: 1,
+			loadArticleFlag: false,
+			userInfo: '',
+			myArticleList: ''
 		};
 	},
 
@@ -48,15 +59,17 @@ import articleInfo from './articleInfo.vue';
 		this.nextRefresh();
 	},
 
-	methods: {		
-		nextRefresh:function() {
+	methods: {
+		nextRefresh: function() {
 			var now = new Date();
-			this.minute = 9-now.getMinutes()%10;
-			this.second = 59-now.getSeconds();
-			if((now.getMinutes()%10==0)&&(now.getSeconds()==0)){
+			this.minute = 9 - (now.getMinutes() % 10);
+			this.second = 59 - now.getSeconds();
+			if (now.getMinutes() % 10 == 0 && now.getSeconds() == 0) {
 				this.reload();
-			}	
-			setTimeout(() => {this.nextRefresh()}, 1000);
+			}
+			setTimeout(() => {
+				this.nextRefresh();
+			}, 1000);
 		},
 		reload: function() {
 			this.showArticles(1);
@@ -64,8 +77,8 @@ import articleInfo from './articleInfo.vue';
 		// 锁
 		showArticles: function(page) {
 			console.log(this.loadArticleFlag);
-			
-			if ( this.loadArticleFlag ) {
+
+			if (this.loadArticleFlag) {
 				loadArticleFlag = false;
 			}
 
@@ -88,12 +101,12 @@ import articleInfo from './articleInfo.vue';
 
 			var that = this;
 			uni.request({
-				url: that.$serverUrl + '/article/queryAllArticles',
+				url: that.$serverUrl + '/article/getHotTop10',
 				method: 'POST',
 				data: {
-					page: page,
+					page: 1,
+					pageSize: 10,
 					userId: that.userInfo.id,
-					targetId: that.userInfo.id //应该为targetId,但缺少publicProfile的数据传输,暂时用userId测试
 				},
 				header: {
 					'content-type': 'application/x-www-form-urlencoded'
@@ -103,7 +116,7 @@ import articleInfo from './articleInfo.vue';
 					setTimeout(() => {
 						//延时加载
 						uni.hideLoading();
-					this.loadArticleFlag = false;
+						this.loadArticleFlag = false;
 
 						console.log(res);
 						if (page == 1) {
@@ -120,7 +133,7 @@ import articleInfo from './articleInfo.vue';
 				},
 				fail: res => {
 					uni.hideLoading();
-				this.loadArticleFlag = false;
+					this.loadArticleFlag = false;
 
 					console.log('index unirequest fail');
 					console.log(res);
@@ -145,61 +158,61 @@ import articleInfo from './articleInfo.vue';
 				var page = currentPage + 1;
 				that.showArticles(page);
 			}
+		},
+		backToMainPage: function() {
+			uni.navigateBack({});
 		}
 	}
 };
 </script>
 
 <style>
-	page{
-		background: #F8F8F8;
-		position:relative;
-	}
-		
-	.top {
-		width:100%;
-		height:40px;
-		display:flex;
-		align-items:center;
-		position:static;
-		margin-bottom: 10px;
-	}
-	.topleft{
-		font-size:14px;
-		margin-left:30px;
-		margin-right:15%;
-		height: 20px;
-	}
-.mainbody{
-	width:calc(100% - 26px);
+page {
+	background: #f8f8f8;
+	position: relative;
+}
+
+.top {
+	width: 100%;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	position: static;
+	margin-bottom: 10rpx;
+	margin-top: 20rpx;
+}
+.topleft {
+	font-size: 14px;
+	margin-left: 30px;
+	margin-right: 15%;
+	height: 20px;
+}
+.mainbody {
+	width: calc(100% - 26px);
 	margin: auto;
 }
 .topright {
-		display:inline-block;
-		position:absolute;
-		right:10px;
-		width: 65px;
-		height: 20px;
-		line-height:20px;
-		background-color: #FFCF3C;
-		border-width: 1upx;
-		border-radius: 1px;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	
-	}
+	display: inline-block;
+	position: absolute;
+	right: 10px;
+	width: 65px;
+	height: 20px;
+	line-height: 20px;
+	background-color: #ffcf3c;
+	border-width: 1upx;
+	border-radius: 1px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 
-	.refresh{
-		font-size:10px;
-		color: white;
-
-	}
-.icon{
+.refresh {
+	font-size: 10px;
+	color: white;
+}
+.icon {
 	width: 15px;
 	height: 15px;
 	padding-left: 2px;
-	
-
 }
 </style>

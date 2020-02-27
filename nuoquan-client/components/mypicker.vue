@@ -13,7 +13,7 @@ pickerIndex:  选项编号，用于控制显示哪一个选项
 
 	-->
 <template>
-	<view class="defaultPicker" :class="{'editingPicker': !visible}">
+	<view class="defaultPicker" :class="{'editingPicker': !visible,'boxShadow':mode =='submitVote'}">
 		<view style="height: 1000px;width: 750upx;position: fixed;left: 0;top: 0;" @tap="toggleVisible" v-if="visible"></view>
 		<view class="picker-shadow">
 			<picker-view :value="pickerIndex" @change="bindChange" indicator-class="selectedPicker">
@@ -95,10 +95,12 @@ pickerIndex:  选项编号，用于控制显示哪一个选项
 		height: 100px;
 		width: 70px;
 		overflow: hidden;
-		box-shadow: 0px 0px 10px 1px #A6A6A6;
 		background-color: white;
 		z-index: 0;
 		border-radius: 15upx;
+	}
+	.boxShadow{
+		box-shadow: 0px 0px 10px 1px #A6A6A6;
 	}
 
 	.editingPicker {
@@ -134,7 +136,7 @@ pickerIndex:  选项编号，用于控制显示哪一个选项
 
 
 	.item {
-		text-align: right;
+		text-align: center;
 		width: 100%;
 		height: 18px;
 		font-size: 14px;

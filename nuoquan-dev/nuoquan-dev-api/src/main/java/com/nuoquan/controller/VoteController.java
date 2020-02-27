@@ -23,6 +23,7 @@ import com.github.pagehelper.PageInfo;
 import com.nuoquan.enums.MsgActionEnum;
 import com.nuoquan.enums.MsgSignFlagEnum;
 import com.nuoquan.enums.StatusEnum;
+import com.nuoquan.mapper.VoteMapper;
 import com.nuoquan.netty.MsgHandler;
 import com.nuoquan.pojo.Article;
 import com.nuoquan.pojo.SearchRecord;
@@ -95,10 +96,11 @@ public class VoteController extends BasicController{
 		@ApiImplicitParam(name="userId", value="作者id", required=true, dataType="String", paramType="form"),
 		@ApiImplicitParam(name="voteTitle", value="投票题目", required=true, dataType="String", paramType="form"),
 		@ApiImplicitParam(name="voteContent", value="投票内容", required=true, dataType="String", paramType="form"),
+		@ApiImplicitParam(name="duration", value="持续时间", required=true, dataType="Integer", paramType="form"),
 		@ApiImplicitParam(name="optionContent", value="投票选项", required=true, dataType="String", paramType="form")
 	})
 	@PostMapping(value="uploadVote")
-	public JSONResult uploadVote(String userId, String voteTitle, String voteContent, String optionContent) throws Exception {
+	public JSONResult uploadVote(String userId, String voteTitle, String voteContent, String optionContent, Integer duration) throws Exception {
 		if (StringUtils.isBlank(userId) || StringUtils.isEmpty(userId)) {
 			return JSONResult.errorMsg("UserId can't be null");
 		}
@@ -111,11 +113,12 @@ public class VoteController extends BasicController{
 		vote.setVoteTitle(voteTitle);
 		vote.setVoteContent(voteContent);
 		vote.setUserId(userId);
+		vote.setDurationTime(duration);
 		Date date = new Date();
 		vote.setCreateDate(date);
 		Calendar ca = Calendar.getInstance();
 		ca.setTime(date);
-		ca.add(Calendar.DATE, 3);
+		ca.add(Calendar.DATE, duration);
 		Date expiryDate = ca.getTime();
 		vote.setExpiryDate(expiryDate);
 		
@@ -387,7 +390,8 @@ public class VoteController extends BasicController{
 			return JSONResult.errorMsg("VoteId can't be null!");
 		}
 		voteService.selectOption(voteUser);
-		return JSONResult.ok();
+		
+		return JSONResult.ok(voteService.getSingleVote(1, 10, voteUser.getUserId(), voteUser.getVoteId()));
 	}
 	
 	@ApiOperation(value = "查询单个投票", notes = "在确认选择后刷新单个投票")

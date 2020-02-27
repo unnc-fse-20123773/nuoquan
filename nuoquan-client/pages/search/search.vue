@@ -1,6 +1,6 @@
 <template>
 	<view class="weui-search-bar">
-		<view class="input-bar">
+		<view class="input-bar" :style="{height: this.getnavbarHeight().bottom + 5 + 'px'}">
 			<span class="back" @tap="exitSearch">返回</span>
 			<input type="text" v-model="searchKeyWords" focus confirm-type="search" @confirm="search(1)" />
 		</view>
@@ -294,8 +294,6 @@
 	}
 
 	.input-bar {
-		padding: 5px 0;
-		height: 35px;
 		width: 100%;
 		position: relative;
 		background: #FFC85A;
@@ -307,7 +305,7 @@
 		font-size: 16px;
 		position: absolute;
 		left: 24px;
-		top: 11px;
+		bottom: 8px;
 		color: #FFFFFF;
 
 	}
@@ -318,7 +316,7 @@
 		background-size: 35px 35px;
 		background-repeat: no-repeat;
 		position: absolute;
-		left: -25px;
+		left: -28px;
 		top: -6px;
 		display: inline-block;
 		width: 35px;
@@ -329,16 +327,21 @@
 
 	.input-bar input {
 		position: absolute;
+		bottom: 5px;
 		left: 63px;
 		font-size: 15px;
 		display: inline-block;
-		width: calc(100% - 40px - 102px);
-		height: 35px;
+		width: calc(56% - 36px);
+		height: 30px;
 		letter-spacing: 1px;
 		color: #353535;
-		background: #FFF1D5;
+		background: rgba(255, 247, 231, 1);
 		border-radius: 75px;
-		padding-left: 33px;
+		padding-left: 36px;
+		
+		opacity: 1;
+		display: inline-block;
+		vertical-align: middle;
 	}
 
 	.input-bar input::after {
@@ -350,7 +353,7 @@
 		height: 20px;
 		position: absolute;
 		left: 13px;
-		top: 8px;
+		top: 5px;
 
 	}
 
@@ -364,9 +367,14 @@
 
 	.exSearchTitle,
 	.SearchHistoryItemTitle {
-		color: #888888;
-		font-size: 13px;
-		font-weight: 300;
+		height:16px;
+		font-size:14px;
+		font-family:Source Han Sans CN;
+		font-weight:400;
+		line-height:16px;
+		color:rgba(136,136,136,1);
+		opacity:1;
+		margin-top: 12px;
 		margin-bottom: 12px;
 	}
 
