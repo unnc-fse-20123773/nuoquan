@@ -9,63 +9,6 @@ export default {
 	onHide: function() {
 		console.log('App Hide');
 	},
-
-	globalData: {
-		// 自定义显示tabbar
-		onTabBar: function(key) {
-			var tabBarData = {
-				color: '#dbdbdb',
-				selectedColor: '#1296db',
-				backgroundColor: 'white',
-				borderStyle: 'white',
-				position: 'bottom',
-				list: [
-					{
-						pagePath: '/pages/message/message',
-						text: '消息',
-						iconPath: '/pages/images/icon/static/inform.png',
-						selectedIconPath: '/pages/images/icon/active/inform.png',
-						clas: 'tabbar-item',
-						active: true
-					},
-					{
-						pagePath: '/pages/list/list',
-						text: '列表',
-						iconPath: '/pages/images/icon/static/list.png',
-						selectedIconPath: '/pages/images/icon/active/list.png',
-						clas: 'tabbar-item',
-						active: false
-					},
-					{
-						pagePath: '/pages/user/user',
-						text: '我的',
-						iconPath: '/pages/images/icon/static/user.png',
-						selectedIconPath: '/pages/images/icon/active/user.png',
-						clas: 'tabbar-item',
-						active: false
-					}
-				]
-			};
-			
-			var _curPageArr = getCurrentPages();
-			var _curPage = _curPageArr[_curPageArr.length - 1];
-			var _pagePath = _curPage.__route__;
-			if (_pagePath.indexOf('/') != 0) {
-				_pagePath = '/' + _pagePath;
-			}
-			
-			var tabBar = tabBarData;
-			for (var i = 0; i < tabBar.list.length; i++) {
-				tabBar.list[i].active = false;
-				if (tabBar.list[i].pagePath == _pagePath) {
-					tabBar.list[i].active = true; // 根据页面地址设置当前页面状态
-				}
-			}
-			_curPage.setData({
-				tabBar: tabBar
-			});
-		}
-	}
 };
 </script>
 
@@ -123,30 +66,5 @@ export default {
 
 .font-family {
 	font-family: weiruanyahei;
-}
-
-/*  自定义tabbar样式*/
-.tabbar {
-	display: flex;
-	flex-direction: row;
-	position: fixed;
-	width: 100%;
-}
-
-.tabbar-item {
-	flex-grow: 1;
-	padding: 6rpx 0;
-	text-align: center;
-}
-
-.tabbar-icon {
-	width: 46rpx;
-	height: 46rpx;
-	display: block;
-	margin: 0 auto;
-}
-
-.tabbar-text {
-	font-size: 24rpx;
 }
 </style>

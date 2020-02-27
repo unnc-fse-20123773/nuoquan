@@ -1,9 +1,24 @@
 <template>
 	<view class="index">
-		<mainpagetop v-on:transQueryType="changeQueryType" v-on:transOrderType="changeOrderType" :userInfo="userInfo" :topArticles="topArticles" :roleup="roleup" style="position: fixed;z-index: 30;height:100%;"></mainpagetop>
+		<mainpagetop
+			v-on:transQueryType="changeQueryType"
+			v-on:transOrderType="changeOrderType"
+			:userInfo="userInfo"
+			:topArticles="topArticles"
+			:roleup="roleup"
+			style="position: fixed;z-index: 30;height:100%;"
+		></mainpagetop>
 		<!-- <button type="primary" @click="goTop" style="position: fixed;top: 200px;z-index: 88;">gotop</button> -->
 		<view class="indexSelf" style="height:100%;">
-			<scroll-view @scroll="linkageWithTop" class="indexArticleArea" :scroll-top="scrollTop" scroll-y="true" @scrolltolower="loadMore" @scrolltoupper="refreshArticle" upper-threshold="5">
+			<scroll-view
+				@scroll="linkageWithTop"
+				class="indexArticleArea"
+				:scroll-top="scrollTop"
+				scroll-y="true"
+				@scrolltolower="loadMore"
+				@scrolltoupper="refreshArticle"
+				upper-threshold="5"
+			>
 				<view style="height:172px;width:100%;"></view>
 				<articlebrief v-for="i in showlist" :key="i.id" v-bind:articleCard="i"></articlebrief>
 				<!-- 用于添加底部空白 by Guetta 9.10 -->
@@ -11,17 +26,7 @@
 			</scroll-view>
 		</view>
 		
-		<adTabbar>
-		    <adTabbarItem text="首页" dataCur="page1" class="maxWidth" @click="navClick(0)" :textColor="curPage=='page1'? '#DF421D':'#9B9B9B'" :icon="'../../static/home' + [curPage=='page1'?'-hover':''] + '.png'"></adTabbarItem>
-		    <adTabbarItem text="订单" dataCur="page2" class="maxWidth" @click="navClick(1)" :textColor="curPage=='page2'? '#DF421D':'#9B9B9B'" :icon="'../../static/order' + [curPage=='page2'?'-hover':''] + '.png'"></adTabbarItem>
-		    <!--自定义中间View，可以注释掉就是正常4个Tab菜单-->
-		    <view class="middleItem" @click="middleClick">
-		        <view class="buttonView">+</view>
-		        <text>自定义</text>
-		    </view>
-		    <adTabbarItem text="图表" dataCur="page3" class="maxWidth" @click="navClick(2)" :textColor="curPage=='page3'? '#DF421D':'#9B9B9B'" :icon="'../../static/chart' + [curPage=='page3'?'-hover':''] + '.png'"></adTabbarItem>
-		    <adTabbarItem text="我的" dataCur="page4" class="maxWidth" @click="navClick(3)" :textColor="curPage=='page4'? '#DF421D':'#9B9B9B'" :icon="'../../static/my' + [curPage=='page4'?'-hover':''] + '.png'"></adTabbarItem>
-		</adTabbar>
+		<tab-bar @click="clickMid"></tab-bar>
 	</view>
 </template>
 
@@ -30,10 +35,7 @@ import articlebrief from '../../components/articlebrief';
 import mainpagetop from '../../components/mainpagetop.vue';
 import mainpageleft from '@/components/mainpageleft.vue';
 import { mapState } from 'vuex';
-
-import tabbar from '@/components/nq-tabbar.vue'
-import adTabbar from '@/components/andy-ADTabbar/andy-ADTabbar.vue';
-import adTabbarItem from '@/components/andy-ADTabbar/andy-ADTabbarItem.vue';
+import tabBar from '@/components/nq-tabbar.vue';
 
 var loadArticleFlag = false; // 为加载文章加锁
 var timer = null; // 为头部做定时器收起
@@ -46,10 +48,10 @@ export default {
 			tagsList: [],
 			topArticles: '',
 			roleup: false,
-			
+
 			queryType: 0,
 			orderType: 0,
-			
+
 			userInfo: '',
 			totalPage: 1,
 			currentPage: 1,
@@ -57,17 +59,13 @@ export default {
 			old: {
 				scrollTop: 0
 			}
-			
 		};
 	},
 	components: {
 		articlebrief,
 		mainpagetop,
 		mainpageleft,
-		
-		adTabbar,
-		adTabbarItem,
-		tabbar
+		tabBar
 	},
 
 	onLoad() {
@@ -80,18 +78,18 @@ export default {
 		} else {
 			this.userInfo = userInfo; // 刷去默认值(若有)
 		}
-	
+
 		this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
 
 		this.getScreenSize(); //获取手机型号
-		
+
 		this.showArticles(this.currentPage); // 显示文章流
 
 		uni.$on('flash', () => {
 			// from submit
 			this.refreshArticle();
 		});
-		
+
 		this.getTagsList(); //获取标签列表
 		// [测试代码块]
 	},
@@ -104,13 +102,13 @@ export default {
 	onShow() {
 		uni.hideTabBar({
 			success() {
-				console.log("隐藏原生tabbar")
+				console.log('隐藏原生tabbar');
 				getApp().globalData.onTabBar();
 			}
-		})
-		
-		this.setTabBarIndex(0) //index为当前tab的索引
-		
+		});
+
+		this.setTabBarIndex(0); //index为当前tab的索引
+
 		var userInfo = this.getGlobalUserInfo(); // 查看用户是否登录
 		if (!this.isNull(userInfo)) {
 			// 设置 userInfo 传给 mainpagetop 组件
@@ -119,7 +117,6 @@ export default {
 		}
 
 		this.getTop10Articles(); // 获取热度榜（刷新）
-		
 	},
 
 	// onPullDownRefresh() {
@@ -127,29 +124,33 @@ export default {
 	// },
 
 	methods: {
-		navClick(index){
-			if(index==0){
-				uni.switchTab({
-					url: 'index'
-				})
-			}
-			if(index==1){
-				uni.switchTab({
-					url: 'votePage'
-				})
-			}
-			if(index==2){
-				uni.switchTab({
-					url: 'messagelist'
-				})
-			}
-			if(index==3){
-				uni.switchTab({
-					url: 'mine'
-				})
-			}
+		clickMid(e){
+			console.log(e);
 		},
 		
+		navClick(index) {
+			if (index == 0) {
+				uni.switchTab({
+					url: 'index'
+				});
+			}
+			if (index == 1) {
+				uni.switchTab({
+					url: 'votePage'
+				});
+			}
+			if (index == 2) {
+				uni.switchTab({
+					url: 'messagelist'
+				});
+			}
+			if (index == 3) {
+				uni.switchTab({
+					url: 'mine'
+				});
+			}
+		},
+
 		showArticles: function(page) {
 			if (loadArticleFlag) {
 				return;
@@ -251,7 +252,7 @@ export default {
 					'content-type': 'application/x-www-form-urlencoded'
 				},
 				success: res => {
-					console.log("top articles:");
+					console.log('top articles:');
 					console.log(res);
 					that.topArticles = res.data.data.rows;
 				}
@@ -284,11 +285,11 @@ export default {
 				}
 			});
 		},
-		
+
 		/**
 		 * 获取标签列表
 		 */
-		getTagsList(){
+		getTagsList() {
 			var that = this;
 			uni.request({
 				url: that.$serverUrl + '/article/getTagsList',
@@ -311,44 +312,39 @@ export default {
 			// console.log( y + "scrollTop" )
 			// console.log(timer + "//  timer");
 			var that = this;
-			if(y >= 160){
+			if (y >= 160) {
 				that.roleup = true;
 				// console.log(that.roleup);
-			}else{
+			} else {
 				that.roleup = false;
 				// console.log(that.roleup);
 			}
 		},
-		
+
 		goTop: function(e) {
-		            this.scrollTop = this.old.scrollTop
-		            this.$nextTick(function() {
-		                this.scrollTop = 0
-		            });
-		            uni.showToast({
-		                icon:"none",
-		                title:"纵向滚动 scrollTop 值已被修改为 0"
-		            })
+			this.scrollTop = this.old.scrollTop;
+			this.$nextTick(function() {
+				this.scrollTop = 0;
+			});
+			uni.showToast({
+				icon: 'none',
+				title: '纵向滚动 scrollTop 值已被修改为 0'
+			});
 		},
-		
+
 		// 接收mainpageTop传过来的queryType并赋值, 一旦调用此方法, 重新刷新页面并获取文章.
-		changeQueryType: function(queryType){
+		changeQueryType: function(queryType) {
 			this.queryType = queryType;
-			console.log("queryType:" + this.queryType);
-			this.totalPage = 1,
-			this.currentPage = 1,
-			this.showArticles(this.currentPage);
-			
+			console.log('queryType:' + this.queryType);
+			(this.totalPage = 1), (this.currentPage = 1), this.showArticles(this.currentPage);
 		},
 		// 接收mainpageTop传过来的orderType并赋值, 一旦调用此方法, 重新刷新页面并获取文章.
-		changeOrderType: function(orderType){
+		changeOrderType: function(orderType) {
 			this.orderType = orderType;
-			console.log("orderType:" + this.orderType);
-			this.totalPage = 1,
-			this.currentPage = 1
+			console.log('orderType:' + this.orderType);
+			(this.totalPage = 1), (this.currentPage = 1);
 			this.showArticles(this.currentPage);
 		}
-		
 	}
 };
 </script>

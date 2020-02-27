@@ -1,5 +1,5 @@
 <template>
-	<view style="width: 100%;height: 100%;">
+	<view style="width: 100%;height: 100%; background: linear-gradient(#f89d4d, #ffc95a);">
 		<!-- 导航栏 -->
 		<view class="navigatorBar_votePage super_center" :style="{ height: navigationBarHeight + 'px' }">NavigatorBar</view>
 		<!-- 左侧按钮 -->
@@ -151,25 +151,12 @@
 			</swiper-item>
 		</swiper>
 		
-		<adTabbar>
-		    <adTabbarItem text="首页" dataCur="page1" class="maxWidth" @click="navClick(0)" :textColor="curPage=='page1'? '#DF421D':'#9B9B9B'" :icon="'../../static/home' + [curPage=='page1'?'-hover':''] + '.png'"></adTabbarItem>
-		    <adTabbarItem text="订单" dataCur="page2" class="maxWidth" @click="navClick(1)" :textColor="curPage=='page2'? '#DF421D':'#9B9B9B'" :icon="'../../static/order' + [curPage=='page2'?'-hover':''] + '.png'"></adTabbarItem>
-		    <!--自定义中间View，可以注释掉就是正常4个Tab菜单-->
-		    <view class="middleItem" @click="middleClick">
-		        <view class="buttonView">+</view>
-		        <text>自定义</text>
-		    </view>
-		    <adTabbarItem text="图表" dataCur="page3" class="maxWidth" @click="navClick" :textColor="curPage=='page3'? '#DF421D':'#9B9B9B'" :icon="'../../static/chart' + [curPage=='page3'?'-hover':''] + '.png'"></adTabbarItem>
-		    <adTabbarItem text="我的" dataCur="page4" class="maxWidth" @click="navClick" :textColor="curPage=='page4'? '#DF421D':'#9B9B9B'" :icon="'../../static/my' + [curPage=='page4'?'-hover':''] + '.png'"></adTabbarItem>
-		</adTabbar>
+		<tab-bar :current="1"></tab-bar>
 	</view>
 </template>
 
 <script>
-	import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
-	
-	import adTabbar from '@/components/andy-ADTabbar/andy-ADTabbar.vue';
-	import adTabbarItem from '@/components/andy-ADTabbar/andy-ADTabbarItem.vue';
+	import tabBar from '@/components/nq-tabbar.vue';
 	
 	const DEFAULT_PAGE = 0;	
 	var loadVoteFlag = false;
@@ -208,10 +195,8 @@
 			};
 		},
 		
-		comments:{
-			uniNavBar,
-			adTabbar,
-			adTabbarItem,
+		components:{
+			tabBar
 		},
 		
 		onLoad: function() {
@@ -531,7 +516,6 @@
 		height: 100%;
 		width: 100%;
 		overflow: hidden;
-		background: linear-gradient(#f89d4d, #ffc95a);
 	}
 
 	.navigatorBar_votePage {
