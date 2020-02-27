@@ -7,10 +7,11 @@
 
 		<searchpage v-if="showSearch" class="searchPage" @exitSearchSignal="controlShowSearch"></searchpage>
 
-		<view :class="[roleup == false ? 'mainPageTop' : 'mainPageTop_roled']">
+		<!-- <view :class="[roleup == false ? 'mainPageTop' : 'mainPageTop_roled']"> -->
+		<view class="mainPageTop" :style="{ height: roleup == false ? height + 'px' : height_roled + 'px' }">
 			<!-- 搜索行 -->
-			<view class="topBar">
-				<!-- 头像，备用 <image class="topBarTouxiang" :src='pathFilter(userInfo.faceImg)' @click="controlShowLeft(1)"></image> -->
+			<view class="topBar" :style="{'margin-top': this.getnavbarHeight().top - 2 + 'px'}">
+				<!-- 头像，备用 <image class="topBarTouxiang" :src='userInfo.faceImg' @click="controlShowLeft(1)"></image> -->
 				<view class="topBarSearch" @click="controlShowSearch(1)">
 					<image src="../static/icon/search_B79144.png" mode="aspectFit"></image>
 				</view>
@@ -35,13 +36,13 @@
 					<!-- 热门标题 -->
 					<swiper :class="[roleup == false ? 'swiperCard' : 'swiperCard_roled']" :indicator-dots="false" :autoplay="true" :interval="3000" :vertical="true" :duration="1000">
 						<view >
-							<swiper-item v-for="(item, index) in topArticles" :key="index">
+							<swiper-item>
 								<view class="itemCard" :style="{'height':roleup == false ? '62px;' :'33px' ,}">
-									<view :class="[roleup == false ? 'hotTitle' : 'hotTitle_roled']">{{ item.articleTitle }}</view>
+									<view :class="[roleup == false ? 'hotTitle' : 'hotTitle_roled']">{{ topArticles[0].articleTitle }}</view>
 									<view v-if="roleup == false" class="userInfo">
-										<image :src=pathFilter(item.faceImg) mode="aspectFit"></image>
+										<image src="../static/icon/logo_app.png" mode="aspectFit"></image>
 										<view class="userid_mainpagetop">
-											{{item.nickname}}
+											陈仅仅一号
 										</view>
 									</view>
 								</view>
@@ -52,16 +53,35 @@
 			</view>
 		</view>
 		<!-- 主页操作行 -->
-		<view v-if="roleup == false" style="display: flex;justify-content: space-between;width: 93.07%;left: 3.47%;height: 30px;position: fixed;top: 150px;" class="column_center">
+		<view v-if="roleup == false" class="optionLine_mpt column_center" :style="{top:height + 11 + 'px'}">
 			<!-- 标签选择 -->
 			<view class="tagchoose column_center">
 				<text>标签</text>
 				<image class="tagicon" src="../static/icon/angle-down.png" mode="aspectFit"></image>
 			</view>
 			<!-- 排序方式1-->
-			<nqSwitch :options='options1' :initStatus='iniStatus1' @onChange="change_article_order1"></nqSwitch>
+			<view class="comments-order">
+			       <view class="order-in-time" :class="{ chosen : order1 == 'all'}" @tap="change_article_order1('all')">
+					   所有
+				   </view>
+				   <view class="order-in-hot" :class="{ chosen : order1 != 'all'}" @tap="change_article_order1('attention')">
+				   	   关注
+				   </view>
+				   <view class="bg-of-order" :style="{'left':order1 == 'all' ? '-13px;' :'41px' ,}"></view>
+			</view>
 			<!-- 排序方式2 -->
-			<nqSwitch :options='options2' :initStatus='iniStatus2' @onChange="change_article_order2"></nqSwitch>
+			<view class="comments-order">
+			       <view class="order-in-time" :class="{ chosen : order2 == 'time'}" @tap="change_article_order2('time')">
+					   时间
+				   </view>
+				   <view class="order-in-hot" :class="{ chosen : order2 != 'time'}" @tap="change_article_order2('hot')">
+				   	   热度
+				   </view>
+				   <view class="bg-of-order" :style="{'left':order2 == 'time' ? '-13px;' :'41px' ,}"></view>
+			</view>
+		</view>
+		<!-- Add background for option bar-->
+		<view v-if="roleup == false" class="optionLinebg_mpt" :style="{top: height + 4 + 'px'}">
 		</view>
 	</view>
 </template>
@@ -69,8 +89,6 @@
 <script>
 import mainpageleft from '@/components/mainpageleft.vue';
 import searchpage from '../pages/search/search';
-import nqSwitch from "@/components/nq-switch.vue"
-
 export default {
 	props: {
 		// 渲染时候替换默认值会被替换
@@ -79,22 +97,20 @@ export default {
 		},
 		topArticles: '',
 		roleup: false,
+		height: 0,
+		height_roled: 0,
 	},
 	components: {
 		mainpageleft,
-		searchpage,
-		nqSwitch
+		searchpage
 	},
 
 		data() {
 			return {
-				serverUrl: this.$serverUrl,
 				showMainPageLeft: 0,
 				showSearch: 0,
-				options1: ["所有","关注"], //为switch组件设置选项标签
-				iniStatus1: 0, //为switch组件设置初始值
-				options2: ["时间","热度"], //为switch组件设置选项标签
-				iniStatus2: 0, //为switch组件设置初始值
+				order1: "all",
+				order2: "time",
 			};
 		},
 
@@ -125,16 +141,14 @@ export default {
 			})
 		},
 		
-		change_article_order1(e){
-			// console.log(e.status);
-			this.iniStatus1=e.status;
-			this.$emit('transQueryType', e.status);
+		change_article_order1(new_order){
+			this.order1 = new_order ;
+			console.log(this.order1);
 		},
 		
-		change_article_order2(e){
-			// console.log(e.status);
-			this.iniStatus2=e.status;
-			this.$emit('transOrderType', e.status);
+		change_article_order2(new_order){
+			this.order2 = new_order ;
+			console.log(this.order2);
 		}
 	}
 };
@@ -152,7 +166,7 @@ page {
 	top: 0;
 	left: 0;
 	background: #ffffff;
-	z-index: 10;
+	z-index: 30;
 }
 
 .bottomLayerOfLeft {
@@ -164,7 +178,7 @@ page {
 
 .mainPageTop {
 	padding-top: 4px;
-	height: 139px;
+	/* height: 139px; */
 	position: fixed;
 	left: 0;
 	top: 0;
@@ -175,7 +189,7 @@ page {
 	background-image: linear-gradient(#ffc95a, #f89d4d);
 }
 
-.mainPageTop_roled{
+/* .mainPageTop_roled{
 	padding-top: 4px;
 	height: 110px;
 	position: fixed;
@@ -187,11 +201,11 @@ page {
 	box-shadow: 0px 0px 10px 1px #c0c0c0;
 	background-image: linear-gradient(#ffc95a, #f89d4d);
 }
-
+ */
 .topBar {
 	width: 100%;
 	height: 30px;
-	margin-top: 23px;
+	/* margin-top: 23px; */
 	/* 此处需要兼容性处理 47px */
 }
 
@@ -206,7 +220,7 @@ page {
 	} */
 
 .topBarSearch {
-	width: 256px;
+	width: 68.27%;
 	height: 30px;
 	background: rgba(255, 247, 231, 1);
 	opacity: 1;
@@ -218,10 +232,10 @@ page {
 }
 
 .topBarSearch image {
-	width: 16px;
-	height: 16px;
+	width: 20px;
+	height: 20px;
 	opacity: 1;
-	margin: 7px 3px;
+	margin: 5px 13px;
 }
 
 .topBarPlus {
@@ -366,6 +380,24 @@ page {
 	line-height: 21px;
 	color: rgba(74, 74, 74, 1);
 	opacity: 1;
+}
+
+.optionLine_mpt{
+	display: flex;
+	justify-content: space-between;
+	width: 93.07%;
+	left: 3.47%;
+	height: 30px;
+	position: fixed;
+	z-index: 20;
+}
+
+.optionLinebg_mpt{
+	position: fixed;
+	z-index: 10;
+	width: 100%;
+	height: 41px;
+	background-color: #fdfdfd;
 }
 
 .tagchoose{

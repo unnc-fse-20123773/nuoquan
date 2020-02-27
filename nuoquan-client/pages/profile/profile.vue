@@ -190,10 +190,6 @@
 			}
 		},
 
-		onShow() {
-			this.setTabBarIndex(3) //index为当前tab的索引
-		},
-
 		methods: {
 			pickerChange: function(res) {
 				if (res.mode == 'major') {

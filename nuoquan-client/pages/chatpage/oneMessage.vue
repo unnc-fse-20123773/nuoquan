@@ -29,7 +29,7 @@
 		<view>
 			<view class="recieve" v-if="thisMessage.flag == FRIEND">
 				<view @tap="goToPersonPublic(friendInfo.id)">
-					<image class="touxiang" :src="friendInfo.faceImg"></image>
+					<image class="touxiang" :src="pathFilter(friendInfo.faceImg)"></image>
 				</view>
 				<view class="content">
 					<view class="contentText-recieve">

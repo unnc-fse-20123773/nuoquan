@@ -154,11 +154,10 @@
 </template>
 
 <script>
-	const DEFAULT_PAGE = 0;
-	// var timer = null; //进度条生长
+	import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
 	
+	const DEFAULT_PAGE = 0;	
 	var loadVoteFlag = false;
-	
 	export default {
 		data() {
 			return {
@@ -193,7 +192,11 @@
 				afterSelectedOptionList: [], // 确认选择后刷新单个产生的单个vote的选项信息
 			};
 		},
-
+		
+		comments:{
+			uniNavBar
+		},
+		
 		onLoad: function() {
 			console.log("还没投票时,selectedOptionId= " + this.selectedOptionId);
 			var userInfo = this.getGlobalUserInfo();

@@ -1,6 +1,12 @@
 <template>
 	<view class="index">
-		<mainpagetop v-on:transQueryType="changeQueryType" v-on:transOrderType="changeOrderType" :userInfo="userInfo" :topArticles="topArticles" :roleup="roleup" style="position: fixed;z-index: 30;height:100%;"></mainpagetop>
+		<!-- Main page top bar -->
+		<mainpagetop :userInfo="userInfo" :topArticles="topArticles" 
+		:roleup="roleup" 
+		:height="capsuleButton.bottom + 79"
+		:height_roled="capsuleButton.bottom + 53"
+		style="position: fixed;z-index: 30;height:100%;">
+		</mainpagetop>
 		<!-- <button type="primary" @click="goTop" style="position: fixed;top: 200px;z-index: 88;">gotop</button> -->
 		<view class="indexSelf" style="height:100%;">
 			<scroll-view @scroll="linkageWithTop" class="indexArticleArea" :scroll-top="scrollTop" scroll-y="true" @scrolltolower="loadMore" @scrolltoupper="refreshArticle" upper-threshold="5">
@@ -41,8 +47,8 @@ export default {
 			scrollTop: 0,
 			old: {
 				scrollTop: 0
-			}
-			
+			},
+			capsuleButton: '',
 		};
 	},
 	components: {
@@ -54,9 +60,9 @@ export default {
 	onLoad() {
 		var userInfo = this.getGlobalUserInfo();
 		if (this.isNull(userInfo)) {
-			uni.redirectTo({
-				url: '../signin/signin'
-			});
+			// uni.redirectTo({
+			// 	url: '../signin/signin'
+			// });
 			return;
 		} else {
 			this.userInfo = userInfo; // 刷去默认值(若有)
@@ -65,6 +71,8 @@ export default {
 		this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
 
 		this.getScreenSize(); //获取手机型号
+		
+		this.capsuleButton = this.getnavbarHeight(); //获取胶囊按钮信息
 		
 		this.showArticles(this.currentPage); // 显示文章流
 
