@@ -1,24 +1,25 @@
 <template>
 	<view id="profile-container">
+		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" left-icon="back" left-text="返回" :title="pageTitle" :height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
+		<view :style="{height: this.getnavbarHeight().bottom + 5 + 'px'}"></view>
 		<view id="yellow-box"></view>
 		<form @submit="formSubmit" @reset="formReset">
 			<view class="profile-basicinfo-card">
 				<image class="profileTouxiang" mode="aspectFill" :src="userInfo.faceImg" height:160upx width:160upx></image>
 				<!-- 一般状态 -->
 				<button class="editProfile super_center" v-if="isEdit == false" @click="editProfile(isEdit)">
-					<text class="editProfile-text">修改</text>
+					<view @click="editProfile(isEdit)" class="editProfile-text">修改</view>
 				</button>
 				<button class="editProfile-edit super_center" v-if="isEdit == true" formType="submit">
-					<text class="editProfile-edit-text">完成</text>
+					<view class="editProfile-edit-text">完成</view>
 				</button>
 
 
 				<view class="nickname">
 					<view class="text">昵称</view>
 					<view class="second_line" v-if="!isEdit">{{userInfo.nickname}}</view>
-					<input class="right-profileText1-1" maxlength="8" :value="userInfo.nickname" v-if="isEdit" />
-					<!-- 					<text v-if="isEdit == true" class="text_limit"> 最长 8 位</text>
- -->
+					<input maxlength="8" :value="userInfo.nickname" v-if="isEdit" />
+					<!-- <text v-if="isEdit == true" class="text_limit"> 最长 8 位</text> -->
 				</view>
 
 				<view class="gender">
@@ -39,46 +40,19 @@
 				<view class="nickname">
 					<view class="text">毕业年份</view>
 					<view class="second_line" v-if="!isEdit">{{userInfo.graduationYear}}</view>
-					<mypicker class="year-pick-style" v-show="isEdit" :mode="'year'" :range="years" :value="year" @change="pickerChange"></mypicker>
+					<mypicker class="year-pick-style" v-if="isEdit" :mode="'year'" :range="years" :value="year" @change="pickerChange"></mypicker>
 				</view>
 				<view class="nickname">
 					<view class="text">专业</view>
 					<view class="second_line" v-if="!isEdit">{{userInfo.major}}</view>
-						<mypicker v-show="isEdit" class="year-pick-style" :mode="'major'" :range="majors" :value="major" @change="pickerChange"></mypicker>
+					<mypicker v-if="isEdit" class="major-pick-style" :mode="'major'" :range="majors" :value="major" @change="pickerChange"></mypicker>
 				</view>
-				<!-- 				<view class="graduationYear" v-if="isEdit == false">
-					<text class="left-profileText2">毕业年份</text>
-					<text class="left-profileTextb">{{userInfo.graduationYear}}</text>
-				</view> -->
-				<!-- 				<view class="graduationYear-edit" v-if="isEdit == true">
-					<text class="left-profileText2">毕业年份</text>
-					<view class="yearPicker">
-						<mypicker class="year-pick-style" :mode="'year'" :range="years" :value="year" @change="pickerChange"></mypicker>
-					</view>
-				</view> -->
-				<!-- 				<view class="major" v-if="isEdit == false">
-					<text class="left-profileText2">专业</text>
-					<text class="left-profileTextb">{{userInfo.major}}</text>
-				</view> -->
-				<!-- 				<view class="major-edit" v-if="isEdit == true">
-					<text class="right-profileText2">专业</text>
-					<view class="majorPicker">
-						<mypicker class="major-pick-style" :mode="'major'" :range="majors" :value="major" @change="pickerChange"></mypicker>
-					</view>
-				</view> -->
-				<!-- 				<view class="degree" v-if="isEdit == false">
-					<text class="right-profileText2">学位</text>
-					<text class="right-profileTextb">{{degrees[userInfo.degree]}}</text>
-				</view> -->
-				<!-- 				<view class="degree-edit" v-if="isEdit == true">
-					<text class="left-profileText2">学位</text>
-					<view class="degreePicker">
-						<mypicker class="degree-pick-style" :mode="'degree'" :range="degrees" :value="degree" @change="pickerChange"></mypicker>
-					</view>
-				</view> -->
-
-				<!-- 修改时状态 -->
-				<!-- <view class="profileText-box" v-show="isEdit == true"> -->
+				<view class="nickname">
+					<view class="text">学位</view>
+					<view class="second_line" v-if="!isEdit">{{degrees[userInfo.degree]}}</view>
+					<mypicker v-if="isEdit" class="degree-pick-style" :mode="'degree'" :range="degrees" :value="degree" @change="pickerChange"></mypicker>
+				</view> 
+				
 			</view>
 			<view class="profile-moreinfo-card super_center">
 				<!-- 一般状态 -->
@@ -106,8 +80,12 @@
 </template>
 <script>
 	import mypicker from '../../components/mypicker.vue';
-
+	import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue";
 	export default {
+		components:{
+			mypicker,
+			uniNavBar
+		},
 		data() {
 			// 为毕业年份 picker 传值
 			const date = new Date();
@@ -128,7 +106,7 @@
 
 			return {
 				genderList: ['女', '男'], // 顺序和数据库保持一致
-
+				pageTitle:'profile',
 				years, // 传入毕业年份 picker
 				yearPickerVal: [], // 毕业年份 picker 的起始值, 必须为list
 				majors,
@@ -305,16 +283,14 @@
 	}
 
 	#profile-container {
-		position: fixed;
 		width: 100%;
 		height: 100%;
 		background-color: #F3F3F3;
 	}
 
 	#yellow-box {
-		position: fixed;
 		top: 0;
-		height: 16%;
+		height: 200rpx;
 		width: 100%;
 		background-color: #FFCF3C;
 	}
@@ -331,10 +307,19 @@
 		/* justify-content: center; */
 		margin-left: auto;
 		margin-right: auto;
-		margin-top: 80px;
+		margin-top: -90rpx;
 		margin-bottom: 10px;
 	}
-
+.profile-moreinfo-card {
+		height: 200upx;
+		width: 93%;
+		background-color: white;
+		border-radius: 20upx;
+		box-shadow: 0upx 0upx 11upx 1upx #A6A6A6;
+		margin-left: auto;
+		margin-right: auto;
+		position: relative;
+	}
 	.profileTouxiang {
 		position: absolute;
 		top: -100upx;
@@ -347,44 +332,9 @@
 
 
 
-	.left-profileText1 {
-		color: #888888;
-		font-size: 11px;
-		font-weight: 500;
-		display: block;
-	}
-
-	.right-remind {
-		margin-left: 10px;
-		color: #888888;
-		font-size: 8px;
-		font-weight: 500;
-	}
-
-	.left-profileTexta {
-		color: #3D3D3D;
-		font-size: 17px;
-		font-weight: 500;
-		display: block;
-	}
 
 
 
-	/* 在这里修改输入框样式 */
-	.right-profileText1 {
-		color: #888888;
-		font-size: 11px;
-		font-weight: 500;
-		display: block;
-
-	}
-
-	.right-profileTexta {
-		color: #3D3D3D;
-		font-size: 17px;
-		font-weight: 500;
-		display: block;
-	}
 
 	.graduationYear {
 		width: 128upx;
@@ -393,19 +343,9 @@
 		top: 45%;
 	}
 
-	.left-profileText2 {
-		color: #888888;
-		font-size: 11px;
-		font-weight: 500;
-	}
 
-	.right-profileText2 {
-		color: #888888;
-		font-size: 11px;
-		/*margin-top: 210upx;*/
-		font-weight: 500;
 
-	}
+
 
 	.major {
 		width: 50%;
@@ -414,19 +354,8 @@
 		top: 45%; */
 	}
 
-	.left-profileTextb {
-		color: #3D3D3D;
-		font-size: 17px;
-		font-weight: 500;
-		display: block;
-	}
 
-	.right-profileTextb {
-		color: #3D3D3D;
-		font-size: 17px;
-		font-weight: 500;
-		display: block;
-	}
+
 
 	.degree {
 		width: 50%;
@@ -450,16 +379,6 @@
 		width: 126px;
 	}
 
-	.profile-moreinfo-card {
-		height: 200upx;
-		margin-left: 7%;
-		position: relative;
-		width: 86%;
-		background-color: white;
-		border-radius: 20upx;
-		box-shadow: 0upx 0upx 11upx 1upx #A6A6A6;
-	}
-
 	.email {
 		position: absolute;
 		left: 13%;
@@ -481,36 +400,43 @@
 	}
 
 	.editProfile {
-			position: absolute;
-		right: 5%;
+		position: absolute;
+		right: 3%;
 		top: 3%;
 		width: 68px;
 		height: 26px;
 		background: rgba(255, 201, 90, 1);
-		opacity: 1;
+	line-height: 26px;
 		border-radius: 4px;
 	}
 
 	.editProfile-edit {
 		position: absolute;
-		right: 10%;
-		top: -10%;
+		right: 3%;
+		top: 3%;
 		width: 68px;
 		height: 26px;
 		border: 1px solid rgba(255, 201, 90, 1);
-		opacity: 1;
+		line-height: 26px;
 		border-radius: 4px;
 	}
 
 	.editProfile-text {
 		color: white;
-		font-size: 20upx;
+		
+		width:100%;
+		height:100%;
+		font-size:14px;
 		font-weight: 400;
+			margin: 0 auto;
 	}
 
 	.editProfile-edit-text {
 		color: #FFCF3C;
-		font-size: 20upx;
+		width:100%;
+		height:100%;
+		margin: 0 auto;
+		font-size:14px;
 		font-weight: 400;
 	}
 
@@ -527,23 +453,6 @@
 
 
 	.gender-text {}
-
-
-	.major-pick-style {
-		position: absolute;
-		z-index: 999;
-		top: 30px;
-		left: -10px;
-		/* 	top:30px;
-		right: -20upx;
-		width:72px;
-		height:69px; */
-		/* background:rgba(255,255,255,1);
-		box-shadow:0px 0px 6px rgba(0,0,0,0.16);
-		opacity:1;
-		border-radius:8px;
-		overflow:auto; */
-	}
 
 	.yearPicker {
 		position: absolute;
@@ -590,19 +499,7 @@
 		justify-content: space-between;
 	}
 
-	.degree-pick-style {
-		position: absolute;
-		z-index: 888;
-		left: -7px;
-		top: 30px;
-		/* width:72px;
-		height:69px;
-		background:rgba(255,255,255,1);
-		box-shadow:0px 0px 6px rgba(0,0,0,0.16);
-		opacity:1;
-		border-radius:8px;
-		overflow:auto; */
-	}
+
 </style>
 
 <style>
@@ -613,9 +510,10 @@
 		display: inline-block;
 		width: 95px;
 		height: 45px;
-		margin: 0 calc((50% - 95px)/2) 18px;
+		margin: -30px calc((50% - 95px)/2) -10px;
 		position: relative;
 		overflow: visible;
+		padding-top: 60px;
 	}
 
 	.nickname .text,
@@ -646,11 +544,10 @@
 	}
 
 	.nickname input {
-		padding-top: 6px;
 		border-bottom: 1upx solid #C0C0C0;
 		height: 27px;
 		font-size: 17px;
-		line-height: 27px;
+		line-height: 100px;
 		color: rgba(53, 53, 53, 1);
 		text-align: left;
 		min-height: 1upx;
@@ -690,8 +587,17 @@
 	.year-pick-style {
 		position: absolute;
 		z-index: 999;
-		bottom: 8px;
-		left: 0;
+		left: -5px;
 	}
+.degree-pick-style{
+	position: absolute;
+	z-index: 888;
+	left: -10px;
+}
+.major-pick-style{
+	position: absolute;
+	z-index: 888;
+	left: -10px;
+}
 	
 </style>

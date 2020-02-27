@@ -162,49 +162,53 @@ import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue";
 	}
 		
 	.top {
-		width:100%;
+		width:95%;
 		height:40px;
 		display:flex;
 		align-items:center;
+		justify-content: space-between;
 		position:static;
 		margin-bottom: 10rpx;
 		margin-top: 20rpx;
+		margin-left: auto;
+		margin-right: auto;
 	}
 	.topleft{
 		font-size:14px;
 		margin-left:30px;
-		margin-right:15%;
+		margin-right: 10%;
 		height: 20px;
+		width: 40%;
 	}
 .mainbody{
 	width:calc(100% - 26px);
 	margin: auto;
 }
 .topright {
-		display:inline-block;
-		position:absolute;
-		right:10px;
-		width: 65px;
-		height: 20px;
+
+		width: 82px;
+		height: 26px;
 		line-height:20px;
 		background-color: #FFCF3C;
 		border-width: 1upx;
-		border-radius: 1px;
+		border-radius: 4px;
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		margin-left: 10%;
+		margin-right: 10px;
 	
 	}
 
 	.refresh{
-		font-size:10px;
+		font-size:14px;
 		color: white;
 
 	}
 .icon{
-	width: 15px;
-	height: 15px;
-	padding-left: 2px;
+	width: 14px;
+	height: 14px;
+	padding-left: 8px;
 	
 
 }
