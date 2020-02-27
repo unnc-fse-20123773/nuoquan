@@ -1063,6 +1063,8 @@ Vue.prototype.reserveTwoDecimal = function(number){
 //获取导航栏各种信息
 Vue.prototype.getnavbarHeight =  function(){
 	var navbarInfo = uni.getMenuButtonBoundingClientRect();
+	console.log(navbarInfo);
+	console.log('nav info');
 	return navbarInfo;
 }
 
