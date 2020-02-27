@@ -3,7 +3,7 @@
 		<view class="ul">
 			<!-- 推出左侧空白 -->
 			<view style="width: 20px;"></view>
-			<view :class="['super_center','li', current == index ? 'cur' : '']" v-for="(item, index) in tabBarList" :key="index" @tap="navigatorTo(item)">
+			<view :class="['super_center','li', current == index ? 'cur' : '']" v-for="(item, index) in tabBarList" :key="index" @tap="onClick(item)">
 				<view class="img super_center" :style="{height: current == index ? '44px' : '20px',
 				width: current == index ? '44px' : '20px',
 				background: current == index ? 'rgba(253,169,86,1)' : ''}" 
@@ -11,10 +11,14 @@
 					<image style="width: 20px;height: 20px;" :src="current == index ? item.selectIcon : item.icon" mode="aspectFit"></image>
 				</view>
 				<view class="ic super_center" v-if="item.type == 1">
-					<image style="width: 24px;height: 24px;
-					margin: 16px 16px;"
-					 src="../static/icon/plus_tab.png" 
-					 mode="aspectFit"></image>
+					<image :class="[rotateStatus ? 'midIcon' : 'midIconBack']" 
+					:style="{width: '24px',
+							height: '24px',
+							margin: '16px 16px',
+							transition: 'all 500ms linear 200ms',
+							transform: 'rotate('+ degree + 'deg)'}" 
+					src="../static/icon/plus_tab.png" 
+					mode="aspectFit"></image>
 				</view>
 				<view class="p" v-if="current != index">{{ item.name }}</view>
 			</view>
@@ -25,6 +29,7 @@
 </template>
 
 <script>
+let count = 0;
 export default {
 	props: {
 		current: {
@@ -34,6 +39,8 @@ export default {
 	},
 	data() {
 		return {
+			degree: 0, //旋转角度
+			rotateStatus: false, //旋转状态,判断静止or顺时针or逆时针
 			tabBarList: [
 				{
 					type: 0,
@@ -73,15 +80,28 @@ export default {
 			]
 		};
 	},
+	created(){
+		console.log(this.degree)
+	},
 	methods: {
-		navigatorTo(e) {
+		onClick(e) {
 			if(e.type==1){
 				this.$emit("click",e);
+				this.rotate();
 				return;
 			}
 			uni.switchTab({
 				url: e.url
 			});
+		},
+		
+		rotate() {
+			if (!this.rotateStatus){
+				this.degree = 45;
+			}else{
+				this.degree = 0;
+			}
+			this.rotateStatus = !this.rotateStatus;
 		}
 	}
 };
@@ -147,6 +167,7 @@ page {
 				box-shadow:0px 0px 4px rgba(0,0,0,0.16);
 				opacity:1;
 			}
+			
 			.p {
 				height:14px;
 				font-size:12px;
@@ -164,4 +185,37 @@ page {
 		}
 	}
 }
+.midIcon{
+      animation:midIcon 300ms linear 1;      
+    }
+    /* 
+      midIcon : 定义的动画名称
+      1s : 动画时间
+      linear : 动画以何种运行轨迹完成一个周期
+      infinite :规定动画应该无限次播放
+     */
+   @keyframes midIcon{
+      0%{-webkit-transform:rotate(0deg);}
+      25%{-webkit-transform:rotate(11.25deg);}
+      50%{-webkit-transform:rotate(22.5deg);}
+      75%{-webkit-transform:rotate(33.75deg);}
+      100%{-webkit-transform:rotate(45deg);}
+    }
+
+ .midIconBack{
+      animation:midIconBack 300ms linear 1;      
+    }
+    /* 
+      midIcon : 定义的动画名称
+      1s : 动画时间
+      linear : 动画以何种运行轨迹完成一个周期
+      infinite :规定动画应该无限次播放
+     */
+    @keyframes midIconBack{
+      0%{-webkit-transform:rotate(45deg);}
+      25%{-webkit-transform:rotate(33.75deg);}
+      50%{-webkit-transform:rotate(22.5deg);}
+      75%{-webkit-transform:rotate(11.25deg);}
+      100%{-webkit-transform:rotate(0deg);}
+    } 
 </style>
