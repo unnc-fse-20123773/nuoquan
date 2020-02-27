@@ -20,7 +20,18 @@
 			</cover-view>
 		</cover-view>
 	</cover-view>
-
+	<!-- 按钮后弹窗 -->
+	<cover-view wx:if="{{rotateStatus}}" class="tabbarMidToastBox" bindtap="rotate">
+		<cover-view class="tabbarMidToast">
+			<cover-view class="createArticle" bindtap="jumptoSubmit">
+				发文章
+			</cover-view>
+			<cover-view style="height: 1px;width: 80%;background-color: #C0C0C0;"></cover-view>
+			<cover-view class="createVote">
+				发投票
+			</cover-view>
+		</cover-view>
+	</cover-view>
 	<!-- 推出右侧空白 -->
 	<cover-view style="width: 20px;"></cover-view>
 </cover-view>

@@ -7,9 +7,10 @@
 
 		<searchpage v-if="showSearch" class="searchPage" @exitSearchSignal="controlShowSearch"></searchpage>
 
-		<view :class="[roleup == false ? 'mainPageTop' : 'mainPageTop_roled']">
+		<!-- <view :class="[roleup == false ? 'mainPageTop' : 'mainPageTop_roled']"> -->
+		<view class="mainPageTop" :style="{ height: roleup == false ? height + 'px' : height_roled + 'px' }">
 			<!-- 搜索行 -->
-			<view class="topBar">
+			<view class="topBar" :style="{'margin-top': this.getnavbarHeight().top - 2 + 'px'}">
 				<!-- 头像，备用 <image class="topBarTouxiang" :src='userInfo.faceImg' @click="controlShowLeft(1)"></image> -->
 				<view class="topBarSearch" @click="controlShowSearch(1)">
 					<image src="../static/icon/search_B79144.png" mode="aspectFit"></image>
@@ -52,7 +53,7 @@
 			</view>
 		</view>
 		<!-- 主页操作行 -->
-		<view v-if="roleup == false" style="display: flex;justify-content: space-between;width: 93.07%;left: 3.47%;height: 30px;position: fixed;top: 150px;" class="column_center">
+		<view v-if="roleup == false" class="optionLine_mpt column_center" :style="{top:height + 11 + 'px'}">
 			<!-- 标签选择 -->
 			<view class="tagchoose column_center">
 				<text>标签</text>
@@ -79,6 +80,9 @@
 				   <view class="bg-of-order" :style="{'left':order2 == 'time' ? '-13px;' :'41px' ,}"></view>
 			</view>
 		</view>
+		<!-- Add background for option bar-->
+		<view v-if="roleup == false" class="optionLinebg_mpt" :style="{top: height + 4 + 'px'}">
+		</view>
 	</view>
 </template>
 
@@ -93,6 +97,8 @@ export default {
 		},
 		topArticles: '',
 		roleup: false,
+		height: 0,
+		height_roled: 0,
 	},
 	components: {
 		mainpageleft,
@@ -160,7 +166,7 @@ page {
 	top: 0;
 	left: 0;
 	background: #ffffff;
-	z-index: 10;
+	z-index: 30;
 }
 
 .bottomLayerOfLeft {
@@ -172,7 +178,7 @@ page {
 
 .mainPageTop {
 	padding-top: 4px;
-	height: 139px;
+	/* height: 139px; */
 	position: fixed;
 	left: 0;
 	top: 0;
@@ -183,7 +189,7 @@ page {
 	background-image: linear-gradient(#ffc95a, #f89d4d);
 }
 
-.mainPageTop_roled{
+/* .mainPageTop_roled{
 	padding-top: 4px;
 	height: 110px;
 	position: fixed;
@@ -195,11 +201,11 @@ page {
 	box-shadow: 0px 0px 10px 1px #c0c0c0;
 	background-image: linear-gradient(#ffc95a, #f89d4d);
 }
-
+ */
 .topBar {
 	width: 100%;
 	height: 30px;
-	margin-top: 23px;
+	/* margin-top: 23px; */
 	/* 此处需要兼容性处理 47px */
 }
 
@@ -374,6 +380,24 @@ page {
 	line-height: 21px;
 	color: rgba(74, 74, 74, 1);
 	opacity: 1;
+}
+
+.optionLine_mpt{
+	display: flex;
+	justify-content: space-between;
+	width: 93.07%;
+	left: 3.47%;
+	height: 30px;
+	position: fixed;
+	z-index: 20;
+}
+
+.optionLinebg_mpt{
+	position: fixed;
+	z-index: 10;
+	width: 100%;
+	height: 41px;
+	background-color: #fdfdfd;
 }
 
 .tagchoose{

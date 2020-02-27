@@ -120,3 +120,34 @@
       75%{-webkit-transform:rotate(11.25deg);}
       100%{-webkit-transform:rotate(0deg);}
     } 
+	
+	.tabbarMidToastBox{
+		position: fixed;
+		z-index: 899;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+	
+	.tabbarMidToast{
+		position: fixed;
+		bottom: 100px;
+		left: 0;
+		right: 0;
+		margin-left: auto;
+		margin-right: auto;
+		z-index: 999;
+		width: 120px;
+		height: 101px;
+		display: flex;
+		flex-direction: column;
+		background-color: #007AFF;
+		opacity: 1;
+	}
+	
+	
+	.createVote , .createArticle{
+		height: 50px;
+		width: 120px;
+	}

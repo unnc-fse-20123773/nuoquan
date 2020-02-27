@@ -18,7 +18,7 @@ Component({
 				selectedIconPath: '../static/BG/tabbarBg/vote.png',
 				text: '投票'
 			}, {
-				pagePath: 'pages/tabPages/testpage',
+				pagePath: '',
 				iconPath: '../static/icon/comment_dots_d4d4d4.png',
 				selectedIconPath: '../static/icon/comment_dots_ffffff.png',
 				isSpecial: true,
@@ -50,7 +50,6 @@ Component({
 			wx.switchTab({
 				url
 			})
-			console.log(selected);
 		},
 
 		setTabBarIndex(index) {
@@ -76,8 +75,15 @@ Component({
 					rotateStatus: !this.data.rotateStatus
 				})
 			}
-
+			
 			console.log(this.data.degree);
 		},
+		
+		jumptoSubmit(){
+			wx.reLaunch({
+				url:'../pages/submit/submit.vue'
+			})
+			console.log("jump to submit");
+		}
 	}
 })
