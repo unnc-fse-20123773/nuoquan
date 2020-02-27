@@ -156,7 +156,6 @@ export default {
 			}
 		});
 
-		this.setTabBarIndex(3); //index为当前tab的索引
 		this.loadingChatSnapshot(); // 载入聊天快照
 	},
 

@@ -107,8 +107,6 @@ export default {
 			}
 		});
 
-		this.setTabBarIndex(0); //index为当前tab的索引
-
 		var userInfo = this.getGlobalUserInfo(); // 查看用户是否登录
 		if (!this.isNull(userInfo)) {
 			// 设置 userInfo 传给 mainpagetop 组件

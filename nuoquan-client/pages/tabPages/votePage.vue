@@ -231,8 +231,6 @@
 				}
 			})
 			
-			this.setTabBarIndex(1); //index为当前tab的索引
-			
 			//Test 
 			// console.log(this.showList);
 			// console.log(this.list);
