@@ -161,6 +161,12 @@
 		},
 
 		onShow() {
+			uni.hideTabBar({
+				success() {
+					console.log("隐藏原生tabbar")
+				}
+			})
+			
 			this.setTabBarIndex(3) //index为当前tab的索引
 			this.loadingChatSnapshot(); // 载入聊天快照
 		},

@@ -150,11 +150,26 @@
 				</scroll-view>
 			</swiper-item>
 		</swiper>
+		
+		<adTabbar>
+		    <adTabbarItem text="首页" dataCur="page1" class="maxWidth" @click="navClick(0)" :textColor="curPage=='page1'? '#DF421D':'#9B9B9B'" :icon="'../../static/home' + [curPage=='page1'?'-hover':''] + '.png'"></adTabbarItem>
+		    <adTabbarItem text="订单" dataCur="page2" class="maxWidth" @click="navClick(1)" :textColor="curPage=='page2'? '#DF421D':'#9B9B9B'" :icon="'../../static/order' + [curPage=='page2'?'-hover':''] + '.png'"></adTabbarItem>
+		    <!--自定义中间View，可以注释掉就是正常4个Tab菜单-->
+		    <view class="middleItem" @click="middleClick">
+		        <view class="buttonView">+</view>
+		        <text>自定义</text>
+		    </view>
+		    <adTabbarItem text="图表" dataCur="page3" class="maxWidth" @click="navClick" :textColor="curPage=='page3'? '#DF421D':'#9B9B9B'" :icon="'../../static/chart' + [curPage=='page3'?'-hover':''] + '.png'"></adTabbarItem>
+		    <adTabbarItem text="我的" dataCur="page4" class="maxWidth" @click="navClick" :textColor="curPage=='page4'? '#DF421D':'#9B9B9B'" :icon="'../../static/my' + [curPage=='page4'?'-hover':''] + '.png'"></adTabbarItem>
+		</adTabbar>
 	</view>
 </template>
 
 <script>
 	import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
+	
+	import adTabbar from '@/components/andy-ADTabbar/andy-ADTabbar.vue';
+	import adTabbarItem from '@/components/andy-ADTabbar/andy-ADTabbarItem.vue';
 	
 	const DEFAULT_PAGE = 0;	
 	var loadVoteFlag = false;
@@ -194,7 +209,9 @@
 		},
 		
 		comments:{
-			uniNavBar
+			uniNavBar,
+			adTabbar,
+			adTabbarItem,
 		},
 		
 		onLoad: function() {
@@ -223,6 +240,12 @@
 		},
 
 		onShow() {
+			uni.hideTabBar({
+				success() {
+					console.log("隐藏原生tabbar")
+				}
+			})
+			
 			this.setTabBarIndex(1); //index为当前tab的索引
 			
 			//Test 
@@ -231,6 +254,19 @@
 		},
 
 		methods: {
+			navClick(index){
+				if(index==0){
+					uni.switchTab({
+						url: 'index'
+					})
+				}
+				if(index==1){
+					uni.switchTab({
+						url: 'votePage'
+					})
+				}
+			},
+			
 			singleImgeFit(e) {
 				var height = e.detail.height;
 				var width = e.detail.width;

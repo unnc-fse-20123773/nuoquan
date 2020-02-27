@@ -10,6 +10,18 @@
 				<view class="marginHelper"></view>
 			</scroll-view>
 		</view>
+		
+		<adTabbar>
+		    <adTabbarItem text="首页" dataCur="page1" class="maxWidth" @click="navClick(0)" :textColor="curPage=='page1'? '#DF421D':'#9B9B9B'" :icon="'../../static/home' + [curPage=='page1'?'-hover':''] + '.png'"></adTabbarItem>
+		    <adTabbarItem text="订单" dataCur="page2" class="maxWidth" @click="navClick(1)" :textColor="curPage=='page2'? '#DF421D':'#9B9B9B'" :icon="'../../static/order' + [curPage=='page2'?'-hover':''] + '.png'"></adTabbarItem>
+		    <!--自定义中间View，可以注释掉就是正常4个Tab菜单-->
+		    <view class="middleItem" @click="middleClick">
+		        <view class="buttonView">+</view>
+		        <text>自定义</text>
+		    </view>
+		    <adTabbarItem text="图表" dataCur="page3" class="maxWidth" @click="navClick(2)" :textColor="curPage=='page3'? '#DF421D':'#9B9B9B'" :icon="'../../static/chart' + [curPage=='page3'?'-hover':''] + '.png'"></adTabbarItem>
+		    <adTabbarItem text="我的" dataCur="page4" class="maxWidth" @click="navClick(3)" :textColor="curPage=='page4'? '#DF421D':'#9B9B9B'" :icon="'../../static/my' + [curPage=='page4'?'-hover':''] + '.png'"></adTabbarItem>
+		</adTabbar>
 	</view>
 </template>
 
@@ -17,8 +29,11 @@
 import articlebrief from '../../components/articlebrief';
 import mainpagetop from '../../components/mainpagetop.vue';
 import mainpageleft from '@/components/mainpageleft.vue';
-
 import { mapState } from 'vuex';
+
+import tabbar from '@/components/nq-tabbar.vue'
+import adTabbar from '@/components/andy-ADTabbar/andy-ADTabbar.vue';
+import adTabbarItem from '@/components/andy-ADTabbar/andy-ADTabbarItem.vue';
 
 var loadArticleFlag = false; // 为加载文章加锁
 var timer = null; // 为头部做定时器收起
@@ -48,7 +63,11 @@ export default {
 	components: {
 		articlebrief,
 		mainpagetop,
-		mainpageleft
+		mainpageleft,
+		
+		adTabbar,
+		adTabbarItem,
+		tabbar
 	},
 
 	onLoad() {
@@ -83,7 +102,14 @@ export default {
 	},
 
 	onShow() {
-		 this.setTabBarIndex(0) //index为当前tab的索引
+		uni.hideTabBar({
+			success() {
+				console.log("隐藏原生tabbar")
+				getApp().globalData.onTabBar();
+			}
+		})
+		
+		this.setTabBarIndex(0) //index为当前tab的索引
 		
 		var userInfo = this.getGlobalUserInfo(); // 查看用户是否登录
 		if (!this.isNull(userInfo)) {
@@ -101,6 +127,29 @@ export default {
 	// },
 
 	methods: {
+		navClick(index){
+			if(index==0){
+				uni.switchTab({
+					url: 'index'
+				})
+			}
+			if(index==1){
+				uni.switchTab({
+					url: 'votePage'
+				})
+			}
+			if(index==2){
+				uni.switchTab({
+					url: 'messagelist'
+				})
+			}
+			if(index==3){
+				uni.switchTab({
+					url: 'mine'
+				})
+			}
+		},
+		
 		showArticles: function(page) {
 			if (loadArticleFlag) {
 				return;

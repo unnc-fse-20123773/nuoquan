@@ -5,10 +5,6 @@
 			"style": {}
 		},
 		{
-			"path": "pages/tabPages/main",
-			"style": {}
-		},
-		{
 			"path": "pages/tabPages/votePage",
 			"style": {}
 		},
@@ -103,7 +99,7 @@
 	
 	//微信小程序自定义导航栏custom-tab-bar
 	"tabBar": {
-		"custom": true,
+		// "custom": true,
 		"color": "#7A7E83",
 		"selectedColor": "#3cc51f",
 		"borderStyle": "black",
@@ -147,10 +143,6 @@
 		"list": [{
 				"name": "index", //模式名称
 				"path": "pages/tabPages/index", //启动页面，必选
-				"query": "" //启动参数，在页面的onLoad函数里面得到
-			},{
-				"name": "main", //模式名称
-				"path": "pages/tabPages/main", //启动页面，必选
 				"query": "" //启动参数，在页面的onLoad函数里面得到
 			},{
 				"name": "shareposter", //模式名称
