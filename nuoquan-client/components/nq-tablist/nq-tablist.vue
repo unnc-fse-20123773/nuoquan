@@ -1,7 +1,7 @@
 <template>
 	<view class="tabList_box">
-		<view class="tabList">
-			<botton class="super_center" style="width: 100%;height: 50px;" @click='onClick'>
+		<view class="tabList" @click='onClick'>
+			<botton class="super_center" style="width: 100%;height: 50px;">
 				<text>发文章</text>
 			</botton>
 			<view style="width: 83px;
@@ -26,6 +26,9 @@ export default{
 	methods:{
 		onClick(){
 			console.log("click in tablist")
+			uni.navigateTo({
+				url: '../../pages/submit/submit'
+			});
 		}
 	}
 	

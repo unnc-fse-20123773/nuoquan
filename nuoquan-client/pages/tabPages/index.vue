@@ -69,7 +69,7 @@ export default {
 		articlebrief,
 		mainpagetop,
 		mainpageleft,
-		tabBar
+		tabBar,
 	},
 
 	onLoad() {

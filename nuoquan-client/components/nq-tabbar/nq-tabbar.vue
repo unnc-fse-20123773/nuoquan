@@ -26,14 +26,13 @@
 			<view style="width: 20px;"></view>
 		</view>
 		
-		<tablist></tablist>
+		<tablist v-if="rotateStatus"></tablist>
 	</view>
 </template>
 
 <script>
-import tablist from './nq-tablist.vue'
+import tablist from '../nq-tablist/nq-tablist.vue'
 	
-let count = 0;
 export default {
 	props: {
 		current: {
