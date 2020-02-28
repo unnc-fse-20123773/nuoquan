@@ -1,27 +1,40 @@
 <template>
-	<view id="container">
-		、
+	<view id="container">、
+		<!-- 导航栏 -->
+		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}"
+		:title="pageTitle" 
+		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
 		<!-- 由两个超圆，用 fixed 定位做成的背景黄色 -->
-		<view id="msglist-yellowshadowbg"></view>
-		<view id="msglist-yellowbg"></view>
+		<view id="msglist-yellowshadowbg">
+			<image src="../../static/BG/msgList_BG.png" mode="scaleToFill"></image>
+		</view>
 		<!-- 点赞和评论数量 -->
-		<view id="msglist-likecommentnum">
+		<view id="msglist-likecommentnum" :style="{ top: this.getnavbarHeight().bottom + 12 + 'px'}">
 			<view class="msglist-like column_center" @tap="goToCmtLikeDetail(0)">
-				<view class="msglist-like-bg super_center"><image src="../../static/icon/like.png" class="msglist-like-icon" mode=""></image></view>
-				<text class="msglist-like-text font-family">{{ lang.like }}</text>
-				<view :class="[uLikeMsgCount > 9 ? 'msglist-like-num-2 super_center' : 'msglist-like-num-1 super_center']" v-if="uLikeMsgCount > 0">{{ uLikeMsgCount }}</view>
+				<view class="msglist-like-bg super_center" style="background:rgba(255,93,93,1);">
+					<image src="../../static/icon/thumbs_up_white.png" class="msglist-like-icon" mode=""></image>
+				</view>
+				<text class="msglist-top-text font-family">{{lang.like}}</text>
+				<view class="msglist-top-num super_center" v-if="uLikeMsgCount>0">
+					{{uLikeMsgCount}}
+				</view>
 				<!-- :class="[currentTab==index ? 'menu-one-act' : 'menu-one']" -->
 			</view>
-			<view class="msglist-likecommentnum-border"></view>
+			<!-- 分割线 -->
+			<view class="msglist-likecommentnum-border">
+			</view>
 			<view class="msglist-comment column_center" @tap="goToCmtLikeDetail(1)">
-				<view class="msglist-comment-bg super_center"><image src="../../static/icon/comment.png" class="msglist-comment-icon" mode=""></image></view>
-				<text class="msglist-comment-text font-family">{{ lang.comment }}</text>
-				<view :class="[uCommentMsgCount > 9 ? 'msglist-comment-num-2 super_center' : 'msglist-comment-num-1 super_center']" v-if="uCommentMsgCount > 0">
-					{{ uCommentMsgCount }}
+				<!-- Comment background -->
+				<view class="msglist-comment-bg super_center" style="background:rgba(0,132,233,1);">
+					<image src="../../static/icon/comment_dots_ffffff.png" class="msglist-comment-icon" mode=""></image>
+				</view>
+				<text class="msglist-top-text font-family">{{lang.comment}}</text>
+				<view class="msglist-top-num super_center " v-if="uCommentMsgCount>0">
+					{{uCommentMsgCount}}
 				</view>
 			</view>
 			<!-- 消息内容滑块区 -->
-			<scroll-view scroll-y="true" style="position: fixed;left: 0upx;top: 314upx;width: 100%;height: 1132upx;">
+			<scroll-view scroll-y="true" class="messagesBox" :style="{ top: this.getnavbarHeight().bottom + 143 + 'px'}">
 				<!-- 新消息卡片 -->
 				<view>
 					<view class="message-list">
@@ -98,6 +111,7 @@ export default {
 	},
 	data() {
 		return {
+			pageTitle:'我的消息',
 			focus: false,
 			isShowView: true,
 
@@ -266,260 +280,220 @@ export default {
 </script>
 
 <style>
-page {
-	width: 100%;
-	height: 100%;
-}
+	page {
+		width: 100%;
+		height: 100%;
+	}
 
-#container {
-	width: 100%;
-	height: 100%;
-	background-color: #f3f3f3;
-}
+	#container {
+		width: 100%;
+		height: 100%;
+		background-color: #f3f3f3;
+	}
 
-#msglist-yellowbg {
-	position: fixed;
-	width: 3100upx;
-	height: 3100upx;
-	border-radius: 2000upx;
-	background-color: #fdd041;
-	top: -2860upx;
-	left: -1520upx;
-}
+	#msglist-yellowbg {
+		position: fixed;
+		width: 3100upx;
+		height: 3100upx;
+		border-radius: 2000upx;
+		background-color: #FDD041;
+		top: -2860upx;
+		left: -1520upx;
+	}
 
-#msglist-yellowshadowbg {
-	position: fixed;
-	width: 2980upx;
-	height: 2980upx;
-	border-radius: 3000upx;
-	background-color: #dcb436;
-	top: -2694upx;
-	left: -1520upx;
-}
+	#msglist-yellowshadowbg {
+		position: fixed;
+		top: 0;
+		width: 100%;
+		height: 200px;
+	}
+	
+	#msglist-yellowshadowbg image{
+		width: 100%;
+		height: 200px;
+	}
 
-#msglist-likecommentnum {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-around;
-	position: fixed;
-	width: 88%;
-	left: 6%;
-	height: 224upx;
-	top: 65upx;
-	background-color: white;
-	border-radius: 25upx;
-	box-shadow: 0upx 0upx 8upx 0upx #888888;
-}
+	#msglist-likecommentnum {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+		position: fixed;
+		width: 90.4%;
+		left: 4.8%;
+		height: 129px;
+		background-color: white;
+		
+		height:129px;
+		box-shadow:0px 0px 6px rgba(0,0,0,0.16);
+		opacity:1;
+		border-radius:8px;
+	}
 
-.msglist-like {
-	position: relative;
-	width: 100%;
-	height: 49%;
-	border-radius: 25upx;
-}
+	.msglist-like {
+		position: relative;
+		width: 100%;
+		height: 49%;
+		border-radius: 25upx;
+	}
 
-.msglist-like-bg {
-	position: absolute;
-	height: 58upx;
-	width: 58upx;
-	left: 40upx;
-	border-radius: 999upx;
-	background-color: #ff5d6c;
-}
+	.msglist-like-bg,.msglist-comment-bg {
+		position: absolute;
+		left: 23px;
+		width:36px;
+		height:36px;
+		border-radius:50%;
+		opacity:1;
+	}
 
-.msglist-like-icon {
-	height: 32upx;
-	width: 32upx;
-	margin-bottom: 5upx;
-	margin-left: 1upx;
-}
+	.msglist-like-icon,.msglist-comment-icon {
+		width:16px;
+		height:16px;
+		opacity:1;
+	}
 
-.msglist-likecommentnum-border {
-	width: 90%;
-	height: 2upx;
-	background-color: #d1d1d1;
-	margin-left: 5%;
-}
+	.msglist-likecommentnum-border {
+		width: 90%;
+		height: 1px;
+		background-color: rgba(236,236,236,1);
+		margin-left: 5%;
+	}
 
-.msglist-comment-bg {
-	position: absolute;
-	height: 58upx;
-	width: 58upx;
-	left: 40upx;
-	border-radius: 999upx;
-	background-color: #058ecc;
-}
+	.msglist-comment {
+		width: 100%;
+		height: 49%;
+		border-radius: 25upx;
+	}
 
-.msglist-comment-icon {
-	height: 32upx;
-	width: 32upx;
-	margin-top: 5upx;
-	margin-left: 1upx;
-}
+	.msglist-top-text {
+		position: absolute;
+		left: 75px;
+		height:23px;
+		font-size:17px;
+		font-family:Source Han Sans CN;
+		font-weight:500;
+		line-height:23px;
+		color:rgba(53,53,53,1);
+		opacity:1;
+	}
 
-.msglist-comment {
-	width: 100%;
-	height: 49%;
-	border-radius: 25upx;
-}
+	.msglist-top-num {
+		position: absolute;
+		padding: 1px 3px;
+		right: 22px;
+		min-width:18px;
+		height:17px;
+		background:rgba(242,94,94,1);
+		opacity:1;
+		border-radius:4px;
+		font-size:11px;
+		font-family:Source Han Sans CN;
+		font-weight:400;
+		line-height:22px;
+		color:rgba(255,255,255,1);
+		opacity:1;
+	}
 
-.msglist-like-text {
-	font-size: 28upx;
-	position: absolute;
-	left: 120upx;
-	font-family: weiruanyahei;
-}
+	.messagesBox{
+		position: fixed;
+		left: 0;
+		width: 100%;
+		height: 1132upx;
+	}
+	
+	.msglist-card {
+		width: 88%;
+		margin-left: 6%;
+		margin-top: 8upx;
+		height: 120upx;
+		background-color: white;
+		border-radius: 12upx;
+		box-shadow: 0upx 0upx 14upx 0upx #B2B2B2;
+	}
 
-/* 一位数和两位数的区分 */
-.msglist-like-num-2 {
-	position: absolute;
-	font-size: small;
-	margin-left: 360upx;
-	font-family: weiruanyahei;
-	background-color: #e4505d;
-	color: white;
-	border-radius: 7upx;
-	width: 56upx;
-	right: 40upx;
-}
+	.msglist-card-read {
+		width: 88%;
+		margin-left: 6%;
+		margin-top: 8upx;
+		height: 120upx;
+		background-color: white;
+		border-radius: 12upx;
+	}
 
-.msglist-like-num-1 {
-	position: absolute;
-	font-size: small;
-	margin-left: 360upx;
-	font-family: weiruanyahei;
-	background-color: #e4505d;
-	color: white;
-	border-radius: 7upx;
-	width: 36upx;
-	right: 40upx;
-}
+	.msglist-Touxiang {
+		margin-left: 24upx;
+		width: 76upx;
+		height: 76upx;
+		border-radius: 999upx;
+		display: inline-block;
+		vertical-align: middle;
+	}
 
-.msglist-comment-text {
-	font-size: 28upx;
-	position: absolute;
-	left: 120upx;
-	font-family: weiruanyahei;
-}
+	.msglist-content {
+		margin-left: 20upx;
+		width: 480upx;
+		height: 70upx;
+		/* display: flex; */
+		display: inline-block;
+	}
 
-/* 一位数和两位数的区分 */
-.msglist-comment-num-1 {
-	position: absolute;
-	font-size: small;
-	margin-left: 360upx;
-	font-family: weiruanyahei;
-	background-color: #058ecc;
-	color: white;
-	border-radius: 7upx;
-	width: 36upx;
-	right: 40upx;
-}
+	.msglist-id {
+		width: 100%;
+		height: 32upx;
+		font-size: x-small;
+		font-weight: 550;
+		color: #353535;
+	}
 
-.msglist-comment-num-2 {
-	position: absolute;
-	font-size: small;
-	margin-left: 360upx;
-	font-family: weiruanyahei;
-	background-color: #058ecc;
-	color: white;
-	border-radius: 7upx;
-	width: 56upx;
-	right: 40upx;
-}
+	.msglist-id-read {
+		width: 100%;
+		height: 32upx;
+		font-size: x-small;
+		font-weight: 500;
+		color: #9b9b9b;
+	}
 
-.msglist-card {
-	width: 88%;
-	margin-left: 6%;
-	margin-top: 8upx;
-	height: 120upx;
-	background-color: white;
-	border-radius: 12upx;
-	box-shadow: 0upx 0upx 14upx 0upx #b2b2b2;
-}
+	.msglist-brief {
+		width: 100%;
+		font-weight: 500;
+		height: 32upx;
+		font-size: xx-small;
+		color: #6f6f6f;
+		margin-top: 6upx;
+	}
 
-.msglist-card-read {
-	width: 88%;
-	margin-left: 6%;
-	margin-top: 8upx;
-	height: 120upx;
-	background-color: white;
-	border-radius: 12upx;
-}
+	.msglist-brief-read {
+		width: 100%;
+		height: 32upx;
+		font-size: xx-small;
+		color: #9b9b9b;
+		margin-top: 6upx;
+	}
 
-.msglist-Touxiang {
-	margin-left: 24upx;
-	width: 76upx;
-	height: 76upx;
-	border-radius: 999upx;
-	display: inline-block;
-	vertical-align: middle;
-}
+	.time-numicon {
+		position: relative;
+		margin-left: 2upx;
+		width: 48upx;
+		height: 76upx;
+		
+	}
 
-.msglist-content {
-	margin-left: 20upx;
-	width: 480upx;
-	height: 70upx;
-	/* display: flex; */
-	display: inline-block;
-}
+	.msglist-time {
+		position: absolute;
+		right: 0;
+		height: 36upx;
+		width: 100%;
+		font-size: 17upx;
+	}
 
-.msglist-id {
-	width: 100%;
-	height: 32upx;
-	font-size: x-small;
-	font-weight: 550;
-	color: #353535;
-}
-
-.msglist-id-read {
-	width: 100%;
-	height: 32upx;
-	font-size: x-small;
-	font-weight: 500;
-	color: #9b9b9b;
-}
-
-.msglist-brief {
-	width: 100%;
-	font-weight: 500;
-	height: 32upx;
-	font-size: xx-small;
-	color: #6f6f6f;
-	margin-top: 6upx;
-}
-
-.msglist-brief-read {
-	width: 100%;
-	height: 32upx;
-	font-size: xx-small;
-	color: #9b9b9b;
-	margin-top: 6upx;
-}
-
-.time-numicon {
-	position: relative;
-	margin-left: 2upx;
-	width: 48upx;
-	height: 76upx;
-}
-
-.msglist-time {
-	position: absolute;
-	right: 0;
-	height: 36upx;
-	width: 100%;
-	font-size: 17upx;
-}
-
-.msglist-icon {
-	position: absolute;
-	right: 0upx;
-	bottom: 0upx;
-	height: 17px;
-	width: 17px;
-	color: white;
-	background-color: #fdd453;
-	font-size: 20upx;
-	border-radius: 999upx;
-}
+	.msglist-icon {
+		position: absolute;
+		right: 0upx;
+		bottom: 0upx;
+		height: 17px;
+		width: 17px;
+		color: white;
+		background-color: #FDD453;
+		font-size: 20upx;
+		border-radius: 999upx;
+	}
 </style>
