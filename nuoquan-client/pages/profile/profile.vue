@@ -54,26 +54,19 @@
 				</view> 
 				
 			</view>
-			<view class="profile-moreinfo-card super_center">
-				<!-- 一般状态 -->
-				<view class="profilemoreText-box" v-if="isEdit == false">
-					<view class="email">
-						<text class="profilemoreText1">学校邮箱</text>
-						<text class="profilemoreTexta" v-if="userInfo.email!=null">{{userInfo.email}}</text>
-						<text class="profilemoreTexta" v-else>scyzl2@nottingham.edu.cn</text>
-					</view>
+			<view class="profile-moreinfo-card">
+				<view class="email">
+					<view class="text">学校邮箱</view>
+					<view class="second_line" v-if="!isModify">{{userInfo.email}}</view>
+					<input v-if="isModify" maxlength="26" :value="userInfo.email" />
+						<!-- <text class="profilemoreTexta" v-else>scyzl2@nottingham.edu.cn</text> -->
 				</view>
-
-				<!-- 修改时状态 -->
-				<view class="profilemoreText-box" v-if="isEdit == true">
-					<view class="email">
-						<text class="profilemoreText1">学校邮箱</text>
-						<input class="profilemoreTexta" style="width: 260px;text-align:left;min-height: 1upx;height:26px;" maxlength="26"
-						 :value="userInfo.email" name="email" />
-						<view class="input-border2"></view>
-					</view>
-				</view>
-
+				<button class="editEmail super_center" v-if="isModify == false&&isSent==false" @click="editEmail(isModify)">
+					<view @click="editModify(isModify)" class="editProfile-text">更改邮箱</view>
+				</button>
+				<button class="editEmail-edit super_center" v-if="isModify == true&&isSent==false" @click="getCaptcha(isSent)" >
+					<view class="editEmail-edit-text">发送验证码</view>
+				</button>
 			</view>
 		</form>
 	</view>
@@ -121,6 +114,8 @@
 				degreeDB: '1', // 数据库 degree 传值
 
 				isEdit: false,
+				isModify:false,
+				isSent:false,
 				userInfo: '',
 				yearPicker: false,
 				majorPicker: false,
@@ -194,6 +189,15 @@
 				}
 				console.log(this.isEdit);
 			},
+			
+			editEmail: function(isModify) {
+				if (isModify == false) {
+					this.isModify = true;
+				} else if (isModify == true) {
+					this.isModify = false;
+				}
+				console.log(this.isModify);
+			},
 
 			cancle: function() {
 				// 取消修改操作
@@ -214,7 +218,60 @@
 				// 给组件赋值回去，更改起始值
 				this.majorPickerVal[0] = e;
 			},
-
+			getCaptcha:function(isSent) {
+				if (isSent == false) {
+					this.isSent = true;
+				} else if (isSent == true) {
+					this.isSent = false;
+				}
+				console.log(this.isSent);
+				if (email) {
+						// 测试账号代码
+						if (email=="test@test.com"){
+							uni.showToast({
+								title: '认证成功',
+								icon: 'none'
+							});
+							this.changeAuth();
+							this.nextStep(false);
+							return;
+						}
+						// 检测邮箱
+						if (util.regEmail(email) || this.checkUNNCEmail(email)) {
+							uni.showToast({
+								title: '非 UNNC 邮箱地址！',
+								icon: 'none'
+							});
+						} else {
+							if (this.$refs.captcha.canSend()) {
+								console.log("获取验证码 email=" + email);
+								this.$refs.captcha.begin();
+								this.title = "重新发送"
+				
+								uni.request({
+									url: this.$serverUrl + '/user/getCode',
+									method: "POST",
+									data: {
+										userId: this.userInfo.id,
+										email: email,
+									},
+									header: {
+										'content-type': 'application/x-www-form-urlencoded'
+									},
+									success: (res) => {
+										console.log(res);
+									},
+								});
+							}
+						}
+					} else {
+						uni.showToast({
+							title: 'Email不能为空',
+							icon: 'none'
+						});
+					}
+				
+			},
 			degreeChange: function(e) {
 				var degree = this.degrees[e];
 				this.degree = degree;
@@ -300,7 +357,7 @@
 		/* width: 86%;
 	height: 300px; */
 		width: 93%;
-		height: 225px;
+		height: 175px;
 		background-color: white;
 		border-radius: 20upx;
 		box-shadow: 0upx 0upx 11upx 1upx #A6A6A6;
@@ -309,9 +366,10 @@
 		margin-right: auto;
 		margin-top: -90rpx;
 		margin-bottom: 10px;
+		padding-top: 50px;
 	}
 .profile-moreinfo-card {
-		height: 200upx;
+		height: 125px;
 		width: 93%;
 		background-color: white;
 		border-radius: 20upx;
@@ -327,76 +385,6 @@
 		width: 160upx;
 		height: 160upx;
 		border-radius: 120px;
-	}
-
-
-
-
-
-
-
-
-	.graduationYear {
-		width: 128upx;
-		position: absolute;
-		left: 13%;
-		top: 45%;
-	}
-
-
-
-
-
-	.major {
-		width: 50%;
-		/* 	position: absolute;
-		right: -5%;
-		top: 45%; */
-	}
-
-
-
-
-	.degree {
-		width: 50%;
-		/* position: absolute;
-		left: 13%;
-		top: 70%; */
-	}
-
-
-
-	.input-border2 {
-		border-bottom: 1upx solid #C0C0C0;
-		width: 260px;
-	}
-
-	.input-border3 {
-		position: absolute;
-		margin-top: 292upx;
-		right: 0;
-		border-bottom: 1upx solid #C0C0C0;
-		width: 126px;
-	}
-
-	.email {
-		position: absolute;
-		left: 13%;
-		top: 25%;
-	}
-
-	.profilemoreText1 {
-		color: #888888;
-		font-size: 11px;
-		font-weight: 500;
-		display: block;
-	}
-
-	.profilemoreTexta {
-		color: #3D3D3D;
-		font-size: 17px;
-		font-weight: 500;
-		display: block;
 	}
 
 	.editProfile {
@@ -423,7 +411,6 @@
 
 	.editProfile-text {
 		color: white;
-		
 		width:100%;
 		height:100%;
 		font-size:14px;
@@ -439,7 +426,32 @@
 		font-size:14px;
 		font-weight: 400;
 	}
-
+	.editEmail {
+		position: absolute;
+		left:calc((50% - 95px)/2);	
+		width: 97px;
+		height: 26px;
+		background: rgba(255, 201, 90, 1);
+		line-height: 26px;
+		border-radius: 4px;
+	}
+	.editEmail-edit{
+		position: absolute;
+		left:calc((50% - 95px)/2);	
+		width: 111px;
+		height: 26px;
+			background: rgba(255, 201, 90, 1);
+		line-height: 26px;
+		border-radius: 4px;
+	}
+	.editEmail-edit-text{
+	color: white;
+	width:100%;
+	height:100%;
+	font-size:14px;
+	font-weight: 400;
+		margin: 0 auto;
+	}
 	.genderPicker {
 		width: 100px;
 		height: 28%;
@@ -447,12 +459,6 @@
 		margin-left: -10px;
 		justify-content: space-around;
 	}
-
-
-
-
-
-	.gender-text {}
 
 	.yearPicker {
 		position: absolute;
@@ -505,19 +511,27 @@
 <style>
 	.nickname,
 	.gender {
-		position: relative;
 		vertical-align: top;
 		display: inline-block;
 		width: 95px;
 		height: 45px;
-		margin: -30px calc((50% - 95px)/2) -10px;
+		margin: 0 calc((50% - 95px)/2) 15px;
 		position: relative;
 		overflow: visible;
-		padding-top: 60px;
+	}
+	.email{
+		position: relative;
+		vertical-align: top;
+		display: inline-block;
+		width: 242px;
+		height: 38px;
+		margin: 18px calc((50% - 95px)/2) 15px;
+		overflow: visible;
 	}
 
 	.nickname .text,
-	.gender .text {
+	.gender .text,
+	.email .text{
 		height: 11px;
 		line-height: 11px;
 		font-size: 11px;
@@ -526,7 +540,8 @@
 	}
 
 	.nickname .second_line,
-	.gender .second_line {
+	.gender .second_line,
+	.email .second_line{
 		height: 34px;
 		font-size: 17px;
 		line-height: 34px;
@@ -543,15 +558,17 @@
 		color: rgba(178, 178, 178, 1);
 	}
 
-	.nickname input {
+	.nickname input,
+	.email input{
 		border-bottom: 1upx solid #C0C0C0;
-		height: 27px;
+		height: 29px;
 		font-size: 17px;
-		line-height: 100px;
+		line-height: 29px;
 		color: rgba(53, 53, 53, 1);
 		text-align: left;
 		min-height: 1upx;
 		overflow: visible;
+		padding-bottom: 5px;
 	}
 
 	.genderPicker-button {
@@ -588,16 +605,19 @@
 		position: absolute;
 		z-index: 999;
 		left: -5px;
+		top:19px;
 	}
 .degree-pick-style{
 	position: absolute;
 	z-index: 888;
 	left: -10px;
+	top:19px;
 }
 .major-pick-style{
 	position: absolute;
 	z-index: 888;
 	left: -10px;
+	top:19px;
 }
 	
 </style>
