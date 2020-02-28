@@ -234,19 +234,6 @@
 		},
 
 		methods: {
-			navClick(index){
-				if(index==0){
-					uni.switchTab({
-						url: 'index'
-					})
-				}
-				if(index==1){
-					uni.switchTab({
-						url: 'votePage'
-					})
-				}
-			},
-			
 			singleImgeFit(e) {
 				var height = e.detail.height;
 				var width = e.detail.width;

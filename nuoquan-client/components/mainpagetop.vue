@@ -91,18 +91,17 @@ export default {
 		nqSwitch
 	},
 
-		data() {
-			return {
-				serverUrl: this.$serverUrl,
-				showMainPageLeft: 0,
-				showSearch: 0,
-				options1: ["所有","关注"], //为switch组件设置选项标签
-				iniStatus1: 0, //为switch组件设置初始值
-				options2: ["时间","热度"], //为switch组件设置选项标签
-				iniStatus2: 0, //为switch组件设置初始值
-			};
-		},
-
+	data() {
+		return {
+			serverUrl: this.$serverUrl,
+			showMainPageLeft: 0,
+			showSearch: 0,
+			options1: ["所有","关注"], //为switch组件设置选项标签
+			iniStatus1: 0, //为switch组件设置初始值
+			options2: ["时间","热度"], //为switch组件设置选项标签
+			iniStatus2: 0, //为switch组件设置初始值
+		};
+	},
 
 	methods: {
 		controlShowLeft(a) {
