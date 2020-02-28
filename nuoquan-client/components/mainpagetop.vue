@@ -7,11 +7,10 @@
 
 		<searchpage v-if="showSearch" class="searchPage" @exitSearchSignal="controlShowSearch"></searchpage>
 
-		<!-- <view :class="[roleup == false ? 'mainPageTop' : 'mainPageTop_roled']"> -->
 		<view class="mainPageTop" :style="{ height: roleup == false ? height + 'px' : height_roled + 'px' }">
 			<!-- 搜索行 -->
 			<view class="topBar" :style="{'margin-top': this.getnavbarHeight().top - 2 + 'px'}">
-				<!-- 头像，备用 <image class="topBarTouxiang" :src='userInfo.faceImg' @click="controlShowLeft(1)"></image> -->
+				<!-- 头像，备用 <image class="topBarTouxiang" :src='pathFilter(userInfo.faceImg)' @click="controlShowLeft(1)"></image> -->
 				<view class="topBarSearch" @click="controlShowSearch(1)">
 					<image src="../static/icon/search_B79144.png" mode="aspectFit"></image>
 				</view>
@@ -36,13 +35,13 @@
 					<!-- 热门标题 -->
 					<swiper :class="[roleup == false ? 'swiperCard' : 'swiperCard_roled']" :indicator-dots="false" :autoplay="true" :interval="3000" :vertical="true" :duration="1000">
 						<view >
-							<swiper-item>
+							<swiper-item v-for="(item, index) in topArticles" :key="index">
 								<view class="itemCard" :style="{'height':roleup == false ? '62px;' :'33px' ,}">
-									<view :class="[roleup == false ? 'hotTitle' : 'hotTitle_roled']">{{ topArticles[0].articleTitle }}</view>
+									<view :class="[roleup == false ? 'hotTitle' : 'hotTitle_roled']">{{ item.articleTitle }}</view>
 									<view v-if="roleup == false" class="userInfo">
-										<image src="../static/icon/logo_app.png" mode="aspectFit"></image>
+										<image :src=pathFilter(item.faceImg) mode="aspectFit"></image>
 										<view class="userid_mainpagetop">
-											陈仅仅一号
+											{{item.nickname}}
 										</view>
 									</view>
 								</view>
@@ -60,25 +59,9 @@
 				<image class="tagicon" src="../static/icon/angle-down.png" mode="aspectFit"></image>
 			</view>
 			<!-- 排序方式1-->
-			<view class="comments-order">
-			       <view class="order-in-time" :class="{ chosen : order1 == 'all'}" @tap="change_article_order1('all')">
-					   所有
-				   </view>
-				   <view class="order-in-hot" :class="{ chosen : order1 != 'all'}" @tap="change_article_order1('attention')">
-				   	   关注
-				   </view>
-				   <view class="bg-of-order" :style="{'left':order1 == 'all' ? '-13px;' :'41px' ,}"></view>
-			</view>
+			<nqSwitch :options='options1' :initStatus='iniStatus1' @onChange="change_article_order1"></nqSwitch>
 			<!-- 排序方式2 -->
-			<view class="comments-order">
-			       <view class="order-in-time" :class="{ chosen : order2 == 'time'}" @tap="change_article_order2('time')">
-					   时间
-				   </view>
-				   <view class="order-in-hot" :class="{ chosen : order2 != 'time'}" @tap="change_article_order2('hot')">
-				   	   热度
-				   </view>
-				   <view class="bg-of-order" :style="{'left':order2 == 'time' ? '-13px;' :'41px' ,}"></view>
-			</view>
+			<nqSwitch :options='options2' :initStatus='iniStatus2' @onChange="change_article_order2"></nqSwitch>
 		</view>
 		<!-- Add background for option bar-->
 		<view v-if="roleup == false" class="optionLinebg_mpt" :style="{top: height + 4 + 'px'}">
@@ -89,6 +72,7 @@
 <script>
 import mainpageleft from '@/components/mainpageleft.vue';
 import searchpage from '../pages/search/search';
+import nqSwitch from '@/components/nq-switch.vue'
 export default {
 	props: {
 		// 渲染时候替换默认值会被替换
@@ -102,15 +86,19 @@ export default {
 	},
 	components: {
 		mainpageleft,
-		searchpage
+		searchpage,
+		nqSwitch
 	},
 
 		data() {
 			return {
+				serverUrl: this.$serverUrl,
 				showMainPageLeft: 0,
 				showSearch: 0,
-				order1: "all",
-				order2: "time",
+				options1: ["所有","关注"], //为switch组件设置选项标签
+				iniStatus1: 0, //为switch组件设置初始值
+				options2: ["时间","热度"], //为switch组件设置选项标签
+				iniStatus2: 0, //为switch组件设置初始值
 			};
 		},
 
@@ -141,14 +129,16 @@ export default {
 			})
 		},
 		
-		change_article_order1(new_order){
-			this.order1 = new_order ;
-			console.log(this.order1);
+		change_article_order1(e){
+			// console.log(e.status);
+			this.iniStatus1=e.status;
+			this.$emit('transQueryType', e.status);
 		},
 		
-		change_article_order2(new_order){
-			this.order2 = new_order ;
-			console.log(this.order2);
+		change_article_order2(e){
+			// console.log(e.status);
+			this.iniStatus2=e.status;
+			this.$emit('transOrderType', e.status);
 		}
 	}
 };

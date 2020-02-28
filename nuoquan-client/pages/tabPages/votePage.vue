@@ -15,7 +15,8 @@
 		
 		
 		<!-- 投票卡片 -->
-		<swiper class="scroll-box" :indicator-dots="false" :autoplay="false">
+		<swiper class="scroll-box" :indicator-dots="false" :autoplay="false" :current="currentVoteIndex" 
+		@change="onSwiperChange">
 			<swiper-item v-for="(item, index) in showList" :key="index" class="card-box" id="card_{index}">
 				<scroll-view class="card" scroll-y="true" show-scrollbar="false" :style="{height: voteCardHeight + 'px'}">
 					<!-- 标题行 -->
@@ -154,15 +155,18 @@
 				</scroll-view>
 			</swiper-item>
 		</swiper>
+		
+		<tab-bar :current="1"></tab-bar>
 	</view>
 </template>
 
 <script>
-	import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
-	import votecomments from "../../components/votecomments.vue"
+	import tabBar from '@/components/nq-tabbar/nq-tabbar.vue';
+	import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue";
 	
 	const DEFAULT_PAGE = 0;	
 	var loadVoteFlag = false;
+	var loadMoreFlag = false; // 确保往前翻不会再次触发loadMore方法
 	export default {
 		data() {
 			return {
@@ -180,6 +184,7 @@
 				
 				showList: ['1','2'],
 				userInfo: '',
+				
 				totalPage: 1,
 				currentPage: 1,
 				
@@ -195,12 +200,14 @@
 				selectedOptionId: '', // 选择的选项id
 				afterSelectedResult: [], // 确认选择后刷新单个产生的单个vote的所有信息
 				afterSelectedOptionList: [], // 确认选择后刷新单个产生的单个vote的选项信息
+				
+				loadedMoreIndex: [] // 用来储存已经触发过loadMore方法的投票的index.
 			};
 		},
 		
-		comments:{
+		components:{
 			uniNavBar,
-			votecomments,
+			tabBar
 		},
 		
 		onLoad: function() {
@@ -229,11 +236,7 @@
 		},
 
 		onShow() {
-			this.setTabBarIndex(1); //index为当前tab的索引
 			
-			//Test 
-			// console.log(this.showList);
-			// console.log(this.list);
 		},
 
 		methods: {
@@ -247,22 +250,14 @@
 					rate = width / height;
 					this.heightWidthRate = rate;
 					this.singleImgWidth = 360 * rate;
-					// console.log(this.singleImgState);
-					// console.log(rate);
-					// console.log(this.singleImgHeight);
-					// console.log(this.singleImgWidth);
 				} else {
 					this.singleImgState = 1;
 					this.singleImgWidth = 360;
 					rate = height / width;
 					this.heightWidthRate = rate;
 					this.singleImgHeight = 360 * rate;
-					// console.log(this.singleImgState);
-					// console.log(rate);
-					// console.log(this.singleImgHeight);
-					// console.log(this.singleImgWidth);
+
 				}
-				// console.log(e.detail);
 			},
 			
 			previewImage: function(voteIndex, imageIndex) {
@@ -384,6 +379,13 @@
 					}
 				})
 			},
+			
+			votedResult(voteIndex){
+				for (let option of this.showList[voteIndex].optionList){
+					this.onePersentBarGrow(option);
+				}
+				this.voteCardHeight = 3000; //确认投票后or该投票状态为已投，改变卡片高度
+			},
 
 			/**
 			 * 为选项添加进度条的长度
@@ -396,7 +398,7 @@
 				var timer = setInterval(function() {
 					//设置计时器
 					if ( option.barWidth >= widthTarget) {
-						//在 persentBarWidth 为目标值时清空计时器，暂以100代替
+						//在 persentBarWidth 为目标值时清空计时器，暂以100代替						// console.log(option);
 						console.log(option);
 						clearInterval(timer);
 					} else {
@@ -404,28 +406,6 @@
 					}
 				}, 6);
 			},
-			
-			// onePersentBarGrow: function(index) {
-			// 	var that = this;
-			// 	console.log(that.persentBarWidth);
-			// 	// var width = that.persentBarWidth[index];//赋值宽度
-			// 	var widthTarget = (this.reserveTwoDecimal(that.widthTarget[index] * 100));
-			// 	console.log("widthTarget: "+widthTarget);
-			// 	// clearInterval(timer); //清空 timer
-			// 	var timer = setInterval(function() {
-			// 		//设置计时器
-			// 		if ( that.persentBarWidth[index] >= widthTarget) {
-			// 			console.log("-----");
-			// 			//在 persentBarWidth 为目标值时清空计时器，暂以100代替
-			// 			console.log(that.persentBarWidth);
-			// 			clearInterval(timer);
-			// 		} else {
-			// 			that.persentBarWidth[index] += 1;
-			// 			// console.log("width:" + width);
-			// 		}
-			// 	}, 12);
-				
-			// },
 
 			showVotes: function(page) {
 				if (loadVoteFlag) {
@@ -449,7 +429,7 @@
 				}, 5000) // 延时5s timeout
 
 				var that = this;
-				console.log(1);
+				// console.log(1);
 				uni.request({
 					url: that.$serverUrl + '/vote/queryAllVotes',
 					method: 'POST',
@@ -469,17 +449,34 @@
 							// 判断当前页是不是第一页，如果是第一页，那么设置showList为空
 							if (page == 1) {
 								that.showList = [];
-								var newVoteList = res.data.data.rows;
-								var oldVoteList = that.showList;
-								that.showList = oldVoteList.concat(newVoteList);
-								that.currentPage = page;
-								that.totalPage = res.data.data.total;
-								console.log(res.data.data.rows.length);
-								for(var i = 0; i < res.data.data.rows.length; i++){
-									that.ischosen[i] = false;
-									that.finishVote[i] = false;
+							}
+							// 在原showList后面嫁接新的数据
+							var newVoteList = res.data.data.rows;
+							var oldVoteList = that.showList;
+							that.showList = oldVoteList.concat(newVoteList);
+							that.currentPage = page;
+							that.totalPage = res.data.data.total;
+							
+							console.log(res.data.data.rows);
+							if (page == 1){
+								that.ischosen = [];
+								that.finishVote = [];
+							}
+							var tempIsChosen = [];
+							var tempFinishVote = [];
+							for(var i = 0; i < res.data.data.rows.length; i++){
+								tempIsChosen[i] = false;
+								tempFinishVote[i] = that.showList[i].isUserVoted;
+							}
+							that.ischosen = that.ischosen.concat(tempIsChosen);
+							that.finishVote = that.finishVote.concat(tempFinishVote);
+							// console.log("每个投票是否被选择:" + that.ischosen);
+							
+							for(var index = 0; index < that.showList.length; index++){
+								if (that.showList[index].isUserVoted == true){
+									console.log("Voted: "+ index);
+									that.votedResult(index);
 								}
-								console.log(that.ischosen);
 							}
 						}, 300);
 					},
@@ -491,6 +488,60 @@
 						console.log(res);
 					}
 				})
+			},
+			
+			loadMore: function(){
+				var currentPage = this.currentPage;
+				var totalPage = this.totalPage;
+				if (currentPage == totalPage){
+					uni.showToast({
+						title: '没有更多投票了',
+						icon: 'none',
+						duration: 1000
+					});
+				} else {
+					var page = currentPage + 1;
+					this.showVotes(page);
+				}
+			},
+			
+			refreshVote: function() {
+				uni.showNavigationBarLoading();
+				this.showVotes(1);
+				uni.hideNavigationBarLoading();
+			},
+			
+			/**
+			 * 监听投票滑动, 当滑到新的一个投票, 返回其index
+			 * @param {Object} e change事件的默认返回值, 其中包含swiper的index
+			 */
+			onSwiperChange: function(e){
+				let index = e.target.current || e.detail.current;
+				console.log("VoteIndex: "+index);
+				
+				// this.votedResult(index);
+				
+				for(let ifHadLoadMore of this.loadedMoreIndex){
+					if(index == ifHadLoadMore){
+						return;
+					}
+				}
+
+				this.loadMoreFlag = false;
+
+				// console.log(index);
+				// console.log(this.loadedMoreIndex);
+				var remainder = (index+1) % 10;
+				if(index == 0){
+					// 刷新投票
+					this.refreshVote();
+				} else if (remainder == 0 || (index+1) == this.showList.length){
+					if (!this.loadMoreFlag){
+						this.loadMore();
+						this.loadedMoreIndex = this.loadedMoreIndex.concat(index);
+						this.loadMoreFlag = true;
+					}
+				}
 			},
 		}
 	};
