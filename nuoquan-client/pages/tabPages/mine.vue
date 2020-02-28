@@ -72,13 +72,12 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
-import tabBar from '@/components/nq-tabbar.vue';
+import tabBar from '@/components/nq-tabbar/nq-tabbar.vue';
 
 export default {
 	data() {
 		return {
 			screenWidth: 350,
-			serverUrl: this.$serverUrl,
 
 			thisUserInfo: '',
 			windowHeight: 0,
@@ -131,15 +130,9 @@ export default {
 	},
 
 	onShow() {
-		uni.hideTabBar({
-			success() {
-				console.log('隐藏原生tabbar');
-			}
-		});
-
 		//更新用户数据
 		console.log('更新用户数据');
-		queryUserInfo(this.thisUserInfo.id);
+		this.queryUserInfo(this.thisUserInfo.id);
 	},
 
 	onPullDownRefresh() {
@@ -151,29 +144,7 @@ export default {
 
 	methods: {
 		...mapMutations(['changeLang']),
-
-		navClick(index) {
-			if (index == 0) {
-				uni.switchTab({
-					url: 'index'
-				});
-			}
-			if (index == 1) {
-				uni.switchTab({
-					url: 'votePage'
-				});
-			}
-			if (index == 2) {
-				uni.switchTab({
-					url: 'messagelist'
-				});
-			}
-			if (index == 3) {
-				uni.switchTab({
-					url: 'mine'
-				});
-			}
-		},
+		
 		/**
 		 * 查询用户信息，并分割邮箱更新到缓存
 		 */
@@ -194,8 +165,8 @@ export default {
 						var user = res.data.data;
 						var finalUser = this.myUser(user); // 分割邮箱地址, 重构 user
 						this.setGlobalUserInfo(finalUser); // 把用户信息写入缓存
-						this.userInfo = finalUser; // 更新页面用户数据
-						// console.log(this.userInfo);
+						this.thisUserInfo = finalUser; // 更新页面用户数据
+						// console.log(this.thisUserInfo);
 					}
 				}
 			});

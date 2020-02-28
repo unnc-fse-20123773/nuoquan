@@ -96,7 +96,7 @@
 import { mapState, mapMutations } from 'vuex';
 import swipeAction from '../../components/swipe-action.vue';
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
-import tabBar from '@/components/nq-tabbar.vue';
+import tabBar from '@/components/nq-tabbar/nq-tabbar.vue';
 
 var userInfo;
 
@@ -164,12 +164,7 @@ export default {
 	},
 
 	onShow() {
-		uni.hideTabBar({
-			success() {
-				console.log('隐藏原生tabbar');
-			}
-		});
-
+		
 		this.loadingChatSnapshot(); // 载入聊天快照
 	},
 

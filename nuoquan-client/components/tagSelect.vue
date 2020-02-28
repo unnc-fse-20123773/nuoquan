@@ -74,7 +74,7 @@ export default {
 	max-height: 192px;
 	overflow: hidden;
 	position: relative;
-	background: url(../../static/BG/submit_BG.png);
+	background: url(../static/BG/submit_BG.png);
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 	border-radius: 10px;

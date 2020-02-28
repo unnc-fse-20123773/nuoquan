@@ -167,52 +167,60 @@ export default {
 </script>
 
 <style>
-page {
-	background: #f8f8f8;
-	position: relative;
-}
-
-.top {
-	width: 100%;
-	height: 40px;
-	display: flex;
-	align-items: center;
-	position: static;
-	margin-bottom: 10rpx;
-	margin-top: 20rpx;
-}
-.topleft {
-	font-size: 14px;
-	margin-left: 30px;
-	margin-right: 15%;
-	height: 20px;
-}
-.mainbody {
-	width: calc(100% - 26px);
+	page{
+		background: #F8F8F8;
+		position:relative;
+	}
+		
+	.top {
+		width:95%;
+		height:40px;
+		display:flex;
+		align-items:center;
+		justify-content: space-between;
+		position:static;
+		margin-bottom: 10rpx;
+		margin-top: 20rpx;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.topleft{
+		font-size:14px;
+		margin-left:30px;
+		margin-right: 10%;
+		height: 20px;
+		width: 40%;
+	}
+.mainbody{
+	width:calc(100% - 26px);
 	margin: auto;
 }
 .topright {
-	display: inline-block;
-	position: absolute;
-	right: 10px;
-	width: 65px;
-	height: 20px;
-	line-height: 20px;
-	background-color: #ffcf3c;
-	border-width: 1upx;
-	border-radius: 1px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
 
-.refresh {
-	font-size: 10px;
-	color: white;
-}
-.icon {
-	width: 15px;
-	height: 15px;
-	padding-left: 2px;
+		width: 82px;
+		height: 26px;
+		line-height:20px;
+		background-color: #FFCF3C;
+		border-width: 1upx;
+		border-radius: 4px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-left: 10%;
+		margin-right: 10px;
+	
+	}
+
+	.refresh{
+		font-size:14px;
+		color: white;
+
+	}
+.icon{
+	width: 14px;
+	height: 14px;
+	padding-left: 8px;
+	
+
 }
 </style>
