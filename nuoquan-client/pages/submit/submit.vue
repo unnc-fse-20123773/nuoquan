@@ -13,8 +13,6 @@
 			<view class="selectedTag" v-for="(item,index) in selectedTags" :key="index" @click="deleteTag(index)" :style="{ 'box-shadow' : '0px 0px 6px '+ selectedTagColorList[index],}">{{item}}</view>
 			<button class="editTagsButton" @tap="editTag(true)" v-if="!editingTag">添加标签 + </button>
 			<view class="finish-button" @tap="editTag(false)" v-if="editingTag">完成</view>
-
-
 		</view>
 
 		<view class="tagsArea" v-if="editingTag">
@@ -26,8 +24,10 @@
 			<view class="tag" v-for="(item,index) in tagList" :key="index" :style="{background: tagColorList[index]}" @tap="addTag(item)">{{item}}</view> -->
 			<!-- 			<view style="width: 750upx;height: 1000px;position: absolute;top:-1000px;z-index: 50;" @click="editTag(false)" v-if="editingTag"></view>
 			<view style="width: 750upx;height: 1000px;position: absolute;bottom:-1000px;z-index: 50;" @click="editTag(false)" v-if="editingTag"></view> -->
-
 		</view>
+		
+	<!-- 	<tagSelect :tagList="tagList" @send="getselectedTag">
+		</tagSelect> -->
 
 
 		<view style="position: relative;">
@@ -54,8 +54,9 @@
 </template>
 
 <script>
+	// import tagSelect from '@/components/tagSelect.vue';
 	// #ifdef APP-PLUS
-	import permision from "@/common/permission.js"
+	import permision from "@/common/permission.js";
 	// #endif
 	var sourceType = [
 		['camera'],
@@ -72,6 +73,9 @@
 	var requestTask;
 	var uploadTasks = [];
 	export default {
+		// components:{
+		// 	tagSelect
+		// },
 		data() {
 			return {
 				userInfo: '',
@@ -163,7 +167,7 @@
 					// 0~tagColors.length-1
 					this.tagColorList.push(tagColors[random_1]);
 					this.selectedTagColorList.push(tagColors[random_2]);
-
+					
 				}
 			},
 			// 检查tagList的数量
@@ -379,7 +383,12 @@
 					icon: 'none',
 				})
 			},
-
+			
+			getselectedTag(res){
+				this.selectedTags = res;
+				console.log(this.selectedTags);
+			},
+			
 			addTag(item) {
 				var a=this.selectedTags.indexOf(item);
 				if(a == -1){
