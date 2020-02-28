@@ -225,6 +225,19 @@ public interface ArticleService {
 	 */
 	public PagedResult getAllSubscribedAuthorArticlesByPopularity(Integer page, Integer pageSize, String userId);
 
+
+	/**
+	 * 根据传进来的text搜索文章(Text=标签)
+	 * @param isSaveRecord
+	 * @param page
+	 * @param pageSize
+	 * @param searchText
+	 * @param userId
+	 * @return
+	 */
+	public PagedResult searchArticleByTag(Integer isSaveRecord, Integer page, Integer pageSize, String searchText,
+			String userId);
+
 //	/**
 //	 * 通过热度查询评论主
 //	 * @param page

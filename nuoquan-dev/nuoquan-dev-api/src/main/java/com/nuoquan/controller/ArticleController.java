@@ -301,7 +301,7 @@ public class ArticleController extends BasicController {
 	 * @return
 	 * @throws Exception
 	 */
-	@ApiOperation(value = "按文章内容搜索")
+	@ApiOperation(value = "综合搜索")
 	@PostMapping(value = "/searchArticleYANG")
 	public JSONResult searchArticleYang(String searchText, Integer isSaveRecord, Integer page, String userId)
 			throws Exception {
@@ -311,6 +311,18 @@ public class ArticleController extends BasicController {
 		}
 		
 		PagedResult result = articleService.searchArticleYang(isSaveRecord, page, PAGE_SIZE, searchText, userId);
+		return JSONResult.ok(result);
+	}
+	
+	@ApiOperation(value = "按标签搜索文章")
+	@PostMapping(value = "/searchArticleByTag")
+	public JSONResult searchArticleByTag(String searchText, Integer isSaveRecord, Integer page, String userId)
+		throws Exception {
+		if (page == null ) {
+			page = 1;
+		}
+		
+		PagedResult result = articleService.searchArticleByTag(isSaveRecord, page, PAGE_SIZE, searchText, userId);
 		return JSONResult.ok(result);
 	}
 

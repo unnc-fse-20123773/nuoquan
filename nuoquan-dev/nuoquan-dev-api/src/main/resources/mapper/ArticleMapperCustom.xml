@@ -109,7 +109,7 @@ select * from (
 	GROUP BY article_id
 ) as d on c.id=d.article_id -->
   	
-  <select id="getTop3ByPopularity" resultMap="BaseResultMap">
+  <select id="getArticleByPopularity" resultMap="BaseResultMap">
   	select a.*, u.nickname as nickname, u.face_img, u.face_img_thumb from nuoquan.article a
    	left join nuoquan.user u on u.id = a.user_id
   	where
