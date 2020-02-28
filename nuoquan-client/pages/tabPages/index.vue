@@ -38,7 +38,7 @@ import articlebrief from '../../components/articlebrief';
 import mainpagetop from '../../components/mainpagetop.vue';
 import mainpageleft from '@/components/mainpageleft.vue';
 import { mapState } from 'vuex';
-import tabBar from '@/components/nq-tabbar.vue';
+import tabBar from '@/components/nq-tabbar/nq-tabbar.vue';
 
 var loadArticleFlag = false; // 为加载文章加锁
 var timer = null; // 为头部做定时器收起
@@ -106,13 +106,6 @@ export default {
 	},
 
 	onShow() {
-		uni.hideTabBar({
-			success() {
-				console.log('隐藏原生tabbar');
-				getApp().globalData.onTabBar();
-			}
-		});
-
 		var userInfo = this.getGlobalUserInfo(); // 查看用户是否登录
 		if (!this.isNull(userInfo)) {
 			// 设置 userInfo 传给 mainpagetop 组件

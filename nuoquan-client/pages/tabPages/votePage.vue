@@ -157,7 +157,7 @@
 </template>
 
 <script>
-	import tabBar from '@/components/nq-tabbar.vue';
+	import tabBar from '@/components/nq-tabbar/nq-tabbar.vue';
 	
 	const DEFAULT_PAGE = 0;	
 	var loadVoteFlag = false;
@@ -230,15 +230,7 @@
 		},
 
 		onShow() {
-			uni.hideTabBar({
-				success() {
-					console.log("隐藏原生tabbar")
-				}
-			})
 			
-			//Test 
-			// console.log(this.showList);
-			// console.log(this.list);
 		},
 
 		methods: {

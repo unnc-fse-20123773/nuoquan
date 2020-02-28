@@ -68,7 +68,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
-import tabBar from '@/components/nq-tabbar.vue';
+import tabBar from '@/components/nq-tabbar/nq-tabbar.vue';
 
 export default {
 	data() {
@@ -126,12 +126,6 @@ export default {
 	},
 
 	onShow() {
-		uni.hideTabBar({
-			success() {
-				console.log('隐藏原生tabbar');
-			}
-		});
-
 		//更新用户数据
 		console.log('更新用户数据');
 		this.queryUserInfo(this.thisUserInfo.id);

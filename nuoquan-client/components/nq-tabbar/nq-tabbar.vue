@@ -17,7 +17,7 @@
 							margin: '16px 16px',
 							transition: 'all 500ms linear 200ms',
 							transform: 'rotate('+ degree + 'deg)'}" 
-					src="../static/icon/plus_tab.png" 
+					src="../../static/icon/plus_tab.png" 
 					mode="aspectFit"></image>
 				</view>
 				<view class="p" v-if="current != index">{{ item.name }}</view>
@@ -25,10 +25,14 @@
 			<!-- 推出右侧空白 -->
 			<view style="width: 20px;"></view>
 		</view>
+		
+		<tablist></tablist>
 	</view>
 </template>
 
 <script>
+import tablist from './nq-tablist.vue'
+	
 let count = 0;
 export default {
 	props: {
@@ -37,6 +41,11 @@ export default {
 			default: 0
 		}
 	},
+	
+	components:{
+		tablist
+	},
+	
 	data() {
 		return {
 			degree: 0, //旋转角度
