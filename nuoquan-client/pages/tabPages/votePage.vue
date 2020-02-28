@@ -1,5 +1,5 @@
 <template>
-	<view style="width: 100%;height: 100%;">
+	<view style="width: 100%; height: 100%; background: linear-gradient(#f89d4d, #ffc95a);">
 		<!-- 导航栏 -->
 		<view class="navigatorBar_votePage super_center" :style="{ height: navigationBarHeight + 'px' }">NavigatorBar</view>
 		<!-- 左侧按钮 -->
@@ -548,7 +548,6 @@
 		height: 100%;
 		width: 100%;
 		overflow: hidden;
-		background: linear-gradient(#f89d4d, #ffc95a);
 	}
 
 	.navigatorBar_votePage {
