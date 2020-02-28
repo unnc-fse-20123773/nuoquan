@@ -306,6 +306,7 @@ page {
 }
 
 .icons {
+	height: 24px;
 	display: inline-flex;
 	width: 200upx;
 	margin-left: 18upx;
@@ -318,7 +319,7 @@ page {
 
 .icons image {
 	display: block;
-	width: 48upx;
+	width: 24px;
 	height: 24px;
 	vertical-align: bottom;
 }
@@ -331,8 +332,8 @@ button {
 	display: inline-block;
 	margin: 0;
 	padding: 0;
-	width: 48upx;
-	height: 48upx;
+	width: 24px;
+	height: 24px;
 	vertical-align: bottom;
 	background: #ffffff;
 }
@@ -340,9 +341,9 @@ button::after {
 	border: none;
 }
 .sendText{
-	line-height: 46upx;
-	width:68upx;
-	height:46upx;
+	line-height: 23px;
+	width:34px;
+	height:23px;
 	font-size:17px;
 	font-weight:500;
 	color:rgba(252,192,65,1);

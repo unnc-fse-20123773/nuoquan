@@ -10,6 +10,10 @@
 		<view class="tapRight super_center" :style="{ top: navigationBarHeight + 46 + 'px' }">
 			<image src="../../static/icon/angle-right-gradient.png" mode="aspectFit"></image>
 		</view>
+		<votecomments></votecomments>
+		
+		
+		
 		<!-- 投票卡片 -->
 		<swiper class="scroll-box" :indicator-dots="false" :autoplay="false">
 			<swiper-item v-for="(item, index) in showList" :key="index" class="card-box" id="card_{index}">
@@ -155,6 +159,7 @@
 
 <script>
 	import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
+	import votecomments from "../../components/votecomments.vue"
 	
 	const DEFAULT_PAGE = 0;	
 	var loadVoteFlag = false;
@@ -194,7 +199,8 @@
 		},
 		
 		comments:{
-			uniNavBar
+			uniNavBar,
+			votecomments,
 		},
 		
 		onLoad: function() {
