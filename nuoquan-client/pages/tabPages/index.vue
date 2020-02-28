@@ -1,15 +1,16 @@
 <template>
 	<view class="index">
+		<!-- Main page top bar -->
 		<mainpagetop
-			v-on:transQueryType="changeQueryType"
-			v-on:transOrderType="changeOrderType"
-			:userInfo="userInfo"
-			:topArticles="topArticles"
-			:roleup="roleup"		
-			:height="capsuleButton.bottom + 79"
-			:height_roled="capsuleButton.bottom + 53"
-			style="position: fixed;z-index: 30;height:100%;"
-		></mainpagetop>
+		@transQueryType="changeQueryType"
+		@transOrderType="changeOrderType"
+		:userInfo="userInfo"
+		:topArticles="topArticles"
+		:roleup="roleup" 
+		:height="capsuleButton.bottom + 79"
+		:height_roled="capsuleButton.bottom + 53"
+		style="position: fixed;z-index: 30;height:100%;">
+		</mainpagetop>
 		<!-- <button type="primary" @click="goTop" style="position: fixed;top: 200px;z-index: 88;">gotop</button> -->
 		<view class="indexSelf" style="height:100%;">
 			<scroll-view
@@ -21,7 +22,7 @@
 				@scrolltoupper="refreshArticle"
 				upper-threshold="5"
 			>
-				<view style="height:172px;width:100%;"></view>
+				<view :style="{height:capsuleButton.bottom + 111 + 'px',width: 100 + '%' }"></view>
 				<articlebrief v-for="i in showlist" :key="i.id" v-bind:articleCard="i"></articlebrief>
 				<!-- 用于添加底部空白 by Guetta 9.10 -->
 				<view class="marginHelper"></view>
@@ -85,7 +86,6 @@ export default {
 		this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
 
 		this.getScreenSize(); //获取手机型号
-
 		
 		this.capsuleButton = this.getnavbarHeight(); //获取胶囊按钮信息
 		
@@ -132,29 +132,6 @@ export default {
 			console.log(e);
 		},
 		
-		navClick(index) {
-			if (index == 0) {
-				uni.switchTab({
-					url: 'index'
-				});
-			}
-			if (index == 1) {
-				uni.switchTab({
-					url: 'votePage'
-				});
-			}
-			if (index == 2) {
-				uni.switchTab({
-					url: 'messagelist'
-				});
-			}
-			if (index == 3) {
-				uni.switchTab({
-					url: 'mine'
-				});
-			}
-		},
-
 		showArticles: function(page) {
 			if (loadArticleFlag) {
 				return;
