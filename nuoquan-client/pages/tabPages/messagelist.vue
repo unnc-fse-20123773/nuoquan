@@ -4,7 +4,7 @@
 		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}"
 		:title="pageTitle" 
 		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
-		<!-- 由两个超圆，用 fixed 定位做成的背景黄色 -->
+		<!-- 黄色背景 -->
 		<view id="msglist-yellowshadowbg">
 			<image src="../../static/BG/msgList_BG.png" mode="scaleToFill"></image>
 		</view>

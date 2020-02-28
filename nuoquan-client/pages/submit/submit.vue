@@ -1,622 +1,590 @@
 <!-- TODO: 取消添加图片, 标签输入不能含有特殊字符，颜色变化 -->
 <template>
 	<view class="submitMain">
-
 		<!-- 当失去焦点时，将输入内容存入articleTitle -->
 		<view style="position: relative;margin-top: 20px;">
-			<input class="title" v-model="articleTitle" placeholder="标题" maxlength="20" placeholder-class="title-placeholder">
-			<view class="titleTextLeft">{{20 - articleTitle.length}}</view>
+			<input class="title" v-model="articleTitle" placeholder="标题" maxlength="20" placeholder-class="title-placeholder" />
+			<view class="titleTextLeft">{{ 20 - articleTitle.length }}</view>
 		</view>
 
 		<!--已选标签部分，会周围彩色光圈的那个-->
 		<view class="selectedTagsArea">
-			<view class="selectedTag" v-for="(item,index) in selectedTags" :key="index" @click="deleteTag(index)" :style="{ 'box-shadow' : '0px 0px 6px '+ selectedTagColorList[index],}">{{item}}</view>
-			<button class="editTagsButton" @tap="editTag(true)" v-if="!editingTag">添加标签 + </button>
+			<!-- <view
+				class="selectedTag"
+				v-for="(item, index) in selectedTags"
+				:key="index"
+				@click="deleteTag(index)"
+				:style="{ 'box-shadow': '0px 0px 6px ' + selectedTagColorList[index] }"
+			>
+				{{ item.tag }}
+			</view> -->
+			<tagSelected 
+				v-for="(item, index) in selectedTags"
+				:key="index"
+				:tag="item" 
+				@click="deleteTag(index)"
+			></tagSelected>
+			<button class="editTagsButton" @tap="editTag(true)" v-if="!editingTag">添加标签 +</button>
 			<view class="finish-button" @tap="editTag(false)" v-if="editingTag">完成</view>
-
-
 		</view>
 
-		<view class="tagsArea" v-if="editingTag">
-			<!-- TO DO 为啥有俩标签这个东西，目前用着同一个列表，是不是还需要改，我们提供标签的那个请求-->
-			<!-- 展示待选标签区域 -->
-			<text>所有标签</text>
-			<view class="tag" v-for="(item,index) in tagList" :key="index" :style="{background: tagColorList[index]}" @tap="addTag(item)">{{item}}</view>
-			<!-- <text>最近选择</text>
-			<view class="tag" v-for="(item,index) in tagList" :key="index" :style="{background: tagColorList[index]}" @tap="addTag(item)">{{item}}</view> -->
-			<!-- 			<view style="width: 750upx;height: 1000px;position: absolute;top:-1000px;z-index: 50;" @click="editTag(false)" v-if="editingTag"></view>
-			<view style="width: 750upx;height: 1000px;position: absolute;bottom:-1000px;z-index: 50;" @click="editTag(false)" v-if="editingTag"></view> -->
-
-		</view>
-
+		<!-- 标签选择块 -->
+		<tagSelectBox style="margin-top: 13px;" :tagList="tagList" @selected="getselectedTag" v-if="editingTag"></tagSelectBox>
 
 		<view style="position: relative;">
 			<textarea class="content" v-model="articleContent" maxlength="140" :auto-height="true" :show-confirm-bar="false"></textarea>
-			<view style="position: absolute;bottom: 8px;right:8px;font-size: 11px;color:#888888;">{{140 - articleContent.length}}</view>
+			<view style="position: absolute;bottom: 8px;right:8px;font-size: 11px;color:#888888;">{{ 140 - articleContent.length }}</view>
 			<image src="../../static/icon/emoji.png" style="position: absolute;left:12px;top:8px;width:20px;height:20px;"></image>
 		</view>
 
 		<view class="picturearea">
-			<block v-for="(image,index) in imageList" :key="index">
+			<block v-for="(image, index) in imageList" :key="index">
 				<view style="position: relative;">
 					<!-- todo 预览图片缩放 -->
 					<image :src="image" :data-src="image" @tap="previewImage" mode="aspectFill"></image>
-					<view style="width:15px;height: 15px;font-size: 10px;line-height: 15px;border-bottom-left-radius: 3px;background: rgba(166, 169, 168,0.3);color:#FFFFFF;position: absolute;top:6px;right:0;text-align: center;"
-					 @click="deleteImg(index)">✕</view>
+					<view
+						style="width:15px;height: 15px;font-size: 10px;line-height: 15px;border-bottom-left-radius: 3px;background: rgba(166, 169, 168,0.3);color:#FFFFFF;position: absolute;top:6px;right:0;text-align: center;"
+						@click="deleteImg(index)"
+					>
+						✕
+					</view>
 				</view>
 			</block>
 			<view v-show="isAddImage(this.imageList.length)" id="clickToChooseImage" class="addPic" @click="chooseImg">+</view>
-			<view v-if="imageList.length==1||imageList.length==4||imageList.length==7" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
+			<view v-if="imageList.length == 1 || imageList.length == 4 || imageList.length == 7" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
 		</view>
 		<button class="submit-button" @tap="upload()">发表</button>
-
 	</view>
 </template>
 
 <script>
-	// #ifdef APP-PLUS
-	import permision from "@/common/permission.js"
-	// #endif
-	var sourceType = [
-		['camera'],
-		['album'],
-		['camera', 'album']
-	]
-	var sizeType = [
-		['compressed'],
-		['original'],
-		['compressed', 'original']
-	]
+import tagSelectBox from '@/components/nq-tag/tagSelectBox.vue';
+import tagSelected from '@/components/nq-tag/tagSelected.vue'
+// #ifdef APP-PLUS
+import permision from '@/common/permission.js';
+// #endif
+var sourceType = [['camera'], ['album'], ['camera', 'album']];
+var sizeType = [['compressed'], ['original'], ['compressed', 'original']];
 
-	var uploadFlag = false; // 标志文章正在上传，为 true 时 block 该方法
-	var requestTask;
-	var uploadTasks = [];
-	export default {
-		data() {
-			return {
-				userInfo: '',
-				articleTitle: '',
-				articleContent: '',
-				articleTag: '',
-				imgPath: '',
-				showInputTagArea: 0,
-				showAddTagButton: 1,
-				showTagArea: 0,
-				editingTag: false,
+var uploadFlag = false; // 标志文章正在上传，为 true 时 block 该方法
+var requestTask;
+var uploadTasks = [];
+export default {
+	components: {
+		tagSelectBox,
+		tagSelected
+	},
+	data() {
+		return {
+			userInfo: '',
+			articleTitle: '',
+			articleContent: '',
+			articleTag: '',
+			imgPath: '',
+			showInputTagArea: 0,
+			showAddTagButton: 1,
+			showTagArea: 0,
+			editingTag: false,
 
-				tagList: [],
-				tagColorList: [], // 储存每个备选tag的颜色
-				selectedTags: [],
-				selectedTagColorList: [], // 储存每个已选tag的颜色
+			tagList: [],
+			tagColorList: [], // 储存每个备选tag的颜色
+			selectedTags: [],
+			selectedTagColorList: [], // 储存每个已选tag的颜色
 
+			finalTag: '',
+			tagIndex: 0,
 
-				finalTag: '',
-				tagIndex: 0,
-
-				imageList: [],
-				sourceTypeIndex: 2,
-				sourceType: ['拍照', '相册', '拍照或相册'],
-				sizeTypeIndex: 0,
-				sizeType: ['压缩', '原图', '压缩或原图'],
-				countIndex: 8,
-				count: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-				windowHeight: 0,
+			imageList: [],
+			sourceTypeIndex: 2,
+			sourceType: ['拍照', '相册', '拍照或相册'],
+			sizeTypeIndex: 0,
+			sizeType: ['压缩', '原图', '压缩或原图'],
+			countIndex: 8,
+			count: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+			windowHeight: 0
+		};
+	},
+	onUnload() {
+		(this.imageList = []),
+			(this.sourceTypeIndex = 2),
+			(this.sourceType = ['拍照', '相册', '拍照或相册']),
+			(this.sizeTypeIndex = 0),
+			(this.sizeType = ['压缩', '原图', '压缩或原图']),
+			(this.countIndex = 8);
+	},
+	onLoad() {
+		this.userInfo = this.getGlobalUserInfo();
+		// 获取屏幕高度
+		var that = this;
+		uni.getSystemInfo({
+			success: function(res) {
+				that.windowHeight = res.windowHeight;
 			}
-		},
-		onUnload() {
-			this.imageList = [],
-				this.sourceTypeIndex = 2,
-				this.sourceType = ['拍照', '相册', '拍照或相册'],
-				this.sizeTypeIndex = 0,
-				this.sizeType = ['压缩', '原图', '压缩或原图'],
-				this.countIndex = 8;
-		},
-		onLoad() {
-			this.userInfo = this.getGlobalUserInfo();
-			// 获取屏幕高度
+		});
+		
+		this.getTagsList();
+
+		// 随机生成颜色
+		var tagColors = this.tagColors;
+		for (var i = 0; i < 6; i++) {
+			var random_1 = Math.floor(Math.random() * tagColors.length);
+			var random_2 = Math.floor(Math.random() * tagColors.length);
+			// 0~tagColors.length-1
+			this.tagColorList.push(tagColors[random_1]);
+			this.selectedTagColorList.push(tagColors[random_2]);
+		}
+	},
+	methods: {
+		getTagsList() {
 			var that = this;
-			uni.getSystemInfo({
-				success: function(res) {
-					that.windowHeight = res.windowHeight;
+			uni.request({
+				url: that.$serverUrl + '/article/getTagsList',
+				method: 'POST',
+				data: {},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					if (res.data.status == 200) {
+						this.tagList = res.data.data;
+					}
 				}
 			});
-			this.getTagsList();
+		},
 
-			// 随机生成颜色
-			var tagColors = this.tagColors;
-			for (var i = 0; i < 6; i++) {
-				var random_1 = Math.floor(Math.random() * tagColors.length);
-				var random_2 = Math.floor(Math.random() * tagColors.length);
-				// 0~tagColors.length-1
-				this.tagColorList.push(tagColors[random_1]);
-				this.selectedTagColorList.push(tagColors[random_2]);
+		// 检查tagList的数量
+		checkInput: function(res) {
+			var that = this;
+			var tag = this.articleTag;
+			//console.log(tag)
+			if (this.isNull(tag)) {
+				that.showAddTagButton = 1;
+				that.showInputTagArea = 0;
+			} else {
+				// 显示标签区域 = 1
+				that.showTagArea = 1;
+
+				//console.log(that.tagIndex);
+				that.tagList[that.tagIndex] = tag;
+				that.tagIndex = that.tagIndex + 1;
+				that.showAddTagButton = 1;
+				that.showInputTagArea = 0;
+				that.articleTag = '';
+			}
+		},
+
+		combineTagToString: function() {
+			var finalTag = "";
+			for (var i = 0; i < this.selectedTags.length; i++) {
+				finalTag = finalTag + '#' + this.selectedTags[i].tag;
+			}
+			return finalTag;
+		},
+
+		sourceTypeChange: function(e) {
+			this.sourceTypeIndex = parseInt(e.target.value);
+		},
+		sizeTypeChange: function(e) {
+			this.sizeTypeIndex = e.target.value;
+		},
+		countChange: function(e) {
+			this.countIndex = e.target.value;
+		},
+		chooseImg: async function() {
+			uni.chooseImage({
+				sourceType: sourceType[this.sourceTypeIndex],
+				sizeType: sizeType[this.sizeTypeIndex],
+				count: this.imageList.length + this.count[this.countIndex] > 9 ? 9 - this.imageList.length : this.count[this.countIndex],
+				success: res => {
+					this.imageList = this.imageList.concat(res.tempFilePaths);
+
+					console.log(res);
+				}
+			});
+		},
+		previewImage: function(e) {
+			var current = e.target.dataset.src;
+			// console.log(e)
+			console.log(this.imageList);
+			uni.previewImage({
+				current: current,
+				urls: this.imageList
+			});
+		},
+		isAddImage: function() {
+			if (this.imageList.length >= 9) {
+				return false;
+			} else {
+				return true;
+			}
+		},
+
+		// TODO：图片上传需加上大小限制，后台限制10M
+		upload: function(e) {
+			var me = this;
+			if (this.isBlank(me.articleTitle) || this.isNull(me.articleTitle)) {
+				uni.showToast({
+					icon: 'none',
+					title: '文章标题不能为空～',
+					duration: 1000
+				});
+				return;
 			}
 
-		},
-		methods: {
-			getTagsList() {
-				var that = this;
-				uni.request({
-					url: that.$serverUrl + '/article/getTagsList',
+			if (this.isBlank(me.articleContent) || this.isNull(me.articleContent)) {
+				uni.showToast({
+					icon: 'none',
+					title: '文章内容不能为空～',
+					duration: 1000
+				});
+				return;
+			}
+
+			if (uploadFlag) {
+				console.log('正在上传...');
+				return;
+			}
+			uploadFlag = true;
+			uni.showLoading({
+				title: '正在上传...'
+			});
+
+			setTimeout(() => {
+				if (uploadFlag) {
+					uploadFlag = false; // 解锁
+					uni.hideLoading();
+					uni.showToast({
+						title: '网络未知错误',
+						icon: 'none',
+						duration: 1000
+					});
+					// TODO: 终止上传
+					for (let task in uploadTasks) {
+						console.log(task);
+						task.abort();
+					}
+					requestTask.abort();
+				}
+			}, 5000); // 延时5s timeout
+
+			setTimeout(() => {
+				var finalTag = this.combineTagToString();
+
+				var serverUrl = me.$serverUrl;
+				requestTask = uni.request({
+					url: serverUrl + '/article/uploadArticle',
 					method: 'POST',
-					data: {},
+					data: {
+						userId: me.userInfo.id,
+						articleTag: finalTag,
+						articleTitle: me.articleTitle,
+						articleContent: me.articleContent
+					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: res => {
+						// console.log(res);
 						if (res.data.status == 200) {
-							this.tagManager(res.data.data);
-						}
-					}
-				});
-			},
-			tagManager(a) {
-				for (var i = 0; i < a.length; i++) {
-					this.tagList[i] = a[i].tag;
-				}
-
-				// 随机生成颜色
-				var tagColors = this.tagColors;
-				for (var i = 0; i < 6; i++) {
-					var random_1 = Math.floor(Math.random() * tagColors.length);
-					var random_2 = Math.floor(Math.random() * tagColors.length);
-					// 0~tagColors.length-1
-					this.tagColorList.push(tagColors[random_1]);
-					this.selectedTagColorList.push(tagColors[random_2]);
-
-				}
-			},
-			// 检查tagList的数量
-			checkInput: function(res) {
-				var that = this;
-				var tag = this.articleTag;
-				//console.log(tag)
-				if (this.isNull(tag)) {
-					that.showAddTagButton = 1;
-					that.showInputTagArea = 0;
-				} else {
-					// 显示标签区域 = 1
-					that.showTagArea = 1;
-
-					//console.log(that.tagIndex);
-					that.tagList[that.tagIndex] = tag;
-					that.tagIndex = that.tagIndex + 1;
-					that.showAddTagButton = 1;
-					that.showInputTagArea = 0;
-					that.articleTag = '';
-				}
-
-			},
-
-			combineTagToString: function(res) {
-				var finalTag;
-				for (var i = 0; i < this.selectedTags.length; i++) {
-					finalTag = this.finalTag + '#' + this.selectedTags[i];
-				}
-				return finalTag;
-			},
-
-			sourceTypeChange: function(e) {
-				this.sourceTypeIndex = parseInt(e.target.value)
-			},
-			sizeTypeChange: function(e) {
-				this.sizeTypeIndex = e.target.value
-			},
-			countChange: function(e) {
-				this.countIndex = e.target.value;
-			},
-			chooseImg: async function() {
-
-				uni.chooseImage({
-					sourceType: sourceType[this.sourceTypeIndex],
-					sizeType: sizeType[this.sizeTypeIndex],
-					count: this.imageList.length + this.count[this.countIndex] > 9 ? 9 - this.imageList.length : this.count[this.countIndex],
-					success: (res) => {
-						this.imageList = this.imageList.concat(res.tempFilePaths);
-
-						console.log(res)
-					}
-				})
-			},
-			previewImage: function(e) {
-				var current = e.target.dataset.src
-				// console.log(e)
-				console.log(this.imageList);
-				uni.previewImage({
-					current: current,
-					urls: this.imageList
-				})
-			},
-			isAddImage: function() {
-				if (this.imageList.length >= 9) {
-					return false;
-				} else {
-					return true;
-				}
-			},
-
-			// TODO：图片上传需加上大小限制，后台限制10M
-			upload: function(e) {
-				var me = this;
-				if (this.isBlank(me.articleTitle) || this.isNull(me.articleTitle)) {
-					uni.showToast({
-						icon: 'none',
-						title: '文章标题不能为空～',
-						duration: 1000
-					});
-					return;
-				}
-
-				if (this.isBlank(me.articleContent) || this.isNull(me.articleContent)) {
-					uni.showToast({
-						icon: 'none',
-						title: '文章内容不能为空～',
-						duration: 1000
-					});
-					return;
-				}
-
-				if (uploadFlag) {
-					console.log("正在上传...")
-					return;
-				}
-				uploadFlag = true;
-				uni.showLoading({
-					title: "正在上传..."
-				})
-
-				setTimeout(() => {
-					if (uploadFlag) {
-						uploadFlag = false // 解锁
-						uni.hideLoading();
-						uni.showToast({
-							title: "网络未知错误",
-							icon: "none",
-							duration: 1000
-						})
-						// TODO: 终止上传
-						for (let task in uploadTasks) {
-							console.log(task)
-							task.abort();
-						};
-						requestTask.abort();
-					}
-				}, 5000); // 延时5s timeout
-
-				setTimeout(() => {
-					var finalTag = this.combineTagToString();
-
-					var serverUrl = me.$serverUrl;
-					requestTask = uni.request({
-						url: serverUrl + '/article/uploadArticle',
-						method: 'POST',
-						data: {
-							userId: me.userInfo.id,
-							articleTag: finalTag,
-							articleTitle: me.articleTitle,
-							articleContent: me.articleContent
-						},
-						header: {
-							'content-type': 'application/x-www-form-urlencoded'
-						},
-						success: (res) => {
-							// console.log(res);
-							if (res.data.status == 200) {
-								if (me.imageList.length > 0) {
-									const articleId = res.data.data;
-									var resCount = 0
-									for (var i = 0; i < me.imageList.length; i++) {
-										uploadTasks[i] = uni.uploadFile({
-											url: this.$serverUrl + '/article/uploadArticleImg',
-											filePath: me.imageList[i],
-											name: 'file',
-											formData: {
-												userId: me.userInfo.id,
-												articleId: articleId,
-												order: i
-											},
-											success: (uploadFileRes) => {
-												resCount++;
-												if (resCount == me.imageList.length) {
-													me.uploadSuccess();
-												}
+							if (me.imageList.length > 0) {
+								const articleId = res.data.data;
+								var resCount = 0;
+								for (var i = 0; i < me.imageList.length; i++) {
+									uploadTasks[i] = uni.uploadFile({
+										url: this.$serverUrl + '/article/uploadArticleImg',
+										filePath: me.imageList[i],
+										name: 'file',
+										formData: {
+											userId: me.userInfo.id,
+											articleId: articleId,
+											order: i
+										},
+										success: uploadFileRes => {
+											resCount++;
+											if (resCount == me.imageList.length) {
+												me.uploadSuccess();
 											}
-										});
-									}
-								} else {
-									me.uploadSuccess();
+										}
+									});
 								}
-							} else if (res.data.status == 501) {
-								me.contentIllegal();
 							} else {
-								me.uploadFail();
+								me.uploadSuccess();
 							}
-						},
-						fail: (res) => {
+						} else if (res.data.status == 501) {
+							me.contentIllegal();
+						} else {
 							me.uploadFail();
 						}
-					})
-				}, 100) //延时执行等待上锁
-			},
+					},
+					fail: res => {
+						me.uploadFail();
+					}
+				});
+			}, 100); //延时执行等待上锁
+		},
 
-			uploadSuccess() {
-				uploadFlag = false;
-				uni.hideLoading();
-				uni.$emit("flash"); // 给 index 发送刷新信号
-				uni.navigateBack({
-					delta: 1
-				})
-				uni.showToast({
-						title: '已提交审核',
-						duration: 2000,
-						icon: 'success',
-					}),
-					setTimeout(() => {
-						uni.switchTab({
-							url: '/pages/tabPages/index'
-						});
-					}, 1800)
-			},
-
-			uploadFail() {
-				// 上传失败 用户提醒
-				uploadFlag = false;
-				uni.hideLoading();
-				uni.showToast({
-					title: '出现未知错误，上传失败',
-					duration: 2000,
-					icon: 'none',
-				})
-			},
-
-			contentIllegal() {
-				// 内容非法 用户提醒
-				uploadFlag = false;
-				uni.hideLoading();
-				uni.showToast({
-					title: '内容涉嫌违规，请联系管理员。',
-					duration: 2000,
-					icon: 'none',
-				})
-			},
-
-			addTag(item) {
-				var a=this.selectedTags.indexOf(item);
-				if(a == -1){
-					this.selectedTags.push(item);
-				}else{
-					uni.showToast({
-						icon: 'none',
-						title: '已经添加～',
-						duration: 200
+		uploadSuccess() {
+			uploadFlag = false;
+			uni.hideLoading();
+			uni.$emit('flash'); // 给 index 发送刷新信号
+			uni.navigateBack({
+				delta: 1
+			});
+			uni.showToast({
+				title: '已提交审核',
+				duration: 2000,
+				icon: 'success'
+			}),
+				setTimeout(() => {
+					uni.switchTab({
+						url: '/pages/tabPages/index'
 					});
-				}
-			},
-			deleteTag: function(index) {
-				console.log(index);
-				this.selectedTags.splice(index, 1);
-				console.log(this.selectedTags.length);
-			},
-			deleteImg: function(index) {
-				// console.log(index);
-				// console.log(this.imageList[index]);
-				this.imageList.splice(index, 1);
-			},
+				}, 1800);
+		},
 
-			editTag(a) {
-				this.editingTag = a;
-			},
+		uploadFail() {
+			// 上传失败 用户提醒
+			uploadFlag = false;
+			uni.hideLoading();
+			uni.showToast({
+				title: '出现未知错误，上传失败',
+				duration: 2000,
+				icon: 'none'
+			});
+		},
+
+		contentIllegal() {
+			// 内容非法 用户提醒
+			uploadFlag = false;
+			uni.hideLoading();
+			uni.showToast({
+				title: '内容涉嫌违规，请联系管理员。',
+				duration: 2000,
+				icon: 'none'
+			});
+		},
+
+		//获取组件返回的已选标签值
+		getselectedTag(tag) {
+			var a = this.selectedTags.indexOf(tag);
+			if (a == -1) {
+				this.selectedTags.push(tag);
+			} else {
+				uni.showToast({
+					icon: 'none',
+					title: '已经添加～',
+					duration: 200
+				});
+			}
+		},
+
+		deleteTag: function(index) {
+			console.log(index);
+			this.selectedTags.splice(index, 1);
+			console.log(this.selectedTags.length);
+		},
+		deleteImg: function(index) {
+			// console.log(index);
+			// console.log(this.imageList[index]);
+			this.imageList.splice(index, 1);
+		},
+
+		editTag(a) {
+			this.editingTag = a;
 		}
-	};
+	}
+};
 </script>
 <style>
-	page {
-		height: 100%;
-	}
+page {
+	height: 100%;
+}
 
-	.submitMain {
-		width: 698upx;
-		margin: auto;
-	}
+.submitMain {
+	width: 698upx;
+	margin: auto;
+}
 
-	.title {
-		width: calc(698upx - 36px);
-		height: 38px;
-		border: 2px solid #FCC041;
-		border-radius: 8px;
-		padding-left: 12px;
-		padding-right: 24px;
-	}
+.title {
+	width: calc(698upx - 36px);
+	height: 38px;
+	border: 2px solid #fcc041;
+	border-radius: 8px;
+	padding-left: 12px;
+	padding-right: 24px;
+}
 
-	.title-placeholder {
-		height: 14px;
-		font-size: 14px;
-		font-family: Source Han Sans CN;
-		font-weight: 400;
-		line-height: 16px;
-		color: rgba(199, 199, 199, 1);
-		letter-spacing: 17px;
-	}
+.title-placeholder {
+	height: 14px;
+	font-size: 14px;
+	font-family: Source Han Sans CN;
+	font-weight: 400;
+	line-height: 16px;
+	color: rgba(199, 199, 199, 1);
+	letter-spacing: 17px;
+}
 
-	.titleTextLeft {
-		position: absolute;
-		right: 8px;
-		top: 15px;
-		width: 12px;
-		height: 11px;
-		font-size: 11px;
-		font-weight: 400;
-		color: rgba(199, 199, 199, 1);
-	}
+.titleTextLeft {
+	position: absolute;
+	right: 8px;
+	top: 15px;
+	width: 12px;
+	height: 11px;
+	font-size: 11px;
+	font-weight: 400;
+	color: rgba(199, 199, 199, 1);
+}
 
-	/* 已选标签部分,开始
+/* 已选标签部分,开始
  */
-	.selectedTagsArea {
-		margin-top: 13px;
-		position: relative;
-	}
+.selectedTagsArea {
+	margin-top: 13px;
+	position: relative;
+}
 
-	.finish-button {
-		margin-top: 8px;
-		width: 68px;
-		height: 26px;
-		background: linear-gradient(318deg, rgba(251, 118, 118, 1) 0%, rgba(254, 192, 77, 1) 100%);
-		box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
-		border-radius: 8px;
-		font-size: 14px;
-		line-height: 26px;
-		color: rgba(255, 255, 255, 1);
-		text-align: center;
-	}
+.finish-button {
+	margin-top: 8px;
+	width: 68px;
+	height: 26px;
+	background: linear-gradient(318deg, rgba(251, 118, 118, 1) 0%, rgba(254, 192, 77, 1) 100%);
+	box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+	border-radius: 8px;
+	font-size: 14px;
+	line-height: 26px;
+	color: rgba(255, 255, 255, 1);
+	text-align: center;
+}
 
-	.editTagsButton {
-		vertical-align: bottom;
-		margin-top: 8px;
-		width: 99px;
-		height: 26px;
-		background: linear-gradient(318deg, rgba(251, 118, 118, 1) 0%, rgba(254, 192, 77, 1) 100%);
-		box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
-		border-radius: 8px;
+.editTagsButton {
+	vertical-align: bottom;
+	margin-top: 8px;
+	width: 99px;
+	height: 26px;
+	background: linear-gradient(318deg, rgba(251, 118, 118, 1) 0%, rgba(254, 192, 77, 1) 100%);
+	box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+	border-radius: 8px;
 
-		font-size: 14px;
-		line-height: 23px;
-		color: rgba(255, 255, 255, 1);
-		display: inline-block;
-	}
+	font-size: 14px;
+	line-height: 23px;
+	color: rgba(255, 255, 255, 1);
+	display: inline-block;
+}
 
-	.selectedTag {
-		display: inline-block;
-		vertical-align: bottom;
-		color: #000000;
-		font-size: 14px;
-		line-height: 26px;
-		height: 26px;
+/* .selectedTag {
+	display: inline-block;
+	vertical-align: bottom;
+	color: #000000;
+	font-size: 14px;
+	line-height: 26px;
+	height: 26px;
 
-		position: relative;
-		margin-right: 9px;
-		margin-top: 8px;
-		padding-right: 27px;
-		padding-left: 12px;
-		pointer-events: none;
-		/* 用于解决空格换行问题 */
-		white-space: nowrap;
-		border-radius: 20px;
+	position: relative;
+	margin-right: 9px;
+	margin-top: 8px;
+	padding-right: 27px;
+	padding-left: 12px;
+	pointer-events: none;
+	white-space: nowrap;
+	border-radius: 20px;
+}
 
-	}
+.selectedTag::after {
+	position: absolute;
+	content: '✕';
+	right: 10px;
+	margin-left: 4px;
+	color: #000000;
+	font-size: 13px;
+	pointer-events: auto;
+	font-weight: 900;
+	white-space: nowrap;
+} */
 
-	.selectedTag::after {
-		position: absolute;
-		content: "✕";
-		right: 10px;
-		margin-left: 4px;
-		color: #000000;
-		font-size: 13px;
-		pointer-events: auto;
-		font-weight: 900;
-		/* 用于解决空格换行问题 */
-		white-space: nowrap;
-	}
-
-	/* 已选标签,结束...待选标签部分开始,灰色部分
+/* 已选标签,结束...待选标签部分开始,灰色部分
  */
-	.tagsArea {
-		margin-top: 13px;
-		padding-bottom: 16px;
-		vertical-align: bottom;
-		min-height: 130px;
-		max-height: 192px;
-		overflow: hidden;
-		position: relative;
-		background: url(../../static/BG/submit_BG.png);
-		background-repeat: no-repeat;
-		background-size: 100% 100%;
-		border-radius: 10px;
-	}
 
-	.tagsArea text {
-		display: block;
-		height: 12px;
-		font-size: 12px;
-		color: rgba(155, 155, 155, 1);
-		padding-top: 16px;
-		padding-left: 12px;
-		padding-bottom: 8px;
-	}
+.tagsArea text {
+	display: block;
+	height: 12px;
+	font-size: 12px;
+	color: rgba(155, 155, 155, 1);
+	padding-top: 16px;
+	padding-left: 12px;
+	padding-bottom: 8px;
+}
 
-	.tag {
-		display: inline-block;
-		vertical-align: bottom;
-		color: #FFFFFF;
-		font-size: 14px;
-		line-height: 26px;
-		height: 26px;
+.tag {
+	display: inline-block;
+	vertical-align: bottom;
+	color: #ffffff;
+	font-size: 14px;
+	line-height: 26px;
+	height: 26px;
 
-		position: relative;
-		margin-left: 8px;
-		margin-top: 6px;
-		padding-right: 12px;
-		padding-left: 12px;
-		/* 用于解决空格换行问题 */
-		white-space: nowrap;
+	position: relative;
+	margin-left: 8px;
+	margin-top: 6px;
+	padding-right: 12px;
+	padding-left: 12px;
+	/* 用于解决空格换行问题 */
+	white-space: nowrap;
 
-		border-radius: 20px;
-	}
+	border-radius: 20px;
+}
 
+/* 待选部分结束*/
+
+.content {
 	/* 待选部分结束*/
+	min-height: 51px;
+	max-height: 300px;
+	margin-top: 13px;
+	width: calc(100% - 12px);
+	overflow: scroll;
+	padding: 36px 4px 24px;
 
+	border: 2px solid rgba(252, 192, 65, 1);
+	border-radius: 8px;
+	font-size: 14px;
+}
 
-	.content {
-		/* 待选部分结束*/
-		min-height: 51px;
-		max-height: 300px;
-		margin-top: 13px;
-		width: calc(100% - 12px);
-		overflow: scroll;
-		padding: 36px 4px 24px;
+.picturearea {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	flex: 0 0 auto;
+	margin-top: 10px;
+}
 
-		border: 2px solid rgba(252, 192, 65, 1);
-		border-radius: 8px;
-		font-size: 14px;
-	}
+.picturearea image {
+	width: 190upx;
+	height: 190upx;
+	margin: 6px 0;
+}
 
-	.picturearea {
-		display: flex;
-		justify-content: space-between;
-		flex-wrap: wrap;
-		flex: 0 0 auto;
-		margin-top: 10px;
-	}
+.addPic {
+	width: 178upx;
+	height: 178upx;
+	line-height: 160upx;
+	margin: 6px 0;
+	text-align: center;
+	vertical-align: middle;
+	color: #888888;
+	font-size: 50px;
+	font-weight: 200;
+	background: #ececec;
+}
 
-	.picturearea image {
-		width: 190upx;
-		height: 190upx;
-		margin: 6px 0;
-	}
+.submit-button {
+	margin-top: 100px;
+	width: 558upx;
+	height: 42px;
+	background: rgba(252, 192, 65, 1);
+	box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+	border-radius: 8px;
 
-	.addPic {
-		width: 178upx;
-		height: 178upx;
-		line-height: 160upx;
-		margin: 6px 0;
-		text-align: center;
-		vertical-align: middle;
-		color: #888888;
-		font-size: 50px;
-		font-weight: 200;
-		background: #ECECEC;
-	}
-
-	.submit-button {
-		margin-top: 100px;
-		width: 558upx;
-		height: 42px;
-		background: rgba(252, 192, 65, 1);
-		box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
-		border-radius: 8px;
-
-		font-size: 18px;
-		font-weight: 500;
-		color: #FFFFFF;
-
-	}
+	font-size: 18px;
+	font-weight: 500;
+	color: #ffffff;
+}
 </style>

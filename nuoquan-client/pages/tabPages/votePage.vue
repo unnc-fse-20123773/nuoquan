@@ -1,5 +1,5 @@
 <template>
-	<view style="width: 100%;height: 100%; background: linear-gradient(#f89d4d, #ffc95a);">
+	<view style="width: 100%; height: 100%; background: linear-gradient(#f89d4d, #ffc95a);">
 		<!-- 导航栏 -->
 		<view class="navigatorBar_votePage super_center" :style="{ height: navigationBarHeight + 'px' }">NavigatorBar</view>
 		<!-- 左侧按钮 -->
@@ -76,7 +76,7 @@
 					<view v-if="finishVote[index] == false" class="voteCard">
 						<!-- 双层嵌套，可适应以后扩展选项内容 -->
 						<view v-for="(option, index2) in item.optionList" :key="index2"  :class="[option.id != selectedOptionId ? 'oneVoteCard' : 'oneVoteCard_chosen']" @click="switchChoose(option.id, index)">
-							<text :class="[option.id != selectedOptionId ? 'oneVote_text' : 'oneVote_text_chosen']">{{(option.optionContent)}}</text>
+							<text :class="[option.id != selectedOptionId ? 'oneVote_text' : 'oneVote_text_chosen']">{{(option.id)}}</text>
 						</view>
 					</view>
 					<!-- 确定投票后的选项展示 -->
@@ -158,6 +158,7 @@
 
 <script>
 	import tabBar from '@/components/nq-tabbar/nq-tabbar.vue';
+	import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue";
 	
 	const DEFAULT_PAGE = 0;	
 	var loadVoteFlag = false;
@@ -201,11 +202,12 @@
 		},
 		
 		components:{
+			uniNavBar,
 			tabBar
 		},
 		
 		onLoad: function() {
-			// console.log("还没投票时,selectedOptionId= " + this.selectedOptionId);
+			console.log("还没投票时,selectedOptionId= " + this.selectedOptionId);
 			var userInfo = this.getGlobalUserInfo();
 			if (this.isNull(userInfo)) {
 				uni.redirectTo({
@@ -225,7 +227,7 @@
 			info = uni.getMenuButtonBoundingClientRect();
 			height = info.bottom;
 			this.navigationBarHeight = height;
-			// console.log('导航栏高度=' + this.navigationBarHeight);
+			console.log('导航栏高度=' + this.navigationBarHeight);
 			this.calculateHeight();
 		},
 
@@ -321,7 +323,7 @@
 				// 记录是在第几个vote进行操作
 				that.ischosenFlag = voteIndex;
 				
-				// console.log("赋值后的选项id= "+ that.selectedOptionId);
+				console.log("赋值后的选项id= "+ that.selectedOptionId);
 				// console.log(that.currentVoteIndex);
 				// console.log(that.ischosen);
 			},
@@ -362,7 +364,7 @@
 						that.afterSelectedOptionList = that.afterSelectedResult.optionList;
 						// console.log(that.afterSelectedOptionList);
 						// that.ischosen[voteIndex] = true;
-						// console.log(that.showList[voteIndex]);
+						console.log(that.showList[voteIndex]);
 						
 						// 进度条伸长
 						for (let option of that.showList[voteIndex].optionList){
@@ -392,8 +394,8 @@
 				var timer = setInterval(function() {
 					//设置计时器
 					if ( option.barWidth >= widthTarget) {
-						//在 persentBarWidth 为目标值时清空计时器，暂以100代替
-						// console.log(option);
+						//在 persentBarWidth 为目标值时清空计时器，暂以100代替						// console.log(option);
+						console.log(option);
 						clearInterval(timer);
 					} else {
 						option.barWidth += 0.5;
@@ -537,7 +539,6 @@
 					}
 				}
 			},
-			
 		}
 	};
 </script>

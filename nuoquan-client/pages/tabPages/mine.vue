@@ -1,9 +1,13 @@
 <template>
 	<view id="public-container">
 		<!-- 黄色头部 -->
-		<view id="yellowTopBox">
-			<view class="yellowTop" :style="{ bottom: yellowBottom }"></view>
+		<!-- <view id="yellowTopBox"> -->
+			<!-- <view class="yellowTop" :style="{ bottom: yellowBottom }"></view> -->
 			<!-- <view class="yellowTop" style="bottom: -240rpx"></view> -->
+		<!-- </view> -->
+		<!-- 黄色背景 -->
+		<view id="msglist-yellowshadowbg">
+			<image src="../../static/BG/msgList_BG.png" mode="scaleToFill"></image>
 		</view>
 		<!-- 简介块 -->
 		<view id="public-infoBox" class="column_center">
@@ -53,11 +57,11 @@
 		</view>
 		<view class="pagejump_box">
 			<!-- TODO:这里应该有更灵活优雅的写法 @jerrio -->
-			<view class="item1" @click="jumpToProfile()">{{ lang.profile }}</view>
+			<view class="item1 column_center" @click="jumpToProfile()">{{ lang.profile }}</view>
 			<view class="line1"></view>
-			<view class="item2" @click="jumpToMyPublish()">{{ lang.myPublish }}</view>
+			<view class="item2 column_center" @click="jumpToMyPublish()">{{ lang.myPublish }}</view>
 			<view class="line2"></view>
-			<view class="item3" @click="jumpToAbout()">{{ lang.about }}</view>
+			<view class="item3 column_center" @click="jumpToAbout()">{{ lang.about }}</view>
 			<!-- 临时添加的设置语言按钮 @jerrio -->
 			<!-- <button class="language" @tap="changeLang">{{lang.changeLang}}</button>-->
 		</view>
@@ -233,6 +237,14 @@ page {
 	z-index: -30;
 }
 
+#msglist-yellowshadowbg {
+		position: fixed;
+		top: 0;
+		width: 100%;
+		height: 200px;
+		z-index: -10;
+	}
+
 .yellowTop {
 	position: absolute; /* 此处采用 absolote 定位，以保证页面流可以正常显示。层级设为 -10，以保证其显示在页面最底部。 */
 	left: -430upx;
@@ -332,21 +344,19 @@ page {
 	opacity: 1;
 }
 .pagejump_box {
-	margin-top: 60rpx;
+	margin-top:13px;
 	margin-left: 13px;
-	margin-right: 13px;
-
-	height: 180px;
+	width: calc(100% - 26px);
 	background: rgba(255, 255, 255, 1);
 	box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.16);
 	opacity: 1;
 	border-radius: 8px;
 }
-.item1 {
-	width: 100px;
-	height: 14px;
-	margin-left: 80rpx;
-	padding-top: 30px;
+
+.item1,.item2,.item3 {
+	width: calc(100% - 28px)%;
+	height: 50px;
+	padding-left: 28px;
 	font-size: 14px;
 	font-family: Source Han Sans CN;
 	font-weight: 400;
@@ -354,43 +364,16 @@ page {
 	color: rgba(53, 53, 53, 1);
 	opacity: 1;
 }
-.line1 {
-	margin: 20px auto;
-	width: 618rpx;
+
+.line1,.line2 {
+	margin-left: auto;
+	margin-right: auto;
+	width: 88.54%;
 	height: 0px;
 	border: 1px solid rgba(236, 236, 236, 1);
 	opacity: 1;
 }
-.item2 {
-	margin-left: 80rpx;
-	width: 100px;
-	height: 14px;
-	font-size: 14px;
-	font-family: Source Han Sans CN;
-	font-weight: 400;
-	line-height: 16px;
-	color: rgba(53, 53, 53, 1);
-	opacity: 1;
-}
-.line2 {
-	margin: 20px auto;
-	width: 618rpx;
-	height: 0px;
-	border: 1px solid rgba(236, 236, 236, 1);
-	opacity: 1;
-}
-.item3 {
-	margin-left: 80rpx;
-	width: 100px;
-	height: 14px;
-	font-size: 14px;
-	font-family: Source Han Sans CN;
-	font-weight: 400;
-	line-height: 16px;
-	color: rgba(53, 53, 53, 1);
-	opacity: 1;
-	margin-bottom: 30px;
-}
+
 .language {
 	margin-top: 60rpx;
 	font-size: 14px;

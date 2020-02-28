@@ -2,14 +2,15 @@
 	<view class="index">
 		<!-- Main page top bar -->
 		<mainpagetop
-		@transQueryType="changeQueryType"
-		@transOrderType="changeOrderType"
-		:userInfo="userInfo"
-		:topArticles="topArticles"
-		:roleup="roleup" 
-		:height="capsuleButton.bottom + 79"
-		:height_roled="capsuleButton.bottom + 53"
-		style="position: fixed;z-index: 30;height:100%;">
+			@transQueryType="changeQueryType"
+			@transOrderType="changeOrderType"
+			:userInfo="userInfo"
+			:topArticles="topArticles"
+			:tagList="tagList"
+			:roleup="roleup" 
+			:height="capsuleButton.bottom + 79"
+			:height_roled="capsuleButton.bottom + 53"
+			style="position: fixed;z-index: 30;height:100%;">
 		</mainpagetop>
 		<!-- <button type="primary" @click="goTop" style="position: fixed;top: 200px;z-index: 88;">gotop</button> -->
 		<view class="indexSelf" style="height:100%;">
@@ -22,7 +23,7 @@
 				@scrolltoupper="refreshArticle"
 				upper-threshold="5"
 			>
-				<view style="height:172px;width:100%;"></view>
+				<view :style="{height:capsuleButton.bottom + 111 + 'px',width: 100 + '%' }"></view>
 				<articlebrief v-for="i in showlist" :key="i.id" v-bind:articleCard="i"></articlebrief>
 				<!-- 用于添加底部空白 by Guetta 9.10 -->
 				<view class="marginHelper"></view>
@@ -48,7 +49,7 @@ export default {
 			title: 'Hello',
 			hottitlelist: ['热门标题1', '热门标题2', '热门标题3'],
 			showlist: [],
-			tagsList: [],
+			tagList: '',
 			topArticles: '',
 			roleup: false,
 
@@ -274,8 +275,8 @@ export default {
 				},
 				success: res => {
 					if (res.data.status == 200) {
-						that.tagsList = res.data.data;
-						console.log(that.tagsList);
+						that.tagList = res.data.data;
+						console.log(that.tagList);
 					}
 				}
 			});
