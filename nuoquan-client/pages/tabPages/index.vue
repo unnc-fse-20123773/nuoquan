@@ -1,7 +1,11 @@
 <template>
 	<view class="index">
 		<!-- Main page top bar -->
-		<mainpagetop :userInfo="userInfo" :topArticles="topArticles" 
+		<mainpagetop
+		@transQueryType="changeQueryType"
+		@transOrderType="changeOrderType"
+		:userInfo="userInfo"
+		:topArticles="topArticles"
 		:roleup="roleup" 
 		:height="capsuleButton.bottom + 79"
 		:height_roled="capsuleButton.bottom + 53"
