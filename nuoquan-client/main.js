@@ -12,7 +12,7 @@ App.mpType = 'app'
 
 Vue.config.productionTip = false
 
-Vue.prototype.version = "v1.0.3 - 公测版"
+Vue.prototype.version = "v1.1.1 - 公测版"
 Vue.prototype.tagColors = ['#FE5F55', '#40A792', '#FDD041', '#5CA0D3', '#621E81', '#738598', '#F3AE4B']
 
 Vue.prototype.$store = store // 挂载 vueX
@@ -1035,21 +1035,6 @@ Vue.prototype.pathFilter = function(path) {
 	}
 	return path;
 }
-
-// 封装tabbar索引，避免重复书写
-Vue.mixin({
-	methods: {
-		setTabBarIndex(index) {
-			console.log("get in main")
-			if (typeof this.$mp.page.getTabBar === 'function' &&
-				this.$mp.page.getTabBar()) {
-				this.$mp.page.getTabBar().setData({
-					selected: index
-				})
-			}
-		}
-	}
-})
 
 // 保留两位小数的方法
 Vue.prototype.reserveTwoDecimal = function(number) {

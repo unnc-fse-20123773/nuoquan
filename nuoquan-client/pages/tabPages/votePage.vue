@@ -150,15 +150,21 @@
 				</scroll-view>
 			</swiper-item>
 		</swiper>
+		<tab-bar :current="2"></tab-bar>
 	</view>
 </template>
 
 <script>
 	import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
+	import tabBar from '@/components/nq-tabbar.vue';
+	
 	
 	const DEFAULT_PAGE = 0;	
 	var loadVoteFlag = false;
 	export default {
+		components: {
+			tabBar
+		},
 		data() {
 			return {
 				serverUrl: this.$serverUrl,

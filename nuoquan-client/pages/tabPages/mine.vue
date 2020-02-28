@@ -18,7 +18,7 @@
 				</view>
 				<!-- 个人简介 -->
 				<view class="introBox super_center"><text class="introBox-text">个人简介：这个人很懒，什么都没写哦...</text></view>
-			
+
 				<!-- 操作行 -->
 				<view class="operationLine">
 					<!-- 粉丝 -->
@@ -26,38 +26,49 @@
 						<view class="operationNum super_center">
 							<text class="operationNum-text" style="color:color:rgba(53,53,53,1);">{{ thisUserInfo.fansNum }}</text>
 						</view>
-						<view class="operationTitle super_center"><text class="operationTitle-text">{{lang.fans}}</text></view>
+						<view class="operationTitle super_center">
+							<text class="operationTitle-text">{{ lang.fans }}</text>
+						</view>
 					</view>
 					<!-- 影响力 -->
 					<view class="operationCard">
-						<view class="operationNum super_center"><text class="operationNum-text" style="color:rgba(254,95,85,1);">{{ thisUserInfo.reputation }}</text></view>
-						<view class="operationTitle super_center"><text class="operationTitle-text">{{lang.reputation}}</text></view>
+						<view class="operationNum super_center">
+							<text class="operationNum-text" style="color:rgba(254,95,85,1);">{{ thisUserInfo.reputation }}</text>
+						</view>
+						<view class="operationTitle super_center">
+							<text class="operationTitle-text">{{ lang.reputation }}</text>
+						</view>
 					</view>
 					<!-- 关注 -->
 					<view class="operationCard" @tap="goToFansFollow(0)">
 						<view class="operationNum super_center">
 							<text class="operationNum-text" style="color:color:rgba(53,53,53,1);">{{ thisUserInfo.followNum }}</text>
 						</view>
-						<view class="operationTitle super_center"><text class="operationTitle-text">{{lang.follow}}</text></view>
+						<view class="operationTitle super_center">
+							<text class="operationTitle-text">{{ lang.follow }}</text>
+						</view>
 					</view>
 				</view>
 			</view>
 		</view>
 		<view class="pagejump_box">
 			<!-- TODO:这里应该有更灵活优雅的写法 @jerrio -->
-			<view class="item1" @click="jumpToProfile()">{{lang.profile}}</view>
+			<view class="item1" @click="jumpToProfile()">{{ lang.profile }}</view>
 			<view class="line1"></view>
-			<view class="item2" @click="jumpToMyPublish()">{{lang.myPublish}}</view>
+			<view class="item2" @click="jumpToMyPublish()">{{ lang.myPublish }}</view>
 			<view class="line2"></view>
-			<view class="item3" @click="jumpToAbout()">{{lang.about}}</view>
+			<view class="item3" @click="jumpToAbout()">{{ lang.about }}</view>
 			<!-- 临时添加的设置语言按钮 @jerrio -->
-<!-- 			<button class="language" @tap="changeLang">{{lang.changeLang}}</button>
- -->		</view>
+			<!-- <button class="language" @tap="changeLang">{{lang.changeLang}}</button>-->
+		</view>
+		
+		<tab-bar :current="4"></tab-bar>
 	</view>
 </template>
 
 <script>
-import {mapState, mapMutations} from 'vuex';  
+import { mapState, mapMutations } from 'vuex';
+import tabBar from '@/components/nq-tabbar.vue';
 
 export default {
 	data() {
@@ -69,26 +80,25 @@ export default {
 			windowHeight: 0,
 			windowWidth: 0,
 			yellowBottom: '',
-			cardWidth: '',
-
+			cardWidth: ''
 		};
 	},
-	
-	computed: {
-		...mapState([
-			'lang'
-		])
+	components: {
+		tabBar
 	},
-	
+
+	computed: {
+		...mapState(['lang'])
+	},
+
 	onLoad() {
-		this.thisUserInfo= this.getGlobalUserInfo();
-	
+		this.thisUserInfo = this.getGlobalUserInfo();
+
 		var screenWidth = uni.getSystemInfoSync().screenWidth;
 		this.screenWidth = screenWidth;
 
 		// 获取当前分页
 		var page = this.page;
-
 
 		//获取屏幕宽高
 		var that = this;
@@ -115,15 +125,19 @@ export default {
 		// 获取卡片宽度
 		that.cardWidth = that.windowWidth - 26 + 'px';
 	},
-	
+
 	onShow() {
-		this.setTabBarIndex(4) //index为当前tab的索引
-		
+		uni.hideTabBar({
+			success() {
+				console.log('隐藏原生tabbar');
+			}
+		});
+
 		//更新用户数据
-		console.log("更新用户数据");
+		console.log('更新用户数据');
 		queryUserInfo(this.thisUserInfo.id);
 	},
-	
+
 	onPullDownRefresh() {
 		console.log('refresh');
 		setTimeout(function() {
@@ -133,7 +147,29 @@ export default {
 
 	methods: {
 		...mapMutations(['changeLang']),
-		
+
+		navClick(index) {
+			if (index == 0) {
+				uni.switchTab({
+					url: 'index'
+				});
+			}
+			if (index == 1) {
+				uni.switchTab({
+					url: 'votePage'
+				});
+			}
+			if (index == 2) {
+				uni.switchTab({
+					url: 'messagelist'
+				});
+			}
+			if (index == 3) {
+				uni.switchTab({
+					url: 'mine'
+				});
+			}
+		},
 		/**
 		 * 查询用户信息，并分割邮箱更新到缓存
 		 */
@@ -160,32 +196,31 @@ export default {
 				}
 			});
 		},
-		
+
 		//粉丝数是否改变
-		isFansNumChange(){
+		isFansNumChange() {
 			//TODO: 多了就加小红点获其他动效
 		},
-		
-		
-		jumpToAbout:function() {
+
+		jumpToAbout: function() {
 			uni.navigateTo({
-				url: '../about/about',
+				url: '../about/about'
 			});
 		},
-		jumpToMyPublish:function() {
+		jumpToMyPublish: function() {
 			uni.navigateTo({
-				url: '../myPublish/myPublish',
+				url: '../myPublish/myPublish'
 			});
 		},
-		jumpToProfile:function() {
+		jumpToProfile: function() {
 			uni.navigateTo({
-				url: '../profile/profile',
+				url: '../profile/profile'
 			});
 		},
 		goToChatPage: function() {
 			var encodeData = encodeURIComponent(JSON.stringify(this.thisUserInfo)); // 对数据字符串化并转码，防止特殊字符影响传参
 			uni.navigateTo({
-				url: '../chatpage/chatpage?friendInfo=' + encodeData,
+				url: '../chatpage/chatpage?friendInfo=' + encodeData
 			});
 		},
 
@@ -200,10 +235,9 @@ export default {
 			};
 			var encodeData = encodeURIComponent(JSON.stringify(data)); // 对数据字符串化并转码，防止特殊字符影响传参
 			uni.navigateTo({
-				url: '../followlist/followlist?data=' + encodeData,
+				url: '../followlist/followlist?data=' + encodeData
 			});
-		},
-		
+		}
 	}
 };
 </script>
@@ -326,74 +360,71 @@ page {
 	color: rgba(178, 178, 178, 1);
 	opacity: 1;
 }
-.pagejump_box{
-	margin-top:60rpx;
-	margin-left:13px;
+.pagejump_box {
+	margin-top: 60rpx;
+	margin-left: 13px;
 	margin-right: 13px;
 
-	height:180px;
-	background:rgba(255,255,255,1);
-	box-shadow:0px 0px 3px 
-	rgba(0,0,0,0.16);
-	opacity:1;
-	border-radius:8px;
-	
+	height: 180px;
+	background: rgba(255, 255, 255, 1);
+	box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.16);
+	opacity: 1;
+	border-radius: 8px;
 }
-.item1{
-	width:100px;
-	height:14px;
-	margin-left:80rpx ;
+.item1 {
+	width: 100px;
+	height: 14px;
+	margin-left: 80rpx;
 	padding-top: 30px;
-	font-size:14px;
-	font-family:Source Han Sans CN;
-	font-weight:400;
-	line-height:16px;
-	color:rgba(53,53,53,1);
-	opacity:1;
+	font-size: 14px;
+	font-family: Source Han Sans CN;
+	font-weight: 400;
+	line-height: 16px;
+	color: rgba(53, 53, 53, 1);
+	opacity: 1;
 }
-.line1{
-	margin:20px auto ;
-	width:618rpx;
-	height:0px;
-	border:1px solid rgba(236,236,236,1);
-	opacity:1;
+.line1 {
+	margin: 20px auto;
+	width: 618rpx;
+	height: 0px;
+	border: 1px solid rgba(236, 236, 236, 1);
+	opacity: 1;
 }
-.item2{
-	margin-left:80rpx ;
-	width:100px;
-	height:14px;
-	font-size:14px;
-	font-family:Source Han Sans CN;
-	font-weight:400;
-	line-height:16px;
-	color:rgba(53,53,53,1);
-	opacity:1;
+.item2 {
+	margin-left: 80rpx;
+	width: 100px;
+	height: 14px;
+	font-size: 14px;
+	font-family: Source Han Sans CN;
+	font-weight: 400;
+	line-height: 16px;
+	color: rgba(53, 53, 53, 1);
+	opacity: 1;
 }
-.line2{
-	margin:20px auto ;
-	width:618rpx;
-	height:0px;
-	border:1px solid rgba(236,236,236,1);
-	opacity:1;
+.line2 {
+	margin: 20px auto;
+	width: 618rpx;
+	height: 0px;
+	border: 1px solid rgba(236, 236, 236, 1);
+	opacity: 1;
 }
-.item3{
-	margin-left:80rpx ;
-	width:100px;
-	height:14px;
-	font-size:14px;
-	font-family:Source Han Sans CN;
-	font-weight:400;
-	line-height:16px;
-	color:rgba(53,53,53,1);
-	opacity:1;
+.item3 {
+	margin-left: 80rpx;
+	width: 100px;
+	height: 14px;
+	font-size: 14px;
+	font-family: Source Han Sans CN;
+	font-weight: 400;
+	line-height: 16px;
+	color: rgba(53, 53, 53, 1);
+	opacity: 1;
 	margin-bottom: 30px;
-	
 }
-.language{
+.language {
 	margin-top: 60rpx;
 	font-size: 14px;
-	font-family:Source Han Sans CN;
-	font-weight:400;
-	color:rgba(53,53,53,1);
+	font-family: Source Han Sans CN;
+	font-weight: 400;
+	color: rgba(53, 53, 53, 1);
 }
 </style>
