@@ -238,6 +238,39 @@ public interface ArticleService {
 	public PagedResult searchArticleByTag(Integer page, Integer pageSize, String searchText,
 			String userId);
 
+
+	/**
+	 * 根据标签请求文章, 并按热度排序
+	 * @param page
+	 * @param pageSize
+	 * @param selectedTag
+	 * @param userId
+	 * @return
+	 */
+	public PagedResult searchArticleByTagPupolarityOrder(Integer page, Integer pageSize, String selectedTag,
+			String userId);
+
+
+	/**
+	 * 根据标签请求关注的人的文章, 时间倒序排列
+	 * @param page
+	 * @param pageSize
+	 * @param userId
+	 * @param userId2 
+	 * @return
+	 */
+	public PagedResult searchArticleByTagWithSubscribed(Integer page, Integer pageSize, String selectedTag, String userId2);
+
+
+	/**
+	 * 根据标签请求关注的人的文章, 热度正序排列
+	 * @param page
+	 * @param pageSize
+	 * @param userId
+	 * @return
+	 */
+	public PagedResult searchArticleByTagPupolarityOrderWithSubscribed(Integer page, Integer pageSize, String selectedTag, String userId);
+
 //	/**
 //	 * 通过热度查询评论主
 //	 * @param page

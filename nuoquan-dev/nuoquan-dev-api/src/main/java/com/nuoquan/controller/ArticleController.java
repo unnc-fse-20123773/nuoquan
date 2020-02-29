@@ -107,7 +107,25 @@ public class ArticleController extends BasicController {
 			}
 		} else {
 			// 如果标签不为空, 根据标签查找
-			result = articleService.searchArticleByTag(page, pageSize, selectedTag, userId);
+			if (queryType == 0) {
+				if (orderType == 0) {
+					result = articleService.searchArticleByTag(page, pageSize, selectedTag, userId);
+				}
+				if (orderType == 1) {
+					result = articleService.searchArticleByTagPupolarityOrder(page, pageSize, selectedTag, userId);
+				}
+			}
+			
+			if (queryType == 1) {
+				if (orderType == 0) {
+					result = articleService.searchArticleByTagWithSubscribed(page, pageSize, selectedTag, userId);
+				}
+				if (orderType == 1) {
+					result = articleService.searchArticleByTagPupolarityOrderWithSubscribed(page, pageSize, selectedTag, userId);
+				}
+			}
+			
+			
 		}
 		return JSONResult.ok(result);
 	}
@@ -320,6 +338,7 @@ public class ArticleController extends BasicController {
 		return JSONResult.ok(result);
 	}
 	
+	@Deprecated
 	@ApiOperation(value = "按标签搜索文章")
 	@PostMapping(value = "/queryArticleByTag")
 	public JSONResult queryArticleByTag(String searchText, Integer page, String userId)
