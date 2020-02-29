@@ -315,14 +315,14 @@ public class ArticleController extends BasicController {
 	}
 	
 	@ApiOperation(value = "按标签搜索文章")
-	@PostMapping(value = "/searchArticleByTag")
-	public JSONResult searchArticleByTag(String searchText, Integer isSaveRecord, Integer page, String userId)
+	@PostMapping(value = "/queryArticleByTag")
+	public JSONResult queryArticleByTag(String searchText, Integer page, String userId)
 		throws Exception {
 		if (page == null ) {
 			page = 1;
 		}
 		
-		PagedResult result = articleService.searchArticleByTag(isSaveRecord, page, PAGE_SIZE, searchText, userId);
+		PagedResult result = articleService.searchArticleByTag(page, PAGE_SIZE, searchText, userId);
 		return JSONResult.ok(result);
 	}
 

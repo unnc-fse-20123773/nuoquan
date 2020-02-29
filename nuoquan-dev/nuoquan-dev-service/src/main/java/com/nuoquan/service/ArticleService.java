@@ -235,7 +235,7 @@ public interface ArticleService {
 	 * @param userId
 	 * @return
 	 */
-	public PagedResult searchArticleByTag(Integer isSaveRecord, Integer page, Integer pageSize, String searchText,
+	public PagedResult searchArticleByTag(Integer page, Integer pageSize, String searchText,
 			String userId);
 
 //	/**

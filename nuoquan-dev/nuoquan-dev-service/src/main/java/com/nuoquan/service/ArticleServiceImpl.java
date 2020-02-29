@@ -346,29 +346,21 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
-	public PagedResult searchArticleByTag(Integer isSaveRecord, Integer page, Integer pageSize, String searchText,
+	public PagedResult searchArticleByTag(Integer page, Integer pageSize, String searchText,
 			String userId) {
 
-		String[] texts = searchText.split(" ");
-		// 保存热搜词
-		if (isSaveRecord != null && isSaveRecord == 1) {
-			for (String text : texts) {
-				SearchRecord record = new SearchRecord();
-				String recordId = sid.nextShort();
-				record.setId(recordId);
-				record.setContent(text);
-				searchRecordMapper.insert(record);
-			}
-		}
+//		String[] texts = searchText.split(" ");
+		
 		
 		// 开启分页查询并转换为vo对象
 		// 在Example中的每一个Criteria相当于一个括号，把里面的内容当成一个整体
 		Example articleExample = new Example(Article.class);
 		articleExample.setOrderByClause("create_date desc");
 		Criteria criteria = articleExample.createCriteria();
-		for(String text : texts) {
-			criteria.orLike("tags", "#" + text + "#");
-		}
+		criteria.andEqualTo("tags", "#" + searchText + "#");
+//		for(String text : texts) {
+//			criteria.orLike("tags", "#" + text + "#");
+//		}
 		
 		Criteria criteria2 = articleExample.createCriteria();
 		criteria2.andEqualTo("status", StatusEnum.READABLE.type);
