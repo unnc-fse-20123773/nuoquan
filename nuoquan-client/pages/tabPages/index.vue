@@ -65,6 +65,8 @@ export default {
 				scrollTop: 0
 			},
 			capsuleButton: '',
+			
+			selectedTag: '',
 		};
 	},
 	components: {
@@ -157,7 +159,8 @@ export default {
 					// pageSize: '',
 					userId: that.userInfo.id,
 					queryType: that.queryType,
-					orderType: that.orderType
+					orderType: that.orderType,
+					selectedTag: that.selectedTag
 				},
 				header: {
 					'content-type': 'application/x-www-form-urlencoded'
@@ -191,8 +194,9 @@ export default {
 		},
 		
 		queryArticleBytag(tag){
-			console.log("去去去:" + this.currentPage);
-			console.log("去去去: " + tag);
+			this.selectedTag = tag;
+			// console.log("去去去:" + this.currentPage);
+			// console.log("去去去: " + tag);
 			
 			if (loadArticleFlag) {
 				return;
