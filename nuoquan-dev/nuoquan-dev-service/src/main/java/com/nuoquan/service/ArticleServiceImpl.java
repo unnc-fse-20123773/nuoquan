@@ -290,7 +290,7 @@ public class ArticleServiceImpl implements ArticleService {
 		for(String text : texts) {
 			criteria.orLike("articleTitle", "%" + text + "%");
 			criteria.orLike("articleContent", "%" + text + "%");
-			criteria.orLike("tags", "%" + text + "%");
+			criteria.orLike("tags", "%#" + text + "%");
 		}
 		
 		Criteria criteria2 = articleExample.createCriteria();
