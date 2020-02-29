@@ -9,9 +9,7 @@
 		<!-- 右侧按钮 -->
 		<view class="tapRight super_center" :style="{ top: navigationBarHeight + 46 + 'px' }">
 			<image src="../../static/icon/angle-right-gradient.png" mode="aspectFit"></image>
-		</view>
-		<votecomments></votecomments>
-		
+		</view>		
 		
 		
 		<!-- 投票卡片 -->
@@ -152,6 +150,7 @@
 						<text v-if="ischosen[index] == false">完成投票后才可查看评论哦</text>
 						<button v-else class="confirmButton_votePage super_center" @click="confirmVote(item.id, index)">确认投票</button>
 					</view>
+					<votecomment :voteid = '  something         '></votecomment>
 				</scroll-view>
 			</swiper-item>
 		</swiper>
@@ -163,6 +162,7 @@
 <script>
 	import tabBar from '@/components/nq-tabbar/nq-tabbar.vue';
 	import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue";
+	import votecomment from "@/components/votecomments.vue";
 	
 	const DEFAULT_PAGE = 0;	
 	var loadVoteFlag = false;
@@ -207,7 +207,8 @@
 		
 		components:{
 			uniNavBar,
-			tabBar
+			tabBar,
+			votecomment,
 		},
 		
 		onLoad: function() {

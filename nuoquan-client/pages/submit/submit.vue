@@ -575,7 +575,6 @@
 
 
 	.content {
-		/* 待选部分结束*/
 		min-height: 51px;
 		max-height: 300px;
 		margin-top: 13px;
