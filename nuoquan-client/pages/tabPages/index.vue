@@ -90,8 +90,6 @@ export default {
 
 		this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
 
-		this.getScreenSize(); //获取手机型号
-		
 		this.capsuleButton = this.getnavbarHeight(); //获取胶囊按钮信息
 		
 		this.showArticles(this.currentPage); // 显示文章流

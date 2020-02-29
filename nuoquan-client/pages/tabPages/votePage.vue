@@ -223,8 +223,6 @@
 				this.userInfo = userInfo;
 			}
 			
-			this.getScreenSize(); //获取手机型号
-			
 			this.showVotes(this.currentPage);
 			//获取导航栏高度
 			var info = this.menuButtonInfo;
