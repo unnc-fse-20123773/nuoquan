@@ -326,6 +326,7 @@ export default {
 		},
 		getSelectedTag(tag){
 			this.selectedTag = tag.tag;
+			console.log(tag)
 			this.showArticles(1);
 		},
 		deleteTag(){

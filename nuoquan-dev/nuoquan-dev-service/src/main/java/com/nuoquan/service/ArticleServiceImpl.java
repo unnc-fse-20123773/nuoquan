@@ -1008,7 +1008,7 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public PagedResult getAllSubscribedAuthorArticlesByPopularity(Integer page, Integer pageSize, String userId) {
 
-		// 查询全部我(操作者)关注的用户
+			// 查询全部我(操作者)关注的用户
 			Example mySubscribedUserExample = new Example(UserFans.class);
 			Criteria criteria = mySubscribedUserExample.createCriteria();
 			// 此处userId为操作者id
@@ -1020,7 +1020,7 @@ public class ArticleServiceImpl implements ArticleService {
 			}
 			
 			Example mySubscribedUserArticle = new Example(Article.class);
-			mySubscribedUserArticle.setOrderByClause("popularity desc");
+			mySubscribedUserArticle.setOrderByClause("popularity asc");
 			Criteria criteria2 = mySubscribedUserArticle.createCriteria();
 			for (UserFans userFans : userList) {
 //					System.out.println(userFans.getUserId());
@@ -1075,6 +1075,239 @@ public class ArticleServiceImpl implements ArticleService {
 			pagedResult.setRecords(pageInfoVO.getTotal());
 
 			return pagedResult;
+	}
+	
+	@Transactional(propagation = Propagation.SUPPORTS)
+	@Override
+	public PagedResult searchArticleByTagPupolarityOrder(Integer page, Integer pageSize, String selectedTag,
+			String userId) {
+
+		String[] texts = selectedTag.split(" ");
+		
+		
+		// 开启分页查询并转换为vo对象
+		// 在Example中的每一个Criteria相当于一个括号，把里面的内容当成一个整体
+		Example articleExample = new Example(Article.class);
+		articleExample.setOrderByClause("popularity asc");
+		Criteria criteria = articleExample.createCriteria();
+		for(String text : texts) {
+			criteria.orLike("tags", "%" + text + "%");
+		}
+		
+		Criteria criteria2 = articleExample.createCriteria();
+		criteria2.andEqualTo("status", StatusEnum.READABLE.type);
+		articleExample.and(criteria2);
+		
+		PageHelper.startPage(page, pageSize);
+		List<Article> list = articleMapper.selectByExample(articleExample);
+		PageInfo<Article> pageInfo = new PageInfo<>(list);
+		PageInfo<ArticleVO> pageInfoVo = PageUtils.PageInfo2PageInfoVo(pageInfo);
+		
+		List<ArticleVO> listVo = new ArrayList<>();
+		for (Article a : list) {
+			ArticleVO av = new ArticleVO();
+			BeanUtils.copyProperties(a, av); //转换对象
+			// 添加作者信息
+			User user= userMapper.selectByPrimaryKey(av.getUserId());
+			if (user!=null) {
+				av.setNickname(user.getNickname());
+				av.setFaceImg(user.getFaceImg());
+				av.setFaceImgThumb(user.getFaceImgThumb());
+			}
+			// 为每个文章添加图片列表
+			av.setImgList(articleImageMapper.getArticleImgs(av.getId()));
+			// 添加和关于用户的点赞关系
+			av.setIsLike(isUserLikeArticle(userId, av.getId()));
+			// 添加标签list
+			if(!StringUtils.isBlank(av.getTags())) {
+				String[] tagList = av.getTags().split("#");
+				List<String> finalTagList = new ArrayList<String>();
+				for (String tag : tagList) {
+					if (!StringUtils.isBlank(tag)) {
+						finalTagList.add(tag);
+					}
+				}
+				av.setTagList(finalTagList);
+			}
+			listVo.add(av);
+		}
+		pageInfoVo.setList(listVo);
+		
+		//为最终返回对象 pagedResult 添加属性
+		PagedResult pagedResult = new PagedResult();
+		pagedResult.setPage(pageInfoVo.getPageNum());
+		pagedResult.setTotal(pageInfoVo.getPages());
+		pagedResult.setRows(pageInfoVo.getList());
+		pagedResult.setRecords(pageInfoVo.getTotal());
+
+		return pagedResult;
+		
+	}
+
+	@Transactional(propagation = Propagation.SUPPORTS)
+	@Override
+	public PagedResult searchArticleByTagWithSubscribed(Integer page, Integer pageSize, String selectedTag, String userId) {
+		
+		// 查询全部我(操作者)关注的用户
+		Example mySubscribedUserExample = new Example(UserFans.class);
+		Criteria criteria = mySubscribedUserExample.createCriteria();
+		// 此处userId为操作者id
+		criteria.andEqualTo("fansId", userId);
+		List<UserFans> userList = userFansMapper.selectByExample(mySubscribedUserExample);
+		
+		if (userList.size() == 0 || userList == null) {
+			return null;
+		}
+		
+		// 根据查询到的userId找到他们的文章
+		Example mySubscribedUserArticle = new Example(Article.class);
+		mySubscribedUserArticle.setOrderByClause("create_date desc");
+		Criteria criteria2 = mySubscribedUserArticle.createCriteria();
+		for (UserFans userFans : userList) {
+			criteria2.orEqualTo("userId", userFans.getUserId());
+		}
+		
+		// 在这些文章中找到状态为可读的文章
+		Criteria criteria3 = mySubscribedUserArticle.createCriteria();
+		criteria3.andEqualTo("status", StatusEnum.READABLE.type);
+		mySubscribedUserArticle.and(criteria3);
+		
+		// 在这些文章中找到符合搜索的标签的文章
+		String[] texts = selectedTag.split(" ");
+		
+		Criteria criteria4 = mySubscribedUserArticle.createCriteria();
+		for(String text : texts) {
+			criteria.orLike("tags", "%" + text + "%");
+		}
+		mySubscribedUserArticle.and(criteria4);
+
+		List<Article> list = articleMapper.selectByExample(mySubscribedUserArticle);
+		PageInfo<Article> pageInfo = new PageInfo<>(list);
+		PageInfo<ArticleVO> pageInfoVO = PageUtils.PageInfo2PageInfoVo(pageInfo);
+		
+		List<ArticleVO> listVO = new ArrayList<>();
+		for (Article a : list) {
+			ArticleVO av = new ArticleVO();
+			BeanUtils.copyProperties(a, av); //转换对象
+			// 添加作者信息
+			User user= userMapper.selectByPrimaryKey(av.getUserId());
+			if (user!=null) {
+				av.setNickname(user.getNickname());
+				av.setFaceImg(user.getFaceImg());
+				av.setFaceImgThumb(user.getFaceImgThumb());
+			}
+			// 为每个文章添加图片列表
+			av.setImgList(articleImageMapper.getArticleImgs(av.getId()));
+			// 添加和关于用户的点赞关系
+			av.setIsLike(isUserLikeArticle(userId, av.getId()));
+			// 添加标签list
+			if (!StringUtils.isBlank(av.getTags())) {
+				String[] tagList = av.getTags().split("#");
+				List<String> finalTagList = new ArrayList<String>();
+				for (String tag : tagList) {
+					if (!StringUtils.isBlank(tag)) {
+						finalTagList.add(tag);
+					}
+				}
+				av.setTagList(finalTagList);
+			}
+			
+			listVO.add(av);
+		}
+		pageInfoVO.setList(listVO);
+		System.out.println("1");
+		
+		//为最终返回对象 pagedResult 添加属性
+		PagedResult pagedResult = new PagedResult();
+		pagedResult.setPage(pageInfoVO.getPageNum());
+		pagedResult.setTotal(pageInfoVO.getPages());
+		pagedResult.setRows(pageInfoVO.getList());
+		pagedResult.setRecords(pageInfoVO.getTotal());
+
+		return pagedResult;
+	}
+
+	@Transactional(propagation = Propagation.SUPPORTS)
+	@Override
+	public PagedResult searchArticleByTagPupolarityOrderWithSubscribed(Integer page, Integer pageSize, String selectedTag, String userId) {
+
+		// 查询全部我(操作者)关注的用户
+		Example mySubscribedUserExample = new Example(UserFans.class);
+		Criteria criteria = mySubscribedUserExample.createCriteria();
+		// 此处userId为操作者id
+		criteria.andEqualTo("fansId", userId);
+		List<UserFans> userList = userFansMapper.selectByExample(mySubscribedUserExample);
+		
+		if (userList.size() == 0 || userList == null) {
+			return null;
+		}
+		
+		// 根据查询到的userId找到他们的文章
+		Example mySubscribedUserArticle = new Example(Article.class);
+		mySubscribedUserArticle.setOrderByClause("popularity asc");
+		Criteria criteria2 = mySubscribedUserArticle.createCriteria();
+		for (UserFans userFans : userList) {
+			criteria2.orEqualTo("userId", userFans.getUserId());
+		}
+		
+		// 在这些文章中找到状态为可读的文章
+		Criteria criteria3 = mySubscribedUserArticle.createCriteria();
+		criteria3.andEqualTo("status", StatusEnum.READABLE.type);
+		mySubscribedUserArticle.and(criteria3);
+		
+		// 在这些文章中找到符合搜索的标签的文章
+		String[] texts = selectedTag.split(" ");
+		
+		Criteria criteria4 = mySubscribedUserArticle.createCriteria();
+		for(String text : texts) {
+			criteria.orLike("tags", "%" + text + "%");
+		}
+		mySubscribedUserArticle.and(criteria4);
+
+		List<Article> list = articleMapper.selectByExample(mySubscribedUserArticle);
+		PageInfo<Article> pageInfo = new PageInfo<>(list);
+		PageInfo<ArticleVO> pageInfoVO = PageUtils.PageInfo2PageInfoVo(pageInfo);
+		
+		List<ArticleVO> listVO = new ArrayList<>();
+		for (Article a : list) {
+			ArticleVO av = new ArticleVO();
+			BeanUtils.copyProperties(a, av); //转换对象
+			// 添加作者信息
+			User user= userMapper.selectByPrimaryKey(av.getUserId());
+			if (user!=null) {
+				av.setNickname(user.getNickname());
+				av.setFaceImg(user.getFaceImg());
+				av.setFaceImgThumb(user.getFaceImgThumb());
+			}
+			// 为每个文章添加图片列表
+			av.setImgList(articleImageMapper.getArticleImgs(av.getId()));
+			// 添加和关于用户的点赞关系
+			av.setIsLike(isUserLikeArticle(userId, av.getId()));
+			// 添加标签list
+			if (!StringUtils.isBlank(av.getTags())) {
+				String[] tagList = av.getTags().split("#");
+				List<String> finalTagList = new ArrayList<String>();
+				for (String tag : tagList) {
+					if (!StringUtils.isBlank(tag)) {
+						finalTagList.add(tag);
+					}
+				}
+				av.setTagList(finalTagList);
+			}
+			
+			listVO.add(av);
+		}
+		pageInfoVO.setList(listVO);
+		System.out.println("1");
+		
+		//为最终返回对象 pagedResult 添加属性
+		PagedResult pagedResult = new PagedResult();
+		pagedResult.setPage(pageInfoVO.getPageNum());
+		pagedResult.setTotal(pageInfoVO.getPages());
+		pagedResult.setRows(pageInfoVO.getList());
+		pagedResult.setRecords(pageInfoVO.getTotal());
+
+		return pagedResult;
 	}
 
 }
