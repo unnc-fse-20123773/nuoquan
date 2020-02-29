@@ -2,14 +2,17 @@
 	<view class="index">
 		<!-- Main page top bar -->
 		<mainpagetop
-		@transQueryType="changeQueryType"
-		@transOrderType="changeOrderType"
-		:userInfo="userInfo"
-		:topArticles="topArticles"
-		:roleup="roleup" 
-		:height="capsuleButton.bottom + 79"
-		:height_roled="capsuleButton.bottom + 53"
-		style="position: fixed;z-index: 30;height:100%;">
+			@transQueryType="changeQueryType"
+			@transOrderType="changeOrderType"
+			@selectedTag="getSelectedTag"
+			@deleteTag="deleteTag"
+			:userInfo="userInfo"
+			:topArticles="topArticles"
+			:tagList="tagList"
+			:roleup="roleup" 
+			:height="capsuleButton.bottom + 79"
+			:height_roled="capsuleButton.bottom + 53"
+			style="position: fixed;z-index: 30;height:100%;">
 		</mainpagetop>
 		<!-- <button type="primary" @click="goTop" style="position: fixed;top: 200px;z-index: 88;">gotop</button> -->
 		<view class="indexSelf" style="height:100%;">
@@ -48,7 +51,7 @@ export default {
 			title: 'Hello',
 			hottitlelist: ['热门标题1', '热门标题2', '热门标题3'],
 			showlist: [],
-			tagsList: [],
+			tagList: '',
 			topArticles: '',
 			roleup: false,
 
@@ -63,6 +66,8 @@ export default {
 				scrollTop: 0
 			},
 			capsuleButton: '',
+			
+			selectedTag: '',
 		};
 	},
 	components: {
@@ -155,7 +160,8 @@ export default {
 					// pageSize: '',
 					userId: that.userInfo.id,
 					queryType: that.queryType,
-					orderType: that.orderType
+					orderType: that.orderType,
+					selectedTag: that.selectedTag
 				},
 				header: {
 					'content-type': 'application/x-www-form-urlencoded'
@@ -274,8 +280,8 @@ export default {
 				},
 				success: res => {
 					if (res.data.status == 200) {
-						that.tagsList = res.data.data;
-						console.log(that.tagsList);
+						that.tagList = res.data.data;
+						console.log(that.tagList);
 					}
 				}
 			});
@@ -310,14 +316,22 @@ export default {
 		changeQueryType: function(queryType) {
 			this.queryType = queryType;
 			console.log('queryType:' + this.queryType);
-			(this.totalPage = 1), (this.currentPage = 1), this.showArticles(this.currentPage);
+			this.showArticles(1);
 		},
 		// 接收mainpageTop传过来的orderType并赋值, 一旦调用此方法, 重新刷新页面并获取文章.
 		changeOrderType: function(orderType) {
 			this.orderType = orderType;
 			console.log('orderType:' + this.orderType);
-			(this.totalPage = 1), (this.currentPage = 1);
-			this.showArticles(this.currentPage);
+			this.showArticles(1);
+		},
+		getSelectedTag(tag){
+			this.selectedTag = tag.tag;
+			console.log(tag)
+			this.showArticles(1);
+		},
+		deleteTag(){
+			this.selectedTag = '';
+			this.showArticles(1);
 		}
 	}
 };

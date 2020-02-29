@@ -1,29 +1,33 @@
-<template name="tagSelect">
-	<view class="tagsArea" v-if="editingTag">
+<template>
+	<view class="tagsArea">
+		<!-- TO DO 为啥有俩标签这个东西，目前用着同一个列表，是不是还需要改，我们提供标签的那个请求-->
+		<!-- 展示待选标签区域 -->
 		<text>所有标签</text>
 		<view class="tag" v-for="(item, index) in tagList" 
 		:key="index" 
 		:style="{ background: tagColorList[index] }" 
-		@tap="sendselectedTag(item) ">{{ item }}</view>
+		@tap="selectedTag(item) ">{{ item.tag }}</view>
+		<!-- <text>最近选择</text>
+		<view class="tag" v-for="(item,index) in tagList" :key="index" :style="{background: tagColorList[index]}" @tap="addTag(item)">{{item}}</view> -->
+		<!-- 			<view style="width: 750upx;height: 1000px;position: absolute;top:-1000px;z-index: 50;" @click="editTag(false)" v-if="editingTag"></view>
+		<view style="width: 750upx;height: 1000px;position: absolute;bottom:-1000px;z-index: 50;" @click="editTag(false)" v-if="editingTag"></view> -->
 	</view>
 </template>
 
 <script>
 export default {
 	props: {
-		tagList: []
+		tagList: ''
 	},
 	data() {
 		return {
 			tagColorList: [], // 储存每个备选tag的颜色
-			selectedTags: [],
-			selectedTagColorList: [] // 储存每个已选tag的颜色
 		};
 	},
 	created() {
 		// 随机生成颜色
 		var tagColors = this.tagColors;
-		for (var i = 0; i < 6; i++) {
+		for (var i = 0; i < this.tagList.length; i++) {
 			var random_1 = Math.floor(Math.random() * tagColors.length);
 			// 0~tagColors.length-1
 			this.tagColorList.push(tagColors[random_1]);
@@ -31,35 +35,8 @@ export default {
 	},
 
 	methods: {
-		tagManager(a) {
-			for (var i = 0; i < a.length; i++) {
-				this.tagList[i] = a[i].tag;
-			}
-
-			// 随机生成颜色
-			var tagColors = this.tagColors;
-			for (var i = 0; i < 6; i++) {
-				var random_1 = Math.floor(Math.random() * tagColors.length);
-				var random_2 = Math.floor(Math.random() * tagColors.length);
-				// 0~tagColors.length-1
-				this.tagColorList.push(tagColors[random_1]);
-				this.selectedTagColorList.push(tagColors[random_2]);
-			}
-		},
-		
-		sendselectedTag(item) {
-			var a=this.selectedTags.indexOf(item);
-			
-			if(a == -1){
-				this.selectedTags.push(item);
-				this.$emit('send' , this.selectedTags);
-			}else{
-				uni.showToast({
-					icon: 'none',
-					title: '已经添加～',
-					duration: 200
-				});
-			}
+		selectedTag(item) {
+			this.$emit('selected' , item);
 		},
 	}
 };
@@ -67,14 +44,13 @@ export default {
 
 <style>
 .tagsArea {
-	margin-top: 13px;
 	padding-bottom: 16px;
 	vertical-align: bottom;
 	min-height: 130px;
 	max-height: 192px;
 	overflow: hidden;
 	position: relative;
-	background: url(../static/BG/submit_BG.png);
+	background: url(../../static/BG/submit_BG.png);
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 	border-radius: 10px;

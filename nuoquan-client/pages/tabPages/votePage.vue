@@ -1,5 +1,5 @@
 <template>
-	<view style="width: 100%;height: 100%;">
+	<view style="width: 100%; height: 100%; background: linear-gradient(#f89d4d, #ffc95a);">
 		<!-- 导航栏 -->
 		<view class="navigatorBar_votePage super_center" :style="{ height: navigationBarHeight + 'px' }">NavigatorBar</view>
 		<!-- 左侧按钮 -->
@@ -78,7 +78,7 @@
 					<view v-if="finishVote[index] == false" class="voteCard">
 						<!-- 双层嵌套，可适应以后扩展选项内容 -->
 						<view v-for="(option, index2) in item.optionList" :key="index2"  :class="[option.id != selectedOptionId ? 'oneVoteCard' : 'oneVoteCard_chosen']" @click="switchChoose(option.id, index)">
-							<text :class="[option.id != selectedOptionId ? 'oneVote_text' : 'oneVote_text_chosen']">{{(option.id)}}</text>
+							<text :class="[option.id != selectedOptionId ? 'oneVote_text' : 'oneVote_text_chosen']">{{(option.optionContent)}}</text>
 						</view>
 					</view>
 					<!-- 确定投票后的选项展示 -->
@@ -553,7 +553,6 @@
 		height: 100%;
 		width: 100%;
 		overflow: hidden;
-		background: linear-gradient(#f89d4d, #ffc95a);
 	}
 
 	.navigatorBar_votePage {
