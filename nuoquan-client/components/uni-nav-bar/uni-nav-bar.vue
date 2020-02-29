@@ -18,6 +18,9 @@
 					</view>
 					<slot name="left" />
 				</view>
+				<view v-else style="height: 38px;width: 160upx;">
+					
+				</view>
 				<!-- 标题区域 -->
 				<view class="uni-navbar__header-container uni-navbar__content_view">
 					<view class="uni-navbar__header-container-inner uni-navbar__content_view" v-if="title.length">
@@ -129,7 +132,7 @@
 		font-size: 17px;
 		/* #endif */
 		/* #ifndef APP-PLUS */
-		font-size: $uni-font-size-lg;
+		font-size: 17px;
 		/* #endif */
 	}
 	.uni-nav-bar-right-text {
@@ -174,7 +177,6 @@
 		/* #endif */
 		flex-wrap: nowrap;
 		width: 120rpx;
-		padding: 0 6px;
 		justify-content: center;
 		align-items: center;
 	}
@@ -183,7 +185,7 @@
 		/* #ifndef APP-NVUE */
 		display: flex;
 		/* #endif */
-		width: 150rpx;
+		width: 160rpx;
 		justify-content: flex-start;
 	}
 
@@ -191,13 +193,14 @@
 		/* #ifndef APP-NVUE */
 		display: flex;
 		/* #endif */
-		width: 150rpx;
-		padding-right: 30rpx;
+		width: 160rpx;
 		justify-content: flex-end;
 	}
 
 	.uni-navbar__header-container {
 		flex: 1;
+		margin-left: auto;
+		margin-right: auto;
 	}
 
 	.uni-navbar__header-container-inner {

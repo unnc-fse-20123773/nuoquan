@@ -66,7 +66,6 @@
 				serverUrl: this.$serverUrl,
 				singleImgWidth:"", //一图调整宽度
 				tagColorList: [],
-				
 				share: false, // 隐藏/显示share画布
 			};
 		},

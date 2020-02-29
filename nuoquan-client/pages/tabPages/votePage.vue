@@ -1,5 +1,5 @@
 <template>
-	<view style="width: 100%;height: 100%;">
+	<view style="width: 100%; height: 100%; background: linear-gradient(#f89d4d, #ffc95a);">
 		<!-- 导航栏 -->
 		<view class="navigatorBar_votePage super_center" :style="{ height: navigationBarHeight + 'px' }">NavigatorBar</view>
 		<!-- 左侧按钮 -->
@@ -151,15 +151,18 @@
 				</scroll-view>
 			</swiper-item>
 		</swiper>
+		
+		<tab-bar :current="1"></tab-bar>
 	</view>
 </template>
 
 <script>
-	const DEFAULT_PAGE = 0;
+	import tabBar from '@/components/nq-tabbar/nq-tabbar.vue';
+	import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue";
 	
+	const DEFAULT_PAGE = 0;	
 	var loadVoteFlag = false;
 	var loadMoreFlag = false; // 确保往前翻不会再次触发loadMore方法
-	
 	export default {
 		data() {
 			return {
@@ -197,9 +200,14 @@
 				loadedMoreIndex: [] // 用来储存已经触发过loadMore方法的投票的index.
 			};
 		},
-
+		
+		components:{
+			uniNavBar,
+			tabBar
+		},
+		
 		onLoad: function() {
-			// console.log("还没投票时,selectedOptionId= " + this.selectedOptionId);
+			console.log("还没投票时,selectedOptionId= " + this.selectedOptionId);
 			var userInfo = this.getGlobalUserInfo();
 			if (this.isNull(userInfo)) {
 				uni.redirectTo({
@@ -219,16 +227,12 @@
 			info = uni.getMenuButtonBoundingClientRect();
 			height = info.bottom;
 			this.navigationBarHeight = height;
-			// console.log('导航栏高度=' + this.navigationBarHeight);
+			console.log('导航栏高度=' + this.navigationBarHeight);
 			this.calculateHeight();
 		},
 
 		onShow() {
-			this.setTabBarIndex(1); //index为当前tab的索引
 			
-			//Test 
-			// console.log(this.showList);
-			// console.log(this.list);
 		},
 
 		methods: {
@@ -319,7 +323,7 @@
 				// 记录是在第几个vote进行操作
 				that.ischosenFlag = voteIndex;
 				
-				// console.log("赋值后的选项id= "+ that.selectedOptionId);
+				console.log("赋值后的选项id= "+ that.selectedOptionId);
 				// console.log(that.currentVoteIndex);
 				// console.log(that.ischosen);
 			},
@@ -360,7 +364,7 @@
 						that.afterSelectedOptionList = that.afterSelectedResult.optionList;
 						// console.log(that.afterSelectedOptionList);
 						// that.ischosen[voteIndex] = true;
-						// console.log(that.showList[voteIndex]);
+						console.log(that.showList[voteIndex]);
 						
 						// 进度条伸长
 						for (let option of that.showList[voteIndex].optionList){
@@ -390,8 +394,8 @@
 				var timer = setInterval(function() {
 					//设置计时器
 					if ( option.barWidth >= widthTarget) {
-						//在 persentBarWidth 为目标值时清空计时器，暂以100代替
-						// console.log(option);
+						//在 persentBarWidth 为目标值时清空计时器，暂以100代替						// console.log(option);
+						console.log(option);
 						clearInterval(timer);
 					} else {
 						option.barWidth += 0.5;
@@ -535,7 +539,6 @@
 					}
 				}
 			},
-			
 		}
 	};
 </script>
@@ -545,7 +548,6 @@
 		height: 100%;
 		width: 100%;
 		overflow: hidden;
-		background: linear-gradient(#f89d4d, #ffc95a);
 	}
 
 	.navigatorBar_votePage {

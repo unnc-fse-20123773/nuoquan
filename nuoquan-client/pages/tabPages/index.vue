@@ -1,15 +1,37 @@
 <template>
 	<view class="index">
-		<mainpagetop v-on:transQueryType="changeQueryType" v-on:transOrderType="changeOrderType" :userInfo="userInfo" :topArticles="topArticles" :roleup="roleup" style="position: fixed;z-index: 30;height:100%;"></mainpagetop>
+		<!-- Main page top bar -->
+		<mainpagetop
+			@transQueryType="changeQueryType"
+			@transOrderType="changeOrderType"
+			@queryArticleBytag="queryArticleBytag"
+			:userInfo="userInfo"
+			:topArticles="topArticles"
+			:tagList="tagList"
+			:roleup="roleup" 
+			:height="capsuleButton.bottom + 79"
+			:height_roled="capsuleButton.bottom + 53"
+			style="position: fixed;z-index: 30;height:100%;">
+		</mainpagetop>
 		<!-- <button type="primary" @click="goTop" style="position: fixed;top: 200px;z-index: 88;">gotop</button> -->
 		<view class="indexSelf" style="height:100%;">
-			<scroll-view @scroll="linkageWithTop" class="indexArticleArea" :scroll-top="scrollTop" scroll-y="true" @scrolltolower="loadMore" @scrolltoupper="refreshArticle" upper-threshold="5">
-				<view style="height:172px;width:100%;"></view>
+			<scroll-view
+				@scroll="linkageWithTop"
+				class="indexArticleArea"
+				:scroll-top="scrollTop"
+				scroll-y="true"
+				@scrolltolower="loadMore"
+				@scrolltoupper="refreshArticle"
+				upper-threshold="5"
+			>
+				<view :style="{height:capsuleButton.bottom + 111 + 'px',width: 100 + '%' }"></view>
 				<articlebrief v-for="i in showlist" :key="i.id" v-bind:articleCard="i"></articlebrief>
 				<!-- 用于添加底部空白 by Guetta 9.10 -->
 				<view class="marginHelper"></view>
 			</scroll-view>
 		</view>
+		
+		<tab-bar @click="clickMid"></tab-bar>
 	</view>
 </template>
 
@@ -17,8 +39,8 @@
 import articlebrief from '../../components/articlebrief';
 import mainpagetop from '../../components/mainpagetop.vue';
 import mainpageleft from '@/components/mainpageleft.vue';
-
 import { mapState } from 'vuex';
+import tabBar from '@/components/nq-tabbar/nq-tabbar.vue';
 
 var loadArticleFlag = false; // 为加载文章加锁
 var timer = null; // 为头部做定时器收起
@@ -28,43 +50,46 @@ export default {
 			title: 'Hello',
 			hottitlelist: ['热门标题1', '热门标题2', '热门标题3'],
 			showlist: [],
-			tagsList: [],
+			tagList: '',
 			topArticles: '',
 			roleup: false,
-			
+
 			queryType: 0,
 			orderType: 0,
-			
+
 			userInfo: '',
 			totalPage: 1,
 			currentPage: 1,
 			scrollTop: 0,
 			old: {
 				scrollTop: 0
-			}
-			
+			},
+			capsuleButton: '',
 		};
 	},
 	components: {
 		articlebrief,
 		mainpagetop,
-		mainpageleft
+		mainpageleft,
+		tabBar,
 	},
 
 	onLoad() {
 		var userInfo = this.getGlobalUserInfo();
 		if (this.isNull(userInfo)) {
-			uni.redirectTo({
-				url: '../signin/signin'
-			});
+			// uni.redirectTo({
+			// 	url: '../signin/signin'
+			// });
 			return;
 		} else {
 			this.userInfo = userInfo; // 刷去默认值(若有)
 		}
-	
+
 		this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
 
 		this.getScreenSize(); //获取手机型号
+		
+		this.capsuleButton = this.getnavbarHeight(); //获取胶囊按钮信息
 		
 		this.showArticles(this.currentPage); // 显示文章流
 
@@ -72,7 +97,7 @@ export default {
 			// from submit
 			this.refreshArticle();
 		});
-		
+
 		this.getTagsList(); //获取标签列表
 		// [测试代码块]
 	},
@@ -83,8 +108,6 @@ export default {
 	},
 
 	onShow() {
-		 this.setTabBarIndex(0) //index为当前tab的索引
-		
 		var userInfo = this.getGlobalUserInfo(); // 查看用户是否登录
 		if (!this.isNull(userInfo)) {
 			// 设置 userInfo 传给 mainpagetop 组件
@@ -93,7 +116,6 @@ export default {
 		}
 
 		this.getTop10Articles(); // 获取热度榜（刷新）
-		
 	},
 
 	// onPullDownRefresh() {
@@ -101,6 +123,10 @@ export default {
 	// },
 
 	methods: {
+		clickMid(e){
+			console.log(e);
+		},
+		
 		showArticles: function(page) {
 			if (loadArticleFlag) {
 				return;
@@ -163,6 +189,71 @@ export default {
 				}
 			});
 		},
+		
+		queryArticleBytag(tag){
+			console.log("去去去:" + this.currentPage);
+			console.log("去去去: " + tag);
+			
+			if (loadArticleFlag) {
+				return;
+			}
+			loadArticleFlag = true;
+			
+			uni.showLoading({
+				title: '加载中...'
+			});
+			setTimeout(() => {
+				if (loadArticleFlag) {
+					loadArticleFlag = false; // 解锁
+					uni.hideLoading();
+					uni.showToast({
+						title: '网络未知错误',
+						icon: 'none',
+						duration: 1000
+					});
+				}
+			}, 5000); // 延时5s timeout
+			
+			var that = this;
+			uni.request({
+				url: that.$serverUrl + '/article/queryArticleByTag',
+				method: 'POST',
+				data: {
+					page: that.currentPage,
+					// pageSize: '',
+					userId: that.userInfo.id,
+					searchText: tag
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					setTimeout(() => {
+						// 延时加载
+						uni.hideLoading();
+						loadArticleFlag = false;
+			
+						console.log(res);
+						// 判断当前页是不是第一页，如果是第一页，那么设置showList为空
+						if (that.currentPage == 1) {
+							that.showlist = [];
+						}
+						var newArticleList = res.data.data.rows;
+						var oldArticleList = that.showlist;
+						that.showlist = oldArticleList.concat(newArticleList);
+						that.currentPage = res.data.data.page;
+						that.totalPage = res.data.data.total;
+					}, 300);
+				},
+				fail: res => {
+					uni.hideLoading();
+					loadArticleFlag = false;
+			
+					console.log('index unirequest fail');
+					console.log(res);
+				}
+			});
+		},
 
 		loadMore: function() {
 			var that = this;
@@ -202,7 +293,7 @@ export default {
 					'content-type': 'application/x-www-form-urlencoded'
 				},
 				success: res => {
-					console.log("top articles:");
+					console.log('top articles:');
 					console.log(res);
 					that.topArticles = res.data.data.rows;
 				}
@@ -235,11 +326,11 @@ export default {
 				}
 			});
 		},
-		
+
 		/**
 		 * 获取标签列表
 		 */
-		getTagsList(){
+		getTagsList() {
 			var that = this;
 			uni.request({
 				url: that.$serverUrl + '/article/getTagsList',
@@ -250,8 +341,8 @@ export default {
 				},
 				success: res => {
 					if (res.data.status == 200) {
-						that.tagsList = res.data.data;
-						console.log(that.tagsList);
+						that.tagList = res.data.data;
+						console.log(that.tagList);
 					}
 				}
 			});
@@ -262,44 +353,39 @@ export default {
 			// console.log( y + "scrollTop" )
 			// console.log(timer + "//  timer");
 			var that = this;
-			if(y >= 160){
-				that.roleup = true,
-				console.log(that.roleup);
-			}else{
-				that.roleup = false,
-				console.log(that.roleup);
+			if (y >= 160) {
+				that.roleup = true;
+				// console.log(that.roleup);
+			} else {
+				that.roleup = false;
+				// console.log(that.roleup);
 			}
 		},
-		
+
 		goTop: function(e) {
-		            this.scrollTop = this.old.scrollTop
-		            this.$nextTick(function() {
-		                this.scrollTop = 0
-		            });
-		            uni.showToast({
-		                icon:"none",
-		                title:"纵向滚动 scrollTop 值已被修改为 0"
-		            })
+			this.scrollTop = this.old.scrollTop;
+			this.$nextTick(function() {
+				this.scrollTop = 0;
+			});
+			uni.showToast({
+				icon: 'none',
+				title: '纵向滚动 scrollTop 值已被修改为 0'
+			});
 		},
-		
+
 		// 接收mainpageTop传过来的queryType并赋值, 一旦调用此方法, 重新刷新页面并获取文章.
-		changeQueryType: function(queryType){
+		changeQueryType: function(queryType) {
 			this.queryType = queryType;
-			console.log("queryType:" + this.queryType);
-			this.totalPage = 1,
-			this.currentPage = 1,
-			this.showArticles(this.currentPage);
-			
+			console.log('queryType:' + this.queryType);
+			(this.totalPage = 1), (this.currentPage = 1), this.showArticles(this.currentPage);
 		},
 		// 接收mainpageTop传过来的orderType并赋值, 一旦调用此方法, 重新刷新页面并获取文章.
-		changeOrderType: function(orderType){
+		changeOrderType: function(orderType) {
 			this.orderType = orderType;
-			console.log("orderType:" + this.orderType);
-			this.totalPage = 1,
-			this.currentPage = 1
+			console.log('orderType:' + this.orderType);
+			(this.totalPage = 1), (this.currentPage = 1);
 			this.showArticles(this.currentPage);
 		}
-		
 	}
 };
 </script>

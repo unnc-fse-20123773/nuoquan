@@ -1,9 +1,13 @@
 <template>
 	<view id="public-container">
 		<!-- 黄色头部 -->
-		<view id="yellowTopBox">
-			<view class="yellowTop" :style="{ bottom: yellowBottom }"></view>
+		<!-- <view id="yellowTopBox"> -->
+			<!-- <view class="yellowTop" :style="{ bottom: yellowBottom }"></view> -->
 			<!-- <view class="yellowTop" style="bottom: -240rpx"></view> -->
+		<!-- </view> -->
+		<!-- 黄色背景 -->
+		<view id="msglist-yellowshadowbg">
+			<image src="../../static/BG/msgList_BG.png" mode="scaleToFill"></image>
 		</view>
 		<!-- 简介块 -->
 		<view id="public-infoBox" class="column_center">
@@ -18,7 +22,7 @@
 				</view>
 				<!-- 个人简介 -->
 				<view class="introBox super_center"><text class="introBox-text">个人简介：这个人很懒，什么都没写哦...</text></view>
-			
+
 				<!-- 操作行 -->
 				<view class="operationLine">
 					<!-- 粉丝 -->
@@ -26,69 +30,78 @@
 						<view class="operationNum super_center">
 							<text class="operationNum-text" style="color:color:rgba(53,53,53,1);">{{ thisUserInfo.fansNum }}</text>
 						</view>
-						<view class="operationTitle super_center"><text class="operationTitle-text">{{lang.fans}}</text></view>
+						<view class="operationTitle super_center">
+							<text class="operationTitle-text">{{ lang.fans }}</text>
+						</view>
 					</view>
 					<!-- 影响力 -->
 					<view class="operationCard">
-						<view class="operationNum super_center"><text class="operationNum-text" style="color:rgba(254,95,85,1);">{{ thisUserInfo.reputation }}</text></view>
-						<view class="operationTitle super_center"><text class="operationTitle-text">{{lang.reputation}}</text></view>
+						<view class="operationNum super_center">
+							<text class="operationNum-text" style="color:rgba(254,95,85,1);">{{ thisUserInfo.reputation }}</text>
+						</view>
+						<view class="operationTitle super_center">
+							<text class="operationTitle-text">{{ lang.reputation }}</text>
+						</view>
 					</view>
 					<!-- 关注 -->
 					<view class="operationCard" @tap="goToFansFollow(0)">
 						<view class="operationNum super_center">
 							<text class="operationNum-text" style="color:color:rgba(53,53,53,1);">{{ thisUserInfo.followNum }}</text>
 						</view>
-						<view class="operationTitle super_center"><text class="operationTitle-text">{{lang.follow}}</text></view>
+						<view class="operationTitle super_center">
+							<text class="operationTitle-text">{{ lang.follow }}</text>
+						</view>
 					</view>
 				</view>
 			</view>
 		</view>
 		<view class="pagejump_box">
 			<!-- TODO:这里应该有更灵活优雅的写法 @jerrio -->
-			<view class="item1" @click="jumpToProfile()">{{lang.profile}}</view>
+			<view class="item1 column_center" @click="jumpToProfile()">{{ lang.profile }}</view>
 			<view class="line1"></view>
-			<view class="item2" @click="jumpToMyPublish()">{{lang.myPublish}}</view>
+			<view class="item2 column_center" @click="jumpToMyPublish()">{{ lang.myPublish }}</view>
 			<view class="line2"></view>
-			<view class="item3" @click="jumpToAbout()">{{lang.about}}</view>
+			<view class="item3 column_center" @click="jumpToAbout()">{{ lang.about }}</view>
 			<!-- 临时添加的设置语言按钮 @jerrio -->
-			<button class="language" @tap="changeLang">{{lang.changeLang}}</button>
+			<!-- <button class="language" @tap="changeLang">{{lang.changeLang}}</button>-->
 		</view>
+		
+		<tab-bar :current="4"></tab-bar>
 	</view>
 </template>
 
 <script>
-import {mapState, mapMutations} from 'vuex';  
+import { mapState, mapMutations } from 'vuex';
+import tabBar from '@/components/nq-tabbar/nq-tabbar.vue';
 
 export default {
 	data() {
 		return {
 			screenWidth: 350,
-			serverUrl: this.$serverUrl,
 
 			thisUserInfo: '',
 			windowHeight: 0,
 			windowWidth: 0,
 			yellowBottom: '',
-			cardWidth: '',
-
+			cardWidth: ''
 		};
 	},
-	
-	computed: {
-		...mapState([
-			'lang'
-		])
+	components: {
+		tabBar
 	},
-	
+
+	computed: {
+		...mapState(['lang'])
+	},
+
 	onLoad() {
-		this.thisUserInfo= this.getGlobalUserInfo();
-	
+		this.thisUserInfo = this.getGlobalUserInfo();
+
 		var screenWidth = uni.getSystemInfoSync().screenWidth;
 		this.screenWidth = screenWidth;
 
 		// 获取当前分页
 		var page = this.page;
-
 
 		//获取屏幕宽高
 		var that = this;
@@ -115,11 +128,11 @@ export default {
 		// 获取卡片宽度
 		that.cardWidth = that.windowWidth - 26 + 'px';
 	},
-	
+
 	onShow() {
 		//更新用户数据
-		console.log("更新用户数据");
-		queryUserInfo(this.thisUserInfo.id);
+		console.log('更新用户数据');
+		this.queryUserInfo(this.thisUserInfo.id);
 	},
 
 	onPullDownRefresh() {
@@ -152,38 +165,37 @@ export default {
 						var user = res.data.data;
 						var finalUser = this.myUser(user); // 分割邮箱地址, 重构 user
 						this.setGlobalUserInfo(finalUser); // 把用户信息写入缓存
-						this.userInfo = finalUser; // 更新页面用户数据
-						// console.log(this.userInfo);
+						this.thisUserInfo = finalUser; // 更新页面用户数据
+						// console.log(this.thisUserInfo);
 					}
 				}
 			});
 		},
-		
+
 		//粉丝数是否改变
-		isFansNumChange(){
+		isFansNumChange() {
 			//TODO: 多了就加小红点获其他动效
 		},
-		
-		
-		jumpToAbout:function() {
+
+		jumpToAbout: function() {
 			uni.navigateTo({
-				url: '../about/about',
+				url: '../about/about'
 			});
 		},
-		jumpToMyPublish:function() {
+		jumpToMyPublish: function() {
 			uni.navigateTo({
-				url: '../myPublish/myPublish',
+				url: '../myPublish/myPublish'
 			});
 		},
-		jumpToProfile:function() {
+		jumpToProfile: function() {
 			uni.navigateTo({
-				url: '../profile/profile',
+				url: '../profile/profile'
 			});
 		},
 		goToChatPage: function() {
 			var encodeData = encodeURIComponent(JSON.stringify(this.thisUserInfo)); // 对数据字符串化并转码，防止特殊字符影响传参
 			uni.navigateTo({
-				url: '../chatpage/chatpage?friendInfo=' + encodeData,
+				url: '../chatpage/chatpage?friendInfo=' + encodeData
 			});
 		},
 
@@ -198,10 +210,9 @@ export default {
 			};
 			var encodeData = encodeURIComponent(JSON.stringify(data)); // 对数据字符串化并转码，防止特殊字符影响传参
 			uni.navigateTo({
-				url: '../followlist/followlist?data=' + encodeData,
+				url: '../followlist/followlist?data=' + encodeData
 			});
-		},
-		
+		}
 	}
 };
 </script>
@@ -215,6 +226,7 @@ page {
 #public-container {
 	height: 100%;
 	width: 100%;
+	margin-top: 30px;
 	overflow: hidden;
 }
 
@@ -224,6 +236,14 @@ page {
 	position: relative;
 	z-index: -30;
 }
+
+#msglist-yellowshadowbg {
+		position: fixed;
+		top: 0;
+		width: 100%;
+		height: 200px;
+		z-index: -10;
+	}
 
 .yellowTop {
 	position: absolute; /* 此处采用 absolote 定位，以保证页面流可以正常显示。层级设为 -10，以保证其显示在页面最底部。 */
@@ -323,72 +343,42 @@ page {
 	color: rgba(178, 178, 178, 1);
 	opacity: 1;
 }
-.pagejump_box{
-	margin-top:60rpx;
-	margin-left:26rpx;
-	width:700rpx;
-	height:350rpx;
-	background:rgba(255,255,255,1);
-	box-shadow:0px 0px 3px 
-	rgba(0,0,0,0.16);
-	opacity:1;
-	border-radius:8px;
-	
+.pagejump_box {
+	margin-top:13px;
+	margin-left: 13px;
+	width: calc(100% - 26px);
+	background: rgba(255, 255, 255, 1);
+	box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.16);
+	opacity: 1;
+	border-radius: 8px;
 }
-.item1{
-	width:100px;
-	height:14px;
-	margin-left:80rpx ;
-	padding-top: 50rpx;
-	font-size:14px;
-	font-family:Source Han Sans CN;
-	font-weight:400;
-	line-height:16px;
-	color:rgba(53,53,53,1);
-	opacity:1;
-}
-.line1{
-	margin:40rpx auto ;
-	width:618rpx;
-	height:0px;
-	border:1px solid rgba(236,236,236,1);
-	opacity:1;
-}
-.item2{
-	margin-left:80rpx ;
-	width:100px;
-	height:14px;
-	font-size:14px;
-	font-family:Source Han Sans CN;
-	font-weight:400;
-	line-height:16px;
-	color:rgba(53,53,53,1);
-	opacity:1;
-}
-.line2{
-	margin:40rpx auto ;
-	width:618rpx;
-	height:0px;
-	border:1px solid rgba(236,236,236,1);
-	opacity:1;
-}
-.item3{
-	margin-left:80rpx ;
-	width:100px;
-	height:14px;
-	font-size:14px;
-	font-family:Source Han Sans CN;
-	font-weight:400;
-	line-height:16px;
-	color:rgba(53,53,53,1);
-	opacity:1;
-	padding-bottom: 50rpx;
-}
-.language{
-	margin-top: 20px;
+
+.item1,.item2,.item3 {
+	width: calc(100% - 28px)%;
+	height: 50px;
+	padding-left: 28px;
 	font-size: 14px;
-	font-family:Source Han Sans CN;
-	font-weight:400;
-	color:rgba(53,53,53,1);
+	font-family: Source Han Sans CN;
+	font-weight: 400;
+	line-height: 16px;
+	color: rgba(53, 53, 53, 1);
+	opacity: 1;
+}
+
+.line1,.line2 {
+	margin-left: auto;
+	margin-right: auto;
+	width: 88.54%;
+	height: 0px;
+	border: 1px solid rgba(236, 236, 236, 1);
+	opacity: 1;
+}
+
+.language {
+	margin-top: 60rpx;
+	font-size: 14px;
+	font-family: Source Han Sans CN;
+	font-weight: 400;
+	color: rgba(53, 53, 53, 1);
 }
 </style>

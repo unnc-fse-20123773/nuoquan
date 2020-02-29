@@ -2,8 +2,7 @@
 	<view class="comment-detail-page">
 		<!-- 导航栏 -->
 		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" left-icon="back" left-text="返回"
-		:title="pageTitle" 
-		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
+		 :title="pageTitle" :height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
 		<!-- 主评论区域 -->
 
 		<view class="comment-Box">
@@ -45,14 +44,14 @@
 		<!--触底提示和功能  END-->
 
 
-		<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)" >
-			<view class="commentPart"  :style="{bottom: textAreaAdjust }">
+		<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)">
+			<view class="commentPart" :style="{bottom: textAreaAdjust }">
 				<!--<view class="emoji"></view><view class="add-pic"></view>-->
 				<view class="submit" @tap="saveComment()">发送</view>
 				<view class="commentSth">
 					<textarea class="comment-text" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
-					 adjust-position="false" v-model="commentContent"  :show-confirm-bar="false" @focus="popTextArea"
-					 @blur="unpopTextArea" cursor-spacing='20' />
+					 adjust-position="false" v-model="commentContent" :show-confirm-bar="false" @focus="popTextArea" @blur="unpopTextArea"
+					 cursor-spacing='20' />
 					<!-- <view class="comment-pic-area"><image src="../../static/BG/indexBG.png"></image><image src="../../static/icon/about.png"></image><image src="../../static/icon/1575235531(1).png"></image></view> -->
 					 <view class="word-count-left">{{wordNotice}}</view>
 				</view>
@@ -92,6 +91,8 @@
 				
 				totalPage: 1,
 				currentPage: 1,
+				
+				saveCommentFlag:false,
 			}
 		},
 
@@ -115,6 +116,14 @@
 		methods: {
 			getSubComments(page) {
 				var that = this;
+				if (saveCommentFlag) {
+					console.log("正在上传...")
+					return;
+				}
+				saveCommentFlag = true;
+				uni.showLoading({
+					title: "正在提交..."
+				})
 				uni.request({
 					method: "POST",
 					url: that.$serverUrl + '/article/getSubComments',

@@ -1,14 +1,14 @@
 <template>
 	<view class="message-list">
 		<block v-for="(it,i) in messagesList" :key="i">
-			<view class="uni-swipe-action" style="height: 138upx;">
+			<view class="uni-swipe-action">
 				<view class="delete-button super_center" v-if="showdelete == 1 && messageIndex == i" @tap="tapDelete(it)">
 					<text style="color: white;text-align: center;font-size: small;">删除</text>
 				</view>
-				<view class="uni-swipe-action__container" style="width: 88%;
-				margin-left: 6%;
-				margin-top: 12upx;
-				height: 120upx;
+				<view class="uni-swipe-action__container" style="width: 90.6%;
+				margin-left: 4.8%;
+				margin-top: 8px;
+				height: 64px;
 				background-color: white;"
 				@touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd" @touchcancel="touchEnd" 
 				 :style="{'transform':messageIndex == i ? transformX : 'translateX(0px)',
@@ -26,6 +26,7 @@
 									</view>
 									
 								</view>
+								<!-- 中间区域 -->
 								<view class="item-middle">
 									<text :class="it.isRead == UNREAD? 'title' : 'title-read'">{{it.friendInfo.nickname}}</text>
 									<text :class="it.isRead == UNREAD? 'message' : 'message-read'">{{it.msg}}</text>
@@ -141,8 +142,8 @@
 				}
 				if (this.messageIndex !== -1) {
 					// 负号控制块左右移动
-					// this.transformX = `translateX(${-this.btnGroupWidth}px)`;
 					this.transformX = `translateX(${58}px)`;
+					// this.transformX = `translateX(${58}px)`;
 					this.$emit('opened');
 					this.showdelete = 1;
 				} else {
@@ -170,11 +171,11 @@
 		position: fixed;
 		background-color: #007AFF;
 		width: 50px;
-		height: 54upx;
-		margin-top: 44upx;
+		height: 26px;
+		margin-top: 26px;
 		margin-left: 16px;
 		background-color: #fccf41;
-		border-radius: 25upx;
+		border-radius: 4px;
 	}
 
 	// .msglist-card {
@@ -253,16 +254,16 @@
 			text-align: center;
 
 			.image {
-				width: 100upx;
-				height: 100upx;
+				width: 40px;
+				height: 40px;
 				border-radius: 50upx;
 				background-color: #eee;
 			}
 
 			
 			.avator{
-				width: 80upx;
-				height: 80upx;
+				width: 40px;
+				height: 40px;
 				border-radius: 50%;
 				overflow: hiideen;
 				background: #f1f1f1;
@@ -288,17 +289,18 @@
 			flex-wrap: wrap;
 			flex-direction: row;
 			justify-content: flex-start;
-			margin-left: 15upx;
+			margin-left: 8px;
 			overflow: hidden;
 
 			.title {
 				width: 100%;
-				color: #353535;
-				font-family: "微软雅黑";
-				font-weight: 400;
-				font-size: 30upx;
-				height: 50upx;
-				line-height: 60upx;
+				height:23px;
+				font-size:14px;
+				font-family:Source Han Sans CN;
+				font-weight:bold;
+				line-height:23px;
+				color:rgba(53,53,53,1);
+				opacity:1;
 				overflow: hidden;
 				/*自动隐藏文字*/
 				text-overflow: ellipsis;
@@ -309,12 +311,13 @@
 			
 			.title-read {
 				width: 100%;
-				color: #9b9b9b;
-				font-family: "微软雅黑";
-				font-weight: 400;
-				font-size: 30upx;
-				height: 50upx;
-				line-height: 60upx;
+				height:23px;
+				font-size:14px;
+				font-family:Source Han Sans CN;
+				font-weight:bold;
+				line-height:23px;
+				color:rgba(136,136,136,1);
+				opacity:1;
 				overflow: hidden;
 				/*自动隐藏文字*/
 				text-overflow: ellipsis;
@@ -325,11 +328,13 @@
 
 			.message {
 				width: 100%;
-				font-family: "微软雅黑";
-				color: #6f6f6f;
-				height: 50upx;
-				line-height: 40upx;
-				font-size: 24upx;
+				height:23px;
+				font-size:11px;
+				font-family:Source Han Sans CN;
+				font-weight:400;
+				line-height:23px;
+				color:rgba(53,53,53,1);
+				opacity:1;
 				overflow: hidden;
 				/**自动隐藏文字*/
 				text-overflow: ellipsis;
@@ -340,11 +345,13 @@
 			
 			.message-read {
 				width: 100%;
-				font-family: "微软雅黑";
-				color: #9b9b9b;
-				height: 50upx;
-				line-height: 40upx;
-				font-size: 24upx;
+				height:23px;
+				font-size:11px;
+				font-family:Source Han Sans CN;
+				font-weight:400;
+				line-height:23px;
+				color:rgba(136,136,136,1);
+				opacity:1;
 				overflow: hidden;
 				/**自动隐藏文字*/
 				text-overflow: ellipsis;
@@ -362,26 +369,26 @@
 			align-items: center;
 
 			.time {
-				margin-top: -10upx;
-				color: #808080;
-				font-size: 18upx;
-				height: 60upx;
-				line-height: 60upx;
+				margin-top: -3px;
+				color: rgba(136,136,136,1);
+				font-size: 11px;
+				height: 30px;
+				line-height: 30px;
 				max-width: 85px;
 				text-overflow: ellipsis;
 			}
 
 			.mark {
 				position: absolute;
-				right: 0;
-				bottom: 15upx;
+				right: 3px;
+				bottom: 5px;
 				background-color: #fdd453;
-				line-height: 35upx;
+				line-height: 17.5px;
 				text-align: center;
-				font-size: 18upx;
-				min-width: 15upx;
-				min-height: 15upx;
-				border-radius: 18upx;
+				font-size: 11px;
+				min-width: 7.5px;
+				min-height: 7.5px;
+				border-radius: 50%;
 				color: #fff;
 			}
 		}

@@ -349,7 +349,7 @@ public class ArticleServiceImpl implements ArticleService {
 	public PagedResult searchArticleByTag(Integer page, Integer pageSize, String searchText,
 			String userId) {
 
-//		String[] texts = searchText.split(" ");
+		String[] texts = searchText.split(" ");
 		
 		
 		// 开启分页查询并转换为vo对象
@@ -357,10 +357,9 @@ public class ArticleServiceImpl implements ArticleService {
 		Example articleExample = new Example(Article.class);
 		articleExample.setOrderByClause("create_date desc");
 		Criteria criteria = articleExample.createCriteria();
-		criteria.andEqualTo("tags", "#" + searchText + "#");
-//		for(String text : texts) {
-//			criteria.orLike("tags", "#" + text + "#");
-//		}
+		for(String text : texts) {
+			criteria.orLike("tags", "%" + text + "%");
+		}
 		
 		Criteria criteria2 = articleExample.createCriteria();
 		criteria2.andEqualTo("status", StatusEnum.READABLE.type);

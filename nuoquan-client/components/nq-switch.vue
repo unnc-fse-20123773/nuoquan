@@ -13,12 +13,18 @@
 <script>
 	export default {
 		props: {
-			options: ''
+			options: '', //非必填，默认关/开
+			initStatus: '', //非必填，默认0
 		},
 		data() {
 			return {
-				status: '',
+				status: 0,
 			};
+		},
+		created(){
+			// 创建后再赋值
+			this.isNull(this.initStatus)?
+				this.status = 0 : this.status = this.initStatus
 		},
 		methods:{
 			/**

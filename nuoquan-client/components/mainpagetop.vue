@@ -7,9 +7,9 @@
 
 		<searchpage v-if="showSearch" class="searchPage" @exitSearchSignal="controlShowSearch"></searchpage>
 
-		<view :class="[roleup == false ? 'mainPageTop' : 'mainPageTop_roled']">
+		<view class="mainPageTop" :style="{ height: roleup == false ? height + 'px' : height_roled + 'px' }">
 			<!-- 搜索行 -->
-			<view class="topBar">
+			<view class="topBar" :style="{'margin-top': this.getnavbarHeight().top - 2 + 'px'}">
 				<!-- 头像，备用 <image class="topBarTouxiang" :src='pathFilter(userInfo.faceImg)' @click="controlShowLeft(1)"></image> -->
 				<view class="topBarSearch" @click="controlShowSearch(1)">
 					<image src="../static/icon/search_B79144.png" mode="aspectFit"></image>
@@ -52,25 +52,36 @@
 			</view>
 		</view>
 		<!-- 主页操作行 -->
-		<view v-if="roleup == false" style="display: flex;justify-content: space-between;width: 93.07%;left: 3.47%;height: 30px;position: fixed;top: 150px;" class="column_center">
+		<view v-if="roleup == false" class="optionLine_mpt column_center" :style="{top:height + 11 + 'px'}">
 			<!-- 标签选择 -->
-			<view class="tagchoose column_center">
+			<view class="tagchoose column_center" @click="toggleShowTag">
 				<text>标签</text>
 				<image class="tagicon" src="../static/icon/angle-down.png" mode="aspectFit"></image>
 			</view>
+			<tagSelectBox
+				:style="{position: 'fixed', 'margin-top': 6 + 'px' , left: 3.47 + '%' , width: 93.07 + '%' , top: height + 41 + 'px' }"
+				:tagList="tagList" 
+				@selected="getselectedTag" 
+				v-if="showTag">
+			</tagSelectBox>
 			<!-- 排序方式1-->
-			<nqSwitch :options='options1' @onChange="change_article_order1"></nqSwitch>
+			<nqSwitch :options='options1' :initStatus='iniStatus1' @onChange="change_article_order1"></nqSwitch>
 			<!-- 排序方式2 -->
-			<nqSwitch :options='options2' @onChange="change_article_order2"></nqSwitch>
+			<nqSwitch :options='options2' :initStatus='iniStatus2' @onChange="change_article_order2"></nqSwitch>
 		</view>
+		<!-- Add background for option bar-->
+		<view v-if="roleup == false" class="optionLinebg_mpt" :style="{top: height + 4 + 'px'}">
+		</view>
+		<!-- 标签选择 -->
+		
 	</view>
 </template>
 
 <script>
 import mainpageleft from '@/components/mainpageleft.vue';
 import searchpage from '../pages/search/search';
-import nqSwitch from "@/components/nq-switch.vue"
-
+import nqSwitch from '@/components/nq-switch.vue'
+import tagSelectBox from '@/components/nq-tag/tagSelectBox.vue'
 export default {
 	props: {
 		// 渲染时候替换默认值会被替换
@@ -78,26 +89,40 @@ export default {
 			faceImg: '../static/touxiang.jpg'
 		},
 		topArticles: '',
+		tagList: '', //标签列表
 		roleup: false,
+		height: 0,
+		height_roled: 0,
 	},
 	components: {
 		mainpageleft,
 		searchpage,
-		nqSwitch
+		nqSwitch,
+		tagSelectBox
 	},
 
-		data() {
-			return {
-				serverUrl: this.$serverUrl,
-				showMainPageLeft: 0,
-				showSearch: 0,
-				options1: ["所有","关注"],
-				options2: ["时间","热度"],
-			};
-		},
-
+	data() {
+		return {
+			serverUrl: this.$serverUrl,
+			showMainPageLeft: 0,
+			showSearch: 0,
+			showTag: false,
+			options1: ["所有","关注"], //为switch组件设置选项标签
+			iniStatus1: 0, //为switch组件设置初始值
+			options2: ["时间","热度"], //为switch组件设置选项标签
+			iniStatus2: 0, //为switch组件设置初始值
+		};
+	},
+	watch:{
+		roleup(newValue, oldValue){
+			this.showTag = false;
+		}
+	},
 
 	methods: {
+		toggleShowTag(){
+			this.showTag = !this.showTag
+		},
 		controlShowLeft(a) {
 			this.showMainPageLeft = a;
 			// console.log(this.showMainPageLeft);
@@ -125,12 +150,18 @@ export default {
 		
 		change_article_order1(e){
 			// console.log(e.status);
+			this.iniStatus1=e.status;
 			this.$emit('transQueryType', e.status);
 		},
 		
 		change_article_order2(e){
 			// console.log(e.status);
+			this.iniStatus2=e.status;
 			this.$emit('transOrderType', e.status);
+		},
+		
+		getselectedTag(tag){
+			this.$emit('queryArticleBytag', tag.tag);
 		}
 	}
 };
@@ -148,7 +179,7 @@ page {
 	top: 0;
 	left: 0;
 	background: #ffffff;
-	z-index: 10;
+	z-index: 30;
 }
 
 .bottomLayerOfLeft {
@@ -160,7 +191,7 @@ page {
 
 .mainPageTop {
 	padding-top: 4px;
-	height: 139px;
+	/* height: 139px; */
 	position: fixed;
 	left: 0;
 	top: 0;
@@ -171,7 +202,7 @@ page {
 	background-image: linear-gradient(#ffc95a, #f89d4d);
 }
 
-.mainPageTop_roled{
+/* .mainPageTop_roled{
 	padding-top: 4px;
 	height: 110px;
 	position: fixed;
@@ -183,11 +214,11 @@ page {
 	box-shadow: 0px 0px 10px 1px #c0c0c0;
 	background-image: linear-gradient(#ffc95a, #f89d4d);
 }
-
+ */
 .topBar {
 	width: 100%;
 	height: 30px;
-	margin-top: 23px;
+	/* margin-top: 23px; */
 	/* 此处需要兼容性处理 47px */
 }
 
@@ -202,7 +233,7 @@ page {
 	} */
 
 .topBarSearch {
-	width: 256px;
+	width: 68.27%;
 	height: 30px;
 	background: rgba(255, 247, 231, 1);
 	opacity: 1;
@@ -214,10 +245,10 @@ page {
 }
 
 .topBarSearch image {
-	width: 16px;
-	height: 16px;
+	width: 20px;
+	height: 20px;
 	opacity: 1;
-	margin: 7px 3px;
+	margin: 5px 13px;
 }
 
 .topBarPlus {
@@ -364,6 +395,24 @@ page {
 	opacity: 1;
 }
 
+.optionLine_mpt{
+	display: flex;
+	justify-content: space-between;
+	width: 93.07%;
+	left: 3.47%;
+	height: 30px;
+	position: fixed;
+	z-index: 20;
+}
+
+.optionLinebg_mpt{
+	position: fixed;
+	z-index: 10;
+	width: 100%;
+	height: 41px;
+	background-color: #fdfdfd;
+}
+
 .tagchoose{
 	width:74px;
 	height:26px;
@@ -417,10 +466,10 @@ page {
 		width:28px;
 		text-align: center;
 		transition: padding-left 200ms,
-		padding-right 200ms,
-		font-size  200ms,
-		color 200ms;
-		 transition-delay: 0ms;
+					padding-right 200ms,
+					font-size  200ms,
+					color 200ms;
+		transition-delay: 0ms;
 	}
 	.bg-of-order{
 		height:28px;
@@ -441,9 +490,9 @@ page {
 		padding-left: 0;
 		padding-right: 0;
 		transition: padding-left 300ms,
-		padding-right 300ms,
-		font-size  300ms,
-		color 300ms;
-		 transition-delay: 100ms;
+					padding-right 300ms,
+					font-size  300ms,
+					color 300ms;
+		transition-delay: 100ms;
 	}
 </style>

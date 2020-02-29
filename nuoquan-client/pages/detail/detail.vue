@@ -1,9 +1,11 @@
 <template>
 	<view class="detail-page">
 		<!-- 导航栏 -->
-		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" left-icon="back" left-text="返回"
+		<uni-nav-bar class="navigationBar"  left-icon="back" left-text="返回"
 		:title="pageTitle" 
 		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
+		<view :style="{'height': this.getnavbarHeight().bottom + 5 + 'px'}" style="width: 100%;"></view>
+		
 		<!-- 第一个大块二，文章本体 -->
 		<detail_1_article class="article-area" :articleCard='articleCard' @controlInputSignal="controlInput" :userInfo="userInfo"
 		 @swLikeArticleSignal="changeLikeStatus" @backToLastPage="backToLastPage()"></detail_1_article>
@@ -13,7 +15,7 @@
 		<!--第一个大块二，评论区域-->
 
 		<detail_2_comments class="comment-area" :commentList='commentList' @controlInputSignal="controlInput" :userInfo="userInfo"
-		@onChange="changeType"></detail_2_comments>
+		@onChange="changeType" :articleCardCommentNum='articleCard.commentNum'></detail_2_comments>
 
 
 
@@ -48,6 +50,8 @@
     <view class="permanent_input_BG" v-if="!showInput" @click="controlInput(1)">
         <input class="permanent_input" :placeholder="placeholderText" v-model="commentContent" disabled="true" min-height="10px" />
     </view>
+	<view style="height:80px;width:100%"></view><!-- 占位块 -->
+	
  
  
  
@@ -94,7 +98,7 @@ import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
 		components: {
 			detail_1_article,
 			detail_2_comments,
-			uniNavBar
+			uniNavBar,
 		},
 
 		onReachBottom() {
@@ -247,10 +251,11 @@ import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
 								that.commentContent = "";
 								that.showInput = false;
 								// 强制子组件重新刷新
-								that.commentList = '';
-								that.$nextTick(function() {
-									that.getComments(1);
-								});
+								// that.commentList = '';
+								// that.$nextTick(function() {
+								// 	that.getComments(1);
+								// });
+								that.getComments(1);
 								
 								that.articleCard.commentNum++; // 文章评论数累加
 							}else if (res.data.status == 500){
