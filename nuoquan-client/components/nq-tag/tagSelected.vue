@@ -4,6 +4,9 @@
 </template>
 
 <script>
+
+import tagSelected from './tagSelected';
+	
 export default {
 	props: {
 		tag: ''

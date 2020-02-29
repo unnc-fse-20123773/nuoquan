@@ -4,6 +4,7 @@
 		<mainpagetop
 			@transQueryType="changeQueryType"
 			@transOrderType="changeOrderType"
+			@queryArticleBytag="queryArticleBytag"
 			:userInfo="userInfo"
 			:topArticles="topArticles"
 			:tagList="tagList"
@@ -64,6 +65,8 @@ export default {
 				scrollTop: 0
 			},
 			capsuleButton: '',
+			
+			selectedTag: '',
 		};
 	},
 	components: {
@@ -156,7 +159,8 @@ export default {
 					// pageSize: '',
 					userId: that.userInfo.id,
 					queryType: that.queryType,
-					orderType: that.orderType
+					orderType: that.orderType,
+					selectedTag: that.selectedTag
 				},
 				header: {
 					'content-type': 'application/x-www-form-urlencoded'
@@ -183,6 +187,72 @@ export default {
 					uni.hideLoading();
 					loadArticleFlag = false;
 
+					console.log('index unirequest fail');
+					console.log(res);
+				}
+			});
+		},
+		
+		queryArticleBytag(tag){
+			this.selectedTag = tag;
+			// console.log("去去去:" + this.currentPage);
+			// console.log("去去去: " + tag);
+			
+			if (loadArticleFlag) {
+				return;
+			}
+			loadArticleFlag = true;
+			
+			uni.showLoading({
+				title: '加载中...'
+			});
+			setTimeout(() => {
+				if (loadArticleFlag) {
+					loadArticleFlag = false; // 解锁
+					uni.hideLoading();
+					uni.showToast({
+						title: '网络未知错误',
+						icon: 'none',
+						duration: 1000
+					});
+				}
+			}, 5000); // 延时5s timeout
+			
+			var that = this;
+			uni.request({
+				url: that.$serverUrl + '/article/queryArticleByTag',
+				method: 'POST',
+				data: {
+					page: that.currentPage,
+					// pageSize: '',
+					userId: that.userInfo.id,
+					searchText: tag
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					setTimeout(() => {
+						// 延时加载
+						uni.hideLoading();
+						loadArticleFlag = false;
+			
+						console.log(res);
+						// 判断当前页是不是第一页，如果是第一页，那么设置showList为空
+						if (that.currentPage == 1) {
+							that.showlist = [];
+						}
+						var newArticleList = res.data.data.rows;
+						var oldArticleList = that.showlist;
+						that.showlist = oldArticleList.concat(newArticleList);
+						that.currentPage = res.data.data.page;
+						that.totalPage = res.data.data.total;
+					}, 300);
+				},
+				fail: res => {
+					uni.hideLoading();
+					loadArticleFlag = false;
+			
 					console.log('index unirequest fail');
 					console.log(res);
 				}

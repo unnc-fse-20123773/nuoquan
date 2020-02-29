@@ -1,5 +1,7 @@
 package com.nuoquan.service;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
@@ -291,6 +293,72 @@ public class ArticleServiceImpl implements ArticleService {
 			criteria.orLike("articleTitle", "%" + text + "%");
 			criteria.orLike("articleContent", "%" + text + "%");
 			criteria.orLike("tags", "%#" + text + "%");
+		}
+		
+		Criteria criteria2 = articleExample.createCriteria();
+		criteria2.andEqualTo("status", StatusEnum.READABLE.type);
+		articleExample.and(criteria2);
+		
+		PageHelper.startPage(page, pageSize);
+		List<Article> list = articleMapper.selectByExample(articleExample);
+		PageInfo<Article> pageInfo = new PageInfo<>(list);
+		PageInfo<ArticleVO> pageInfoVo = PageUtils.PageInfo2PageInfoVo(pageInfo);
+		
+		List<ArticleVO> listVo = new ArrayList<>();
+		for (Article a : list) {
+			ArticleVO av = new ArticleVO();
+			BeanUtils.copyProperties(a, av); //转换对象
+			// 添加作者信息
+			User user= userMapper.selectByPrimaryKey(av.getUserId());
+			if (user!=null) {
+				av.setNickname(user.getNickname());
+				av.setFaceImg(user.getFaceImg());
+				av.setFaceImgThumb(user.getFaceImgThumb());
+			}
+			// 为每个文章添加图片列表
+			av.setImgList(articleImageMapper.getArticleImgs(av.getId()));
+			// 添加和关于用户的点赞关系
+			av.setIsLike(isUserLikeArticle(userId, av.getId()));
+			// 添加标签list
+			if(!StringUtils.isBlank(av.getTags())) {
+				String[] tagList = av.getTags().split("#");
+				List<String> finalTagList = new ArrayList<String>();
+				for (String tag : tagList) {
+					if (!StringUtils.isBlank(tag)) {
+						finalTagList.add(tag);
+					}
+				}
+				av.setTagList(finalTagList);
+			}
+			listVo.add(av);
+		}
+		pageInfoVo.setList(listVo);
+		
+		//为最终返回对象 pagedResult 添加属性
+		PagedResult pagedResult = new PagedResult();
+		pagedResult.setPage(pageInfoVo.getPageNum());
+		pagedResult.setTotal(pageInfoVo.getPages());
+		pagedResult.setRows(pageInfoVo.getList());
+		pagedResult.setRecords(pageInfoVo.getTotal());
+
+		return pagedResult;
+	}
+	
+	@Transactional(propagation = Propagation.SUPPORTS)
+	@Override
+	public PagedResult searchArticleByTag(Integer page, Integer pageSize, String searchText,
+			String userId) {
+
+		String[] texts = searchText.split(" ");
+		
+		
+		// 开启分页查询并转换为vo对象
+		// 在Example中的每一个Criteria相当于一个括号，把里面的内容当成一个整体
+		Example articleExample = new Example(Article.class);
+		articleExample.setOrderByClause("create_date desc");
+		Criteria criteria = articleExample.createCriteria();
+		for(String text : texts) {
+			criteria.orLike("tags", "%" + text + "%");
 		}
 		
 		Criteria criteria2 = articleExample.createCriteria();
@@ -684,7 +752,7 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public PagedResult getArticleByPopurity(Integer page, Integer pageSize, String userId) {
 		PageHelper.startPage(page, pageSize);
-		List<ArticleVO> list = articleMapperCustom.getTop3ByPopularity();
+		List<ArticleVO> list = articleMapperCustom.getArticleByPopularity();
 		for (ArticleVO a : list) {
 			// 为每个文章添加图片列表
 			a.setImgList(articleImageMapper.getArticleImgs(a.getId()));
@@ -866,21 +934,31 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public PagedResult getAllSubscribedAuthorArticles(Integer page, Integer pageSize, String userId) {
 		// 查询全部我(操作者)关注的用户
-		Example example = new Example(UserFans.class);
-		Criteria criteria = example.createCriteria();
+		Example mySubscribedUserExample = new Example(UserFans.class);
+		Criteria criteria = mySubscribedUserExample.createCriteria();
 		// 此处userId为操作者id
 		criteria.andEqualTo("fansId", userId);
-		List<UserFans> userList = userFansMapper.selectByExample(example);
+		List<UserFans> userList = userFansMapper.selectByExample(mySubscribedUserExample);
 		
-		Example example2 = new Example(Article.class);
-		example2.setOrderByClause("create_date desc");
-		Criteria criteria2 = example2.createCriteria();
+		if (userList.size() == 0 || userList == null) {
+			return null;
+		}
+		
+		// 查找 我关注的人的 + 状态为1(可读) 的文章
+		Example mySubscribedUserArticle = new Example(Article.class);
+		mySubscribedUserArticle.setOrderByClause("create_date desc");
+		Criteria criteria2 = mySubscribedUserArticle.createCriteria();
 		for (UserFans userFans : userList) {
 			System.out.println(userFans.getUserId());
 			criteria2.orEqualTo("userId", userFans.getUserId());
 		}
-
-		List<Article> list = articleMapper.selectByExample(example2);
+		
+		Criteria criteria3 = mySubscribedUserArticle.createCriteria();
+		criteria3.andEqualTo("status", StatusEnum.READABLE.type);
+		mySubscribedUserArticle.and(criteria3);
+		
+		
+		List<Article> list = articleMapper.selectByExample(mySubscribedUserArticle);
 		PageInfo<Article> pageInfo = new PageInfo<>(list);
 		PageInfo<ArticleVO> pageInfoVO = PageUtils.PageInfo2PageInfoVo(pageInfo);
 		
@@ -931,21 +1009,29 @@ public class ArticleServiceImpl implements ArticleService {
 	public PagedResult getAllSubscribedAuthorArticlesByPopularity(Integer page, Integer pageSize, String userId) {
 
 		// 查询全部我(操作者)关注的用户
-			Example example = new Example(UserFans.class);
-			Criteria criteria = example.createCriteria();
+			Example mySubscribedUserExample = new Example(UserFans.class);
+			Criteria criteria = mySubscribedUserExample.createCriteria();
 			// 此处userId为操作者id
 			criteria.andEqualTo("fansId", userId);
-			List<UserFans> userList = userFansMapper.selectByExample(example);
+			List<UserFans> userList = userFansMapper.selectByExample(mySubscribedUserExample);
 			
-			Example example2 = new Example(Article.class);
-			example2.setOrderByClause("popularity desc");
-			Criteria criteria2 = example2.createCriteria();
+			if (userList.size() == 0 || userList == null) {
+				return null;
+			}
+			
+			Example mySubscribedUserArticle = new Example(Article.class);
+			mySubscribedUserArticle.setOrderByClause("popularity desc");
+			Criteria criteria2 = mySubscribedUserArticle.createCriteria();
 			for (UserFans userFans : userList) {
 //					System.out.println(userFans.getUserId());
 				criteria2.orEqualTo("userId", userFans.getUserId());
 			}
+			
+			Criteria criteria3 = mySubscribedUserArticle.createCriteria();
+			criteria3.andEqualTo("status", StatusEnum.READABLE.type);
+			mySubscribedUserArticle.and(criteria3);
 
-			List<Article> list = articleMapper.selectByExample(example2);
+			List<Article> list = articleMapper.selectByExample(mySubscribedUserArticle);
 			PageInfo<Article> pageInfo = new PageInfo<>(list);
 			PageInfo<ArticleVO> pageInfoVO = PageUtils.PageInfo2PageInfoVo(pageInfo);
 			

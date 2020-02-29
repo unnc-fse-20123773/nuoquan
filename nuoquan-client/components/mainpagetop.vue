@@ -158,6 +158,10 @@ export default {
 			// console.log(e.status);
 			this.iniStatus2=e.status;
 			this.$emit('transOrderType', e.status);
+		},
+		
+		getselectedTag(tag){
+			this.$emit('queryArticleBytag', tag.tag);
 		}
 	}
 };

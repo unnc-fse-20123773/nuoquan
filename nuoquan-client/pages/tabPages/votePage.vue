@@ -76,7 +76,7 @@
 					<view v-if="finishVote[index] == false" class="voteCard">
 						<!-- 双层嵌套，可适应以后扩展选项内容 -->
 						<view v-for="(option, index2) in item.optionList" :key="index2"  :class="[option.id != selectedOptionId ? 'oneVoteCard' : 'oneVoteCard_chosen']" @click="switchChoose(option.id, index)">
-							<text :class="[option.id != selectedOptionId ? 'oneVote_text' : 'oneVote_text_chosen']">{{(option.id)}}</text>
+							<text :class="[option.id != selectedOptionId ? 'oneVote_text' : 'oneVote_text_chosen']">{{(option.optionContent)}}</text>
 						</view>
 					</view>
 					<!-- 确定投票后的选项展示 -->
