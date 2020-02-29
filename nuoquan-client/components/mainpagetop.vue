@@ -54,11 +54,13 @@
 		<!-- 主页操作行 -->
 		<view v-if="roleup == false" class="optionLine_mpt column_center" :style="{top:height + 11 + 'px'}">
 			<!-- 标签选择 -->
-			<view v-if="!selectedTag" class="tagchoose column_center" @click="toggleShowTag">
-				<text>标签</text>
-				<image class="tagicon" src="../static/icon/angle-down.png" mode="aspectFit"></image>
+			<view @click="toggleShowTag">
+				<view v-if="!selectedTag" class="tagchoose column_center">
+					<text>标签</text>
+					<image class="tagicon" src="../static/icon/angle-down.png" mode="aspectFit"></image>
+				</view>
+				<tagSelected v-if="selectedTag" :tag='selectedTag' @click="deleteTag"></tagSelected>
 			</view>
-			<tagSelected v-if="selectedTag" :tag='selectedTag' @click="deleteTag"></tagSelected>
 			<tagSelectBox
 				:style="{position: 'fixed', 'margin-top': 6 + 'px' , left: 3.47 + '%' , width: 93.07 + '%' , top: height + 41 + 'px' }"
 				:tagList="tagList" 
@@ -165,12 +167,12 @@ export default {
 		
 		getSelectedTag(tag){
 			this.selectedTag = tag; //传值给渲染层
+			this.showTagBox = false;
 			this.$emit('selectedTag', tag);
 		},
 		
 		deleteTag(){
 			this.selectedTag = '';
-			this.showTagBox = false;
 			this.$emit('deleteTag');
 		}
 	}
