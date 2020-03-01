@@ -1,6 +1,15 @@
 <template>
 	<view style="width: 100%; height: 100%; background: linear-gradient(#f89d4d, #ffc95a);">
 		<!-- 导航栏 -->
+		<uni-nav-bar class="navigationBar"
+		:style="{height: this.getnavbarHeight() + 'px'}" 
+		:showLeftIcon="true" 
+		:isNavHome="isNavHome" 
+		left-text="返回"
+		:title="pageTitle" 
+		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>				
+		
+		<!-- 导航栏 -->
 		<view class="navigatorBar_votePage super_center" :style="{ height: navigationBarHeight + 'px' }">NavigatorBar</view>
 		<!-- 左侧按钮 -->
 		<view class="tapLeft super_center" :style="{ top: navigationBarHeight + 46 + 'px' }">
@@ -201,7 +210,8 @@
 				afterSelectedResult: [], // 确认选择后刷新单个产生的单个vote的所有信息
 				afterSelectedOptionList: [], // 确认选择后刷新单个产生的单个vote的选项信息
 				
-				loadedMoreIndex: [] // 用来储存已经触发过loadMore方法的投票的index.
+				loadedMoreIndex: [], // 用来储存已经触发过loadMore方法的投票的index.
+				isNavHome: getApp().globalData.isNavHome,//判断导航栏左侧是否显示home按钮
 			};
 		},
 		

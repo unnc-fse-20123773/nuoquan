@@ -4,9 +4,14 @@
 		<view :style="{ width: 100 + '%', height: this.getnavbarHeight().bottom + 5 + 'px' , 'background-color': 'white' }">
 		</view>
 		<!-- 导航栏 -->
-		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" left-icon="back" left-text="返回"
+		<uni-nav-bar class="navigationBar"
+		:style="{height: this.getnavbarHeight() + 'px'}" 
+		:showLeftIcon="true" 
+		:isNavHome="isNavHome" 
+		left-text="返回"
 		:title="pageTitle" 
-		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
+		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>				
+		
 		<!-- 黄色头部 -->
 		<view id="yellowTopBox">
 			<view class="yellowTop" :style="{ bottom: yellowBottom }"></view>
@@ -168,7 +173,8 @@ export default {
 			totalPage: 1,
 			currentPage: 1,
 			totalNum: '0',
-			myArticleList: ''
+			myArticleList: '',
+			isNavHome: getApp().globalData.isNavHome,//判断导航栏左侧是否显示home按钮
 		};
 	},
 

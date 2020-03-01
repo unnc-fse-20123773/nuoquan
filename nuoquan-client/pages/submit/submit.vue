@@ -1,6 +1,16 @@
 <!-- TODO: 取消添加图片, 标签输入不能含有特殊字符，颜色变化 -->
 <template>
 	<view class="submitMain">
+		<!-- 导航栏 -->
+		<uni-nav-bar class="navigationBar"
+		:style="{height: this.getnavbarHeight() + 'px'}" 
+		:showLeftIcon="true" 
+		:isNavHome="isNavHome" 
+		left-text="返回"
+		:title="pageTitle" 
+		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>				
+		
+		<view :style="{height: this.getnavbarHeight().bottom + 5 + 'px'}"></view>
 		<!-- 当失去焦点时，将输入内容存入articleTitle -->
 		<view style="position: relative;margin-top: 20px;">
 			<input class="title" v-model="articleTitle" placeholder="标题" maxlength="20" placeholder-class="title-placeholder" />
@@ -60,6 +70,8 @@
 <script>
 import tagSelectBox from '@/components/nq-tag/tagSelectBox.vue';
 import tagSelected from '@/components/nq-tag/tagSelected.vue'
+import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue";	
+
 // #ifdef APP-PLUS
 import permision from '@/common/permission.js';
 // #endif
@@ -72,10 +84,12 @@ var uploadTasks = [];
 export default {
 	components: {
 		tagSelectBox,
-		tagSelected
+		tagSelected,
+		uniNavBar
 	},
 	data() {
 		return {
+			pageTitle: '新建帖子',
 			userInfo: '',
 			articleTitle: '',
 			articleContent: '',
@@ -101,7 +115,8 @@ export default {
 			sizeType: ['压缩', '原图', '压缩或原图'],
 			countIndex: 8,
 			count: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-			windowHeight: 0
+			windowHeight: 0,
+			isNavHome: getApp().globalData.isNavHome,//判断导航栏左侧是否显示home按钮
 		};
 	},
 	onUnload() {
@@ -440,6 +455,7 @@ page {
 .selectedTagsArea {
 	margin-top: 13px;
 	position: relative;
+	margin-bottom: 8px;
 }
 
 .finish-button {

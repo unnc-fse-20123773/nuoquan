@@ -1,6 +1,14 @@
 <template>
 	<view id="profile-container">
-		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" left-icon="back" left-text="返回" :title="pageTitle" :height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
+		<!-- 导航栏 -->
+		<uni-nav-bar class="navigationBar" 
+			:style="{height: this.getnavbarHeight() + 'px'}" 
+			:showLeftIcon="true" 
+			:isNavHome="isNavHome"
+			left-text="返回" 
+			:title="pageTitle" 
+			:height="this.getnavbarHeight().bottom + 5">
+		</uni-nav-bar>
 		<view :style="{height: this.getnavbarHeight().bottom + 5 + 'px'}"></view>
 		<view id="yellow-box"></view>
 		<form @submit="formSubmit" @reset="formReset">
@@ -333,7 +341,7 @@
 		top: 0;
 		height: 200rpx;
 		width: 100%;
-		background-color: #FFCF3C;
+		background-color: #ffc85a;
 	}
 
 	.profile-basicinfo-card {
@@ -378,7 +386,7 @@
 		width: 68px;
 		height: 26px;
 		background: rgba(255, 201, 90, 1);
-	line-height: 26px;
+		line-height: 26px;
 		border-radius: 4px;
 	}
 
@@ -388,9 +396,11 @@
 		top: 3%;
 		width: 68px;
 		height: 26px;
-		border: 1px solid rgba(255, 201, 90, 1);
+		/* border: 1px solid rgba(255, 201, 90, 1); */
 		line-height: 26px;
 		border-radius: 4px;
+		opacity:1;
+		background-color: white;
 	}
 
 	.editProfile-text {
@@ -497,7 +507,7 @@
 	.gender {
 		vertical-align: top;
 		display: inline-block;
-		width: 95px;
+		min-width: 95px;
 		height: 45px;
 		margin: 0 calc((50% - 95px)/2) 15px;
 		position: relative;
@@ -573,9 +583,9 @@
 	.genderPicker-buttonclick {
 		width: 41px;
 		height: 23px;
-		border: 1px solid blue;
+		border: 1px solid #3370FF;
 		border-radius: 4px;
-		background-color: blue;
+		background-color: #3370FF;
 		color: rgba(255, 255, 255, 1);
 		text-align: center;
 		align-self: flex-end;

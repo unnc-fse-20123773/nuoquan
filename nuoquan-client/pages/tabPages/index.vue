@@ -337,6 +337,7 @@ export default {
 <style>
 page {
 	height: 100%;
+	width: 100%;
 }
 </style>
 
@@ -344,6 +345,7 @@ page {
 .index {
 	/* 页面高度由内容扩充，最低值为100%（page 定义的）- by Guetta */
 	height: 100%;
+	width: 100%;
 	background-color: #fdfdfd;
 }
 

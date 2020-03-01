@@ -2,7 +2,7 @@
 	<view id="container">、
 		<!-- 导航栏 -->
 		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}"
-		:title="pageTitle" 
+		:title="pageTitle" :showLeftIcon="false"
 		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
 		<!-- 黄色背景 -->
 		<view id="msglist-yellowshadowbg">

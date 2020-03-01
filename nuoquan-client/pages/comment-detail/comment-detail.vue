@@ -1,8 +1,14 @@
 <template>
 	<view class="comment-detail-page">
 		<!-- 导航栏 -->
-		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" left-icon="back" left-text="返回"
-		 :title="pageTitle" :height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
+		<uni-nav-bar class="navigationBar"
+		:style="{height: this.getnavbarHeight() + 'px'}" 
+		:showLeftIcon="true" 
+		:isNavHome="isNavHome" 
+		left-text="返回"
+		:title="pageTitle" 
+		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>				
+		
 		<!-- 主评论区域 -->
 
 		<view class="comment-Box">
@@ -93,6 +99,7 @@
 				currentPage: 1,
 				
 				saveCommentFlag:false,
+				isNavHome: getApp().globalData.isNavHome,//判断导航栏左侧是否显示home按钮
 			}
 		},
 

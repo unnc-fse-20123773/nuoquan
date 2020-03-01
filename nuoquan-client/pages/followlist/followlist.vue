@@ -1,9 +1,15 @@
 <template>
 	<view id="public-container">
 		<!-- 导航栏 -->
-		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" left-icon="back" left-text="返回"
+		<uni-nav-bar class="navigationBar"
+		:style="{height: this.getnavbarHeight() + 'px'}" 
+		:showLeftIcon="true" 
+		:isNavHome="isNavHome" 
+		left-text="返回"
 		:title="pageTitle" 
-		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
+		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>				
+		
+		<view :style="{height: this.getnavbarHeight().bottom + 5 + 'px'}"></view>
 		
 		<view id="public-message-futherbox">
 			<scroll-view class="top-menu-view" scroll-x="true" scroll-left="scrollLeft">
@@ -90,8 +96,8 @@
 				scrollTop: 0,
 				old: {
 					scrollTop: 0
-				}
-
+				},
+				isNavHome: getApp().globalData.isNavHome,//判断导航栏左侧是否显示home按钮
 			}
 		},
 
