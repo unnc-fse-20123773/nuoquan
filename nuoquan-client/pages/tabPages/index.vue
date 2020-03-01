@@ -80,9 +80,9 @@ export default {
 	onLoad() {
 		var userInfo = this.getGlobalUserInfo();
 		if (this.isNull(userInfo)) {
-			// uni.redirectTo({
-			// 	url: '../signin/signin'
-			// });
+			uni.redirectTo({
+				url: '../signin/signin'
+			});
 			return;
 		} else {
 			this.userInfo = userInfo; // 刷去默认值(若有)
