@@ -133,7 +133,6 @@
 			uni.setNavigationBarTitle({
 				title: "个人信息"
 			});
-			console.log(this.getGlobalUserInfo());
 			var a = this.getGlobalUserInfo();
 			this.userInfo = a;
 			// 按已有信息修改默认值
@@ -165,6 +164,7 @@
 					this.major = res.newPickerValue;
 				} else if (res.mode == 'degree') {
 					this.degree = res.newPickerValue;
+					this.degreeDB = this.degrees.indexOf(res.newPickerValue);
 				} else if (res.mode == 'year') {
 					this.year = res.newPickerValue;
 				}
@@ -201,20 +201,6 @@
 				this.editProfile(this.isEdit);
 			},
 
-			yearChange: function(e) {
-				var year = this.years[e];
-				this.year = year;
-				// 给组件赋值回去，更改起始值
-				this.yearPickerVal[0] = e;
-
-			},
-
-			majorChange: function(e) {
-				var major = this.majors[e];
-				this.major = major;
-				// 给组件赋值回去，更改起始值
-				this.majorPickerVal[0] = e;
-			},
 			getCaptcha:function(isSent) {
 				if (isSent == false) {
 					this.isSent = true;
@@ -269,14 +255,7 @@
 					}
 				
 			},
-			degreeChange: function(e) {
-				var degree = this.degrees[e];
-				this.degree = degree;
-				this.degreeDB = e[0];
-				// 给组件赋值回去，更改起始值
-				this.degreePickerVal[0] = e;
 
-			},
 
 			formSubmit: function(e) {
 				// 提交表单操作
@@ -289,6 +268,7 @@
 					major: this.major,
 					degree: this.degreeDB
 				};
+				console.log("here");
 				console.log(data);
 				uni.request({
 					url: this.$serverUrl + '/user/updateUser',
