@@ -5,11 +5,8 @@
 		<view id="yellow-box"></view>
 		<form @submit="formSubmit" @reset="formReset">
 			<view class="profile-basicinfo-card">
-				<avatar class="profileTouxiang"
-					selWidth="200px" selHeight="400upx" @upload="uploadFace" :avatarSrc="pathFilter(userInfo.faceImg)"
-					avatarStyle="width: 160upx; height: 160upx; border-radius: 100%;">
-				</avatar>
-				<!-- 完成/修改按钮 -->
+				<image class="profileTouxiang" mode="aspectFill" :src="userInfo.faceImg" height:160upx width:160upx></image>
+				<!-- 一般状态 -->
 				<button class="editProfile super_center" v-if="isEdit == false" @click="editProfile(isEdit)">
 					<view @click="editProfile(isEdit)" class="editProfile-text">修改</view>
 				</button>
@@ -17,18 +14,18 @@
 					<view class="editProfile-edit-text">完成</view>
 				</button>
 
-				<!-- 编辑框 -->
+
 				<view class="nickname">
 					<view class="text">昵称</view>
 					<view class="second_line" v-if="!isEdit">{{userInfo.nickname}}</view>
-					<input name="nickname" maxlength="8" :value="userInfo.nickname" v-if="isEdit" />
+					<input maxlength="8" :value="userInfo.nickname" v-if="isEdit" />
 					<!-- <text v-if="isEdit == true" class="text_limit"> 最长 8 位</text> -->
 				</view>
 
 				<view class="gender">
 					<view class="text"> 性别</view>
-					<!-- 					<text class="right-profileTexta"  v-if="userInfo.gender==null || userInfo.gender==-1">待设置</text> -->
-					<view class="second_line" v-if="!isEdit">{{genderList[userInfo.gender]}}</view>
+					<view class="second_line"  v-if="!isEdit&&userInfo.gender!=null&& userInfo.gender!=-1">{{genderList[userInfo.gender]}}</view>
+					<view class="second_line" v-else-if="!isEdit&&(userInfo.gender==null || userInfo.gender==-1)">待设置</view>
 					<view v-if="isEdit" style="display: flex;justify-content: space-between;position: relative;left:-6px;height:34px;">
 						<view :class="[gender == 1 ? 'genderPicker-buttonclick' : 'genderPicker-button']" @click="genderChanger(1)">
 							男
@@ -77,9 +74,11 @@
 <script>
 	import mypicker from '../../components/mypicker.vue';
 	import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue";
-	import avatar from "../../components/yq-avatar/yq-avatar.vue";
-	
 	export default {
+		components:{
+			mypicker,
+			uniNavBar
+		},
 		data() {
 			// 为毕业年份 picker 传值
 			const date = new Date();
@@ -92,7 +91,8 @@
 
 			// major
 			const majors = ['AEE', 'ABE', 'CS', 'CEE', 'CIVE', 'ECON', 'EEE', 'ENGL',
-				'GEOG', 'IC', 'IS', 'MATH', 'PDM', 'NUBS'];
+				'GEOG', 'IC', 'IS', 'MATH', 'PDM', 'NUBS'
+			];
 
 			// degree 顺序和数据库保持一致
 			const degrees = ['高中', '本科', '研究生'];
@@ -123,10 +123,8 @@
 			}
 		},
 
-		components:{
+		components: {
 			mypicker,
-			uniNavBar,
-			avatar
 		},
 
 		onLoad: function() {
@@ -155,8 +153,12 @@
 
 			if (!this.isNull(degree)) {
 				this.degree = this.degrees[degree];
-				this.degreeDB = degree; // 修改对数据库的默认值
+			this.degreeDB = degree; // 修改对数据库的默认值
 			}
+		},
+
+		onShow() {
+			this.setTabBarIndex(3) //index为当前tab的索引
 		},
 
 		methods: {
@@ -165,6 +167,7 @@
 					this.major = res.newPickerValue;
 				} else if (res.mode == 'degree') {
 					this.degree = res.newPickerValue;
+					this.degreeDB = this.degrees.indexOf(res.newPickerValue);
 				} else if (res.mode == 'year') {
 					this.year = res.newPickerValue;
 				}
@@ -177,6 +180,7 @@
 					this.gender = gender;
 				}
 			},
+
 
 			editProfile: function(isEdit) {
 				if (isEdit == false) {
@@ -201,20 +205,7 @@
 				this.editProfile(this.isEdit);
 			},
 
-			yearChange: function(e) {
-				var year = this.years[e];
-				this.year = year;
-				// 给组件赋值回去，更改起始值
-				this.yearPickerVal[0] = e;
-
-			},
-
-			majorChange: function(e) {
-				var major = this.majors[e];
-				this.major = major;
-				// 给组件赋值回去，更改起始值
-				this.majorPickerVal[0] = e;
-			},
+			
 			getCaptcha:function(isSent) {
 				if (isSent == false) {
 					this.isSent = true;
@@ -269,14 +260,7 @@
 					}
 				
 			},
-			degreeChange: function(e) {
-				var degree = this.degrees[e];
-				this.degree = degree;
-				this.degreeDB = e[0];
-				// 给组件赋值回去，更改起始值
-				this.degreePickerVal[0] = e;
-
-			},
+	
 
 			formSubmit: function(e) {
 				// 提交表单操作
@@ -285,13 +269,15 @@
 					id: this.userInfo.id,
 					nickname: form.nickname,
 					gender: this.gender,
+					email: form.email,
 					graduationYear: this.year,
 					major: this.major,
 					degree: this.degreeDB
 				};
 				console.log(data);
+				var that = this;
 				uni.request({
-					url: this.$serverUrl + '/user/updateUser',
+					url: that.$serverUrl + '/user/updateUser',
 					method: "POST",
 					data: JSON.stringify(data),
 					header: {
@@ -303,7 +289,7 @@
 							var finalUser = this.myUser(user); // 分割邮箱地址, 重构 user
 							this.setGlobalUserInfo(finalUser); // 把用户信息写入缓存
 							this.userInfo = finalUser; // 更新页面用户数据
-							// console.log(this.userInfo);
+							console.log(this.userInfo);
 						}
 					},
 				});
@@ -311,27 +297,18 @@
 				// 完成修改，更改 isEdit 为 false
 				this.editProfile(this.isEdit);
 			},
-			/**
-			 * 上传头像
-			 * @param {Object} e
-			 */
-			uploadFace(rsp) {
-				var path = rsp.path;
-				uni.uploadFile({
-					url: this.$serverUrl + '/user/uploadFace',
-					filePath: path,
-					name: 'file',
-					formData: {
-						userId: this.userInfo.id,
-					},
-					success: (res) => {
-						// uploadFile 返回的 res.data 是 String
-						var data = JSON.parse(res.data);
-						if (data.status == 200) {
-							this.userInfo.faceImg = data.data;
-						}
+
+			getIndex(list, item) {
+				for (var i = 0; i < list.length; i++) {
+					if (list[i] == item) {
+						return i;
 					}
-				});
+				}
+				return -1;
+			},
+
+			test(e) {
+				console.log(e);
 			}
 		}
 	}
