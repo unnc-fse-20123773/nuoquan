@@ -1,10 +1,17 @@
 <script>
 export default {
+	globalData:{
+		isNavHome: false //导航栏左侧是否为 home
+	},
 	onLaunch: function() {
 		
 	},
-	onShow: function() {
+	onShow: function(options) {
 		console.log('App Show');
+		if(options.path != "pages/tabPages/index"){
+			console.log(options.path);
+			this.globalData.isNavHome = true;
+		}
 	},
 	onHide: function() {
 		console.log('App Hide');

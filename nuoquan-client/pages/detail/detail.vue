@@ -1,8 +1,8 @@
 <template>
 	<view class="detail-page">
 		<!-- 导航栏 -->
-		<uni-nav-bar class="navigationBar"  left-icon="back" left-text="返回"
-		:title="pageTitle" 
+		<uni-nav-bar class="navigationBar" left-text="返回"
+		:title="pageTitle" :showLeftIcon="true" :isNavHome="isNavHome"
 		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
 		<view :style="{'height': this.getnavbarHeight().bottom + 5 + 'px'}" style="width: 100%;"></view>
 		
@@ -92,6 +92,8 @@ import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
 				currentPage: 1,
 				type: 0, //查询评论接口参数，0：按时间查询, 1：按热度查询
 				control_scroll_button_flag:0,
+				
+				isNavHome: getApp().globalData.isNavHome,//判断导航栏左侧是否显示home按钮
 			};
 		},
 		

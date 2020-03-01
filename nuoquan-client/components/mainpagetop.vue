@@ -54,15 +54,15 @@
 		<!-- 主页操作行 -->
 		<view v-if="roleup == false" class="optionLine_mpt column_center" :style="{top:height + 11 + 'px'}">
 			<!-- 标签选择 -->
-			<view @click="toggleShowTag">
-				<view v-if="!selectedTag" class="tagchoose column_center">
+			<view>
+				<view v-if="!selectedTag" @click="toggleShowTag" class="tagchoose column_center">
 					<text>标签</text>
 					<image class="tagicon" src="../static/icon/angle-down.png" mode="aspectFit"></image>
 				</view>
 				<tagSelected v-if="selectedTag" :tag='selectedTag' @click="deleteTag"></tagSelected>
 			</view>
 			<tagSelectBox
-				:style="{position: 'fixed', 'margin-top': 6 + 'px' , left: 3.47 + '%' , width: 93.07 + '%' , top: height + 41 + 'px' }"
+				:style="{position: 'fixed', 'z-index': '40' , 'margin-top': 6 + 'px' , left: 3.47 + '%' , width: 93.07 + '%' , top: height + 41 + 'px' }"
 				:tagList="tagList" 
 				@selected="getSelectedTag" 
 				v-if="showTagBox">
@@ -75,8 +75,8 @@
 		<!-- Add background for option bar-->
 		<view v-if="roleup == false" class="optionLinebg_mpt" :style="{top: height + 4 + 'px'}">
 		</view>
-		<!-- 标签选择 -->
-		
+		<!-- 标签选择列表蒙版 -->
+		<!-- <view v-if="showTagBox" style="width: 100%;height: 100%;position: fixed;z-index: 30;top: 0;background-color: #007AFF;"></view> -->
 	</view>
 </template>
 

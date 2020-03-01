@@ -1,38 +1,49 @@
 <template>
-	<view class="zdTabBar">
-		<view class="ul">
-			<!-- 推出左侧空白 -->
-			<view style="width: 20px;"></view>
-			<view :class="['super_center','li', current == index ? 'cur' : '']" v-for="(item, index) in tabBarList" :key="index" @tap="onClick(item)">
-				<view class="img super_center" :style="{height: current == index ? '44px' : '20px',
-				width: current == index ? '44px' : '20px',
-				background: current == index ? 'rgba(253,169,86,1)' : ''}" 
-				v-if="item.type == 0">
-					<image style="width: 20px;height: 20px;" :src="current == index ? item.selectIcon : item.icon" mode="aspectFit"></image>
+	<view>
+		<view class="zdTabBar">
+			<view class="ul">
+				<!-- 推出左侧空白 -->
+				<view style="width: 20px;"></view>
+				<view :class="['super_center', 'li', current == index ? 'cur' : '']" v-for="(item, index) in tabBarList" :key="index" @tap="onClick(item)">
+					<view
+						class="img super_center"
+						:style="{ height: current == index ? '44px' : '20px', width: current == index ? '44px' : '20px', background: current == index ? 'rgba(253,169,86,1)' : '' }"
+						v-if="item.type == 0"
+					>
+						<image style="width: 20px;height: 20px;" :src="current == index ? item.selectIcon : item.icon" mode="aspectFit"></image>
+					</view>
+					<view class="ic super_center" v-if="item.type == 1">
+						<image
+							:class="[rotateStatus ? 'midIcon' : 'midIconBack']"
+							:style="{ width: '24px', height: '24px', margin: '16px 16px', transition: 'all 500ms linear 200ms', transform: 'rotate(' + degree + 'deg)' }"
+							src="../../static/icon/plus_tab.png"
+							mode="aspectFit"
+						></image>
+					</view>
+					<view class="p" v-if="current != index">{{ item.name }}</view>
 				</view>
-				<view class="ic super_center" v-if="item.type == 1">
-					<image :class="[rotateStatus ? 'midIcon' : 'midIconBack']" 
-					:style="{width: '24px',
-							height: '24px',
-							margin: '16px 16px',
-							transition: 'all 500ms linear 200ms',
-							transform: 'rotate('+ degree + 'deg)'}" 
-					src="../../static/icon/plus_tab.png" 
-					mode="aspectFit"></image>
-				</view>
-				<view class="p" v-if="current != index">{{ item.name }}</view>
+				<!-- 推出右侧空白 -->
+				<view style="width: 20px;"></view>
 			</view>
-			<!-- 推出右侧空白 -->
-			<view style="width: 20px;"></view>
+
+			<tablist style="position: fixed;z-index: 40;" v-if="rotateStatus"></tablist>
 		</view>
-		
-		<tablist v-if="rotateStatus"></tablist>
+		<!-- 蒙层 -->
+		<view
+			v-if="rotateStatus"
+			style="position: fixed; 
+			top: 0;
+			height: 100%;
+			width: 100%;
+			z-index: 30;"
+			@tap="rotate"
+		></view>
 	</view>
 </template>
 
 <script>
-import tablist from '../nq-tablist/nq-tablist.vue'
-	
+import tablist from '../nq-tablist/nq-tablist.vue';
+
 export default {
 	props: {
 		current: {
@@ -40,11 +51,11 @@ export default {
 			default: 0
 		}
 	},
-	
-	components:{
+
+	components: {
 		tablist
 	},
-	
+
 	data() {
 		return {
 			degree: 0, //旋转角度
@@ -88,13 +99,13 @@ export default {
 			]
 		};
 	},
-	created(){
-		console.log(this.degree)
+	created() {
+		console.log(this.degree);
 	},
 	methods: {
 		onClick(e) {
-			if(e.type==1){
-				this.$emit("click",e);
+			if (e.type == 1) {
+				this.$emit('click', e);
 				this.rotate();
 				return;
 			}
@@ -102,11 +113,11 @@ export default {
 				url: e.url
 			});
 		},
-		
+
 		rotate() {
-			if (!this.rotateStatus){
+			if (!this.rotateStatus) {
 				this.degree = 45;
-			}else{
+			} else {
 				this.degree = 0;
 			}
 			this.rotateStatus = !this.rotateStatus;
@@ -145,13 +156,13 @@ page {
 	left: 0;
 	bottom: 0;
 	right: 0;
-	z-index: 20;
+	z-index: 40;
 	padding-bottom: env(safe-area-inset-bottom);
 	height: 63px;
 	background: rgba(255, 255, 255, 1);
 	box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.16);
 	border-radius: 16px 16px 0px 0px;
-	
+
 	.ul {
 		.df;
 		.li {
@@ -161,29 +172,32 @@ page {
 			// 配合super_center中的display=flex，使元素垂直且居中
 			flex-direction: column;
 			.img {
-				border-radius:50%;
-				opacity:1;
+				border-radius: 50%;
+				opacity: 1;
+				z-index: 20;
 			}
 			.ic {
 				position: absolute;
 				bottom: 22px;
 				border-radius: 50%;
 				text-align: center;
-				width:56px;
-				height:56px;
-				background:rgba(255,255,255,1);
-				box-shadow:0px 0px 4px rgba(0,0,0,0.16);
-				opacity:1;
+				width: 56px;
+				height: 56px;
+				background: rgba(255, 255, 255, 1);
+				box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
+				opacity: 1;
+				z-index: 40;
 			}
-			
+
 			.p {
-				height:14px;
-				font-size:12px;
-				font-family:Source Han Sans CN;
-				font-weight:bold;
-				line-height:23px;
-				color:rgba(212,212,212,1);
-				opacity:1;
+				height: 14px;
+				font-size: 12px;
+				font-family: Source Han Sans CN;
+				font-weight: bold;
+				line-height: 23px;
+				color: rgba(212, 212, 212, 1);
+				opacity: 1;
+				z-index: 20;
 			}
 			&.cur {
 				.p {
@@ -193,37 +207,57 @@ page {
 		}
 	}
 }
-.midIcon{
-      animation:midIcon 300ms linear 1;      
-    }
-    /* 
+.midIcon {
+	animation: midIcon 300ms linear 1;
+}
+/* 
       midIcon : 定义的动画名称
       1s : 动画时间
       linear : 动画以何种运行轨迹完成一个周期
       infinite :规定动画应该无限次播放
      */
-   @keyframes midIcon{
-      0%{-webkit-transform:rotate(0deg);}
-      25%{-webkit-transform:rotate(11.25deg);}
-      50%{-webkit-transform:rotate(22.5deg);}
-      75%{-webkit-transform:rotate(33.75deg);}
-      100%{-webkit-transform:rotate(45deg);}
-    }
+@keyframes midIcon {
+	0% {
+		-webkit-transform: rotate(0deg);
+	}
+	25% {
+		-webkit-transform: rotate(11.25deg);
+	}
+	50% {
+		-webkit-transform: rotate(22.5deg);
+	}
+	75% {
+		-webkit-transform: rotate(33.75deg);
+	}
+	100% {
+		-webkit-transform: rotate(45deg);
+	}
+}
 
- .midIconBack{
-      animation:midIconBack 300ms linear 1;      
-    }
-    /* 
+.midIconBack {
+	animation: midIconBack 300ms linear 1;
+}
+/* 
       midIcon : 定义的动画名称
       1s : 动画时间
       linear : 动画以何种运行轨迹完成一个周期
       infinite :规定动画应该无限次播放
      */
-    @keyframes midIconBack{
-      0%{-webkit-transform:rotate(45deg);}
-      25%{-webkit-transform:rotate(33.75deg);}
-      50%{-webkit-transform:rotate(22.5deg);}
-      75%{-webkit-transform:rotate(11.25deg);}
-      100%{-webkit-transform:rotate(0deg);}
-    } 
+@keyframes midIconBack {
+	0% {
+		-webkit-transform: rotate(45deg);
+	}
+	25% {
+		-webkit-transform: rotate(33.75deg);
+	}
+	50% {
+		-webkit-transform: rotate(22.5deg);
+	}
+	75% {
+		-webkit-transform: rotate(11.25deg);
+	}
+	100% {
+		-webkit-transform: rotate(0deg);
+	}
+}
 </style>

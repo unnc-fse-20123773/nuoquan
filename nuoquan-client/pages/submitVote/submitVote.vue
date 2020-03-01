@@ -1,5 +1,15 @@
 <template>
 	<view class="submitVoteMain">
+		<!-- 导航栏 -->
+		<uni-nav-bar class="navigationBar"
+		:style="{height: this.getnavbarHeight() + 'px'}" 
+		:showLeftIcon="true" 
+		:isNavHome="isNavHome" 
+		left-text="返回"
+		:title="pageTitle" 
+		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>				
+		
+		<view :style="{height: this.getnavbarHeight().bottom + 5 + 'px'}"></view>
 		<!-- 当失去焦点时，将输入内容存入voteTitle -->
 		<view style="position: relative;margin-top: 20px;">
 			<input class="title" v-model="voteTitle" placeholder="标题" maxlength="20" placeholder-class="title-placeholder">
@@ -46,6 +56,7 @@
 
 <script>
 import mypicker from '../../components/mypicker.vue';
+import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue";	
 
 var uploadFlag = false; // 标志文章正在上传，为 true 时 block 该方法
 var requestTask;
@@ -65,6 +76,7 @@ var sourceType = [
 export default {
 	data() {
 		return {
+			pageTitle: '新建投票',
 			showContengEdit: false,
 
 			voteTitle: "",
@@ -87,11 +99,12 @@ export default {
 			count: [1, 2, 3, 4, 5, 6, 7, 8, 9],
 			
 			windowHeight: 0,
-
+			isNavHome: getApp().globalData.isNavHome,//判断导航栏左侧是否显示home按钮
 		}
 	},
 	components: {
 		mypicker,
+		uniNavBar
 	},
 	
 	onLoad() {
