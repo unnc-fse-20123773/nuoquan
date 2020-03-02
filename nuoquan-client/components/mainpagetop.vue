@@ -25,7 +25,7 @@
 				<view :class="[roleup == false ? 'hotestCard' : 'hotestCard_roled']">
 					<!-- 左侧图标 -->
 					<view class="iconBox" @click="jumpTohot" :style="{'height':roleup == false ? '62px;' :'33px' ,}">
-						<image v-if="roleup == false" src="../static/BG/hotest.png" mode="aspectFit" class="fireIcon"></image>
+						<image v-if="roleup == false" src="../static/BG/hotest.png" mode="scaleToFill" class="fireIcon"></image>
 						<image :class="[roleup == false ? 'hotText' : 'hotText_roled']" src="../static/icon/hotText.png" mode="aspectFit"></image>
 					</view>
 					
@@ -313,8 +313,9 @@ page {
 .fireIcon {
 	position: absolute;
 	z-index: 10;
-	height: 62px;
-	width: 62px;
+	height: 50px;
+	width: 55px;
+	bottom: -1px;
 }
 
 .hotText {

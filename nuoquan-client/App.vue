@@ -44,7 +44,7 @@ export default {
 .navigationBar {
 	width: 100%;
 	position: fixed;
-	z-index: 9999;
+	z-index: 50;
 	left: 0;
 	top: 0;
 }

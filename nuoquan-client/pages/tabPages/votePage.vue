@@ -1,16 +1,19 @@
 <template>
 	<view style="width: 100%; height: 100%; background: linear-gradient(#f89d4d, #ffc95a);">
 		<!-- 导航栏 -->
-		<uni-nav-bar class="navigationBar"
-		:style="{height: this.getnavbarHeight() + 'px'}" 
-		:showLeftIcon="true" 
-		:isNavHome="isNavHome" 
-		left-text="返回"
-		:title="pageTitle" 
-		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>				
-		
-		<!-- 导航栏 -->
-		<view class="navigatorBar_votePage super_center" :style="{ height: navigationBarHeight + 'px' }">NavigatorBar</view>
+		<view class="navigatorBar_votePage super_center" :style="{ height: navigationBarHeight + 'px' }" @click="showallVote">
+			<view class="navbarLine column_center">
+				<text>投票</text>
+				<view class="allvote column_center">
+					<view class="allvote_text">所有投票</view>
+					<image src="../../static/icon/angle-down.png" mode="aspectFit"></image>
+				</view>
+			</view>
+		</view>
+		<!-- 全部投票列表 -->
+		<nqallvote v-if="ifallVote" style="width: 100%;height: 100%;"></nqallvote>
+		<!-- 显示列表时的底部蒙版 -->
+		<view v-if="ifallVote" style="position: fixed;background-color: #000000;opacity: 0.3;width: 100%;height: 100%;z-index: 40;"></view>
 		<!-- 左侧按钮 -->
 		<view class="tapLeft super_center" :style="{ top: navigationBarHeight + 46 + 'px' }">
 			<image src="../../static/icon/angle-left-gradient.png" mode="aspectFit"></image>
@@ -167,7 +170,7 @@
 
 <script>
 	import tabBar from '@/components/nq-tabbar/nq-tabbar.vue';
-	import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue";
+	import nqallvote from '@/components/nq-allvote/nq-allvote.vue';
 	
 	const DEFAULT_PAGE = 0;	
 	var loadVoteFlag = false;
@@ -177,6 +180,9 @@
 			return {
 				serverUrl: this.$serverUrl,
 				list: ['Javascript', 'Typescript', 'Java', 'PHP', 'Go'],
+				
+				ifallVote: false,
+				
 				voteCardHeight: 0, //单个投票卡片高度
 				ischosen: [], //判断选项是否选中
 				ischosenFlag: '',
@@ -212,8 +218,8 @@
 		},
 		
 		components:{
-			uniNavBar,
-			tabBar
+			tabBar,
+			nqallvote
 		},
 		
 		onLoad: function() {
@@ -284,6 +290,10 @@
 					urls: arr
 				});
 				arr = [];
+			},
+			
+			showallVote(){
+				this.ifallVote = true;
 			},
 			
 			calculateHeight() {
@@ -561,8 +571,64 @@
 	}
 
 	.navigatorBar_votePage {
+		position: relative;
 		width: 100%;
-		background-color: white;
+	}
+	
+	.navbarLine{
+		position: absolute;
+		width: 100%;
+		height: 38px;
+		bottom: 0;
+	}
+	
+	.navbarLine text{
+		position: absolute;
+		text-align: center;
+		font-size: 17px;
+		line-height: 23px;
+		color: white;
+		font-weight: 550;
+		height: 23px;
+		width: 100%;
+		left: 0;
+		right: 0;
+		margin-left: auto;
+		margin-right: auto;
+		overflow: inherit;
+	}
+	
+	.allvote{
+		position: absolute;
+		left: 23px;
+		width:111px;
+		height:29px;
+		background:rgba(233,153,19,1);
+		opacity:1;
+		border-radius:75px;
+	}
+	
+	.allvote image{
+		position: absolute;
+		right: 12px;
+		width:18px;
+		height:18px;
+		background:rgba(212,139,16,1);
+		border-radius:50%;
+		opacity:1;
+	}
+	
+	.allvote_text{
+		position: absolute;
+		left: 16px;
+		width: 57px;
+		height:16px;
+		font-size:14px;
+		font-family:Source Han Sans CN;
+		font-weight:400;
+		line-height:16px;
+		color:rgba(255,255,255,1);
+		opacity:1;
 	}
 
 	.tapLeft {

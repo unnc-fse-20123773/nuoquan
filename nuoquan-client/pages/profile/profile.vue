@@ -371,24 +371,29 @@
 		width: 93%;
 		height: 175px;
 		background-color: white;
-		border-radius: 20upx;
-		box-shadow: 0upx 0upx 11upx 1upx #A6A6A6;
 		/* justify-content: center; */
 		margin-left: auto;
 		margin-right: auto;
 		margin-top: -90rpx;
 		margin-bottom: 10px;
 		padding-top: 50px;
+		
+		background:rgba(255,255,255,1);
+		box-shadow:0px 0px 6px rgba(0,0,0,0.16);
+		opacity:1;
+		border-radius:8px;
 	}
-.profile-moreinfo-card {
+	.profile-moreinfo-card {
 		height: 125px;
 		width: 93%;
 		background-color: white;
-		border-radius: 20upx;
-		box-shadow: 0upx 0upx 11upx 1upx #A6A6A6;
 		margin-left: auto;
 		margin-right: auto;
 		position: relative;
+		background:rgba(255,255,255,1);
+		box-shadow:0px 0px 6px rgba(0,0,0,0.16);
+		opacity:1;
+		border-radius:8px;
 	}
 	.profileTouxiang {
 		position: absolute;

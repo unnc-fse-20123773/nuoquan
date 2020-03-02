@@ -8,6 +8,7 @@
 		left-text="返回"
 		:title="pageTitle" 
 		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>				
+		<view :style="{height: this.getnavbarHeight().bottom + 5 + 'px'}"></view>
 		
 		<!-- 主评论区域 -->
 
