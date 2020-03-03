@@ -1177,7 +1177,7 @@ public class ArticleServiceImpl implements ArticleService {
 		
 		Criteria criteria4 = mySubscribedUserArticle.createCriteria();
 		for(String text : texts) {
-			criteria.orLike("tags", "%" + text + "%");
+			criteria4.orLike("tags", "%" + text + "%");
 		}
 		mySubscribedUserArticle.and(criteria4);
 
@@ -1260,7 +1260,7 @@ public class ArticleServiceImpl implements ArticleService {
 		
 		Criteria criteria4 = mySubscribedUserArticle.createCriteria();
 		for(String text : texts) {
-			criteria.orLike("tags", "%" + text + "%");
+			criteria4.orLike("tags", "%" + text + "%");
 		}
 		mySubscribedUserArticle.and(criteria4);
 
