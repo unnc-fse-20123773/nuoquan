@@ -24,7 +24,7 @@
 				<!-- 				<button><image src="../../static/icon/emoji.png"></image></button>
  -->
 				<button @click="showToast()"><image src="../../static/icon/emoji.png"></image></button>
-				<button @click="sendText(textMsg)" class="sendText">发送</image></button>
+				<button @click="sendText(textMsg)" class="sendText">{{lang.send}}</image></button>
 
 			</view>
 		</view>
@@ -78,7 +78,7 @@ export default {
 	},
 
 	computed: {
-		...mapState(['chatMessageCard', 'flashChatPage'])
+		...mapState(['chatMessageCard', 'flashChatPage', 'lang'])
 	},
 
 	watch: {
