@@ -94,6 +94,8 @@ import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
 				control_scroll_button_flag:0,
 				
 				isNavHome: getApp().globalData.isNavHome,//判断导航栏左侧是否显示home按钮
+				
+				navbarHeight: 0 //一次性储存 navbarheight
 			};
 		},
 		
@@ -114,6 +116,9 @@ import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
 		},
 		
 		async onLoad(options) {
+			// 一次性储存 navbar 高度
+			this.navbarHeight = this.getnavbarHeight().bottom + 5;
+			
 			//获取全局用户信息
 			var userInfo = this.getGlobalUserInfo();
 			if (!this.isNull(userInfo)) {

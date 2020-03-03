@@ -7,9 +7,9 @@
 			:isNavHome="isNavHome"
 			left-text="返回" 
 			:title="pageTitle" 
-			:height="this.getnavbarHeight().bottom + 5">
+			:height="navbarHeight">
 		</uni-nav-bar>
-		<view :style="{height: this.getnavbarHeight().bottom + 5 + 'px'}"></view>
+		<view :style="{height: navbarHeight + 'px'}"></view>
 		<view id="yellow-box"></view>
 		<form @submit="formSubmit" @reset="formReset">
 			<view class="profile-basicinfo-card">
@@ -128,6 +128,7 @@
 				yearPicker: false,
 				majorPicker: false,
 				degreePicker: false,
+				navbarHeight: 0 //一次性储存 navbarheight
 			}
 		},
 
@@ -138,6 +139,9 @@
 		},
 
 		onLoad: function() {
+			// 一次性储存 navbar 高度
+			this.navbarHeight = this.getnavbarHeight().bottom + 5;
+			
 			uni.setNavigationBarTitle({
 				title: "个人信息"
 			});
