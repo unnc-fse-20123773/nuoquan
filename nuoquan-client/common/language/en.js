@@ -7,6 +7,7 @@ module.exports = {
 	vertion : "v1.1.1",
 	back : "Back",
 	send : "Send",
+	submit : "Submit",
 	time : "Time",
 	hot : "Hot",
 	all : "All",
@@ -16,10 +17,24 @@ module.exports = {
 	second : "s",
 	min : "m",
 	hour : "h",
+	ok : "OK",
+	
+	//登陆
+	isReadProtocol : "I have read and agree :",
+	userProtocol : "User Protocol",
+	wechatLogin : "Login",
+	emailAuth : "EmailAuth",
+	finishLogin : "Finish",
+	emailPrompt : " UNNC email address",
+	captcha : " Captcha",
+	getCaptcha : "Get captcha",
+	waitCaptcha : "Please wait (SECORD)s",
 	
 	//文章
+	article : "Article",
 	detail : "Detail",
 	commentDetail : "Comment Detail",
+	addTags : "Add Tags",
 	
 	//投票
 	vote : "Vote",
@@ -50,8 +65,12 @@ module.exports = {
 	
 	//关注粉丝列表
 	fanAndFollow : "Follow List",
+	followed : "已关注",
 	
 	//个人信息
+	
+	//他人页
+	whosHome : "'s Home",
 	
 	//关于
 	contact : "Contact Us",
