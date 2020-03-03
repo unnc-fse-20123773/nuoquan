@@ -1,7 +1,29 @@
 module.exports = {
 	// langType 属性为语言包标识，请勿删除
 	langType : 'zh-CN',
-	// 以下为示例内容，请根据项目需求自行更改
+	
+	tabbarName : ["主页","投票","","动态","我的"],
+	send : "发送",
+	time : "时间",
+	hot : "热度",
+	all : "所有",
+	follow : "关注",
+	tags : "标签",
+	
+	//投票
+	vote : "投票",
+	allVote: "所有投票",
+	end : "结束",
+	votes : "参与",
+	comments : "评论",
+	writeComment : "发表评论",
+	onBottom : "划到底部啦",
+	votePrompt : "完成投票后才可查看评论哦",
+	
+	//我的消息
+	myMessage : "我的消息",
+	
+	//我的
 	profile : "个人信息",
 	myPublish : "我的发布",
 	about : "关于我们",

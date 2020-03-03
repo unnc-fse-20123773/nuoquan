@@ -3,9 +3,9 @@
 		<!-- 导航栏 -->
 		<view class="navigatorBar_votePage super_center" :style="{ height: navigationBarHeight + 'px' }" @click="showallVote">
 			<view class="navbarLine column_center">
-				<text>投票</text>
+				<text>{{lang.vote}}</text>
 				<view class="allvote column_center">
-					<view class="allvote_text">所有投票</view>
+					<view class="allvote_text">{{lang.allVote}}</view>
 					<image src="../../static/icon/angle-down.png" mode="aspectFit"></image>
 				</view>
 			</view>
@@ -140,24 +140,24 @@
 						<!-- 时间 -->
 						<view class="timeLine">
 							<view class="timeleft">{{reTimeDeal(item.expiryDate)}}</view>
-							<text>结束</text>
+							<text>{{lang.end}}</text>
 						</view>
 						<view class="numbersBar">
 							<!-- 参与人数 -->
 							<view class="participants">
 								<view class="participants_Num">{{item.sumVote}}</view>
-								<text>参与</text>
+								<text>{{lang.votes}}</text>
 							</view>
 							<!-- 评论人数 -->
 							<view class="commentusers">
 								<view class="commentusers_Num">{{item.commentNum}}</view>
-								<text>评论</text>
+								<text>{{lang.comments}}</text>
 							</view>
 						</view>
 					</view>
 					<!-- 确认投票 -->
 					<view v-if="finishVote[index] == false" class="alertandconfirm super_center">
-						<text v-if="ischosen[index] == false">完成投票后才可查看评论哦</text>
+						<text v-if="ischosen[index] == false">{{lang.votePrompt}}</text>
 						<button v-else class="confirmButton_votePage super_center" @click="confirmVote(item.id, index)">确认投票</button>
 					</view>
 					<votecomment :voteid = '  something         '></votecomment>
@@ -174,6 +174,7 @@
 	import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue";
 	import votecomment from "@/components/votecomments.vue";
 	import nqallvote from '@/components/nq-allvote/nq-allvote.vue';
+	import { mapState, mapMutations } from 'vuex';
 	
 	const DEFAULT_PAGE = 0;	
 	var loadVoteFlag = false;
@@ -225,6 +226,9 @@
 			tabBar,
 			votecomment,
 			nqallvote
+		},
+		computed: {
+			...mapState(['lang'])
 		},
 		
 		onLoad: function() {

@@ -624,7 +624,7 @@ Vue.prototype.chat = {
 		// 从本地缓存获取聊天快照的 list
 		var chatSnapshotListStr = uni.getStorageSync(chatKey);
 		var chatSnapshotList;
-		var oldChatSnapshot
+		var oldChatSnapshot;
 		if (app.isNull(chatSnapshotListStr)) {
 			// 为空，赋一个空的list；
 			chatSnapshotList = [];
@@ -639,6 +639,9 @@ Vue.prototype.chat = {
 					break;
 				}
 			}
+		}
+		if(oldChatSnapshot==null){
+			oldChatSnapshot = new this.ChatSnapshot(myId, friendId, msg, flag, createDate, 0);
 		}
 		// 构建聊天快照对象
 		if (isRead == this.READ) {

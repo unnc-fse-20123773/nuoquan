@@ -21,7 +21,7 @@
 							mode="aspectFit"
 						></image>
 					</view>
-					<view class="p" v-if="current != index">{{ item.name }}</view>
+					<view class="p" v-if="current != index">{{ lang.tabbarName[index] }}</view>
 				</view>
 				<!-- 推出右侧空白 -->
 				<view style="width: 20px;"></view>
@@ -105,7 +105,7 @@ export default {
 		};
 	},
 	computed: {
-		...mapState(['myMsgCount'])
+		...mapState(['myMsgCount','lang'])
 	},
 	
 	watch: {
