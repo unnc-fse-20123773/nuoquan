@@ -1,14 +1,13 @@
 <template>
 	<view style="width:100%;height:100%;margin:auto;">
-		<uni-nav-bar
-			class="navigationBar"
-			:style="{ height: this.getnavbarHeight() + 'px' }"
-			left-icon="back"
-			left-text="返回"
-			:title="pageTitle"
-			:height="this.getnavbarHeight().bottom + 5"
-			@click="backToMainPage"
-		></uni-nav-bar>
+		<uni-nav-bar class="navigationBar"
+		:style="{height: this.getnavbarHeight() + 'px'}" 
+		:showLeftIcon="true" 
+		:isNavHome="isNavHome" 
+		left-text="返回"
+		:title="pageTitle" 
+		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>				
+		
 		<view :style="{ height: this.getnavbarHeight().bottom + 5 + 'px' }"></view>
 		<view class="top">
 			<text class="topleft">下次更新 {{ minute }}分{{ second }}秒</text>
@@ -38,7 +37,8 @@ export default {
 			currentPage: 1,
 			loadArticleFlag: false,
 			userInfo: '',
-			myArticleList: ''
+			myArticleList: '',
+			isNavHome: getApp().globalData.isNavHome,//判断导航栏左侧是否显示home按钮
 		};
 	},
 

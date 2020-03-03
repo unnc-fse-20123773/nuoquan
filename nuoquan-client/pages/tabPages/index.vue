@@ -4,7 +4,8 @@
 		<mainpagetop
 			@transQueryType="changeQueryType"
 			@transOrderType="changeOrderType"
-			@queryArticleBytag="queryArticleBytag"
+			@selectedTag="getSelectedTag"
+			@deleteTag="deleteTag"
 			:userInfo="userInfo"
 			:topArticles="topArticles"
 			:tagList="tagList"
@@ -79,9 +80,9 @@ export default {
 	onLoad() {
 		var userInfo = this.getGlobalUserInfo();
 		if (this.isNull(userInfo)) {
-			// uni.redirectTo({
-			// 	url: '../signin/signin'
-			// });
+			uni.redirectTo({
+				url: '../signin/signin'
+			});
 			return;
 		} else {
 			this.userInfo = userInfo; // 刷去默认值(若有)
@@ -89,8 +90,6 @@ export default {
 
 		this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
 
-		this.getScreenSize(); //获取手机型号
-		
 		this.capsuleButton = this.getnavbarHeight(); //获取胶囊按钮信息
 		
 		this.showArticles(this.currentPage); // 显示文章流
@@ -191,10 +190,6 @@ export default {
 					console.log(res);
 				}
 			});
-		},
-		
-		queryArticleBytag(tag){
-			this.selectedTag = tag;
 		},
 
 		loadMore: function() {
@@ -319,14 +314,22 @@ export default {
 		changeQueryType: function(queryType) {
 			this.queryType = queryType;
 			console.log('queryType:' + this.queryType);
-			(this.totalPage = 1), (this.currentPage = 1), this.showArticles(this.currentPage);
+			this.showArticles(1);
 		},
 		// 接收mainpageTop传过来的orderType并赋值, 一旦调用此方法, 重新刷新页面并获取文章.
 		changeOrderType: function(orderType) {
 			this.orderType = orderType;
 			console.log('orderType:' + this.orderType);
-			(this.totalPage = 1), (this.currentPage = 1);
-			this.showArticles(this.currentPage);
+			this.showArticles(1);
+		},
+		getSelectedTag(tag){
+			this.selectedTag = tag.tag;
+			console.log(tag)
+			this.showArticles(1);
+		},
+		deleteTag(){
+			this.selectedTag = '';
+			this.showArticles(1);
 		}
 	}
 };
@@ -334,6 +337,7 @@ export default {
 <style>
 page {
 	height: 100%;
+	width: 100%;
 }
 </style>
 
@@ -341,6 +345,7 @@ page {
 .index {
 	/* 页面高度由内容扩充，最低值为100%（page 定义的）- by Guetta */
 	height: 100%;
+	width: 100%;
 	background-color: #fdfdfd;
 }
 

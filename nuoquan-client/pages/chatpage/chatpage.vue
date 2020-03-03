@@ -2,9 +2,14 @@
 <template>
 	<view style="height:100%;width:100%;">
 		<!-- 导航栏 -->
-		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" left-icon="back" left-text="返回"
+		<uni-nav-bar class="navigationBar"
+		:style="{height: this.getnavbarHeight() + 'px'}" 
+		:showLeftIcon="true" 
+		:isNavHome="isNavHome" 
+		left-text="返回"
 		:title="pageTitle" 
 		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
+		<view :style="{height: this.getnavbarHeight().bottom + 5 + 'px'}"></view>
 		
 		<scroll-view class="messageArea" :style="{ height: textareaHeight }" scroll-y="true" @scrolltoupper="loadMore"
 		 @scroll="scroll" :scroll-into-view="scrollToView">
@@ -66,6 +71,8 @@ export default {
 			
 			keyboardHeight:'',
 			showEmojiFlag:false,
+			
+			isNavHome: getApp().globalData.isNavHome,//判断导航栏左侧是否显示home按钮
 		};
 	},
 
@@ -306,6 +313,7 @@ page {
 }
 
 .icons {
+	height: 24px;
 	display: inline-flex;
 	width: 200upx;
 	margin-left: 18upx;
@@ -318,7 +326,7 @@ page {
 
 .icons image {
 	display: block;
-	width: 48upx;
+	width: 24px;
 	height: 24px;
 	vertical-align: bottom;
 }
@@ -331,8 +339,8 @@ button {
 	display: inline-block;
 	margin: 0;
 	padding: 0;
-	width: 48upx;
-	height: 48upx;
+	width: 24px;
+	height: 24px;
 	vertical-align: bottom;
 	background: #ffffff;
 }
@@ -340,9 +348,9 @@ button::after {
 	border: none;
 }
 .sendText{
-	line-height: 46upx;
-	width:68upx;
-	height:46upx;
+	line-height: 23px;
+	width:34px;
+	height:23px;
 	font-size:17px;
 	font-weight:500;
 	color:rgba(252,192,65,1);

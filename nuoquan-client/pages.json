@@ -120,7 +120,11 @@
 			"name": "index", //模式名称
 			"path": "pages/tabPages/index", //启动页面，必选
 			"query": "" //启动参数，在页面的onLoad函数里面得到
-		}, {
+		},  {
+			"name": "votePage",
+			"path": "pages/tabPages/votePage",
+			"query": "" //启动参数，在页面的onLoad函数里面得到
+		},{
 			"name": "shareposter", //模式名称
 			"path": "components/shareposter/myshareposter", //启动页面，必选
 			"query": "" //启动参数，在页面的onLoad函数里面得到

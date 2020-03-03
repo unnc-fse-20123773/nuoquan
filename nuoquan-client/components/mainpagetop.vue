@@ -25,7 +25,7 @@
 				<view :class="[roleup == false ? 'hotestCard' : 'hotestCard_roled']">
 					<!-- 左侧图标 -->
 					<view class="iconBox" @click="jumpTohot" :style="{'height':roleup == false ? '62px;' :'33px' ,}">
-						<image v-if="roleup == false" src="../static/BG/hotest.png" mode="aspectFit" class="fireIcon"></image>
+						<image v-if="roleup == false" src="../static/BG/hotest.png" mode="scaleToFill" class="fireIcon"></image>
 						<image :class="[roleup == false ? 'hotText' : 'hotText_roled']" src="../static/icon/hotText.png" mode="aspectFit"></image>
 					</view>
 					
@@ -54,15 +54,18 @@
 		<!-- 主页操作行 -->
 		<view v-if="roleup == false" class="optionLine_mpt column_center" :style="{top:height + 11 + 'px'}">
 			<!-- 标签选择 -->
-			<view class="tagchoose column_center" @click="toggleShowTag">
-				<text>标签</text>
-				<image class="tagicon" src="../static/icon/angle-down.png" mode="aspectFit"></image>
+			<view>
+				<view v-if="!selectedTag" @click="toggleShowTag" class="tagchoose column_center">
+					<text>标签</text>
+					<image class="tagicon" src="../static/icon/angle-down.png" mode="aspectFit"></image>
+				</view>
+				<tagSelected v-if="selectedTag" :tag='selectedTag' @click="deleteTag"></tagSelected>
 			</view>
 			<tagSelectBox
-				:style="{position: 'fixed', 'margin-top': 6 + 'px' , left: 3.47 + '%' , width: 93.07 + '%' , top: height + 41 + 'px' }"
+				:style="{position: 'fixed', 'z-index': '40' , 'margin-top': 6 + 'px' , left: 3.47 + '%' , width: 93.07 + '%' , top: height + 41 + 'px' }"
 				:tagList="tagList" 
-				@selected="getselectedTag" 
-				v-if="showTag">
+				@selected="getSelectedTag" 
+				v-if="showTagBox">
 			</tagSelectBox>
 			<!-- 排序方式1-->
 			<nqSwitch :options='options1' :initStatus='iniStatus1' @onChange="change_article_order1"></nqSwitch>
@@ -72,8 +75,8 @@
 		<!-- Add background for option bar-->
 		<view v-if="roleup == false" class="optionLinebg_mpt" :style="{top: height + 4 + 'px'}">
 		</view>
-		<!-- 标签选择 -->
-		
+		<!-- 标签选择列表蒙版 -->
+		<!-- <view v-if="showTagBox" style="width: 100%;height: 100%;position: fixed;z-index: 30;top: 0;background-color: #007AFF;"></view> -->
 	</view>
 </template>
 
@@ -82,7 +85,15 @@ import mainpageleft from '@/components/mainpageleft.vue';
 import searchpage from '../pages/search/search';
 import nqSwitch from '@/components/nq-switch.vue'
 import tagSelectBox from '@/components/nq-tag/tagSelectBox.vue'
+import tagSelected from '@/components/nq-tag/tagSelected.vue'
 export default {
+	components: {
+		mainpageleft,
+		searchpage,
+		nqSwitch,
+		tagSelectBox,
+		tagSelected
+	},
 	props: {
 		// 渲染时候替换默认值会被替换
 		userInfo: {
@@ -94,34 +105,28 @@ export default {
 		height: 0,
 		height_roled: 0,
 	},
-	components: {
-		mainpageleft,
-		searchpage,
-		nqSwitch,
-		tagSelectBox
-	},
-
 	data() {
 		return {
 			serverUrl: this.$serverUrl,
 			showMainPageLeft: 0,
 			showSearch: 0,
-			showTag: false,
+			showTagBox: false,
 			options1: ["所有","关注"], //为switch组件设置选项标签
 			iniStatus1: 0, //为switch组件设置初始值
 			options2: ["时间","热度"], //为switch组件设置选项标签
 			iniStatus2: 0, //为switch组件设置初始值
+			selectedTag: '' //已选择的标签
 		};
 	},
 	watch:{
 		roleup(newValue, oldValue){
-			this.showTag = false;
+			this.showTagBox = false;
 		}
 	},
 
 	methods: {
 		toggleShowTag(){
-			this.showTag = !this.showTag
+			this.showTagBox = !this.showTagBox
 		},
 		controlShowLeft(a) {
 			this.showMainPageLeft = a;
@@ -160,8 +165,15 @@ export default {
 			this.$emit('transOrderType', e.status);
 		},
 		
-		getselectedTag(tag){
-			this.$emit('queryArticleBytag', tag.tag);
+		getSelectedTag(tag){
+			this.selectedTag = tag; //传值给渲染层
+			this.showTagBox = false;
+			this.$emit('selectedTag', tag);
+		},
+		
+		deleteTag(){
+			this.selectedTag = '';
+			this.$emit('deleteTag');
 		}
 	}
 };
@@ -301,8 +313,9 @@ page {
 .fireIcon {
 	position: absolute;
 	z-index: 10;
-	height: 62px;
-	width: 62px;
+	height: 50px;
+	width: 55px;
+	bottom: -1px;
 }
 
 .hotText {

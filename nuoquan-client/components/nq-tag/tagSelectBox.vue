@@ -27,7 +27,7 @@ export default {
 	created() {
 		// 随机生成颜色
 		var tagColors = this.tagColors;
-		for (var i = 0; i < 6; i++) {
+		for (var i = 0; i < this.tagList.length; i++) {
 			var random_1 = Math.floor(Math.random() * tagColors.length);
 			// 0~tagColors.length-1
 			this.tagColorList.push(tagColors[random_1]);

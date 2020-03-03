@@ -1,6 +1,14 @@
 <template>
 	<view id="profile-container">
-		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" left-icon="back" left-text="返回" :title="pageTitle" :height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
+		<!-- 导航栏 -->
+		<uni-nav-bar class="navigationBar" 
+			:style="{height: this.getnavbarHeight() + 'px'}" 
+			:showLeftIcon="true" 
+			:isNavHome="isNavHome"
+			left-text="返回" 
+			:title="pageTitle" 
+			:height="this.getnavbarHeight().bottom + 5">
+		</uni-nav-bar>
 		<view :style="{height: this.getnavbarHeight().bottom + 5 + 'px'}"></view>
 		<view id="yellow-box"></view>
 		<form @submit="formSubmit" @reset="formReset">
@@ -133,7 +141,6 @@
 			uni.setNavigationBarTitle({
 				title: "个人信息"
 			});
-			console.log(this.getGlobalUserInfo());
 			var a = this.getGlobalUserInfo();
 			this.userInfo = a;
 			// 按已有信息修改默认值
@@ -165,6 +172,7 @@
 					this.major = res.newPickerValue;
 				} else if (res.mode == 'degree') {
 					this.degree = res.newPickerValue;
+					this.degreeDB = this.degrees.indexOf(res.newPickerValue);
 				} else if (res.mode == 'year') {
 					this.year = res.newPickerValue;
 				}
@@ -201,20 +209,6 @@
 				this.editProfile(this.isEdit);
 			},
 
-			yearChange: function(e) {
-				var year = this.years[e];
-				this.year = year;
-				// 给组件赋值回去，更改起始值
-				this.yearPickerVal[0] = e;
-
-			},
-
-			majorChange: function(e) {
-				var major = this.majors[e];
-				this.major = major;
-				// 给组件赋值回去，更改起始值
-				this.majorPickerVal[0] = e;
-			},
 			getCaptcha:function(isSent) {
 				if (isSent == false) {
 					this.isSent = true;
@@ -269,14 +263,7 @@
 					}
 				
 			},
-			degreeChange: function(e) {
-				var degree = this.degrees[e];
-				this.degree = degree;
-				this.degreeDB = e[0];
-				// 给组件赋值回去，更改起始值
-				this.degreePickerVal[0] = e;
 
-			},
 
 			formSubmit: function(e) {
 				// 提交表单操作
@@ -289,6 +276,7 @@
 					major: this.major,
 					degree: this.degreeDB
 				};
+				console.log("here");
 				console.log(data);
 				uni.request({
 					url: this.$serverUrl + '/user/updateUser',
@@ -353,7 +341,7 @@
 		top: 0;
 		height: 200rpx;
 		width: 100%;
-		background-color: #FFCF3C;
+		background-color: #ffc85a;
 	}
 
 	.profile-basicinfo-card {
@@ -363,24 +351,29 @@
 		width: 93%;
 		height: 175px;
 		background-color: white;
-		border-radius: 20upx;
-		box-shadow: 0upx 0upx 11upx 1upx #A6A6A6;
 		/* justify-content: center; */
 		margin-left: auto;
 		margin-right: auto;
 		margin-top: -90rpx;
 		margin-bottom: 10px;
 		padding-top: 50px;
+		
+		background:rgba(255,255,255,1);
+		box-shadow:0px 0px 6px rgba(0,0,0,0.16);
+		opacity:1;
+		border-radius:8px;
 	}
-.profile-moreinfo-card {
+	.profile-moreinfo-card {
 		height: 125px;
 		width: 93%;
 		background-color: white;
-		border-radius: 20upx;
-		box-shadow: 0upx 0upx 11upx 1upx #A6A6A6;
 		margin-left: auto;
 		margin-right: auto;
 		position: relative;
+		background:rgba(255,255,255,1);
+		box-shadow:0px 0px 6px rgba(0,0,0,0.16);
+		opacity:1;
+		border-radius:8px;
 	}
 	.profileTouxiang {
 		position: absolute;
@@ -398,7 +391,7 @@
 		width: 68px;
 		height: 26px;
 		background: rgba(255, 201, 90, 1);
-	line-height: 26px;
+		line-height: 26px;
 		border-radius: 4px;
 	}
 
@@ -408,9 +401,11 @@
 		top: 3%;
 		width: 68px;
 		height: 26px;
-		border: 1px solid rgba(255, 201, 90, 1);
+		/* border: 1px solid rgba(255, 201, 90, 1); */
 		line-height: 26px;
 		border-radius: 4px;
+		opacity:1;
+		background-color: white;
 	}
 
 	.editProfile-text {
@@ -517,7 +512,7 @@
 	.gender {
 		vertical-align: top;
 		display: inline-block;
-		width: 95px;
+		min-width: 95px;
 		height: 45px;
 		margin: 0 calc((50% - 95px)/2) 15px;
 		position: relative;
@@ -593,9 +588,9 @@
 	.genderPicker-buttonclick {
 		width: 41px;
 		height: 23px;
-		border: 1px solid blue;
+		border: 1px solid #3370FF;
 		border-radius: 4px;
-		background-color: blue;
+		background-color: #3370FF;
 		color: rgba(255, 255, 255, 1);
 		text-align: center;
 		align-self: flex-end;

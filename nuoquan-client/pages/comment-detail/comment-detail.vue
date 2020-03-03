@@ -1,8 +1,15 @@
 <template>
 	<view class="comment-detail-page">
 		<!-- 导航栏 -->
-		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" left-icon="back" left-text="返回"
-		 :title="pageTitle" :height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
+		<uni-nav-bar class="navigationBar"
+		:style="{height: this.getnavbarHeight() + 'px'}" 
+		:showLeftIcon="true" 
+		:isNavHome="isNavHome" 
+		left-text="返回"
+		:title="pageTitle" 
+		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>				
+		<view :style="{height: this.getnavbarHeight().bottom + 5 + 'px'}"></view>
+		
 		<!-- 主评论区域 -->
 
 		<view class="comment-Box">
@@ -93,6 +100,7 @@
 				currentPage: 1,
 				
 				saveCommentFlag:false,
+				isNavHome: getApp().globalData.isNavHome,//判断导航栏左侧是否显示home按钮
 			}
 		},
 
@@ -116,13 +124,14 @@
 		methods: {
 			getSubComments(page) {
 				var that = this;
-				if (saveCommentFlag) {
+				if (this.saveCommentFlag) {
 					console.log("正在上传...")
 					return;
 				}
-				saveCommentFlag = true;
+				this.saveCommentFlag = true;
 				uni.showLoading({
-					title: "正在提交..."
+					title: "正在提交...",
+					duration:1000,
 				})
 				uni.request({
 					method: "POST",
@@ -137,6 +146,7 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: (res) => {
+						that.saveCommentFlag = false;
 						if (res.data.status == 200) {
 							if (page == 1) {
 								that.commentList = [];
@@ -247,7 +257,8 @@
 							
 							// 强制子组件重新刷新
 							that.commentList = '';
-							that.$nextTick(function() {
+                            this.getSubComments(1);
+                            that.$nextTick(function() {
 								that.getSubComments(1);
 							});
 							uni.$emit('flashSubComment',this.mainComment.id);
