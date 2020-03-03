@@ -108,10 +108,8 @@ export default {
 		console.log(opt.friendInfo)
 		this.friendInfo = JSON.parse(decodeURIComponent(opt.friendInfo)); //解码
 
-		uni.setNavigationBarTitle({
-			title: this.friendInfo.nickname
-		});
-
+		// 设置页面tittle
+		this.pageTitle= this.friendInfo.nickname
 		// 获取我的信息
 		var userInfo = this.getGlobalUserInfo();
 		if (this.isNull(userInfo)) {

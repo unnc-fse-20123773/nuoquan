@@ -11,6 +11,7 @@
 						v-if="item.type == 0"
 					>
 						<image style="width: 20px;height: 20px;" :src="current == index ? item.selectIcon : item.icon" mode="aspectFit"></image>
+						<msgcount :count="item.count"></msgcount>
 					</view>
 					<view class="ic super_center" v-if="item.type == 1">
 						<image
@@ -43,6 +44,7 @@
 
 <script>
 import tablist from '../nq-tablist/nq-tablist.vue';
+import msgcount from '../nq-msgcount/nq-msgcount.vue';
 
 export default {
 	props: {
@@ -53,7 +55,8 @@ export default {
 	},
 
 	components: {
-		tablist
+		tablist,
+		msgcount
 	},
 
 	data() {
@@ -87,7 +90,8 @@ export default {
 					icon: '/static/icon/comment_dots_d4d4d4.png',
 					selectIcon: '/static/icon/comment_dots_ffffff.png',
 					name: '动态',
-					url: '/pages/tabPages/messagelist'
+					url: '/pages/tabPages/messagelist',
+					count: 10
 				},
 				{
 					type: 0,

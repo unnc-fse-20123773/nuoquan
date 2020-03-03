@@ -20,16 +20,16 @@ Vue.prototype.$store = store // 挂载 vueX
 // Vue.prototype.$serverUrl = "http://127.0.0.1:8080"
 // Vue.prototype.$wsServerUrl = "wss://127.0.0.1:8088/ws"
 
-Vue.prototype.$serverUrl = "http://192.168.124.8:8080"
-Vue.prototype.$wsServerUrl = "wss://192.168.124.8:8088/ws"
+// Vue.prototype.$serverUrl = "http://192.168.124.8:8080"
+// Vue.prototype.$wsServerUrl = "wss://192.168.124.8:8088/ws"
 
 // 服务器地址
 //Vue.prototype.$serverUrl = "http://129.28.130.27:8080/nottinghome"
 //Vue.prototype.$wsServerUrl = "ws://129.28.130.27:8088/ws"
 
 // 安全服务器地址
-// Vue.prototype.$serverUrl = "https://www.checkchack.cn:8443/nottinghome"
-// Vue.prototype.$wsServerUrl = "wss://www.checkchack.cn:8088/ws"
+Vue.prototype.$serverUrl = "https://www.checkchack.cn:8443/nottinghome"
+Vue.prototype.$wsServerUrl = "wss://www.checkchack.cn:8088/ws"
 
 /**
  * 获取当前用户信息（我）
@@ -517,7 +517,7 @@ Vue.prototype.chat = {
 	 * @param {Object} myId
 	 * @param {Object} friendId
 	 * @param {Object} msg
-	 * @param {Object} flag 是我的消息还是朋友的消息
+	 * @param {Object} flag 是我的消息还是朋友的消息 ME or FRIEND
 	 * @param {Object} createDate
 	 */
     ChatHistory: function (myId, friendId, msg, flag, createDate) {
