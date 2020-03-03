@@ -40,7 +40,7 @@
 								<view class="item-right">
 									<view class="time">{{ timeDeal(it.createDate) }}</view>
 									<!-- <view class="mark" v-if="it.unreadCount > 0">{{ it.count }}</view> -->
-									<msgcount :count="it.unreadCount"></msgcount>
+									<msgcount style="position: absolute;z-index: 40;right: 0;" :count="it.unreadCount"></msgcount>
 								</view>
 							</block>
 						</view>
