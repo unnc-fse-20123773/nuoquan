@@ -44,7 +44,7 @@
 		</view>
 		
 		<view v-if="share">
-			<mySharePoster :articleCard='articleCard'></mySharePoster>
+			<mySharePoster :articleCard='articleCard' @unShow="toggleShare"></mySharePoster>
 		</view>
 	</view>
 </template>

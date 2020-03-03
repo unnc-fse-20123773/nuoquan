@@ -15,28 +15,27 @@
 		<view>
 			<image :src="shareImage" class="shareimage" mode="aspectFit"></image>
 			<canvasdrawer :painting="painting" class="canvasdrawer" @getImage="eventGetImage" />
-			<button class="backButton super_center" @click="back">
-				<image src="../../static/icon/arrow-left-fcc041.png" mode="aspectFit"></image>
-			</button>
+			<button class="backButton super_center" @click="unShow"><image src="../../static/icon/arrow-left-fcc041.png" mode="aspectFit"></image></button>
 			<button class="shareButton column_center" @click="eventSave">
 				<image src="../../static/icon/angle-left.png" mode="aspectFit"></image>
 				<text>分享到朋友圈</text>
 			</button>
-			<view style="position: fixed;
+			<view
+				@click="unShow"
+				style="position: fixed;
 					width: 100%;
 					height: 100%;
 					background-color: #000000;
 					opacity: 0.3;
-					z-index: 30;">
-			</view>
+					z-index: 30;"
+			></view>
 		</view>
-		
 	</view>
 </template>
 <script>
 import postersLayer from './posterslayer.vue';
 import { pathToBase64, base64ToPath } from '../../common/image-tools/index.js';
-import canvasdrawer from './uniapp-canvas-drawer.vue'
+import canvasdrawer from './uniapp-canvas-drawer.vue';
 export default {
 	props: {
 		articleCard: ''
@@ -55,7 +54,7 @@ export default {
 			// width: 320, // 画布宽度
 			// height: 320, // 画布长度
 			// context: '', // canvas 环境
-			
+
 			QrCode: '', // 二维码
 			painting: {},
 			shareImage: ''
@@ -63,10 +62,11 @@ export default {
 	},
 
 	onReady() {
-		if(this.articleCard == null){
+		if (this.articleCard == null) {
 			this.articleCard = {
 				//测试用例
-				articleContent: "章四季豆暗色调骄傲搜的我去教室大家啊章四季豆暗色调骄傲搜的我去教室大家啊章四季豆暗色调骄傲搜的我去教室大家啊so打卡塑料袋价款的祭扫激动isad竞赛就, 暗示大家as哦就记得再试一次暗示大家as的奇偶暗示大家哦",
+				articleContent:
+					'章四季豆暗色调骄傲搜的我去教室大家啊章四季豆暗色调骄傲搜的我去教室大家啊章四季豆暗色调骄傲搜的我去教室大家啊so打卡塑料袋价款的祭扫激动isad竞赛就, 暗示大家as哦就记得再试一次暗示大家as的奇偶暗示大家哦',
 				articleTitle: '再试一次暗示大家as的奇偶暗示',
 				commentNum: 13,
 				createDate: 1581531649000,
@@ -97,7 +97,7 @@ export default {
 
 		// this.context = uni.createCanvasContext('canvasdrawer', this);
 		// this.myPoster();
-		
+
 		this.getQrcodeUnlimit('pages/detail/detail', 'data=' + this.articleCard.id, 200, true).then(res => {
 			if (res == 'suc') {
 				this.eventDraw();
@@ -106,16 +106,16 @@ export default {
 	},
 
 	methods: {
-		back(){
-			this.$emit("back");
+		unShow() {
+			this.$emit('unShow');
 		},
-		
-		eventDraw () {
-		    uni.showLoading({
+
+		eventDraw() {
+			uni.showLoading({
 				title: '绘制分享图片中',
 				mask: true
-		    })
-		    
+			});
+
 			this.painting = {
 				width: 500,
 				height: 500,
@@ -143,59 +143,63 @@ export default {
 						type: 'image',
 						width: 37,
 						height: 37,
-						top: 67+23,
-						left: 88+31,
+						top: 67 + 23,
+						left: 88 + 31,
 						radius: 18,
 						url: this.articleCard.faceImg
 					},
-					
+
 					{
+						//昵称
 						type: 'text',
 						content: this.articleCard.nickname,
 						fontSize: 17,
 						color: '#9A9A9A',
 						textAlign: 'left',
-						top: 67+31,
-						left: 88+82,
+						top: 67 + 31,
+						left: 88 + 82,
 						bolder: false
 					},
-					{	//标题
+					{
+						//标题
 						type: 'text',
 						content: this.articleCard.articleTitle,
 						fontSize: 22,
 						lineHeight: 25,
 						color: '#353535',
 						textAlign: 'left',
-						top: 67+80,
-						left: 88+29,
+						top: 67 + 80,
+						left: 88 + 29,
 						width: 266,
 						MaxLineNumber: 1,
 						breakWord: true,
 						bolder: true
 					},
-					{	//内容
+					{
+						//内容
 						type: 'text',
 						content: this.articleCard.articleContent,
 						fontSize: 15,
 						lineHeight: 22,
 						color: '#888888',
 						textAlign: 'left',
-						top: 67+128,
-						left: 88+29,
+						top: 67 + 128,
+						left: 88 + 29,
 						width: 266,
 						MaxLineNumber: 5,
 						breakWord: true,
 						bolder: false
 					},
-					{	//分割线
+					{
+						//分割线
 						type: 'text',
-						content: "- - - - - - - - - - - - - - - - - - - -",
+						content: '- - - - - - - - - - - - - - - - - - - -',
 						fontSize: 15,
 						lineHeight: 21,
 						color: '#B1B1B1',
 						textAlign: 'left',
-						top: 67+250,
-						left: 88+27,
+						top: 67 + 250,
+						left: 88 + 27,
 						width: 270,
 						MaxLineNumber: 1,
 						breakWord: true,
@@ -206,8 +210,8 @@ export default {
 						type: 'image',
 						width: 70,
 						height: 70,
-						top: 67+269,
-						left: 88+27,
+						top: 67 + 269,
+						left: 88 + 27,
 						url: this.QrCode
 					},
 					{
@@ -217,38 +221,38 @@ export default {
 						lineHeight: 25,
 						color: '#888888',
 						textAlign: 'right',
-						top: 67+282,
-						left: 500-88-28,
+						top: 67 + 282,
+						left: 500 - 88 - 28,
 						width: 150,
 						MaxLineNumber: 2,
 						breakWord: true,
 						bolder: false
 					}
 				]
-			}
+			};
 		},
-		eventSave () {
-		    uni.saveImageToPhotosAlbum({
+		eventSave() {
+			uni.saveImageToPhotosAlbum({
 				filePath: this.shareImage,
-				success (res) {
+				success(res) {
 					uni.showToast({
 						title: '保存图片成功',
 						icon: 'success',
 						duration: 2000
-					})
+					});
 				}
-			})
+			});
 		},
 		eventGetImage(event) {
-			uni.hideLoading()
-			console.log(event)
-			const { tempFilePath, errMsg } = event
+			uni.hideLoading();
+			console.log(event);
+			const { tempFilePath, errMsg } = event;
 			// const result = event.detail.__args__
 			// const tempFilePath = result[0].tempFilePath
 			// const errMsg = result[0].errMsg
 			if (errMsg === 'canvasdrawer:ok') {
-				this.shareImage = tempFilePath
-				this.painting = {}
+				this.shareImage = tempFilePath;
+				this.painting = {};
 			}
 		},
 
@@ -364,55 +368,55 @@ export default {
 	margin-right: auto;
 }
 
-.backButton{
+.backButton {
 	position: fixed;
 	z-index: 40;
-	left: calc((100% - 320px)/2);
+	left: calc((100% - 320px) / 2);
 	top: calc(26% + 320px);
-	width:49px;
-	height:49px;
-	background:rgba(255,255,255,1);
-	opacity:1;
-	border-radius:8px;
+	width: 49px;
+	height: 49px;
+	background: rgba(255, 255, 255, 1);
+	opacity: 1;
+	border-radius: 8px;
 }
 
-.backButton image{
-	width:30px;
-	height:30px;
-	opacity:1;
+.backButton image {
+	width: 30px;
+	height: 30px;
+	opacity: 1;
 }
 
-.shareButton{
+.shareButton {
 	position: fixed;
-	right: calc((100% - 320px)/2);
+	right: calc((100% - 320px) / 2);
 	top: calc(26% + 320px);
 	z-index: 40;
-	width:164px;
-	height:49px;
-	background:rgba(252,192,65,1);
-	box-shadow:0px 0px 8px rgba(0,0,0,0.16);
-	opacity:1;
-	border-radius:8px;
+	width: 164px;
+	height: 49px;
+	background: rgba(252, 192, 65, 1);
+	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.16);
+	opacity: 1;
+	border-radius: 8px;
 }
 
-.shareButton image{
+.shareButton image {
 	position: absolute;
 	left: 16px;
-	width:30px;
-	height:30px;
-	opacity:1;
+	width: 30px;
+	height: 30px;
+	opacity: 1;
 }
 
-.shareButton text{
+.shareButton text {
 	position: absolute;
 	right: 16px;
-	min-width:104px;
-	height:17px;
-	font-size:17px;
-	font-family:Source Han Sans CN;
-	font-weight:400;
-	line-height:17px;
-	color:rgba(255,255,255,1);
-	opacity:1;
+	min-width: 104px;
+	height: 17px;
+	font-size: 17px;
+	font-family: Source Han Sans CN;
+	font-weight: 400;
+	line-height: 17px;
+	color: rgba(255, 255, 255, 1);
+	opacity: 1;
 }
 </style>
