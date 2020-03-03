@@ -10,6 +10,9 @@ module.exports = {
 	follow : "Follow",
 	tags : "Tags",
 	
+	//文章
+	detail : "Detail",
+	
 	//投票
 	vote : "Vote",
 	allVote : "All Vote",

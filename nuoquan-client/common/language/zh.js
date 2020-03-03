@@ -10,6 +10,9 @@ module.exports = {
 	follow : "关注",
 	tags : "标签",
 	
+	//文章
+	detail : "详情",
+	
 	//投票
 	vote : "投票",
 	allVote: "所有投票",
@@ -32,5 +35,6 @@ module.exports = {
 	fans : "粉丝",
 	reputation : "影响力",
 	like : "点赞",
-	comment : "评论"
+	comment : "评论",
+	
 }
