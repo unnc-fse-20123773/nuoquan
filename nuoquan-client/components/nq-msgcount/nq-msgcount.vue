@@ -27,9 +27,7 @@ export default {
 
 <style>
 .msgcount {
-	position: absolute;
 	padding: 1px 3px;
-	right: 0;
 	min-width: 18px;
 	height: 17px;
 	background: rgba(242, 94, 94, 1);
