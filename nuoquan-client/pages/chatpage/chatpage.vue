@@ -6,13 +6,14 @@
 		:style="{height: this.getnavbarHeight() + 'px'}" 
 		:showLeftIcon="true" 
 		:isNavHome="isNavHome" 
-		left-text="返回"
+		:left-text="lang.back"
 		:title="pageTitle" 
-		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
+		:height="navbarHeight"></uni-nav-bar>
 		
 		<scroll-view id="scrollview" class="messageArea" :style="{ height: textareaHeight }" scroll-y="true" @scrolltoupper="loadMore"
 		  :scroll-top="scrollTop" :scroll-into-view="scrollToView">
-			<view :style="{height: this.getnavbarHeight().bottom + 15 + 'px'}"></view>
+		  <!-- 占位，防止 navbar 盖住内容 -->
+			<view :style="{height: navbarHeight + 10 + 'px'}"></view>
 			<onemessage v-for="(item, index) in chatContent" :key="index" :thisMessage="item" :userInfo="userInfo" :friendInfo="friendInfo"
 			 :id="item.id"></onemessage>
 			<view class="marginHelper"></view>
@@ -74,6 +75,8 @@ export default {
 			showEmojiFlag:false,
 			
 			isNavHome: getApp().globalData.isNavHome,//判断导航栏左侧是否显示home按钮
+			
+			navbarHeight: 0 //一次性储存 navbarheight
 		};
 	},
 
@@ -104,12 +107,14 @@ export default {
 	},
 
 	onLoad(opt) {
+		// 一次性储存 navbar 高度
+		this.navbarHeight = this.getnavbarHeight().bottom + 5;
 		// console.log(opt);
 		page = 1; //初始化page,
 		// 获取界面传参
 		// console.log(opt.friendInfo)
 		this.friendInfo = JSON.parse(decodeURIComponent(opt.friendInfo)); //解码
-
+		
 		// 设置页面tittle
 		this.pageTitle= this.friendInfo.nickname
 		// 获取我的信息

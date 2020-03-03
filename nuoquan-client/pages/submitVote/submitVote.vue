@@ -5,11 +5,11 @@
 		:style="{height: this.getnavbarHeight() + 'px'}" 
 		:showLeftIcon="true" 
 		:isNavHome="isNavHome" 
-		left-text="返回"
+		:left-text="lang.back"
 		:title="pageTitle" 
-		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>				
+		:height="navbarHeight"></uni-nav-bar>				
 		
-		<view :style="{height: this.getnavbarHeight().bottom + 5 + 'px'}"></view>
+		<view :style="{height: navbarHeight + 'px'}"></view>
 		<!-- 当失去焦点时，将输入内容存入voteTitle -->
 		<view style="position: relative;margin-top: 20px;">
 			<input class="title" v-model="voteTitle" placeholder="标题" maxlength="20" placeholder-class="title-placeholder">
@@ -100,6 +100,7 @@ export default {
 			
 			windowHeight: 0,
 			isNavHome: getApp().globalData.isNavHome,//判断导航栏左侧是否显示home按钮
+			navbarHeight: 0 //一次性储存 navbarheight
 		}
 	},
 	components: {
@@ -108,6 +109,9 @@ export default {
 	},
 	
 	onLoad() {
+		// 一次性储存 navbar 高度
+		this.navbarHeight = this.getnavbarHeight().bottom + 5;
+		
 		this.userInfo = this.getGlobalUserInfo();
 		// 获取屏幕高度
 		var that = this;

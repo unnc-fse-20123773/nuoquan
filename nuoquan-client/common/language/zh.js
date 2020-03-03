@@ -3,15 +3,23 @@ module.exports = {
 	langType : 'zh-CN',
 	
 	tabbarName : ["主页","投票","","动态","我的"],
+	tabList : ["发文章","发投票"],
+	vertion : "v1.1.1",
+	back : "返回",
 	send : "发送",
 	time : "时间",
 	hot : "热度",
 	all : "所有",
 	follow : "关注",
 	tags : "标签",
+	refresh : "刷新",
+	second : "秒",
+	min : "分",
+	hour : "小时",
 	
 	//文章
 	detail : "详情",
+	commentDetail : "评论详情",
 	
 	//投票
 	vote : "投票",
@@ -22,6 +30,9 @@ module.exports = {
 	writeComment : "发表评论",
 	onBottom : "划到底部啦",
 	votePrompt : "完成投票后才可查看评论哦",
+	
+	//热门
+	nextRefresh : "下次更新",
 	
 	//我的消息
 	myMessage : "我的消息",
@@ -37,4 +48,12 @@ module.exports = {
 	like : "点赞",
 	comment : "评论",
 	
+	//关注粉丝列表
+	fanAndFollow : "关注粉丝列表",
+	
+	//个人信息
+	
+	//关于
+	contact : "联系我们",
+	update : "更新公告",
 }

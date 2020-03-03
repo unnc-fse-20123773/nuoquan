@@ -3,7 +3,7 @@
 		<view class="tabList_box">
 			<view class="tabList">
 				<view class="super_center" style="width: 100%;height: 50px;" @click="gosubmit">
-					<text>发文章</text>
+					<text>{{lang.tabList[0]}}</text>
 				</view>
 				<view
 					style="width: 83px;
@@ -12,7 +12,7 @@
 					background-color:rgba(236,236,236,1) ;"
 				></view>
 				<view class="super_center" style="width: 100%;height: 50px;" @click="gosubmitVote">
-					<text>发投票</text>
+					<text>{{lang.tabList[1]}}</text>
 				</view>
 			</view>
 		</view>
@@ -20,9 +20,14 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex';
+	
 export default {
 	data() {
 		return {};
+	},
+	computed: {
+		...mapState(['lang'])
 	},
 	methods: {
 		gosubmit() {

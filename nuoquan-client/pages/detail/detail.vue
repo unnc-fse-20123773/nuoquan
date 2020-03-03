@@ -3,13 +3,13 @@
 		<!-- 导航栏 -->
 		<uni-nav-bar
 			class="navigationBar"
-			left-text="返回"
+			:left-text="lang.back"
 			:title="lang.detail"
 			:showLeftIcon="true"
 			:isNavHome="isNavHome"
-			:height="this.getnavbarHeight().bottom + 5"
+			:height="navbarHeight"
 		></uni-nav-bar>
-		<view :style="{ height: this.getnavbarHeight().bottom + 5 + 'px' }" style="width: 100%;"></view>
+		<view :style="{ height: navbarHeight + 'px' }" style="width: 100%;"></view>
 
 		<!-- 第一个大块二，文章本体 -->
 		<detail_1_article
@@ -116,7 +116,8 @@ export default {
 			type: 0, //查询评论接口参数，0：按时间查询, 1：按热度查询
 			control_scroll_button_flag: 0,
 
-			isNavHome: getApp().globalData.isNavHome //判断导航栏左侧是否显示home按钮
+			isNavHome: getApp().globalData.isNavHome, //判断导航栏左侧是否显示home按钮
+			navbarHeight: 0 //一次性储存 navbarheight
 		};
 	},
 	computed: {
@@ -133,6 +134,9 @@ export default {
 	},
 
 	async onLoad(options) {
+		// 一次性储存 navbar 高度
+		this.navbarHeight = this.getnavbarHeight().bottom + 5;
+			
 		//获取全局用户信息
 		var userInfo = this.getGlobalUserInfo();
 		if (!this.isNull(userInfo)) {
