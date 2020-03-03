@@ -6,7 +6,8 @@ margin-left: calc(100% - 624upx);
 background:rgba(236,236,236,1);
 opacity:1;
 border-radius:8px;
-padding:4px 24upx 12px;" v-if="subCommentNum > 0">
+padding:4px 24upx 12px;"
+	 v-if="subCommentNum > 0">
 		<block v-for="subComment in subCommentList" :key='subComment.id'>
 			<view class="reComment">
 
@@ -36,7 +37,7 @@ padding:4px 24upx 12px;" v-if="subCommentNum > 0">
 
 			</view>
 		</block>
-<view class="showMoreSubComment" @tap="goToCommentDetail()" v-if="subCommentNum > 2">展开剩余评论</view>
+		<view class="showMoreSubComment" @tap="goToCommentDetail()" v-if="subCommentNum > 2">展开剩余评论</view>
 	</view>
 
 </template>
@@ -45,7 +46,7 @@ padding:4px 24upx 12px;" v-if="subCommentNum > 0">
 	export default {
 		props: {
 			mainCommentid: "",
-			mainComment:"",
+			mainComment: "",
 		},
 		data() {
 			return {
@@ -53,13 +54,13 @@ padding:4px 24upx 12px;" v-if="subCommentNum > 0">
 				userInfo: this.getGlobalUserInfo(),
 
 				subCommentList: [],
-				subCommentNum:0,
+				subCommentNum: 0,
 			};
 		},
 		mounted() {
 			this.getSubComments(1);
 			uni.$on('flashSubComment', (underCommentId) => {
-					this.getSubComments(1);
+				this.getSubComments(1);
 			})
 		},
 		methods: {
@@ -82,16 +83,16 @@ padding:4px 24upx 12px;" v-if="subCommentNum > 0">
 						console.log(res);
 						if (res.data.status == 200) {
 							that.subCommentNum = res.data.data.rows.length;
-							
+
 							if (res.data.data.rows.length <= 2) {
 								that.subCommentList = res.data.data.rows
-							} else {		
+							} else {
 								that.subCommentList = res.data.data.rows.slice(0, 2)
 							}
 
 						}
-console.log(that.subCommentList);
-console.log(that.subCommentNum)
+						console.log(that.subCommentList);
+						console.log(that.subCommentNum)
 					}
 				});
 			},
@@ -111,57 +112,57 @@ console.log(that.subCommentNum)
 			 * 点赞或取消点赞二级评论
 			 * @param {Object} comment
 			 */
-// 			swLikeSubComment() {
-// 				if (this.subComment.isLike) {
-// 					this.unLikeComment(this.subComment);
-// 					this.subComment.likeNum--;
-// 					console.log(this.subComment.likeNum);
-// 				} else {
-// 					this.likeComment(this.subComment);
-// 					this.subComment.likeNum++;
-// 				}
-// 				this.subComment.isLike = !this.subComment.isLike;
-// 			},
-// 
-// 			likeComment(comment) {
-// 				console.log("点赞评论");
-// 				var that = this;
-// 				uni.request({
-// 					method: "POST",
-// 					url: that.$serverUrl + '/article/userLikeComment',
-// 					data: {
-// 						userId: that.userInfo.id,
-// 						commentId: comment.id,
-// 						createrId: comment.fromUserId,
-// 					},
-// 					header: {
-// 						'content-type': 'application/x-www-form-urlencoded'
-// 					},
-// 					success: (res) => {
-// 						console.log(res);
-// 					},
-// 				});
-// 			},
-// 
-// 			unLikeComment(comment) {
-// 				console.log("取消点赞评论");
-// 				var that = this;
-// 				uni.request({
-// 					method: "POST",
-// 					url: that.$serverUrl + '/article/userUnLikeComment',
-// 					data: {
-// 						userId: that.userInfo.id,
-// 						commentId: comment.id,
-// 						createrId: comment.fromUserId,
-// 					},
-// 					header: {
-// 						'content-type': 'application/x-www-form-urlencoded'
-// 					},
-// 					success: (res) => {
-// 						console.log(res);
-// 					},
-// 				});
-// 			},
+			// 			swLikeSubComment() {
+			// 				if (this.subComment.isLike) {
+			// 					this.unLikeComment(this.subComment);
+			// 					this.subComment.likeNum--;
+			// 					console.log(this.subComment.likeNum);
+			// 				} else {
+			// 					this.likeComment(this.subComment);
+			// 					this.subComment.likeNum++;
+			// 				}
+			// 				this.subComment.isLike = !this.subComment.isLike;
+			// 			},
+			// 
+			// 			likeComment(comment) {
+			// 				console.log("点赞评论");
+			// 				var that = this;
+			// 				uni.request({
+			// 					method: "POST",
+			// 					url: that.$serverUrl + '/article/userLikeComment',
+			// 					data: {
+			// 						userId: that.userInfo.id,
+			// 						commentId: comment.id,
+			// 						createrId: comment.fromUserId,
+			// 					},
+			// 					header: {
+			// 						'content-type': 'application/x-www-form-urlencoded'
+			// 					},
+			// 					success: (res) => {
+			// 						console.log(res);
+			// 					},
+			// 				});
+			// 			},
+			// 
+			// 			unLikeComment(comment) {
+			// 				console.log("取消点赞评论");
+			// 				var that = this;
+			// 				uni.request({
+			// 					method: "POST",
+			// 					url: that.$serverUrl + '/article/userUnLikeComment',
+			// 					data: {
+			// 						userId: that.userInfo.id,
+			// 						commentId: comment.id,
+			// 						createrId: comment.fromUserId,
+			// 					},
+			// 					header: {
+			// 						'content-type': 'application/x-www-form-urlencoded'
+			// 					},
+			// 					success: (res) => {
+			// 						console.log(res);
+			// 					},
+			// 				});
+			// 			},
 
 			goToPersonPublic() {
 				this.$emit("goToPersonPublic", this.subComment.fromUserId);
@@ -270,19 +271,20 @@ console.log(that.subCommentNum)
 		line-height: 18px;
 		color: rgba(53, 53, 53, 1);
 	}
-	.showMoreSubComment{
+
+	.showMoreSubComment {
 		margin-top: 8px;
-		width:97px;
-		height:20px;
+		width: 97px;
+		height: 20px;
 		line-height: 20px;
-		background:rgba(209,209,209,1);
-		box-shadow:0px 0px 4px rgba(0,0,0,0.16);
-		border-radius:36px;
-		
+		background: rgba(209, 209, 209, 1);
+		box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
+		border-radius: 36px;
+
 		text-align: center;
 		margin-left: calc(100% - 97px);
-		font-size:12px;
-		font-weight:500;
-		color:rgba(53,53,53,1);
-		}
+		font-size: 12px;
+		font-weight: 500;
+		color: rgba(53, 53, 53, 1);
+	}
 </style>

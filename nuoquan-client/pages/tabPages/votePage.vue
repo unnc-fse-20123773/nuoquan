@@ -160,7 +160,7 @@
 						<text v-if="ischosen[index] == false">完成投票后才可查看评论哦</text>
 						<button v-else class="confirmButton_votePage super_center" @click="confirmVote(item.id, index)">确认投票</button>
 					</view>
-					<votecomment :voteid = '  something         '></votecomment>
+					<votecomment @changeCommentNum="changeCommentNum" v-if="finishVote[index] == true" :voteId = 'item.id' :index = 'index' :userId = "item.userId"></votecomment>
 				</scroll-view>
 			</swiper-item>
 		</swiper>
@@ -246,7 +246,7 @@
 			info = uni.getMenuButtonBoundingClientRect();
 			height = info.bottom;
 			this.navigationBarHeight = height;
-			console.log('导航栏高度=' + this.navigationBarHeight);
+			// console.log('导航栏高度=' + this.navigationBarHeight);
 			this.calculateHeight();
 		},
 
@@ -346,7 +346,7 @@
 				// 记录是在第几个vote进行操作
 				that.ischosenFlag = voteIndex;
 				
-				console.log("赋值后的选项id= "+ that.selectedOptionId);
+				// console.log("赋值后的选项id= "+ that.selectedOptionId);
 				// console.log(that.currentVoteIndex);
 				// console.log(that.ischosen);
 			},
@@ -387,7 +387,7 @@
 						that.afterSelectedOptionList = that.afterSelectedResult.optionList;
 						// console.log(that.afterSelectedOptionList);
 						// that.ischosen[voteIndex] = true;
-						console.log(that.showList[voteIndex]);
+						// console.log(that.showList[voteIndex]);
 						
 						// 进度条伸长
 						for (let option of that.showList[voteIndex].optionList){
@@ -418,7 +418,7 @@
 					//设置计时器
 					if ( option.barWidth >= widthTarget) {
 						//在 persentBarWidth 为目标值时清空计时器，暂以100代替						// console.log(option);
-						console.log(option);
+						// console.log(option);
 						clearInterval(timer);
 					} else {
 						option.barWidth += 0.5;
@@ -493,7 +493,7 @@
 							
 							for(var index = 0; index < that.showList.length; index++){
 								if (that.showList[index].isUserVoted == true){
-									console.log("Voted: "+ index);
+									// console.log("Voted: "+ index);
 									that.votedResult(index);
 								}
 							}
@@ -562,6 +562,10 @@
 					}
 				}
 			},
+			changeCommentNum(index){
+				// console.log("12312312 " + index);
+				this.showList[index].commentNum++;
+			}
 		}
 	};
 </script>

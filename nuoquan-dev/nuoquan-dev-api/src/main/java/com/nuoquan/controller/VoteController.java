@@ -194,7 +194,6 @@ public class VoteController extends BasicController{
 	 */
 	@PostMapping("/saveVoteComment")
 	public JSONResult saveVoteComment(@RequestBody UserVoteComment comment) throws Exception{
-		
 		// 内容安全监测
 		if (weChatService.msgSecCheck(comment.getComment())) {
 			
