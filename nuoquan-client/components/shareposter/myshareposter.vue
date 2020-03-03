@@ -15,9 +15,22 @@
 		<view>
 			<image :src="shareImage" class="shareimage" mode="aspectFit"></image>
 			<canvasdrawer :painting="painting" class="canvasdrawer" @getImage="eventGetImage" />
-			<button @click="back">返回</button>
-			<button @click="eventSave">分享到朋友圈</button>
+			<button class="backButton super_center" @click="back">
+				<image src="../../static/icon/arrow-left-fcc041.png" mode="aspectFit"></image>
+			</button>
+			<button class="shareButton column_center" @click="eventSave">
+				<image src="../../static/icon/angle-left.png" mode="aspectFit"></image>
+				<text>分享到朋友圈</text>
+			</button>
+			<view style="position: fixed;
+					width: 100%;
+					height: 100%;
+					background-color: #000000;
+					opacity: 0.3;
+					z-index: 30;">
+			</view>
 		</view>
+		
 	</view>
 </template>
 <script>
@@ -343,13 +356,63 @@ export default {
 	width: 320px;
 	height: 320px;
 	position: fixed;
+	z-index: 40;
 	left: 0;
 	right: 0;
-	top: 0;
-	bottom: 0;
+	top: 22%;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: auto;
-	margin-bottom: auto;
+}
+
+.backButton{
+	position: fixed;
+	z-index: 40;
+	left: calc((100% - 320px)/2);
+	top: calc(26% + 320px);
+	width:49px;
+	height:49px;
+	background:rgba(255,255,255,1);
+	opacity:1;
+	border-radius:8px;
+}
+
+.backButton image{
+	width:30px;
+	height:30px;
+	opacity:1;
+}
+
+.shareButton{
+	position: fixed;
+	right: calc((100% - 320px)/2);
+	top: calc(26% + 320px);
+	z-index: 40;
+	width:164px;
+	height:49px;
+	background:rgba(252,192,65,1);
+	box-shadow:0px 0px 8px rgba(0,0,0,0.16);
+	opacity:1;
+	border-radius:8px;
+}
+
+.shareButton image{
+	position: absolute;
+	left: 16px;
+	width:30px;
+	height:30px;
+	opacity:1;
+}
+
+.shareButton text{
+	position: absolute;
+	right: 16px;
+	min-width:104px;
+	height:17px;
+	font-size:17px;
+	font-family:Source Han Sans CN;
+	font-weight:400;
+	line-height:17px;
+	color:rgba(255,255,255,1);
+	opacity:1;
 }
 </style>

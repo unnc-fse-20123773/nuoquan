@@ -7,8 +7,13 @@ export default {
 		
 	},
 	onShow: function(options) {
+		let pages = getCurrentPages(); //当前页面栈
 		console.log('App Show');
-		if(options.path != "pages/tabPages/index"){
+		if(options.path != "pages/tabPages/index" 
+		&& options.path != "pages/tabPages/messagelist" 
+		&& options.path != "pages/tabPages/mine" 
+		&& options.path != "pages/tabPages/votePage"
+		&& pages.length == 0){
 			console.log(options.path);
 			this.globalData.isNavHome = true;
 		}
@@ -39,7 +44,7 @@ export default {
 .navigationBar {
 	width: 100%;
 	position: fixed;
-	z-index: 9999;
+	z-index: 50;
 	left: 0;
 	top: 0;
 }
