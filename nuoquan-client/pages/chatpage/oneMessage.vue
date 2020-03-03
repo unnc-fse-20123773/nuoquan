@@ -62,7 +62,7 @@
 			};
 		},
 		onReady: function() {
-			console.log(this.chat);
+			// console.log(this.chat);
 			// console.log(this.thisMessage);
 		},
 		methods: {

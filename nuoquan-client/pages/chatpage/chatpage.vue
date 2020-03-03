@@ -9,11 +9,10 @@
 		left-text="返回"
 		:title="pageTitle" 
 		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
-		<view :style="{height: this.getnavbarHeight().bottom + 5 + 'px'}"></view>
 		
-		<scroll-view class="messageArea" :style="{ height: textareaHeight }" scroll-y="true" @scrolltoupper="loadMore"
-		 @scroll="scroll" :scroll-into-view="scrollToView">
-			<view style="height:20px;width:100%;"></view>
+		<scroll-view id="scrollview" class="messageArea" :style="{ height: textareaHeight }" scroll-y="true" @scrolltoupper="loadMore"
+		  :scroll-top="scrollTop" :scroll-into-view="scrollToView">
+			<view :style="{height: this.getnavbarHeight().bottom + 15 + 'px'}"></view>
 			<onemessage v-for="(item, index) in chatContent" :key="index" :thisMessage="item" :userInfo="userInfo" :friendInfo="friendInfo"
 			 :id="item.id"></onemessage>
 			<view class="marginHelper"></view>
@@ -64,10 +63,12 @@ export default {
 			textMsg: '', // 输入框中的text
 			windowHeight: '',
 			scrollToView: '',
-
+			scrollTop: 0,
+			
 			userInfo: '',
 			friendInfo: '',
 			textareaHeight: '' ,//聊天内容高度
+			mitemHeight: 0,
 			
 			keyboardHeight:'',
 			showEmojiFlag:false,
@@ -84,28 +85,29 @@ export default {
 		// 监听收到的消息
 		chatMessageCard(newVal, oldVal) {
 			// console.log("newVal:");
-			// console.log(newVal);
+			console.log(newVal);
 			// 渲染到窗口
+			newVal.id = this.generateId(0);
 			this.chatContent.push(newVal);
 			this.scrollToBottom();
 		},
 
 		// 监听发送的消息
-		flashChatPage(newVal, oldVal) {
-			// 载入最后一条消息
-			var list = this.getListByKey(chatKey);
-			var msg = list[list.length - 1];
-			msg.id = this.generateId(0);
-			this.chatContent.push(msg);
-			this.scrollToBottom();
-		}
+		// flashChatPage(newVal, oldVal) {
+		// 	// 载入最后一条消息
+		// 	var list = this.getListByKey(chatKey);
+		// 	var msg = list[list.length - 1];
+		// 	msg.id = this.generateId(0);
+		// 	// this.chatContent.push(msg);
+		// 	this.scrollToBottom();
+		// }
 	},
 
 	onLoad(opt) {
-		console.log(opt);
+		// console.log(opt);
 		page = 1; //初始化page,
 		// 获取界面传参
-		console.log(opt.friendInfo)
+		// console.log(opt.friendInfo)
 		this.friendInfo = JSON.parse(decodeURIComponent(opt.friendInfo)); //解码
 
 		// 设置页面tittle
@@ -255,10 +257,36 @@ export default {
 
 		scrollToBottom() {
 			// 将页面滚动到底部，
-			console.log(this.chatContent);
+			console.log("scrollToBottom")
 			if (this.chatContent.length > 0) {
 				this.scrollToView = this.chatContent[this.chatContent.length - 1].id;
 			}
+			console.log(this.scrollToView);
+			
+			// var that = this;
+			// var query = uni.createSelectorQuery();
+			// query.selectAll('send').boundingClientRect();
+			// query.select('#scrollview').boundingClientRect();
+			// console.info(query);
+			// query.exec(function (res) {
+			// 	console.info(res);
+			// 	that.mitemHeight = 0;
+			// 	// res.forEach((i)=>{
+			// 	// 	if(i)
+			// 	// })
+			// 	res[0].forEach(function (rect) {
+			// 		console.info(rect.height);
+			// 		that.mitemHeight = that.mitemHeight + rect.height + 20;
+			// 	});
+			
+			// 	if (that.mitemHeight > that.textareaHeight) {
+			// 		that.scrollTop = that.mitemHeight - that.textareaHeight;
+			// 	}
+			// 	console.log(that.mitemHeight)
+			// 	console.log(that.textareaHeight)
+			// 	console.log(that.scrollTop)
+			// });
+			// this.scrollTop = 99999;
 		}
 	}
 };
@@ -272,16 +300,12 @@ page {
 </style>
 
 <style scoped>
-/**
-	 * TODO： 滚动区域高度需固定
-	 * 					by Jerrio
-	 */
 .messageArea {
 	display: flex;
 	/* margin-top: 30upx; */
 	margin-bottom: 90upx;
 	width: 100%;
-	/* height: 94%; */
+	height: 94%;
 }
 
 .bottomBar {

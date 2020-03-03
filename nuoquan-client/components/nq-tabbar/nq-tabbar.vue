@@ -45,6 +45,7 @@
 <script>
 import tablist from '../nq-tablist/nq-tablist.vue';
 import msgcount from '../nq-msgcount/nq-msgcount.vue';
+import { mapState, mapMutations } from 'vuex';
 
 export default {
 	props: {
@@ -91,7 +92,7 @@ export default {
 					selectIcon: '/static/icon/comment_dots_ffffff.png',
 					name: '动态',
 					url: '/pages/tabPages/messagelist',
-					count: 10
+					count: uni.getStorageSync('myMsgCount'),
 				},
 				{
 					type: 0,
@@ -103,9 +104,17 @@ export default {
 			]
 		};
 	},
-	created() {
-		console.log(this.degree);
+	computed: {
+		...mapState(['myMsgCount'])
 	},
+	
+	watch: {
+		myMsgCount(newVal, oldVal) {
+			console.log(newVal)
+			this.tabBarList[3].count = newVal;
+		}
+	},
+	
 	methods: {
 		onClick(e) {
 			if (e.type == 1) {
