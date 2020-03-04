@@ -24,6 +24,17 @@
 		
 		<!-- 分享海报 -->
 		<view v-if="share"><mySharePoster :articleCard="articleCard" @unShow="toggleShare"></mySharePoster></view>
+		<view v-if="share"
+			@click="unShow"
+			style="position: fixed;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				background-color: #000000;
+				opacity: 0.3;
+				z-index: 30;"
+		></view>
 		
 		<view style="border-bottom: 4px solid #ECECEC;height:0;width:750upx;font-size: 0;position: relative;left: -16px;" @controlInputSignal="controlInput">这是分割线</view>
 		<!--第一个大块二，评论区域-->

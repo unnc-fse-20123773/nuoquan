@@ -68,16 +68,12 @@
 </template>
 
 <script>
-import mySharePoster from 'components/shareposter/myshareposter.vue';
 
 export default {
 	name: 'detail_1_article',
 	props: {
 		articleCard: '',
 		userInfo: ''
-	},
-	components: {
-		mySharePoster
 	},
 	data() {
 		return {

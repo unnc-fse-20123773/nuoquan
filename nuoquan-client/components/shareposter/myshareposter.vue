@@ -20,15 +20,6 @@
 				<image src="../../static/icon/angle-left.png" mode="aspectFit"></image>
 				<text>分享到朋友圈</text>
 			</button>
-			<view
-				@click="unShow"
-				style="position: fixed;
-					width: 100%;
-					height: 100%;
-					background-color: #000000;
-					opacity: 0.3;
-					z-index: 30;"
-			></view>
 		</view>
 	</view>
 </template>
