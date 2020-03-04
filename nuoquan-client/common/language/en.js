@@ -8,6 +8,7 @@ module.exports = {
 	back : "Back",
 	send : "Send",
 	submit : "Submit",
+	delete : "Delete",
 	time : "Time",
 	hot : "Hot",
 	all : "All",
@@ -17,6 +18,7 @@ module.exports = {
 	second : "s",
 	min : "m",
 	hour : "h",
+	day : "days",
 	edit : "Edit",
 	ok : "OK",
 	
@@ -45,7 +47,10 @@ module.exports = {
 	comments : "Comments",
 	writeComment : "Comment",
 	onBottom : "No more content",
-	votePrompt : "You can view the comments after you voted.",
+	addBody : "Add body",
+	addOption : "Add option",
+	votePrompt1 : "You can view the comments after you voted.",
+	votePrompt2 : "Up to 10 options, each limited to 20 words.",
 	
 	//热门
 	hotTitle : "Top 10",

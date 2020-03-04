@@ -157,7 +157,7 @@
 					</view>
 					<!-- 确认投票 -->
 					<view v-if="finishVote[index] == false" class="alertandconfirm super_center">
-						<text v-if="ischosen[index] == false">{{lang.votePrompt}}</text>
+						<text v-if="ischosen[index] == false">{{lang.votePrompt1}}</text>
 						<button v-else class="confirmButton_votePage super_center" @click="confirmVote(item.id, index)">确认投票</button>
 					</view>
 					<!-- 评论区 -->
