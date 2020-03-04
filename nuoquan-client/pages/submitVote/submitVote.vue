@@ -158,17 +158,17 @@ export default {
 			// console.log("选择的天数: "+ this.pickerValue);
 		},
 
-		combineOptionsToString: function(res) {
+		combineOptionsToString() {
 			var that = this;
 			for (var i = 0; i < that.voteOptions.length; i++) {
-				if (this.isNull(that.voteOptions[i]) || this.isBlank(that.voteOptions[i])) {
+				if (this.isBlank(that.voteOptions[i])) {
 					uni.showToast({
 						icon: 'none',
 						title: '选项不能为空',
 						duration: 1000
 					});
 					that.optionString = '';
-					return;
+					return false;
 				} else {
 					if (this.isBlank(that.optionString) || this.isNull(that.optionString)) {
 						that.optionString = that.voteOptions[i];
@@ -177,7 +177,9 @@ export default {
 					}
 				}
 			}
-			console.log(that.optionString);
+			// console.log(that.optionString);
+			return true
+			
 		},
 
 		chooseImg: async function() {
@@ -225,13 +227,7 @@ export default {
 		},
 		upload(res) {
 			var that = this;
-			console.log('--upload--');
-			console.log(that.voteTitle);
-			console.log(that.voteContent);
-			console.log(that.pickerValue);
-			console.log('----------');
-
-			if (this.isBlank(that.voteTitle) || this.isNull(that.voteTitle)) {
+			if (this.isBlank(that.voteTitle)) {
 				uni.showToast({
 					icon: 'none',
 					title: '投票标题不能为空!',
@@ -239,16 +235,6 @@ export default {
 				});
 				return;
 			}
-
-			// if (this.isBlank(that.voteContent)){
-			// 	uni.showToast({
-			// 		icon:'none',
-			// 		title:'投票内容不能为空!',
-			// 		duration:1000
-			// 	});
-			// 	return;
-			// }
-
 			if (that.voteOptions.length == 0) {
 				uni.showToast({
 					icon: 'none',
@@ -257,10 +243,10 @@ export default {
 				});
 				return;
 			}
-			// this.combineOptionsToString();
-			// console.log(that.voteOptions);
-			// console.log(that.voteOptions.length);
-
+			//拼接是否成功
+			if (!this.combineOptionsToString()){
+				return;
+			}
 			if (uploadFlag) {
 				console.log('正在上传...');
 				return;
@@ -289,64 +275,63 @@ export default {
 				}
 			}, 5000); // 延时五秒,timeout
 
-			setTimeout(() => {
-				// 将选项数组合并成字符串
-				this.combineOptionsToString();
-				console.log(that.voteOptions);
-				console.log(that.voteOptions.length);
+			// 将选项数组合并成字符串
+			console.log(that.voteOptions);
+			console.log(that.voteOptions.length);
 
-				requestTask = uni.request({
-					url: this.$serverUrl + '/vote/uploadVote',
-					method: 'POST',
-					data: {
-						userId: that.userInfo.id,
-						voteTitle: that.voteTitle,
-						voteContent: that.voteContent,
-						optionContent: that.optionString,
-						duration: that.pickerValue
-					},
-					header: {
-						'content-type': 'application/x-www-form-urlencoded'
-					},
-					success: res => {
-						console.log(res);
-						that.optionString = ''; // 清空组装options
-						if (res.data.status == 200) {
-							if (that.imageList.length > 0) {
-								const voteId = res.data.data;
-								var resCount = 0;
-								for (var i = 0; i < that.imageList.length; i++) {
-									uploadTasks[i] = uni.uploadFile({
-										url: this.$serverUrl + '/vote/uploadVoteImg',
-										filePath: this.imageList[i],
-										name: 'file',
-										formData: {
-											userId: that.userInfo.id,
-											voteId: voteId,
-											order: i
-										},
-										success: uploadFileRes => {
-											resCount++;
-											if (resCount == that.imageList.length) {
-												that.uploadSuccess();
-											}
+			requestTask = uni.request({
+				url: this.$serverUrl + '/vote/uploadVote',
+				method: 'POST',
+				data: {
+					userId: that.userInfo.id,
+					voteTitle: that.voteTitle,
+					voteContent: that.voteContent,
+					optionContent: that.optionString,
+					duration: that.pickerValue
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					console.log(res);
+					that.optionString = ''; // 清空组装options
+					if (res.data.status == 200) {
+						if (that.imageList.length > 0) {
+							const voteId = res.data.data;
+							var resCount = 0;
+							for (var i = 0; i < that.imageList.length; i++) {
+								uploadTasks[i] = uni.uploadFile({
+									url: this.$serverUrl + '/vote/uploadVoteImg',
+									filePath: this.imageList[i],
+									name: 'file',
+									formData: {
+										userId: that.userInfo.id,
+										voteId: voteId,
+										order: i
+									},
+									success: uploadFileRes => {
+										resCount++;
+										if (resCount == that.imageList.length) {
+											that.uploadSuccess();
 										}
-									});
-								}
+									}
+								});
 							}
-							console.log('上传成功');
-							that.uploadSuccess();
-						} else if (res.data.status == 501) {
-							that.contentIllegal();
-						} else {
-							that.uploadFail();
 						}
-					},
-					fail: res => {
+						console.log('上传成功');
+						that.uploadSuccess();
+					} else if (res.data.status == 501) {
+						that.contentIllegal();
+					} else {
+						console.log("上传失败,内部错误");
 						that.uploadFail();
 					}
-				});
-			}, 100);
+				},
+				fail: res => {
+					console.log("上传失败,外部错误");
+					that.uploadFail();
+				}
+			});
 		},
 
 		uploadSuccess() {

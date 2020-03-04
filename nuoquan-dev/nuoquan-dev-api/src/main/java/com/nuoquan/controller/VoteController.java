@@ -23,6 +23,7 @@ import com.github.pagehelper.PageInfo;
 import com.nuoquan.enums.MsgActionEnum;
 import com.nuoquan.enums.MsgSignFlagEnum;
 import com.nuoquan.enums.StatusEnum;
+import com.nuoquan.enums.VoteStatusEnum;
 import com.nuoquan.mapper.VoteMapper;
 import com.nuoquan.netty.MsgHandler;
 import com.nuoquan.pojo.Article;
@@ -128,10 +129,10 @@ public class VoteController extends BasicController{
 				&& weChatService.msgSecCheck(optionContent)) {
 			// 合法
 			isLegal = true;
-			vote.setStatus(StatusEnum.READABLE.type);
+			vote.setStatus(VoteStatusEnum.CHECKING.type);
 		} else {
 			// 非法, 存入数据库, 状态为不可见
-			vote.setStatus(StatusEnum.UNREADABLE.type);
+			vote.setStatus(VoteStatusEnum.UNQUALIFIED.type);
 		}
 		
 		// save to database
