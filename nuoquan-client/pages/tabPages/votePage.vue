@@ -6,7 +6,7 @@
 				<text>投票</text>
 				<view class="allvote column_center">
 					<view class="allvote_text">所有投票</view>
-					<image src="../../static/icon/angle-down.png" mode="aspectFit"></image>
+					<image src="../../static/icon/angle-down-ffffff.png" mode="aspectFit"></image>
 				</view>
 			</view>
 		</view>
@@ -95,7 +95,7 @@
 					<view v-else class="voteCard">
 						<view v-for="(result, index3) in item.optionList" :key="index3">
 							<view style="margin-top: 12px;width:100%;height:37px;">
-								<!-- 这个地方请加上判断，准备狂写三元运算符吧。。。css语法有问题，太过冗长，下个版本我会简化 Guetta -->
+								<!-- 以下代码，下个版本需重构 Guetta -->
 								<!-- 非用户选项结果 -->
 								<view v-if="result.id != selectedOptionId" class="oneResult">
 									<view class="resultTextCard">
@@ -160,7 +160,8 @@
 						<text v-if="ischosen[index] == false">完成投票后才可查看评论哦</text>
 						<button v-else class="confirmButton_votePage super_center" @click="confirmVote(item.id, index)">确认投票</button>
 					</view>
-					<votecomment :voteid = '  something         '></votecomment>
+					<!-- 评论区 -->
+					<votecomment v-if="finishVote[index] !== false" :voteid = '  something         '></votecomment>
 				</scroll-view>
 			</swiper-item>
 		</swiper>
@@ -1126,7 +1127,6 @@
 	.alertandconfirm {
 		width: 100%;
 		height: 120px;
-		background: rgba(255, 255, 255, 1);
 		opacity: 1;
 		border-radius: 0px 0px 8px 8px;
 	}

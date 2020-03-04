@@ -3,8 +3,8 @@
 		<!-- 导航栏 -->
 		<uni-nav-bar class="navigationBar" left-text="返回"
 		:title="pageTitle" :showLeftIcon="true" :isNavHome="isNavHome"
-		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
-		<view :style="{'height': this.getnavbarHeight().bottom + 5 + 'px'}" style="width: 100%;"></view>
+		:height="navbarHeight"></uni-nav-bar>
+		<view :style="{'height': navbarHeight + 'px'}" style="width: 100%;"></view>
 		
 		<!-- 第一个大块二，文章本体 -->
 		<detail_1_article class="article-area" :articleCard='articleCard' @controlInputSignal="controlInput" :userInfo="userInfo"
@@ -16,8 +16,6 @@
 
 		<detail_2_comments class="comment-area" :commentList='commentList' @controlInputSignal="controlInput" :userInfo="userInfo"
 		@onChange="changeType" :articleCardCommentNum='articleCard.commentNum'></detail_2_comments>
-
-
 
 		<!--触底提示和功能  start-->
 		<view class="comment-bottom" v-if="control_scroll_button_flag">
