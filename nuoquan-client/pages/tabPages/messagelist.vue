@@ -2,7 +2,7 @@
 	<view id="container">、
 		<!-- 导航栏 -->
 		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}"
-		:title="pageTitle" :showLeftIcon="false"
+		:title="lang.myMessage" :showLeftIcon="false"
 		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
 		<!-- 黄色背景 -->
 		<view id="msglist-yellowshadowbg">
@@ -111,7 +111,6 @@ export default {
 	},
 	data() {
 		return {
-			pageTitle:'我的消息',
 			focus: false,
 			isShowView: true,
 

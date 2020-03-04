@@ -5,7 +5,7 @@
 		:style="{height: this.getnavbarHeight() + 'px'}" 
 		:showLeftIcon="true" 
 		:isNavHome="isNavHome" 
-		left-text="返回"
+		:left-text="lang.back"
 		:title="pageTitle" 
 		:height="navbarHeight"></uni-nav-bar>				
 		

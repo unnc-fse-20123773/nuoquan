@@ -6,8 +6,8 @@
 		:style="{height: this.getnavbarHeight() + 'px'}" 
 		:showLeftIcon="true" 
 		:isNavHome="isNavHome" 
-		left-text="返回"
-		:title="pageTitle" 
+		:left-text="lang.back"
+		:title="lang.tabList[0]" 
 		:height="navbarHeight"></uni-nav-bar>				
 		
 		<view :style="{height: navbarHeight + 'px'}"></view>
@@ -34,8 +34,8 @@
 				:tag="item" 
 				@click="deleteTag(index)"
 			></tagSelected>
-			<button class="editTagsButton" @tap="editTag(true)" v-if="!editingTag">添加标签 +</button>
-			<view class="finish-button" @tap="editTag(false)" v-if="editingTag">完成</view>
+			<button class="editTagsButton" @tap="editTag(true)" v-if="!editingTag">{{lang.addTags}} +</button>
+			<view class="finish-button" @tap="editTag(false)" v-if="editingTag">{{lang.ok}}</view>
 		</view>
 
 		<!-- 标签选择块 -->
@@ -63,7 +63,7 @@
 			<view v-show="isAddImage(this.imageList.length)" id="clickToChooseImage" class="addPic" @click="chooseImg">+</view>
 			<view v-if="imageList.length == 1 || imageList.length == 4 || imageList.length == 7" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
 		</view>
-		<button class="submit-button" @tap="upload()">发表</button>
+		<button class="submit-button" @tap="upload()">{{lang.submit}}</button>
 	</view>
 </template>
 
@@ -71,6 +71,7 @@
 import tagSelectBox from '@/components/nq-tag/tagSelectBox.vue';
 import tagSelected from '@/components/nq-tag/tagSelected.vue'
 import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue";	
+import { mapState, mapMutations } from 'vuex';
 
 // #ifdef APP-PLUS
 import permision from '@/common/permission.js';
@@ -86,6 +87,9 @@ export default {
 		tagSelectBox,
 		tagSelected,
 		uniNavBar
+	},
+	computed: {
+		...mapState(['lang'])
 	},
 	data() {
 		return {

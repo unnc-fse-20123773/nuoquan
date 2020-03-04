@@ -5,8 +5,8 @@
 		:style="{height: this.getnavbarHeight() + 'px'}" 
 		:showLeftIcon="true" 
 		:isNavHome="isNavHome" 
-		left-text="返回"
-		:title="pageTitle" 
+		:left-text="lang.back"
+		:title="lang.about" 
 		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
 		<view :style="{height: this.getnavbarHeight().bottom + 5 + 'px'}"></view>
 		<!--顶部名称部分-->
@@ -16,7 +16,7 @@
 			<!--Nottinghome-->
 			<view class="company-name">Nottinghome</view>
 			<!--版本-->
-			<view class="version">1.0.3</view>
+			<view class="version">{{lang.version}}</view>
 		</view>
 		
 		<!--表单部分-->
@@ -25,7 +25,7 @@
 			<!--表单1-->
 			<view class="form1">
 				<view class="form1-fold">
-					<view class="contact-us">联系我们</view>
+					<view class="contact-us">{{lang.contact}}</view>
 					<image @click="control1" v-if="contentShow1" src="../../static/icon/angle-down.png"></image>
 					<image @click="control1" v-if="!contentShow1" src="../../static/icon/angle-up.png"></image>
 				</view>
@@ -51,7 +51,7 @@
 			<!--表单2-->
 			<view class="form2">
 				<view class="form2-fold">
-					<view class="update-notice">更新公告</view>
+					<view class="update-notice">{{lang.updateLog}}</view>
 					<image @click="control2" v-if="contentShow2" src="../../static/icon/angle-down.png"></image>
 					<image @click="control2" v-if="!contentShow2" src="../../static/icon/angle-up.png"></image>
 				</view>
@@ -96,15 +96,17 @@
 
 <script>
 import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue";	
+import { mapState, mapMutations } from 'vuex';
 	
 export default {
 	components:{
 		uniNavBar
 	},
-	
+	computed: {
+		...mapState(['lang'])
+	},
 	data() {
 		return {
-			pageTitle: '关于',
 			contentShow1: true,
 			contentShow2: true,
 			contentShow3: true,

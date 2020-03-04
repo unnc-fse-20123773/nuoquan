@@ -8,8 +8,8 @@
 		:style="{height: this.getnavbarHeight() + 'px'}" 
 		:showLeftIcon="true" 
 		:isNavHome="isNavHome" 
-		left-text="返回"
-		:title="pageTitle" 
+		:left-text="lang.back"
+		:title="thisUserInfo.nickname+lang.whosHome" 
 		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>				
 		
 		<!-- 黄色头部 -->
@@ -36,7 +36,7 @@
 						<view style="height: 100%;display: flex;">
 							<!-- 关注&已关注 -->
 							<button class="guanzhuButton super_center" @tap="addFollow(thisUserInfo.id)" v-if="thisUserInfo.follow == false">
-								<text class="guanzhuButton-text">关注</text>
+								<text class="guanzhuButton-text">{{lang.follow}}</text>
 							</button>
 							<button
 								plain="true"
@@ -45,7 +45,7 @@
 								@tap="cancelFollow(thisUserInfo.id)"
 								v-if="thisUserInfo.follow == true"
 							>
-								<text class="guanzhuButton-text-after">已关注</text>
+								<text class="guanzhuButton-text-after">{{lang.followed}}</text>
 							</button>
 							<!-- 私信 -->
 							<view class="messageButton super_center" @tap="goToChatPage">
@@ -67,19 +67,19 @@
 						<view class="operationNum super_center">
 							<text class="operationNum-text" style="color:color:rgba(53,53,53,1);">{{ thisUserInfo.fansNum }}</text>
 						</view>
-						<view class="operationTitle super_center"><text class="operationTitle-text">粉丝</text></view>
+						<view class="operationTitle super_center"><text class="operationTitle-text">{{lang.fans}}</text></view>
 					</view>
 					<!-- 影响力 -->
 					<view class="operationCard">
 						<view class="operationNum super_center"><text class="operationNum-text" style="color:rgba(254,95,85,1);">{{ thisUserInfo.reputation }}</text></view>
-						<view class="operationTitle super_center"><text class="operationTitle-text">影响力</text></view>
+						<view class="operationTitle super_center"><text class="operationTitle-text">{{lang.reputation}}</text></view>
 					</view>
 					<!-- 关注 -->
 					<view class="operationCard" @tap="goToFansFollow(0)">
 						<view class="operationNum super_center">
 							<text class="operationNum-text" style="color:color:rgba(53,53,53,1);">{{ thisUserInfo.followNum }}</text>
 						</view>
-						<view class="operationTitle super_center"><text class="operationTitle-text">关注</text></view>
+						<view class="operationTitle super_center"><text class="operationTitle-text">{{lang.follow}}</text></view>
 					</view>
 				</view>
 			</view>
@@ -146,19 +146,21 @@
 </template>
 
 <script>
+import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
+import { mapState, mapMutations } from 'vuex';
+
 var me;
 var userId; // this user's id
 var loadArticleFlag = false;
-import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
-
 export default {
 	components:{
 		uniNavBar
 	},
-	
+	computed: {
+		...mapState(['lang'])
+	},
 	data() {
 		return {
-			pageTitle: '',
 			screenWidth: 350,
 			serverUrl: this.$serverUrl,
 
@@ -329,7 +331,7 @@ export default {
 						// console.log(that.getListByKey("userList"))
 
 						// 设置title
-						that.pageTitle = that.thisUserInfo.nickname + '的主页'
+						// that.pageTitle = that.thisUserInfo.nickname + '的主页'
 					}
 				}
 			});

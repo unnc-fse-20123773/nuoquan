@@ -5,8 +5,8 @@
 		:style="{height: this.getnavbarHeight() + 'px'}" 
 		:showLeftIcon="true" 
 		:isNavHome="isNavHome" 
-		left-text="返回"
-		:title="pageTitle" 
+		:left-text="lang.back"
+		:title="lang.commentDetail" 
 		:height="navbarHeight"></uni-nav-bar>				
 		<view :style="{height: navbarHeight + 'px'}"></view>
 		
@@ -41,11 +41,11 @@
 
 		<!--触底提示和功能  start   COPY FROM DETAIL-->
 		<view class="comment-bottom">
-			<view class="comment-bottom-notice">划到底部啦</view>
+			<view class="comment-bottom-notice">{{lang.onBottom}}</view>
 			<view class="comment-bottom-buttons">
 				<image class="back" @tap="backToLastPage" src="../../static/icon/arrow-left-fcc041.png" mode="aspectFit"></image>
 				<image class="to-top" @tap="scrollToTop" src="../../static/icon/arrow-left-fcc041.png"></image>
-				<view class="active-input-button" @click="controlInput(1)">发表评论</view>
+				<view class="active-input-button" @click="controlInput(1)">{{lang.writeComment}}</view>
 			</view>
 		</view>
 		<!--触底提示和功能  END-->
@@ -54,7 +54,7 @@
 		<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)">
 			<view class="commentPart" :style="{bottom: textAreaAdjust }">
 				<!--<view class="emoji"></view><view class="add-pic"></view>-->
-				<view class="submit" @tap="saveComment()">发送</view>
+				<view class="submit" @tap="saveComment()">{{lang.send}}</view>
 				<view class="commentSth">
 					<textarea class="comment-text" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
 					 adjust-position="false" v-model="commentContent" :show-confirm-bar="false" @focus="popTextArea" @blur="unpopTextArea"
@@ -75,16 +75,18 @@
 <script>
 	import sonCommentBox from './sonCommentBox.vue'
 	import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
+	import { mapState, mapMutations } from 'vuex';
 	
 	export default {
 		components: {
 			sonCommentBox,
 			uniNavBar
 		},
-		
+		computed: {
+			...mapState(['lang'])
+		},
 		data() {
 			return {
-				pageTitle: '评论详情',
 				mainComment:'',    //用于接受跳转传过来的underCommentId,然后申请获取sonComment  yaoyao 9.16 
 				userInfo: '',
 				commentContent: '',  //用户准备提交的评论内容
