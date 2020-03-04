@@ -48,6 +48,7 @@ module.exports = {
 	votePrompt : "You can view the comments after you voted.",
 	
 	//热门
+	hotTitle : "Top 10",
 	nextRefresh : "Next Update",
 	
 	//我的消息

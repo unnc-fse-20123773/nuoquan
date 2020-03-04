@@ -48,6 +48,7 @@ module.exports = {
 	votePrompt : "完成投票后才可查看评论哦",
 	
 	//热门
+	hotTitle : "热门榜",
 	nextRefresh : "下次更新",
 	
 	//我的消息

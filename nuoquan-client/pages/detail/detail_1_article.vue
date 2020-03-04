@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import mySharePoster from 'components/shareposter/myshareposter.vue';
+// import mySharePoster from 'components/shareposter/myshareposter.vue';
 
 export default {
 	name: 'detail_1_article',
@@ -77,7 +77,7 @@ export default {
 		userInfo: ''
 	},
 	components: {
-		mySharePoster
+		// mySharePoster
 	},
 	data() {
 		return {

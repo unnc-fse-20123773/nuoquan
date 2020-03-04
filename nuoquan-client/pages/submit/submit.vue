@@ -34,7 +34,7 @@
 				:tag="item" 
 				@click="deleteTag(index)"
 			></tagSelected>
-			<button class="editTagsButton" @tap="editTag(true)" v-if="!editingTag">{{lang.addTags}} +</button>
+			<button class="editTagsButton" @tap="editTag(true)" v-if="!editingTag">{{lang.addTags + " +"}}</button>
 			<view class="finish-button" @tap="editTag(false)" v-if="editingTag">{{lang.ok}}</view>
 		</view>
 
