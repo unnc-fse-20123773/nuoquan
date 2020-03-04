@@ -1,12 +1,11 @@
 package com.nuoquan.service;
 
-import java.io.Console;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 
 import org.apache.commons.lang3.StringUtils;
+import org.junit.Test;
 import org.n3r.idworker.Sid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +25,6 @@ import com.nuoquan.mapper.VoteMapper;
 import com.nuoquan.mapper.VoteMapperCustom;
 import com.nuoquan.mapper.VoteOptionMapper;
 import com.nuoquan.mapper.VoteUserMapper;
-import com.nuoquan.pojo.Article;
 import com.nuoquan.pojo.UserLikeComment;
 import com.nuoquan.pojo.UserLikeCommentVote;
 import com.nuoquan.pojo.UserVoteComment;
@@ -34,13 +32,11 @@ import com.nuoquan.pojo.Vote;
 import com.nuoquan.pojo.VoteImage;
 import com.nuoquan.pojo.VoteOption;
 import com.nuoquan.pojo.VoteUser;
-import com.nuoquan.pojo.vo.ArticleVO;
 import com.nuoquan.pojo.vo.UserVoteCommentVO;
 import com.nuoquan.pojo.vo.VoteVO;
 import com.nuoquan.support.Convert;
 import com.nuoquan.utils.PagedResult;
 
-import javassist.expr.NewArray;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.entity.Example.Criteria;
 
@@ -463,7 +459,12 @@ public class VoteServiceImpl implements VoteService {
 			voteOptionMapper.updatePercent(vu.getId(), percent);
 		}
 	}
-
+	
+	@Test
+	public void test() {
+		System.out.println((double)3/3);
+	}
+	
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
 	public PagedResult getSingleVote(Integer page, Integer pageSize, String userId, String voteId) {

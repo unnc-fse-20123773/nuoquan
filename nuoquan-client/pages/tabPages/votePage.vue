@@ -28,17 +28,15 @@
 			<swiper-item v-for="(item, index) in showList" :key="index" class="card-box" id="card_{index}">
 				<scroll-view class="card" scroll-y="true" show-scrollbar="false" :style="{height: voteCardHeight + 'px'}">
 					<!-- 标题行 -->
-					<view @click="goToDetail()">
-						<view class="title">{{item.voteTitle}}</view>
-					</view>
+					<view class="title">{{item.voteTitle}}</view>	
 					<!-- 用户信息行 -->
 					<view class="userLine hor_center">
-						<image src="../../static/icon/user_d4d4d4.png" class="touxiang"></image>
+						<image :src="item.faceImg" class="touxiang"></image>
 						<view class="name">{{item.nickname}}</view>
 						<view class="time">{{timeDeal(item.createDate)}}</view>
 					</view>
 					<!-- 内容 -->
-					<view class="briefarticleCard" @click="goToDetail()">
+					<view class="briefarticleCard">
 						{{item.voteContent}}
 					</view>
 					<!--图片区域-->
