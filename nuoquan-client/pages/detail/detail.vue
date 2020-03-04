@@ -19,8 +19,12 @@
 			:userInfo="userInfo"
 			@swLikeArticleSignal="changeLikeStatus"
 			@backToLastPage="backToLastPage()"
+			@share="toggleShare"
 		></detail_1_article>
-
+		
+		<!-- 分享海报 -->
+		<view v-if="share"><mySharePoster :articleCard="articleCard" @unShow="toggleShare"></mySharePoster></view>
+		
 		<view style="border-bottom: 4px solid #ECECEC;height:0;width:750upx;font-size: 0;position: relative;left: -16px;" @controlInputSignal="controlInput">这是分割线</view>
 		<!--第一个大块二，评论区域-->
 
@@ -79,6 +83,7 @@
 <script>
 import detail_1_article from './detail_1_article.vue';
 import detail_2_comments from './detail_2_comments.vue';
+import mySharePoster from 'components/shareposter/myshareposter.vue';
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 import { mapState, mapMutations } from 'vuex';
 
@@ -87,7 +92,8 @@ export default {
 	components: {
 		detail_1_article,
 		detail_2_comments,
-		uniNavBar
+		uniNavBar,
+		mySharePoster
 	},
 	data() {
 		return {
@@ -97,6 +103,7 @@ export default {
 			commentContent: '', //用户准备提交的评论内容
 			commentList: {}, //返回值，获取评论列表信息
 
+			share: false, // 是否显示分享海报
 			showInput: false, //控制输入框，true时显示输入框
 			writingComment: false, //控制输入框，true时自动获取焦点，拉起输入法
 			placeholderText: '评论点什么吧......',
@@ -170,6 +177,9 @@ export default {
 	},
 
 	methods: {
+		toggleShare() {
+			this.share = !this.share;
+		},
 		getArticleById(articleId, userId) {
 			var that = this;
 			return new Promise((resolve, reject) => {

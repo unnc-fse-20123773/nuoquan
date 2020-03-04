@@ -148,7 +148,6 @@ export default {
 						radius: 18,
 						url: this.articleCard.faceImg
 					},
-
 					{
 						//昵称
 						type: 'text',
@@ -311,6 +310,7 @@ export default {
 		getQrcodeUnlimit(page, scene, width, isHyaline) {
 			var that = this;
 			return new Promise((resolve, reject) => {
+				console.log('请求二维码');
 				uni.request({
 					url: this.$serverUrl + '/wechat/getQrcodeUnlimit',
 					method: 'POST',
@@ -327,17 +327,21 @@ export default {
 						console.log(res);
 						var QrCode = 'data:image/png;base64,' + res.data.data;
 						that.QrCode = QrCode;
-						resolve('suc');
-						// base64ToPath(QrCode)
-						// 	.then(path => {
-						// 		console.log(path)
-						// 		that.QrCode = path
-						// 	})
-						// 	.catch(error => {
-						// 		console.error(error)
-						// 	})
+						base64ToPath(QrCode)
+							.then(path => {
+								console.log(path);
+								that.QrCode = path;
+								console.log('获得二维码');
+								console.log(that.QrCode);
+								resolve('suc');
+							})
+							.catch(error => {
+								console.error(error);
+								reject('err');
+							});
 					},
 					fail: res => {
+						console.log('获得二维码失败');
 						reject('err');
 					}
 				});

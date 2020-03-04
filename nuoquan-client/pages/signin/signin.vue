@@ -132,7 +132,6 @@ var isLoding = false;
 var timer = null;
 var timer_ = null;
 //邮箱验证
-var util = require('../../common/util.js');
 var email; //输入的email值
 var captcha; //输入的captcha值
 export default {
@@ -275,14 +274,6 @@ export default {
 			captcha = event.target.value;
 		},
 
-		/**
-		 * 匹配中英校区和Alumni的邮箱
-		 * true: 不匹配, false: 匹配
-		 */
-		checkUNNCEmail(str) {
-			return !RegExp(/^\w+([-+.]\w+)*@(\w+\.)*nottingham\.[edu\.cn,ac\.uk]+$/).test(str);
-		},
-
 		getCaptcha() {
 			if (email) {
 				// 测试账号代码
@@ -296,7 +287,7 @@ export default {
 					return;
 				}
 				// 检测邮箱
-				if (util.regEmail(email) || this.checkUNNCEmail(email)) {
+				if (this.$util.regEmail(email) || this.$util.regUNNCEmail(email)) {
 					uni.showToast({
 						title: '非 UNNC 邮箱地址！',
 						icon: 'none'
@@ -305,7 +296,6 @@ export default {
 					if (this.$refs.captcha.canSend()) {
 						console.log('获取验证码 email=' + email);
 						this.$refs.captcha.begin();
-						this.title = '重新发送';
 
 						uni.request({
 							url: this.$serverUrl + '/user/getCode',

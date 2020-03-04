@@ -17,6 +17,7 @@ module.exports = {
 	second : "s",
 	min : "m",
 	hour : "h",
+	edit : "Edit",
 	ok : "OK",
 	
 	//登陆
@@ -68,6 +69,17 @@ module.exports = {
 	followed : "已关注",
 	
 	//个人信息
+	nickname : "Nickname",
+	gender : "Gender",
+	male : "Mr",
+	female : "Ms",
+	graduationYear : "Graduation Year",
+	major : "Major",
+	degree : "Degree",
+	schoolEmail : "School Email",
+	changeEmail : "Change Email",
+	genderList : ["Ms", "Mr", "Others"], //顺序请和数据库保持一致
+	degreeList : ["High school", "Undergraduate", "Graduate"], //顺序请和数据库保持一致
 	
 	//他人页
 	whosHome : "'s Home",

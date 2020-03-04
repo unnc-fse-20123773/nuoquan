@@ -17,6 +17,7 @@ module.exports = {
 	second : "秒",
 	min : "分",
 	hour : "小时",
+	edit : "修改",
 	ok : "完成",
 	
 	//登陆
@@ -28,7 +29,7 @@ module.exports = {
 	emailPrompt : " 请输入 UNNC 邮箱",
 	captcha : " 验证码",
 	getCaptcha : "获取验证码",
-	waitCaptcha : "稍等(SECORD)秒",
+	waitCaptcha : "重新发送 (SECORD)",
 	
 	//文章
 	article : "文章",
@@ -66,12 +67,24 @@ module.exports = {
 	//关注粉丝列表
 	fanAndFollow : "关注粉丝列表",
 	followed : "已关注",
+	
 	//个人信息
+	nickname : "昵称",
+	gender : "性别",
+	male : "男",
+	female : "女",
+	graduationYear : "毕业年份",
+	major : "专业",
+	degree : "学位",
+	schoolEmail : "学校邮箱",
+	changeEmail : "更改邮箱",
+	genderList : ["女", "男", "其他"], //顺序请和数据库保持一致
+	degreeList : ["高中", "本科", "研究生"], //顺序请和数据库保持一致
 	
 	//他人页
 	whosHome : "'的主页",
 	
 	//关于
 	contact : "联系我们",
-	update : "更新公告",
+	updateLog : "更新公告",
 }

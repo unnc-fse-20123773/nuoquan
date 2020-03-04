@@ -23,67 +23,81 @@
 					avatarStyle="width: 160upx; height: 160upx; border-radius: 100%;"
 				></avatar>
 				<!-- 完成/修改按钮 -->
-				<button class="editProfile super_center" v-if="isEdit == false" @click="editProfile(isEdit)">
-					<view @click="editProfile(isEdit)" class="editProfile-text">修改</view>
-				</button>
-				<button class="editProfile-edit super_center" v-if="isEdit == true" formType="submit"><view class="editProfile-edit-text">完成</view></button>
+				<button class="editProfile super_center" v-if="isEdit == false" @click="toggleIsEdit"><view class="editProfile-text">{{lang.edit}}</view></button>
+				<button class="editProfile-edit super_center" v-if="isEdit == true" formType="submit"><view class="editProfile-edit-text">{{lang.ok}}</view></button>
 
 				<!-- 编辑框 -->
 				<view class="nickname">
-					<view class="text">昵称</view>
+					<view class="text">{{lang.nickname}}</view>
 					<view class="second_line" v-if="!isEdit">{{ userInfo.nickname }}</view>
 					<input name="nickname" maxlength="8" :value="userInfo.nickname" v-if="isEdit" />
 					<!-- <text v-if="isEdit == true" class="text_limit"> 最长 8 位</text> -->
 				</view>
 
 				<view class="gender">
-					<view class="text">性别</view>
+					<view class="text">{{lang.gender}}</view>
 					<!-- 					<text class="right-profileTexta"  v-if="userInfo.gender==null || userInfo.gender==-1">待设置</text> -->
 					<view class="second_line" v-if="!isEdit">{{ genderList[userInfo.gender] }}</view>
 					<view v-if="isEdit" style="display: flex;justify-content: space-between;position: relative;left:-6px;height:34px;">
-						<view :class="[gender == 1 ? 'genderPicker-buttonclick' : 'genderPicker-button']" @click="genderChanger(1)">男</view>
-						<view :class="[gender == 0 ? 'genderPicker-buttonclick' : 'genderPicker-button']" @click="genderChanger(0)">女</view>
+						<view :class="[gender == 1 ? 'genderPicker-buttonclick' : 'genderPicker-button']" @click="genderChanger(1)">{{lang.male}}</view>
+						<view :class="[gender == 0 ? 'genderPicker-buttonclick' : 'genderPicker-button']" @click="genderChanger(0)">{{lang.female}}</view>
 					</view>
 				</view>
 
 				<view class="nickname">
-					<view class="text">毕业年份</view>
+					<view class="text">{{lang.graduationYear}}</view>
 					<view class="second_line" v-if="!isEdit">{{ userInfo.graduationYear }}</view>
 					<mypicker class="year-pick-style" v-if="isEdit" :mode="'year'" :range="years" :value="year" @change="pickerChange"></mypicker>
 				</view>
 				<view class="nickname">
-					<view class="text">专业</view>
+					<view class="text">{{lang.major}}</view>
 					<view class="second_line" v-if="!isEdit">{{ userInfo.major }}</view>
 					<mypicker v-if="isEdit" class="major-pick-style" :mode="'major'" :range="majors" :value="major" @change="pickerChange"></mypicker>
 				</view>
 				<view class="nickname">
-					<view class="text">学位</view>
+					<view class="text">{{lang.degree}}</view>
 					<view class="second_line" v-if="!isEdit">{{ degrees[userInfo.degree] }}</view>
 					<mypicker v-if="isEdit" class="degree-pick-style" :mode="'degree'" :range="degrees" :value="degree" @change="pickerChange"></mypicker>
 				</view>
 			</view>
-			<view class="profile-moreinfo-card">
-				<view class="email">
-					<view class="text">学校邮箱</view>
-					<view class="second_line" v-if="!isModify">{{ userInfo.email }}</view>
-					<input v-if="isModify" maxlength="26" :value="userInfo.email" />
-					<!-- <text class="profilemoreTexta" v-else>scyzl2@nottingham.edu.cn</text> -->
-				</view>
-				<button class="editEmail super_center" v-if="isModify == false && isSent == false" @click="editEmail(isModify)">
-					<view @click="editModify(isModify)" class="editProfile-text">更改邮箱</view>
-				</button>
-				<button class="editEmail-edit super_center" v-if="isModify == true && isSent == false" @click="getCaptcha(isSent)">
-					<view class="editEmail-edit-text">发送验证码</view>
-				</button>
-			</view>
 		</form>
+		<view class="profile-moreinfo-card">
+			<view class="email">
+				<view class="text">{{lang.schoolEmail}}</view>
+				<view v-if="!isEditEmail">
+					<view class="second_line">{{ userInfo.email }}</view>
+					<button class="editEmail super_center" @click="editEmail"><view @click="editModify(isEditEmail)" class="editProfile-text">{{lang.changeEmail}}</view></button>
+				</view>
+				<view v-else-if="isEditEmail">
+					<input maxlength="26" :value="userInfo.email" @input="onEmailInput" />
+					<!-- <text class="profilemoreTexta" v-else>scyzl2@nottingham.edu.cn</text> -->
+					
+					<whCaptcha 
+						style="font-size: 15px;margin-top: 15px;"
+						ref="captcha"
+						:secord="60"
+						:title="lang.getCaptcha"
+						:waitTitle="lang.waitCaptcha"
+						normalClass="editEmail"
+						disabledClass=""
+						@click="getCaptcha"
+					></whCaptcha>
+					
+					<view v-if="showCaptcha">
+						<input style="width:75px;" maxlength="6" :placeholder="lang.captcha" @input="onCaptcha"/>
+						<button @click="confirmCode"><view>{{lang.ok}}</view></button>
+					</view>
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 <script>
-import mypicker from '../../components/mypicker.vue';
+import mypicker from '@/components/mypicker.vue';
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
-import avatar from '../../components/yq-avatar/yq-avatar.vue';
+import avatar from '@/components/yq-avatar/yq-avatar.vue';
 import { mapState, mapMutations } from 'vuex';
+import whCaptcha from '@/components/wh-captcha/wh-captcha.vue';
 
 export default {
 	data() {
@@ -108,7 +122,7 @@ export default {
 			yearPickerVal: [], // 毕业年份 picker 的起始值, 必须为list
 			majors,
 			majorPickerVal: [],
-			degrees,
+			degrees: ['高中', '本科', '研究生'], //顺序和数据库保持一致
 			degreePickerVal: [],
 
 			gender: 2,
@@ -117,13 +131,15 @@ export default {
 			degree: degrees[1],
 			degreeDB: '1', // 数据库 degree 传值
 
-			isEdit: false,
-			isModify: false,
-			isSent: false,
+			isEdit: false, //上半区属性修改
 			userInfo: '',
 			yearPicker: false,
 			majorPicker: false,
 			degreePicker: false,
+			isEditEmail: false,
+			email: '', //输入的邮箱
+			captcha: '', //输入的验证码
+			showCaptcha: false,
 			navbarHeight: 0 //一次性储存 navbarheight
 		};
 	},
@@ -131,20 +147,20 @@ export default {
 	components: {
 		mypicker,
 		uniNavBar,
-		avatar
+		avatar,
+		whCaptcha
 	},
 	computed: {
 		...mapState(['lang'])
 	},
-	onLoad: function() {
+	onLoad() {
 		// 一次性储存 navbar 高度
 		this.navbarHeight = this.getnavbarHeight().bottom + 5;
 
-		uni.setNavigationBarTitle({
-			title: '个人信息'
-		});
-		var a = this.getGlobalUserInfo();
-		this.userInfo = a;
+		this.userInfo = this.getGlobalUserInfo();
+		//按语言切换默认列表
+		this.degrees = this.lang.degreeList;
+		this.genderList = this.lang.genderList;
 		// 按已有信息修改默认值
 		var gender = this.userInfo.gender;
 		var year = this.userInfo.graduationYear;
@@ -167,10 +183,35 @@ export default {
 			this.degree = this.degrees[degree];
 			this.degreeDB = degree; // 修改对数据库的默认值
 		}
+		
+		this.email = this.userInfo.email; // 改绑邮箱默认值
 	},
 
 	methods: {
-		pickerChange: function(res) {
+		/**
+		 * 上传头像
+		 * @param {Object} e
+		 */
+		uploadFace(rsp) {
+			var path = rsp.path;
+			uni.uploadFile({
+				url: this.$serverUrl + '/user/uploadFace',
+				filePath: path,
+				name: 'file',
+				formData: {
+					userId: this.userInfo.id
+				},
+				success: res => {
+					// uploadFile 返回的 res.data 是 String
+					var data = JSON.parse(res.data);
+					if (data.status == 200) {
+						this.userInfo.faceImg = data.data;
+					}
+				}
+			});
+		},
+		
+		pickerChange(res) {
 			if (res.mode == 'major') {
 				this.major = res.newPickerValue;
 			} else if (res.mode == 'degree') {
@@ -180,7 +221,7 @@ export default {
 				this.year = res.newPickerValue;
 			}
 		},
-		genderChanger: function(gender) {
+		genderChanger(gender) {
 			if (this.gender == gender) {
 				this.gender = -1;
 				console.log(gender);
@@ -189,59 +230,79 @@ export default {
 			}
 		},
 
-		editProfile: function(isEdit) {
-			if (isEdit == false) {
-				this.isEdit = true;
-			} else if (isEdit == true) {
-				this.isEdit = false;
-			}
-			console.log(this.isEdit);
+		toggleIsEdit() {
+			this.isEdit = !this.isEdit;
 		},
 
-		editEmail: function(isModify) {
-			if (isModify == false) {
-				this.isModify = true;
-			} else if (isModify == true) {
-				this.isModify = false;
-			}
-			console.log(this.isModify);
-		},
-
-		cancle: function() {
-			// 取消修改操作
-			this.editProfile(this.isEdit);
-		},
-
-		getCaptcha: function(isSent) {
-			if (isSent == false) {
-				this.isSent = true;
-			} else if (isSent == true) {
-				this.isSent = false;
-			}
-			console.log(this.isSent);
-			if (email) {
-				// 测试账号代码
-				if (email == 'test@test.com') {
-					uni.showToast({
-						title: '认证成功',
-						icon: 'none'
-					});
-					this.changeAuth();
-					this.nextStep(false);
-					return;
+		formSubmit(e) {
+			// 提交表单操作
+			var form = e.detail.value;
+			var data = {
+				id: this.userInfo.id,
+				nickname: form.nickname,
+				gender: this.gender,
+				graduationYear: this.year,
+				major: this.major,
+				degree: this.degreeDB
+			};
+			console.log(data);
+			uni.request({
+				url: this.$serverUrl + '/user/updateUser',
+				method: 'POST',
+				data: JSON.stringify(data),
+				header: {
+					'content-type': 'application/json'
+				},
+				success: res => {
+					if (res.data.status == 200) {
+						var user = res.data.data;
+						var finalUser = this.myUser(user); // 分割邮箱地址, 重构 user
+						this.setGlobalUserInfo(finalUser); // 把用户信息写入缓存
+						this.userInfo = finalUser; // 更新页面用户数据
+						// console.log(this.userInfo);
+					}
 				}
+			});
+
+			// 完成修改，更改 isEdit 为 false
+			this.toggleIsEdit();
+		},
+		
+		/**
+		 * 修改邮箱状态切换
+		 */
+		editEmail() {
+			this.isEditEmail = !this.isEditEmail;
+		},
+		/**
+		 * 监听邮箱输入
+		 * @param {Object} event
+		 */
+		onEmailInput(event) {
+			this.email = event.target.value;
+		},
+		/**
+		 * 监听验证码输入
+		 * @param {Object} event
+		 */
+		onCaptcha(event){
+			this.captcha = event.target.value;
+		},
+		getCaptcha() {
+			var email = this.email;
+			if (this.email) {
 				// 检测邮箱
-				if (util.regEmail(email) || this.checkUNNCEmail(email)) {
+				if (this.$util.regEmail(email) || this.$util.regUNNCEmail(email)) {
 					uni.showToast({
 						title: '非 UNNC 邮箱地址！',
 						icon: 'none'
 					});
 				} else {
+					this.showCaptcha = true;
 					if (this.$refs.captcha.canSend()) {
 						console.log('获取验证码 email=' + email);
 						this.$refs.captcha.begin();
-						this.title = '重新发送';
-
+						
 						uni.request({
 							url: this.$serverUrl + '/user/getCode',
 							method: 'POST',
@@ -265,62 +326,52 @@ export default {
 				});
 			}
 		},
-
-		formSubmit: function(e) {
-			// 提交表单操作
-			var form = e.detail.value;
-			var data = {
-				id: this.userInfo.id,
-				nickname: form.nickname,
-				gender: this.gender,
-				graduationYear: this.year,
-				major: this.major,
-				degree: this.degreeDB
-			};
-			console.log('here');
-			console.log(data);
-			uni.request({
-				url: this.$serverUrl + '/user/updateUser',
-				method: 'POST',
-				data: JSON.stringify(data),
-				header: {
-					'content-type': 'application/json'
-				},
-				success: res => {
-					if (res.data.status == 200) {
-						var user = res.data.data;
-						var finalUser = this.myUser(user); // 分割邮箱地址, 重构 user
-						this.setGlobalUserInfo(finalUser); // 把用户信息写入缓存
-						this.userInfo = finalUser; // 更新页面用户数据
-						// console.log(this.userInfo);
+		
+		confirmCode() {
+			if (this.captcha) {
+				uni.showLoading({
+					title: '请等待'
+				});
+				uni.request({
+					url: this.$serverUrl + '/user/confirmCode',
+					method: 'POST',
+					data: {
+						userId: this.userInfo.id,
+						code: this.captcha,
+						email: this.email
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: res => {
+						if (res.data.status == 200) {
+							console.log(res.data.data);
+							this.userInfo = res.data.data;
+							
+							uni.showToast({
+								title: 'OK',
+								icon: 'none'
+							});
+							this.isEditEmail = false;
+							this.showCaptcha = false;
+						} else {
+							console.log('验证失败 ' + res.data.msg);
+							uni.showToast({
+								title: '验证失败',
+								icon: 'none'
+							});
+						}
+					},
+					complete: () => {
+						uni.hideLoading();
 					}
-				}
-			});
-
-			// 完成修改，更改 isEdit 为 false
-			this.editProfile(this.isEdit);
-		},
-		/**
-		 * 上传头像
-		 * @param {Object} e
-		 */
-		uploadFace(rsp) {
-			var path = rsp.path;
-			uni.uploadFile({
-				url: this.$serverUrl + '/user/uploadFace',
-				filePath: path,
-				name: 'file',
-				formData: {
-					userId: this.userInfo.id
-				},
-				success: res => {
-					// uploadFile 返回的 res.data 是 String
-					var data = JSON.parse(res.data);
-					if (data.status == 200) {
-						this.userInfo.faceImg = data.data;
-					}
-				}
-			});
+				});
+			} else {
+				uni.showToast({
+					title: '验证码为空',
+					icon: 'none'
+				});
+			}
 		}
 	}
 };
