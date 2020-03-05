@@ -122,6 +122,10 @@ export default {
 				this.rotate();
 				return;
 			}
+			if(this.rotateStatus){
+				//切换窗口的时候把list关上，
+				this.rotate();
+			}
 			uni.switchTab({
 				url: e.url
 			});
