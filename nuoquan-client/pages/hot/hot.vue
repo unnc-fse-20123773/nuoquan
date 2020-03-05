@@ -5,7 +5,7 @@
 		:showLeftIcon="true" 
 		:isNavHome="isNavHome" 
 		:left-text="lang.back"
-		:title="pageTitle" 
+		:title="lang.hotTitle" 
 		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>				
 		
 		<view :style="{ height: this.getnavbarHeight().bottom + 5 + 'px' }"></view>
@@ -35,7 +35,6 @@ export default {
 	},
 	data() {
 		return {
-			pageTitle: 'hot',
 			minute: '',
 			second: '',
 			totalPage: 1,

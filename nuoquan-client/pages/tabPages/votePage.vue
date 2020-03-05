@@ -109,9 +109,9 @@
 											</view>
 										</view>
 									</view>
-									<view class="resultBarCard">
-										<view class="resultBar_border"></view>
-										<view class="resultBar_bgclr" :style="{ width: result.barWidth + '%' }"></view>
+									<view style="width: 100%;height: 8px;">
+										<ProgressBar :progessbarwidth="result.barWidth" Type="aqua"></ProgressBar>
+										<br />
 									</view>
 								</view>
 								<!-- 用户选项结果 -->
@@ -127,9 +127,9 @@
 											</view>
 										</view>
 									</view>
-									<view class="resultBarCard">
-										<view class="resultBar_border_chosen"></view>
-										<view class="resultBar_bgclr_chosen" :style="{ width:  result.barWidth + '%' }"></view>
+									<view style="width: 100%;height: 8px;">
+										<ProgressBar :progessbarwidth="result.barWidth" Type="aquachosen"></ProgressBar>
+										<br />
 									</view>
 								</view>
 							</view>
@@ -157,7 +157,7 @@
 					</view>
 					<!-- 确认投票 -->
 					<view v-if="finishVote[index] == false" class="alertandconfirm super_center">
-						<text v-if="ischosen[index] == false">{{lang.votePrompt}}</text>
+						<text v-if="ischosen[index] == false">{{lang.votePrompt1}}</text>
 						<button v-else class="confirmButton_votePage super_center" @click="confirmVote(item.id, index)">确认投票</button>
 					</view>
 					<!-- 评论区 -->
@@ -419,16 +419,16 @@
 			onePersentBarGrow(option){
 				var widthTarget = (this.reserveTwoDecimal(option.percent * 100));
 				this.$set(option, 'barWidth', 0); // 为选项添加barWidth属性
-				var timer = setInterval(function() {
-					//设置计时器
-					if ( option.barWidth >= widthTarget) {
-						//在 persentBarWidth 为目标值时清空计时器，暂以100代替						// console.log(option);
-						console.log(option);
-						clearInterval(timer);
-					} else {
-						option.barWidth += 0.5;
-					}
-				}, 6);
+				// var timer = setInterval(function() {
+				// 	//设置计时器
+				// 	if ( option.barWidth >= widthTarget) {
+				// 		//在 persentBarWidth 为目标值时清空计时器，暂以100代替						// console.log(option);
+				// 		console.log(option);
+				// 		clearInterval(timer);
+				// 	} else {
+				// 		option.barWidth += 0.5;
+				// 	}
+				// }, 6);
 			},
 
 			showVotes: function(page) {
@@ -936,31 +936,6 @@
 		color: rgba(155, 155, 155, 1);
 	}
 
-	.resultBarCard {
-		position: relative;
-		width: 100%;
-		height: 8px;
-		margin-top: 4px;
-	}
-
-	.resultBar_border {
-		position: absolute;
-		width: 100%;
-		height: 8px;
-		z-index: 10;
-		border: 1px solid rgba(174, 174, 174, 1);
-		border-radius: 20px;
-	}
-
-	.resultBar_bgclr {
-		position: absolute;
-		height: 8px;
-		z-index: 20;
-		border: 1px solid rgba(174, 174, 174, 1);
-		background: rgba(174, 174, 174, 1);
-		opacity: 1;
-		border-radius: 20px;
-	}
 
 	/* 选项效果 */
 	.voteContent_chosen {
@@ -1020,25 +995,6 @@
 		font-weight: 400;
 		line-height: 16px;
 		color: rgba(36, 130, 180, 1);
-	}
-
-	.resultBar_border_chosen {
-		position: absolute;
-		width: 100%;
-		height: 8px;
-		z-index: 10;
-		border-radius: 20px;
-		border: 1px solid rgba(72, 177, 233, 1);
-	}
-
-	.resultBar_bgclr_chosen {
-		position: absolute;
-		height: 8px;
-		z-index: 20;
-		border: 1px solid rgba(72, 177, 233, 1);
-		opacity: 1;
-		border-radius: 20px;
-		background: linear-gradient(90deg, rgba(83, 224, 219, 1) 0%, rgba(72, 177, 233, 1) 100%);
 	}
 
 	.voteInfoLine {

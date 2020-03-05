@@ -15,9 +15,11 @@
 		<view>
 			<image :src="shareImage" class="shareimage" mode="aspectFit"></image>
 			<canvasdrawer :painting="painting" class="canvasdrawer" @getImage="eventGetImage" />
-			<button class="backButton super_center" @click="unShow"><image src="../../static/icon/arrow-left-fcc041.png" mode="aspectFit"></image></button>
+			<button class="backButton super_center" @click="unShow">
+				<image src="../../static/icon/arrow-left-888888.png" mode="aspectFit"></image>
+			</button>
 			<button class="shareButton column_center" @click="eventSave">
-				<image src="../../static/icon/angle-left.png" mode="aspectFit"></image>
+				<image src="../../static/icon/download-alt-ffffff.png" mode="aspectFit"></image>
 				<text>分享到朋友圈</text>
 			</button>
 		</view>
@@ -376,8 +378,8 @@ export default {
 }
 
 .backButton image {
-	width: 30px;
-	height: 30px;
+	width: 36px;
+	height: 36px;
 	opacity: 1;
 }
 
@@ -397,8 +399,8 @@ export default {
 .shareButton image {
 	position: absolute;
 	left: 16px;
-	width: 30px;
-	height: 30px;
+	width: 20px;
+	height: 20px;
 	opacity: 1;
 }
 

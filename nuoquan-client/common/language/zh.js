@@ -8,6 +8,7 @@ module.exports = {
 	back : "返回",
 	send : "发送",
 	submit : "提交",
+	delete : "删除",
 	time : "时间",
 	hot : "热度",
 	all : "所有",
@@ -17,6 +18,7 @@ module.exports = {
 	second : "秒",
 	min : "分",
 	hour : "小时",
+	day : "天",
 	edit : "修改",
 	ok : "完成",
 	
@@ -45,9 +47,13 @@ module.exports = {
 	comments : "评论",
 	writeComment : "发表评论",
 	onBottom : "划到底部啦",
-	votePrompt : "完成投票后才可查看评论哦",
+	addBody : "添加正文",
+	addOption : "添加选项",
+	votePrompt1 : "完成投票后才可查看评论哦",
+	votePrompt2 : "最多10个选项，每个选项限制20字",
 	
 	//热门
+	hotTitle : "热门榜",
 	nextRefresh : "下次更新",
 	
 	//我的消息

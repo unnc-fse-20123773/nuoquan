@@ -105,7 +105,7 @@ export default {
 		};
 	},
 	computed: {
-		...mapState(['lang'])
+		...mapState(['myMsgCount','lang'])
 	},
 	
 	watch: {
