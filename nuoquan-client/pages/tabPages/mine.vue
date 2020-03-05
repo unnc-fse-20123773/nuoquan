@@ -58,12 +58,12 @@
 		<view class="pagejump_box">
 			<!-- TODO:这里应该有更灵活优雅的写法 @jerrio -->
 			<view class="item1 column_center" @click="jumpToProfile()">{{ lang.profile }}</view>
-			<view class="line1"></view>
+			<view class="line"></view>
 			<view class="item2 column_center" @click="jumpToMyPublish()">{{ lang.myPublish }}</view>
-			<view class="line2"></view>
+			<view class="line"></view>
 			<view class="item3 column_center" @click="jumpToAbout()">{{ lang.about }}</view>
-			<!-- 临时添加的设置语言按钮 @jerrio -->
-			<button class="language" @tap="changeLang">{{lang.changeLang}}</button>
+			<view class="line"></view>
+			<view class="language column_center" @tap="changeLang">{{lang.changeLang}}</view>
 		</view>
 		
 		<tab-bar :current="4"></tab-bar>
@@ -353,7 +353,7 @@ page {
 	border-radius: 8px;
 }
 
-.item1,.item2,.item3 {
+.item1,.item2,.item3,.language {
 	width: calc(100% - 28px)%;
 	height: 50px;
 	padding-left: 28px;
@@ -365,7 +365,7 @@ page {
 	opacity: 1;
 }
 
-.line1,.line2 {
+.line {
 	margin-left: auto;
 	margin-right: auto;
 	width: 88.54%;
@@ -374,11 +374,4 @@ page {
 	opacity: 1;
 }
 
-.language {
-	margin-top: 60rpx;
-	font-size: 14px;
-	font-family: Source Han Sans CN;
-	font-weight: 400;
-	color: rgba(53, 53, 53, 1);
-}
 </style>

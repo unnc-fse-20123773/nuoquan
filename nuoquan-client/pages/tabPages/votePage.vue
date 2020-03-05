@@ -108,7 +108,7 @@
 										</view>
 									</view>
 									<view style="width: 100%;height: 8px;">
-										<ProgressBar :progessbarwidth="result.barWidth" Type="aqua"></ProgressBar>
+										<ProgressBar :progessBarWidth="result.barWidth" Type="aqua"></ProgressBar>
 										<br />
 									</view>
 								</view>
@@ -126,7 +126,7 @@
 										</view>
 									</view>
 									<view style="width: 100%;height: 8px;">
-										<ProgressBar :progessbarwidth="result.barWidth" Type="aquachosen"></ProgressBar>
+										<ProgressBar :progessBarWidth="result.barWidth" Type="aquachosen"></ProgressBar>
 										<br />
 									</view>
 								</view>
@@ -416,8 +416,7 @@
 			 */
 			onePersentBarGrow(option){
 				var widthTarget = (this.reserveTwoDecimal(option.percent * 100));
-				console.log(widthTarget)
-				this.$set(option, 'barWidth', 50); // 为选项添加barWidth属性
+				this.$set(option, 'barWidth', widthTarget); // 为选项添加barWidth属性
 				// var timer = setInterval(function() {
 				// 	//设置计时器
 				// 	if ( option.barWidth >= widthTarget) {

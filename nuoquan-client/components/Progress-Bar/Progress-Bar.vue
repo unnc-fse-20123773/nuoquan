@@ -3,7 +3,7 @@
 		<view class="progress" 
 			:style="{ border: Type == 'aqua' ? '1px solid rgba(174,174,174,1)' : '1px solid rgba(72,177,233,1);' }" 
 			:class="Type">
-			<view class="progress-bar" :style="{height: 8 + 'px',width: progessbarwidth + '%'}">
+			<view class="progress-bar" :style="{height: 8 + 'px',width: thisWidth + '%'}">
 			</view>
 		</view>
 	</view>
@@ -13,7 +13,7 @@
 export default {
 	props: {
 		// 进度条百分比
-		progessbarwidth: {
+		progessBarWidth: {
 			type: Number,
 			default: 0
 		},
@@ -40,8 +40,11 @@ export default {
 	},
 	data() {
 		return {
-
+			thisWidth: 0
 		};
+	},
+	mounted(){
+		this.thisWidth = this.progessBarWidth;
 	},
 	methods: {}
 };
