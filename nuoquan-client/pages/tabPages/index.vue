@@ -32,7 +32,7 @@
 			</scroll-view>
 		</view>
 		
-		<tab-bar @click="clickMid"></tab-bar>
+		<tab-bar @clickTab="onClickTab"></tab-bar>
 	</view>
 </template>
 
@@ -124,10 +124,12 @@ export default {
 	// },
 
 	methods: {
-		clickMid(e){
-			console.log(e);
+		onClickTab(e){
+			//刷新
+			if(e.url == "/"+this.getCurrentPage().route){
+				this.showArticles(1);
+			}
 		},
-		
 		showArticles: function(page) {
 			if (loadArticleFlag) {
 				return;

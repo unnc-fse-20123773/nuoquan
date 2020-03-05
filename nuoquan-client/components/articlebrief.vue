@@ -111,7 +111,7 @@ export default {
 	},
 
 	created() {
-		console.log(this);
+		// console.log(this);
 		if (this.thisArticle.imgList.length > 3) {
 			// 只取前三
 			for (var i = 0; i < 3; i++) {

@@ -164,7 +164,7 @@
 			</swiper-item>
 		</swiper>
 		
-		<tab-bar :current="1"></tab-bar>
+		<tab-bar :current="1" @clickTab="onClickTab"></tab-bar>
 	</view>
 </template>
 
@@ -254,6 +254,12 @@
 		},
 
 		methods: {
+			onClickTab(e){
+				//刷新
+				if(e.url == "/"+this.getCurrentPage().route){
+					this.showVotes(1);
+				}
+			},
 			singleImgeFit(e) {
 				var height = e.detail.height;
 				var width = e.detail.width;
@@ -463,7 +469,6 @@
 							that.currentPage = page;
 							that.totalPage = res.data.data.total;
 							
-							console.log(res.data.data.rows);
 							if (page == 1){
 								that.ischosen = [];
 								that.finishVote = [];
