@@ -376,7 +376,7 @@ image {
 .name {
 	position: absolute;
 	left: 12.61%;
-	max-width: 24%;
+	/* max-width: 24%; */
 	font-size: 14px;
 	font-family: Source Han Sans CN;
 	font-weight: 400;

@@ -26,7 +26,7 @@
 			<view style="position: absolute;bottom: 8px;right:8px;font-size: 11px;color:#888888;">{{ 140 - voteContent.length }}</view>
 			<image src="../../static/icon/emoji.png" style="position: absolute;left:12px;top:8px;width:20px;height:20px;"></image>
 		</view>
-		<view class="picturearea">
+		<view class="picturearea" v-if="showContengEdit">
 			<block v-for="(image, index) in imageList" :key="index">
 				<view style="position: relative;">
 					<!-- todo 预览图片缩放 -->
@@ -43,15 +43,17 @@
 			<view v-if="imageList.length == 1 || imageList.length == 4 || imageList.length == 7" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
 		</view>
 
-		<view class="menu">
+		<view style="display: flex;position: relative;">
 			<mypicker class="major-pick-style" :mode="pickerMode" :range="pickerRange" :value="pickerValue" @change="pickerChange"></mypicker>
 
-			<view style="display:inline-block;height:12px;font-size:12px;font-weight:400;color:rgba(154,154,154,1);">{{ lang.day }}</view>
-			<view style="margin-left: 25px;display:inline-block;height:12px;font-size:12px;font-weight:400;color:rgba(154,154,154,1);">{{ lang.votePrompt2 }}</view>
+			<view style="margin-left: 8px;display:inline-block;height:12px;font-size:12px;font-weight:400;color:rgba(154,154,154,1);">{{ lang.dayend }}</view>
+			<view style="position: absolute;right: 0;display:inline-block;height:12px;font-size:12px;font-weight:400;color:rgba(154,154,154,1);">{{ lang.votePrompt2 }}</view>
 		</view>
 		<view v-for="(item, index) in voteOptions" :key="index">
-			<view class="optionArea"><input class="optionItem" v-model="voteOptions[index]" placeholder="选项内容" /></view>
-			<button @click="deleteOpt(index)">{{ lang.delete }}</button>
+			<view class="optionArea column_center">
+				<input class="optionItem" v-model="voteOptions[index]" placeholder="选项内容" />
+				<view class="delete" @click="deleteOpt(index)">×</view>
+			</view>
 		</view>
 		<view class="addOptionButton" @tap="addOptionFunc()">{{ lang.addOption }}</view>
 		<view class="submitVoteButton" @tap="upload()">{{ lang.submit }}</view>
@@ -79,7 +81,7 @@ export default {
 			voteTitle: '',
 			voteContent: '',
 			votePeriod: '',
-			voteOptions: [],
+			voteOptions: ["",""],
 			optionString: '',
 
 			pickerMode: 'submitVote',
@@ -379,8 +381,8 @@ page {
 }
 
 .submitVoteMain {
-	width: 698upx;
-	margin: auto;
+	width: 93.07%;
+	margin: 0 3.47%;
 }
 
 .title {
@@ -416,7 +418,7 @@ page {
 .addContentButton {
 	display: inline-block;
 	width: 100px;
-	margin: 16px 0 0 0;
+	margin: 16px 0 14px 0;
 	padding: 6px 32px 6px 10px;
 	height: 26px;
 	font-size: 14px;
@@ -440,7 +442,6 @@ page {
 .content {
 	min-height: 51px;
 	max-height: 300px;
-	margin-top: 13px;
 	width: calc(100% - 12px);
 	overflow: scroll;
 	padding: 36px 4px 24px;
@@ -455,7 +456,7 @@ page {
 	justify-content: space-between;
 	flex-wrap: wrap;
 	flex: 0 0 auto;
-	margin-top: 10px;
+	margin: 16px 0;
 }
 
 .picturearea image {
@@ -468,7 +469,6 @@ page {
 	width: 178upx;
 	height: 178upx;
 	line-height: 160upx;
-	margin: 6px 0;
 	text-align: center;
 	vertical-align: middle;
 	color: #888888;
@@ -477,16 +477,30 @@ page {
 	background: #ececec;
 }
 
-.optionItem {
-	margin-top: 12px;
-	width: 634upx;
+.optionArea{
+	position: relative;
+	margin-top: 16px;
+	width: 93.07%;
 	height: 14px;
-	font-size: 14px;
-	line-height: 14px;
 	padding: 24upx 31upx;
 	border: 1upx solid rgba(188, 188, 188, 1);
 	border-radius: 20px;
 	min-height: auto;
+}
+
+.optionItem {
+	width: 90%;
+	height: 16px;
+	font-size: 14px;
+	line-height: 14px;
+	min-height: auto;
+}
+
+.optionArea .delete{
+	position: absolute;
+	right: 12px;
+	font-size: 18px;
+	line-height: 18px;
 }
 
 .addOptionButton {
