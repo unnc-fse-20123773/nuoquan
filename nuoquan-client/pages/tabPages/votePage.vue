@@ -416,7 +416,8 @@
 			 */
 			onePersentBarGrow(option){
 				var widthTarget = (this.reserveTwoDecimal(option.percent * 100));
-				this.$set(option, 'barWidth', 0); // 为选项添加barWidth属性
+				console.log(widthTarget)
+				this.$set(option, 'barWidth', 50); // 为选项添加barWidth属性
 				// var timer = setInterval(function() {
 				// 	//设置计时器
 				// 	if ( option.barWidth >= widthTarget) {
