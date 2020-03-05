@@ -1063,7 +1063,8 @@ Vue.prototype.reTimeDeal = function(timediff) {
  * @param {Object} path
  */
 Vue.prototype.pathFilter = function(path) {
-	if (path.startsWith("/")) {
+	//先判空防止null出错
+	if (!app.isNull(path) && path.startsWith("/")) {
 		path = app.$serverUrl + path;
 	}
 	return path;

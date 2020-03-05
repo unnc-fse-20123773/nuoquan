@@ -31,7 +31,7 @@
 					<view class="title">{{item.voteTitle}}</view>	
 					<!-- 用户信息行 -->
 					<view class="userLine hor_center">
-						<image :src="item.faceImg" class="touxiang"></image>
+						<image :src="pathFilter(item.faceImg)" class="touxiang"></image>
 						<view class="name">{{item.nickname}}</view>
 						<view class="time">{{timeDeal(item.createDate)}}</view>
 					</view>
@@ -156,7 +156,7 @@
 					<!-- 确认投票 -->
 					<view v-if="finishVote[index] == false" class="alertandconfirm super_center">
 						<text v-if="ischosen[index] == false">{{lang.votePrompt1}}</text>
-						<button v-else class="confirmButton_votePage super_center" @click="confirmVote(item.id, index)">确认投票</button>
+						<button v-else class="confirmButton_votePage super_center" @click="confirmVote(item.id, index)">{{lang.ok}}</button>
 					</view>
 					<!-- 评论区 -->
 					<votecomment v-if="finishVote[index] !== false" :voteid = '  something         '></votecomment>
@@ -251,10 +251,6 @@
 			this.navigationBarHeight = height;
 			console.log('导航栏高度=' + this.navigationBarHeight);
 			this.calculateHeight();
-		},
-
-		onShow() {
-			
 		},
 
 		methods: {
@@ -359,11 +355,6 @@
 			 * @param {Object} voteIndex 投票的index, 用来控制下面的确认投票键
 			 */
 			confirmVote(voteId, voteIndex) {
-				this.ifShowComment = !this.ifShowComment;
-				this.finishVote[voteIndex] = !this.finishVote[voteIndex];
-				// console.log('确认投票');
-				
-				
 				var that = this;
 				uni.request({
 					url: that.$serverUrl + '/vote/selectOption',
@@ -392,6 +383,9 @@
 						// that.ischosen[voteIndex] = true;
 						console.log(that.showList[voteIndex]);
 						
+						this.ifShowComment = !this.ifShowComment;
+						this.finishVote[voteIndex] = !this.finishVote[voteIndex];
+						
 						// 进度条伸长
 						for (let option of that.showList[voteIndex].optionList){
 							this.onePersentBarGrow(option);
@@ -417,16 +411,6 @@
 			onePersentBarGrow(option){
 				var widthTarget = (this.reserveTwoDecimal(option.percent * 100));
 				this.$set(option, 'barWidth', widthTarget); // 为选项添加barWidth属性
-				// var timer = setInterval(function() {
-				// 	//设置计时器
-				// 	if ( option.barWidth >= widthTarget) {
-				// 		//在 persentBarWidth 为目标值时清空计时器，暂以100代替						// console.log(option);
-				// 		console.log(option);
-				// 		clearInterval(timer);
-				// 	} else {
-				// 		option.barWidth += 0.5;
-				// 	}
-				// }, 6);
 			},
 
 			showVotes: function(page) {
