@@ -49,6 +49,7 @@ export default {
 <style>
 .tabList_box {
 	position: fixed;
+	width: 115px;
 	z-index: 40;
 	left: 0;
 	right: 0;
