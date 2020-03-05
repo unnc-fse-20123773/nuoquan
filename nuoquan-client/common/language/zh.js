@@ -51,6 +51,7 @@ module.exports = {
 	addOption : "添加选项",
 	votePrompt1 : "完成投票后才可查看评论哦",
 	votePrompt2 : "最多10个选项，每个选项限制20字",
+	dayEnd : "天后截止",
 	
 	//热门
 	hotTitle : "热门榜",
@@ -94,7 +95,4 @@ module.exports = {
 	contact : "联系我们",
 	updateLog : "更新公告",
 	
-	//新建投票
-	
-	dayend : "天后截止",
 }

@@ -46,7 +46,7 @@
 		<view style="display: flex;position: relative;">
 			<mypicker class="major-pick-style" :mode="pickerMode" :range="pickerRange" :value="pickerValue" @change="pickerChange"></mypicker>
 
-			<view style="margin-left: 8px;display:inline-block;height:12px;font-size:12px;font-weight:400;color:rgba(154,154,154,1);">{{ lang.dayend }}</view>
+			<view style="margin-left: 8px;display:inline-block;height:12px;font-size:12px;font-weight:400;color:rgba(154,154,154,1);">{{ lang.dayEnd }}</view>
 			<view style="position: absolute;right: 0;display:inline-block;height:12px;font-size:12px;font-weight:400;color:rgba(154,154,154,1);">{{ lang.votePrompt2 }}</view>
 		</view>
 		<view v-for="(item, index) in voteOptions" :key="index">
