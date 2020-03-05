@@ -88,7 +88,7 @@ module.exports = {
 	degreeList : ["高中", "本科", "研究生"], //顺序请和数据库保持一致
 	
 	//他人页
-	whosHome : "'的主页",
+	whosHome : "的主页",
 	
 	//关于
 	contact : "联系我们",

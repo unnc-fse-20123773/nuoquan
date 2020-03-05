@@ -9,7 +9,7 @@
 		:showLeftIcon="true" 
 		:isNavHome="isNavHome" 
 		:left-text="lang.back"
-		:title="thisUserInfo.nickname+lang.whosHome" 
+		:title="thisUserInfo.nickname + lang.whosHome" 
 		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>				
 		
 		<!-- 黄色头部 -->

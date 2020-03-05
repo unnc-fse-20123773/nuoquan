@@ -93,4 +93,8 @@ module.exports = {
 	//关于
 	contact : "Contact Us",
 	updateLog : "Update Log",
+	
+	//新建投票
+	
+	dayend : "days finish",
 }
