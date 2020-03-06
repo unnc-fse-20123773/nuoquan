@@ -9,11 +9,21 @@ export default {
 	onShow: function(options) {
 		let pages = getCurrentPages(); //当前页面栈
 		console.log('App Show');
-		if(options.path != "pages/tabPages/index" 
-		&& options.path != "pages/tabPages/messagelist" 
-		&& options.path != "pages/tabPages/mine" 
-		&& options.path != "pages/tabPages/votePage"
-		&& pages.length == 0){
+		console.log(options.scene);
+		// if(options.path != "pages/tabPages/index" 
+		// && options.path != "pages/tabPages/messagelist" 
+		// && options.path != "pages/tabPages/mine" 
+		// && options.path != "pages/tabPages/votePage"
+		// && pages.length == 0){
+		// 	console.log(options.path);
+		// 	this.globalData.isNavHome = true;
+		// }
+		if(options.scene == 1007
+		|| options.scene == 1008
+		|| options.scene == 1011
+		|| options.scene == 1012
+		|| options.scene == 1013
+		|| options.scene == 1014){
 			console.log(options.path);
 			this.globalData.isNavHome = true;
 		}

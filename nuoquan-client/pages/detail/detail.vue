@@ -108,7 +108,6 @@ export default {
 	},
 	data() {
 		return {
-			imgList: [],
 			userInfo: {},
 			articleCard: '', //detail的主角，由index传过来的单个文章信息
 			commentContent: '', //用户准备提交的评论内容
@@ -150,7 +149,7 @@ export default {
 		uni.$emit('updateArticle', this.articleCard);
 		console.log('返回');
 	},
-
+	
 	async onLoad(options) {
 		// 一次性储存 navbar 高度
 		this.navbarHeight = this.getnavbarHeight().bottom + 5;
@@ -181,7 +180,7 @@ export default {
 		if (res.from === 'menu') {
 			// 来自右上角菜单的分享
 			return {
-				title: '来，给老子看！',
+				title: '速来围观' + this.userInfo.nickname + '的分享',
 				path: '/pages/detail/detail?data=' + this.articleCard.id
 			};
 		}

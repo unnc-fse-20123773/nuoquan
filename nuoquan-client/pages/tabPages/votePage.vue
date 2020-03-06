@@ -4,10 +4,10 @@
 		<view class="navigatorBar_votePage super_center" :style="{ height: navigationBarHeight + 'px' }" @click="showallVote">
 			<view class="navbarLine column_center">
 				<text>{{lang.vote}}</text>
-				<view class="allvote column_center">
+				<!-- <view class="allvote column_center">
 					<view class="allvote_text">{{lang.allVote}}</view>
 					<image src="../../static/icon/angle-down-ffffff.png" mode="aspectFit"></image>
-				</view>
+				</view> -->
 			</view>
 		</view>
 		<!-- 全部投票列表 -->

@@ -67,7 +67,7 @@ module.exports = {
 	changeLang : "Language",
 	follow : "Follow",
 	fans : "Follower",
-	reputation : "Peputation",
+	reputation : "Reputation",
 	like : "Like",
 	comment : "Comment",
 	
