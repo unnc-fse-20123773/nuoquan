@@ -67,7 +67,7 @@
 		<view class="menubar">
 			<view class="menubar_rel">
 				<!-- 分享 -->
-				<image class="menubar_share" src="../static/icon/share-alt-353535.png" mode="aspectFit"></image>
+				<!-- <image class="menubar_share" src="../static/icon/share-alt-353535.png" mode="aspectFit"></image> -->
 				<!-- 评论和点赞 -->
 				<view class="operationBar column_center">
 					<view class="commentBar column_center" @click="goToDetail()">

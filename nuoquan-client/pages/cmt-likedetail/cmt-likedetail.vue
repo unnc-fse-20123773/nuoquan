@@ -424,51 +424,39 @@
 			},
 			
 			goToArticle(articleId){
-				// console.log(article)
-				var that = this;
-				uni.request({
-					url: that.$serverUrl + '/article/getArticleById',
-					method: "POST",
-					data:{
-						articleId: articleId,
-						userId: that.userInfo.id,
-					},
-					header: {
-						'content-type': 'application/x-www-form-urlencoded'
-					},
-					success: (res) => {
-						if (res.data.status == 200) {
-							var article = res.data.data;
-							console.log(article)
-							uni.navigateTo({
-								url:'../detail/detail?data=' + JSON.stringify(article),
-							})
-						}
-					},
-				});
+				uni.navigateTo({
+					url:'../detail/detail?data=' + articleId,
+				})
 			},
 			
+			/**
+			 * TODO：应跳到对应comment
+			 * @param {Object} articleId
+			 */
 			goToComment(articleId){
-				var that = this;
-				uni.request({
-					url: that.$serverUrl + '/article/getArticleById',
-					method: "POST",
-					data:{
-						articleId: articleId,
-						userId: that.userInfo.id,
-					},
-					header: {
-						'content-type': 'application/x-www-form-urlencoded'
-					},
-					success: (res) => {
-						if (res.data.status == 200) {
-							var article = res.data.data;
-							uni.navigateTo({
-								url:'../detail/detail?data=' + JSON.stringify(article),
-							})
-						}
-					},
-				});
+				uni.navigateTo({
+					url:'../detail/detail?data=' + articleId,
+				})
+				// var that = this;
+				// uni.request({
+				// 	url: that.$serverUrl + '/article/getArticleById',
+				// 	method: "POST",
+				// 	data:{
+				// 		articleId: articleId,
+				// 		userId: that.userInfo.id,
+				// 	},
+				// 	header: {
+				// 		'content-type': 'application/x-www-form-urlencoded'
+				// 	},
+				// 	success: (res) => {
+				// 		if (res.data.status == 200) {
+				// 			var article = res.data.data;
+				// 			uni.navigateTo({
+				// 				url:'../detail/detail?data=' + JSON.stringify(article),
+				// 			})
+				// 		}
+				// 	},
+				// });
 			}
 		}
 	}

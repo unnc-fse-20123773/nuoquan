@@ -4,16 +4,16 @@
 		<view class="navigatorBar_votePage super_center" :style="{ height: navigationBarHeight + 'px' }" @click="showallVote">
 			<view class="navbarLine column_center">
 				<text>{{lang.vote}}</text>
-				<view class="allvote column_center">
+				<!-- <view class="allvote column_center">
 					<view class="allvote_text">{{lang.allVote}}</view>
 					<image src="../../static/icon/angle-down-ffffff.png" mode="aspectFit"></image>
-				</view>
+				</view> -->
 			</view>
 		</view>
 		<!-- 全部投票列表 -->
-		<nqallvote v-if="ifallVote" style="width: 100%;height: 100%;"></nqallvote>
+		<!-- <nqallvote v-if="ifallVote" style="width: 100%;height: 100%;"></nqallvote> -->
 		<!-- 显示列表时的底部蒙版 -->
-		<view v-if="ifallVote" style="position: fixed;background-color: #000000;opacity: 0.3;width: 100%;height: 100%;z-index: 40;"></view>
+		<!-- <view v-if="ifallVote" style="position: fixed;background-color: #000000;opacity: 0.3;width: 100%;height: 100%;z-index: 40;"></view> -->
 		<!-- 左侧按钮 -->
 		<view class="tapLeft super_center" :style="{ top: navigationBarHeight + 46 + 'px' }">
 			<image src="../../static/icon/angle-left-gradient.png" mode="aspectFit"></image>

@@ -1,10 +1,10 @@
 <template>
 	<!--评论区域-->
-	<view class="comments-area" :style="{'opacity':mainCommentList.length != undefined ? 1:0}">
+	<view class="comments-area" :style="{ opacity: mainCommentList.length != undefined ? 1 : 0 }">
 		<!--评论数，排序方式-->
 		<view class="comments-menu">
-			<view class="comments-num">{{articleCardCommentNum}}条评论</view>
-			<nqSwitch style="margin-top: 3px;" :options='options' @onChange="change_comment_order"></nqSwitch>
+			<view class="comments-num">{{ articleCardCommentNum }}条评论</view>
+			<nqSwitch style="margin-top: 3px;" :options="[lang.time, lang.hot]" @onChange="change_comment_order"></nqSwitch>
 			<!-- <view class="comments-order">
                    <view class="order-in-time" :class="{ chosen : order == 0}" @tap="change_comment_order(0)">
 					   时间
@@ -16,161 +16,154 @@
 			</view> -->
 		</view>
 
-
 		<!--循环评论卡片-->
 		<view class="comments">
 			<block v-for="mainComment in mainCommentList" :key="mainComment.id">
-
 				<view class="comment">
 					<view class="comment-info">
 						<image :src="pathFilter(mainComment.faceImg)" @tap="goToPersonPublic(mainComment.fromUserId)"></image>
 						<view class="name_text">{{ mainComment.nickname }}</view>
-						<view class="time_text">{{ timeDeal(mainComment.createDate)}}</view>
+						<view class="time_text">{{ timeDeal(mainComment.createDate) }}</view>
 					</view>
 					<view class="comment-content" @tap="goToCommentDetail(mainComment)">{{ mainComment.comment }}</view>
-					<reComment :mainCommentid="mainComment.id"  :mainComment="mainComment"  style='width: 100%;height:100%;'></reComment>
+					<reComment :mainCommentid="mainComment.id" :mainComment="mainComment" style="width: 100%;height:100%;"></reComment>
 					<view class="comment-menu">
-						<view class="son-comment-num" @tap="goToCommentDetail(mainComment)">{{mainComment.commentNum}}</view>
-						<view class="like-num" :class="{liked:mainComment.isLike}" @tap="swLikeMainComment(mainComment)">{{ mainComment.likeNum }}</view>
+						<view class="son-comment-num" @tap="goToCommentDetail(mainComment)">{{ mainComment.commentNum }}</view>
+						<view class="like-num" :class="{ liked: mainComment.isLike }" @tap="swLikeMainComment(mainComment)">{{ mainComment.likeNum }}</view>
 					</view>
 				</view>
 			</block>
 		</view>
-		
 	</view>
-
 </template>
 
 <script>
-	import nqSwitch from "@/components/nq-switch.vue"
-	import reComment from '@/components/reComment.vue'
+import nqSwitch from '@/components/nq-switch.vue';
+import reComment from '@/components/reComment.vue';
+import { mapState, mapMutations } from 'vuex';
 
-	export default {
-		props: {
-			commentList: {
-				type: Object,
-			},
-			userInfo: "",
-			articleCardCommentNum:"",
+export default {
+	props: {
+		commentList: {
+			type: Object
 		},
-		components: {
-			nqSwitch,
-			reComment,
-		},
-		data() {
-			return {
-				mainCommentList: this.commentList,
-				order: 0, //评论排序方式 0：按时间查询, 1：按热度查询
-				options: ["时间", "热度"],
+		userInfo: '',
+		articleCardCommentNum: ''
+	},
+	components: {
+		nqSwitch,
+		reComment
+	},
+	computed: {
+		...mapState(['lang'])
+	},
+	data() {
+		return {
+			mainCommentList: this.commentList,
+			order: 0, //评论排序方式 0：按时间查询, 1：按热度查询
+		};
+	},
+	watch: {
+		commentList: function(val) {
+			//监听props中的属性
+			this.mainCommentList = this.commentList;
+			console.log('watch data changes,');
+			console.log(this.mainCommentList);
+			console.log(this.commentList);
+		}
+	},
+	methods: {
+		swLikeMainComment(comment) {
+			if (comment.isLike) {
+				this.unLikeComment(comment);
+				comment.likeNum--;
+			} else {
+				this.likeComment(comment);
+				comment.likeNum++;
 			}
+			comment.isLike = !comment.isLike;
+			// console.log(this.mainComment.isLike);
 		},
-		watch: {
-			'commentList': function(val) { //监听props中的属性
-				this.mainCommentList = this.commentList;
-				console.log("watch data changes,")
-				console.log(this.mainCommentList);
-				console.log(this.commentList);
-			}
-		},
-		methods: {
-			swLikeMainComment(comment) {
-				if (comment.isLike) {
-					this.unLikeComment(comment);
-					comment.likeNum--;
-				} else {
-					this.likeComment(comment);
-					comment.likeNum++;
+
+		likeComment(comment) {
+			console.log('点赞评论');
+			var that = this;
+			uni.request({
+				method: 'POST',
+				url: that.$serverUrl + '/article/userLikeComment',
+				data: {
+					userId: that.userInfo.id,
+					commentId: comment.id,
+					createrId: comment.fromUserId
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					console.log(res);
 				}
-				comment.isLike = !comment.isLike;
-				// console.log(this.mainComment.isLike);
-			},
+			});
+		},
 
-			likeComment(comment) {
-				console.log("点赞评论");
-				var that = this;
-				uni.request({
-					method: "POST",
-					url: that.$serverUrl + '/article/userLikeComment',
-					data: {
-						userId: that.userInfo.id,
-						commentId: comment.id,
-						createrId: comment.fromUserId,
-					},
-					header: {
-						'content-type': 'application/x-www-form-urlencoded'
-					},
-					success: (res) => {
-						console.log(res);
-					},
-				});
-			},
-
-			unLikeComment(comment) {
-				console.log("取消点赞评论");
-				var that = this;
-				uni.request({
-					method: "POST",
-					url: that.$serverUrl + '/article/userUnLikeComment',
-					data: {
-						userId: that.userInfo.id,
-						commentId: comment.id,
-						createrId: comment.fromUserId,
-					},
-					header: {
-						'content-type': 'application/x-www-form-urlencoded'
-					},
-					success: (res) => {
-						console.log(res);
-					},
-				});
-			},
-			goToCommentDetail(mainComment) {
-				uni.navigateTo({
-					url: '/pages/comment-detail/comment-detail?data=' + JSON.stringify(mainComment),
-				})
-			},
-			change_comment_order(e) {
-				this.$emit("onChange", {
-					type: e.status
-				});
-			},
-			goToPersonPublic(userId) {
-				// router.goToPersonPublic(); // 全局方法
-				uni.navigateTo({
-					url: '/pages/personpublic/personpublic?userId=' + userId,
-				})
-			}
-
-		}, //method
-
-
-
-
-
-
-	}
+		unLikeComment(comment) {
+			console.log('取消点赞评论');
+			var that = this;
+			uni.request({
+				method: 'POST',
+				url: that.$serverUrl + '/article/userUnLikeComment',
+				data: {
+					userId: that.userInfo.id,
+					commentId: comment.id,
+					createrId: comment.fromUserId
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					console.log(res);
+				}
+			});
+		},
+		goToCommentDetail(mainComment) {
+			uni.navigateTo({
+				url: '/pages/comment-detail/comment-detail?data=' + JSON.stringify(mainComment)
+			});
+		},
+		change_comment_order(e) {
+			this.$emit('onChange', {
+				type: e.status
+			});
+		},
+		goToPersonPublic(userId) {
+			// router.goToPersonPublic(); // 全局方法
+			uni.navigateTo({
+				url: '/pages/personpublic/personpublic?userId=' + userId
+			});
+		}
+	} //method
+};
 </script>
 
 <style>
-	@import url("./oneComment.css");
+@import url('./oneComment.css');
 
-	.comments-menu {
-		height: 28px;
-		padding-top: 13px;
-	}
+.comments-menu {
+	height: 28px;
+	padding-top: 13px;
+}
 
-	.comments-num {
-		height: 17px;
-		font-size: 17px;
-		font-family: Source Han Sans CN;
-		font-weight: 500;
-		line-height: 17px;
-		color: rgba(155, 155, 155, 1);
-		padding-left: 4px;
-		display: inline-block;
-	}
+.comments-num {
+	height: 17px;
+	font-size: 17px;
+	font-family: Source Han Sans CN;
+	font-weight: 500;
+	line-height: 17px;
+	color: rgba(155, 155, 155, 1);
+	padding-left: 4px;
+	display: inline-block;
+}
 
-	/* .comments-order {
+/* .comments-order {
 		margin-top:3px;
 		height: 22px;
 		background: #ECECEC;
