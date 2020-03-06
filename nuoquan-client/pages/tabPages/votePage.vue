@@ -3,9 +3,9 @@
 		<!-- 导航栏 -->
 		<view class="navigatorBar_votePage super_center" :style="{ height: navigationBarHeight + 'px' }" @click="showallVote">
 			<view class="navbarLine column_center">
-				<text>投票</text>
+				<text>{{lang.vote}}</text>
 				<view class="allvote column_center">
-					<view class="allvote_text">所有投票</view>
+					<view class="allvote_text">{{lang.allVote}}</view>
 					<image src="../../static/icon/angle-down.png" mode="aspectFit"></image>
 				</view>
 			</view>
@@ -140,27 +140,34 @@
 						<!-- 时间 -->
 						<view class="timeLine">
 							<view class="timeleft">{{reTimeDeal(item.expiryDate)}}</view>
-							<text>结束</text>
+							<text>{{lang.end}}</text>
 						</view>
 						<view class="numbersBar">
 							<!-- 参与人数 -->
 							<view class="participants">
 								<view class="participants_Num">{{item.sumVote}}</view>
-								<text>参与</text>
+								<text>{{lang.votes}}</text>
 							</view>
 							<!-- 评论人数 -->
 							<view class="commentusers">
 								<view class="commentusers_Num">{{item.commentNum}}</view>
-								<text>评论</text>
+								<text>{{lang.comments}}</text>
 							</view>
 						</view>
 					</view>
 					<!-- 确认投票 -->
 					<view v-if="finishVote[index] == false" class="alertandconfirm super_center">
-						<text v-if="ischosen[index] == false">完成投票后才可查看评论哦</text>
-						<button v-else class="confirmButton_votePage super_center" @click="confirmVote(item.id, index)">确认投票</button>
+						<text v-if="ischosen[index] == false">{{lang.votePrompt}}</text>
+						<button v-else class="confirmButton_votePage super_center" 
+							@click="confirmVote(item.id, index)">确认投票</button>
 					</view>
-					<votecomment @changeCommentNum="changeCommentNum" v-if="finishVote[index] == true" :voteId = 'item.id' :index = 'index' :userId = "item.userId"></votecomment>
+					<votecomment ref="voteComment" 
+						@changeCommentNum="changeCommentNum"
+						@finishLoad="showCommentWhenLoad(index)" 
+						:ifLoad='finishVote[index]' 
+						:voteId = 'item.id' 
+						:index = 'index'
+						:userId = "item.userId"></votecomment>
 				</scroll-view>
 			</swiper-item>
 		</swiper>
@@ -174,6 +181,7 @@
 	import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue";
 	import votecomment from "@/components/votecomments.vue";
 	import nqallvote from '@/components/nq-allvote/nq-allvote.vue';
+	import { mapState, mapMutations } from 'vuex';
 	
 	const DEFAULT_PAGE = 0;	
 	var loadVoteFlag = false;
@@ -226,6 +234,9 @@
 			votecomment,
 			nqallvote
 		},
+		computed: {
+			...mapState(['lang'])
+		},
 		
 		onLoad: function() {
 			console.log("还没投票时,selectedOptionId= " + this.selectedOptionId);
@@ -248,13 +259,24 @@
 			this.navigationBarHeight = height;
 			// console.log('导航栏高度=' + this.navigationBarHeight);
 			this.calculateHeight();
-		},
-
-		onShow() {
+			// this.showCommentWhenLoad();
 			
 		},
 
+		mounted() {
+		},
+
 		methods: {
+			showCommentWhenLoad(index){
+				console.log(index);
+				// console.log(this);
+				// console.log(this.$refs);
+				
+				// console.log(ifLoad);
+				// this.$refs.voteComment.getComments(1);
+				this.$refs.voteComment[index].getComments(1);
+			},
+			
 			singleImgeFit(e) {
 				var height = e.detail.height;
 				var width = e.detail.width;
@@ -355,12 +377,7 @@
 			 * @param {Object} voteId 投票的id
 			 * @param {Object} voteIndex 投票的index, 用来控制下面的确认投票键
 			 */
-			confirmVote(voteId, voteIndex) {
-				this.ifShowComment = !this.ifShowComment;
-				this.finishVote[voteIndex] = !this.finishVote[voteIndex];
-				// console.log('确认投票');
-				
-				
+			confirmVote(voteId, voteIndex) {			
 				var that = this;
 				uni.request({
 					url: that.$serverUrl + '/vote/selectOption',
@@ -375,16 +392,15 @@
 						'content-type': 'application/json'
 					},
 					success: res => {
-						// console.log('123');
-						// console.log(that.selectedOptionId);
-						// console.log(voteId);
-						// console.log(res);
+						this.ifShowComment = !this.ifShowComment;
+						this.finishVote[voteIndex] = !this.finishVote[voteIndex];
+						// 更新showList
+						that.showList[that.currentVoteIndex] = res.data.data.rows[0];
 						// 得到投票后的数值, 根据新的OptionList的id和that.selectedOptionId来判断放在哪一个区域
 						// 如果两个相等, 放在用户选择区, 其余放在非用户选择区
-						that.afterSelectedResult = res.data.data.rows[0];
-						that.showList[that.currentVoteIndex] = that.afterSelectedResult;
+						// that.afterSelectedResult = res.data.data.rows[0];
 						// console.log(that.afterSelectedResult);
-						that.afterSelectedOptionList = that.afterSelectedResult.optionList;
+						// that.afterSelectedOptionList = that.afterSelectedResult.optionList;
 						// console.log(that.afterSelectedOptionList);
 						// that.ischosen[voteIndex] = true;
 						// console.log(that.showList[voteIndex]);
@@ -460,44 +476,45 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: res => {
-						setTimeout(() => {
-							// 延时加载
-							uni.hideLoading();
-							loadVoteFlag = false;
-							// console.log(res);
-							// 判断当前页是不是第一页，如果是第一页，那么设置showList为空
-							if (page == 1) {
-								that.showList = [];
+						uni.hideLoading();
+						loadVoteFlag = false;
+						// console.log(res);
+						// 判断当前页是不是第一页，如果是第一页，那么设置showList为空
+						if (page == 1) {
+							that.showList = [];
+						}
+						// 在原showList后面嫁接新的数据
+						var newVoteList = res.data.data.rows;
+						var oldVoteList = that.showList;
+						that.showList = oldVoteList.concat(newVoteList);
+						that.currentPage = page;
+						that.totalPage = res.data.data.total;
+						
+						console.log(res.data.data.rows);
+						if (page == 1){
+							that.ischosen = [];
+							that.finishVote = [];
+						}
+						var tempIsChosen = [];
+						var tempFinishVote = [];
+						for(var i = 0; i < res.data.data.rows.length; i++){
+							tempIsChosen[i] = false;
+							tempFinishVote[i] = that.showList[i].isUserVoted;
+						}
+						that.ischosen = that.ischosen.concat(tempIsChosen);
+						that.finishVote = that.finishVote.concat(tempFinishVote);
+						// console.log("每个投票是否被选择:" + that.ischosen);
+						// setTimeout(()=>{
+						// 	that.showCommentWhenLoad();
+						// }, 1000);						
+						
+						for(var index = 0; index < that.showList.length; index++){
+							if (that.showList[index].isUserVoted == true){
+								// console.log("Voted: "+ index);
+								// that.showCommentWhenLoad(1);
+								that.votedResult(index);
 							}
-							// 在原showList后面嫁接新的数据
-							var newVoteList = res.data.data.rows;
-							var oldVoteList = that.showList;
-							that.showList = oldVoteList.concat(newVoteList);
-							that.currentPage = page;
-							that.totalPage = res.data.data.total;
-							
-							console.log(res.data.data.rows);
-							if (page == 1){
-								that.ischosen = [];
-								that.finishVote = [];
-							}
-							var tempIsChosen = [];
-							var tempFinishVote = [];
-							for(var i = 0; i < res.data.data.rows.length; i++){
-								tempIsChosen[i] = false;
-								tempFinishVote[i] = that.showList[i].isUserVoted;
-							}
-							that.ischosen = that.ischosen.concat(tempIsChosen);
-							that.finishVote = that.finishVote.concat(tempFinishVote);
-							// console.log("每个投票是否被选择:" + that.ischosen);
-							
-							for(var index = 0; index < that.showList.length; index++){
-								if (that.showList[index].isUserVoted == true){
-									// console.log("Voted: "+ index);
-									that.votedResult(index);
-								}
-							}
-						}, 300);
+						}
 					},
 					fail: res => {
 						uni.hideLoading();
@@ -536,7 +553,7 @@
 			 */
 			onSwiperChange: function(e){
 				let index = e.target.current || e.detail.current;
-				console.log("VoteIndex: "+index);
+				// console.log("VoteIndex: "+index);
 				
 				// this.votedResult(index);
 				
@@ -562,6 +579,8 @@
 					}
 				}
 			},
+			
+			// 当有评论时, 父组件votePage让该vote的评论数+1
 			changeCommentNum(index){
 				// console.log("12312312 " + index);
 				this.showList[index].commentNum++;

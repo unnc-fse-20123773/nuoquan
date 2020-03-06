@@ -1,9 +1,14 @@
 <template>
 	<view style="width: calc(100% - 24px);height: 100%;margin: auto;">
-
-
 		<view style="position: relative;margin-bottom: 20px;margin-top: 25px;">
-			<textarea class="content" v-model="commentContent" maxlength="140" :auto-height="true" :show-confirm-bar="false" @click="controlInput(1)"></textarea>
+			<textarea class="content" 
+			v-model="commentContent" 
+			maxlength="140" 
+			:auto-height="true" 
+			:show-confirm-bar="false" 
+			@click="controlInput(1)" 
+			:placeholder="placeholderText">
+			</textarea>
 			<!-- 			<view style="position: absolute;bottom: 8px;right:8px;font-size: 11px;color:#888888;">{{140 - commentContent.length}}</view>-->
 			<view style="width:28px;height:14px;line-height:14px;font-size:14px;color:rgba(252,192,65,1);position: absolute;top:11px;right:12px;">结束</view>
 			<image src="../static/icon/emoji.png" style="position: absolute;left:12px;top:8px;width:20px;height:20px;"></image>
@@ -22,7 +27,7 @@
 						<view class="time_text">{{ timeDeal( voteComment.createDate)}}</view>
 					</view>
 					<view class="comment-content" @tap="goToCommentDetail(voteComment)">{{ voteComment.comment }}</view>
-					<!-- 					<reComment :voteCommentid="voteComment.id" :voteComment="voteComment" style='width: 100%;height:100%;'></reComment> -->
+					<reComment :mainCommentid="voteComment.id" :mainComment="voteComment" style='width: 100%;height:100%;'></reComment>
 					<view class="comment-menu">
 						<view class="son-comment-num" @tap="goToCommentDetail(voteComment)">{{voteComment.commentNum}}</view>
 						<view class="like-num" :class="{liked:voteComment.isLike}" @tap="swLikevoteComment(voteComment)">{{ voteComment.likeNum }}</view>
@@ -47,13 +52,19 @@
 
 <script>
 	import nqSwitch from "@/components/nq-switch.vue";
+	import reComment from '@/components/reComment.vue';
 
 	var uploadFlag = false;
 	export default {
 		props: {
-			voteId: "",
+			voteId: '',
 			index: '',
-			userId: "",
+			userId: '',
+			test: {
+				type: Number,
+				default: 1
+			},
+			ifLoad: "",
 
 		},
 		data() {
@@ -64,6 +75,7 @@
 				submitData: {
 					//这个是从子组件传来的数据，回复评论的评论之类
 				},
+				placeholderText: '评论点什么吧......',
 
 				totalPage: 1,
 				currentPage: 1,
@@ -76,10 +88,17 @@
 		},
 		created() {
 			this.userInfo = this.getGlobalUserInfo();
-		},
-		async onload() {
 			var page = this.currentPage;
-			this.getComments(page);
+			// this.getComments(page);
+			// console.log("voteid = " + this.voteId);
+			// console.log("voteIndex = " + this.index);
+			
+		},
+		mounted() {
+			// 通知votePage, 子组件以完成渲染
+			if(this.ifLoad){
+				this.$emit('finishLoad');
+			}
 		},
 		onReachBottom() {
 			this.loadMore();
@@ -93,10 +112,14 @@
 			},
 			goToCommentDetail(voteComment) {
 				//是否需要跳转评论主页？
+				console.log("1");
+				uni.navigateTo({
+					url: '/pages/comment-detail/comment-vote-detail?data=' + JSON.stringify(voteComment),
+				})
 			},
 			scrollTo(a) {
 				if (a == 'top') {
-					console.log('scrolltotop');
+					// console.log('scrolltotop');
 					uni.pageScrollTo({
 						scrollTop: 0,
 						duration: 300
@@ -120,8 +143,9 @@
 				this.submitData.comment = this.commentContent;
 				this.submitData.fromUserId = this.userInfo.id;
 				this.submitData.voteId = this.voteId;
-				console.log(this.submitData);
-				console.log(this.index);
+				
+				// console.log(this.submitData);
+				// console.log(this.index);
 				var that = this;
 				if (this.commentContent == "") {
 					uni.showToast({
@@ -165,6 +189,11 @@
 			},
 
 			getComments: function(page) {
+				// console.log(this.index);
+				// console.log(this.ifLoad);
+				console.log("voteid = " + this.voteId);
+				console.log("voteIndex = " + this.index);
+				
 				var that = this;
 				uni.showLoading({
 					title: "加载中..."
@@ -187,6 +216,7 @@
 							if (page == 1) {
 								that.voteCommentList = [];
 							}
+							console.log("main comment is:");
 							console.log(res);
 							var newCommentList = res.data.data.rows;
 							var oldCommentList = that.voteCommentList;

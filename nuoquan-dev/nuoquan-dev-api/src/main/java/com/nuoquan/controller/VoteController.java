@@ -236,12 +236,12 @@ public class VoteController extends BasicController{
 			@ApiImplicitParam(name = "voteId", required = true, dataType = "String", paramType = "form"),
 			@ApiImplicitParam(name = "userId", required = false, dataType = "String", paramType = "form")})
 	@PostMapping("/getMainVoteComments")
-	public JSONResult getFatherVoteComments(Integer page, Integer pageSize, String voteId, String userId) throws Exception{
+	public JSONResult getMainVoteComments(Integer page, Integer pageSize, String voteId, String userId) throws Exception{
 		
-		if (StringUtils.isBlank(voteId)) {
+		if (StringUtils.isBlank(voteId) || StringUtils.isEmpty(voteId)) {
 			return JSONResult.errorMsg("voteId can't be null");
 		}
-		
+		System.out.println(voteId);
 		if (page == null) {
 			page = 1;
 		}

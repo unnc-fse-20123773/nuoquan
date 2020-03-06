@@ -4,15 +4,15 @@
 		:style="{height: this.getnavbarHeight() + 'px'}" 
 		:showLeftIcon="true" 
 		:isNavHome="isNavHome" 
-		left-text="返回"
+		:left-text="lang.back"
 		:title="pageTitle" 
 		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>				
 		
 		<view :style="{ height: this.getnavbarHeight().bottom + 5 + 'px' }"></view>
 		<view class="top">
-			<text class="topleft">下次更新 {{ minute }}分{{ second }}秒</text>
+			<text class="topleft">{{lang.nextRefresh}} {{minute+lang.min+second+lang.second}}</text>
 			<button class="topright" @click="reload()">
-				<text class="refresh">刷新</text>
+				<text class="refresh">{{lang.refresh}}</text>
 				<image class="icon" src="../../static/icon/refresh-ffffff.png"></image>
 			</button>
 		</view>
@@ -23,10 +23,15 @@
 <script>
 import articleInfo from './articleInfo.vue';
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
+import { mapState, mapMutations } from 'vuex';
+
 export default {
 	components: {
 		articleInfo,
 		uniNavBar
+	},
+	computed: {
+		...mapState(['lang'])
 	},
 	data() {
 		return {

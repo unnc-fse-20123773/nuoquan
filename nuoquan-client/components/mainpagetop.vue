@@ -56,7 +56,7 @@
 			<!-- 标签选择 -->
 			<view>
 				<view v-if="!selectedTag" @click="toggleShowTag" class="tagchoose column_center">
-					<text>标签</text>
+					<text>{{lang.tags}}</text>
 					<image class="tagicon" src="../static/icon/angle-down.png" mode="aspectFit"></image>
 				</view>
 				<tagSelected v-if="selectedTag" :tag='selectedTag' @click="deleteTag"></tagSelected>
@@ -68,9 +68,9 @@
 				v-if="showTagBox">
 			</tagSelectBox>
 			<!-- 排序方式1-->
-			<nqSwitch :options='options1' :initStatus='iniStatus1' @onChange="change_article_order1"></nqSwitch>
+			<nqSwitch :options='[lang.all, lang.follow]' :initStatus='iniStatus1' @onChange="change_article_order1"></nqSwitch>
 			<!-- 排序方式2 -->
-			<nqSwitch :options='options2' :initStatus='iniStatus2' @onChange="change_article_order2"></nqSwitch>
+			<nqSwitch :options='[lang.time, lang.hot]' :initStatus='iniStatus2' @onChange="change_article_order2"></nqSwitch>
 		</view>
 		<!-- Add background for option bar-->
 		<view v-if="roleup == false" class="optionLinebg_mpt" :style="{top: height + 4 + 'px'}">
@@ -86,6 +86,8 @@ import searchpage from '../pages/search/search';
 import nqSwitch from '@/components/nq-switch.vue'
 import tagSelectBox from '@/components/nq-tag/tagSelectBox.vue'
 import tagSelected from '@/components/nq-tag/tagSelected.vue'
+import { mapState, mapMutations } from 'vuex';
+
 export default {
 	components: {
 		mainpageleft,
@@ -111,12 +113,13 @@ export default {
 			showMainPageLeft: 0,
 			showSearch: 0,
 			showTagBox: false,
-			options1: ["所有","关注"], //为switch组件设置选项标签
 			iniStatus1: 0, //为switch组件设置初始值
-			options2: ["时间","热度"], //为switch组件设置选项标签
 			iniStatus2: 0, //为switch组件设置初始值
 			selectedTag: '' //已选择的标签
 		};
+	},
+	computed: {
+		...mapState(['lang'])
 	},
 	watch:{
 		roleup(newValue, oldValue){

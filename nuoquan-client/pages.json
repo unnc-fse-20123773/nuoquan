@@ -67,13 +67,20 @@
 			"path": "pages/profile/profile",
 			"style": {}
 		}, {
+			"path": "pages/submitVote/submitVote",
+			"style": {}
+		}, {
 			"path": "components/shareposter/myshareposter",
 			"style": {}
 		}, {
-			"path": "pages/submitVote/submitVote",
+			"path": "components/nq-msgcount/nq-msgcount",
 			"style": {}
 		}
-	],
+	    , {
+            "path" : "pages/comment-detail/comment-vote-detail",
+            "style" : {}
+        }
+    ],
 
 	//微信小程序自定义导航栏custom-tab-bar
 	"tabBar": {
@@ -120,11 +127,15 @@
 			"name": "index", //模式名称
 			"path": "pages/tabPages/index", //启动页面，必选
 			"query": "" //启动参数，在页面的onLoad函数里面得到
-		},  {
+		}, {
 			"name": "votePage",
 			"path": "pages/tabPages/votePage",
 			"query": "" //启动参数，在页面的onLoad函数里面得到
-		},{
+		}, {
+			"name": "组件测试", //模式名称
+			"path": "components/nq-msgcount/nq-msgcount", //启动页面，必选
+			"query": "" //启动参数，在页面的onLoad函数里面得到
+		}, {
 			"name": "shareposter", //模式名称
 			"path": "components/shareposter/myshareposter", //启动页面，必选
 			"query": "" //启动参数，在页面的onLoad函数里面得到

@@ -35,11 +35,11 @@
 		},
 		
 		created() {
-			console.log(this.reCommentDetail);
+			// console.log(this.reCommentDetail);
 		},
 		
 		onLoad() {
-			console.log("哈哈哈哈哈哈");
+			// console.log("哈哈哈哈哈哈");
 		},
 		
 		methods:{
@@ -51,6 +51,7 @@
 					nickname:this.reCommentDetail.nickname,
 				}
 				this.$emit('controlInputSignal',dataOfRecomment);
+				console.log("sonCB请求C-D");
 			},
 			
 			swLikeCommentDetail(){

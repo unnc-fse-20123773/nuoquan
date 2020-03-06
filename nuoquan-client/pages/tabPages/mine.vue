@@ -63,7 +63,7 @@
 			<view class="line2"></view>
 			<view class="item3 column_center" @click="jumpToAbout()">{{ lang.about }}</view>
 			<!-- 临时添加的设置语言按钮 @jerrio -->
-			<!-- <button class="language" @tap="changeLang">{{lang.changeLang}}</button>-->
+			<button class="language" @tap="changeLang">{{lang.changeLang}}</button>
 		</view>
 		
 		<tab-bar :current="4"></tab-bar>

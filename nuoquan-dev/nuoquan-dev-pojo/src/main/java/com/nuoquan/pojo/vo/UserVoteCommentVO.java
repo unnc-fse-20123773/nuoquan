@@ -53,19 +53,6 @@ public class UserVoteCommentVO {
         this.fromUserId = fromUserId;
     }
 
-    /**
-     * @return article_id
-     */
-    public String getArticleId() {
-        return voteId;
-    }
-
-    /**
-     * @param articleId
-     */
-    public void setArticleId(String articleId) {
-        this.voteId = articleId;
-    }
 
     /**
      * @return comment
@@ -219,5 +206,13 @@ public class UserVoteCommentVO {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public String getVoteId() {
+		return voteId;
+	}
+
+	public void setVoteId(String voteId) {
+		this.voteId = voteId;
 	}
 }

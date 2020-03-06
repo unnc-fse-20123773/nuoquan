@@ -6,11 +6,11 @@
 		:style="{height: this.getnavbarHeight() + 'px'}" 
 		:showLeftIcon="true" 
 		:isNavHome="isNavHome" 
-		left-text="返回"
-		:title="pageTitle" 
-		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>				
+		:left-text="lang.back"
+		:title="lang.tabList[0]" 
+		:height="navbarHeight"></uni-nav-bar>				
 		
-		<view :style="{height: this.getnavbarHeight().bottom + 5 + 'px'}"></view>
+		<view :style="{height: navbarHeight + 'px'}"></view>
 		<!-- 当失去焦点时，将输入内容存入articleTitle -->
 		<view style="position: relative;margin-top: 20px;">
 			<input class="title" v-model="articleTitle" placeholder="标题" maxlength="20" placeholder-class="title-placeholder" />
@@ -34,8 +34,8 @@
 				:tag="item" 
 				@click="deleteTag(index)"
 			></tagSelected>
-			<button class="editTagsButton" @tap="editTag(true)" v-if="!editingTag">添加标签 +</button>
-			<view class="finish-button" @tap="editTag(false)" v-if="editingTag">完成</view>
+			<button class="editTagsButton" @tap="editTag(true)" v-if="!editingTag">{{lang.addTags}} +</button>
+			<view class="finish-button" @tap="editTag(false)" v-if="editingTag">{{lang.ok}}</view>
 		</view>
 
 		<!-- 标签选择块 -->
@@ -63,7 +63,7 @@
 			<view v-show="isAddImage(this.imageList.length)" id="clickToChooseImage" class="addPic" @click="chooseImg">+</view>
 			<view v-if="imageList.length == 1 || imageList.length == 4 || imageList.length == 7" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
 		</view>
-		<button class="submit-button" @tap="upload()">发表</button>
+		<button class="submit-button" @tap="upload()">{{lang.submit}}</button>
 	</view>
 </template>
 
@@ -71,6 +71,7 @@
 import tagSelectBox from '@/components/nq-tag/tagSelectBox.vue';
 import tagSelected from '@/components/nq-tag/tagSelected.vue'
 import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue";	
+import { mapState, mapMutations } from 'vuex';
 
 // #ifdef APP-PLUS
 import permision from '@/common/permission.js';
@@ -86,6 +87,9 @@ export default {
 		tagSelectBox,
 		tagSelected,
 		uniNavBar
+	},
+	computed: {
+		...mapState(['lang'])
 	},
 	data() {
 		return {
@@ -117,6 +121,7 @@ export default {
 			count: [1, 2, 3, 4, 5, 6, 7, 8, 9],
 			windowHeight: 0,
 			isNavHome: getApp().globalData.isNavHome,//判断导航栏左侧是否显示home按钮
+			navbarHeight: 0 //一次性储存 navbarheight
 		};
 	},
 	onUnload() {
@@ -128,6 +133,9 @@ export default {
 			(this.countIndex = 8);
 	},
 	onLoad() {
+		// 一次性储存 navbar 高度
+		this.navbarHeight = this.getnavbarHeight().bottom + 5;
+		
 		this.userInfo = this.getGlobalUserInfo();
 		// 获取屏幕高度
 		var that = this;

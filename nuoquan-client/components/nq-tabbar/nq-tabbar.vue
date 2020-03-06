@@ -5,6 +5,7 @@
 				<!-- 推出左侧空白 -->
 				<view style="width: 20px;"></view>
 				<view :class="['super_center', 'li', current == index ? 'cur' : '']" v-for="(item, index) in tabBarList" :key="index" @tap="onClick(item)">
+					<msgcount style="position: absolute;z-index: 40;right: 10%;top: 9px;" :count="item.count"></msgcount>
 					<view
 						class="img super_center"
 						:style="{ height: current == index ? '44px' : '20px', width: current == index ? '44px' : '20px', background: current == index ? 'rgba(253,169,86,1)' : '' }"
@@ -20,7 +21,7 @@
 							mode="aspectFit"
 						></image>
 					</view>
-					<view class="p" v-if="current != index">{{ item.name }}</view>
+					<view class="p" v-if="current != index">{{ lang.tabbarName[index] }}</view>
 				</view>
 				<!-- 推出右侧空白 -->
 				<view style="width: 20px;"></view>
@@ -43,6 +44,8 @@
 
 <script>
 import tablist from '../nq-tablist/nq-tablist.vue';
+import msgcount from '../nq-msgcount/nq-msgcount.vue';
+import { mapState, mapMutations } from 'vuex';
 
 export default {
 	props: {
@@ -53,7 +56,8 @@ export default {
 	},
 
 	components: {
-		tablist
+		tablist,
+		msgcount
 	},
 
 	data() {
@@ -87,7 +91,8 @@ export default {
 					icon: '/static/icon/comment_dots_d4d4d4.png',
 					selectIcon: '/static/icon/comment_dots_ffffff.png',
 					name: '动态',
-					url: '/pages/tabPages/messagelist'
+					url: '/pages/tabPages/messagelist',
+					count: uni.getStorageSync('myMsgCount'),
 				},
 				{
 					type: 0,
@@ -99,9 +104,17 @@ export default {
 			]
 		};
 	},
-	created() {
-		console.log(this.degree);
+	computed: {
+		...mapState(['lang'])
 	},
+	
+	watch: {
+		myMsgCount(newVal, oldVal) {
+			console.log(newVal)
+			this.tabBarList[3].count = newVal;
+		}
+	},
+	
 	methods: {
 		onClick(e) {
 			if (e.type == 1) {

@@ -27,6 +27,7 @@ import com.nuoquan.mapper.VoteMapperCustom;
 import com.nuoquan.mapper.VoteOptionMapper;
 import com.nuoquan.mapper.VoteUserMapper;
 import com.nuoquan.pojo.Article;
+import com.nuoquan.pojo.User;
 import com.nuoquan.pojo.UserLikeComment;
 import com.nuoquan.pojo.UserLikeCommentVote;
 import com.nuoquan.pojo.UserVoteComment;
@@ -263,10 +264,14 @@ public class VoteServiceImpl implements VoteService {
 		PageHelper.startPage(page, pageSize);
 		
 		List<UserVoteCommentVO> list = userVoteCommentMapperCustom.queryComments(voteId);
-//		for (UserVoteCommentVO c : list) {
-//			// 查询并设置关于用户的点赞关系
-//			c.setIsLike(isUserLikeComment(userId, c.getId()));
-//		}
+		for (UserVoteCommentVO c : list) {
+			
+			// 查询并设置关于用户的点赞关系
+			c.setIsLike(isUserLikeComment(userId, c.getId()));
+			// 查询并设置toNickName
+			User user= userMapper.selectByPrimaryKey(c.getToUserId());
+			c.setToNickname(user.getNickname());
+		}
 		
 		PageInfo<UserVoteCommentVO> pageList = new PageInfo<>(list);
 		
