@@ -493,7 +493,10 @@ public class VoteServiceImpl implements VoteService {
 		v.setOptionList(voteOptionMapper.getOptions(v.getId()));
 		// 为每个投票添加用户是否投过票的布尔值
 		v.setIsUserVoted(isUserVoted(userId, v.getId()));
-		
+		// 如果该用户投过票, 查询 选择的 选项id
+		if (v.getIsUserVoted()) {
+			v.setSelectedOptId(selectedOptionId(userId, v.getId()));
+		}
 		return v;
 	}
 

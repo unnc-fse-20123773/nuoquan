@@ -837,7 +837,62 @@ export default {
 				duration: 2000,
 				icon: 'none'
 			});
-		}
+		},
+		
+		/**
+		 * 点赞或取消点赞评论
+		 * @param {Object} comment
+		 */
+		swLikeComment(comment, index) {
+			if (comment.isLike) {
+				this.unLikeComment(comment);
+				comment.likeNum--;
+			} else {
+				this.likeComment(comment);
+				comment.likeNum++;
+			}
+			comment.isLike = !comment.isLike;
+			console.log(this.showList[this.currentVoteIndex])
+			this.showList[this.currentVoteIndex].commentList[index].mainComment = comment
+		},
+		
+		likeComment(comment) {
+			console.log('点赞评论');
+			uni.request({
+				method: 'POST',
+				url: this.$serverUrl + '/vote/userLikeVoteComment',
+				data: {
+					userId: this.userInfo.id,
+					commentId: comment.id,
+					createrId: comment.fromUserId
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					console.log(res);
+				}
+			});
+		},
+		
+		unLikeComment(comment) {
+			console.log('取消点赞评论');
+			uni.request({
+				method: 'POST',
+				url: this.$serverUrl + '/vote/userUnLikeVoteComment',
+				data: {
+					userId: this.userInfo.id,
+					commentId: comment.id,
+					createrId: comment.fromUserId
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					console.log(res);
+				}
+			});
+		},
 	}
 };
 </script>

@@ -38,10 +38,6 @@
 			console.log(this.reCommentDetail);
 		},
 		
-		onLoad() {
-			// console.log("哈哈哈哈哈哈");
-		},
-		
 		methods:{
 			controlInputInSonCommentBox(){
 				var dataOfRecomment={

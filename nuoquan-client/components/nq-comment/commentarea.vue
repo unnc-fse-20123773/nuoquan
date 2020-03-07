@@ -32,7 +32,7 @@
 					style="width: 100%;height:100%;"></reComment>
 					<view class="comment-menu">
 						<view class="son-comment-num" @tap="goToCommentDetail(comment.mainComment)">{{ comment.mainComment.commentNum }}</view>
-						<view class="like-num" :class="{ liked: comment.mainComment.isLike }" @tap="swLikeComment(comment.mainComment)">{{ comment.mainComment.likeNum }}</view>
+						<view class="like-num" :class="{ liked: comment.mainComment.isLike }" @tap="swLikeComment(comment.mainComment, index)">{{ comment.mainComment.likeNum }}</view>
 					</view>
 				</view>
 			</block>
@@ -75,9 +75,9 @@ export default {
 		};
 	},
 	methods: {
-		swLikeComment(comment) {
+		swLikeComment(comment, index) {
 			console.log("click like");
-			this.$emit('like', comment);
+			this.$emit('like', comment, index);
 		},
 		onLongpress(){
 			console.log("触发长按操作,复制或者是快速回复")
