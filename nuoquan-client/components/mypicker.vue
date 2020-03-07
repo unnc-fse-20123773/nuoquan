@@ -100,7 +100,7 @@ pickerIndex:  选项编号，用于控制显示哪一个选项
 		border-radius: 15upx;
 	}
 	.boxShadow{
-		box-shadow: 0px 0px 10px 1px #A6A6A6;
+		box-shadow: 0px 0px 6px rgba(0,0,0,0.16);;
 	}
 
 	.editingPicker {
@@ -138,8 +138,11 @@ pickerIndex:  选项编号，用于控制显示哪一个选项
 	.item {
 		text-align: center;
 		width: 100%;
-		height: 18px;
 		font-size: 14px;
 		font-weight: 800;
+		
+		/* 保证文章正常显示 */
+		word-wrap: normal;
+		word-break: break-all;
 	}
 </style>

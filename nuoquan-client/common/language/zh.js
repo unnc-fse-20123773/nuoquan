@@ -21,6 +21,7 @@ module.exports = {
 	day : "天",
 	edit : "修改",
 	ok : "完成",
+	pullUp : "收起",
 	
 	//登陆
 	isReadProtocol : "我已阅读并同意遵守",
@@ -47,11 +48,20 @@ module.exports = {
 	comments : "评论",
 	writeComment : "发表评论",
 	onBottom : "划到底部啦",
-	addBody : "添加正文",
 	addOption : "添加选项",
 	votePrompt1 : "完成投票后才可查看评论哦",
 	votePrompt2 : "最多10个选项，每个选项限制20字",
 	dayEnd : "天后截止",
+	engageComment: "评论点什么吧......",
+	
+	//新建文章&投票
+	addTitle: "添加标题",
+	optionContent: "选项内容",
+	addDescription : "添加描述",
+	
+	//搜索
+	searchHistory: "搜索历史",
+	topSearches: "大家都在搜",
 	
 	//热门
 	hotTitle : "热门榜",
@@ -70,6 +80,11 @@ module.exports = {
 	reputation : "影响力",
 	like : "点赞",
 	comment : "评论",
+	
+	//我的发布
+	passCheck: '审核通过',
+	underCheck: '审核中',
+	failCheck: '审核失败',
 	
 	//关注粉丝列表
 	fanAndFollow : "关注粉丝列表",
@@ -94,5 +109,5 @@ module.exports = {
 	//关于
 	contact : "联系我们",
 	updateLog : "更新公告",
-	
+
 }

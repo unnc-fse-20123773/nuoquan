@@ -29,8 +29,11 @@
 		<!-- 子评论区域 -->
 		<view style="width: 100%;">
 			<!--移到了sonCommentBox组件，考虑评论之间的点赞方程容易混淆，做了组件，就互不影响了-->
-			<sonCommentBox v-for="i in commentList" :key="i.id" :reCommentDetail="i" @controlInputSignal="controlInput"
-			 @swLikeComment="swLikeComment" @goToPersonPublic="goToPersonPublic"></sonCommentBox>
+			<sonCommentBox v-for="i in commentList" :key="i.id" 
+			:reCommentDetail="i" 
+			@controlInputSignal="controlInput"
+			@swLikeComment="swLikeComment" 
+			@goToPersonPublic="goToPersonPublic"></sonCommentBox>
 			<!-- 占位块 -->
 			<view style="width: 100%; height: 40px;"></view>
 		</view>
@@ -54,10 +57,17 @@
 		<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)">
 			<view class="commentPart" :style="{bottom: textAreaAdjust }">
 				<!--<view class="emoji"></view><view class="add-pic"></view>-->
-				<view class="submit" @tap="saveComment()">{{lang.send}}</view>
+				<view class="submit" 
+				@tap="saveVoteComment()">{{lang.send}}
+				</view>
 				<view class="commentSth">
-					<textarea class="comment-text" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
-					 adjust-position="false" v-model="commentContent" :show-confirm-bar="false" @focus="popTextArea" @blur="unpopTextArea"
+					<textarea class="comment-text" 
+					:placeholder="placeholderText" 
+					:focus="writingComment" auto-height="true"
+					 adjust-position="false" 
+					 v-model="commentContent" :show-confirm-bar="false" 
+					 @focus="popTextArea" 
+					 @blur="unpopTextArea"
 					 cursor-spacing='20' />
 					<!-- <view class="comment-pic-area"><image src="../../static/BG/indexBG.png"></image><image src="../../static/icon/about.png"></image><image src="../../static/icon/1575235531(1).png"></image></view> -->
 					 <view class="word-count-left">{{wordNotice}}</view>
@@ -67,7 +77,11 @@
 		
 <!--常驻input--> 
      <view class="permanent_input_BG" v-if="!showInput" @click="controlInput(1)">
-        <input class="permanent_input" :placeholder="placeholderText" v-model="commentContent" disabled="true" min-height="10px" />
+        <input class="permanent_input" 
+		:placeholder="placeholderText" 
+		v-model="commentContent" 
+		disabled="true" 
+		min-height="10px" />
      </view>
 	</view>
 </template>
@@ -102,11 +116,13 @@
 				currentPage: 1,
 				
 				saveCommentFlag:false,
+				
 				isNavHome: getApp().globalData.isNavHome,//判断导航栏左侧是否显示home按钮
 				
 				navbarHeight: 0 //一次性储存 navbarheight
 			}
 		},
+
 		onLoad: function(options) {
 			// 一次性储存 navbar 高度
 			this.navbarHeight = this.getnavbarHeight().bottom + 5;
@@ -120,52 +136,15 @@
 			this.mainComment = JSON.parse(decodeURIComponent(options.data));
 			console.log(this.mainComment);
 			// 获取次评论
-			this.getSubComments(1);
+			// this.getSubComments(1);
+			this.getSubVoteComments(1);
 		},
 		
 		onReachBottom() {
 			this.loadMore();
 		},
+
 		methods: {
-			getSubComments(page) {
-				var that = this;
-				if (this.saveCommentFlag) {
-					console.log("正在上传...")
-					return;
-				}
-				this.saveCommentFlag = true;
-				uni.showLoading({
-					title: "正在提交...",
-					duration:1000,
-				})
-				uni.request({
-					method: "POST",
-					url: that.$serverUrl + '/article/getSubComments',
-					data: {
-						underCommentId: that.mainComment.id,
-						userId: that.userInfo.id,
-						page: page,
-						type: 0,
-					},
-					header: {
-						'content-type': 'application/x-www-form-urlencoded'
-					},
-					success: (res) => {
-						that.saveCommentFlag = false;
-						if (res.data.status == 200) {
-							if (page == 1) {
-								that.commentList = [];
-							}
-							var newCommentList = res.data.data.rows;
-							var oldCommentList = that.commentList;
-							that.commentList = oldCommentList.concat(newCommentList);
-							that.currentPage = page;
-							that.totalPage = res.data.data.total;
-						}
-					}
-				});
-			},
-			
 			loadMore: function() {
 				var that = this;
 				var currentPage = that.currentPage;
@@ -193,7 +172,9 @@
 					this.submitData=a;
 					this.showInput= true;
 					this.writingComment = true ;
-					console.log(this.writingComment);
+					
+					console.log("收到请求");
+					// console.log(this.writingComment);
 				}else if(a==1){ //a==1 当前页面调用，回复主评论
 					this.submitData.toUserId=this.mainComment.fromUserId;
 					this.submitData.fatherCommentId=this.mainComment.id;
@@ -201,10 +182,10 @@
 					
 					this.showInput = true;
 					this.writingComment = true; 
-					console.log('this is control input in detail. a ==' + a);
-					console.log(this.submitData);
+					// console.log('this is control input in detail. a ==' + a);
+					// console.log(this.submitData);
 				}else{ //a==0, 关闭输入框，一切恢复默认状态
-				    console.log('this is control input in detail. a ==0, EXIT');
+				    // console.log('this is control input in detail. a ==0, EXIT');
 					this.submitData = {};
 					this.placeholderText="评论";
 					this.showInput = false;
@@ -224,6 +205,7 @@
 				
 				this.textAreaAdjust = "";
 			},
+
 			
 			/**
 			 * fromUserId 必填
@@ -235,12 +217,13 @@
 			 * PS: 父级（一级，给文章评论）评论 无 fatherCommentId, underCommentId;
 			 *     子级评论有 fatherCommentId, underCommentId;
 			 */
-			saveComment: function() {
-				console.log('tragger savecomment');
+			
+			saveVoteComment: function() {
+				console.log('tragger saveVoteComment');
 				this.submitData.comment=this.commentContent;
 				this.submitData.fromUserId=this.userInfo.id;
-				this.submitData.articleId=this.mainComment.articleId;
-				// console.log(this.submitData);
+				this.submitData.voteId=this.mainComment.voteId;
+				console.log(this.submitData);
 				var that = this;
 				if(this.commentContent==""){
 					uni.showToast({
@@ -250,25 +233,66 @@
 					});
 				}else{
 					uni.request({
-						url: that.$serverUrl + '/article/saveComment',
+						url: that.$serverUrl + '/vote/saveVoteComment',
 						method: 'POST',
 						data: this.submitData,
 						success: (res) => {
+							console.log(res);
 							that.writingComment = false;
 							that.commentContent = "";
 							that.showInput = false;
 							
 							// 强制子组件重新刷新
 							that.commentList = '';
-                            this.getSubComments(1);
-                            that.$nextTick(function() {
-								that.getSubComments(1);
-							});
-							uni.$emit('flashSubComment',this.mainComment.id);
-							uni.$emit('updateArticle',this.mainComment.articleId);
+			                this.getSubVoteComments(1);
+			    //             that.$nextTick(function() {
+							// 	that.getSubVoteComments(1);
+							// });
+							// uni.$emit('flashSubComment',this.mainComment.id);
+							// uni.$emit('updateArticle',this.mainComment.articleId);
 						},
 					})
 				}
+			},
+			
+			getSubVoteComments(page) {
+				var that = this;
+				if (this.saveCommentFlag) {
+					console.log("正在上传...")
+					return;
+				}
+				this.saveCommentFlag = true;
+				uni.showLoading({
+					title: "正在提交...",
+					duration:1000,
+				})
+				uni.request({
+					method: "POST",
+					url: that.$serverUrl + '/vote/getSubComments',
+					data: {
+						underCommentId: that.mainComment.id,
+						userId: that.userInfo.id,
+						page: page,
+						type: 0,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {
+						that.saveCommentFlag = false;
+						if (res.data.status == 200) {
+							if (page == 1) {
+								that.commentList = [];
+							}
+							var newCommentList = res.data.data.rows;
+							var oldCommentList = that.commentList;
+							that.commentList = oldCommentList.concat(newCommentList);
+							that.currentPage = page;
+							that.totalPage = res.data.data.total;
+			
+						}
+					}
+				});
 			},
 			
 			swLikeComment(comment) {
@@ -352,9 +376,11 @@
 	width: calc(100% - 30px);
 	margin-top:15px;
 }
+
 .son-comment-num{
 	background:linear-gradient(313deg,rgba(255,184,32,0.84) 0%,rgba(240,240,122,1) 100%);
 }
+
 /* 滑到底了等提示
  */.comment-bottom{
 		height:160px;
@@ -400,6 +426,7 @@
 		height: 16px;
 		background: #FCC041;
 		border-radius: 2px;
+
 	}
 	.active-input-button{
 		color:#FFFFFF;
@@ -418,6 +445,14 @@
 	}
 	/* 滑到底了等提示
 	 */
+
+
+
+
+
+
+
+
 	/* 以下五条为底部输入框样式 */
 	.bottoLayerOfInput{
 		position: absolute;
@@ -439,6 +474,7 @@
 		min-height: 50px;
 		background: white;
 	}
+
 	.emoji{
 		background-repeat: no-repeat;
 		background-position: center;
@@ -484,6 +520,7 @@
 		line-height: 20px;
 		padding:12px 12px 0px;
 		position: relative;
+
 	}
 	.comment-text{
 		width: calc(670upx - 60px);	
@@ -502,7 +539,9 @@
 		width:35px;
 		height:35px;
 		margin-right: 18px;
+
 	}
+
 	.word-count-left{
 	position: absolute;
 		width:15px;
@@ -539,4 +578,5 @@
 	    font-size: 12px;
 		line-height: 30px;
 	}
+
 </style>

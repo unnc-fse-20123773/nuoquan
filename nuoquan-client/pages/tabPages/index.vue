@@ -78,6 +78,7 @@ export default {
 	},
 
 	onLoad() {
+		console.log('this.getnavbarHeight()=' + this.getnavbarHeight());
 		var userInfo = this.getGlobalUserInfo();
 		if (this.isNull(userInfo)) {
 			uni.redirectTo({

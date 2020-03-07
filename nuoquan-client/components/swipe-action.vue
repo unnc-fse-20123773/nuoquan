@@ -3,7 +3,7 @@
 		<block v-for="(it, i) in messagesList" :key="i">
 			<view class="uni-swipe-action">
 				<view class="delete-button super_center" v-if="showdelete == 1 && messageIndex == i" @tap="tapDelete(it)">
-					<text style="color: white;text-align: center;font-size: small;">删除</text>
+					<text style="color: white;text-align: center;font-size: small;">{{lang.delete}}</text>
 				</view>
 				<view
 					class="uni-swipe-action__container"
@@ -56,7 +56,8 @@ import msgcount from './nq-msgcount/nq-msgcount.vue';
 export default {
 	name: 'swipe-action',
 	props: {
-		messagesList: ''
+		messagesList: '',
+		lang: '',
 	},
 	components:{
 		msgcount

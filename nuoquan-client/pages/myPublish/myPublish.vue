@@ -22,11 +22,13 @@
 				<view style="width:100%;height:100%;margin:auto;background: #FFFFFF;">
 					<view class="mainbody">
 						<view style="height:20px;width:100%;"></view>
-						<myArticles v-bind:myArticleList="myArticleList"></myArticles>
+						<myArticles :lang="lang" v-bind:myArticleList="myArticleList"></myArticles>
 					</view>
 				</view>
 			</swiper-item>
-			<swiper-item item-id="vote" @touchmove.stop><myVote v-for="vote in myVoteList" :key="vote.id" :vote="vote"></myVote></swiper-item>
+			<swiper-item item-id="vote" @touchmove.stop>
+				<myVote :lang="lang" v-for="vote in myVoteList" :key="vote.id" :vote="vote"></myVote>
+			</swiper-item>
 		</swiper>
 	</view>
 </template>
