@@ -389,9 +389,9 @@ export default {
 			});
 		},
 
-		goToPersonPublic() {
+		goToPersonPublic(userId) {
 			uni.navigateTo({
-				url: '/pages/personpublic/personpublic?userId=' + this.mainComment.fromUserId
+				url: '/pages/personpublic/personpublic?userId=' + userId
 			});
 		},
 		backToLastPage() {
