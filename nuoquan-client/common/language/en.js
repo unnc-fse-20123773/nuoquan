@@ -53,6 +53,9 @@ module.exports = {
 	votePrompt2 : "Up to 10 options, each limited to 20 words.",
 	dayEnd : "days finish",
 	
+	//评论
+	commentPrompt1 : "Say something...",
+	
 	//热门
 	hotTitle : "Top 10",
 	nextRefresh : "Next Update",

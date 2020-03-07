@@ -5,7 +5,6 @@ import java.util.List;
 
 
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Test;
 import org.n3r.idworker.Sid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +24,7 @@ import com.nuoquan.mapper.VoteMapper;
 import com.nuoquan.mapper.VoteMapperCustom;
 import com.nuoquan.mapper.VoteOptionMapper;
 import com.nuoquan.mapper.VoteUserMapper;
+import com.nuoquan.pojo.User;
 import com.nuoquan.pojo.UserLikeComment;
 import com.nuoquan.pojo.UserLikeCommentVote;
 import com.nuoquan.pojo.UserVoteComment;
@@ -259,10 +259,14 @@ public class VoteServiceImpl implements VoteService {
 		PageHelper.startPage(page, pageSize);
 		
 		List<UserVoteCommentVO> list = userVoteCommentMapperCustom.queryComments(voteId);
-//		for (UserVoteCommentVO c : list) {
-//			// 查询并设置关于用户的点赞关系
-//			c.setIsLike(isUserLikeComment(userId, c.getId()));
-//		}
+		for (UserVoteCommentVO c : list) {
+			
+			// 查询并设置关于用户的点赞关系
+			c.setIsLike(isUserLikeComment(userId, c.getId()));
+			// 查询并设置toNickName
+			User user= userMapper.selectByPrimaryKey(c.getToUserId());
+			c.setToNickname(user.getNickname());
+		}
 		
 		PageInfo<UserVoteCommentVO> pageList = new PageInfo<>(list);
 		
@@ -283,7 +287,7 @@ public class VoteServiceImpl implements VoteService {
 		
 		for (UserVoteCommentVO c : list) {
 			// 查询并设置关于用户的点赞关系
-//			c.setIsLike(isUserLikeComment(userId, c.getId()));
+			c.setIsLike(isUserLikeComment(userId, c.getId()));
 			// 设置回复人昵称
 			c.setToNickname(userService.queryUserById(c.getToUserId()).getNickname());
 		}
@@ -459,35 +463,20 @@ public class VoteServiceImpl implements VoteService {
 			voteOptionMapper.updatePercent(vu.getId(), percent);
 		}
 	}
-	
-	@Test
-	public void test() {
-		System.out.println((double)3/3);
-	}
-	
+
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
-	public PagedResult getSingleVote(Integer page, Integer pageSize, String userId, String voteId) {
-
-		PageHelper.startPage(page, pageSize);
+	public VoteVO getSingleVote(String userId, String voteId) {
 		
-		List<VoteVO> list = voteMapperCustom.getSpecifiedVote(voteId);
-		for(VoteVO v : list) {
-			// 为每个投票添加图片列表
-			v.setImgList(voteImageMapper.getVoteImgs(v.getId()));
-			// 为每个投票添加选项列表
-			v.setOptionList(voteOptionMapper.getOptions(v.getId()));
-		}
+		VoteVO v = voteMapperCustom.getSpecifiedVote(voteId);
+		// 为每个投票添加图片列表
+		v.setImgList(voteImageMapper.getVoteImgs(v.getId()));
+		// 为每个投票添加选项列表
+		v.setOptionList(voteOptionMapper.getOptions(v.getId()));
+		// 为每个投票添加用户是否投过票的布尔值
+		v.setIsUserVoted(isUserVoted(userId, v.getId()));
 		
-		PageInfo<VoteVO> pageList = new PageInfo<>(list);
-		
-		PagedResult pagedResult = new PagedResult();
-		pagedResult.setPage(page);
-		pagedResult.setTotal(pageList.getPages());
-		pagedResult.setRows(list);
-		pagedResult.setRecords(pageList.getTotal());
-		
-		return pagedResult;
+		return v;
 	}
 
 	@Transactional(propagation = Propagation.SUPPORTS)

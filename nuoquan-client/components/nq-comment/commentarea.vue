@@ -1,9 +1,9 @@
 <template>
 	<!--评论区域-->
-	<view class="comments-area" :style="{ opacity: mainCommentList.length != undefined ? 1 : 0 }">
+	<view class="comments-area" :style="{ opacity: commentList.length != undefined ? 1 : 0 }">
 		<!--评论数，排序方式-->
 		<view class="comments-menu">
-			<view class="comments-num">{{ articleCardCommentNum }}条评论</view>
+			<view class="comments-num">{{ commentNum }}条评论</view>
 			<nqSwitch style="margin-top: 3px;" :options="[lang.time, lang.hot]" @onChange="change_comment_order"></nqSwitch>
 			<!-- <view class="comments-order">
                    <view class="order-in-time" :class="{ chosen : order == 0}" @tap="change_comment_order(0)">
@@ -18,19 +18,22 @@
 
 		<!--循环评论卡片-->
 		<view class="comments">
-			<block v-for="mainComment in mainCommentList" :key="mainComment.id">
+			<block v-for="(comment, index) in commentList" :key="index">
 				<view class="comment">
 					<view class="comment-info">
-						<image :src="pathFilter(mainComment.faceImg)" @tap="goToPersonPublic(mainComment.fromUserId)"></image>
-						<view class="name_text">{{ mainComment.nickname }}</view>
-						<view class="time_text">{{ timeDeal(mainComment.createDate) }}</view>
+						<image :src="pathFilter(comment.mainComment.faceImg)" @tap="goToPersonPublic(comment.mainComment.fromUserId)"></image>
+						<view class="name_text">{{ comment.mainComment.nickname }}</view>
+						<view class="time_text">{{ timeDeal(comment.mainComment.createDate) }}</view>
 					</view>
-					<view class="comment-content" @tap="goToCommentDetail(mainComment)">{{ mainComment.comment }}</view>
-					<reComment :mainCommentid="mainComment.id" :mainComment="mainComment" style="width: 100%;height:100%;"></reComment>
+					<view class="comment-content" @longpress="onLongpress" @tap="goToCommentDetail(comment.mainComment)">{{ comment.mainComment.comment }}</view>
 					<view class="comment-menu">
-						<view class="son-comment-num" @tap="goToCommentDetail(mainComment)">{{ mainComment.commentNum }}</view>
-						<view class="like-num" :class="{ liked: mainComment.isLike }" @tap="swLikeMainComment(mainComment)">{{ mainComment.likeNum }}</view>
+						<view class="son-comment-num" @tap="goToCommentDetail(comment.mainComment)">{{ comment.mainComment.commentNum }}</view>
+						<view class="like-num" :class="{ liked: comment.mainComment.isLike }" @tap="swLikeComment(comment.mainComment)">{{ comment.mainComment.likeNum }}</view>
 					</view>
+					<reComment 
+					:subComment="comment.subComment" 
+					@goToCommentDetail="goToCommentDetail(comment.mainComment)"
+					style="width: 100%;height:100%;"></reComment>
 				</view>
 			</block>
 		</view>
@@ -39,16 +42,22 @@
 
 <script>
 import nqSwitch from '@/components/nq-switch.vue';
-import reComment from '@/components/reComment.vue';
+import reComment from './reComment.vue';
 import { mapState, mapMutations } from 'vuex';
 
 export default {
 	props: {
-		commentList: {
-			type: Object
-		},
-		userInfo: '',
-		articleCardCommentNum: ''
+		/** commentList数据结构
+		 * commentList:{
+		 * 		mainComment:
+		 * 		subComment:{
+		 * 			subCommentList,
+		 * 			subCommentNum
+		 * 		}
+		 * }
+		 */
+		commentList: '', 
+		commentNum: ''
 	},
 	components: {
 		nqSwitch,
@@ -59,75 +68,23 @@ export default {
 	},
 	data() {
 		return {
-			mainCommentList: this.commentList,
+			// commentList: this.commentList,
 			order: 0, //评论排序方式 0：按时间查询, 1：按热度查询
 		};
 	},
-	watch: {
-		commentList: function(val) {
-			//监听props中的属性
-			this.mainCommentList = this.commentList;
-			console.log('watch data changes,');
-			console.log(this.mainCommentList);
-			console.log(this.commentList);
-		}
-	},
 	methods: {
-		swLikeMainComment(comment) {
-			if (comment.isLike) {
-				this.unLikeComment(comment);
-				comment.likeNum--;
-			} else {
-				this.likeComment(comment);
-				comment.likeNum++;
-			}
-			comment.isLike = !comment.isLike;
-			// console.log(this.mainComment.isLike);
+		swLikeComment(comment) {
+			console.log("click like");
+			this.$emit('like', comment);
 		},
-
-		likeComment(comment) {
-			console.log('点赞评论');
-			var that = this;
-			uni.request({
-				method: 'POST',
-				url: that.$serverUrl + '/article/userLikeComment',
-				data: {
-					userId: that.userInfo.id,
-					commentId: comment.id,
-					createrId: comment.fromUserId
-				},
-				header: {
-					'content-type': 'application/x-www-form-urlencoded'
-				},
-				success: res => {
-					console.log(res);
-				}
-			});
-		},
-
-		unLikeComment(comment) {
-			console.log('取消点赞评论');
-			var that = this;
-			uni.request({
-				method: 'POST',
-				url: that.$serverUrl + '/article/userUnLikeComment',
-				data: {
-					userId: that.userInfo.id,
-					commentId: comment.id,
-					createrId: comment.fromUserId
-				},
-				header: {
-					'content-type': 'application/x-www-form-urlencoded'
-				},
-				success: res => {
-					console.log(res);
-				}
-			});
+		onLongpress(){
+			console.log("触发长按操作,复制或者是快速回复")
 		},
 		goToCommentDetail(mainComment) {
-			uni.navigateTo({
-				url: '/pages/comment-detail/comment-detail?data=' + JSON.stringify(mainComment)
-			});
+			this.$emit("goToCommentDetail", mainComment);
+			// uni.navigateTo({
+			// 	url: '/pages/comment-detail/comment-detail?data=' + JSON.stringify(mainComment)
+			// });
 		},
 		change_comment_order(e) {
 			this.$emit('onChange', {

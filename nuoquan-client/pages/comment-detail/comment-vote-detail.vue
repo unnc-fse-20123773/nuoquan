@@ -1,3 +1,4 @@
+<!-- @Deprecated -->
 <template>
 	<view class="comment-detail-page">
 		<!-- 导航栏 -->
@@ -18,7 +19,7 @@
 			<view class="comment-info">
 				<image :src="pathFilter(mainComment.faceImg)" @tap="goToPersonPublic(mainComment.fromUserId)"></image>
 				<view class="name_text">{{ mainComment.nickname }}</view>
-				<view class="time_text">{{ timeDeal(mainComment.createDate) }}</view>
+				<view class="time_text">{{ mainComment.timeAgo }}</view>
 			</view>
 			<view class="comment-content" @tap="controlInput(mainComment)">{{ mainComment.comment }}</view>
 			<view class="comment-menu">
@@ -56,7 +57,7 @@
 		<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)">
 			<view class="commentPart" :style="{ bottom: textAreaAdjust }">
 				<!--<view class="emoji"></view><view class="add-pic"></view>-->
-				<view class="submit" @tap="saveComment()">{{ lang.send }}</view>
+				<view class="submit" @tap="saveVoteComment()">{{ lang.send }}</view>
 				<view class="commentSth">
 					<textarea
 						class="comment-text"
@@ -99,7 +100,6 @@ export default {
 	data() {
 		return {
 			mainComment: '', //用于接受跳转传过来的underCommentId,然后申请获取sonComment  yaoyao 9.16
-			type: '', //文章 or 投票
 			userInfo: '',
 			commentContent: '', //用户准备提交的评论内容
 			commentList: '', //返回值，获取评论列表信息,循环展示的东西，sonComment
@@ -114,18 +114,13 @@ export default {
 			currentPage: 1,
 
 			saveCommentFlag: false,
+
 			isNavHome: getApp().globalData.isNavHome, //判断导航栏左侧是否显示home按钮
 
 			navbarHeight: 0 //一次性储存 navbarheight
 		};
 	},
-	/**
-	 * data:{
-	 * 		mainCommentId:
-	 * 		type: article / vote
-	 * }
-	 * @param {Object} options
-	 */
+
 	onLoad: function(options) {
 		// 一次性储存 navbar 高度
 		this.navbarHeight = this.getnavbarHeight().bottom + 5;
@@ -136,98 +131,35 @@ export default {
 		var userInfo = this.getGlobalUserInfo();
 		this.userInfo = userInfo;
 		// 接收传过来的主角评论ID
-		var data = JSON.parse(decodeURIComponent(options.data));
-		this.mainComment = data.mainComment;
-		this.type = data.type;
+		this.mainComment = JSON.parse(decodeURIComponent(options.data));
+		console.log(this.mainComment);
 		// 获取次评论
-		this.getSubComments(1);
+		// this.getSubComments(1);
+		this.getSubVoteComments(1);
 	},
 
 	onReachBottom() {
 		this.loadMore();
 	},
+
 	methods: {
-		getSubComments(page){
-			var type = this.type;
-			//判断是文章评论还是投票评论
-			if(type == 'article'){
-				console.log("这是文章评论");
-				this.getArticleSubComments(page);
-			}else if(type == 'vote'){
-				console.log("这是投票评论");
-				this.getVoteSubComments(page);
-			}
-		},
-		
-		getArticleSubComments(page) {
-			uni.request({
-				method: 'POST',
-				url: this.$serverUrl + '/article/getSubComments',
-				data: {
-					underCommentId: this.mainComment.id,
-					userId: this.userInfo.id,
-					page: page,
-					type: 0
-				},
-				header: {
-					'content-type': 'application/x-www-form-urlencoded'
-				},
-				success: res => {
-					if (res.data.status == 200) {
-						if (page == 1) {
-							this.commentList = [];
-						}
-						var newCommentList = res.data.data.rows;
-						var oldCommentList = this.commentList;
-						this.commentList = oldCommentList.concat(newCommentList);
-						this.currentPage = page;
-						this.totalPage = res.data.data.total;
-					}
-				}
-			});
-		},
-
-		getVoteSubComments(page) {
-			uni.request({
-				method: "POST",
-				url: this.$serverUrl + '/vote/getSubComments',
-				data: {
-					underCommentId: this.mainComment.id,
-					userId: this.userInfo.id,
-					page: page,
-					type: 0,
-				},
-				header: {
-					'content-type': 'application/x-www-form-urlencoded'
-				},
-				success: (res) => {
-					// console.log(res);
-					if (res.data.status == 200) {
-						if (page == 1) {
-							this.commentList = [];
-						}
-						var newCommentList = res.data.data.rows;
-						var oldCommentList = this.commentList;
-						this.commentList = oldCommentList.concat(newCommentList);
-						this.currentPage = page;
-						this.totalPage = res.data.data.total;
-					}
-				}
-			});
-		},
-
 		loadMore: function() {
+			var that = this;
+			var currentPage = that.currentPage;
+			console.log(currentPage);
+			var totalPage = that.totalPage;
+			console.log(totalPage);
 			// 判断当前页数和总页数是否相等
-			if (this.currentPage == this.totalPage) {
-				// this.showArticles(1);
+			if (currentPage == totalPage) {
+				// that.showArticles(1);
 				uni.showToast({
 					title: '没有更多评论了',
 					icon: 'none',
 					duration: 1000
 				});
 			} else {
-				var page = this.currentPage + 1;
-				this.getSubComments(page);
+				var page = currentPage + 1;
+				that.getSubComments(page);
 			}
 		},
 
@@ -235,11 +167,13 @@ export default {
 			if (a != 0 && a != 1) {
 				//a!=0, !=1， 从子组件传来，包含被回复对象：被回复人ID，被回复评论ID，被回复人昵称
 				this.placeholderText = '回复 @' + a.nickname + ' 的评论';
-				// delete a.nickname;
+				delete a.nickname;
 				this.submitData = a;
 				this.showInput = true;
 				this.writingComment = true;
-				console.log(this.writingComment);
+
+				console.log('收到请求');
+				// console.log(this.writingComment);
 			} else if (a == 1) {
 				//a==1 当前页面调用，回复主评论
 				this.submitData.toUserId = this.mainComment.fromUserId;
@@ -248,11 +182,11 @@ export default {
 
 				this.showInput = true;
 				this.writingComment = true;
-				console.log('this is control input in detail. a ==' + a);
-				console.log(this.submitData);
+				// console.log('this is control input in detail. a ==' + a);
+				// console.log(this.submitData);
 			} else {
 				//a==0, 关闭输入框，一切恢复默认状态
-				console.log('this is control input in detail. a ==0, EXIT');
+				// console.log('this is control input in detail. a ==0, EXIT');
 				this.submitData = {};
 				this.placeholderText = '评论';
 				this.showInput = false;
@@ -283,7 +217,46 @@ export default {
 		 * PS: 父级（一级，给文章评论）评论 无 fatherCommentId, underCommentId;
 		 *     子级评论有 fatherCommentId, underCommentId;
 		 */
-		saveComment: function() {
+
+		saveVoteComment: function() {
+			console.log('tragger saveVoteComment');
+			this.submitData.comment = this.commentContent;
+			this.submitData.fromUserId = this.userInfo.id;
+			this.submitData.voteId = this.mainComment.voteId;
+			console.log(this.submitData);
+			var that = this;
+			if (this.commentContent == '') {
+				uni.showToast({
+					title: '好像忘写评论了哦~',
+					duration: 1000,
+					icon: 'none'
+				});
+			} else {
+				uni.request({
+					url: that.$serverUrl + '/vote/saveVoteComment',
+					method: 'POST',
+					data: this.submitData,
+					success: res => {
+						console.log(res);
+						that.writingComment = false;
+						that.commentContent = '';
+						that.showInput = false;
+
+						// 强制子组件重新刷新
+						that.commentList = '';
+						this.getSubVoteComments(1);
+						//             that.$nextTick(function() {
+						// 	that.getSubVoteComments(1);
+						// });
+						// uni.$emit('flashSubComment',this.mainComment.id);
+						// uni.$emit('updateArticle',this.mainComment.articleId);
+					}
+				});
+			}
+		},
+
+		getSubVoteComments(page) {
+			var that = this;
 			if (this.saveCommentFlag) {
 				console.log('正在上传...');
 				return;
@@ -293,46 +266,32 @@ export default {
 				title: '正在提交...',
 				duration: 1000
 			});
-			console.log('tragger savecomment');
-			if (this.commentContent == '') {
-				uni.showToast({
-					title: '好像忘写评论了哦~',
-					duration: 1000,
-					icon: 'none'
-				});
-			} else {
-				var url = "";
-				// var submitData;
-				if(this.type == 'article'){
-					url = "/article/saveComment"
-					this.submitData.comment = this.commentContent;
-					this.submitData.fromUserId = this.userInfo.id;
-					this.submitData.articleId = this.mainComment.articleId;
-				}else if(this.type == 'vote'){
-					url = "/vote/saveVoteComment"
-					this.submitData.comment = this.commentContent;
-					this.submitData.fromUserId = this.userInfo.id;
-					this.submitData.voteId = this.mainComment.voteId;
-				}
-				uni.request({
-					url: this.$serverUrl + url,
-					method: 'POST',
-					data: this.submitData,
-					success: res => {
-						this.writingComment = false;
-						this.commentContent = '';
-						this.showInput = false;
-
-						// 强制子组件重新刷新
-						this.commentList = '';
-						this.$nextTick(function() {
-							this.getSubComments(1);
-						});
-						uni.$emit('flashSubComment', this.mainComment.id);
-						// uni.$emit('updateArticle', this.mainComment.articleId);
+			uni.request({
+				method: 'POST',
+				url: that.$serverUrl + '/vote/getSubComments',
+				data: {
+					underCommentId: that.mainComment.id,
+					userId: that.userInfo.id,
+					page: page,
+					type: 0
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					that.saveCommentFlag = false;
+					if (res.data.status == 200) {
+						if (page == 1) {
+							that.commentList = [];
+						}
+						var newCommentList = res.data.data.rows;
+						var oldCommentList = that.commentList;
+						that.commentList = oldCommentList.concat(newCommentList);
+						that.currentPage = page;
+						that.totalPage = res.data.data.total;
 					}
-				});
-			}
+				}
+			});
 		},
 
 		swLikeComment(comment) {
@@ -348,17 +307,12 @@ export default {
 
 		likeComment(comment) {
 			console.log('点赞评论');
-			var url = "";
-			if(this.type == 'article'){
-				url = "/article/userLikeComment"
-			}else if(this.type == 'vote'){
-				url = "/vote/userLikeVoteComment"
-			}
+			var that = this;
 			uni.request({
 				method: 'POST',
-				url: this.$serverUrl + url,
+				url: that.$serverUrl + '/article/userLikeComment',
 				data: {
-					userId: this.userInfo.id,
+					userId: that.userInfo.id,
 					commentId: comment.id,
 					createrId: comment.fromUserId
 				},
@@ -373,17 +327,12 @@ export default {
 
 		unLikeComment(comment) {
 			console.log('取消点赞评论');
-			var url = "";
-			if(this.type == 'article'){
-				url = "/article/userUnLikeComment"
-			}else if(this.type == 'vote'){
-				url = "/vote/userUnLikeVoteComment"
-			}
+			var that = this;
 			uni.request({
 				method: 'POST',
-				url: this.$serverUrl + url,
+				url: that.$serverUrl + '/article/userUnLikeComment',
 				data: {
-					userId: this.userInfo.id,
+					userId: that.userInfo.id,
 					commentId: comment.id,
 					createrId: comment.fromUserId
 				},
@@ -425,9 +374,11 @@ page {
 	width: calc(100% - 30px);
 	margin-top: 15px;
 }
+
 .son-comment-num {
 	background: linear-gradient(313deg, rgba(255, 184, 32, 0.84) 0%, rgba(240, 240, 122, 1) 100%);
 }
+
 /* 滑到底了等提示
  */
 .comment-bottom {
@@ -491,6 +442,7 @@ page {
 }
 /* 滑到底了等提示
 	 */
+
 /* 以下五条为底部输入框样式 */
 .bottoLayerOfInput {
 	position: absolute;
@@ -512,6 +464,7 @@ page {
 	min-height: 50px;
 	background: white;
 }
+
 .emoji {
 	background-repeat: no-repeat;
 	background-position: center;
@@ -575,6 +528,7 @@ page {
 	height: 35px;
 	margin-right: 18px;
 }
+
 .word-count-left {
 	position: absolute;
 	width: 15px;

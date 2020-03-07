@@ -53,6 +53,9 @@ module.exports = {
 	votePrompt2 : "最多10个选项，每个选项限制20字",
 	dayEnd : "天后截止",
 	
+	//评论
+	commentPrompt1 : "评论点什么...",
+	
 	//热门
 	hotTitle : "热门榜",
 	nextRefresh : "下次更新",
