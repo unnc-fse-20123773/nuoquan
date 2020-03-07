@@ -1,15 +1,8 @@
 <template>
 	<view class="comment-detail-page">
 		<!-- 导航栏 -->
-		<uni-nav-bar
-			class="navigationBar"
-			:style="{ height: this.getnavbarHeight() + 'px' }"
-			:showLeftIcon="true"
-			:isNavHome="isNavHome"
-			:left-text="lang.back"
-			:title="lang.commentDetail"
-			:height="navbarHeight"
-		></uni-nav-bar>
+		<uni-nav-bar class="navigationBar" :style="{ height: this.getnavbarHeight() + 'px' }" :showLeftIcon="true" :isNavHome="isNavHome"
+		 :left-text="lang.back" :title="lang.commentDetail" :height="navbarHeight"></uni-nav-bar>
 		<view :style="{ height: navbarHeight + 'px' }"></view>
 
 		<!-- 主评论区域 -->
@@ -30,14 +23,8 @@
 		<!-- 子评论区域 -->
 		<view style="width: 100%;">
 			<!--移到了sonCommentBox组件，考虑评论之间的点赞方程容易混淆，做了组件，就互不影响了-->
-			<sonCommentBox
-				v-for="i in commentList"
-				:key="i.id"
-				:reCommentDetail="i"
-				@controlInputSignal="controlInput"
-				@swLikeComment="swLikeComment"
-				@goToPersonPublic="goToPersonPublic"
-			></sonCommentBox>
+			<sonCommentBox v-for="i in commentList" :key="i.id" :reCommentDetail="i" @controlInputSignal="controlInput"
+			 @swLikeComment="swLikeComment" @goToPersonPublic="goToPersonPublic"></sonCommentBox>
 			<!-- 占位块 -->
 			<view style="width: 100%; height: 40px;"></view>
 		</view>
@@ -58,18 +45,9 @@
 				<!--<view class="emoji"></view><view class="add-pic"></view>-->
 				<view class="submit" @tap="saveComment()">{{ lang.send }}</view>
 				<view class="commentSth">
-					<textarea
-						class="comment-text"
-						:placeholder="placeholderText"
-						:focus="writingComment"
-						auto-height="true"
-						adjust-position="false"
-						v-model="commentContent"
-						:show-confirm-bar="false"
-						@focus="popTextArea"
-						@blur="unpopTextArea"
-						cursor-spacing="20"
-					/>
+					<textarea class="comment-text" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
+					 adjust-position="false" v-model="commentContent" :show-confirm-bar="false" @focus="popTextArea" @blur="unpopTextArea"
+					 cursor-spacing="20" />
 					<!-- <view class="comment-pic-area"><image src="../../static/BG/indexBG.png"></image><image src="../../static/icon/about.png"></image><image src="../../static/icon/1575235531(1).png"></image></view> -->
 					<view class="word-count-left">{{ wordNotice }}</view>
 				</view>
@@ -95,6 +73,10 @@ export default {
 	},
 	computed: {
 		...mapState(['lang'])
+	},
+	onUnload() {
+		console.log('emit update comment');
+		uni.$emit('updateMainComment', this.mainComment);	
 	},
 	data() {
 		return {
