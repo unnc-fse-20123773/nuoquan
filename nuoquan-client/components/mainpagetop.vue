@@ -63,14 +63,41 @@
 			</view>
 			<tagSelectBox
 				:style="{position: 'fixed', 'z-index': '40' , 'margin-top': 6 + 'px' , left: 3.47 + '%' , width: 93.07 + '%' , top: height + 41 + 'px' }"
+				:lang = "lang"
 				:tagList="tagList" 
 				@selected="getSelectedTag" 
 				v-if="showTagBox">
 			</tagSelectBox>
 			<!-- 排序方式1-->
-			<nqSwitch :options='[lang.all, lang.follow]' :initStatus='iniStatus1' @onChange="change_article_order1"></nqSwitch>
+			<nqSwitch v-if="lang.langType == 'zh-CN'" 
+				:bgSwitchLeft = "'-13px'"
+				:bgSwitchRight = "'41px'"
+				:options='[lang.all, lang.follow]' 
+				:initStatus='iniStatus1' 
+				@onChange="change_article_order1">
+			</nqSwitch>
+			<nqSwitch v-else 
+				:bgSwitchLeft = "'-13px'"
+				:bgSwitchRight = "'47px'"
+				:options='[lang.all, lang.follow]' 
+				:initStatus='iniStatus1' 
+				@onChange="change_article_order1">
+			</nqSwitch>
 			<!-- 排序方式2 -->
-			<nqSwitch :options='[lang.time, lang.hot]' :initStatus='iniStatus2' @onChange="change_article_order2"></nqSwitch>
+			<nqSwitch v-if="lang.langType == 'zh-CN'" 
+				:bgSwitchLeft = "'-13px'"
+				:bgSwitchRight = "'41px'"
+				:options='[lang.time, lang.hot]' 
+				:initStatus='iniStatus2' 
+				@onChange="change_article_order2">
+			</nqSwitch>
+			<nqSwitch v-else
+				:bgSwitchLeft = "'-11px'"
+				:bgSwitchRight = "'41px'"
+				:options='[lang.time, lang.hot]' 
+				:initStatus='iniStatus2' 
+				@onChange="change_article_order2">
+			</nqSwitch>
 		</view>
 		<!-- Add background for option bar-->
 		<view v-if="roleup == false" class="optionLinebg_mpt" :style="{top: height + 4 + 'px'}">

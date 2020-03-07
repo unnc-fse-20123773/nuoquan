@@ -13,7 +13,7 @@
 		<view :style="{height: navbarHeight + 'px'}"></view>
 		<!-- 当失去焦点时，将输入内容存入articleTitle -->
 		<view style="position: relative;margin-top: 20px;">
-			<input class="title" v-model="articleTitle" placeholder="标题" maxlength="20" placeholder-class="title-placeholder" />
+			<input class="title" v-model="articleTitle" :placeholder="lang.addTitle" maxlength="20" placeholder-class="title-placeholder" />
 			<view class="titleTextLeft">{{ 20 - articleTitle.length }}</view>
 		</view>
 
@@ -39,7 +39,7 @@
 		</view>
 
 		<!-- 标签选择块 -->
-		<tagSelectBox style="margin-top: 13px;" :tagList="tagList" @selected="getselectedTag" v-if="editingTag"></tagSelectBox>
+		<tagSelectBox :lang="lang" style="margin-top: 13px;" :tagList="tagList" @selected="getselectedTag" v-if="editingTag"></tagSelectBox>
 
 		<view style="position: relative;">
 			<textarea class="content" v-model="articleContent" maxlength="140" :auto-height="true" :show-confirm-bar="false"></textarea>
@@ -391,12 +391,20 @@ export default {
 		getselectedTag(tag) {
 			var a = this.selectedTags.indexOf(tag);
 			if (a == -1) {
-				this.selectedTags.push(tag);
+				if(this.selectedTags.length<3){
+					this.selectedTags.push(tag);
+				}else{
+					uni.showToast({
+						duration: 300,
+						title:'最多添加三个标签~',
+						icon:'none',
+					})
+				}
 			} else {
 				uni.showToast({
 					icon: 'none',
 					title: '已经添加～',
-					duration: 200
+					duration: 200,
 				});
 			}
 		},
@@ -444,7 +452,6 @@ page {
 	font-weight: 400;
 	line-height: 16px;
 	color: rgba(199, 199, 199, 1);
-	letter-spacing: 17px;
 }
 
 .titleTextLeft {

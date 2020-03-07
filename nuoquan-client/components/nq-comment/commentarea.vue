@@ -4,7 +4,20 @@
 		<!--评论数，排序方式-->
 		<view class="comments-menu">
 			<view class="comments-num">{{ commentNum }}条评论</view>
-			<nqSwitch style="margin-top: 3px;" :options="[lang.time, lang.hot]" @onChange="change_comment_order"></nqSwitch>
+			<nqSwitch v-if="lang.langType == 'zh-CN'"
+				style="margin-top: 3px;" 
+				:bgSwitchLeft = "'-13px'"
+				:bgSwitchRight = "'41px'" 
+				:options="[lang.time, lang.hot]" 
+				@onChange="change_comment_order">
+			</nqSwitch>
+			<nqSwitch v-else
+				style="margin-top: 3px;" 
+				:bgSwitchLeft = "'-11px'"
+				:bgSwitchRight = "'41px'" 
+				:options="[lang.time, lang.hot]" 
+				@onChange="change_comment_order">
+			</nqSwitch>
 			<!-- <view class="comments-order">
                    <view class="order-in-time" :class="{ chosen : order == 0}" @tap="change_comment_order(0)">
 					   时间
@@ -26,13 +39,10 @@
 						<view class="time_text">{{ timeDeal(comment.mainComment.createDate) }}</view>
 					</view>
 					<view class="comment-content" @longpress="onLongpress" @tap="goToCommentDetail(comment.mainComment)">{{ comment.mainComment.comment }}</view>
-					<reComment 
-					:subComment="comment.subComment" 
-					@goToCommentDetail="goToCommentDetail(comment.mainComment)"
-					style="width: 100%;height:100%;"></reComment>
+					<reComment :subComment="comment.subComment" @goToCommentDetail="goToCommentDetail(comment.mainComment)" style="width: 100%;height:100%;"></reComment>
 					<view class="comment-menu">
 						<view class="son-comment-num" @tap="goToCommentDetail(comment.mainComment)">{{ comment.mainComment.commentNum }}</view>
-						<view class="like-num" :class="{ liked: comment.mainComment.isLike }" @tap="swLikeComment(comment.mainComment, index)">{{ comment.mainComment.likeNum }}</view>
+						<view class="like-num" :class="{ liked: comment.mainComment.isLike }" @tap="swLikeComment(comment, index)">{{ comment.mainComment.likeNum }}</view>
 					</view>
 				</view>
 			</block>
@@ -41,88 +51,105 @@
 </template>
 
 <script>
-import nqSwitch from '@/components/nq-switch.vue';
-import reComment from './reComment.vue';
-import { mapState, mapMutations } from 'vuex';
+	import nqSwitch from '@/components/nq-switch.vue';
+	import reComment from './reComment.vue';
+	import {
+		mapState,
+		mapMutations
+	} from 'vuex';
 
-export default {
-	props: {
-		/** commentList数据结构
-		 * commentList:{
-		 * 		mainComment:
-		 * 		subComment:{
-		 * 			subCommentList,
-		 * 			subCommentNum
-		 * 		}
-		 * }
-		 */
-		commentList: '', 
-		commentNum: '',
-		areaWidth: '',
-		areaMargin: '',
-	},
-	components: {
-		nqSwitch,
-		reComment
-	},
-	computed: {
-		...mapState(['lang'])
-	},
-	data() {
-		return {
-			// commentList: this.commentList,
-			order: 0, //评论排序方式 0：按时间查询, 1：按热度查询
-		};
-	},
-	methods: {
-		swLikeComment(comment, index) {
-			console.log("click like");
-			this.$emit('like', comment, index);
+	export default {
+		props: {
+			/** commentList数据结构
+			 * commentList:[
+			 * 		mainComment:
+			 * 		subComment:{
+			 * 			subCommentList,
+			 * 			subCommentNum
+			 * 		}
+			 * ]
+			 */
+			commentList: '',
+			commentNum: '',
+			areaWidth: '',
+			areaMargin: '',
 		},
-		onLongpress(){
-			console.log("触发长按操作,复制或者是快速回复")
+		components: {
+			nqSwitch,
+			reComment
 		},
-		goToCommentDetail(mainComment) {
-			this.$emit("goToCommentDetail", mainComment);
-			// uni.navigateTo({
-			// 	url: '/pages/comment-detail/comment-detail?data=' + JSON.stringify(mainComment)
-			// });
+		computed: {
+			...mapState(['lang'])
 		},
-		change_comment_order(e) {
-			this.$emit('onChange', {
-				type: e.status
+		created() {
+			uni.$on('updateComment', comment => {
+				console.log('on update');
+				// from comment-detail || comment-vote-detail
+				for (var i = 0; i < this.commentList.length; i++) {
+					if (this.commentList[i].mainComment.id == comment.mainComment.id) {
+						this.commentList[i].mainComment = comment.mainComment;
+						this.commentList[i].subComment = comment.subComment;
+						console.log('update 第' + i + '条评论');
+					}
+				}
 			});
 		},
-		goToPersonPublic(userId) {
-			// router.goToPersonPublic(); // 全局方法
-			uni.navigateTo({
-				url: '/pages/personpublic/personpublic?userId=' + userId
-			});
-		}
-	} //method
-};
+
+		data() {
+			return {
+				// commentList: this.commentList,
+				order: 0, //评论排序方式 0：按时间查询, 1：按热度查询
+			};
+		},
+		methods: {
+			swLikeComment(comment, index) {
+				console.log("click like");
+				this.$emit('like', comment, index);
+			},
+			onLongpress() {
+				console.log("触发长按操作,复制或者是快速回复")
+			},
+			goToCommentDetail(mainComment) {
+				this.$emit("goToCommentDetail", mainComment);
+				// uni.navigateTo({
+				// 	url: '/pages/comment-detail/comment-detail?data=' + JSON.stringify(mainComment)
+				// });
+			},
+			change_comment_order(e) {
+				this.$emit('onChange', {
+					type: e.status
+				});
+			},
+			goToPersonPublic(userId) {
+				// router.goToPersonPublic(); // 全局方法
+				uni.navigateTo({
+					url: '/pages/personpublic/personpublic?userId=' + userId
+				});
+			}
+		} //method
+	};
 </script>
 
 <style>
-@import url('./oneComment.css');
+	@import url('./oneComment.css');
 
-.comments-menu {
-	height: 28px;
-	padding-top: 13px;
-}
+	.comments-menu {
+		height: 28px;
+		padding-top: 13px;
+	}
 
-.comments-num {
-	height: 17px;
-	font-size: 17px;
-	font-family: Source Han Sans CN;
-	font-weight: 500;
-	line-height: 17px;
-	color: rgba(155, 155, 155, 1);
-	padding-left: 4px;
-	display: inline-block;
-}
+	.comments-num {
+		height: 17px;
+		font-size: 17px;
+		font-family: Source Han Sans CN;
+		font-weight: 500;
+		line-height: 17px;
+		color: rgba(155, 155, 155, 1);
+		padding-left: 4px;
+		display: inline-block;
+	}
 
-/* .comments-order {
+	/* .comments-order {
 		margin-top:3px;
 		height: 22px;
 		background: #ECECEC;

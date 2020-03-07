@@ -38,7 +38,7 @@
 				<!-- 新消息卡片 -->
 				<view>
 					<view class="message-list">
-						<swipe-action :options="options" :messagesList="chatSnapShotList" @tapCard="goToChatpage()" @tapDelete="deleteChat()"></swipe-action>
+						<swipe-action :lang="lang" :options="options" :messagesList="chatSnapShotList" @tapCard="goToChatpage()" @tapDelete="deleteChat()"></swipe-action>
 					</view>
 				</view>
 

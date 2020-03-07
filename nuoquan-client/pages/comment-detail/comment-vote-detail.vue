@@ -43,17 +43,6 @@
 			<view style="width: 100%; height: 40px;"></view>
 		</view>
 
-		<!--触底提示和功能  start   COPY FROM DETAIL-->
-		<view class="comment-bottom">
-			<view class="comment-bottom-notice">{{ lang.onBottom }}</view>
-			<view class="comment-bottom-buttons">
-				<image class="back" @tap="backToLastPage" src="../../static/icon/arrow-left-fcc041.png" mode="aspectFit"></image>
-				<image class="to-top" @tap="scrollToTop" src="../../static/icon/arrow-left-fcc041.png"></image>
-				<view class="active-input-button" @click="controlInput(1)">{{ lang.writeComment }}</view>
-			</view>
-		</view>
-		<!--触底提示和功能  END-->
-
 		<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)">
 			<view class="commentPart" :style="{ bottom: textAreaAdjust }">
 				<!--<view class="emoji"></view><view class="add-pic"></view>-->
@@ -350,15 +339,6 @@ export default {
 				url: '/pages/personpublic/personpublic?userId=' + this.mainComment.fromUserId
 			});
 		},
-		backToLastPage() {
-			uni.navigateBack({});
-		}, //COPY FROM DETAIL -- YAO
-		scrollToTop() {
-			uni.pageScrollTo({
-				scrollTop: 0,
-				duration: 300
-			});
-		} //COPY FROM DETAIL -- YAO
 	} //method --妖
 };
 </script>
@@ -378,70 +358,6 @@ page {
 .son-comment-num {
 	background: linear-gradient(313deg, rgba(255, 184, 32, 0.84) 0%, rgba(240, 240, 122, 1) 100%);
 }
-
-/* 滑到底了等提示
- */
-.comment-bottom {
-	height: 160px;
-	width: calc(202px + 80upx);
-	margin: auto;
-}
-
-.comment-bottom-notice {
-	width: 71px;
-	height: 14px;
-	line-height: 14px;
-	font-size: 14px;
-	color: #b2b2b2;
-	margin: 37px auto 27px;
-}
-.comment-bottom-buttons {
-	display: flex;
-	justify-content: space-between;
-}
-.comment-bottom-buttons .back {
-	width: 16px;
-	height: 16px;
-	padding: 14px;
-	background: #fff1d5;
-	border-radius: 22px;
-}
-.comment-bottom-buttons .to-top {
-	width: 18px;
-	height: 12px;
-	background: #fff1d5;
-	border-radius: 22px;
-	padding: 16px 11px 16px 15px;
-	position: relative;
-	transform: rotate(90deg);
-}
-.comment-bottom-buttons .to-top::after {
-	content: '';
-	position: absolute;
-	top: 14px;
-	left: 12px;
-	width: 2px;
-	height: 16px;
-	background: #fcc041;
-	border-radius: 2px;
-}
-.active-input-button {
-	color: #ffffff;
-	width: 76px;
-	height: 17px;
-	font-size: 17px;
-	font-family: Source Han Sans CN;
-	font-weight: 400;
-	line-height: 17px;
-	color: rgba(255, 255, 255, 1);
-	padding: 10px 22px;
-	border-radius: 10px;
-	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.16);
-	background: #fcc041;
-	letter-spacing: 2px;
-}
-/* 滑到底了等提示
-	 */
 
 /* 以下五条为底部输入框样式 */
 .bottoLayerOfInput {

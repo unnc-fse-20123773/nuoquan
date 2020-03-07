@@ -14,7 +14,20 @@
 			<image src="../static/icon/emoji.png" style="position: absolute;left:12px;top:8px;width:20px;height:20px;"></image>
 		</view> -->
 
-		<nqSwitch style="margin-top: 30px;" :options="['时间','热度']" @onChange="change_comment_order"></nqSwitch>
+		<nqSwitch v-if="lang.langType == 'zh-CN'" 
+			:bgSwitchLeft = "'-13px'"
+			:bgSwitchRight = "'41px'"
+			style="margin-top: 30px;" 
+			:options="[lang.time, lang.hot]" 
+			@onChange="change_comment_order">
+		</nqSwitch>
+		<nqSwitch v-else
+			:bgSwitchLeft = "'-11px'"
+			:bgSwitchRight = "'41px'"
+			style="margin-top: 30px;" 
+			:options="[lang.time, lang.hot]" 
+			@onChange="change_comment_order">
+		</nqSwitch>
 		<view style="height:50px;width: 100%;"></view><!-- 占位块 -->
 
 		<!--循环评论卡片  来源 @pages/detail/oneComment.css -->
@@ -39,10 +52,13 @@
 
 		<!--触底提示和功能  from detail start-->
 		<view class="comment-bottom">
-			<view class="comment-bottom-notice">划到底部啦</view>
-			<view class="comment-bottom-buttons">
-				<image class="to-top" @tap="scrollTo('top')" src="../static/icon/arrow-left-fcc041.png"></image>
-				<view class="active-input-button" @tap="saveComment()" @click="scrollTo('input')">发表评论</view>
+			<view class="comment-bottom-notice">{{lang.onBottom}}</view>
+			<view class="comment-bottom-buttons super_center">
+				<image class="to-top" mode="aspectFit" @tap="scrollTo('top')" src="../static/icon/arrow-left-fcc041.png"></image>
+				<view class="active-input-button" 
+				:style="{'letter-spacing': lang.langType == 'zh-CN' ? '2px':''}"
+				@tap="saveComment()" 
+				@click="scrollTo('input')">{{lang.writeComment}}</view>
 			</view>
 		</view>
 		<!--触底提示和功能  END-->
@@ -53,6 +69,7 @@
 <script>
 	import nqSwitch from "@/components/nq-switch.vue";
 	import reComment from '@/components/reComment.vue';
+	import { mapState, mapMutations } from 'vuex';
 
 	var uploadFlag = false;
 	export default {
@@ -83,6 +100,9 @@
 				serverUrl: this.$serverUrl
 			};
 		},
+		computed: {
+				...mapState(['lang'])
+			},
 		components: {
 			nqSwitch,
 		},
@@ -297,12 +317,12 @@
 	/* 滑到底了等提示 */
 	.comment-bottom {
 		height: 160px;
-		width: calc(164px + 40upx);
 		margin: auto;
 	}
 
 	.comment-bottom-notice {
-		width: 71px;
+		text-align: center;
+		min-width: 71px;
 		height: 14px;
 		line-height: 14px;
 		font-size: 14px;
@@ -312,7 +332,6 @@
 
 	.comment-bottom-buttons {
 		display: flex;
-		justify-content: space-between;
 
 	}
 
@@ -346,17 +365,19 @@
 	}
 
 	.active-input-button {
-		color: #FFFFFF;
-		width: 76px;
-		height: 17px;
-		font-size: 17px;
-		line-height: 17px;
+		height:14px;
+		font-size:14px;
+		font-family:Source Han Sans CN;
+		font-weight:400;
+		line-height:16px;
 		color: rgba(255, 255, 255, 1);
 		padding: 10px 22px;
 		border-radius: 10px;
 		box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.16);
 		background: #FCC041;
-		letter-spacing: 2px;
+		/* letter-spacing: 2px; */
+		margin-left: 26px;
+		
 	}
 </style>
 <style>

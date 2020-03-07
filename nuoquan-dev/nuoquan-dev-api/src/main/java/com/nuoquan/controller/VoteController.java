@@ -208,22 +208,22 @@ public class VoteController extends BasicController{
 				String commentId = voteService.saveComment(comment);
 				
 				// 给作者发推送
-				DataContent dataContent = new DataContent();
-				
-				UserVoteCommentVO commentVO = voteService.getCommentById(commentId, null);
-				if (StringUtils.isBlank(comment.getFatherCommentId())) {
-					// 给文章评论
-					VoteVO targetVote = voteService.getVoteById(comment.getVoteId(), null);
-					dataContent.setData(new NoticeCard(commentVO, targetVote));
-					dataContent.setAction(MsgActionEnum.COMMENTARTICLE.type);
-				} else {
-					// 给评论评论
-					UserVoteCommentVO targetComment = voteService.getCommentById(comment.getFatherCommentId(), null);
-					dataContent.setData(new NoticeCard(commentVO, targetComment));
-					dataContent.setAction(MsgActionEnum.COMMENTCOMMENT.type);
-				}
-				
-				MsgHandler.sendMsgTo(comment.getToUserId(), dataContent);
+//				DataContent dataContent = new DataContent();
+//				
+//				UserVoteCommentVO commentVO = voteService.getCommentById(commentId, null);
+//				if (StringUtils.isBlank(comment.getFatherCommentId())) {
+//					// 给文章评论
+//					VoteVO targetVote = voteService.getVoteById(comment.getVoteId(), null);
+//					dataContent.setData(new NoticeCard(commentVO, targetVote));
+//					dataContent.setAction(MsgActionEnum.COMMENTARTICLE.type);
+//				} else {
+//					// 给评论评论
+//					UserVoteCommentVO targetComment = voteService.getCommentById(comment.getFatherCommentId(), null);
+//					dataContent.setData(new NoticeCard(commentVO, targetComment));
+//					dataContent.setAction(MsgActionEnum.COMMENTCOMMENT.type);
+//				}
+//				
+//				MsgHandler.sendMsgTo(comment.getToUserId(), dataContent);
 			}
 			return JSONResult.ok();
 		} else {
@@ -303,11 +303,11 @@ public class VoteController extends BasicController{
 			likeVO.setFaceImgThumb(user.getFaceImgThumb());
 			
 			// 给作者发推送
-			DataContent dataContent = new DataContent();
-			dataContent.setAction(MsgActionEnum.LIKECOMMENT.type);
-			dataContent.setData(new NoticeCard(likeVO, voteService.getCommentById(commentId, userId)));
-			
-			MsgHandler.sendMsgTo(createrId, dataContent);
+//			DataContent dataContent = new DataContent();
+//			dataContent.setAction(MsgActionEnum.LIKECOMMENT.type);
+//			dataContent.setData(new NoticeCard(likeVO, voteService.getCommentById(commentId, userId)));
+//			
+//			MsgHandler.sendMsgTo(createrId, dataContent);
 		}
 		
 		return JSONResult.ok();

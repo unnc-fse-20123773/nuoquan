@@ -1,15 +1,8 @@
 <template>
 	<view class="comment-detail-page">
 		<!-- 导航栏 -->
-		<uni-nav-bar
-			class="navigationBar"
-			:style="{ height: this.getnavbarHeight() + 'px' }"
-			:showLeftIcon="true"
-			:isNavHome="isNavHome"
-			:left-text="lang.back"
-			:title="lang.commentDetail"
-			:height="navbarHeight"
-		></uni-nav-bar>
+		<uni-nav-bar class="navigationBar" :style="{ height: this.getnavbarHeight() + 'px' }" :showLeftIcon="true" :isNavHome="isNavHome"
+		 :left-text="lang.back" :title="lang.commentDetail" :height="navbarHeight"></uni-nav-bar>
 		<view :style="{ height: navbarHeight + 'px' }"></view>
 
 		<!-- 主评论区域 -->
@@ -30,14 +23,8 @@
 		<!-- 子评论区域 -->
 		<view style="width: 100%;">
 			<!--移到了sonCommentBox组件，考虑评论之间的点赞方程容易混淆，做了组件，就互不影响了-->
-			<sonCommentBox
-				v-for="i in commentList"
-				:key="i.id"
-				:reCommentDetail="i"
-				@controlInputSignal="controlInput"
-				@swLikeComment="swLikeComment"
-				@goToPersonPublic="goToPersonPublic"
-			></sonCommentBox>
+			<sonCommentBox v-for="i in subCommentList" :key="i.id" :reCommentDetail="i" @controlInputSignal="controlInput"
+			 @swLikeComment="swLikeComment" @goToPersonPublic="goToPersonPublic"></sonCommentBox>
 			<!-- 占位块 -->
 			<view style="width: 100%; height: 40px;"></view>
 		</view>
@@ -58,18 +45,9 @@
 				<!--<view class="emoji"></view><view class="add-pic"></view>-->
 				<view class="submit" @tap="saveComment()">{{ lang.send }}</view>
 				<view class="commentSth">
-					<textarea
-						class="comment-text"
-						:placeholder="placeholderText"
-						:focus="writingComment"
-						auto-height="true"
-						adjust-position="false"
-						v-model="commentContent"
-						:show-confirm-bar="false"
-						@focus="popTextArea"
-						@blur="unpopTextArea"
-						cursor-spacing="20"
-					/>
+					<textarea class="comment-text" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
+					 adjust-position="false" v-model="commentContent" :show-confirm-bar="false" @focus="popTextArea" @blur="unpopTextArea"
+					 cursor-spacing="20" />
 					<!-- <view class="comment-pic-area"><image src="../../static/BG/indexBG.png"></image><image src="../../static/icon/about.png"></image><image src="../../static/icon/1575235531(1).png"></image></view> -->
 					<view class="word-count-left">{{ wordNotice }}</view>
 				</view>
@@ -96,13 +74,25 @@ export default {
 	computed: {
 		...mapState(['lang'])
 	},
+	onUnload() {
+		console.log('emit update comment');
+		//更新commentarea对应的卡片
+		var comment = {
+			mainComment: this.mainComment,
+			subComment:{
+				subCommentList: this.subCommentList,
+				subCommentNum: this.mainComment.commentNum
+			}
+		}
+		uni.$emit('updateComment', comment);	
+	},
 	data() {
 		return {
 			mainComment: '', //用于接受跳转传过来的underCommentId,然后申请获取sonComment  yaoyao 9.16
 			type: '', //文章 or 投票
 			userInfo: '',
 			commentContent: '', //用户准备提交的评论内容
-			commentList: '', //返回值，获取评论列表信息,循环展示的东西，sonComment
+			subCommentList: '', //返回值，获取评论列表信息,循环展示的东西，sonComment
 			showInput: false, //控制输入框，true时显示输入框
 			writingComment: false, //控制输入框，true时自动获取焦点，拉起输入法
 			wordNotice: '48',
@@ -175,11 +165,11 @@ export default {
 				success: res => {
 					if (res.data.status == 200) {
 						if (page == 1) {
-							this.commentList = [];
+							this.subCommentList = [];
 						}
 						var newCommentList = res.data.data.rows;
-						var oldCommentList = this.commentList;
-						this.commentList = oldCommentList.concat(newCommentList);
+						var oldCommentList = this.subCommentList;
+						this.subCommentList = oldCommentList.concat(newCommentList);
 						this.currentPage = page;
 						this.totalPage = res.data.data.total;
 					}
@@ -204,11 +194,11 @@ export default {
 					// console.log(res);
 					if (res.data.status == 200) {
 						if (page == 1) {
-							this.commentList = [];
+							this.subCommentList = [];
 						}
 						var newCommentList = res.data.data.rows;
-						var oldCommentList = this.commentList;
-						this.commentList = oldCommentList.concat(newCommentList);
+						var oldCommentList = this.subCommentList;
+						this.subCommentList = oldCommentList.concat(newCommentList);
 						this.currentPage = page;
 						this.totalPage = res.data.data.total;
 					}
@@ -288,12 +278,6 @@ export default {
 				console.log('正在上传...');
 				return;
 			}
-			this.saveCommentFlag = true;
-			uni.showLoading({
-				title: '正在提交...',
-				duration: 1000
-			});
-			console.log('tragger savecomment');
 			if (this.commentContent == '') {
 				uni.showToast({
 					title: '好像忘写评论了哦~',
@@ -301,6 +285,13 @@ export default {
 					icon: 'none'
 				});
 			} else {
+				this.saveCommentFlag = true;
+				uni.showLoading({
+					title: '正在提交...',
+					duration: 1000
+				});
+				console.log('tragger savecomment');
+				
 				var url = "";
 				// var submitData;
 				if(this.type == 'article'){
@@ -322,13 +313,15 @@ export default {
 						this.writingComment = false;
 						this.commentContent = '';
 						this.showInput = false;
-
+						// 解锁
+						this.saveCommentFlag = false;
 						// 强制子组件重新刷新
-						this.commentList = '';
+						this.subCommentList = '';
 						this.$nextTick(function() {
 							this.getSubComments(1);
 						});
-						uni.$emit('flashSubComment', this.mainComment.id);
+						this.mainComment.commentNum++;
+						// uni.$emit('flashSubComment', this.mainComment.id);
 						// uni.$emit('updateArticle', this.mainComment.articleId);
 					}
 				});
@@ -396,9 +389,9 @@ export default {
 			});
 		},
 
-		goToPersonPublic() {
+		goToPersonPublic(userId) {
 			uni.navigateTo({
-				url: '/pages/personpublic/personpublic?userId=' + this.mainComment.fromUserId
+				url: '/pages/personpublic/personpublic?userId=' + userId
 			});
 		},
 		backToLastPage() {

@@ -109,7 +109,6 @@ export default {
 	},
 	data() {
 		return {
-			imgList: [],
 			userInfo: {},
 			articleCard: '', //detail的主角，由index传过来的单个文章信息
 			commentContent: '', //用户准备提交的评论内容
@@ -174,31 +173,31 @@ export default {
 		// 添加浏览量
 		this.addViewCount();
 		
-		uni.$on("flashSubComment", mainCommentId => {
-			console.log("修改对应主评下的次评论")
-			this.getSubComments(mainCommentId, 1).then(subComment =>{
-				var commentList = this.commentList;
-				for(var i=0; i<commentList.length;i++){
-					var mainComment = commentList[i].mainComment
-					if(mainComment.id == mainCommentId){
-						mainComment.commentNum++;//主评评论数+1
-						var comment = {
-							mainComment: mainComment,
-							subComment: subComment
-						}
+		// uni.$on("flashSubComment", mainCommentId => {
+		// 	console.log("修改对应主评下的次评论")
+		// 	this.getSubComments(mainCommentId, 1).then(subComment =>{
+		// 		var commentList = this.commentList;
+		// 		for(var i=0; i<commentList.length;i++){
+		// 			var mainComment = commentList[i].mainComment
+		// 			if(mainComment.id == mainCommentId){
+		// 				mainComment.commentNum++;//主评评论数+1
+		// 				var comment = {
+		// 					mainComment: mainComment,
+		// 					subComment: subComment
+		// 				}
 						
-						commentList.splice(i, 1, comment);
-					}
-				}
-			})
-		})
+		// 				commentList.splice(i, 1, comment);
+		// 			}
+		// 		}
+		// 	})
+		// })
 	},
 
 	onShareAppMessage(res) {
 		if (res.from === 'menu') {
 			// 来自右上角菜单的分享
 			return {
-				title: '来，给老子看！',
+				title: '速来围观' + this.userInfo.nickname + '的分享',
 				path: '/pages/detail/detail?data=' + this.articleCard.id
 			};
 		}
@@ -447,14 +446,15 @@ export default {
 		 * @param {Object} comment
 		 */
 		swLikeComment(comment) {
-			if (comment.isLike) {
-				this.unLikeComment(comment);
-				comment.likeNum--;
+			var mainComment = comment.mainComment;
+			if (mainComment.isLike) {
+				this.unLikeComment(mainComment);
+				mainComment.likeNum--;
 			} else {
-				this.likeComment(comment);
-				comment.likeNum++;
+				this.likeComment(mainComment);
+				mainComment.likeNum++;
 			}
-			comment.isLike = !comment.isLike;
+			mainComment.isLike = !mainComment.isLike;
 		},
 		
 		likeComment(comment) {
