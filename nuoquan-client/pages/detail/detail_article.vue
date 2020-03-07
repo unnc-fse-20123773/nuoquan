@@ -57,7 +57,7 @@
 		</view>
 		<!--4个ICON, 点赞评论分享返回-->
 		<view class="menu-bar">
-			<view :class="[articleCard.isLike ? 'liked' : 'like']" :style="{ color: articleCard.isLike ? 'white' : '#ffffff'}" @tap="swLikeArticle()">{{ articleCard.likeNum }}</view>
+			<view :class="[articleCard.isLike ? 'liked' : 'like']"  @tap="swLikeArticle()">{{ articleCard.likeNum }}</view>
 			<view class="comment" @tap="controlInputInDetailArticle">{{ articleCard.commentNum }}</view>
 			<view class="share" @tap="toggleShare()"></view>
 			<view class="back" @tap="menu_back()"></view>
@@ -389,7 +389,7 @@ export default {
 	font-weight: 400;
 	line-height: 11px;
 	text-align: center;
-	color: #353535;
+	color: #FFFFFF;
 	padding: 26px 16px 7px;
 	border-radius: 22px;
 	position: relative;
