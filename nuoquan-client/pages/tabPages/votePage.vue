@@ -765,11 +765,6 @@ export default {
 				console.log('正在上传...');
 				return;
 			}
-			uploadFlag = true;
-			uni.showLoading({
-				title: '正在上传...'
-			});
-
 			setTimeout(() => {
 				if (uploadFlag) {
 					uploadFlag = false; // 解锁
@@ -789,6 +784,10 @@ export default {
 					icon: 'none'
 				});
 			} else {
+				uploadFlag = true;
+				uni.showLoading({
+					title: '正在上传...'
+				});
 				var submitData = {
 					comment: this.commentContent,
 					fromUserId: this.userInfo.id,
@@ -809,7 +808,7 @@ export default {
 							// this.showInput = false;
 							this.getComments(this.showList[this.currentVoteIndex]);
 
-							// this.articleCard.commentNum++; // 文章评论数累加
+							this.showList[this.currentVoteIndex].vote.commentNum++; // 评论数累加
 						} else if (res.data.status == 500) {
 							this.contentIllegal();
 						}

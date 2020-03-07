@@ -23,7 +23,7 @@
 		<!-- 子评论区域 -->
 		<view style="width: 100%;">
 			<!--移到了sonCommentBox组件，考虑评论之间的点赞方程容易混淆，做了组件，就互不影响了-->
-			<sonCommentBox v-for="i in commentList" :key="i.id" :reCommentDetail="i" @controlInputSignal="controlInput"
+			<sonCommentBox v-for="i in subCommentList" :key="i.id" :reCommentDetail="i" @controlInputSignal="controlInput"
 			 @swLikeComment="swLikeComment" @goToPersonPublic="goToPersonPublic"></sonCommentBox>
 			<!-- 占位块 -->
 			<view style="width: 100%; height: 40px;"></view>
@@ -76,7 +76,15 @@ export default {
 	},
 	onUnload() {
 		console.log('emit update comment');
-		uni.$emit('updateMainComment', this.mainComment);	
+		//更新commentarea对应的卡片
+		var comment = {
+			mainComment: this.mainComment,
+			subComment:{
+				subCommentList: this.subCommentList,
+				subCommentNum: this.mainComment.commentNum
+			}
+		}
+		uni.$emit('updateComment', comment);	
 	},
 	data() {
 		return {
@@ -84,7 +92,7 @@ export default {
 			type: '', //文章 or 投票
 			userInfo: '',
 			commentContent: '', //用户准备提交的评论内容
-			commentList: '', //返回值，获取评论列表信息,循环展示的东西，sonComment
+			subCommentList: '', //返回值，获取评论列表信息,循环展示的东西，sonComment
 			showInput: false, //控制输入框，true时显示输入框
 			writingComment: false, //控制输入框，true时自动获取焦点，拉起输入法
 			wordNotice: '48',
@@ -157,11 +165,11 @@ export default {
 				success: res => {
 					if (res.data.status == 200) {
 						if (page == 1) {
-							this.commentList = [];
+							this.subCommentList = [];
 						}
 						var newCommentList = res.data.data.rows;
-						var oldCommentList = this.commentList;
-						this.commentList = oldCommentList.concat(newCommentList);
+						var oldCommentList = this.subCommentList;
+						this.subCommentList = oldCommentList.concat(newCommentList);
 						this.currentPage = page;
 						this.totalPage = res.data.data.total;
 					}
@@ -186,11 +194,11 @@ export default {
 					// console.log(res);
 					if (res.data.status == 200) {
 						if (page == 1) {
-							this.commentList = [];
+							this.subCommentList = [];
 						}
 						var newCommentList = res.data.data.rows;
-						var oldCommentList = this.commentList;
-						this.commentList = oldCommentList.concat(newCommentList);
+						var oldCommentList = this.subCommentList;
+						this.subCommentList = oldCommentList.concat(newCommentList);
 						this.currentPage = page;
 						this.totalPage = res.data.data.total;
 					}
@@ -308,11 +316,12 @@ export default {
 						// 解锁
 						this.saveCommentFlag = false;
 						// 强制子组件重新刷新
-						this.commentList = '';
+						this.subCommentList = '';
 						this.$nextTick(function() {
 							this.getSubComments(1);
 						});
-						uni.$emit('flashSubComment', this.mainComment.id);
+						this.mainComment.commentNum++;
+						// uni.$emit('flashSubComment', this.mainComment.id);
 						// uni.$emit('updateArticle', this.mainComment.articleId);
 					}
 				});

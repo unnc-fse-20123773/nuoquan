@@ -174,24 +174,24 @@ export default {
 		// 添加浏览量
 		this.addViewCount();
 		
-		uni.$on("flashSubComment", mainCommentId => {
-			console.log("修改对应主评下的次评论")
-			this.getSubComments(mainCommentId, 1).then(subComment =>{
-				var commentList = this.commentList;
-				for(var i=0; i<commentList.length;i++){
-					var mainComment = commentList[i].mainComment
-					if(mainComment.id == mainCommentId){
-						mainComment.commentNum++;//主评评论数+1
-						var comment = {
-							mainComment: mainComment,
-							subComment: subComment
-						}
+		// uni.$on("flashSubComment", mainCommentId => {
+		// 	console.log("修改对应主评下的次评论")
+		// 	this.getSubComments(mainCommentId, 1).then(subComment =>{
+		// 		var commentList = this.commentList;
+		// 		for(var i=0; i<commentList.length;i++){
+		// 			var mainComment = commentList[i].mainComment
+		// 			if(mainComment.id == mainCommentId){
+		// 				mainComment.commentNum++;//主评评论数+1
+		// 				var comment = {
+		// 					mainComment: mainComment,
+		// 					subComment: subComment
+		// 				}
 						
-						commentList.splice(i, 1, comment);
-					}
-				}
-			})
-		})
+		// 				commentList.splice(i, 1, comment);
+		// 			}
+		// 		}
+		// 	})
+		// })
 	},
 
 	onShareAppMessage(res) {

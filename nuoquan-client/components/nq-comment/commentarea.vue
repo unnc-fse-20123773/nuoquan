@@ -48,13 +48,13 @@
 	export default {
 		props: {
 			/** commentList数据结构
-			 * commentList:{
+			 * commentList:[
 			 * 		mainComment:
 			 * 		subComment:{
 			 * 			subCommentList,
 			 * 			subCommentNum
 			 * 		}
-			 * }
+			 * ]
 			 */
 			commentList: '',
 			commentNum: '',
@@ -69,12 +69,13 @@
 			...mapState(['lang'])
 		},
 		created() {
-			uni.$on('updateMainComment', newMainComment => {
+			uni.$on('updateComment', comment => {
 				console.log('on update');
 				// from comment-detail || comment-vote-detail
 				for (var i = 0; i < this.commentList.length; i++) {
-					if (this.commentList[i].mainComment.id == newMainComment.id) {
-						this.commentList[i].mainComment = newMainComment;
+					if (this.commentList[i].mainComment.id == comment.mainComment.id) {
+						this.commentList[i].mainComment = comment.mainComment;
+						this.commentList[i].subComment = comment.subComment;
 						console.log('update 第' + i + '条评论');
 					}
 				}

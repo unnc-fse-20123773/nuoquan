@@ -10,7 +10,8 @@
 		v-if="subComment.subCommentNum > 0"
 	>
 		<block v-for="(subComment, index) in subComment.subCommentList" :key="index">
-			<view class="reComment">
+			<!-- 仅显示前两条 -->
+			<view class="reComment" v-if="index<2"> 
 				<view :style="{ 'border-top': index == 0 ? '' : '1px solid #DCDCDC' }" class="reCommentContent" @tap="goToCommentDetail()">
 					<view class="contentarea">{{ subComment.nickname }}</view>
 					<view style="color:#000000;font-size: 12px;display: inline-block;margin: 0 5px 0 0;">回复</view>
