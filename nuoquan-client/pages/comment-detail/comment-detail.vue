@@ -288,12 +288,6 @@ export default {
 				console.log('正在上传...');
 				return;
 			}
-			this.saveCommentFlag = true;
-			uni.showLoading({
-				title: '正在提交...',
-				duration: 1000
-			});
-			console.log('tragger savecomment');
 			if (this.commentContent == '') {
 				uni.showToast({
 					title: '好像忘写评论了哦~',
@@ -301,6 +295,13 @@ export default {
 					icon: 'none'
 				});
 			} else {
+				this.saveCommentFlag = true;
+				uni.showLoading({
+					title: '正在提交...',
+					duration: 1000
+				});
+				console.log('tragger savecomment');
+				
 				var url = "";
 				// var submitData;
 				if(this.type == 'article'){
@@ -322,7 +323,8 @@ export default {
 						this.writingComment = false;
 						this.commentContent = '';
 						this.showInput = false;
-
+						// 解锁
+						this.saveCommentFlag = false;
 						// 强制子组件重新刷新
 						this.commentList = '';
 						this.$nextTick(function() {
