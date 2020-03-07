@@ -15,7 +15,6 @@ public interface VoteOptionMapper extends MyMapper<VoteOption> {
 	 */
 	public void addCoorespondingOptionCount(String optionId);
 
-	public void updatePercent(String id, Double percent);
-	
+	public void updatePercent(String id, Double percent);	
 	
 }

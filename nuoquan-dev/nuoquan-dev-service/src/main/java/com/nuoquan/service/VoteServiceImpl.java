@@ -178,6 +178,10 @@ public class VoteServiceImpl implements VoteService {
 			v.setOptionList(voteOptionMapper.getOptions(v.getId()));
 			// 为每个投票添加用户是否投过票的布尔值
 			v.setIsUserVoted(isUserVoted(userId, v.getId()));
+			// 如果该用户投过票, 查询 选择的 选项id
+			if (v.getIsUserVoted()) {
+				v.setSelectedOptId(selectedOptionId(userId, v.getId()));
+			}
 		}
 		
 		PageInfo<VoteVO> pageList = new PageInfo<>(list);
@@ -189,6 +193,20 @@ public class VoteServiceImpl implements VoteService {
 		pagedResult.setRecords(pageList.getTotal());
 		
 		return pagedResult;
+	}
+	
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public String selectedOptionId(String userId, String voteId) {
+		String selectedOptId = null;
+		Example example = new Example(VoteUser.class);
+		Criteria criteria = example.createCriteria();
+		criteria.andEqualTo("userId", userId);
+		criteria.andEqualTo("voteId", voteId);
+		List<VoteUser> vo = voteUserMapper.selectByExample(example);
+		for (VoteUser voteUser : vo) {
+			selectedOptId = voteUser.getOptionId();
+		}
+		return selectedOptId;
 	}
 	
 	@Transactional(propagation = Propagation.SUPPORTS)
@@ -529,7 +547,7 @@ public class VoteServiceImpl implements VoteService {
 	}
 
 	/**
-	 * 每8分钟跟新文章状态
+	 * 每8分钟跟新投票状态
 	 */
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override

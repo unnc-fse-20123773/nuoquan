@@ -114,7 +114,7 @@
 							<view style="margin-top: 12px;width:100%;height:37px;">
 								<!-- 以下代码，下个版本需重构 Guetta -->
 								<!-- 非用户选项结果 -->
-								<view v-if="result.id != selectedOptionId" class="oneResult">
+								<view v-if="result.id != voteCard.vote.selectedOptId" class="oneResult">
 									<view class="resultTextCard">
 										<view class="voteContent">{{ result.optionContent }}</view>
 										<view class="voteresultNum">
@@ -328,6 +328,7 @@ export default {
 		// console.log('导航栏高度=' + this.navigationBarHeight);
 		this.calculateHeight();
 		// this.showCommentWhenLoad();
+		console.log(showList);
 	},
 
 	methods: {
