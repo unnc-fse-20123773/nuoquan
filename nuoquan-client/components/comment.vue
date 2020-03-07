@@ -1,3 +1,4 @@
+<!-- @Deprecated -->
 <template>
 	<view class="comment" :id="mainComment.id">
 		<view class="contentarea" @tap="controlInputInComment('inComment')">{{ mainComment.comment }}</view>

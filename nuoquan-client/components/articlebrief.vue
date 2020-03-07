@@ -67,7 +67,7 @@
 		<view class="menubar">
 			<view class="menubar_rel">
 				<!-- 分享 -->
-				<image class="menubar_share" src="../static/icon/share-alt-353535.png" mode="aspectFit"></image>
+				<!-- <image class="menubar_share" src="../static/icon/share-alt-353535.png" mode="aspectFit"></image> -->
 				<!-- 评论和点赞 -->
 				<view class="operationBar column_center">
 					<view class="commentBar column_center" @click="goToDetail()">
@@ -111,7 +111,7 @@ export default {
 	},
 
 	created() {
-		console.log(this);
+		// console.log(this);
 		if (this.thisArticle.imgList.length > 3) {
 			// 只取前三
 			for (var i = 0; i < 3; i++) {
@@ -376,7 +376,7 @@ image {
 .name {
 	position: absolute;
 	left: 12.61%;
-	max-width: 24%;
+	/* max-width: 24%; */
 	font-size: 14px;
 	font-family: Source Han Sans CN;
 	font-weight: 400;

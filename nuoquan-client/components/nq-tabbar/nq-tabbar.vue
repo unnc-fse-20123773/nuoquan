@@ -118,10 +118,15 @@ export default {
 	methods: {
 		onClick(e) {
 			if (e.type == 1) {
-				this.$emit('click', e);
+				this.$emit('clickMid', e);
 				this.rotate();
 				return;
 			}
+			if(this.rotateStatus){
+				//切换窗口的时候把list关上，
+				this.rotate();
+			}
+			this.$emit("clickTab", e)
 			uni.switchTab({
 				url: e.url
 			});

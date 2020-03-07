@@ -51,6 +51,10 @@ module.exports = {
 	addOption : "添加选项",
 	votePrompt1 : "完成投票后才可查看评论哦",
 	votePrompt2 : "最多10个选项，每个选项限制20字",
+	dayEnd : "天后截止",
+	
+	//评论
+	commentPrompt1 : "评论点什么...",
 	
 	//热门
 	hotTitle : "热门榜",
@@ -88,9 +92,10 @@ module.exports = {
 	degreeList : ["高中", "本科", "研究生"], //顺序请和数据库保持一致
 	
 	//他人页
-	whosHome : "'的主页",
+	whosHome : "的主页",
 	
 	//关于
 	contact : "联系我们",
 	updateLog : "更新公告",
+	
 }

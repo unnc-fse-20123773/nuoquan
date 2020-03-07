@@ -51,6 +51,10 @@ module.exports = {
 	addOption : "Add option",
 	votePrompt1 : "You can view the comments after you voted.",
 	votePrompt2 : "Up to 10 options, each limited to 20 words.",
+	dayEnd : "days finish",
+	
+	//评论
+	commentPrompt1 : "Say something...",
 	
 	//热门
 	hotTitle : "Top 10",
@@ -93,4 +97,5 @@ module.exports = {
 	//关于
 	contact : "Contact Us",
 	updateLog : "Update Log",
+	
 }

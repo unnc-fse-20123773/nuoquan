@@ -195,7 +195,6 @@ public class VoteController extends BasicController{
 	 */
 	@PostMapping("/saveVoteComment")
 	public JSONResult saveVoteComment(@RequestBody UserVoteComment comment) throws Exception{
-		
 		// 内容安全监测
 		if (weChatService.msgSecCheck(comment.getComment())) {
 			
@@ -238,12 +237,12 @@ public class VoteController extends BasicController{
 			@ApiImplicitParam(name = "voteId", required = true, dataType = "String", paramType = "form"),
 			@ApiImplicitParam(name = "userId", required = false, dataType = "String", paramType = "form")})
 	@PostMapping("/getMainVoteComments")
-	public JSONResult getFatherVoteComments(Integer page, Integer pageSize, String voteId, String userId) throws Exception{
+	public JSONResult getMainVoteComments(Integer page, Integer pageSize, String voteId, String userId) throws Exception{
 		
-		if (StringUtils.isBlank(voteId)) {
+		if (StringUtils.isBlank(voteId) || StringUtils.isEmpty(voteId)) {
 			return JSONResult.errorMsg("voteId can't be null");
 		}
-		
+		System.out.println(voteId);
 		if (page == null) {
 			page = 1;
 		}
@@ -392,7 +391,7 @@ public class VoteController extends BasicController{
 		}
 		voteService.selectOption(voteUser);
 		
-		return JSONResult.ok(voteService.getSingleVote(1, 10, voteUser.getUserId(), voteUser.getVoteId()));
+		return JSONResult.ok(voteService.getSingleVote(voteUser.getUserId(), voteUser.getVoteId()));
 	}
 	
 	@ApiOperation(value = "查询单个投票", notes = "在确认选择后刷新单个投票")
@@ -403,16 +402,9 @@ public class VoteController extends BasicController{
 		@ApiImplicitParam(name = "pageSize", value = "每页大小", required = true, dataType = "String", paramType = "form") 
 		})
 	@PostMapping("/querySingleVote")
-	public JSONResult querySingleVote(Integer page, Integer pageSize, String userId, String voteId) throws Exception {
+	public JSONResult querySingleVote(String userId, String voteId) throws Exception {
 		
-		if (page == null) {
-			page = 1;
-		}
-		if (pageSize == null) {
-			pageSize = PAGE_SIZE;
-		}
-		
-		PagedResult result = voteService.getSingleVote(page, pageSize, userId, voteId);
+		VoteVO result = voteService.getSingleVote(userId, voteId);
 		
 		return JSONResult.ok(result);
 	}

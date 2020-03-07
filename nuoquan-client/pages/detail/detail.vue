@@ -12,7 +12,7 @@
 		<view :style="{ height: navbarHeight + 'px' }" style="width: 100%;"></view>
 
 		<!-- 第一个大块二，文章本体 -->
-		<detail_1_article
+		<detail_article
 			class="article-area"
 			:articleCard="articleCard"
 			@controlInputSignal="controlInput"
@@ -20,22 +20,34 @@
 			@swLikeArticleSignal="changeLikeStatus"
 			@backToLastPage="backToLastPage()"
 			@share="toggleShare"
-		></detail_1_article>
+		></detail_article>
 		
 		<!-- 分享海报 -->
 		<view v-if="share"><mySharePoster :articleCard="articleCard" @unShow="toggleShare"></mySharePoster></view>
+		<view v-if="share"
+			@click="unShow"
+			style="position: fixed;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				background-color: #000000;
+				opacity: 0.3;
+				z-index: 30;"
+		></view>
 		
 		<view style="border-bottom: 4px solid #ECECEC;height:0;width:750upx;font-size: 0;position: relative;left: -16px;" @controlInputSignal="controlInput">这是分割线</view>
 		<!--第一个大块二，评论区域-->
 
-		<detail_2_comments
+		<commentarea
 			class="comment-area"
 			:commentList="commentList"
+			:commentNum="articleCard.commentNum"
 			@controlInputSignal="controlInput"
-			:userInfo="userInfo"
 			@onChange="changeType"
-			:articleCardCommentNum="articleCard.commentNum"
-		></detail_2_comments>
+			@like="swLikeComment"
+			@goToCommentDetail="goToCommentDetail"
+		></commentarea>
 
 		<!--触底提示和功能  start-->
 		<view class="comment-bottom" v-if="control_scroll_button_flag">
@@ -51,7 +63,7 @@
 		<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)">
 			<view class="commentPart" :style="{ bottom: textAreaAdjust }">
 				<!--<view class="emoji"></view><view class="add-pic"></view>-->
-				<view class="submit" @tap="saveComment()">发送</view>
+				<view class="submit" @tap="saveComment()">{{lang.send}}</view>
 				<view class="commentSth">
 					<textarea
 						class="comment-text"
@@ -81,8 +93,8 @@
 </template>
 
 <script>
-import detail_1_article from './detail_1_article.vue';
-import detail_2_comments from './detail_2_comments.vue';
+import detail_article from './detail_article.vue';
+import commentarea from '@/components/nq-comment/commentarea.vue';
 import mySharePoster from 'components/shareposter/myshareposter.vue';
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 import { mapState, mapMutations } from 'vuex';
@@ -90,8 +102,8 @@ import { mapState, mapMutations } from 'vuex';
 var uploadFlag = false;
 export default {
 	components: {
-		detail_1_article,
-		detail_2_comments,
+		detail_article,
+		commentarea,
 		uniNavBar,
 		mySharePoster
 	},
@@ -101,7 +113,7 @@ export default {
 			userInfo: {},
 			articleCard: '', //detail的主角，由index传过来的单个文章信息
 			commentContent: '', //用户准备提交的评论内容
-			commentList: {}, //返回值，获取评论列表信息
+			commentList: [], //返回值，获取评论列表信息
 
 			share: false, // 是否显示分享海报
 			showInput: false, //控制输入框，true时显示输入框
@@ -118,8 +130,8 @@ export default {
 
 			textAreaAdjust: '',
 
-			totalPage: 1,
-			currentPage: 1,
+			totalPage: 1, //评论分页属性
+			currentPage: 1, //评论分页属性
 			type: 0, //查询评论接口参数，0：按时间查询, 1：按热度查询
 			control_scroll_button_flag: 0,
 
@@ -140,7 +152,7 @@ export default {
 		console.log('返回');
 	},
 
-	async onLoad(options) {
+	onLoad(options) {
 		// 一次性储存 navbar 高度
 		this.navbarHeight = this.getnavbarHeight().bottom + 5;
 			
@@ -156,14 +168,30 @@ export default {
 		}
 
 		var articleId = options.data;
-		var res = await this.getArticleById(articleId, this.userInfo.id);
-		// console.log(res);
-		this.articleCard = res;
-
-		var page = this.currentPage;
-		this.getComments(page);
-
+		this.getArticleById(articleId, this.userInfo.id).then(()=>{
+			this.getComments(this.currentPage);
+		})
+		// 添加浏览量
 		this.addViewCount();
+		
+		uni.$on("flashSubComment", mainCommentId => {
+			console.log("修改对应主评下的次评论")
+			this.getSubComments(mainCommentId, 1).then(subComment =>{
+				var commentList = this.commentList;
+				for(var i=0; i<commentList.length;i++){
+					var mainComment = commentList[i].mainComment
+					if(mainComment.id == mainCommentId){
+						mainComment.commentNum++;//主评评论数+1
+						var comment = {
+							mainComment: mainComment,
+							subComment: subComment
+						}
+						
+						commentList.splice(i, 1, comment);
+					}
+				}
+			})
+		})
 	},
 
 	onShareAppMessage(res) {
@@ -181,8 +209,7 @@ export default {
 			this.share = !this.share;
 		},
 		getArticleById(articleId, userId) {
-			var that = this;
-			return new Promise((resolve, reject) => {
+			return new Promise((resolve, reject)=>{
 				uni.request({
 					url: this.$serverUrl + '/article/getArticleById',
 					method: 'POST',
@@ -194,10 +221,16 @@ export default {
 						userId: userId
 					},
 					success: res => {
-						resolve(res.data.data);
+						if(res.data.status == 200){
+							this.articleCard = res.data.data;
+							console.log(this.articleCard);
+							resolve('suc');
+						}else{
+							reject('fail');
+						}
 					}
 				});
-			});
+			})
 		},
 
 		addViewCount() {
@@ -315,7 +348,7 @@ export default {
 			this.getComments(1);
 		},
 
-		getComments: function(page) {
+		getComments(page) {
 			var that = this;
 			uni.showLoading({
 				title: '加载中...'
@@ -332,27 +365,138 @@ export default {
 				header: {
 					'content-type': 'application/x-www-form-urlencoded'
 				},
-				success: res => {
+				success: async res => {
 					if (res.data.status == 200) {
 						if (page == 1) {
 							that.commentList = [];
 						}
-						console.log(res);
-						var newCommentList = res.data.data.rows;
-						var oldCommentList = that.commentList;
-						that.commentList = oldCommentList.concat(newCommentList);
-						that.currentPage = page;
-						that.totalPage = res.data.data.total;
-						// console.log(that.articleCard.id);
+						var commentList=[];
+						//获取主评论
+						var mainComments = res.data.data.rows;
+						//获取子评论
+						// for(let mainComment of mainComments){
+						for(var i=0; i < mainComments.length; i++){
+							var comment;
+							var mainComment = mainComments[i];
+							await this.getSubComments(mainComment.id, 1).then(subComment =>{
+								comment = {
+									mainComment: mainComment,
+									subComment: subComment
+								}
+								commentList.push(comment);
+							})
+						}
+						// 拼接
+						var newCommentList = commentList;
+						var oldCommentList = this.commentList;
+						this.commentList = oldCommentList.concat(newCommentList);
+						this.currentPage = page;
+						this.totalPage = res.data.data.total;
+						// console.log(this.commentList);
+						
+						this.control_scroll_butoon(); //获取评论数据后，生成卡片后，判断总页面高度，控制是否显示回到顶部按钮
 					} else {
 						console.log(res);
 					}
 					uni.hideLoading();
-					this.control_scroll_butoon(); //获取评论数据后，生成卡片后，判断总页面高度，控制是否显示回到顶部按钮
 				}
 			});
 		},
-
+		
+		getSubComments(mainCommentId, page) {
+			return new Promise((resolve, reject) => {
+				uni.request({
+					method: "POST",
+					url: this.$serverUrl + '/article/getSubComments',
+					data: {
+						underCommentId: mainCommentId,
+						userId: this.userInfo.id,
+						page: page,
+						type: 0,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: (res) => {
+						// console.log(res);
+						if (res.data.status == 200) {
+							var subCommentNum = res.data.data.records;
+							var subCommentList;
+							if (subCommentNum <= 2) {
+								subCommentList = res.data.data.rows;
+							} else {
+								subCommentList = res.data.data.rows.slice(0, 2);
+							}
+							var subComment={
+								subCommentList: subCommentList,
+								subCommentNum: subCommentNum
+							}
+							resolve(subComment);
+						}else{
+							reject("Request fail");
+						}
+					},
+					fail: res => {
+						reject("Request fail");
+					}
+				});
+			})
+		},
+		/**
+		 * 点赞或取消点赞评论
+		 * @param {Object} comment
+		 */
+		swLikeComment(comment) {
+			if (comment.isLike) {
+				this.unLikeComment(comment);
+				comment.likeNum--;
+			} else {
+				this.likeComment(comment);
+				comment.likeNum++;
+			}
+			comment.isLike = !comment.isLike;
+		},
+		
+		likeComment(comment) {
+			console.log('点赞评论');
+			var that = this;
+			uni.request({
+				method: 'POST',
+				url: that.$serverUrl + '/article/userLikeComment',
+				data: {
+					userId: that.userInfo.id,
+					commentId: comment.id,
+					createrId: comment.fromUserId
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					console.log(res);
+				}
+			});
+		},
+		
+		unLikeComment(comment) {
+			console.log('取消点赞评论');
+			var that = this;
+			uni.request({
+				method: 'POST',
+				url: that.$serverUrl + '/article/userUnLikeComment',
+				data: {
+					userId: that.userInfo.id,
+					commentId: comment.id,
+					createrId: comment.fromUserId
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					console.log(res);
+				}
+			});
+		},
+		
 		loadMore: function() {
 			var that = this;
 			var currentPage = that.currentPage;
@@ -400,6 +544,15 @@ export default {
 		goToPersonPublic() {
 			uni.navigateTo({
 				url: '/pages/personpublic/personpublic?userId=' + this.articleCard.userId
+			});
+		},
+		goToCommentDetail(mainComment){
+			var data={
+				mainComment:mainComment,
+				type: "article"
+			}
+			uni.navigateTo({
+				url: '/pages/comment-detail/comment-detail?data=' + JSON.stringify(data)
 			});
 		},
 

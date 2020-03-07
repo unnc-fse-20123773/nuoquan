@@ -32,7 +32,7 @@
 			</scroll-view>
 		</view>
 		
-		<tab-bar @click="clickMid"></tab-bar>
+		<tab-bar @clickTab="onClickTab"></tab-bar>
 	</view>
 </template>
 
@@ -124,10 +124,12 @@ export default {
 	// },
 
 	methods: {
-		clickMid(e){
-			console.log(e);
+		onClickTab(e){
+			//刷新
+			if(e.url == "/"+this.getCurrentPage().route){
+				this.showArticles(1);
+			}
 		},
-		
 		showArticles: function(page) {
 			if (loadArticleFlag) {
 				return;
@@ -165,22 +167,19 @@ export default {
 					'content-type': 'application/x-www-form-urlencoded'
 				},
 				success: res => {
-					setTimeout(() => {
-						// 延时加载
-						uni.hideLoading();
-						loadArticleFlag = false;
+					uni.hideLoading();
+					loadArticleFlag = false;
 
-						console.log(res);
-						// 判断当前页是不是第一页，如果是第一页，那么设置showList为空
-						if (page == 1) {
-							that.showlist = [];
-						}
-						var newArticleList = res.data.data.rows;
-						var oldArticleList = that.showlist;
-						that.showlist = oldArticleList.concat(newArticleList);
-						that.currentPage = page;
-						that.totalPage = res.data.data.total;
-					}, 300);
+					console.log(res);
+					// 判断当前页是不是第一页，如果是第一页，那么设置showList为空
+					if (page == 1) {
+						that.showlist = [];
+					}
+					var newArticleList = res.data.data.rows;
+					var oldArticleList = that.showlist;
+					that.showlist = oldArticleList.concat(newArticleList);
+					that.currentPage = page;
+					that.totalPage = res.data.data.total;
 				},
 				fail: res => {
 					uni.hideLoading();

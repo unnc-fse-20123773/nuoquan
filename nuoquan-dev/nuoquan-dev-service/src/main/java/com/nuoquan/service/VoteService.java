@@ -114,7 +114,7 @@ public interface VoteService {
 
 	public void selectOption(VoteUser voteUser);
 
-	public PagedResult getSingleVote(Integer page, Integer pageSize, String userId, String voteId);
+	public VoteVO getSingleVote(String userId, String voteId);
 
 	boolean isUserVoted(String userId, String voteId);
 	
