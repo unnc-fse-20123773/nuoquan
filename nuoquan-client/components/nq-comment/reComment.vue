@@ -1,18 +1,17 @@
 <template>
 	<view
 		style="
-			width:576upx;
 			height:100%;
-			margin-left: calc(100% - 624upx);
 			background:rgba(236,236,236,1);
 			opacity:1;
 			border-radius:8px;
-			padding:4px 24upx 12px;"
+			margin-left: 8.53%;
+			padding: 4px 12px 4px 12px;"
 		v-if="subComment.subCommentNum > 0"
 	>
-		<block v-for="subComment in subComment.subCommentList" :key="subComment.id">
+		<block v-for="(subComment, index) in subComment.subCommentList" :key="index">
 			<view class="reComment">
-				<view class="content" @tap="goToCommentDetail()">
+				<view :style="{ 'border-top': index == 0 ? '' : '1px solid #DCDCDC' }" class="reCommentContent" @tap="goToCommentDetail()">
 					<view class="contentarea">{{ subComment.nickname }}</view>
 					<view style="color:#000000;font-size: 12px;display: inline-block;margin: 0 5px 0 0;">回复</view>
 					<view class="contentarea">@{{ subComment.toNickname }}</view>
@@ -31,10 +30,10 @@
 						<text class="icom" :class="{'liked':subComment.isLike}">{{ subComment.likeNum }}</text>
 					</view>
 				</view> -->
-				<view style="border-top:1px solid #DCDCDC"></view>
+				<!-- <view style="border-top:1px solid #DCDCDC"></view> -->
 			</view>
 		</block>
-		<view class="showMoreSubComment" @tap="goToCommentDetail()" v-if="subCommentNum > 2">展开剩余评论</view>
+		<view class="showMoreSubComment" @tap="goToCommentDetail()" v-if="subComment.subCommentNum > 2">展开剩余评论</view>
 	</view>
 </template>
 
@@ -143,16 +142,22 @@ export default {
 	color: #888888;
 }
 
-.content {
+.reCommentContent {
 	font-size: 12px;
 	color: #000000;
 	line-height: 17px;
-
-	max-height: 34px;
-	overflow: hidden;
+	max-height: 28px;
+	padding: 8px 0 8px 0;
+	
+	/* 保证文章正常显示 */
+	word-wrap: break-word;
+	word-break: break-all;
 	text-overflow: ellipsis;
-	margin-top: 8px;
-	margin-bottom: 8px;
+	/**文字隐藏后添加省略号*/
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
 }
 
 .bottombar {
@@ -219,6 +224,7 @@ export default {
 
 .showMoreSubComment {
 	margin-top: 8px;
+	margin-bottom: 8px;
 	width: 97px;
 	height: 20px;
 	line-height: 20px;

@@ -89,7 +89,10 @@
 								@tap="previewImage(index, imageIndex)"
 								@longpress="aboutImg(imageIndex)"
 							></image>
-							<view v-if="voteCard.vote.imgList.length == 2 || voteCard.vote.length == 5 || voteCard.vote.length == 8" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
+							<view
+								v-if="voteCard.vote.imgList.length == 2 || voteCard.vote.length == 5 || voteCard.vote.length == 8"
+								style="width: 190upx;height: 190upx;margin: 6px 0;"
+							></view>
 						</view>
 					</view>
 					<!-- 投票选项 -->
@@ -106,7 +109,7 @@
 						</view>
 					</view>
 					<!-- 确定投票后的选项展示 -->
-					<view v-else-if="currentVoteIndex==index" class="voteCard">
+					<view v-else-if="currentVoteIndex == index" class="voteCard">
 						<view v-for="(result, index3) in voteCard.vote.optionList" :key="index3">
 							<view style="margin-top: 12px;width:100%;height:37px;">
 								<!-- 以下代码，下个版本需重构 Guetta -->
@@ -172,7 +175,7 @@
 					<!-- 确认投票 -->
 					<view v-if="voteCard.vote.isUserVoted == false" class="alertandconfirm super_center">
 						<text v-if="ischosen[index] == false">{{ lang.votePrompt1 }}</text>
-						<button v-else class="confirmButton_votePage super_center" @click="confirmVote(voteCard.vote, index)">{{lang.ok}}</button>
+						<button v-else class="confirmButton_votePage super_center" @click="confirmVote(voteCard.vote, index)">{{ lang.ok }}</button>
 					</view>
 
 					<view v-if="voteCard.vote.isUserVoted">
@@ -199,8 +202,9 @@
 							<image src="../../static/icon/emoji.png" style="position: absolute;left:12px;top:8px;width:20px;height:20px;"></image>
 						</view>
 
-						<commentarea
-							class="comment-area"
+						<commentarea style="background-color: #00B7B8;"
+							:areaWidth= '"calc(100% - 24px)"'
+							:areaMargin= '"auto"'
 							:commentList="voteCard.commentList"
 							:commentNum="voteCard.vote.commentNum"
 							@onChange="changeType"
@@ -266,7 +270,7 @@ export default {
 			ischosen: [], //判断选项是否选中
 			ischosenFlag: '',
 			finishVote: [], //判断是否展示投票结果条形图
-			
+
 			/*页面数据结构
 			showList[voteCard]
 		    voteCard:{
@@ -289,16 +293,16 @@ export default {
 			currentVoteIndex: 0, //当前在哪个vote卡片
 			totalPage: 1, //投票流的分页属性
 			currentPage: 1, //投票流的分页属性
-			
+
 			selectedOptionId: '', // 选择的选项id
 			//评论
-			commentContent: "", //评论框输入的内容
-			
+			commentContent: '', //评论框输入的内容
+
 			// imgList: [],
 			// afterSelectedResult: [], // 确认选择后刷新单个产生的单个vote的所有信息
 			// afterSelectedOptionList: [], // 确认选择后刷新单个产生的单个vote的选项信息
 			// ifShowComment: false, //判断是否展示评论区域
-			loadedMoreIndex: [], // 用来储存已经触发过loadMore方法的投票的index.
+			loadedMoreIndex: [] // 用来储存已经触发过loadMore方法的投票的index.
 		};
 	},
 
@@ -471,7 +475,7 @@ export default {
 
 					// 进度条伸长
 					this.votedResult(this.showList[index]);
-					
+
 					// for (let option of this.showList[index].vote.optionList) {
 					// 	this.onePersentBarGrow(option);
 					// }
@@ -480,7 +484,7 @@ export default {
 				}
 			});
 		},
-		
+
 		/**
 		 * @param {Object} voteCard 注意传入值的地址
 		 */
@@ -499,7 +503,7 @@ export default {
 		onePersentBarGrow(option) {
 			var widthTarget = this.reserveTwoDecimal(option.percent * 100);
 			this.$set(option, 'barWidth', widthTarget); // 为选项添加barWidth属性
-			console.log(option)
+			console.log(option);
 		},
 
 		showVotes(page) {
@@ -544,7 +548,7 @@ export default {
 					}
 					var showList = [];
 					var votes = res.data.data.rows;
-					for(let vote of votes){
+					for (let vote of votes) {
 						//预设结构体
 						var voteCard = {
 							vote: vote,
@@ -552,22 +556,22 @@ export default {
 							totalPage: 1,
 							type: 0,
 							commentList: []
-						}
+						};
 						//获取并拼接commentList
-						await this.getComments(voteCard).then(voteCard=>{
-							showList.push(voteCard)
-						})
+						await this.getComments(voteCard).then(voteCard => {
+							showList.push(voteCard);
+						});
 					}
-					
+
 					// 在原showList后面嫁接新的数据
 					var newShowList = showList;
 					var oldShowList = this.showList;
 					this.showList = oldShowList.concat(newShowList);
 					this.currentPage = page;
 					this.totalPage = res.data.data.total;
-					
+
 					console.log(this.showList);
-					
+
 					// if (page == 1) {
 					// 	this.ischosen = [];
 					// 	this.finishVote = [];
@@ -580,7 +584,7 @@ export default {
 					// }
 					// this.ischosen = this.ischosen.concat(tempIsChosen);
 					// this.finishVote = this.finishVote.concat(tempFinishVote);
-					
+
 					this.votedResult(this.showList[this.currentVoteIndex]);
 				},
 				fail: res => {
@@ -594,7 +598,7 @@ export default {
 		},
 
 		getComments(voteCard) {
-			return new Promise((resolve, reject)=>{
+			return new Promise((resolve, reject) => {
 				uni.request({
 					method: 'POST',
 					url: this.$serverUrl + '/vote/getMainVoteComments',
@@ -612,28 +616,28 @@ export default {
 							if (voteCard.currentPage == 1) {
 								voteCard.commentList = [];
 							}
-							var commentList=[];
+							var commentList = [];
 							//获取主评论
 							var mainComments = res.data.data.rows;
 							//获取子评论
 							// for(let mainComment of mainComments){
-							for(var i=0; i < mainComments.length; i++){
+							for (var i = 0; i < mainComments.length; i++) {
 								var comment;
 								var mainComment = mainComments[i];
-								await this.getSubComments(mainComment.id, 1).then(subComment =>{
+								await this.getSubComments(mainComment.id, 1).then(subComment => {
 									comment = {
 										mainComment: mainComment,
 										subComment: subComment
-									}
+									};
 									commentList.push(comment);
-								})
+								});
 							}
 							// 拼接
 							var newCommentList = commentList;
 							var oldCommentList = voteCard.commentList;
 							voteCard.commentList = oldCommentList.concat(newCommentList);
 							voteCard.totalPage = res.data.data.total;
-							console.log(voteCard)
+							console.log(voteCard);
 							resolve(voteCard);
 							// console.log(this.commentList);
 							// this.control_scroll_butoon(); //获取评论数据后，生成卡片后，判断总页面高度，控制是否显示回到顶部按钮
@@ -642,24 +646,24 @@ export default {
 						}
 					}
 				});
-			})
+			});
 		},
-		
+
 		getSubComments(mainCommentId, page) {
 			return new Promise((resolve, reject) => {
 				uni.request({
-					method: "POST",
+					method: 'POST',
 					url: this.$serverUrl + '/vote/getSubComments',
 					data: {
 						underCommentId: mainCommentId,
 						userId: this.userInfo.id,
 						page: page,
-						type: 0,
+						type: 0
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
-					success: (res) => {
+					success: res => {
 						// console.log(res);
 						if (res.data.status == 200) {
 							var subCommentNum = res.data.data.records;
@@ -669,22 +673,22 @@ export default {
 							} else {
 								subCommentList = res.data.data.rows.slice(0, 2);
 							}
-							var subComment={
+							var subComment = {
 								subCommentList: subCommentList,
 								subCommentNum: subCommentNum
-							}
+							};
 							resolve(subComment);
-						}else{
-							reject("Request fail");
+						} else {
+							reject('Request fail');
 						}
 					},
 					fail: res => {
-						reject("Request fail");
+						reject('Request fail');
 					}
 				});
-			})
+			});
 		},
-		
+
 		loadMore: function() {
 			var currentPage = this.currentPage;
 			var totalPage = this.totalPage;
@@ -706,9 +710,9 @@ export default {
 		 */
 		onSwiperChange: function(e) {
 			// let index = e.target.current || e.detail.current;
-			var index = e.detail.current
-			console.log("VoteIndex: "+index);
-			this.currentVoteIndex = index
+			var index = e.detail.current;
+			console.log('VoteIndex: ' + index);
+			this.currentVoteIndex = index;
 			this.votedResult(this.showList[index]);
 			// var tmp = this.showList;
 			// this.showList = '';
@@ -743,7 +747,7 @@ export default {
 			// console.log("12312312 " + index);
 			this.showList[index].commentNum++;
 		},
-		
+
 		/**
 		 * fromUserId 必填
 		 * toUserId 必填
@@ -764,7 +768,7 @@ export default {
 			uni.showLoading({
 				title: '正在上传...'
 			});
-			
+
 			setTimeout(() => {
 				if (uploadFlag) {
 					uploadFlag = false; // 解锁
@@ -776,7 +780,7 @@ export default {
 					});
 				}
 			}, 5000); // 延时5s timeout
-			
+
 			if (this.commentContent == '') {
 				uni.showToast({
 					title: '好像忘写评论了哦~',
@@ -788,8 +792,8 @@ export default {
 					comment: this.commentContent,
 					fromUserId: this.userInfo.id,
 					toUserId: this.showList[this.currentVoteIndex].vote.userId,
-					voteId: this.showList[this.currentVoteIndex].vote.id,
-				}
+					voteId: this.showList[this.currentVoteIndex].vote.id
+				};
 				uni.request({
 					url: this.$serverUrl + '/vote/saveVoteComment',
 					method: 'POST',
@@ -798,12 +802,12 @@ export default {
 						if (res.data.status == 200) {
 							uni.hideLoading();
 							uploadFlag = false;
-							
+
 							this.commentContent = '';
 							// this.writingComment = false;
 							// this.showInput = false;
 							this.getComments(this.showList[this.currentVoteIndex]);
-		
+
 							// this.articleCard.commentNum++; // 文章评论数累加
 						} else if (res.data.status == 500) {
 							this.contentIllegal();
@@ -812,17 +816,17 @@ export default {
 				});
 			}
 		},
-		
-		goToCommentDetail(mainComment){
-			var data={
-				mainComment:mainComment,
-				type: "vote"
-			}
+
+		goToCommentDetail(mainComment) {
+			var data = {
+				mainComment: mainComment,
+				type: 'vote'
+			};
 			uni.navigateTo({
 				url: '/pages/comment-detail/comment-detail?data=' + JSON.stringify(data)
 			});
 		},
-		
+
 		contentIllegal() {
 			// 内容非法 用户提醒
 			uploadFlag = false;
@@ -832,7 +836,7 @@ export default {
 				duration: 2000,
 				icon: 'none'
 			});
-		},
+		}
 	}
 };
 </script>

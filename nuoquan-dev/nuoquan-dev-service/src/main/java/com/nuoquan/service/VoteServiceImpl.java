@@ -453,7 +453,7 @@ public class VoteServiceImpl implements VoteService {
 		// 4.更新vote_option表中该投票的每个选项的percent值
 		Example example = new Example(VoteOption.class);
 		Criteria criteria = example.createCriteria();
-		criteria.andEqualTo("vote_id");
+		criteria.andEqualTo("voteId", voteUser.getVoteId());
 		List<VoteOption> list = voteOptionMapper.selectByExample(example);
 		for (VoteOption vu : list) {
 			Integer optionTotalCount = vu.getCount();

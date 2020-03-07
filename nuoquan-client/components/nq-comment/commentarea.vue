@@ -1,6 +1,6 @@
 <template>
 	<!--评论区域-->
-	<view class="comments-area" :style="{ opacity: commentList.length != undefined ? 1 : 0 }">
+	<view :style="{ width: areaWidth, margin: areaMargin ,opacity: commentList.length != undefined ? 1 : 0 }">
 		<!--评论数，排序方式-->
 		<view class="comments-menu">
 			<view class="comments-num">{{ commentNum }}条评论</view>
@@ -26,14 +26,14 @@
 						<view class="time_text">{{ timeDeal(comment.mainComment.createDate) }}</view>
 					</view>
 					<view class="comment-content" @longpress="onLongpress" @tap="goToCommentDetail(comment.mainComment)">{{ comment.mainComment.comment }}</view>
-					<view class="comment-menu">
-						<view class="son-comment-num" @tap="goToCommentDetail(comment.mainComment)">{{ comment.mainComment.commentNum }}</view>
-						<view class="like-num" :class="{ liked: comment.mainComment.isLike }" @tap="swLikeComment(comment.mainComment)">{{ comment.mainComment.likeNum }}</view>
-					</view>
 					<reComment 
 					:subComment="comment.subComment" 
 					@goToCommentDetail="goToCommentDetail(comment.mainComment)"
 					style="width: 100%;height:100%;"></reComment>
+					<view class="comment-menu">
+						<view class="son-comment-num" @tap="goToCommentDetail(comment.mainComment)">{{ comment.mainComment.commentNum }}</view>
+						<view class="like-num" :class="{ liked: comment.mainComment.isLike }" @tap="swLikeComment(comment.mainComment)">{{ comment.mainComment.likeNum }}</view>
+					</view>
 				</view>
 			</block>
 		</view>
@@ -57,7 +57,9 @@ export default {
 		 * }
 		 */
 		commentList: '', 
-		commentNum: ''
+		commentNum: '',
+		areaWidth: '',
+		areaMargin: '',
 	},
 	components: {
 		nqSwitch,
