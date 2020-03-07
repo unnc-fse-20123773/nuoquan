@@ -391,12 +391,20 @@ export default {
 		getselectedTag(tag) {
 			var a = this.selectedTags.indexOf(tag);
 			if (a == -1) {
-				this.selectedTags.push(tag);
+				if(this.selectedTags.length<3){
+					this.selectedTags.push(tag);
+				}else{
+					uni.showToast({
+						duration: 300,
+						title:'最多添加三个标签~',
+						icon:'none',
+					})
+				}
 			} else {
 				uni.showToast({
 					icon: 'none',
 					title: '已经添加～',
-					duration: 200
+					duration: 200,
 				});
 			}
 		},
