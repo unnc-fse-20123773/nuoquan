@@ -4,7 +4,20 @@
 		<!--评论数，排序方式-->
 		<view class="comments-menu">
 			<view class="comments-num">{{ commentNum }}条评论</view>
-			<nqSwitch style="margin-top: 3px;" :options="[lang.time, lang.hot]" @onChange="change_comment_order"></nqSwitch>
+			<nqSwitch v-if="lang.langType == 'zh-CN'"
+				style="margin-top: 3px;" 
+				:bgSwitchLeft = "'-13px'"
+				:bgSwitchRight = "'41px'" 
+				:options="[lang.time, lang.hot]" 
+				@onChange="change_comment_order">
+			</nqSwitch>
+			<nqSwitch v-else
+				style="margin-top: 3px;" 
+				:bgSwitchLeft = "'-11px'"
+				:bgSwitchRight = "'41px'" 
+				:options="[lang.time, lang.hot]" 
+				@onChange="change_comment_order">
+			</nqSwitch>
 			<!-- <view class="comments-order">
                    <view class="order-in-time" :class="{ chosen : order == 0}" @tap="change_comment_order(0)">
 					   时间

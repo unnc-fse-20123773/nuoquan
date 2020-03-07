@@ -21,6 +21,7 @@ module.exports = {
 	day : "days",
 	edit : "Edit",
 	ok : "OK",
+	pullUp : "Pull up",
 	
 	//登陆
 	isReadProtocol : "I have read and agree :",
@@ -47,11 +48,21 @@ module.exports = {
 	comments : "Comments",
 	writeComment : "Comment",
 	onBottom : "No more content",
-	addBody : "Add body",
 	addOption : "Add option",
 	votePrompt1 : "You can view the comments after you voted.",
 	votePrompt2 : "Up to 10 options, each limited to 20 words.",
 	dayEnd : "days finish",
+	engageComment: "Write some comment ......",
+	
+	
+	//新建文章&投票
+	addTitle: "Add title",
+	optionContent: "Option content",
+	addDescription : "Add description",
+	
+	//搜索
+	searchHistory: "Search History",
+	topSearches: "Top Searches",
 	
 	//评论
 	commentPrompt1 : "Say something...",
@@ -70,9 +81,14 @@ module.exports = {
 	changeLang : "Language",
 	follow : "Follow",
 	fans : "Follower",
-	reputation : "Peputation",
+	reputation : "Reputation",
 	like : "Like",
 	comment : "Comment",
+	
+	//我的发布
+	passCheck: 'Published successfully',
+	underCheck: 'Under Review',
+	failCheck: 'Publishing failed',
 	
 	//关注粉丝列表
 	fanAndFollow : "Follow List",

@@ -38,21 +38,20 @@
 							<!-- 						<view class="picNum"></view>第二版不显示图片总数了，此处注释掉 -->
 						</view>
 					</view>
-
 					<!-- 审核状态 -->
-					<view class="status pass" style="width:49px;background: #09BB07;" v-if="thisArticle.status == 1">审核通过</view>
-					<view class="status pending" style="width:36px;background: #3370FF;" v-if="thisArticle.status == 2">审核中</view>
-					<view class="status fail" style="width:49px;background: #888888;" v-if="thisArticle.status == 3">审核失败</view>
+					<view class="status pass" style="min-width:49px;background: #09BB07;" v-if="thisArticle.status == 1">{{lang.passCheck}}</view>
+					<view class="status pending" style="min-width:36px;background: #3370FF;" v-if="thisArticle.status == 2">{{lang.underCheck}}</view>
+					<view class="status fail" style="min-width:49px;background: #888888;" v-if="thisArticle.status == 3">{{lang.failCheck}}</view>
 				</view>
 
 				<view class="menu-area" v-if="messageIndex == thisArticle.id">
 					<view style="background: #FE5F55;" @click="fDeleteArticle(thisArticle.id)">
 						<image src="../../static/icon/bin.png"></image>
-						<text>删除</text>
+						<text>{{lang.delete}}</text>
 					</view>
 					<view style="background: #FCC041;" @click="closeSwipe">
 						<image src="../../static/icon/arrow-right-FFFFFF.png"></image>
-						<text>收起</text>
+						<text>{{lang.pullUp}}</text>
 					</view>
 				</view>
 			</view>
@@ -64,7 +63,8 @@
 export default {
 	name: 'aticlebrief',
 	props: {
-		myArticleList: {}
+		myArticleList: {},
+		lang: '',
 	},
 	data() {
 		return {
@@ -327,7 +327,7 @@ export default {
 	padding-bottom: 4px;
 }
 .menu-area view text {
-	width: 24px;
+	min-width: 24px;
 	height: 12px;
 	font-size: 12px;
 	line-height: 20px;

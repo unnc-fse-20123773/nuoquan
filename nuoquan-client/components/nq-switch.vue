@@ -1,12 +1,18 @@
 <template>
 	<view class="switch">
-			<view class="switch-left" :class="{ chosen : status == 0}" @tap="changeStatus(0)">
+		
+			<view class="switch-left" :class="{ chosen : status == 0}" 
+			@tap="changeStatus(0)">
 				{{options[0]?options[0]:"关"}}
 			</view>
-			<view class="switch-right" :class="{ chosen : status != 0}" @tap="changeStatus(1)">
+			
+			<view class="switch-right" :class="{ chosen : status != 0}" 
+			@tap="changeStatus(1)">
 				{{options[1]?options[1]:"开"}}
 			</view>
-			<view class="bg-of-switch" :style="{'left':status == 0 ? '-13px;' :'41px' ,}"></view>
+			
+			<!-- <view class="bg-of-switch" :style="{'left':status == 0 ? '-13px;' :'41px' ,}"></view> -->
+			<view class="bg-of-switch" :style="{'left':status == 0 ? bgSwitchLeft : bgSwitchRight ,}"></view>
 	</view>
 </template>
 
@@ -15,6 +21,8 @@
 		props: {
 			options: '', //非必填，默认关/开
 			initStatus: '', //非必填，默认0
+			bgSwitchLeft: '',
+			bgSwitchRight: '',
 		},
 		data() {
 			return {

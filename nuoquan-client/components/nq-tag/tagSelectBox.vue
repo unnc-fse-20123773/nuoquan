@@ -2,7 +2,7 @@
 	<view class="tagsArea">
 		<!-- TO DO 为啥有俩标签这个东西，目前用着同一个列表，是不是还需要改，我们提供标签的那个请求-->
 		<!-- 展示待选标签区域 -->
-		<text>所有标签</text>
+		<text>{{lang.all}} {{lang.tags}}</text>
 		<view class="tag" v-for="(item, index) in tagList" 
 		:key="index" 
 		:style="{ background: tagColorList[index] }" 
@@ -17,7 +17,8 @@
 <script>
 export default {
 	props: {
-		tagList: ''
+		tagList: '',
+		lang: '',
 	},
 	data() {
 		return {

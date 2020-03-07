@@ -147,13 +147,14 @@ export default {
 	font-size: 12px;
 	color: #000000;
 	line-height: 17px;
-	max-height: 28px;
+	max-height: 32px;
 	padding: 8px 0 8px 0;
 	
 	/* 保证文章正常显示 */
 	word-wrap: break-word;
 	word-break: break-all;
 	text-overflow: ellipsis;
+	white-space: pre-wrap;
 	/**文字隐藏后添加省略号*/
 	display: -webkit-box;
 	-webkit-box-orient: vertical;

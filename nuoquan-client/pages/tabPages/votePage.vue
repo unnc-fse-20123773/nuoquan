@@ -3,7 +3,7 @@
 		<!-- 导航栏 -->
 		<view class="navigatorBar_votePage super_center" :style="{ height: navigationBarHeight + 'px' }" @click="showallVote">
 			<view class="navbarLine column_center">
-				<text>{{ lang.vote }}</text>
+				<text>{{lang.vote}}</text>
 				<!-- <view class="allvote column_center">
 					<view class="allvote_text">{{lang.allVote}}</view>
 					<image src="../../static/icon/angle-down-ffffff.png" mode="aspectFit"></image>
@@ -211,6 +211,17 @@
 							@like="swLikeComment"
 							@goToCommentDetail="goToCommentDetail"
 						></commentarea>
+						<view class="comment-bottom">
+							<view class="comment-bottom-notice">{{lang.onBottom}}</view>
+							<view class="comment-bottom-buttons super_center">
+								<!-- <image class="back" @tap="backToLastPage" src="../../static/icon/arrow-left-fcc041.png" mode="aspectFit"></image> -->
+								<image class="to-top" @tap="scrollTo('top')" src="../../static/icon/arrow-left-fcc041.png"></image>
+								<view class="active-input-button" 
+								:style="{'letter-spacing': lang.langType == 'zh-CN' ? '2px':''}"
+								@tap="saveComment()" 
+								@click="scrollTo('input')">{{lang.writeComment}}</view>
+							</view>
+						</view>
 					</view>
 
 					<!-- <votecomment
@@ -255,6 +266,7 @@ export default {
 	data() {
 		return {
 			//显示
+			pageHeight: 0, //屏幕高度
 			menuButtonInfo: '',
 			navigationBarHeight: 0, //导航栏高度
 			ifallVote: false, //控制左上角列表显示
@@ -390,19 +402,6 @@ export default {
 			this.ifallVote = true;
 		},
 
-		calculateHeight() {
-			var that = this;
-			var pageHeight;
-			uni.getSystemInfo({
-				success: function(res) {
-					pageHeight = res.windowHeight;
-					that.voteCardHeight = pageHeight - (99 + that.navigationBarHeight);
-					// console.log(that.voteCardHeight);
-				}
-			});
-			// console.log(this.voteCardHeight);
-		},
-
 		switchChoose(selectedOptionId) {
 			this.selectedOptionId = selectedOptionId;
 			// console.log("传进来的选项id= "+ selectedOptionId);
@@ -485,7 +484,21 @@ export default {
 				}
 			});
 		},
-
+		
+		
+		calculateHeight() {
+			var that = this;
+			uni.getSystemInfo({
+				success: function(res) {
+					that.pageHeight = res.windowHeight;
+					that.voteCardHeight = that.pageHeight - (99 + that.navigationBarHeight);
+					// console.log(that.voteCardHeight);
+				}
+			});
+			// console.log(that.pageHeight);
+			// console.log(this.voteCardHeight);
+		},
+		
 		/**
 		 * @param {Object} voteCard 注意传入值的地址
 		 */
@@ -493,7 +506,8 @@ export default {
 			for (let option of voteCard.vote.optionList) {
 				this.onePersentBarGrow(option);
 			}
-			this.voteCardHeight = 3000; //确认投票后or该投票状态为已投，改变卡片高度
+			this.voteCardHeight = this.pageHeight - (79 + this.navigationBarHeight - 16); //确认投票后or该投票状态为已投，改变卡片高度
+			//页面高度 - ( (navbar高度+tabbar高度+上边距 = 79) + 导航栏高度 - 卡片圆角半径16px)
 		},
 
 		/**
@@ -894,6 +908,12 @@ export default {
 				}
 			});
 		},
+		scrollToTop() {
+			uni.pageScrollTo({
+				scrollTop: 0,
+				duration: 300
+			});
+		}, 
 	}
 };
 </script>
@@ -1467,4 +1487,69 @@ page {
 	border-radius: 8px;
 	font-size: 14px;
 }
+
+	/* 滑到底了等提示 */
+	.comment-bottom {
+		height: 160px;
+		margin: auto;
+	}
+
+	.comment-bottom-notice {
+		text-align: center;
+		min-width: 71px;
+		height: 14px;
+		line-height: 14px;
+		font-size: 14px;
+		color: #B2B2B2;
+		margin: 37px auto 27px;
+	}
+
+	.comment-bottom-buttons {
+		display: flex;
+
+	}
+
+	.comment-bottom-buttons .back {
+		width: 16px;
+		height: 16px;
+		padding: 14px;
+		background: #FFF1D5;
+		border-radius: 22px;
+	}
+
+	.comment-bottom-buttons .to-top {
+		width: 18px;
+		height: 12px;
+		background: #FFF1D5;
+		border-radius: 22px;
+		padding: 16px 11px 16px 15px;
+		position: relative;
+		transform: rotate(90deg);
+	}
+
+	.comment-bottom-buttons .to-top::after {
+		content: '';
+		position: absolute;
+		top: 14px;
+		left: 12px;
+		width: 2px;
+		height: 16px;
+		background: #FCC041;
+		border-radius: 2px;
+	}
+
+	.active-input-button {
+		height:14px;
+		font-size:14px;
+		font-family:Source Han Sans CN;
+		font-weight:400;
+		line-height:16px;
+		color: rgba(255, 255, 255, 1);
+		padding: 10px 22px;
+		border-radius: 10px;
+		box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.16);
+		background: #FCC041;
+		/* letter-spacing: 2px; */
+		margin-left: 26px;
+	}
 </style>

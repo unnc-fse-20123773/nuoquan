@@ -1,13 +1,13 @@
 <template>
 	<view class="weui-search-bar">
 		<view class="input-bar" :style="{height: this.getnavbarHeight().bottom + 5 + 'px'}">
-			<span class="back" @tap="exitSearch">返回</span>
+			<span class="back" @tap="exitSearch">{{lang.back}}</span>
 			<input type="text" v-model="searchKeyWords" focus confirm-type="search" @confirm="search(1)" />
 		</view>
 
 		<!-- 历史搜索标题行及区域 -->
 		<view class="SearchHistoryItem" v-show="searching">
-			<view class="SearchHistoryItemTitle">搜索历史</view>
+			<view class="SearchHistoryItemTitle">{{lang.searchHistory}}</view>
 			<icon type="clear" @tap="searchDeleteAll" size="11"></icon>
 			<!-- <view v-for="key in searchHisKeyList" :key="key">{{key}}</view> -->
 			<view class="searchList">
@@ -17,7 +17,7 @@
 
 		<!-- 		大家都在搜-->
 		<view class="wxSearchKey" v-show="searching">
-			<text class="exSearchTitle">大家都在搜</text>
+			<view class="exSearchTitle">{{lang.topSearches}}</view>
 			<view class="searchList">
 				<view class="item" v-for="(i,index) in hotList" :key="index" @click="putHotIntoInput(index)">
 					{{i}}
@@ -45,7 +45,8 @@
 
 <script>
 	import searchResultArticle from '../../components/searchResultArticle.vue';
-
+	import { mapState, mapMutations } from 'vuex';
+	
 	var isSearching = false; //搜索锁
 	export default {
 		data() {
@@ -62,6 +63,9 @@
 				currentPage: 1,
 			}
 		},
+		computed: {
+			...mapState(['lang'])
+		},
 		components: {
 			searchResultArticle,
 		},
@@ -73,6 +77,8 @@
 			uni.hideLoading();
 		},
 		methods: {
+			...mapMutations(['changeLang']), //引用vuex中的方法
+			
 			getHotWords: function() {
 				var that = this;
 				uni.request({
@@ -317,7 +323,7 @@
 		background-repeat: no-repeat;
 		position: absolute;
 		left: -28px;
-		top: -6px;
+		top: -8px;
 		display: inline-block;
 		width: 35px;
 		height: 35px;

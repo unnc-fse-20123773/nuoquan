@@ -200,8 +200,7 @@ export default {
 	margin: auto;
 }
 .topright {
-
-		width: 82px;
+		min-width: 82px;
 		height: 26px;
 		line-height:20px;
 		background-color: #FFCF3C;
@@ -212,7 +211,6 @@ export default {
 		align-items: center;
 		margin-left: 10%;
 		margin-right: 10px;
-	
 	}
 
 	.refresh{
