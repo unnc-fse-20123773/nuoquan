@@ -1,20 +1,20 @@
 <template>
-	<view style="width: calc(100% - 24px);height: 100%;margin: auto;">
-		<view style="position: relative;margin-bottom: 20px;margin-top: 25px;">
+	<!-- <view style="width: calc(100% - 24px);height: 100%;margin: auto;"> -->
+		<view>
+		<!-- <view style="position: relative;margin-bottom: 20px;margin-top: 25px;">
 			<textarea class="content" 
 			v-model="commentContent" 
-			maxlength="140" 
+			maxlength="140"
 			:auto-height="true" 
 			:show-confirm-bar="false" 
 			@click="controlInput(1)" 
 			:placeholder="placeholderText">
 			</textarea>
-			<!-- 			<view style="position: absolute;bottom: 8px;right:8px;font-size: 11px;color:#888888;">{{140 - commentContent.length}}</view>-->
 			<view style="width:28px;height:14px;line-height:14px;font-size:14px;color:rgba(252,192,65,1);position: absolute;top:11px;right:12px;">结束</view>
 			<image src="../static/icon/emoji.png" style="position: absolute;left:12px;top:8px;width:20px;height:20px;"></image>
-		</view>
+		</view> -->
 
-		<nqSwitch v-if="lang.langtype == 'zh-CN'" 
+		<nqSwitch v-if="lang.langType == 'zh-CN'" 
 			:bgSwitchLeft = "'-13px'"
 			:bgSwitchRight = "'41px'"
 			style="margin-top: 30px;" 

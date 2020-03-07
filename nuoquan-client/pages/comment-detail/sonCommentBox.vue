@@ -8,7 +8,7 @@
 				<view class="replyTo" v-if="commentDetail.toNickname != null && commentDetail.toNickname != undefined">
 					{{commentDetail.toNickname}}
 				</view>
-				<view class="time_text">{{ commentDetail.timeAgo }}</view>
+				<view class="time_text">{{ timeDeal(commentDetail.createDate) }}</view>
 			</view>
 			<view class="comment-content" @tap="controlInputInSonCommentBox()">{{ commentDetail.comment }}</view>
 			<view class="comment-menu">
@@ -35,11 +35,7 @@
 		},
 		
 		created() {
-			// console.log(this.reCommentDetail);
-		},
-		
-		onLoad() {
-			// console.log("哈哈哈哈哈哈");
+			console.log(this.reCommentDetail);
 		},
 		
 		methods:{
@@ -70,9 +66,7 @@
 </script>
 
 <style scoped>
-
-	
-@import url("../detail/oneComment.css");
+@import url("../../components/nq-comment/oneComment.css");
 /* 此文件,detail的评论,comment-detail,son-Comment卡片统一样式,所以统一引入,后期更改请同步------妖
  */	
 .replyTo{

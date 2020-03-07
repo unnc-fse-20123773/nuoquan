@@ -66,9 +66,8 @@ public class VoteVO {
     private List<VoteImage> imgList; // 投票图片列表
     private List<VoteOption> optionList;
     private Boolean isUserVoted;
-    
-    
-    
+    private String selectedOptId;
+
 
     /**
      * @return id
@@ -310,5 +309,13 @@ public class VoteVO {
 
 	public void setIsUserVoted(Boolean isUserVoted) {
 		this.isUserVoted = isUserVoted;
+	}
+
+	public String getSelectedOptId() {
+		return selectedOptId;
+	}
+
+	public void setSelectedOptId(String selectedOptId) {
+		this.selectedOptId = selectedOptId;
 	}
 }

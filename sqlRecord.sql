@@ -725,3 +725,11 @@ UNLOCK TABLES;
 -- v20.2.21 @author: jerio
 -- 添加标签表
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+
+ALTER TABLE `nuoquan`.`vote_user` 
+ADD UNIQUE INDEX `user_option_rel` (`user_id` ASC, `option_id` ASC);
+
+-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+-- v20.3.7 @author: jerio
+-- 添加user_option_rel关系
+-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑

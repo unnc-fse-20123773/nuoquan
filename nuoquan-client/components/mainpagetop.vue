@@ -69,7 +69,7 @@
 				v-if="showTagBox">
 			</tagSelectBox>
 			<!-- 排序方式1-->
-			<nqSwitch v-if="lang.langtype == 'zh-CN'" 
+			<nqSwitch v-if="lang.langType == 'zh-CN'" 
 				:bgSwitchLeft = "'-13px'"
 				:bgSwitchRight = "'41px'"
 				:options='[lang.all, lang.follow]' 
@@ -84,7 +84,7 @@
 				@onChange="change_article_order1">
 			</nqSwitch>
 			<!-- 排序方式2 -->
-			<nqSwitch v-if="lang.langtype == 'zh-CN'" 
+			<nqSwitch v-if="lang.langType == 'zh-CN'" 
 				:bgSwitchLeft = "'-13px'"
 				:bgSwitchRight = "'41px'"
 				:options='[lang.time, lang.hot]' 

@@ -64,6 +64,9 @@ module.exports = {
 	searchHistory: "Search History",
 	topSearches: "Top Searches",
 	
+	//评论
+	commentPrompt1 : "Say something...",
+	
 	//热门
 	hotTitle : "Top 10",
 	nextRefresh : "Next Update",
