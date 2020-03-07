@@ -324,6 +324,7 @@ export default {
 		// console.log('导航栏高度=' + this.navigationBarHeight);
 		this.calculateHeight();
 		// this.showCommentWhenLoad();
+		console.log(showList);
 	},
 
 	methods: {
