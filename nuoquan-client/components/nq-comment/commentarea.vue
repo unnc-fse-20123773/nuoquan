@@ -29,7 +29,7 @@
 					<reComment :subComment="comment.subComment" @goToCommentDetail="goToCommentDetail(comment.mainComment)" style="width: 100%;height:100%;"></reComment>
 					<view class="comment-menu">
 						<view class="son-comment-num" @tap="goToCommentDetail(comment.mainComment)">{{ comment.mainComment.commentNum }}</view>
-						<view class="like-num" :class="{ liked: comment.mainComment.isLike }" @tap="swLikeComment(comment.mainComment, index)">{{ comment.mainComment.likeNum }}</view>
+						<view class="like-num" :class="{ liked: comment.mainComment.isLike }" @tap="swLikeComment(comment, index)">{{ comment.mainComment.likeNum }}</view>
 					</view>
 				</view>
 			</block>

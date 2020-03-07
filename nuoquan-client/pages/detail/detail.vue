@@ -447,14 +447,15 @@ export default {
 		 * @param {Object} comment
 		 */
 		swLikeComment(comment) {
-			if (comment.isLike) {
-				this.unLikeComment(comment);
-				comment.likeNum--;
+			var mainComment = comment.mainComment;
+			if (mainComment.isLike) {
+				this.unLikeComment(mainComment);
+				mainComment.likeNum--;
 			} else {
-				this.likeComment(comment);
-				comment.likeNum++;
+				this.likeComment(mainComment);
+				mainComment.likeNum++;
 			}
-			comment.isLike = !comment.isLike;
+			mainComment.isLike = !mainComment.isLike;
 		},
 		
 		likeComment(comment) {

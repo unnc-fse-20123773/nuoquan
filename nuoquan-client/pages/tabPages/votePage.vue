@@ -504,7 +504,6 @@ export default {
 		onePersentBarGrow(option) {
 			var widthTarget = this.reserveTwoDecimal(option.percent * 100);
 			this.$set(option, 'barWidth', widthTarget); // 为选项添加barWidth属性
-			console.log(option);
 		},
 
 		showVotes(page) {
@@ -843,16 +842,19 @@ export default {
 		 * @param {Object} comment
 		 */
 		swLikeComment(comment, index) {
-			if (comment.isLike) {
-				this.unLikeComment(comment);
-				comment.likeNum--;
+			var mainComment = comment.mainComment
+			if (mainComment.isLike) {
+				this.unLikeComment(mainComment);
+				mainComment.likeNum--;
 			} else {
-				this.likeComment(comment);
-				comment.likeNum++;
+				this.likeComment(mainComment);
+				mainComment.likeNum++;
 			}
-			comment.isLike = !comment.isLike;
+			mainComment.isLike = !mainComment.isLike;
 			console.log(this.showList[this.currentVoteIndex])
-			this.showList[this.currentVoteIndex].commentList[index].mainComment = comment
+			//动态修改显示层的值，直接按地址修改这里好像不可以
+			this.showList[this.currentVoteIndex].commentList[index].mainComment = mainComment;
+			this.showList[this.currentVoteIndex].commentList[index].subComment = comment.subComment;
 		},
 		
 		likeComment(comment) {
