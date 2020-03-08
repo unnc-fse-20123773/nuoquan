@@ -22,9 +22,10 @@
 			</view>
 			<view class="comment-content" @tap="controlInput(mainComment)">{{ mainComment.comment }}</view>
 			<view class="comment-menu">
-				<view class="son-comment-num" @tap="controlInput(mainComment)">{{ mainComment.commentNum }}</view>
-				<view class="like-num" :class="{ liked: mainComment.isLike }" @tap="swLikeComment(mainComment)">{{ mainComment.likeNum }}</view>
-			</view>
+			<view class="operationBar column_center">
+					<nqCmt @click.native="controlInput(mainComment)" :number="mainComment.commentNum"></nqCmt>
+					<nqLike style="margin-left: 11px;" @click.native="swLikeComment(mainComment)" :status="mainComment.isLike" :number="mainComment.likeNum"></nqLike>
+				</view>			</view>
 		</view>
 
 		<!-- 子评论区域 -->
@@ -43,14 +44,14 @@
 		</view>
 
 		<!--触底提示和功能  start   COPY FROM DETAIL-->
-		<view class="comment-bottom">
+		<!-- <view class="comment-bottom">
 			<view class="comment-bottom-notice">{{ lang.onBottom }}</view>
 			<view class="comment-bottom-buttons">
 				<image class="back" @tap="backToLastPage" src="../../static/icon/arrow-left-fcc041.png" mode="aspectFit"></image>
 				<image class="to-top" @tap="scrollToTop" src="../../static/icon/arrow-left-fcc041.png"></image>
 				<view class="active-input-button" @click="controlInput(1)">{{ lang.writeComment }}</view>
 			</view>
-		</view>
+		</view> -->
 		<!--触底提示和功能  END-->
 
 		<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)">
@@ -71,7 +72,7 @@
 						cursor-spacing="20"
 					/>
 					<!-- <view class="comment-pic-area"><image src="../../static/BG/indexBG.png"></image><image src="../../static/icon/about.png"></image><image src="../../static/icon/1575235531(1).png"></image></view> -->
-					<view class="word-count-left">{{ wordNotice }}</view>
+					<view class="word-count-left">{{ 140 - commentContent.length }}</view>
 				</view>
 			</view>
 		</view>
@@ -87,11 +88,15 @@
 import sonCommentBox from './sonCommentBox.vue';
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 import { mapState, mapMutations } from 'vuex';
+import nqLike from '@/components/nq-button/nq-likeButton.vue';
+import nqCmt from '@/components/nq-button/nq-cmtButton.vue';
 
 export default {
 	components: {
 		sonCommentBox,
-		uniNavBar
+		uniNavBar,
+		nqLike,
+		nqCmt,
 	},
 	computed: {
 		...mapState(['lang'])
@@ -105,7 +110,7 @@ export default {
 			commentList: '', //返回值，获取评论列表信息,循环展示的东西，sonComment
 			showInput: false, //控制输入框，true时显示输入框
 			writingComment: false, //控制输入框，true时自动获取焦点，拉起输入法
-			wordNotice: '48',
+			// wordNotice: '48',
 			submitData: {},
 			placeholderText: '评论点什么吧......',
 			textAreaAdjust: '',
@@ -230,7 +235,7 @@ export default {
 				this.getSubComments(page);
 			}
 		},
-
+		
 		controlInput(a) {
 			if (a != 0 && a != 1) {
 				//a!=0, !=1， 从子组件传来，包含被回复对象：被回复人ID，被回复评论ID，被回复人昵称
@@ -263,14 +268,14 @@ export default {
 			console.log('展开');
 			console.log(e);
 			console.log(e.detail.height);
-			this.textAreaAdjust = e.detail.height / 3 + 'px';
+			// this.textAreaAdjust = e.detail.height / 3 + 'px';
 			// this.textAreaAdjust = '0' ;
 		},
 		unpopTextArea(e) {
 			console.log('收起');
 			console.log(e);
 
-			this.textAreaAdjust = '';
+			// this.textAreaAdjust = '';
 		},
 
 		/**

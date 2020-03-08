@@ -44,8 +44,12 @@
 					@goToCommentDetail="goToCommentDetail(comment.mainComment)"
 					style="width: 100%;height:100%;"></reComment>
 					<view class="comment-menu">
-						<view class="son-comment-num" @tap="goToCommentDetail(comment.mainComment)">{{ comment.mainComment.commentNum }}</view>
-						<view class="like-num" :class="{ liked: comment.mainComment.isLike }" @tap="swLikeComment(comment.mainComment, index)">{{ comment.mainComment.likeNum }}</view>
+						<!-- <view class="son-comment-num" @tap="goToCommentDetail(comment.mainComment)">{{ comment.mainComment.commentNum }}</view> -->
+						<!-- <view class="like-num" :class="{ liked: comment.mainComment.isLike }" @tap="swLikeComment(comment.mainComment, index)">{{ comment.mainComment.likeNum }}</view> -->
+						<view class="operationBar column_center">
+								<nqCmt @click.native="goToCommentDetail(comment.mainComment)" :number="comment.mainComment.commentNum"></nqCmt>
+								<nqLike style="margin-left: 11px;" @click.native="swLikeComment(comment.mainComment, index)" :status="comment.mainComment.isLike" :number="comment.mainComment.likeNum "></nqLike>
+						</view>
 					</view>
 				</view>
 			</block>
@@ -57,6 +61,8 @@
 import nqSwitch from '@/components/nq-switch.vue';
 import reComment from './reComment.vue';
 import { mapState, mapMutations } from 'vuex';
+import nqLike from '@/components/nq-button/nq-likeButton.vue';
+import nqCmt from '@/components/nq-button/nq-cmtButton.vue';
 
 export default {
 	props: {
@@ -76,7 +82,9 @@ export default {
 	},
 	components: {
 		nqSwitch,
-		reComment
+		reComment,
+		nqLike,
+		nqCmt,
 	},
 	computed: {
 		...mapState(['lang'])

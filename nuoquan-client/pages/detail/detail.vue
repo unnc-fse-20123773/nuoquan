@@ -78,7 +78,7 @@
 						cursor-spacing="20"
 					/>
 					<!-- <view class="comment-pic-area"><image src="../../static/BG/indexBG.png"></image><image src="../../static/icon/about.png"></image><image src="../../static/icon/1575235531(1).png"></image></view> -->
-					<view class="word-count-left">{{ wordNotice }}</view>
+					<view class="word-count-left">{{ 140 - commentContent.length }}</view>
 				</view>
 			</view>
 		</view>
@@ -118,7 +118,6 @@ export default {
 			showInput: false, //控制输入框，true时显示输入框
 			writingComment: false, //控制输入框，true时自动获取焦点，拉起输入法
 			placeholderText: '评论点什么吧......',
-			wordNotice: '48',
 			inputData: {}, //localData,用于拼接不同情况下的savecomment请求的数据
 
 			submitData: {
@@ -251,7 +250,7 @@ export default {
 			console.log('展开');
 			console.log(e);
 			console.log(e.detail.height);
-			this.textAreaAdjust = e.detail.height / 3 + 'px';
+			// this.textAreaAdjust = e.detail.height / 3 + 'px';
 			// this.textAreaAdjust = '0' ;
 		},
 
@@ -259,7 +258,7 @@ export default {
 			console.log('收起');
 			console.log(e);
 
-			this.textAreaAdjust = '';
+			// this.textAreaAdjust = '';
 		},
 		changeLikeStatus(status) {
 			this.articleCard.isLike = status;

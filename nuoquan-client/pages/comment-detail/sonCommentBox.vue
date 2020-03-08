@@ -12,8 +12,10 @@
 			</view>
 			<view class="comment-content" @tap="controlInputInSonCommentBox()">{{ commentDetail.comment }}</view>
 			<view class="comment-menu">
-				<view class="son-comment-num" @tap="controlInputInSonCommentBox()">{{commentDetail.commentNum}}</view>
-				<view class="like-num" :class="{liked:commentDetail.isLike}" @tap="swLikeCommentDetail(commentDetail)">{{ commentDetail.likeNum }}</view>
+				<view class="operationBar column_center">
+						<nqCmt @click.native="controlInputInSonCommentBox()" :number="commentDetail.commentNum"></nqCmt>
+						<nqLike style="margin-left: 11px;" @click.native="swLikeCommentDetail(commentDetail)" :status="commentDetail.isLike" :number="commentDetail.commentNum"></nqLike>
+				</view>
 			</view>
 		</view>
 <!--结束 		 此BLOCK,detail的评论,comment-detail,son-Comment卡片统一样式,所以统一引入,后期更改请同步------妖      -->
@@ -23,11 +25,15 @@
 </template>
 
 <script>
+import nqLike from '@/components/nq-button/nq-likeButton.vue';import nqCmt from '@/components/nq-button/nq-cmtButton.vue';	
 	export default{
 		props:{
 		  reCommentDetail: '', //沿用之前组件名字了，可改，记得本组件内全替换
 		},
-		
+		components: {
+				nqLike,
+				nqCmt,
+		},
 		data(){
 			return{
 				commentDetail: this.reCommentDetail,
