@@ -61,7 +61,31 @@
 			</view>
 		</form>
 		<view class="profile-moreinfo-card">
-			<view class="email">
+			<view class="text row">{{lang.schoolEmail}}</view>
+			<view class="row">
+				<view class="full_email" v-if='!isEditEmail'>{{ userInfo.email}}</view>
+				<input maxlength="6" :value="userInfo.emailPrefix" @input="onEmailInput" v-if="isEditEmail&& !showCaptcha" />
+				<view v-if="isEditEmail&& !showCaptcha" class="text">{{ userInfo.emailSuffix }}</view>
+				<view v-if="isEditEmail&&showCaptcha" class="text">{{email}}@nottingham.edu.cn</view>
+			</view>
+			<view class="row">
+				<button class="editEmail super_center" @click="editEmail" v-if="!isEditEmail">
+					<view class="editProfile-text">{{lang.changeEmail}}</view>
+				</button>
+
+				<input v-if="isEditEmail&& showCaptcha" maxlength="6" :placeholder="lang.captcha" @input="onCaptcha" />
+				<button v-if="isEditEmail&& showCaptcha" @click="confirmCode" class="confirmButton">
+					<view>{{lang.ok}}</view>
+				</button>
+				<whCaptcha class="waiting" ref="captcha" :secord="60" :title="lang.getCaptcha" :waitTitle="lang.waitCaptcha"
+				 normalClass="editEmail" disabledClass="waiting60s" @click="getCaptcha" v-if="isEditEmail"></whCaptcha>
+
+
+
+			</view>
+
+
+			<!-- 			<view class="email">
 				<view class="text">{{lang.schoolEmail}}</view>
 				<view v-if="!isEditEmail">
 					<view class="second_line">{{ userInfo.email }}</view>
