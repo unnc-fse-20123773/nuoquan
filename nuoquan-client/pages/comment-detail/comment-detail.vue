@@ -103,7 +103,7 @@ export default {
 			writingComment: false, //控制输入框，true时自动获取焦点，拉起输入法
 			submitData: {},
 			placeholderText: '',
-			textAreaAdjust: '',
+			textAreaAdjust: 0,
 
 			totalPage: 1,
 			currentPage: 1,

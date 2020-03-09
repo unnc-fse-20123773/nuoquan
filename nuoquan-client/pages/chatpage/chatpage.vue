@@ -155,7 +155,7 @@ export default {
 		var query2 = uni.createSelectorQuery().in(this);
 		query2.select('#icons').boundingClientRect(data => {
 		    console.log(data);
-			that.textareaWidth = that.windowWidth - data.width - 40;
+			that.textareaWidth = that.windowWidth - data.width - 56;
 		}).exec();
 		
 		// 获取与该用户的聊天历史记录
@@ -341,7 +341,7 @@ page {
 	line-height: 16px;
 	/* width: 62.67%; */
 	max-height: 75px;
-	padding: 5px 0;
+	padding: 5px 8px;
 	margin: 11px 0 11px 14px;
 	font-size: 13px;
 	height:34px;

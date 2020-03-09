@@ -126,7 +126,7 @@ export default {
 			imgIndex: '',
 			serverUrl: this.$serverUrl,
 
-			textAreaAdjust: '',
+			textAreaAdjust: 0,
 
 			totalPage: 1, //评论分页属性
 			currentPage: 1, //评论分页属性
