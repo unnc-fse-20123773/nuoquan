@@ -37,7 +37,7 @@
 						<view >
 							<swiper-item v-for="(item, index) in topArticles" :key="index">
 								<view class="itemCard" :style="{'height':roleup == false ? '62px;' :'33px' ,}">
-									<view :class="[roleup == false ? 'hotTitle' : 'hotTitle_roled']">{{ item.articleTitle }}</view>
+									<view class="hotTitle" :style="{'margin-top': roleup ? '8px': '12px'}">{{ item.articleTitle }}</view>
 									<view v-if="roleup == false" class="userInfo">
 										<image :src=pathFilter(item.faceImg) mode="aspectFit"></image>
 										<view class="userid_mainpagetop">
@@ -416,26 +416,19 @@ page {
 
 .hotTitle {
 	width: 100%;
-	height: 17px;
-	margin-top: 12px;
+	height: 21px;
 	font-size: 17px;
 	font-family: Source Han Sans CN;
 	font-weight: 500;
 	line-height: 21px;
 	color: rgba(74, 74, 74, 1);
 	opacity: 1;
-}
-
-.hotTitle_roled {
-	width: 100%;
-	height: 17px;
-	margin-top: 8px;
-	font-size: 17px;
-	font-family: Source Han Sans CN;
-	font-weight: 500;
-	line-height: 21px;
-	color: rgba(74, 74, 74, 1);
-	opacity: 1;
+	text-overflow: ellipsis;
+	/**文字隐藏后添加省略号*/
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 1;
+	overflow: hidden;
 }
 
 .optionLine_mpt{

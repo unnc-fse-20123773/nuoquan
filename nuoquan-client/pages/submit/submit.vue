@@ -93,7 +93,6 @@ export default {
 	},
 	data() {
 		return {
-			pageTitle: '新建帖子',
 			userInfo: '',
 			articleTitle: '',
 			articleContent: '',

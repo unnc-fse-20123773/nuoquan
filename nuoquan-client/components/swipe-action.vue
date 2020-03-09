@@ -40,7 +40,7 @@
 								<view class="item-right">
 									<view class="time">{{ timeDeal(it.createDate) }}</view>
 									<!-- <view class="mark" v-if="it.unreadCount > 0">{{ it.count }}</view> -->
-									<msgcount style="position: absolute;z-index: 40;right: 0;" :count="it.unreadCount"></msgcount>
+									<msgcount style="position: absolute;z-index: 40;right: 0;bottom: 0;" :count="it.unreadCount"></msgcount>
 								</view>
 							</block>
 						</view>
@@ -243,9 +243,9 @@ export default {
 
 .item {
 	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
 	padding: 10upx 16upx;
+	height: 54px;
+	width: calc(100% - 16px);
 
 	&.stick {
 		background-color: rgba(243, 236, 221, 0.5);

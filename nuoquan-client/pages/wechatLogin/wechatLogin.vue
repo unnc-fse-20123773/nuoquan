@@ -1,6 +1,17 @@
 <!-- 开发测试用界面 -->
 <template>
 	<view>
+		<!-- 导航栏 -->
+		<uni-nav-bar class="navigationBar"
+		:style="{height: this.getnavbarHeight().bottom + 'px'}" 
+		:showLeftIcon="true" 
+		:isNavHome="true" 
+		:left-text="'返回'"
+		:title="pageTitle" 
+		:height="navbarHeight"></uni-nav-bar>				
+		
+		<view :style="{height: navbarHeight + 'px'}"></view>
+		
 		<button type="primary" open-type="getUserInfo" @getuserinfo="getUserInfo" withCredentials="true">微信登陆授权</button>
 
 		<!-- 用于开发阶段清除用户信息的缓存，发布时需要注释掉 -->
@@ -24,16 +35,21 @@
 	 	emailPrefix: 'zy22089',
 	 	emailSuffix: '@nottingham.edu.cn'
 	}*/
-
+	import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue";
 	export default {
+		components: {
+			uniNavBar,
+		},
 		data() {
 			return {
-				userId: ''
+				pageTitle: '开发调试页',
+				userId: '',
+				navbarHeight: 0,
 			}
 		},
 
 		onLoad() {
-
+			this.navbarHeight = this.getnavbarHeight().bottom + 5;
 		},
 		methods: {
 			/**
