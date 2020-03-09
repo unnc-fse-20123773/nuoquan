@@ -18,7 +18,7 @@
 				</button>
 
 				<!-- 编辑框 -->
-				<view style="block;width: 50%;">
+				<view style="block;width: 100%;">
 					<view class="nickname" style="display: block;">
 						<view class="text">{{lang.nickname}}</view>
 						<view class="second_line" v-if="!isEdit">{{ userInfo.nickname }}</view>
@@ -38,19 +38,19 @@
 							<view :class="[gender == 0 ? 'genderPicker-buttonclick' : 'genderPicker-button']" @click="genderChanger(0)">{{lang.female}}</view>
 						</view>
 					</view>
-					<view class="nickname">
+					<view class="major">
 						<view class="text">{{lang.major}}</view>
 						<view class="second_line" v-if="!isEdit">{{ userInfo.major }}</view>
 						<mypicker v-if="isEdit" class="major-pick-style" :mode="'major'" :range="majors" :value="major" @change="pickerChange"></mypicker>
 					</view>
 				</view>
 				<view style="display: inline-block;width:50%;">
-					<view class="nickname">
+					<view class="graduationYear">
 						<view class="text">{{lang.graduationYear}}</view>
 						<view class="second_line" v-if="!isEdit">{{ userInfo.graduationYear }}</view>
 						<mypicker class="year-pick-style" v-if="isEdit" :mode="'year'" :range="years" :value="year" @change="pickerChange"></mypicker>
 					</view>
-					<view class="nickname">
+					<view class="degree">
 						<view class="text">{{lang.degree}}</view>
 						<view class="second_line" v-if="!isEdit">{{ degrees[userInfo.degree] }}</view>
 						<mypicker v-if="isEdit" class="degree-pick-style" :mode="'degree'" :range="degrees" :value="degree" @change="pickerChange"></mypicker>
@@ -61,7 +61,31 @@
 			</view>
 		</form>
 		<view class="profile-moreinfo-card">
-			<view class="email">
+			<view class="text row">{{lang.schoolEmail}}</view>
+			<view class="row">
+				<view class="full_email" v-if='!isEditEmail'>{{ userInfo.email}}</view>
+				<input maxlength="6" :value="userInfo.emailPrefix" @input="onEmailInput" v-if="isEditEmail&& !showCaptcha" />
+				<view v-if="isEditEmail&& !showCaptcha" class="text">{{ userInfo.emailSuffix }}</view>
+				<view v-if="isEditEmail&&showCaptcha" class="text">{{email}}@nottingham.edu.cn</view>
+			</view>
+			<view class="row">
+				<button class="editEmail super_center" @click="editEmail" v-if="!isEditEmail">
+					<view class="editProfile-text">{{lang.changeEmail}}</view>
+				</button>
+
+				<input v-if="isEditEmail&& showCaptcha" maxlength="6" :placeholder="lang.captcha" @input="onCaptcha" />
+				<button v-if="isEditEmail&& showCaptcha" @click="confirmCode" class="confirmButton">
+					<view>{{lang.ok}}</view>
+				</button>
+				<whCaptcha class="waiting" ref="captcha" :secord="60" :title="lang.getCaptcha" :waitTitle="lang.waitCaptcha"
+				 normalClass="editEmail" disabledClass="waiting60s" @click="getCaptcha" v-if="isEditEmail"></whCaptcha>
+
+
+
+			</view>
+
+
+			<!-- 			<view class="email">
 				<view class="text">{{lang.schoolEmail}}</view>
 				<view v-if="!isEditEmail">
 					<view class="second_line">{{ userInfo.email }}</view>
@@ -71,7 +95,6 @@
 				</view>
 				<view v-else-if="isEditEmail">
 					<input maxlength="26" :value="userInfo.email" @input="onEmailInput" />
-					<!-- <text class="profilemoreTexta" v-else>scyzl2@nottingham.edu.cn</text> -->
 
 					<whCaptcha style="font-size: 15px;margin-top: 15px;" ref="captcha" :secord="60" :title="lang.getCaptcha"
 					 :waitTitle="lang.waitCaptcha" normalClass="editEmail" disabledClass="" @click="getCaptcha"></whCaptcha>
@@ -83,7 +106,10 @@
 						</button>
 					</view>
 				</view>
-			</view>
+			</view> -->
+
+
+
 		</view>
 	</view>
 </template>
@@ -402,8 +428,7 @@
 		height: 175px;
 		background-color: white;
 		/* justify-content: center; */
-		margin-left: auto;
-		margin-right: auto;
+		margin: 0 auto;
 		margin-top: -90rpx;
 		margin-bottom: 10px;
 		padding-top: 50px;
@@ -414,18 +439,6 @@
 		border-radius: 8px;
 	}
 
-	.profile-moreinfo-card {
-		height: 125px;
-		width: 93%;
-		background-color: white;
-		margin-left: auto;
-		margin-right: auto;
-		position: relative;
-		background: rgba(255, 255, 255, 1);
-		box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
-		opacity: 1;
-		border-radius: 8px;
-	}
 
 	.profileTouxiang {
 		position: absolute;
@@ -478,15 +491,6 @@
 		font-weight: 400;
 	}
 
-	.editEmail {
-		position: absolute;
-		left: calc((50% - 95px) / 2);
-		width: 97px;
-		height: 26px;
-		background: rgba(255, 201, 90, 1);
-		line-height: 26px;
-		border-radius: 4px;
-	}
 
 	.editEmail-edit {
 		position: absolute;
@@ -562,30 +566,44 @@
 </style>
 
 <style>
-	.nickname,
-	.gender {
+	.nickname {
+		vertical-align: top;
+		display: inline-block;
+		height: 45px;
+		width: 140px;
+		margin: 0 0 15px calc((50% - 95px) / 2);
+		position: relative;
+		overflow: visible;
+	}
+
+	.gender,
+	.major {
+		vertical-align: top;
+		display: inline-block;
+		width: 95px;
+		height: 45px;
+		margin: 0 calc((100% - 95px) / 2) 15px;
+		position: relative;
+		overflow: visible;
+	}
+
+	.graduationYear,
+	.degree {
 		vertical-align: top;
 		display: inline-block;
 		min-width: 95px;
+		max-width: 115px;
 		height: 45px;
 		margin: 0 calc((100% - 115px) / 2) 15px;
 		position: relative;
 		overflow: visible;
 	}
 
-	.email {
-		position: relative;
-		vertical-align: top;
-		display: inline-block;
-		width: 242px;
-		height: 38px;
-		margin: 18px calc((50% - 95px) / 2) 15px;
-		overflow: visible;
-	}
+
 
 	.nickname .text,
 	.gender .text,
-	.email .text {
+	.profile-moreinfo-card .text {
 		height: 11px;
 		line-height: 11px;
 		font-size: 11px;
@@ -613,7 +631,7 @@
 	}
 
 	.nickname input,
-	.email input {
+		{
 		border-bottom: 1upx solid #c0c0c0;
 		height: 29px;
 		font-size: 17px;
@@ -659,21 +677,18 @@
 	.year-pick-style {
 		position: absolute;
 		z-index: 999;
-		left: -5px;
 		top: 19px;
 	}
 
 	.degree-pick-style {
 		position: absolute;
 		z-index: 888;
-		left: -10px;
 		top: 19px;
 	}
 
 	.major-pick-style {
 		position: absolute;
 		z-index: 888;
-		left: -10px;
 		top: 19px;
 	}
 
@@ -686,4 +701,98 @@
 		clear: both;
 		visibility: hidden;
 	} */
+
+
+
+
+
+	.profile-moreinfo-card {
+		height: 105px;
+		width: 93%;
+		background-color: white;
+		margin-left: auto;
+		margin-right: auto;
+		position: relative;
+		background: rgba(255, 255, 255, 1);
+		box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+		opacity: 1;
+		border-radius: 8px;
+		padding-top: 20px;
+	}
+
+	.profile-moreinfo-card .text {
+		height: 11px;
+		line-height: 11px;
+		font-size: 11px;
+		color: rgba(178, 178, 178, 1);
+		overflow: visible;
+		display: inline-block;
+	}
+
+	.profile-moreinfo-card .row {
+		margin-left: calc((50% - 95px)/2);
+		margin-bottom: 10px;
+		display: block;
+		vertical-align: bottom;
+	}
+
+	.profile-moreinfo-card input {
+		margin-right: 10px;
+		vertical-align: bottom;
+		border-bottom: 1rpx solid #c0c0c0;
+		height: 17px;
+		font-size: 17px;
+		line-height: 17px;
+		color: rgba(53, 53, 53, 1);
+		text-align: left;
+		min-height: 1rpx;
+		overflow: visible;
+		padding-bottom: 5px;
+		display: inline-block;
+		width: 60px;
+	}
+
+	.editEmail {
+		margin-right: 10px;
+		vertical-align: bottom;
+		position: absolute;
+		left: calc((50% - 95px) / 2);
+		width: 97px;
+		height: 26px;
+		background: rgba(255, 201, 90, 1);
+		line-height: 26px;
+		border-radius: 4px;
+		text-align: center;
+		font-size: 14px;
+		font-weight: 400;
+		line-height: 26px;
+		color: rgba(255, 255, 255, 1);
+	}
+
+	.confirmButton {
+		margin-right: 10px;
+		vertical-align: bottom;
+		display: inline-block;
+		width: 68px;
+		height: 26px;
+		background: rgba(255, 201, 90, 1);
+		border-radius: 4px;
+		font-size: 14px;
+		line-height: 26px;
+		color: rgba(255, 255, 255, 1);
+	}
+
+	.waiting60s {
+		display: inline-block;
+		text-align: center;
+		width: 120px;
+		height: 26px;
+		border: 1px solid rgba(253, 208, 65, 1);
+		opacity: 1;
+		border-radius: 4px;
+		font-size: 14px;
+		font-weight: 400;
+		line-height: 26px;
+		color: rgba(255, 201, 90, 1);
+	}
 </style>
