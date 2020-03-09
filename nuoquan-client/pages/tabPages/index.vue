@@ -129,6 +129,7 @@ export default {
 			setTimeout(() => {
 				this.goTop()
 			}, 200)
+			
 			//刷新
 			if(e.url == "/"+this.getCurrentPage().route){
 				this.showArticles(1);
@@ -310,10 +311,6 @@ export default {
 			setTimeout(() => {
 				this.scrollTop = -1;
 			}, 200)
-			uni.showToast({
-				icon: 'none',
-				title: '纵向滚动 scrollTop 值已被修改为 0'
-			});
 		},
 
 		// 接收mainpageTop传过来的queryType并赋值, 一旦调用此方法, 重新刷新页面并获取文章.
