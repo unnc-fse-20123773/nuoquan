@@ -27,7 +27,7 @@ export default {
 		}
 	},
 	created() {
-		console.log(this.number)
+		// console.log(this.number)
 	}
 };
 </script>
