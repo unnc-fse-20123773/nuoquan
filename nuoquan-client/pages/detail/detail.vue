@@ -784,6 +784,7 @@ page {
 	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.16);
 	background: #ffffff;
 	line-height: 14px;
+	z-index: 30;
 }
 .permanent_input {
 	height: 30px;

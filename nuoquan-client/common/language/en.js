@@ -28,6 +28,7 @@ module.exports = {
 	edit : "Edit",
 	ok : "OK",
 	pullUp : "Pull up",
+	reply: "reply",
 	
 	//登陆
 	isReadProtocol : "I have read and agree :",
@@ -74,6 +75,7 @@ module.exports = {
 	commentPrompt1 : "Say something...",
 	commentNum : " Comments",
 	replyComent : "Reply @NICKNAME‘s comment",
+	showMoreComments: "Show more comments",
 	
 	//热门
 	hotTitle : "Top 10",

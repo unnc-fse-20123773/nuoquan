@@ -65,6 +65,7 @@
 	.switch-right ,.switch-left{
 		color:#9B9B9B;
 		font-size: 10px;
+		font-weight: 400;
 		line-height: 22px;
 		display: inline-block;
 		align-items: center;
@@ -76,6 +77,7 @@
 		transition: padding-left 200ms,
 		padding-right 200ms,
 		font-size  200ms,
+		font-weight  200ms,
 		color 200ms;
 		transition-delay: 0ms;
 	}
@@ -92,6 +94,7 @@
 		transition: left 500ms ease;
 	}
 	.chosen{
+		font-weight: 550;
 		font-size: 14px;
 		color:#353535;
 		width:28px;
@@ -100,6 +103,7 @@
 		transition: padding-left 300ms,
 		padding-right 300ms,
 		font-size  300ms,
+		font-weight  300ms,
 		color 300ms;
 		transition-delay: 100ms;
 	}

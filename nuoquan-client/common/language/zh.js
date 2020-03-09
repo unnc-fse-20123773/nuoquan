@@ -28,6 +28,7 @@ module.exports = {
 	edit : "修改",
 	ok : "完成",
 	pullUp : "收起",
+	reply: "回复",
 	
 	//登陆
 	isReadProtocol : "我已阅读并同意遵守",
@@ -73,6 +74,7 @@ module.exports = {
 	commentPrompt1 : "评论点什么...",
 	commentNum : " 条评论",
 	replyComent : "回复 @NICKNAME 的评论",
+	showMoreComments: "展开全部评论",
 	
 	//热门
 	hotTitle : "热门榜",

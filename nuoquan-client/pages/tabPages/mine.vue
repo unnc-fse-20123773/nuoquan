@@ -22,16 +22,15 @@
 				</view>
 				<!-- 个人简介 -->
 				<view class="introBox super_center"><text class="introBox-text">个人简介：这个人很懒，什么都没写哦...</text></view>
-
 				<!-- 操作行 -->
 				<view class="operationLine">
-					<!-- 粉丝 -->
-					<view class="operationCard" @tap="goToFansFollow(1)">
+					<!-- 关注 -->
+					<view class="operationCard" @tap="goToFansFollow(0)">
 						<view class="operationNum super_center">
-							<text class="operationNum-text" style="color:color:rgba(53,53,53,1);">{{ thisUserInfo.fansNum }}</text>
+							<text class="operationNum-text" style="color:color:rgba(53,53,53,1);">{{ thisUserInfo.followNum }}</text>
 						</view>
 						<view class="operationTitle super_center">
-							<text class="operationTitle-text">{{ lang.fans }}</text>
+							<text class="operationTitle-text">{{ lang.follow }}</text>
 						</view>
 					</view>
 					<!-- 影响力 -->
@@ -43,13 +42,13 @@
 							<text class="operationTitle-text">{{ lang.reputation }}</text>
 						</view>
 					</view>
-					<!-- 关注 -->
-					<view class="operationCard" @tap="goToFansFollow(0)">
+					<!-- 粉丝 -->
+					<view class="operationCard" @tap="goToFansFollow(1)">
 						<view class="operationNum super_center">
-							<text class="operationNum-text" style="color:color:rgba(53,53,53,1);">{{ thisUserInfo.followNum }}</text>
+							<text class="operationNum-text" style="color:color:rgba(53,53,53,1);">{{ thisUserInfo.fansNum }}</text>
 						</view>
 						<view class="operationTitle super_center">
-							<text class="operationTitle-text">{{ lang.follow }}</text>
+							<text class="operationTitle-text">{{ lang.fans }}</text>
 						</view>
 					</view>
 				</view>

@@ -603,7 +603,10 @@
 
 	.nickname .text,
 	.gender .text,
-	.profile-moreinfo-card .text {
+	.profile-moreinfo-card .text,
+	.graduationYear .text,
+	.degree .text,
+	.major .text{
 		height: 11px;
 		line-height: 11px;
 		font-size: 11px;
@@ -613,7 +616,10 @@
 
 	.nickname .second_line,
 	.gender .second_line,
-	.email .second_line {
+	.email .second_line,
+	.graduationYear .second_line,
+	.degree .second_line,
+	.major .second_line{
 		height: 34px;
 		font-size: 17px;
 		line-height: 34px;

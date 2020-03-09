@@ -14,7 +14,7 @@
 			<view class="comment-menu">
 				<view class="operationBar column_center">
 						<!-- <nqCmt @click.native="controlInputInSonCommentBox()" :number="commentDetail.commentNum"></nqCmt> -->
-						<nqLike style="margin-left: 11px;" @click.native="swLikeCommentDetail(commentDetail)" :status="commentDetail.isLike" :number="commentDetail.commentNum"></nqLike>
+						<nqLike style="position: absolute;right: 0;" @click.native="swLikeCommentDetail(commentDetail)" :status="commentDetail.isLike" :number="commentDetail.commentNum"></nqLike>
 				</view>
 			</view>
 		</view>
