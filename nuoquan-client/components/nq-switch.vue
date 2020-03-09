@@ -94,7 +94,7 @@
 		transition: left 500ms ease;
 	}
 	.chosen{
-		font-weight: 550;
+		font-weight: bold;
 		font-size: 14px;
 		color:#353535;
 		width:28px;

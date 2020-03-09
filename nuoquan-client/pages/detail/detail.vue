@@ -33,7 +33,7 @@
 				height: 100%;
 				background-color: #000000;
 				opacity: 0.3;
-				z-index: 30;"
+				z-index: 35;"
 		></view>
 		
 		<view style="border-bottom: 4px solid #ECECEC;height:0;width:750upx;font-size: 0;position: relative;left: -16px;" @controlInputSignal="controlInput">这是分割线</view>

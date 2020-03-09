@@ -47,6 +47,9 @@ module.exports = {
 	commentDetail : "评论详情",
 	addTags : "添加标签",
 	
+	//详情页
+	sharetoMoments: "分享到朋友圈",
+	
 	//投票
 	vote : "投票",
 	allVote: "所有投票",

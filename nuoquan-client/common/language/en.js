@@ -47,6 +47,9 @@ module.exports = {
 	commentDetail : "Comment Detail",
 	addTags : "Add Tags",
 	
+	//详情页
+	sharetoMoments: "Share to moments",
+	
 	//投票
 	vote : "Vote",
 	allVote : "All Vote",
