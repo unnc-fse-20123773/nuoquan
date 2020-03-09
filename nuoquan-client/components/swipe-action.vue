@@ -243,9 +243,9 @@ export default {
 
 .item {
 	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
 	padding: 10upx 16upx;
+	height: 54px;
+	width: calc(100% - 16px);
 
 	&.stick {
 		background-color: rgba(243, 236, 221, 0.5);
