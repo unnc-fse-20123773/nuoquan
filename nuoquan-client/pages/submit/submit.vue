@@ -98,7 +98,7 @@ export default {
 			articleTitle: '',
 			articleContent: '',
 			maxTitleLength: 20,
-			maxContentLength: 300,
+			maxContentLength: 999,
 			articleTag: '',
 			imgPath: '',
 			showInputTagArea: 0,

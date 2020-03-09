@@ -91,7 +91,7 @@ export default {
 		// this.context = uni.createCanvasContext('canvasdrawer', this);
 		// this.myPoster();
 
-		this.getQrcodeUnlimit('pages/detail/detail', 'data=' + this.articleCard.id, 200, true).then(res => {
+		this.getQrcodeUnlimit('pages/detail/detail', this.articleCard.id, 200, true).then(res => {
 			if (res == 'suc') {
 				this.eventDraw();
 			}
@@ -139,7 +139,7 @@ export default {
 						top: 67 + 23,
 						left: 88 + 31,
 						radius: 18,
-						url: this.articleCard.faceImg
+						url: this.pathFilter(this.articleCard.faceImg)
 					},
 					{
 						//昵称

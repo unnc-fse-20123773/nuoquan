@@ -165,7 +165,9 @@ export default {
 			return;
 		}
 
-		var articleId = options.data;
+		var articleId = options.data || options.scene;
+		// console.log("data="+options.data); //跳转进入
+		// console.log("sence="+options.scene); //扫码进入
 		this.getArticleById(articleId, this.userInfo.id).then(()=>{
 			this.getComments(this.currentPage);
 		})
