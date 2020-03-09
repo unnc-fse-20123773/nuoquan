@@ -26,6 +26,9 @@ export default {
 			default: false
 		}
 	},
+	created() {
+		console.log(this.number)
+	}
 };
 </script>
 

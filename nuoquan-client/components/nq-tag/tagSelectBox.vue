@@ -2,7 +2,7 @@
 	<view class="tagsArea">
 		<!-- TO DO 为啥有俩标签这个东西，目前用着同一个列表，是不是还需要改，我们提供标签的那个请求-->
 		<!-- 展示待选标签区域 -->
-		<text>{{lang.all}} {{lang.tags}}</text>
+		<text>{{lang.allTags}}</text>
 		<view class="tag" v-for="(item, index) in tagList" 
 		:key="index" 
 		:style="{ background: tagColorList[index] }" 

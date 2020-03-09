@@ -2,7 +2,7 @@ module.exports = {
 	// langType 属性为语言包标识，请勿删除
 	langType : 'zh-CN',
 	
-	tabbarName : ["主页","投票","","动态","我的"],
+	tabbarName : ["轮滑","投票","","动态","我的"],
 	tabList : ["发文章","发投票"],
 	vertion : "v1.1.1",
 	back : "返回",
@@ -14,6 +14,8 @@ module.exports = {
 	all : "所有",
 	follow : "关注",
 	tags : "标签",
+	allTags : "所有标签",
+	find : "发现",
 	refresh : "刷新",
 	second : "秒",
 	min : "分",
@@ -77,7 +79,7 @@ module.exports = {
 	nextRefresh : "下次更新",
 	
 	//我的消息
-	myMessage : "我的消息",
+	myMessage : "动态",
 	
 	//我的
 	profile : "个人信息",

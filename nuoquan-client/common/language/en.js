@@ -14,6 +14,8 @@ module.exports = {
 	all : "All",
 	follow : "Follow",
 	tags : "Tags",
+	allTags : "All Tags",
+	find : "Find",
 	refresh : "Refresh",
 	second : "s",
 	min : "m",

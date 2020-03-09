@@ -1043,10 +1043,6 @@ page {
 	border-radius: 16px;
 }
 
-.card text {
-	height: 1000px;
-}
-
 .title {
 	width: 93.12%;
 	font-size: 17px;

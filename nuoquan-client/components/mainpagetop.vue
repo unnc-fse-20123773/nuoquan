@@ -56,7 +56,7 @@
 			<!-- 标签选择 -->
 			<view>
 				<view v-if="!selectedTag" @click="toggleShowTag" class="tagchoose column_center">
-					<text>{{lang.tags}}</text>
+					<text>{{lang.find}}</text>
 					<image class="tagicon" src="../static/icon/angle-down.png" mode="aspectFit"></image>
 				</view>
 				<tagSelected v-if="selectedTag" :tag='selectedTag' @click="deleteTag"></tagSelected>
