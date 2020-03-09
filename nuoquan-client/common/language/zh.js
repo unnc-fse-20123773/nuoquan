@@ -70,6 +70,7 @@ module.exports = {
 	//评论
 	commentPrompt1 : "评论点什么...",
 	commentNum : " 条评论",
+	replyComent : "回复 @NICKNAME 的评论",
 	
 	//热门
 	hotTitle : "热门榜",

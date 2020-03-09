@@ -71,6 +71,7 @@ module.exports = {
 	//评论
 	commentPrompt1 : "Say something...",
 	commentNum : " Comments",
+	replyComent : "Reply @NICKNAME‘s comment",
 	
 	//热门
 	hotTitle : "Top 10",
