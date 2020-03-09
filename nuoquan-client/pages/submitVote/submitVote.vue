@@ -44,7 +44,7 @@
 		</view>
 
 		<view style="display: flex;position: relative;">
-			<mypicker class="major-pick-style" :mode="pickerMode" :range="pickerRange" :value="pickerValue" @change="pickerChange"></mypicker>
+			<mypicker style="margin-right: 25px;" :mode="pickerMode" :range="pickerRange" :value="pickerValue" @change="pickerChange"></mypicker>
 
 			<view style="margin-left: 8px;display:inline-block;height:12px;font-size:12px;font-weight:400;color:rgba(154,154,154,1);">{{ lang.dayEnd }}</view>
 			<view style="position: absolute;right: 0;display:inline-block;height:12px;font-size:12px;font-weight:400;color:rgba(154,154,154,1);max-width: 50%;">{{ lang.votePrompt2 }}</view>
