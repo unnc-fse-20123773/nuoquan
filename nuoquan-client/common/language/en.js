@@ -19,6 +19,10 @@ module.exports = {
 	min : "m",
 	hour : "h",
 	day : "days",
+	justNow : "Just now",
+	minsAgo : " mins ago",
+	hoursAgo : " hours ago",
+	daysAgo : " days ago",
 	edit : "Edit",
 	ok : "OK",
 	pullUp : "Pull up",
@@ -66,6 +70,7 @@ module.exports = {
 	
 	//评论
 	commentPrompt1 : "Say something...",
+	commentNum : " Comments",
 	
 	//热门
 	hotTitle : "Top 10",

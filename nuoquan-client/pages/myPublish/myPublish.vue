@@ -15,7 +15,7 @@
 
 		<view class="swiperMenu">
 			<view :class="[swiperViewing == 'article' ? 'swiperChoosen' : 'swiperNormal']" @tap="switchSwiper('article')">{{lang.article}} {{ myArticleList.length }}</view>
-			<view :class="[swiperViewing == 'vote' ? 'swiperChoosen' : 'swiperNormal']" @tap="switchSwiper('vote')">{{lang.vote}} {{ myVoteList.length }}</view>
+			<!-- <view :class="[swiperViewing == 'vote' ? 'swiperChoosen' : 'swiperNormal']" @tap="switchSwiper('vote')">{{lang.vote}} {{ myVoteList.length }}</view> -->
 		</view>
 		<swiper style="width:100%;height:100%;" :current-item-id="swiperViewing">
 			<swiper-item item-id="article" @touchmove.stop>
@@ -26,9 +26,9 @@
 					</view>
 				</view>
 			</swiper-item>
-			<swiper-item item-id="vote" @touchmove.stop>
+			<!-- <swiper-item item-id="vote" @touchmove.stop>
 				<myVote :lang="lang" v-for="vote in myVoteList" :key="vote.id" :vote="vote"></myVote>
-			</swiper-item>
+			</swiper-item> -->
 		</swiper>
 	</view>
 </template>

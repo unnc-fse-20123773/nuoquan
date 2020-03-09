@@ -1013,13 +1013,13 @@ Vue.prototype.timeDeal = function(timediff) {
 	var timeSpanStr;
 	milliseconds = newTime - oldTime;
 	if (milliseconds <= 1000 * 60 * 1) {
-		timeSpanStr = '刚刚';
+		timeSpanStr = app.$store.state.lang.justNow;
 	} else if (1000 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60) {
-		timeSpanStr = Math.round((milliseconds / (1000 * 60))) + '分钟前';
+		timeSpanStr = Math.round((milliseconds / (1000 * 60))) + app.$store.state.lang.minsAgo;
 	} else if (1000 * 60 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24) {
-		timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
+		timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + app.$store.state.lang.hoursAgo;
 	} else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
-		timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
+		timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + app.$store.state.lang.daysAgo;
 
 	} else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && parts[0] == now.getFullYear()) {
 		timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];

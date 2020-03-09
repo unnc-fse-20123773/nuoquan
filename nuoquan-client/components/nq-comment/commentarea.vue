@@ -3,7 +3,7 @@
 	<view :style="{ width: areaWidth, margin: areaMargin ,opacity: commentList.length != undefined ? 1 : 0 }">
 		<!--评论数，排序方式-->
 		<view class="comments-menu">
-			<view class="comments-num">{{ commentNum }}条评论</view>
+			<view class="comments-num">{{ commentNum }}{{lang.commentNum}}</view>
 			<nqSwitch v-if="lang.langType == 'zh-CN'"
 				style="margin-top: 3px;" 
 				:bgSwitchLeft = "'-13px'"
@@ -41,8 +41,10 @@
 					<view class="comment-content" @longpress="onLongpress" @tap="goToCommentDetail(comment.mainComment)">{{ comment.mainComment.comment }}</view>
 					<reComment :subComment="comment.subComment" @goToCommentDetail="goToCommentDetail(comment.mainComment)" style="width: 100%;height:100%;"></reComment>
 					<view class="comment-menu">
-						<view class="son-comment-num" @tap="goToCommentDetail(comment.mainComment)">{{ comment.mainComment.commentNum }}</view>
-						<view class="like-num" :class="{ liked: comment.mainComment.isLike }" @tap="swLikeComment(comment, index)">{{ comment.mainComment.likeNum }}</view>
+						<view class="operationBar column_center">
+								<nqCmt @click.native="goToCommentDetail(comment.mainComment)" :number="comment.mainComment.commentNum"></nqCmt>
+								<nqLike style="margin-left: 11px;" @click.native="swLikeComment(comment, index)" :status="comment.mainComment.isLike" :number="comment.mainComment.likeNum "></nqLike>
+						</view>
 					</view>
 				</view>
 			</block>
@@ -51,12 +53,11 @@
 </template>
 
 <script>
-	import nqSwitch from '@/components/nq-switch.vue';
-	import reComment from './reComment.vue';
-	import {
-		mapState,
-		mapMutations
-	} from 'vuex';
+import nqSwitch from '@/components/nq-switch.vue';
+import reComment from './reComment.vue';
+import { mapState, mapMutations } from 'vuex';
+import nqLike from '@/components/nq-button/nq-likeButton.vue';
+import nqCmt from '@/components/nq-button/nq-cmtButton.vue';
 
 	export default {
 		props: {
@@ -76,7 +77,9 @@
 		},
 		components: {
 			nqSwitch,
-			reComment
+			reComment,
+			nqLike,
+			nqCmt,
 		},
 		computed: {
 			...mapState(['lang'])

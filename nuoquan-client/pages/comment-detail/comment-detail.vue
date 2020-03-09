@@ -15,8 +15,10 @@
 			</view>
 			<view class="comment-content" @tap="controlInput(mainComment)">{{ mainComment.comment }}</view>
 			<view class="comment-menu">
-				<view class="son-comment-num" @tap="controlInput(mainComment)">{{ mainComment.commentNum }}</view>
-				<view class="like-num" :class="{ liked: mainComment.isLike }" @tap="swLikeComment(mainComment)">{{ mainComment.likeNum }}</view>
+				<view class="operationBar column_center">
+					<nqCmt @click.native="controlInput(mainComment)" :number="mainComment.commentNum"></nqCmt>
+					<nqLike style="margin-left: 11px;" @click.native="swLikeComment(mainComment)" :status="mainComment.isLike" :number="mainComment.likeNum"></nqLike>
+				</view>
 			</view>
 		</view>
 
@@ -30,14 +32,14 @@
 		</view>
 
 		<!--触底提示和功能  start   COPY FROM DETAIL-->
-		<view class="comment-bottom">
+		<!-- <view class="comment-bottom">
 			<view class="comment-bottom-notice">{{ lang.onBottom }}</view>
 			<view class="comment-bottom-buttons">
 				<image class="back" @tap="backToLastPage" src="../../static/icon/arrow-left-fcc041.png" mode="aspectFit"></image>
 				<image class="to-top" @tap="scrollToTop" src="../../static/icon/arrow-left-fcc041.png"></image>
 				<view class="active-input-button" @click="controlInput(1)">{{ lang.writeComment }}</view>
 			</view>
-		</view>
+		</view> -->
 		<!--触底提示和功能  END-->
 
 		<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)">
@@ -45,7 +47,7 @@
 				<!--<view class="emoji"></view><view class="add-pic"></view>-->
 				<view class="submit" @tap="saveComment()">{{ lang.send }}</view>
 				<view class="commentSth">
-					<textarea class="comment-text" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
+					<textarea class="comment-text" :placeholder="lang.engageComment" :focus="writingComment" auto-height="true"
 					 adjust-position="false" v-model="commentContent" :show-confirm-bar="false" @focus="popTextArea" @blur="unpopTextArea"
 					 cursor-spacing="20" />
 					<!-- <view class="comment-pic-area"><image src="../../static/BG/indexBG.png"></image><image src="../../static/icon/about.png"></image><image src="../../static/icon/1575235531(1).png"></image></view> -->
@@ -65,11 +67,15 @@
 import sonCommentBox from './sonCommentBox.vue';
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 import { mapState, mapMutations } from 'vuex';
+import nqLike from '@/components/nq-button/nq-likeButton.vue';
+import nqCmt from '@/components/nq-button/nq-cmtButton.vue';
 
 export default {
 	components: {
 		sonCommentBox,
-		uniNavBar
+		uniNavBar,
+		nqLike,
+		nqCmt,
 	},
 	computed: {
 		...mapState(['lang'])
@@ -95,9 +101,8 @@ export default {
 			subCommentList: '', //返回值，获取评论列表信息,循环展示的东西，sonComment
 			showInput: false, //控制输入框，true时显示输入框
 			writingComment: false, //控制输入框，true时自动获取焦点，拉起输入法
-			wordNotice: '48',
 			submitData: {},
-			placeholderText: '评论点什么吧......',
+			placeholderText: '',
 			textAreaAdjust: '',
 
 			totalPage: 1,
@@ -131,6 +136,8 @@ export default {
 		this.type = data.type;
 		// 获取次评论
 		this.getSubComments(1);
+		
+		this.placeholderText = this.lang.engageComment; //设置评论默认值
 	},
 
 	onReachBottom() {
@@ -244,7 +251,7 @@ export default {
 				//a==0, 关闭输入框，一切恢复默认状态
 				console.log('this is control input in detail. a ==0, EXIT');
 				this.submitData = {};
-				this.placeholderText = '评论';
+				this.placeholderText = this.lang.engageComment;
 				this.showInput = false;
 				this.writingComment = false;
 			}
@@ -595,7 +602,7 @@ page {
 	vertical-align: top;
 	color: #888888;
 	overflow: hidden;
-	text-overflow: ellipsis;
+	/* text-overflow: ellipsis; */
 	width: calc(100% - 48px);
 
 	padding: 3px 12px 4px;
