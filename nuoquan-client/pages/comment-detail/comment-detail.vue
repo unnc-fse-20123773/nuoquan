@@ -260,14 +260,14 @@ export default {
 			console.log('展开');
 			console.log(e);
 			console.log(e.detail.height);
-			this.textAreaAdjust = e.detail.height / 3 + 'px';
+			// this.textAreaAdjust = e.detail.height / 3 + 'px';
 			// this.textAreaAdjust = '0' ;
 		},
 		unpopTextArea(e) {
 			console.log('收起');
 			console.log(e);
 
-			this.textAreaAdjust = '';
+			// this.textAreaAdjust = '';
 		},
 
 		/**
