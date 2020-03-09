@@ -61,7 +61,7 @@ export default {
 			userInfo: '',
 			totalPage: 1,
 			currentPage: 1,
-			scrollTop: 0,
+			scrollTop: -1,
 			old: {
 				scrollTop: 0
 			},
@@ -126,6 +126,9 @@ export default {
 
 	methods: {
 		onClickTab(e){
+			setTimeout(() => {
+				this.goTop()
+			}, 200)
 			//刷新
 			if(e.url == "/"+this.getCurrentPage().route){
 				this.showArticles(1);
@@ -304,6 +307,9 @@ export default {
 			this.$nextTick(function() {
 				this.scrollTop = 0;
 			});
+			setTimeout(() => {
+				this.scrollTop = -1;
+			}, 200)
 			uni.showToast({
 				icon: 'none',
 				title: '纵向滚动 scrollTop 值已被修改为 0'
