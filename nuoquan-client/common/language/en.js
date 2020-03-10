@@ -14,6 +14,8 @@ module.exports = {
 	all : "All",
 	follow : "Follow",
 	tags : "Tags",
+	allTags : "All Tags",
+	find : "Find",
 	refresh : "Refresh",
 	second : "s",
 	min : "m",
@@ -71,6 +73,7 @@ module.exports = {
 	//评论
 	commentPrompt1 : "Say something...",
 	commentNum : " Comments",
+	replyComent : "Reply @NICKNAME‘s comment",
 	
 	//热门
 	hotTitle : "Top 10",

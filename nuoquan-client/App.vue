@@ -1,36 +1,33 @@
 <script>
 export default {
-	globalData:{
+	globalData: {
 		isNavHome: false //导航栏左侧是否为 home
 	},
-	onLaunch: function() {
-		
-	},
+	onLaunch: function() {},
 	onShow: function(options) {
 		let pages = getCurrentPages(); //当前页面栈
 		console.log('App Show');
-		console.log(options.scene);
-		// if(options.path != "pages/tabPages/index" 
-		// && options.path != "pages/tabPages/messagelist" 
-		// && options.path != "pages/tabPages/mine" 
+		console.log('scene=' + options.scene);
+		console.log('pages.length=' + pages.length);
+		console.log("判断="+(options.scene == (1007 || 1008 || 1011 || 
+				1012 || 1013 || 1014 || 1047 || 1048 || 1049)))
+		if (options.scene != null && (options.scene == (1007 || 1008 || 1011 || 
+				1012 || 1013 || 1014 || 1047 || 1048 || 1049))) {
+			console.log('get scene=' + options.scene);
+			this.globalData.isNavHome = true;
+		}
+		// if(options.path != "pages/tabPages/index"
+		// && options.path != "pages/tabPages/messagelist"
+		// && options.path != "pages/tabPages/mine"
 		// && options.path != "pages/tabPages/votePage"
-		// && pages.length == 0){
+		// && pages.length > 1){
 		// 	console.log(options.path);
 		// 	this.globalData.isNavHome = true;
 		// }
-		if(options.scene == 1007
-		|| options.scene == 1008
-		|| options.scene == 1011
-		|| options.scene == 1012
-		|| options.scene == 1013
-		|| options.scene == 1014){
-			console.log(options.path);
-			this.globalData.isNavHome = true;
-		}
 	},
 	onHide: function() {
 		console.log('App Hide');
-	},
+	}
 };
 </script>
 

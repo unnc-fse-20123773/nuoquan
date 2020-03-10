@@ -47,7 +47,7 @@
 				<!--<view class="emoji"></view><view class="add-pic"></view>-->
 				<view class="submit" @tap="saveComment()">{{ lang.send }}</view>
 				<view class="commentSth">
-					<textarea class="comment-text" :placeholder="lang.engageComment" :focus="writingComment" auto-height="true"
+					<textarea class="comment-text" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
 					 adjust-position="false" v-model="commentContent" :show-confirm-bar="false" @focus="popTextArea" @blur="unpopTextArea"
 					 cursor-spacing="20" />
 					<!-- <view class="comment-pic-area"><image src="../../static/BG/indexBG.png"></image><image src="../../static/icon/about.png"></image><image src="../../static/icon/1575235531(1).png"></image></view> -->
@@ -231,7 +231,7 @@ export default {
 		controlInput(a) {
 			if (a != 0 && a != 1) {
 				//a!=0, !=1， 从子组件传来，包含被回复对象：被回复人ID，被回复评论ID，被回复人昵称
-				this.placeholderText = '回复 @' + a.nickname + ' 的评论';
+				this.placeholderText = this.lang.replyComent.replace('NICKNAME', a.nickname);
 				// delete a.nickname;
 				this.submitData = a;
 				this.showInput = true;
@@ -260,14 +260,14 @@ export default {
 			console.log('展开');
 			console.log(e);
 			console.log(e.detail.height);
-			this.textAreaAdjust = e.detail.height / 3 + 'px';
+			// this.textAreaAdjust = e.detail.height / 3 + 'px';
 			// this.textAreaAdjust = '0' ;
 		},
 		unpopTextArea(e) {
 			console.log('收起');
 			console.log(e);
 
-			this.textAreaAdjust = '';
+			// this.textAreaAdjust = '';
 		},
 
 		/**

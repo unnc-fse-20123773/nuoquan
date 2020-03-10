@@ -117,7 +117,7 @@ export default {
 			share: false, // 是否显示分享海报
 			showInput: false, //控制输入框，true时显示输入框
 			writingComment: false, //控制输入框，true时自动获取焦点，拉起输入法
-			placeholderText: '评论点什么吧......',
+			placeholderText: '',
 			inputData: {}, //localData,用于拼接不同情况下的savecomment请求的数据
 
 			submitData: {
@@ -153,7 +153,7 @@ export default {
 	onLoad(options) {
 		// 一次性储存 navbar 高度
 		this.navbarHeight = this.getnavbarHeight().bottom + 5;
-			
+		this.placeholderText = this.lang.engageComment;
 		//获取全局用户信息
 		var userInfo = this.getGlobalUserInfo();
 		if (!this.isNull(userInfo)) {
@@ -164,7 +164,7 @@ export default {
 			});
 			return;
 		}
-
+		
 		var articleId = options.data || options.scene;
 		// console.log("data="+options.data); //跳转进入
 		// console.log("sence="+options.scene); //扫码进入
@@ -522,7 +522,7 @@ export default {
 
 		controlInput(a) {
 			if (a != 0 && a != 1) {
-				this.placeholderText = '回复 @' + a.nickname + ' 的评论';
+				this.placeholderText = this.lang.replyComent.replace('NICKNAME', a.nickname);
 				delete a.nickname;
 				this.submitData = a;
 				this.writingComment = true;
@@ -536,7 +536,7 @@ export default {
 				//a==0, 关闭输入框，一切恢复默认状态
 				console.log('this is control input in detail. a ==0, EXIT');
 				this.submitData = {};
-				this.placeholderText = '评论点什么吧......';
+				this.placeholderText = this.lang.engageComment;
 				this.showInput = false;
 				this.writingComment = false;
 			}

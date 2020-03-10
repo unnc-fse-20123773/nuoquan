@@ -23,7 +23,7 @@
 		<!-- 投票卡片 -->
 		<swiper class="scroll-box" :indicator-dots="false" :autoplay="false" :current="currentVoteIndex" @change="onSwiperChange">
 			<swiper-item v-for="(voteCard, index) in showList" :key="index" class="card-box" id="card_{index}">
-				<scroll-view class="card" scroll-y="true" show-scrollbar="false" :style="{ height: voteCardHeight + 'px' }">
+				<scroll-view @scroll="showScrollTop" :scroll-top="scrollTop" class="card" scroll-y="true" show-scrollbar="false" :style="{ height: voteCardHeight + 'px' }">
 					<!-- 标题行 -->
 					<view class="title">{{ voteCard.vote.voteTitle }}</view>
 					<!-- 用户信息行 -->
@@ -215,11 +215,11 @@
 							<view class="comment-bottom-notice">{{lang.onBottom}}</view>
 							<view class="comment-bottom-buttons super_center">
 								<!-- <image class="back" @tap="backToLastPage" src="../../static/icon/arrow-left-fcc041.png" mode="aspectFit"></image> -->
-								<image class="to-top" @tap="scrollTo('top')" src="../../static/icon/arrow-left-fcc041.png"></image>
+								<image class="to-top" @tap="scrollToTop" src="../../static/icon/arrow-left-fcc041.png"></image>
 								<view class="active-input-button" 
 								:style="{'letter-spacing': lang.langType == 'zh-CN' ? '2px':''}"
 								@tap="saveComment()" 
-								@click="scrollTo('input')">{{lang.writeComment}}</view>
+								@click="scrollToTop">{{lang.writeComment}}</view>
 							</view>
 						</view>
 					</view>
@@ -266,6 +266,11 @@ export default {
 	data() {
 		return {
 			//显示
+			scrollTop: -1,
+			old: {
+				scrollTop: 0
+			},
+			
 			pageHeight: 0, //屏幕高度
 			menuButtonInfo: '',
 			navigationBarHeight: 0, //导航栏高度
@@ -908,12 +913,28 @@ export default {
 				}
 			});
 		},
-		scrollToTop() {
-			uni.pageScrollTo({
-				scrollTop: 0,
-				duration: 300
+		scrollToTop(e) {
+			this.scrollTop = this.old.scrollTop
+			this.$nextTick(function() {
+				this.scrollTop = 0
 			});
+			setTimeout(() => {
+				this.scrollTop = -1;
+			}, 200)
+			console.log(this.scrollTop);
+			console.log(this.old.scrollTop);
+			// uni.showToast({
+			// 	icon:"none",
+			// 	title:"纵向滚动 scrollTop 值已被修改为 0"
+			// })
+			// uni.pageScrollTo({
+			// 	scrollTop: 0,
+			// 	duration: 300
+			// });
 		}, 
+		showScrollTop(){
+			console.log('=' + this.scrollTop);
+		}
 	}
 };
 </script>
@@ -1041,10 +1062,6 @@ page {
 	box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
 	opacity: 1;
 	border-radius: 16px;
-}
-
-.card text {
-	height: 1000px;
 }
 
 .title {

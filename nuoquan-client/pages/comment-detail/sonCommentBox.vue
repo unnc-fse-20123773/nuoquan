@@ -13,7 +13,7 @@
 			<view class="comment-content" @tap="controlInputInSonCommentBox()">{{ commentDetail.comment }}</view>
 			<view class="comment-menu">
 				<view class="operationBar column_center">
-						<nqCmt @click.native="controlInputInSonCommentBox()" :number="commentDetail.commentNum"></nqCmt>
+						<!-- <nqCmt @click.native="controlInputInSonCommentBox()" :number="commentDetail.commentNum"></nqCmt> -->
 						<nqLike style="margin-left: 11px;" @click.native="swLikeCommentDetail(commentDetail)" :status="commentDetail.isLike" :number="commentDetail.commentNum"></nqLike>
 				</view>
 			</view>
