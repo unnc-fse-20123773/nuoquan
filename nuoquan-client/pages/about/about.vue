@@ -16,7 +16,7 @@
 			<!--Nottinghome-->
 			<view class="company-name">Nottinghome</view>
 			<!--版本-->
-			<view class="version">{{lang.version}}</view>
+			<view class="version">v1.1.1</view>
 		</view>
 		
 		<!--表单部分-->
@@ -32,17 +32,18 @@
 				<view class="form1-expand" v-if="!contentShow1">
 					<!-- <view class="subtitle">商务合作</view> -->
 					<view class="body">
-						我们的初衷一直是为 UNNCer 打造一个专属的校际圈，让大家自由表达、拓宽交友圈、更有效的利用校内的信息和资源。
-						因此，我们欢迎校内各组织社团、学生团队、alumni 创业企业等与我们合作。合作形式包括但不限于联名活动、官方账号入驻 Nottinghome 小程序、资源共享等等。
-						我们欢迎一切能让 UNNCer 变的更好的 idea。
+						“Share beyond Moments”
+						Nottinghome 期待与校内各组织社团、学生团队、alumni 创业企业合作。
+						合作形式包括但不限于联名活动、官方账号入驻 Nottinghome、资源共享等等。
+						我们欢迎一切能让 UNNC 变的更好的 idea~
 						举报和反馈请联系：
 						wx: honggh-
 						
 						商务合作请联系：
 						wx: qian4223x
-						email: jumbox_nb@outlook.com
+						email: guetta.xia@outlook.com
 						
-						官方微信公众号：
+						更多资讯，请关注官方微信公众号：
 						Jumboxtech
 					</view>
 				</view>
@@ -56,14 +57,18 @@
 					<image @click="control2" v-if="!contentShow2" src="../../static/icon/angle-up.png"></image>
 				</view>
 				<view class="form2-expand" v-if="!contentShow2">
-					<view class="subtitle">V1.0.3</view>
+					<view class="subtitle">v1.1.1</view>
 					<view class="body">
-						19.11.8 更新：
-						1. 升级“个人主页”的外观，实现全部功能；
-						2. 新增“关于”页面
-						3. 新增“我的发布”页面，现用户可以通过该页面删除已发布的帖子
-						4. 修复若干 bug
-						5. 解决了部分页面部分机型不适配问题
+						Nottinghome v1.1.0 系列现已全面升级！
+						1. 全新UI，更加流畅的交互体验
+						2. 新增投票板块，更多有趣的话题等你发现
+						3. 优化私信功能，轻松结识圈中大佬
+						4. 中英切换，信息编辑... 更多全新功能现已加入
+						
+						20.3.10 更新：
+						1. 修复部分已知 Bug
+						2. 优化分享功能
+						3. 修复私信功能外观显示问题
 					</view>
 				</view>
 			</view>
