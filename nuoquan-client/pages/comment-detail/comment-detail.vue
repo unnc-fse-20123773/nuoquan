@@ -317,24 +317,39 @@ export default {
 					method: 'POST',
 					data: this.submitData,
 					success: res => {
-						this.writingComment = false;
-						this.commentContent = '';
-						this.showInput = false;
 						// 解锁
 						this.saveCommentFlag = false;
-						// 强制子组件重新刷新
-						this.subCommentList = '';
-						this.$nextTick(function() {
-							this.getSubComments(1);
-						});
-						this.mainComment.commentNum++;
-						// uni.$emit('flashSubComment', this.mainComment.id);
-						// uni.$emit('updateArticle', this.mainComment.articleId);
+						
+						if (res.data.status == 200) {
+							this.writingComment = false;
+							this.commentContent = '';
+							this.showInput = false;
+							// 强制子组件重新刷新
+							this.subCommentList = '';
+							this.$nextTick(function() {
+								this.getSubComments(1);
+							});
+							this.mainComment.commentNum++;
+							// uni.$emit('flashSubComment', this.mainComment.id);
+							// uni.$emit('updateArticle', this.mainComment.articleId);
+						} else if (res.data.status == 500) {
+							this.contentIllegal();
+						}
 					}
 				});
 			}
 		},
-
+		
+		contentIllegal() {
+			// 内容非法 用户提醒
+			uni.hideLoading();
+			uni.showToast({
+				title: '内容涉嫌违规，请联系管理员。',
+				duration: 2000,
+				icon: 'none'
+			});
+		},
+		
 		swLikeComment(comment) {
 			if (comment.isLike) {
 				this.unLikeComment(comment);

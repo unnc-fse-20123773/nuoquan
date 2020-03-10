@@ -170,9 +170,9 @@ export default {
 		// console.log("sence="+options.scene); //扫码进入
 		this.getArticleById(articleId, this.userInfo.id).then(()=>{
 			this.getComments(this.currentPage);
+			// 添加浏览量
+			this.addViewCount();
 		})
-		// 添加浏览量
-		this.addViewCount();
 		
 		// uni.$on("flashSubComment", mainCommentId => {
 		// 	console.log("修改对应主评下的次评论")
@@ -553,7 +553,7 @@ export default {
 				type: "article"
 			}
 			uni.navigateTo({
-				url: '/pages/comment-detail/comment-detail?data=' + JSON.stringify(data)
+				url: '/pages/comment-detail/comment-detail?data=' + encodeURIComponent(JSON.stringify(data))
 			});
 		},
 
