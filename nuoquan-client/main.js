@@ -998,12 +998,21 @@ Vue.prototype.netty = {
 }
 
 /**
+ * 时间显示格式化 eg. 13:01
+ */
+Vue.prototype.TwoDigit = function(digit){
+	if(0 < digit && digit <= 9){
+		digit = "0" + digit
+	}
+	return digit;
+}
+/**
  * Timestamp 渲染
  * @param {Object} timediff
  */
 Vue.prototype.timeDeal = function(timediff) {
 	timediff = new Date(timediff);
-	var parts = [timediff.getFullYear(), timediff.getMonth() + 1, timediff.getDate(), timediff.getHours(), timediff.getMinutes(),
+	var parts = [timediff.getFullYear(), timediff.getMonth() + 1, timediff.getDate(), app.TwoDigit(timediff.getHours()), app.TwoDigit(timediff.getMinutes()),
 		timediff.getSeconds()
 	];
 	var oldTime = timediff.getTime();
