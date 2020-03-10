@@ -33,7 +33,7 @@
 				height: 100%;
 				background-color: #000000;
 				opacity: 0.3;
-				z-index: 30;"
+				z-index: 35;"
 		></view>
 		
 		<view style="border-bottom: 4px solid #ECECEC;height:0;width:750upx;font-size: 0;position: relative;left: -16px;" @controlInputSignal="controlInput">这是分割线</view>
@@ -126,7 +126,7 @@ export default {
 			imgIndex: '',
 			serverUrl: this.$serverUrl,
 
-			textAreaAdjust: '',
+			textAreaAdjust: 0,
 
 			totalPage: 1, //评论分页属性
 			currentPage: 1, //评论分页属性
@@ -784,6 +784,7 @@ page {
 	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.16);
 	background: #ffffff;
 	line-height: 14px;
+	z-index: 30;
 }
 .permanent_input {
 	height: 30px;

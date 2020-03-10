@@ -14,7 +14,7 @@
 			<view class="reComment" v-if="index<2"> 
 				<view :style="{ 'border-top': index == 0 ? '' : '1px solid #DCDCDC' }" class="reCommentContent" @tap="goToCommentDetail()">
 					<view class="contentarea">{{ subComment.nickname }}</view>
-					<view style="color:#000000;font-size: 12px;display: inline-block;margin: 0 5px 0 0;">回复</view>
+					<view style="color:#000000;font-size: 12px;display: inline-block;margin: 0 5px 0 0;">{{lang.reply}}</view>
 					<view class="contentarea">@{{ subComment.toNickname }}</view>
 					{{ subComment.comment }}
 				</view>
@@ -34,11 +34,20 @@
 				<!-- <view style="border-top:1px solid #DCDCDC"></view> -->
 			</view>
 		</block>
-		<view class="showMoreSubComment" @tap="goToCommentDetail()" v-if="subComment.subCommentNum > 2">展开剩余评论</view>
+		<view style="width: 100%;
+			position: relative;
+			margin-top: 8px;
+			margin-bottom: 8px;
+			height: 20px;
+			line-height: 20px;">	
+			<view class="showMoreSubComment" @tap="goToCommentDetail()" v-if="subComment.subCommentNum > 2">{{lang.showMoreComments}}</view>
+		</view>
 	</view>
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex';
+	
 export default {
 	props: {
 		subComment: ''
@@ -54,6 +63,9 @@ export default {
 		// uni.$on('flashSubComment', (underCommentId) => {
 		// 	this.getSubComments(1);
 		// })
+	},
+	computed: {
+		...mapState(['lang'])
 	},
 	methods: {
 		// controlInputInRecomment(){
@@ -225,9 +237,12 @@ export default {
 }
 
 .showMoreSubComment {
-	margin-top: 8px;
-	margin-bottom: 8px;
-	width: 97px;
+	position: absolute;
+	right: 0;
+	padding: 2px 10px;
+	/* margin-top: 8px;
+	margin-bottom: 8px; */
+	min-width: 97px;
 	height: 20px;
 	line-height: 20px;
 	background: rgba(209, 209, 209, 1);
@@ -235,7 +250,6 @@ export default {
 	border-radius: 36px;
 
 	text-align: center;
-	margin-left: calc(100% - 97px);
 	font-size: 12px;
 	font-weight: 500;
 	color: rgba(53, 53, 53, 1);

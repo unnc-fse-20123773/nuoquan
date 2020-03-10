@@ -146,6 +146,6 @@ pickerIndex:  选项编号，用于控制显示哪一个选项
 
 		/* 保证文章正常显示 */
 		word-wrap: normal;
-		word-break: break-all;
+		word-break:keep-all;
 	}
 </style>
