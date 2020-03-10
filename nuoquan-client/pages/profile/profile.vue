@@ -64,16 +64,16 @@
 			<view class="text row">{{lang.schoolEmail}}</view>
 			<view class="row">
 				<view class="full_email" v-if='!isEditEmail'>{{ userInfo.email}}</view>
-				<input maxlength="6" :value="userInfo.emailPrefix" @input="onEmailInput" v-if="isEditEmail&& !showCaptcha" />
-				<view v-if="isEditEmail&& !showCaptcha" class="text">{{ userInfo.emailSuffix }}</view>
-				<view v-if="isEditEmail&&showCaptcha" class="text">{{email}}@nottingham.edu.cn</view>
+				<input maxlength="35" :value="userInfo.email" @input="onEmailInput" v-if="isEditEmail&& !showCaptcha" />
+				<!-- <view v-if="isEditEmail&& !showCaptcha" class="text">{{ userInfo.email }}</view> -->
+				<view v-if="isEditEmail&&showCaptcha" class="text">{{email}}</view>
 			</view>
 			<view class="row">
 				<button class="editEmail super_center" @click="editEmail" v-if="!isEditEmail">
 					<view class="editProfile-text">{{lang.changeEmail}}</view>
 				</button>
 
-				<input v-if="isEditEmail&& showCaptcha" maxlength="6" :placeholder="lang.captcha" @input="onCaptcha" />
+				<input style="width: 60px;" v-if="isEditEmail&& showCaptcha" maxlength="6" :placeholder="lang.captcha" @input="onCaptcha" />
 				<button v-if="isEditEmail&& showCaptcha" @click="confirmCode" class="confirmButton">
 					<view>{{lang.ok}}</view>
 				</button>
@@ -755,7 +755,7 @@
 		overflow: visible;
 		padding-bottom: 5px;
 		display: inline-block;
-		width: 60px;
+		/* width: 60px; */
 	}
 
 	.editEmail {
