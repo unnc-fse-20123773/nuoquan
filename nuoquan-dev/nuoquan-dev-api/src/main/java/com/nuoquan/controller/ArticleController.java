@@ -1,5 +1,7 @@
 package com.nuoquan.controller;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -430,10 +432,13 @@ public class ArticleController extends BasicController {
 				String finalVideoPath = fileSpace + uploadPathDB;
 				// 保存图片
 				uploadFile(file, finalVideoPath);	// 调用 BasicController 里的方法
+				
+				Integer imageOrder = Integer.valueOf(order);
 
 				ArticleImage articleImage = new ArticleImage();
 				articleImage.setImagePath(uploadPathDB);
 				articleImage.setArticleId(articleId);
+				articleImage.setImageOrder(imageOrder);
 				articleService.saveArticleImages(articleImage);
 				
 				return JSONResult.ok();

@@ -12,6 +12,9 @@ public class ArticleImage {
 
     @Column(name = "image_path")
     private String imagePath;
+    
+    @Column(name = "image_order")
+    private Integer imageOrder;
 
     /**
      * @return id
@@ -54,4 +57,12 @@ public class ArticleImage {
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
+
+	public Integer getImageOrder() {
+		return imageOrder;
+	}
+
+	public void setImageOrder(Integer imageOrder) {
+		this.imageOrder = imageOrder;
+	}
 }

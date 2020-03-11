@@ -740,7 +740,12 @@ CHANGE COLUMN `vote_content` `vote_content` TEXT CHARACTER SET 'utf8mb4' NOT NUL
 ALTER TABLE `nuoquan`.`vote_option` 
 CHANGE COLUMN `option_content` `option_content` TEXT CHARACTER SET 'utf8mb4' NOT NULL ;
 
+ALTER TABLE `nuoquan`.`article_image` 
+ADD COLUMN `image_order` INT NOT NULL AFTER `image_path`;
+
+
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 -- v20.3.12 @author: deyan
 -- 将vote中的vote_content和vote_option中的option_content改为utf8mb4
+-- 为article_image表添加image_order属性
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
