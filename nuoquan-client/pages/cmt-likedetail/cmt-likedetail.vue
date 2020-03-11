@@ -87,7 +87,7 @@
 									<!-- 相对绝对定位 -->
 									<view class="id-line-rel">
 										<view class="clTouxiang-box">
-											<image class="clTouxiang" :src="item.data.source.faceImg" mode="scaleToFill" @tap="goToPersonPublic(likeList[index2].data.source.userId)"></image>
+											<image class="clTouxiang" :src="pathFilter(item.data.source.faceImg)" mode="scaleToFill" @tap="goToPersonPublic(likeList[index2].data.source.userId)"></image>
 										</view>
 										<view class="clID-box">
 											<text class="clID-text">{{item.data.source.nickname}}</text>
@@ -119,7 +119,7 @@
 									<!-- 相对绝对定位 -->
 									<view class="id-line-rel">
 										<view class="clTouxiang-box">
-											<image class="clTouxiang" :src="item.data.source.faceImg" mode="scaleToFill" @tap="goToPersonPublic(commentList[index2].data.source.fromUserId)"></image>
+											<image class="clTouxiang" :src="pathFilter(item.data.source.faceImg)" mode="scaleToFill" @tap="goToPersonPublic(commentList[index2].data.source.fromUserId)"></image>
 										</view>
 										<view class="clID-box">
 											<text class="clID-text">{{item.data.source.nickname}}</text>
@@ -175,7 +175,7 @@
 									<!-- 相对绝对定位 -->
 									<view class="id-line-rel">
 										<view class="clTouxiang-box">
-											<image class="clTouxiang" :src="item.data.source.faceImg" mode="scaleToFill" @tap="goToPersonPublic(commentList[index2].data.source.fromUserId)"></image>
+											<image class="clTouxiang" :src="pathFilter(item.data.source.faceImg)" mode="scaleToFill" @tap="goToPersonPublic(commentList[index2].data.source.fromUserId)"></image>
 										</view>
 										<view class="clID-box">
 											<text class="clID-text">{{item.data.source.nickname}}</text>

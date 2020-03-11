@@ -135,6 +135,7 @@ export default {
 				this.showArticles(1);
 			}
 		},
+		
 		showArticles: function(page) {
 			if (loadArticleFlag) {
 				return;
