@@ -2,7 +2,7 @@ module.exports = {
 	// langType 属性为语言包标识，请勿删除
 	langType : 'zh-CN',
 	
-	tabbarName : ["主页","投票","","动态","我的"],
+	tabbarName : ["轮滑","投票","","动态","我的"],
 	tabList : ["发文章","发投票"],
 	vertion : "v1.1.1",
 	back : "返回",
@@ -14,14 +14,21 @@ module.exports = {
 	all : "所有",
 	follow : "关注",
 	tags : "标签",
+	allTags : "所有标签",
+	find : "发现",
 	refresh : "刷新",
 	second : "秒",
 	min : "分",
 	hour : "小时",
 	day : "天",
+	justNow : "刚刚",
+	minsAgo : "分钟前",
+	hoursAgo : "小时前",
+	daysAgo : "天前",
 	edit : "修改",
 	ok : "完成",
 	pullUp : "收起",
+	reply: "回复",
 	
 	//登陆
 	isReadProtocol : "我已阅读并同意遵守",
@@ -39,6 +46,9 @@ module.exports = {
 	detail : "详情",
 	commentDetail : "评论详情",
 	addTags : "添加标签",
+	
+	//详情页
+	sharetoMoments: "分享到朋友圈",
 	
 	//投票
 	vote : "投票",
@@ -65,13 +75,16 @@ module.exports = {
 	
 	//评论
 	commentPrompt1 : "评论点什么...",
+	commentNum : " 条评论",
+	replyComent : "回复 @NICKNAME 的评论",
+	showMoreComments: "展开全部评论",
 	
 	//热门
 	hotTitle : "热门榜",
 	nextRefresh : "下次更新",
 	
 	//我的消息
-	myMessage : "我的消息",
+	myMessage : "动态",
 	
 	//我的
 	profile : "个人信息",

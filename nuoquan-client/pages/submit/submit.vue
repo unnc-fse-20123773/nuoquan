@@ -13,8 +13,8 @@
 		<view :style="{height: navbarHeight + 'px'}"></view>
 		<!-- 当失去焦点时，将输入内容存入articleTitle -->
 		<view style="position: relative;margin-top: 20px;">
-			<input class="title" v-model="articleTitle" :placeholder="lang.addTitle" maxlength="20" placeholder-class="title-placeholder" />
-			<view class="titleTextLeft">{{ 20 - articleTitle.length }}</view>
+			<input class="title" v-model="articleTitle" :placeholder="lang.addTitle" :maxlength="maxTitleLength" placeholder-class="title-placeholder" />
+			<view class="titleTextLeft">{{ maxTitleLength - articleTitle.length }}</view>
 		</view>
 
 		<!--已选标签部分，会周围彩色光圈的那个-->
@@ -42,8 +42,8 @@
 		<tagSelectBox :lang="lang" style="margin-top: 13px;" :tagList="tagList" @selected="getselectedTag" v-if="editingTag"></tagSelectBox>
 
 		<view style="position: relative;">
-			<textarea class="content" v-model="articleContent" maxlength="140" :auto-height="true" :show-confirm-bar="false"></textarea>
-			<view style="position: absolute;bottom: 8px;right:8px;font-size: 11px;color:#888888;">{{ 140 - articleContent.length }}</view>
+			<textarea class="content" v-model="articleContent" :maxlength="maxContentLength" :auto-height="true" :show-confirm-bar="false"></textarea>
+			<view style="position: absolute;bottom: 8px;right:8px;font-size: 11px;color:#888888;">{{ maxContentLength - articleContent.length }}</view>
 			<image src="../../static/icon/emoji.png" style="position: absolute;left:12px;top:8px;width:20px;height:20px;"></image>
 		</view>
 
@@ -93,17 +93,18 @@ export default {
 	},
 	data() {
 		return {
-			pageTitle: '新建帖子',
 			userInfo: '',
 			articleTitle: '',
 			articleContent: '',
+			maxTitleLength: 20,
+			maxContentLength: 999,
 			articleTag: '',
 			imgPath: '',
 			showInputTagArea: 0,
 			showAddTagButton: 1,
 			showTagArea: 0,
 			editingTag: false,
-
+			
 			tagList: [],
 			tagColorList: [], // 储存每个备选tag的颜色
 			selectedTags: [],

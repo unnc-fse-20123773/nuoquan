@@ -43,10 +43,10 @@ const store = new Vuex.Store({
 	state: {
 		chatMessageCard: '', // 暂存一条socket接收的聊天消息 & 刷新消息列表的条件
 		// flashChatPage: "doFlash", // 作为触发 chatPage 刷新的条件
-		myMsgCount: sMyMsg == null ? 0 : sMyMsg, // 所有消息计数
-		totalChatMsgCount: sTotalChatMsg == null ? 0 : sTotalChatMsg, //聊天消息总计数
-		likeMsgCount: sLikeMsg == null ? 0 : sLikeMsg, // 点赞未读消息计数
-		commentMsgCount: sCommentMsg == null ? 0 : sCommentMsg, // 评论未读消息计数
+		myMsgCount: isNull(sMyMsg) ? 0 : sMyMsg, // 所有消息计数
+		totalChatMsgCount: isNull(sTotalChatMsg) ? 0 : sTotalChatMsg, //聊天消息总计数
+		likeMsgCount: isNull(sLikeMsg) ? 0 : sLikeMsg, // 点赞未读消息计数
+		commentMsgCount: isNull(sCommentMsg) ? 0 : sCommentMsg, // 评论未读消息计数
 
 		lang: lang //语言
 	},
@@ -60,6 +60,7 @@ const store = new Vuex.Store({
 			} else {
 				state.totalChatMsgCount++
 			}
+			uni.setStorageSync('totalChatMsgCount', state.totalChatMsgCount);
 			//计算总数
 			state.myMsgCount = state.totalChatMsgCount + state.likeMsgCount + state.commentMsgCount;
 			uni.setStorageSync('myMsgCount', state.myMsgCount);
@@ -68,11 +69,10 @@ const store = new Vuex.Store({
 		setLikeMsgCount(state, value) {
 			if (value == undefined) {
 				state.likeMsgCount++;
-				uni.setStorageSync('likeMsgCount', state.likeMsgCount);
 			} else {
 				state.likeMsgCount = value;
-				uni.setStorageSync('likeMsgCount', state.likeMsgCount);
 			}
+			uni.setStorageSync('likeMsgCount', state.likeMsgCount);
 			//计算总数
 			state.myMsgCount = state.totalChatMsgCount + state.likeMsgCount + state.commentMsgCount;
 			uni.setStorageSync('myMsgCount', state.myMsgCount);
@@ -81,11 +81,10 @@ const store = new Vuex.Store({
 		setCommentMsgCount(state, value) {
 			if (value == undefined) {
 				state.commentMsgCount++;
-				uni.setStorageSync('commentMsgCount', state.commentMsgCount);
 			} else {
 				state.commentMsgCount = value;
-				uni.setStorageSync('commentMsgCount', state.commentMsgCount);
 			}
+			uni.setStorageSync('commentMsgCount', state.commentMsgCount);
 			//计算总数
 			state.myMsgCount = state.totalChatMsgCount + state.likeMsgCount + state.commentMsgCount;
 			uni.setStorageSync('myMsgCount', state.myMsgCount);

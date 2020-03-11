@@ -19,12 +19,12 @@
 			<view class="marginHelper"></view>
 		</scroll-view>
 		<view class="bottomBar" id="chatarea">
-			<textarea fixed="true" cursor-spacing="20" auto-height="true" v-model="textMsg" :show-confirm-bar="false" />
-			<view class="icons">
-				<button @click="showToast()"><image src="../../static/icon/viewLocalPic.png"></image></button>
+			<textarea :style="{ width:  textareaWidth + 'px'}" fixed="true" cursor-spacing="20" auto-height="true" v-model="textMsg" :show-confirm-bar="false" />
+			<view id="icons" class="icons">
+				<button class="viewPic" @click="showToast()"><image src="../../static/icon/viewLocalPic.png"></image></button>
 				<!-- 				<button><image src="../../static/icon/emoji.png"></image></button>
  -->
-				<button @click="showToast()"><image src="../../static/icon/emoji.png"></image></button>
+				<button class="viewEmoji" @click="showToast()"><image src="../../static/icon/emoji.png"></image></button>
 				<button @click="sendText(textMsg)" class="sendText">{{lang.send}}</image></button>
 
 			</view>
@@ -63,12 +63,14 @@ export default {
 			socketMsgQueue: [], // 未发送的消息队列
 			textMsg: '', // 输入框中的text
 			windowHeight: '',
+			windowWidth: '',
 			scrollToView: '',
 			scrollTop: 0,
 			
 			userInfo: '',
 			friendInfo: '',
 			textareaHeight: '' ,//聊天内容高度
+			textareaWidth: 0, //聊天框宽度
 			mitemHeight: 0,
 			
 			keyboardHeight:'',
@@ -130,6 +132,7 @@ export default {
 		uni.getSystemInfo({
 			success: function(res) {
 				that.windowHeight = res.windowHeight;
+				that.windowWidth = res.windowWidth;
 			}
 		});
 
@@ -147,7 +150,14 @@ export default {
 			that.textareaHeight = that.windowHeight - res[0].height - 5 + 'px';
 			console.log(that.textareaHeight);
 		});
-
+		
+		//根据屏幕宽度，自适应输入框宽度
+		var query2 = uni.createSelectorQuery().in(this);
+		query2.select('#icons').boundingClientRect(data => {
+		    console.log(data);
+			that.textareaWidth = that.windowWidth - data.width - 56;
+		}).exec();
+		
 		// 获取与该用户的聊天历史记录
 		chatKey = 'chat-' + this.userInfo.id + '-' + this.friendInfo.id;
 		chatHistory = this.getListByKey(chatKey);
@@ -328,27 +338,24 @@ page {
 
 .bottomBar textarea {
 	display: inline-block;
-	height: 16px;
 	line-height: 16px;
-	width: 438upx;
+	/* width: 62.67%; */
 	max-height: 75px;
-	border-radius: 24upx;
-	border: solid 1px #c6c6c6;
-	padding: 5px 16upx;
-	margin: 11px 0 11px 28upx;
+	padding: 5px 8px;
+	margin: 11px 0 11px 14px;
 	font-size: 13px;
+	height:34px;
+	border:1px solid rgba(252,192,65,1);
+	opacity:1;
+	border-radius:8px;
 }
 
 .icons {
-	height: 24px;
-	display: inline-flex;
-	width: 200upx;
-	margin-left: 18upx;
-	margin-right: 24upx;
-	justify-content: space-between;
 	position: absolute;
 	bottom: 13px;
-	right:0;
+	right:10px;
+	height: 24px;
+	display: inline-flex;
 }
 
 .icons image {
@@ -357,12 +364,8 @@ page {
 	height: 24px;
 	vertical-align: bottom;
 }
-.icons button.button-hover {
-	position: relative;
-	top: 3rpx;
-	box-shadow: 0px 0px 8px #999 inset;
-}
-button {
+
+/* button {
 	display: inline-block;
 	margin: 0;
 	padding: 0;
@@ -370,17 +373,30 @@ button {
 	height: 24px;
 	vertical-align: bottom;
 	background: #ffffff;
-}
+} */
 button::after {
 	border: none;
 }
+.viewPic, .viewEmoji{
+	display: inline-block;
+	margin: 0 4px;
+	padding: 0;
+	width: 24px;
+	height: 24px;
+	vertical-align: bottom;
+	background: #ffffff;
+}
+
 .sendText{
+	padding: 0 0;
 	line-height: 23px;
-	width:34px;
+	min-width:34px;
 	height:23px;
 	font-size:17px;
 	font-weight:500;
 	color:rgba(252,192,65,1);
+	background: #ffffff;
+	margin: 0 0 0 6px;
 }
 .marginHelper {
 	height: 40upx;
