@@ -508,7 +508,7 @@ page {
 	 */
 /* 以下五条为底部输入框样式 */
 .bottoLayerOfInput {
-	position: absolute;
+	position: fixed;
 	width: 750upx;
 	height: 1000px;
 	bottom: 0;
@@ -572,6 +572,7 @@ page {
 	line-height: 20px;
 	padding: 12px 12px 0px;
 	position: relative;
+	margin: 0 auto 24px;
 }
 .comment-text {
 	width: calc(670upx - 60px);
@@ -606,7 +607,7 @@ page {
 	bottom: 0px;
 	left: 0;
 	width: 100%;
-	height: 58px;
+	min-height: 58px;
 	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.16);
 	background: #ffffff;
 	line-height: 14px;
@@ -621,7 +622,7 @@ page {
 	width: calc(100% - 48px);
 
 	padding: 3px 12px 4px;
-	margin: 12px auto 0;
+	margin: 12px auto 24px;
 	border-radius: 8px;
 	border: 2px solid rgba(252, 192, 65, 1);
 	font-size: 12px;
