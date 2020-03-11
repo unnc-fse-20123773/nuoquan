@@ -15,8 +15,10 @@
 			</view>
 			<view class="comment-content" @tap="controlInput(mainComment)">{{ mainComment.comment }}</view>
 			<view class="comment-menu">
-				<view class="son-comment-num" @tap="controlInput(mainComment)">{{ mainComment.commentNum }}</view>
-				<view class="like-num" :class="{ liked: mainComment.isLike }" @tap="swLikeComment(mainComment)">{{ mainComment.likeNum }}</view>
+				<view class="operationBar column_center">
+					<nqCmt @click.native="controlInput(1)" :number="mainComment.commentNum"></nqCmt>
+					<nqLike style="margin-left: 11px;" @click.native="swLikeComment(mainComment)" :status="mainComment.isLike" :number="mainComment.likeNum"></nqLike>
+				</view>
 			</view>
 		</view>
 
@@ -30,14 +32,14 @@
 		</view>
 
 		<!--触底提示和功能  start   COPY FROM DETAIL-->
-		<view class="comment-bottom">
+		<!-- <view class="comment-bottom">
 			<view class="comment-bottom-notice">{{ lang.onBottom }}</view>
 			<view class="comment-bottom-buttons">
 				<image class="back" @tap="backToLastPage" src="../../static/icon/arrow-left-fcc041.png" mode="aspectFit"></image>
 				<image class="to-top" @tap="scrollToTop" src="../../static/icon/arrow-left-fcc041.png"></image>
 				<view class="active-input-button" @click="controlInput(1)">{{ lang.writeComment }}</view>
 			</view>
-		</view>
+		</view> -->
 		<!--触底提示和功能  END-->
 
 		<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)">
@@ -65,11 +67,15 @@
 import sonCommentBox from './sonCommentBox.vue';
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 import { mapState, mapMutations } from 'vuex';
+import nqLike from '@/components/nq-button/nq-likeButton.vue';
+import nqCmt from '@/components/nq-button/nq-cmtButton.vue';
 
 export default {
 	components: {
 		sonCommentBox,
-		uniNavBar
+		uniNavBar,
+		nqLike,
+		nqCmt,
 	},
 	computed: {
 		...mapState(['lang'])
@@ -95,10 +101,9 @@ export default {
 			subCommentList: '', //返回值，获取评论列表信息,循环展示的东西，sonComment
 			showInput: false, //控制输入框，true时显示输入框
 			writingComment: false, //控制输入框，true时自动获取焦点，拉起输入法
-			wordNotice: '48',
 			submitData: {},
-			placeholderText: '评论点什么吧......',
-			textAreaAdjust: '',
+			placeholderText: '',
+			textAreaAdjust: 0,
 
 			totalPage: 1,
 			currentPage: 1,
@@ -131,6 +136,8 @@ export default {
 		this.type = data.type;
 		// 获取次评论
 		this.getSubComments(1);
+		
+		this.placeholderText = this.lang.engageComment; //设置评论默认值
 	},
 
 	onReachBottom() {
@@ -224,7 +231,7 @@ export default {
 		controlInput(a) {
 			if (a != 0 && a != 1) {
 				//a!=0, !=1， 从子组件传来，包含被回复对象：被回复人ID，被回复评论ID，被回复人昵称
-				this.placeholderText = '回复 @' + a.nickname + ' 的评论';
+				this.placeholderText = this.lang.replyComent.replace('NICKNAME', a.nickname);
 				// delete a.nickname;
 				this.submitData = a;
 				this.showInput = true;
@@ -244,7 +251,7 @@ export default {
 				//a==0, 关闭输入框，一切恢复默认状态
 				console.log('this is control input in detail. a ==0, EXIT');
 				this.submitData = {};
-				this.placeholderText = '评论';
+				this.placeholderText = this.lang.engageComment;
 				this.showInput = false;
 				this.writingComment = false;
 			}
@@ -253,14 +260,14 @@ export default {
 			console.log('展开');
 			console.log(e);
 			console.log(e.detail.height);
-			this.textAreaAdjust = e.detail.height / 3 + 'px';
+			// this.textAreaAdjust = e.detail.height / 3 + 'px';
 			// this.textAreaAdjust = '0' ;
 		},
 		unpopTextArea(e) {
 			console.log('收起');
 			console.log(e);
 
-			this.textAreaAdjust = '';
+			// this.textAreaAdjust = '';
 		},
 
 		/**
@@ -310,24 +317,39 @@ export default {
 					method: 'POST',
 					data: this.submitData,
 					success: res => {
-						this.writingComment = false;
-						this.commentContent = '';
-						this.showInput = false;
 						// 解锁
 						this.saveCommentFlag = false;
-						// 强制子组件重新刷新
-						this.subCommentList = '';
-						this.$nextTick(function() {
-							this.getSubComments(1);
-						});
-						this.mainComment.commentNum++;
-						// uni.$emit('flashSubComment', this.mainComment.id);
-						// uni.$emit('updateArticle', this.mainComment.articleId);
+						
+						if (res.data.status == 200) {
+							this.writingComment = false;
+							this.commentContent = '';
+							this.showInput = false;
+							// 强制子组件重新刷新
+							this.subCommentList = '';
+							this.$nextTick(function() {
+								this.getSubComments(1);
+							});
+							this.mainComment.commentNum++;
+							// uni.$emit('flashSubComment', this.mainComment.id);
+							// uni.$emit('updateArticle', this.mainComment.articleId);
+						} else if (res.data.status == 500) {
+							this.contentIllegal();
+						}
 					}
 				});
 			}
 		},
-
+		
+		contentIllegal() {
+			// 内容非法 用户提醒
+			uni.hideLoading();
+			uni.showToast({
+				title: '内容涉嫌违规，请联系管理员。',
+				duration: 2000,
+				icon: 'none'
+			});
+		},
+		
 		swLikeComment(comment) {
 			if (comment.isLike) {
 				this.unLikeComment(comment);
@@ -595,7 +617,7 @@ page {
 	vertical-align: top;
 	color: #888888;
 	overflow: hidden;
-	text-overflow: ellipsis;
+	/* text-overflow: ellipsis; */
 	width: calc(100% - 48px);
 
 	padding: 3px 12px 4px;

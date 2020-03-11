@@ -14,13 +14,21 @@ module.exports = {
 	all : "All",
 	follow : "Follow",
 	tags : "Tags",
+	allTags : "All Tags",
+	find : "Find",
 	refresh : "Refresh",
 	second : "s",
 	min : "m",
 	hour : "h",
 	day : "days",
+	justNow : "Just now",
+	minsAgo : " mins ago",
+	hoursAgo : " hours ago",
+	daysAgo : " days ago",
 	edit : "Edit",
 	ok : "OK",
+	pullUp : "Pull up",
+	reply: "reply",
 	
 	//登陆
 	isReadProtocol : "I have read and agree :",
@@ -39,6 +47,9 @@ module.exports = {
 	commentDetail : "Comment Detail",
 	addTags : "Add Tags",
 	
+	//详情页
+	sharetoMoments: "Share to moments",
+	
 	//投票
 	vote : "Vote",
 	allVote : "All Vote",
@@ -47,14 +58,27 @@ module.exports = {
 	comments : "Comments",
 	writeComment : "Comment",
 	onBottom : "No more content",
-	addBody : "Add body",
 	addOption : "Add option",
 	votePrompt1 : "You can view the comments after you voted.",
 	votePrompt2 : "Up to 10 options, each limited to 20 words.",
 	dayEnd : "days finish",
+	engageComment: "Write some comment ......",
+	
+	
+	//新建文章&投票
+	addTitle: "Add title",
+	optionContent: "Option content",
+	addDescription : "Add description",
+	
+	//搜索
+	searchHistory: "Search History",
+	topSearches: "Top Searches",
 	
 	//评论
 	commentPrompt1 : "Say something...",
+	commentNum : " Comments",
+	replyComent : "Reply @NICKNAME‘s comment",
+	showMoreComments: "Show more comments",
 	
 	//热门
 	hotTitle : "Top 10",
@@ -70,9 +94,14 @@ module.exports = {
 	changeLang : "Language",
 	follow : "Follow",
 	fans : "Follower",
-	reputation : "Peputation",
+	reputation : "Reputation",
 	like : "Like",
 	comment : "Comment",
+	
+	//我的发布
+	passCheck: 'Published successfully',
+	underCheck: 'Under Review',
+	failCheck: 'Publishing failed',
 	
 	//关注粉丝列表
 	fanAndFollow : "Follow List",

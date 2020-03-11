@@ -31,8 +31,8 @@ Vue.prototype.$wsServerUrl = "wss://127.0.0.1:8088/ws"
 // Vue.prototype.$wsServerUrl = "ws://129.28.130.27:8088/ws"
 
 // 安全服务器地址
-// Vue.prototype.$serverUrl = "https://www.checkchack.cn:8443/nottinghome"
-// Vue.prototype.$wsServerUrl = "wss://www.checkchack.cn:8088/ws"
+Vue.prototype.$serverUrl = "https://www.checkchack.cn:8443/nottinghome"
+Vue.prototype.$wsServerUrl = "wss://www.checkchack.cn:8088/ws"
 
 /**
  * 获取当前用户信息（我）
@@ -773,7 +773,7 @@ Vue.prototype.chat = {
 					var unsignedMsgList = res.data.data;
 					console.log(unsignedMsgList);
 					if (!app.isNull(unsignedMsgList)) {
-						app.$store.commit('setMyMsgCount', unsignedMsgList.length); // 增加 msgCount in index.js
+						// app.$store.commit('setMyMsgCount', unsignedMsgList.length); // 增加 msgCount in index.js
 						for (var i = 0; i < unsignedMsgList.length; i++) {
 							var msgObj = unsignedMsgList[i];
 							// 1.逐条存入聊天记录
@@ -813,7 +813,7 @@ Vue.prototype.notification = {
 	 * @param {Object} dataContent
 	 */
 	saveLikeMsg(dataContent) {
-		app.appendIntoList(dataContent, this.LIKEMSG_KEY);
+		app.addIntoList(dataContent, this.LIKEMSG_KEY);
 	},
 
 	getLikeMsg(page) {
@@ -838,7 +838,7 @@ Vue.prototype.notification = {
 	 * @param {Object} dataContent
 	 */
 	saveCommentMsg(dataContent) {
-		app.appendIntoList(dataContent, this.COMMENTMSG_KEY);
+		app.addIntoList(dataContent, this.COMMENTMSG_KEY);
 	},
 
 	getCommentMsg(page) {
@@ -884,7 +884,7 @@ Vue.prototype.notification = {
 						for (var i = 0; i < unsignedMsgList.length; i++) {
 							var dataContent = unsignedMsgList[i];
 							//累加信息
-							app.$store.commit('setMyMsgCount'); // 累加通用信息
+							// app.$store.commit('setMyMsgCount'); // 累加通用信息
 							app.$store.commit('setLikeMsgCount'); //累加点赞信息
 							// 逐条存入缓存
 							app.notification.saveLikeMsg(dataContent);
@@ -935,7 +935,7 @@ Vue.prototype.notification = {
 						for (var i = 0; i < unsignedMsgList.length; i++) {
 							var dataContent = unsignedMsgList[i];
 							//累加信息
-							app.$store.commit('setMyMsgCount'); // 累加通用信息
+							// app.$store.commit('setMyMsgCount'); // 累加通用信息
 							app.$store.commit('setCommentMsgCount'); //累加评论信息
 							// 逐条存入缓存
 							app.notification.saveCommentMsg(dataContent);
@@ -998,12 +998,21 @@ Vue.prototype.netty = {
 }
 
 /**
+ * 时间显示格式化 eg. 13:01
+ */
+Vue.prototype.TwoDigit = function(digit){
+	if(0 < digit && digit <= 9){
+		digit = "0" + digit
+	}
+	return digit;
+}
+/**
  * Timestamp 渲染
  * @param {Object} timediff
  */
 Vue.prototype.timeDeal = function(timediff) {
 	timediff = new Date(timediff);
-	var parts = [timediff.getFullYear(), timediff.getMonth() + 1, timediff.getDate(), timediff.getHours(), timediff.getMinutes(),
+	var parts = [timediff.getFullYear(), timediff.getMonth() + 1, timediff.getDate(), app.TwoDigit(timediff.getHours()), app.TwoDigit(timediff.getMinutes()),
 		timediff.getSeconds()
 	];
 	var oldTime = timediff.getTime();
@@ -1013,13 +1022,13 @@ Vue.prototype.timeDeal = function(timediff) {
 	var timeSpanStr;
 	milliseconds = newTime - oldTime;
 	if (milliseconds <= 1000 * 60 * 1) {
-		timeSpanStr = '刚刚';
+		timeSpanStr = app.$store.state.lang.justNow;
 	} else if (1000 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60) {
-		timeSpanStr = Math.round((milliseconds / (1000 * 60))) + '分钟前';
+		timeSpanStr = Math.round((milliseconds / (1000 * 60))) + app.$store.state.lang.minsAgo;
 	} else if (1000 * 60 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24) {
-		timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
+		timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + app.$store.state.lang.hoursAgo;
 	} else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
-		timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
+		timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + app.$store.state.lang.daysAgo;
 
 	} else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && parts[0] == now.getFullYear()) {
 		timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];

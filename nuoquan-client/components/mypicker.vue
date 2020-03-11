@@ -13,17 +13,21 @@ pickerIndex:  选项编号，用于控制显示哪一个选项
 
 	-->
 <template>
-	<view class="defaultPicker" :class="{'editingPicker': !visible,'boxShadow':mode =='submitVote'}">
-		<view style="height: 1000px;width: 750upx;position: fixed;left: 0;top: 0;" @tap="toggleVisible" v-if="visible"></view>
-		<view class="picker-shadow">
+	<view class="defaultPicker">
+		<!-- 		<view style="height: 1000px;width: 750upx;position: fixed;left: 0;top: 0;" @tap="toggleVisible"></view>-->
+
+		<!-- 			
 			<picker-view :value="pickerIndex" @change="bindChange" indicator-class="selectedPicker">
 				<picker-view-column>
 					<view class="item" v-for="(item,index) in dataList" :key="index">{{item}}</view>
 				</picker-view-column>
-			</picker-view>
-			<image class="arrow" src="../static/icon/angle-down.png" mode="scaleToFill" v-if="!visible" @tap="toggleVisible"></image>
-			<image class="arrow" src="../static/icon/angle-up.png" mode="scaleToFill" v-if="visible" @tap="toggleVisible"></image>
-		</view>
+			</picker-view> -->
+		<picker :value="pickerIndex" @change="bindChange" :range="dataList" mode='selector'>
+			<view class="item">{{dataList[pickerIndex]}}</view>		<image class="arrow" src="../static/icon/angle-down.png" mode="scaleToFill"></image>
+
+		</picker>
+		<!-- 		<image class="arrow" src="../static/icon/angle-up.png" mode="scaleToFill" v-if="visible" @tap="toggleVisible"></image>-->
+
 	</view>
 </template>
 
@@ -39,8 +43,7 @@ pickerIndex:  选项编号，用于控制显示哪一个选项
 		data() {
 			return {
 				dataList: this.range, // 对象列表
-				pickerIndex: [], //显示第几个选项
-				visible: false,
+				pickerIndex: "", //显示第几个选项
 			}
 		},
 
@@ -62,7 +65,8 @@ pickerIndex:  选项编号，用于控制显示哪一个选项
 				console.log(this.value);
 				console.log(this.dataList);
 				var index = this.dataList.indexOf(this.value);
-				this.$set(this.pickerIndex, 0, index);
+				this.pickerIndex = index;
+				// this.$set(this.pickerIndex, 0, index);
 				console.log(index);
 				console.log('转换完成');
 			},
@@ -82,9 +86,7 @@ pickerIndex:  选项编号，用于控制显示哪一个选项
 				// 	this.value = index;	
 				// }
 			},
-			toggleVisible() {
-				this.visible = !this.visible;
-			},
+
 		}
 	}
 </script>
@@ -92,40 +94,41 @@ pickerIndex:  选项编号，用于控制显示哪一个选项
 <style>
 	.defaultPicker {
 		position: relative;
-		height: 100px;
-		width: 70px;
-		overflow: hidden;
+		overflow: visible;
 		background-color: white;
 		z-index: 0;
 		border-radius: 15upx;
 	}
-	.boxShadow{
-		box-shadow: 0px 0px 10px 1px #A6A6A6;
+
+/* 	.boxShadow {
+		box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+		;
 	}
 
 	.editingPicker {
 		height: 18px;
 	}
-
-	picker-view {
+ */
+/* 	picker-view {
 		display: inline-block;
 		position: relative;
 		height: 600upx;
 		width: calc(100% - 25px);
 		height: 180px;
 		top: -81px;
-	}
+	} */
 
 	.arrow {
 		display: inline-block;
 		width: 25px;
 		height: 25px;
+		vertical-align: bottom;
 		position: absolute;
-		top: -4px;
-		right: 0;
+		bottom: -3px;
+		right:-28px;
 	}
 
-	.selectedPicker {
+/* 	.selectedPicker {
 		text-align: right;
 		font-size: 17px;
 		height: 18px;
@@ -133,13 +136,16 @@ pickerIndex:  选项编号，用于控制显示哪一个选项
 		color: #000000;
 		font-weight: 800;
 	}
-
+ */
 
 	.item {
-		text-align: center;
-		width: 100%;
-		height: 18px;
+		text-align: left;
 		font-size: 14px;
 		font-weight: 800;
+		display: inline-block;
+
+		/* 保证文章正常显示 */
+		word-wrap: normal;
+		word-break:keep-all;
 	}
 </style>

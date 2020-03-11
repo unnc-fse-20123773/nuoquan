@@ -85,8 +85,9 @@
 		max-width: 428upx;
 	}
 	.bottomBar {
+		position: relative;
 		display: flex;
-		width: 400upx;
+		width: 100%;
 		align-items: center;
 		height: 18px;
 		justify-content: inherit;
@@ -143,7 +144,7 @@
 	}
 
 	.contentText-send {
-		width: 400upx;
+		width: 100%;
 		font-size: 12px;
 		color: white;
 		word-break: break-all;
@@ -172,6 +173,8 @@
 	}
 
 	.time-recieve {
+		position: absolute;
+		right: 0;
 		display: inline-flex;
 		font-size: 7px;
 		font-weight: light;
@@ -179,7 +182,6 @@
 		line-height: 18px;
 		max-width: 100px;
 		color: #939393;
-		margin-right: 6px;
 	}
 
 	.contentText-recieve {

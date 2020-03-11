@@ -37,7 +37,7 @@
 						<view >
 							<swiper-item v-for="(item, index) in topArticles" :key="index">
 								<view class="itemCard" :style="{'height':roleup == false ? '62px;' :'33px' ,}">
-									<view :class="[roleup == false ? 'hotTitle' : 'hotTitle_roled']">{{ item.articleTitle }}</view>
+									<view class="hotTitle" :style="{'margin-top': roleup ? '8px': '12px'}">{{ item.articleTitle }}</view>
 									<view v-if="roleup == false" class="userInfo">
 										<image :src=pathFilter(item.faceImg) mode="aspectFit"></image>
 										<view class="userid_mainpagetop">
@@ -56,21 +56,48 @@
 			<!-- 标签选择 -->
 			<view>
 				<view v-if="!selectedTag" @click="toggleShowTag" class="tagchoose column_center">
-					<text>{{lang.tags}}</text>
+					<text>{{lang.find}}</text>
 					<image class="tagicon" src="../static/icon/angle-down.png" mode="aspectFit"></image>
 				</view>
 				<tagSelected v-if="selectedTag" :tag='selectedTag' @click="deleteTag"></tagSelected>
 			</view>
 			<tagSelectBox
 				:style="{position: 'fixed', 'z-index': '40' , 'margin-top': 6 + 'px' , left: 3.47 + '%' , width: 93.07 + '%' , top: height + 41 + 'px' }"
+				:lang = "lang"
 				:tagList="tagList" 
 				@selected="getSelectedTag" 
 				v-if="showTagBox">
 			</tagSelectBox>
 			<!-- 排序方式1-->
-			<nqSwitch :options='[lang.all, lang.follow]' :initStatus='iniStatus1' @onChange="change_article_order1"></nqSwitch>
+			<nqSwitch v-if="lang.langType == 'zh-CN'" 
+				:bgSwitchLeft = "'-13px'"
+				:bgSwitchRight = "'41px'"
+				:options='[lang.all, lang.follow]' 
+				:initStatus='iniStatus1' 
+				@onChange="change_article_order1">
+			</nqSwitch>
+			<nqSwitch v-else 
+				:bgSwitchLeft = "'-13px'"
+				:bgSwitchRight = "'47px'"
+				:options='[lang.all, lang.follow]' 
+				:initStatus='iniStatus1' 
+				@onChange="change_article_order1">
+			</nqSwitch>
 			<!-- 排序方式2 -->
-			<nqSwitch :options='[lang.time, lang.hot]' :initStatus='iniStatus2' @onChange="change_article_order2"></nqSwitch>
+			<nqSwitch v-if="lang.langType == 'zh-CN'" 
+				:bgSwitchLeft = "'-13px'"
+				:bgSwitchRight = "'41px'"
+				:options='[lang.time, lang.hot]' 
+				:initStatus='iniStatus2' 
+				@onChange="change_article_order2">
+			</nqSwitch>
+			<nqSwitch v-else
+				:bgSwitchLeft = "'-11px'"
+				:bgSwitchRight = "'41px'"
+				:options='[lang.time, lang.hot]' 
+				:initStatus='iniStatus2' 
+				@onChange="change_article_order2">
+			</nqSwitch>
 		</view>
 		<!-- Add background for option bar-->
 		<view v-if="roleup == false" class="optionLinebg_mpt" :style="{top: height + 4 + 'px'}">
@@ -389,26 +416,19 @@ page {
 
 .hotTitle {
 	width: 100%;
-	height: 17px;
-	margin-top: 12px;
+	height: 21px;
 	font-size: 17px;
 	font-family: Source Han Sans CN;
 	font-weight: 500;
 	line-height: 21px;
 	color: rgba(74, 74, 74, 1);
 	opacity: 1;
-}
-
-.hotTitle_roled {
-	width: 100%;
-	height: 17px;
-	margin-top: 8px;
-	font-size: 17px;
-	font-family: Source Han Sans CN;
-	font-weight: 500;
-	line-height: 21px;
-	color: rgba(74, 74, 74, 1);
-	opacity: 1;
+	text-overflow: ellipsis;
+	/**文字隐藏后添加省略号*/
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 1;
+	overflow: hidden;
 }
 
 .optionLine_mpt{

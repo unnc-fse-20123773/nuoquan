@@ -3,7 +3,7 @@
 		<view class="progress" 
 			:style="{ border: Type == 'aqua' ? '1px solid rgba(174,174,174,1)' : '1px solid rgba(72,177,233,1);' }" 
 			:class="Type">
-			<view class="progress-bar" :style="{height: 8 + 'px',width: thisWidth + '%'}">
+			<view class="progress-bar" :style="{height: 8 + 'px',width: thisWidth + '%', 'max-width': 100 + '%'}">
 			</view>
 		</view>
 	</view>

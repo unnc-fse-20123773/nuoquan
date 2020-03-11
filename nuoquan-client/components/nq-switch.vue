@@ -1,12 +1,18 @@
 <template>
 	<view class="switch">
-			<view class="switch-left" :class="{ chosen : status == 0}" @tap="changeStatus(0)">
+		
+			<view class="switch-left" :class="{ chosen : status == 0}" 
+			@tap="changeStatus(0)">
 				{{options[0]?options[0]:"关"}}
 			</view>
-			<view class="switch-right" :class="{ chosen : status != 0}" @tap="changeStatus(1)">
+			
+			<view class="switch-right" :class="{ chosen : status != 0}" 
+			@tap="changeStatus(1)">
 				{{options[1]?options[1]:"开"}}
 			</view>
-			<view class="bg-of-switch" :style="{'left':status == 0 ? '-13px;' :'41px' ,}"></view>
+			
+			<!-- <view class="bg-of-switch" :style="{'left':status == 0 ? '-13px;' :'41px' ,}"></view> -->
+			<view class="bg-of-switch" :style="{'left':status == 0 ? bgSwitchLeft : bgSwitchRight ,}"></view>
 	</view>
 </template>
 
@@ -15,6 +21,8 @@
 		props: {
 			options: '', //非必填，默认关/开
 			initStatus: '', //非必填，默认0
+			bgSwitchLeft: '',
+			bgSwitchRight: '',
 		},
 		data() {
 			return {
@@ -57,6 +65,7 @@
 	.switch-right ,.switch-left{
 		color:#9B9B9B;
 		font-size: 10px;
+		font-weight: 400;
 		line-height: 22px;
 		display: inline-block;
 		align-items: center;
@@ -68,6 +77,7 @@
 		transition: padding-left 200ms,
 		padding-right 200ms,
 		font-size  200ms,
+		font-weight  200ms,
 		color 200ms;
 		transition-delay: 0ms;
 	}
@@ -84,6 +94,7 @@
 		transition: left 500ms ease;
 	}
 	.chosen{
+		font-weight: bold;
 		font-size: 14px;
 		color:#353535;
 		width:28px;
@@ -92,6 +103,7 @@
 		transition: padding-left 300ms,
 		padding-right 300ms,
 		font-size  300ms,
+		font-weight  300ms,
 		color 300ms;
 		transition-delay: 100ms;
 	}

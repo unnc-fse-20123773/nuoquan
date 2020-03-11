@@ -70,19 +70,8 @@
 				<!-- <image class="menubar_share" src="../static/icon/share-alt-353535.png" mode="aspectFit"></image> -->
 				<!-- 评论和点赞 -->
 				<view class="operationBar column_center">
-					<view class="commentBar column_center" @click="goToDetail()">
-						<image src="../static/icon/comment.png" mode="aspectFit"></image>
-						<text>{{ thisArticle.commentNum }}</text>
-					</view>
-					<view v-if="!thisArticle.isLike" class="likeBar column_center" @click="swLikeArticle">
-						<image src="../static/icon/heart_353535.png" mode="aspectFit"></image>
-						<text>{{ thisArticle.likeNum }}</text>
-					</view>
-					
-					<view v-else class="likedBar column_center" @click="swLikeArticle">
-						<image src="../static/icon/heart_ffffff.png" mode="aspectFit"></image>
-						<text>{{ thisArticle.likeNum }}</text>
-					</view>
+					<nqCmt @click.native="goToDetail()" :number="thisArticle.commentNum"></nqCmt>
+					<nqLike style="margin-left: 11px;" @click.native="swLikeArticle" :status="thisArticle.isLike" :number="thisArticle.likeNum"></nqLike>
 				</view>
 			</view> 
 		</view>
@@ -90,10 +79,17 @@
 </template>
 
 <script>
+import nqLike from '../components/nq-button/nq-likeButton.vue';
+import nqCmt from '../components/nq-button/nq-cmtButton.vue';
+
 export default {
 	name: 'aticlebrief',
 	props: {
 		articleCard: {}
+	},
+	components:{
+		nqLike,
+		nqCmt
 	},
 	data() {
 		return {
@@ -111,7 +107,7 @@ export default {
 	},
 
 	created() {
-		// console.log(this);
+		// console.log(this.thisArticle);
 		if (this.thisArticle.imgList.length > 3) {
 			// 只取前三
 			for (var i = 0; i < 3; i++) {
@@ -443,53 +439,6 @@ image {
 	font-weight:400;
 	line-height:23px;
 	color:rgba(53,53,53,1);
-}
-
-.likeBar{
-	margin-left: 19px;
-	height:22px;
-	opacity:1;
-	border-radius:50px;
-}
-
-.likeBar image{
-	width:13px;
-	height:12px;
-	margin-left: 8px;
-}
-
-.likeBar text{
-	margin-left: 8px;
-	margin-right: 8px;
-	font-size:14px;
-	font-family:Source Han Sans CN;
-	font-weight:400;
-	line-height:23px;
-	color:rgba(53,53,53,1);
-}
-
-.likedBar{
-	margin-left: 19px;
-	height:22px;
-	background:linear-gradient(131deg,rgba(255,161,161,1) 0%,rgba(245,60,60,1) 100%);
-	opacity:1;
-	border-radius:50px;
-}
-
-.likedBar image{
-	width:13px;
-	height:12px;
-	margin-left: 8px;
-}
-
-.likedBar text{
-	margin-left: 8px;
-	margin-right: 8px;
-	font-size:14px;
-	font-family:Source Han Sans CN;
-	font-weight:400;
-	line-height:23px;
-	color:rgba(255,255,255,1);
 }
 
 .picturearea-one {

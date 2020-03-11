@@ -14,11 +14,11 @@
 		<view :style="{ height: navbarHeight + 'px' }"></view>
 		<!-- 当失去焦点时，将输入内容存入voteTitle -->
 		<view style="position: relative;margin-top: 20px;">
-			<input class="title" v-model="voteTitle" placeholder="标题" maxlength="20" placeholder-class="title-placeholder" />
+			<input class="title" v-model="voteTitle" :placeholder="lang.addTitle" maxlength="20" placeholder-class="title-placeholder" />
 			<view class="titleTextLeft">{{ 20 - voteTitle.length }}</view>
 		</view>
 
-		<button class="addContentButton" @tap="showContent()">{{ lang.addBody }}</button>
+		<button class="addContentButton" @tap="showContent()">{{ lang.addDescription }}</button>
 
 		<!-- 正文内容 -->
 		<view style="position: relative;" v-if="showContengEdit">
@@ -44,14 +44,14 @@
 		</view>
 
 		<view style="display: flex;position: relative;">
-			<mypicker class="major-pick-style" :mode="pickerMode" :range="pickerRange" :value="pickerValue" @change="pickerChange"></mypicker>
+			<mypicker style="margin-right: 25px;" :mode="pickerMode" :range="pickerRange" :value="pickerValue" @change="pickerChange"></mypicker>
 
 			<view style="margin-left: 8px;display:inline-block;height:12px;font-size:12px;font-weight:400;color:rgba(154,154,154,1);">{{ lang.dayEnd }}</view>
-			<view style="position: absolute;right: 0;display:inline-block;height:12px;font-size:12px;font-weight:400;color:rgba(154,154,154,1);">{{ lang.votePrompt2 }}</view>
+			<view style="position: absolute;right: 0;display:inline-block;height:12px;font-size:12px;font-weight:400;color:rgba(154,154,154,1);max-width: 50%;">{{ lang.votePrompt2 }}</view>
 		</view>
 		<view v-for="(item, index) in voteOptions" :key="index">
 			<view class="optionArea column_center">
-				<input class="optionItem" v-model="voteOptions[index]" placeholder="选项内容" />
+				<input class="optionItem" v-model="voteOptions[index]" :placeholder="lang.optionContent" />
 				<view class="delete" @click="deleteOpt(index)">×</view>
 			</view>
 		</view>
@@ -401,7 +401,6 @@ page {
 	font-weight: 400;
 	line-height: 16px;
 	color: rgba(199, 199, 199, 1);
-	letter-spacing: 17px;
 }
 
 .titleTextLeft {
@@ -417,7 +416,7 @@ page {
 
 .addContentButton {
 	display: inline-block;
-	width: 100px;
+	min-width: 100px;
 	margin: 16px 0 14px 0;
 	padding: 6px 32px 6px 10px;
 	height: 26px;

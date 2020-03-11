@@ -20,7 +20,7 @@
 			</button>
 			<button class="shareButton column_center" @click="eventSave">
 				<image src="../../static/icon/download-alt-ffffff.png" mode="aspectFit"></image>
-				<text>分享到朋友圈</text>
+				<text>{{lang.sharetoMoments}}</text>
 			</button>
 		</view>
 	</view>
@@ -29,6 +29,8 @@
 import postersLayer from './posterslayer.vue';
 import { pathToBase64, base64ToPath } from '../../common/image-tools/index.js';
 import canvasdrawer from './uniapp-canvas-drawer.vue';
+import { mapState, mapMutations } from 'vuex';
+
 export default {
 	props: {
 		articleCard: ''
@@ -38,7 +40,9 @@ export default {
 		postersLayer,
 		canvasdrawer
 	},
-
+	computed: {
+			...mapState(['lang'])
+		},
 	data() {
 		return {
 			postersData: {},
@@ -91,7 +95,7 @@ export default {
 		// this.context = uni.createCanvasContext('canvasdrawer', this);
 		// this.myPoster();
 
-		this.getQrcodeUnlimit('pages/detail/detail', 'data=' + this.articleCard.id, 200, true).then(res => {
+		this.getQrcodeUnlimit('pages/detail/detail', this.articleCard.id, 200, true).then(res => {
 			if (res == 'suc') {
 				this.eventDraw();
 			}
@@ -139,7 +143,7 @@ export default {
 						top: 67 + 23,
 						left: 88 + 31,
 						radius: 18,
-						url: this.articleCard.faceImg
+						url: this.pathFilter(this.articleCard.faceImg)
 					},
 					{
 						//昵称
@@ -388,7 +392,7 @@ export default {
 	right: calc((100% - 320px) / 2);
 	top: calc(26% + 320px);
 	z-index: 40;
-	width: 164px;
+	min-width: 164px;
 	height: 49px;
 	background: rgba(252, 192, 65, 1);
 	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.16);
@@ -397,16 +401,13 @@ export default {
 }
 
 .shareButton image {
-	position: absolute;
-	left: 16px;
 	width: 20px;
 	height: 20px;
 	opacity: 1;
 }
 
 .shareButton text {
-	position: absolute;
-	right: 16px;
+	margin-left: 8px;
 	min-width: 104px;
 	height: 17px;
 	font-size: 17px;

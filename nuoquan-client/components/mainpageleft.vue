@@ -108,7 +108,7 @@
 			goToMessageListPage() {
 				console.log("going to messageList");
 				
-				this.$store.commit('setMyMsgCount', 0);
+				// this.$store.commit('setMyMsgCount', 0);
 				uni.switchTab({
 				      url:'./messagelist',
 				})
@@ -116,7 +116,6 @@
 			},
 			
 			goToAboutPage() {
-				this.$store.commit('setMyMsgCount', 0);
 				uni.navigateTo({
 					url: '../about/about',
 				});

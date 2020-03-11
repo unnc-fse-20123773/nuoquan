@@ -33,7 +33,7 @@
 				height: 100%;
 				background-color: #000000;
 				opacity: 0.3;
-				z-index: 30;"
+				z-index: 35;"
 		></view>
 		
 		<view style="border-bottom: 4px solid #ECECEC;height:0;width:750upx;font-size: 0;position: relative;left: -16px;" @controlInputSignal="controlInput">这是分割线</view>
@@ -78,14 +78,14 @@
 						cursor-spacing="20"
 					/>
 					<!-- <view class="comment-pic-area"><image src="../../static/BG/indexBG.png"></image><image src="../../static/icon/about.png"></image><image src="../../static/icon/1575235531(1).png"></image></view> -->
-					<view class="word-count-left">{{ wordNotice }}</view>
+					<view class="word-count-left">{{ 140 - commentContent.length }}</view>
 				</view>
 			</view>
 		</view>
 
 		<!--常驻input-->
 		<view class="permanent_input_BG" v-if="!showInput" @click="controlInput(1)">
-			<input class="permanent_input" :placeholder="placeholderText" v-model="commentContent" disabled="true" min-height="10px" />
+			<input class="permanent_input" :placeholder="lang.engageComment" v-model="commentContent" disabled="true" min-height="10px" />
 		</view>
 		<view style="height:80px;width:100%"></view>
 		<!-- 占位块 -->
@@ -109,7 +109,6 @@ export default {
 	},
 	data() {
 		return {
-			imgList: [],
 			userInfo: {},
 			articleCard: '', //detail的主角，由index传过来的单个文章信息
 			commentContent: '', //用户准备提交的评论内容
@@ -118,8 +117,7 @@ export default {
 			share: false, // 是否显示分享海报
 			showInput: false, //控制输入框，true时显示输入框
 			writingComment: false, //控制输入框，true时自动获取焦点，拉起输入法
-			placeholderText: '评论点什么吧......',
-			wordNotice: '48',
+			placeholderText: '',
 			inputData: {}, //localData,用于拼接不同情况下的savecomment请求的数据
 
 			submitData: {
@@ -128,7 +126,7 @@ export default {
 			imgIndex: '',
 			serverUrl: this.$serverUrl,
 
-			textAreaAdjust: '',
+			textAreaAdjust: 0,
 
 			totalPage: 1, //评论分页属性
 			currentPage: 1, //评论分页属性
@@ -155,7 +153,7 @@ export default {
 	onLoad(options) {
 		// 一次性储存 navbar 高度
 		this.navbarHeight = this.getnavbarHeight().bottom + 5;
-			
+		this.placeholderText = this.lang.engageComment;
 		//获取全局用户信息
 		var userInfo = this.getGlobalUserInfo();
 		if (!this.isNull(userInfo)) {
@@ -166,13 +164,15 @@ export default {
 			});
 			return;
 		}
-
-		var articleId = options.data;
+		
+		var articleId = options.data || options.scene;
+		// console.log("data="+options.data); //跳转进入
+		// console.log("sence="+options.scene); //扫码进入
 		this.getArticleById(articleId, this.userInfo.id).then(()=>{
 			this.getComments(this.currentPage);
+			// 添加浏览量
+			this.addViewCount();
 		})
-		// 添加浏览量
-		this.addViewCount();
 		
 		// uni.$on("flashSubComment", mainCommentId => {
 		// 	console.log("修改对应主评下的次评论")
@@ -198,7 +198,7 @@ export default {
 		if (res.from === 'menu') {
 			// 来自右上角菜单的分享
 			return {
-				title: '来，给老子看！',
+				title: '速来围观' + this.userInfo.nickname + '的分享',
 				path: '/pages/detail/detail?data=' + this.articleCard.id
 			};
 		}
@@ -252,7 +252,7 @@ export default {
 			console.log('展开');
 			console.log(e);
 			console.log(e.detail.height);
-			this.textAreaAdjust = e.detail.height / 3 + 'px';
+			// this.textAreaAdjust = e.detail.height / 3 + 'px';
 			// this.textAreaAdjust = '0' ;
 		},
 
@@ -260,7 +260,7 @@ export default {
 			console.log('收起');
 			console.log(e);
 
-			this.textAreaAdjust = '';
+			// this.textAreaAdjust = '';
 		},
 		changeLikeStatus(status) {
 			this.articleCard.isLike = status;
@@ -522,7 +522,7 @@ export default {
 
 		controlInput(a) {
 			if (a != 0 && a != 1) {
-				this.placeholderText = '回复 @' + a.nickname + ' 的评论';
+				this.placeholderText = this.lang.replyComent.replace('NICKNAME', a.nickname);
 				delete a.nickname;
 				this.submitData = a;
 				this.writingComment = true;
@@ -536,7 +536,7 @@ export default {
 				//a==0, 关闭输入框，一切恢复默认状态
 				console.log('this is control input in detail. a ==0, EXIT');
 				this.submitData = {};
-				this.placeholderText = '评论点什么吧......';
+				this.placeholderText = this.lang.engageComment;
 				this.showInput = false;
 				this.writingComment = false;
 			}
@@ -553,7 +553,7 @@ export default {
 				type: "article"
 			}
 			uni.navigateTo({
-				url: '/pages/comment-detail/comment-detail?data=' + JSON.stringify(data)
+				url: '/pages/comment-detail/comment-detail?data=' + encodeURIComponent(JSON.stringify(data))
 			});
 		},
 
@@ -784,6 +784,7 @@ page {
 	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.16);
 	background: #ffffff;
 	line-height: 14px;
+	z-index: 30;
 }
 .permanent_input {
 	height: 30px;
@@ -791,7 +792,7 @@ page {
 	vertical-align: top;
 	color: #888888;
 	overflow: hidden;
-	text-overflow: ellipsis;
+	/* text-overflow: ellipsis; */
 	width: calc(100% - 48px);
 
 	padding: 3px 12px 4px;
