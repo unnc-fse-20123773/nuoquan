@@ -35,7 +35,7 @@
 					<!-- 热门标题 -->
 					<swiper :class="[roleup == false ? 'swiperCard' : 'swiperCard_roled']" :indicator-dots="false" :autoplay="true" :interval="3000" :vertical="true" :duration="1000">
 						<view >
-							<swiper-item @click="goToDetail(index)" v-for="(item, index) in topArticles" :key="index">
+							<swiper-item @click="goToDetail(item.id)" v-for="(item, index) in topArticles" :key="index">
 								<view class="itemCard" :style="{'height':roleup == false ? '62px;' :'33px' ,}">
 									<view class="hotTitle" :style="{'margin-top': roleup ? '8px': '12px'}">{{ item.articleTitle }}</view>
 									<view v-if="roleup == false" class="userInfo">
@@ -173,11 +173,11 @@ export default {
 			});
 		},
 		goToDetail(articleIndex) {
-			// var id = this.topArticles.articleIndex.id;
-			// console.log(id);
-			// uni.navigateTo({
-			// 	url: '/pages/detail/detail?data=' + article.id
-			// });
+			var id = articleIndex;
+			console.log(id);
+			uni.navigateTo({
+				url: '/pages/detail/detail?data=' + id
+			});
 		},
 		jumpTohot() {
 			uni.navigateTo({

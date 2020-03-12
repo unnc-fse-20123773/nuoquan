@@ -19,7 +19,7 @@
 		</view>
 		<swiper style="width:100%;height:100%;" :current-item-id="swiperViewing">
 			<swiper-item item-id="article" @touchmove.stop>
-				<view style="width:100%;height:100%;margin:auto;background: #FFFFFF;">
+				<view style="width:100%;min-height:100%;margin:auto;background: #FFFFFF;">
 					<view class="mainbody">
 						<view style="height:20px;width:100%;"></view>
 						<myArticles :lang="lang" v-bind:myArticleList="myArticleList"></myArticles>
