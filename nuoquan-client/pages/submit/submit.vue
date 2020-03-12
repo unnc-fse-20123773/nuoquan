@@ -34,7 +34,7 @@
 				:tag="item" 
 				@click="deleteTag(index)"
 			></tagSelected>
-			<button class="editTagsButton" @tap="editTag(true)" v-if="!editingTag">{{lang.addTags + " +"}}</button>
+			<view class="editTagsButton" @tap="editTag(true)" v-if="!editingTag">{{lang.addTags + " +"}}</view>
 			<view class="finish-button" @tap="editTag(false)" v-if="editingTag">{{lang.ok}}</view>
 		</view>
 
@@ -495,7 +495,7 @@ page {
 	background: linear-gradient(318deg, rgba(251, 118, 118, 1) 0%, rgba(254, 192, 77, 1) 100%);
 	box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
 	border-radius: 8px;
-
+	text-align: center;
 	font-size: 14px;
 	line-height: 23px;
 	color: rgba(255, 255, 255, 1);

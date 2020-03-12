@@ -18,7 +18,7 @@
 			<view class="titleTextLeft">{{ 20 - voteTitle.length }}</view>
 		</view>
 
-		<button class="addContentButton" @tap="showContent()">{{ lang.addDescription }}</button>
+		<view class="addContentButton" @tap="showContent()">{{ lang.addDescription }}</view>
 
 		<!-- 正文内容 -->
 		<view style="position: relative;" v-if="showContengEdit">
@@ -419,6 +419,7 @@ page {
 	min-width: 100px;
 	margin: 16px 0 14px 0;
 	padding: 6px 32px 6px 10px;
+	text-align: center;
 	height: 26px;
 	font-size: 14px;
 	line-height: 14px;

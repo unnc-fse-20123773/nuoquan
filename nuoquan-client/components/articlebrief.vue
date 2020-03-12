@@ -301,7 +301,7 @@ image {
 	width: 93.12%;
 	font-size: 14px;
 	font-family: Source Han Sans CN;
-	line-height: 16px;
+	line-height: 20px;
 	opacity: 1;
 	font-weight: 400;
 	margin: 8px 3.44% 8px 3.44%;
@@ -373,7 +373,7 @@ image {
 	position: absolute;
 	left: 12.61%;
 	/* max-width: 24%; */
-	font-size: 14px;
+	font-size: 12px;
 	font-family: Source Han Sans CN;
 	font-weight: 400;
 	line-height: 23px;
@@ -387,7 +387,7 @@ image {
 .time {
 	position: absolute;
 	right: 3.44%;
-	font-size: 14px;
+	font-size: 12px;
 	font-family: Source Han Sans CN;
 	font-weight: 400;
 	line-height: 23px;

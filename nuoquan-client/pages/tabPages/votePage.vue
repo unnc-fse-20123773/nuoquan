@@ -199,7 +199,7 @@
 							>
 								{{ lang.send }}
 							</view>
-							<image src="../../static/icon/emoji.png" style="position: absolute;left:12px;top:8px;width:20px;height:20px;"></image>
+							<image @click="showToastEmoji()" src="../../static/icon/emoji.png" style="position: absolute;left:12px;top:8px;width:20px;height:20px;"></image>
 						</view>
 
 						<commentarea style="background-color: #00B7B8;"
@@ -921,20 +921,22 @@ export default {
 			setTimeout(() => {
 				this.scrollTop = -1;
 			}, 200)
-			console.log(this.scrollTop);
-			console.log(this.old.scrollTop);
-			// uni.showToast({
-			// 	icon:"none",
-			// 	title:"纵向滚动 scrollTop 值已被修改为 0"
-			// })
-			// uni.pageScrollTo({
-			// 	scrollTop: 0,
-			// 	duration: 300
-			// });
+			// console.log(this.scrollTop);
+			// console.log(this.old.scrollTop);
 		}, 
+		
 		showScrollTop(){
-			console.log('=' + this.scrollTop);
-		}
+			// console.log('=' + this.scrollTop);
+		},
+		
+		showToastEmoji() {
+			uni.showToast({
+				// title: '⠀⠀⠀⠀⠀under⠀⠀⠀⠀⠀development',//不是空格，是特殊符号，莫删
+				title: '开发小哥正在玩命实现中...',
+				duration: 2000,
+				icon: 'none'
+			});
+		},
 	}
 };
 </script>
@@ -1114,7 +1116,7 @@ page {
 	position: absolute;
 	left: calc(3.44% + 32px);
 	max-width: 24%;
-	font-size: 14px;
+	font-size: 12px;
 	font-family: Source Han Sans CN;
 	font-weight: 400;
 	line-height: 23px;
@@ -1125,7 +1127,7 @@ page {
 .time {
 	position: absolute;
 	right: 3.44%;
-	font-size: 14px;
+	font-size: 12px;
 	font-family: Source Han Sans CN;
 	font-weight: 400;
 	line-height: 23px;

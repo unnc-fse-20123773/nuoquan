@@ -89,7 +89,7 @@ module.exports = {
 	
 	//我的
 	profile : "Profile",
-	myPublish : "Publish",
+	myPublish : "My Post",
 	about : "About Us",
 	changeLang : "Language",
 	follow : "Follow",
