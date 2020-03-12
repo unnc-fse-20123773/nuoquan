@@ -16,7 +16,7 @@
 			<!--Nottinghome-->
 			<view class="company-name">Nottinghome</view>
 			<!--版本-->
-			<view class="version">v1.1.1</view>
+			<view class="version">v1.1.2</view>
 		</view>
 		
 		<!--表单部分-->
@@ -65,9 +65,9 @@
 						3. 优化私信功能，轻松结识圈中大佬
 						4. 中英切换，信息编辑... 更多全新功能现已加入
 						
-						20.3.10 更新：
+						20.3.13 更新：
 						1. 修复部分已知 Bug
-						2. 优化分享功能
+						2. 优化卡片生成功能
 						3. 修复私信功能外观显示问题
 					</view>
 				</view>
