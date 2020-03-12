@@ -30,8 +30,9 @@
 				></image>
 			</view>
 			<!-- 其他数量 -->
-			<view v-else-if="articleCard.imgList.length == 4" class="detailpics" style="max-width: 400upx;margin-left: 0;">
+			<view v-else-if="articleCard.imgList.length == 4" class="detailpics" style="max-width: 508upx;margin-left: 0;">
 				<image
+				style="width: 248upx;height:248upx;"
 					class="detailpic"
 					v-for="(i, index) in articleCard.imgList"
 					:key="index"
@@ -327,6 +328,7 @@ export default {
 	word-wrap: break-word;
 	white-space: pre-line;
 	font-size: 14px;
+	line-height: 20px;
 	font-family: Source Han Sans CN;
 	font-weight: 400;
 	line-height: 18px;

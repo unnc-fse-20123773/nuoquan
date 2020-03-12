@@ -1114,7 +1114,7 @@ page {
 	position: absolute;
 	left: calc(3.44% + 32px);
 	max-width: 24%;
-	font-size: 14px;
+	font-size: 12px;
 	font-family: Source Han Sans CN;
 	font-weight: 400;
 	line-height: 23px;
@@ -1125,7 +1125,7 @@ page {
 .time {
 	position: absolute;
 	right: 3.44%;
-	font-size: 14px;
+	font-size: 12px;
 	font-family: Source Han Sans CN;
 	font-weight: 400;
 	line-height: 23px;

@@ -29,7 +29,7 @@
 </template>
 	
 <script>
-	const tabHeight = 50;
+	const tabHeight = 74;
 	export default {
 		name: "yq-avatar",
 		data() {
@@ -1018,7 +1018,7 @@
 		width: 100%;
 	}
 	.oper-wrapper {
-		height: 50px;
+		min-height: 50px;
 		position: fixed !important;
 		box-sizing: border-box;
 		border: 1px solid #F1F1F1;
@@ -1026,7 +1026,7 @@
 		width: 100%;
 		left: 0;
 		bottom: 0;
-		z-index: 100009;
+		z-index: 300000;
 		flex-direction: row;
 	}
 	.oper {
@@ -1038,9 +1038,11 @@
 		height: 100%;
 		box-sizing: border-box;
 		align-self: center;
+		margin-bottom: 24px;
 	}
 	.btn-wrapper {
 		display: flex;
+		height: 36px;
 		flex-direction: row;
 		/* #ifndef H5 */
 		flex-grow: 1;
