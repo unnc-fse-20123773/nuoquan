@@ -209,6 +209,10 @@
 			"name": "新建投票",
 			"path": "pages/submitVote/submitVote",
 			"query": "" //启动参数，在页面的onLoad函数里面得到
+		},{
+			"name": "用户协议",
+			"path": "pages/userDeal/userDeal",
+			"query": "" //启动参数，在页面的onLoad函数里面得到
 		}]
 	}
 }

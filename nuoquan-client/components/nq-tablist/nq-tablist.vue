@@ -29,6 +29,9 @@ export default {
 	computed: {
 		...mapState(['lang'])
 	},
+	created() {
+		
+	},
 	methods: {
 		gosubmit() {
 			console.log('click in tablist');
@@ -53,7 +56,7 @@ export default {
 	z-index: 40;
 	left: 0;
 	right: 0;
-	bottom: 87px;
+	bottom: 11.04%;
 	margin-left: auto;
 	margin-right: auto;
 }
