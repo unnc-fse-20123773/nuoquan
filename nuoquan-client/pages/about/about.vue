@@ -34,8 +34,8 @@
 					<view class="body">
 						“Share beyond Moments”
 						Nottinghome 期待与校内各组织社团、学生团队、alumni 创业企业合作。
-						合作形式包括但不限于联名活动、官方账号入驻 Nottinghome、资源共享等等。
-						我们欢迎一切能让 UNNC 变的更好的 idea~
+						合作形式包括但不限于联名活动、官方账号入驻 Nottinghome、资源共享等。
+						欢迎更多朋友与我们一起为 UNNC 创造无限可能！
 						举报和反馈请联系：
 						wx: honggh-
 						
