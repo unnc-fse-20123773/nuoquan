@@ -56,7 +56,7 @@ export default {
 	z-index: 40;
 	left: 0;
 	right: 0;
-	bottom: 11.04%;
+	bottom: 87px;
 	margin-left: auto;
 	margin-right: auto;
 }

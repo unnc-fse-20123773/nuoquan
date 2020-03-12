@@ -408,8 +408,9 @@ page {
 .userid_mainpagetop{
 	position: absolute;
 	left: 25px;
-	height:12px;
+	height:14px;
 	width: 100%;
+	line-height: 14px;
 	font-size:12px;
 	font-weight:400;
 	color:rgba(155,155,155,1);

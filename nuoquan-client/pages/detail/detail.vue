@@ -127,7 +127,8 @@ export default {
 			serverUrl: this.$serverUrl,
 
 			textAreaAdjust: 0,
-
+			ifPop: false,//判断键盘是否弹起
+			
 			totalPage: 1, //评论分页属性
 			currentPage: 1, //评论分页属性
 			type: 0, //查询评论接口参数，0：按时间查询, 1：按热度查询
@@ -249,6 +250,7 @@ export default {
 		},
 
 		popTextArea(e) {
+			// this.ifPop = true;
 			console.log('展开');
 			console.log(e);
 			console.log(e.detail.height);
@@ -257,6 +259,7 @@ export default {
 		},
 
 		unpopTextArea(e) {
+			// this.ifPop = false;
 			console.log('收起');
 			console.log(e);
 
