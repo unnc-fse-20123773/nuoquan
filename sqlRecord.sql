@@ -754,7 +754,12 @@ ADD COLUMN `image_order` INT NOT NULL AFTER `image_path`;
 ALTER TABLE `nuoquan`.`user` 
 ADD COLUMN `latest_login` DATETIME NULL DEFAULT NULL AFTER `reputation`;
 
+ALTER TABLE `nuoquan`.`vote_image` 
+ADD COLUMN `image_order` INT NOT NULL AFTER `image_path`;
+
+
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 -- v20.3.12 @author: deyan
 -- 为user表添加last_login属性, 用来储存用户 最近的 登录时间
+-- 为vote_image表添加image_order属性
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑

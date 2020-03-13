@@ -8,6 +8,7 @@
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="vote_id" property="voteId" jdbcType="VARCHAR" />
     <result column="image_path" property="imagePath" jdbcType="VARCHAR" />
+    <result column="image_order" property="imageOrder" jdbcType="INTEGER" />
   </resultMap>
   
   <select id="getVoteImgs" resultMap="BaseResultMap">
@@ -15,6 +16,7 @@
   	where
   		1 = 1
   		and vote_id = #{voteId}
+  	order by nuoquan.vote_image.image_order asc
   </select>
   
 </mapper>
