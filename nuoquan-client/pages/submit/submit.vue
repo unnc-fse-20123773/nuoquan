@@ -44,7 +44,7 @@
 		<view style="position: relative;">
 			<textarea class="content" v-model="articleContent" :maxlength="maxContentLength" :auto-height="true" :show-confirm-bar="false"></textarea>
 			<view style="position: absolute;bottom: 8px;right:8px;font-size: 11px;color:#888888;">{{ maxContentLength - articleContent.length }}</view>
-			<image src="../../static/icon/emoji.png" style="position: absolute;left:12px;top:8px;width:20px;height:20px;"></image>
+			<image src="../../static/icon/emoji.png" style="position: absolute;left:12px;top:8px;width:20px;height:20px;" @click="showToast()"></image>
 		</view>
 
 		<view class="picturearea">
@@ -423,7 +423,16 @@ export default {
 
 		editTag(a) {
 			this.editingTag = a;
-		}
+		},
+		
+		showToast() {
+			uni.showToast({
+				// title: '⠀⠀⠀⠀⠀under⠀⠀⠀⠀⠀development',//不是空格，是特殊符号，莫删
+				title: '开发小哥正在玩命实现中...',
+				duration: 2000,
+				icon: 'none'
+			});
+		},
 	}
 };
 </script>
