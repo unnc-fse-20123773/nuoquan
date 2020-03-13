@@ -306,4 +306,15 @@ public class UserServiceImpl implements UserService {
 		return true;
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Override
+	public void updateLatestLoginTime(String userId) {
+		Example example = new Example(UserFans.class);
+		Criteria criteria = example.createCriteria();
+		criteria.andEqualTo("id", userId);
+		User user = new User();
+		user.setLatestLogin(new Date());
+		userMapper.updateByExampleSelective(user, example);
+	}
+
 }

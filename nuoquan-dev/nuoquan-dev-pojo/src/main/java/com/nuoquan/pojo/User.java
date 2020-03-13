@@ -64,6 +64,14 @@ public class User {
     private String cid;
     
     private Integer reputation;
+    
+    /**
+     * 用户最近登录的时间
+     */
+    @Column(name = "latest_login")
+    private Date latestLogin;
+    
+    
     /**
      * @return id
      */
@@ -308,5 +316,13 @@ public class User {
 
 	public void setReputation(Integer reputation) {
 		this.reputation = reputation;
+	}
+
+	public Date getLatestLogin() {
+		return latestLogin;
+	}
+
+	public void setLatestLogin(Date latestLogin) {
+		this.latestLogin = latestLogin;
 	}
 }

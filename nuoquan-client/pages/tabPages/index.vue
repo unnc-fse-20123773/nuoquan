@@ -88,7 +88,8 @@ export default {
 		} else {
 			this.userInfo = userInfo; // 刷去默认值(若有)
 		}
-
+		this.updateLatestLoginTime();//更新登陆时间
+		
 		this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
 
 		this.capsuleButton = this.getnavbarHeight(); //获取胶囊按钮信息
@@ -259,6 +260,7 @@ export default {
 					'content-type': 'application/x-www-form-urlencoded'
 				},
 				success: res => {
+					console.log("用户信息");
 					console.log(res);
 					if (res.data.status == 200) {
 						var user = res.data.data;
@@ -270,7 +272,24 @@ export default {
 				}
 			});
 		},
-
+		
+		updateLatestLoginTime(){
+			uni.request({
+				url: this.$serverUrl + '/user/updateLatestLoginTime',
+				method: 'POST',
+				data:{
+					userId: this.userInfo.id 
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					console.log("更新用户最近登录时间");
+					console.log(res);
+				}
+			})
+		},
+		
 		/**
 		 * 获取标签列表
 		 */

@@ -191,7 +191,7 @@ export default {
 								top: 67 + 250,
 								left: 88 + 27,
 								width: 270,
-								dashWidth: 7
+								dashWidth: 5
 							},
 							{
 								//二维码
