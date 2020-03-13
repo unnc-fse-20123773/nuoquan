@@ -287,7 +287,7 @@ export default {
 	position: absolute;
 	top: 0;
 	left: 32px;
-	width: 96px;
+	min-width: 96px;
 }
 
 .time {

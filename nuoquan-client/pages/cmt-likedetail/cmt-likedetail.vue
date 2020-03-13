@@ -204,7 +204,6 @@
 								<!-- 卡片高度未定义，上下边距会失效，用 marginHelper 填充空白 -->
 								<view class="marginHelper2"></view>
 							</view>
-							
 						</view>
 						<!-- 用于添加底部空白 by Guetta 9.10 -->
 						<view class="marginHelper3"></view>
@@ -612,7 +611,7 @@
 		border-radius: 25upx;
 		min-height: 150upx;
 		background-color: white;
-		box-shadow: 0upx 0upx 10upx 1upx #A6A6A6;
+		box-shadow: 0px 0px 6px rgba(0,0,0,0.16);
 		margin-top: 15px;
 	}
 	
@@ -632,7 +631,7 @@
 	}
 	
 	.marginHelper3{
-		height: 15upx;
+		height: 80px;
 		margin-top: 15upx;
 		width: 100%;
 		background-color: #f3f3f3;
@@ -857,6 +856,17 @@
 		color: #919191;
 		height: 100%;
 		width: 98%;
+		
+		/* 保证文章正常显示 */
+		word-wrap: break-word;
+		word-break: normal;
+		white-space: normal;
+		text-overflow: ellipsis;
+		/**文字隐藏后添加省略号*/
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+		overflow: hidden;
 	}
 	
 	.origin-briefTextbox{
