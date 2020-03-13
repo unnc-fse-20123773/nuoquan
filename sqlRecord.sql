@@ -749,3 +749,12 @@ ADD COLUMN `image_order` INT NOT NULL AFTER `image_path`;
 -- 将vote中的vote_content和vote_option中的option_content改为utf8mb4
 -- 为article_image表添加image_order属性
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+
+
+ALTER TABLE `nuoquan`.`user` 
+ADD COLUMN `latest_login` DATETIME NULL DEFAULT NULL AFTER `reputation`;
+
+-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+-- v20.3.12 @author: deyan
+-- 为user表添加last_login属性, 用来储存用户 最近的 登录时间
+-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑

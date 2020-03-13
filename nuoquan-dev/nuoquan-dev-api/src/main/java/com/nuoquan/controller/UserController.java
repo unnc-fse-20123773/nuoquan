@@ -243,6 +243,29 @@ public class UserController extends BasicController {
 		return JSONResult.ok(userVO);
 	}
 	
+	@ApiOperation(value = "update the latest login time of user.")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "userId", required = true, dataType = "String", paramType = "form")
+	})
+	@PostMapping("/updateLatestLoginTime")
+	public JSONResult updateLatestLoginTime(String userId) throws Exception{
+		
+		// 1. 判断用户名不为空
+		if (StringUtils.isEmpty(userId)) {
+			return JSONResult.errorMsg("该账号为空");
+		}
+		User user = new User();
+		// 2. 判断用户名是否存在
+		boolean isIdExist = userService.checkIdIsExist(userId);
+		if (isIdExist) {
+			userService.updateLatestLoginTime(userId);
+			return JSONResult.ok();
+		} else {
+			return JSONResult.errorMsg("用户不存在");
+		}
+		
+	}
+	
 	@ApiOperation(value = "query the user's info and whether I followed him")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "userId", required = true, dataType = "String", paramType = "form"),

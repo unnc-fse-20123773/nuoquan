@@ -258,6 +258,7 @@ export default {
 					'content-type': 'application/x-www-form-urlencoded'
 				},
 				success: res => {
+					console.log("用户信息");
 					console.log(res);
 					if (res.data.status == 200) {
 						var user = res.data.data;
@@ -265,6 +266,20 @@ export default {
 						this.setGlobalUserInfo(finalUser); // 把用户信息写入缓存
 						this.userInfo = finalUser; // 更新页面用户数据
 						// console.log(this.userInfo);
+						uni.request({
+							url: that.$serverUrl + '/user/updateLatestLoginTime',
+							method: 'POST',
+							data:{
+								userId: userId 
+							},
+							header: {
+								'content-type': 'application/x-www-form-urlencoded'
+							},
+							success: res => {
+								console.log("更新用户最近登录时间");
+								console.log(res);
+							}
+						})
 					}
 				}
 			});
