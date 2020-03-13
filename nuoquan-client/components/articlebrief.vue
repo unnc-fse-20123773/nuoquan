@@ -6,8 +6,8 @@
 		</view>
 		<!-- 用户信息行 -->
 		<view class="userLine hor_center">
-			<image :src="pathFilter(thisArticle.faceImg)" class="touxiang" @tap="goToPersonPublic(thisArticle.userId)"></image>
-			<view class="name" @tap="goToPersonPublic(thisArticle.userId)">{{ thisArticle.nickname }}</view>
+			<image :src="pathFilter(thisArticle.faceImg)" class="touxiang" @tap.stop="goToPersonPublic(thisArticle.userId)"></image>
+			<view class="name" @tap.stop="goToPersonPublic(thisArticle.userId)">{{ thisArticle.nickname }}</view>
 			<view class="time" :style="timeLeft">{{ timeDeal(thisArticle.createDate) }}</view>
 		</view>
 		<!-- 标签行 -->
@@ -70,7 +70,7 @@
 				<!-- <image class="menubar_share" src="../static/icon/share-alt-353535.png" mode="aspectFit"></image> -->
 				<!-- 评论和点赞 -->
 				<view class="operationBar column_center">
-					<nqCmt @click.native="goToDetail()" :number="thisArticle.commentNum"></nqCmt>
+					<nqCmt @click.native.stop="goToDetail()" :number="thisArticle.commentNum"></nqCmt>
 					<nqLike style="margin-left: 11px;" @click.native.stop="swLikeArticle" :status="thisArticle.isLike" :number="thisArticle.likeNum"></nqLike>
 				</view>
 			</view> 
