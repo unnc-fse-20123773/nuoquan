@@ -95,6 +95,9 @@ export default {
 		// this.context = uni.createCanvasContext('canvasdrawer', this);
 		// this.myPoster();
 		
+		
+		// this.getQrcodeUnlimit('pages/wechatLogin/wechatLogin', null, 200, true)
+		
 		this.eventDraw();
 	},
 
@@ -323,7 +326,7 @@ export default {
 								// console.log(path);
 								that.QrCode = path;
 								console.log('获得二维码');
-								// console.log(that.QrCode);
+								console.log(that.QrCode);
 								resolve('suc');
 							})
 							.catch(error => {

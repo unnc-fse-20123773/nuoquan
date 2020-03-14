@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App'
 import store from './store' // 引入 vuex 的 store 对象
 import util from 'common/util.js' // 引入共用工具
+import userUtil from 'common/userUtil.js' // 用户信息维护相关方法
 import ProgressBar from '@/components/Progress-Bar/Progress-Bar';//引入进度条全局组件
 Vue.component('ProgressBar', ProgressBar);
 
@@ -39,22 +40,25 @@ Vue.prototype.$wsServerUrl = "wss://www.checkchack.cn:8088/ws"
  * @param {Object} user
  */
 Vue.prototype.setGlobalUserInfo = function(user) {
-	uni.setStorageSync('userInfo', user);
+	// uni.setStorageSync('userInfo', user);
+	userUtil.setGlobalUserInfo(user);
 }
 
 /**
  * 设置当前用户信息
  */
 Vue.prototype.getGlobalUserInfo = function() {
-	var value = uni.getStorageSync('userInfo');
-	return value;
+	// var value = uni.getStorageSync('userInfo');
+	// return value;
+	return userUtil.getGlobalUserInfo();
 }
 
 /**
  * 清空当前用户信息
  */
 Vue.prototype.removeGlobalUserInfo = function() {
-	uni.removeStorageSync('userInfo');
+	// uni.removeStorageSync('userInfo');
+	userUtil.removeGlobalUserInfo();
 }
 
 /**

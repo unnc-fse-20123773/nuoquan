@@ -5,10 +5,8 @@ export default {
 	},
 	onLaunch: function() {},
 	onShow: function(options) {
-		let pages = getCurrentPages(); //当前页面栈
 		console.log('App Show');
 		console.log('scene=' + options.scene);
-		console.log('pages.length=' + pages.length);
 		var sceneList = [1007, 1008, 1011, 1012, 1013, 1014, 1047, 1048, 1049]
 		for (let scene of sceneList){
 			if(options.scene == scene){
@@ -22,6 +20,7 @@ export default {
 		// 	console.log('get scene=' + options.scene);
 		// 	this.globalData.isNavHome = true;
 		// }
+		// let pages = getCurrentPages(); //当前页面栈
 		// if(options.path != "pages/tabPages/index"
 		// && options.path != "pages/tabPages/messagelist"
 		// && options.path != "pages/tabPages/mine"
