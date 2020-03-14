@@ -112,7 +112,7 @@ export default {
 	},
 	data() {
 		return {
-			versionNum: 'v1.1.3',
+			versionNum: this.version,
 			contentShow1: true,
 			contentShow2: true,
 			contentShow3: true,
