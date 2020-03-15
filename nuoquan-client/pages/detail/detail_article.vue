@@ -1,7 +1,13 @@
 <template>
 	<view>
-		<!--标题-->
-		<view class="detail-title">{{ articleCard.articleTitle }}</view>
+		<view style="display: flex;">
+			<!--标题-->
+			<view class="detail-title" :style="{width : isfunCom ? 'calc(100%-75px)' : '100%'}">{{ articleCard.articleTitle }}</view>
+			<!-- 搞笑大赛 -->
+			<image v-if="isfunCom" src="../../static/BG/funCom.png" mode="aspectFit" 
+				style="width: 75px;height: 36px;margin-top: 10px;">
+			</image>
+		</view>
 		<!--作者信息，头像名字时间-->
 		<view class="author-info-bar">
 			<image :src="pathFilter(articleCard.faceImg)" class="touxiang" @click="goToPersonPublic()"></image>
@@ -75,7 +81,7 @@ export default {
 	name: 'detail_1_article',
 	props: {
 		articleCard: '',
-		userInfo: ''
+		userInfo: '',
 	},
 	components: {
 		// mySharePoster
@@ -85,21 +91,43 @@ export default {
 			serverUrl: this.$serverUrl,
 			singleImgWidth: '', //一图调整宽度
 			tagColorList: [],
-			share: false // 隐藏/显示share画布
+			share: false ,// 隐藏/显示share画布
+			isfunCom: false,
 		};
 	},
-	mounted() {
-		// 随机生成颜色
-		if (!this.isNull(this.articleCard.tagList)) {
-			var tagColors = this.tagColors;
-			for (var i = 0; i < this.articleCard.tagList.length; i++) {
-				var random = Math.floor(Math.random() * tagColors.length); // 0~tagColors.length-1
-				this.tagColorList.push(tagColors[random]);
+	
+	watch: {
+		articleCard(newVal, oldVal){
+			// 随机生成颜色
+			if (this.articleCard.tagList != null) {
+				var tagColors = this.tagColors;
+				for (var i = 0; i < this.articleCard.tagList.length; i++) {
+					var random = Math.floor(Math.random() * tagColors.length); // 0~tagColors.length-1
+					this.tagColorList.push(tagColors[random]);
+				}
 			}
+			
+			// 捕获特殊标签做特殊处理
+			this.catchSpecialTag();
 		}
 	},
 
 	methods: {
+		/**
+		 * 捕获特殊标签做特殊处理
+		 */
+		catchSpecialTag(){
+			if (this.articleCard.tagList != null) {
+				for (var tag of this.articleCard.tagList) {
+					//搞笑大赛
+					if (tag == 'UNNC搞笑大赛'){
+						this.isfunCom = true;
+					}
+				}
+			}
+		},
+		
+		
 		singleImgeFit(e) {
 			var height = e.detail.height;
 			var width = e.detail.width;
@@ -250,11 +278,11 @@ export default {
 }
 
 .detail-title {
-	width: 100%;
+	/* width: calc(100% - 75px); */
 	color: #4a4a4a;
 	font-size: 17px;
 	line-height: 21px;
-	margin: auto;
+	/* margin: auto; */
 	font-weight: 500;
 	word-break: break-all;
 	word-wrap: break-word;

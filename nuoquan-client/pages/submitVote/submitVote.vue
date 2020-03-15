@@ -10,7 +10,7 @@
 			:title="lang.tabList[1]"
 			:height="navbarHeight"
 		></uni-nav-bar>
-
+	
 		<view :style="{ height: navbarHeight + 'px' }"></view>
 		<!-- 当失去焦点时，将输入内容存入voteTitle -->
 		<view style="position: relative;margin-top: 20px;">

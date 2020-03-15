@@ -33,7 +33,7 @@ import { mapState, mapMutations } from 'vuex';
 
 export default {
 	props: {
-		articleCard: ''
+		articleCard: '' // 传进文章基本信息
 	},
 
 	components: {
@@ -98,6 +98,7 @@ export default {
 		
 		// this.getQrcodeUnlimit('pages/wechatLogin/wechatLogin', null, 200, true)
 		
+		// 开始画图
 		this.eventDraw();
 	},
 
@@ -112,8 +113,11 @@ export default {
 				mask: true
 			});
 			
+			// 先请求二维码
 			this.getQrcodeUnlimit('pages/detail/detail', this.articleCard.id, 200, true).then(res => {
 				if (res == 'suc') {
+					// 成功获取到二维码了，开始对画布内容赋值。
+					// 把该列表传给组件，组件通过类型及位置信息画图。
 					this.painting = {
 						width: 500,
 						height: 500,
@@ -185,7 +189,7 @@ export default {
 								width: 266,
 								MaxLineNumber: 5,
 								breakWord: true,
-								bolder: false
+								bolder: false,
 							},
 							{
 								//分割线
