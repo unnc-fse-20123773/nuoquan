@@ -94,12 +94,11 @@ export default {
 
 		// this.context = uni.createCanvasContext('canvasdrawer', this);
 		// this.myPoster();
-
-		this.getQrcodeUnlimit('pages/detail/detail', this.articleCard.id, 200, true).then(res => {
-			if (res == 'suc') {
-				this.eventDraw();
-			}
-		});
+		
+		
+		// this.getQrcodeUnlimit('pages/wechatLogin/wechatLogin', null, 200, true)
+		
+		this.eventDraw();
 	},
 
 	methods: {
@@ -112,120 +111,118 @@ export default {
 				title: '绘制分享图片中',
 				mask: true
 			});
-
-			this.painting = {
-				width: 500,
-				height: 500,
-				clear: true,
-				views: [
-					{
-						type: 'image',
+			
+			this.getQrcodeUnlimit('pages/detail/detail', this.articleCard.id, 200, true).then(res => {
+				if (res == 'suc') {
+					this.painting = {
 						width: 500,
 						height: 500,
-						top: 0,
-						left: 0,
-						url: '/static/BG/1-blue.png'
-					},
-					{
-						type: 'rect',
-						width: 324,
-						height: 366,
-						top: 67,
-						left: 88,
-						background: '#FFFFFF',
-						radius: 20
-					},
-					{
-						//头像
-						type: 'image',
-						width: 37,
-						height: 37,
-						top: 67 + 23,
-						left: 88 + 31,
-						radius: 18,
-						url: this.pathFilter(this.articleCard.faceImg)
-					},
-					{
-						//昵称
-						type: 'text',
-						content: this.articleCard.nickname,
-						fontSize: 17,
-						color: '#9A9A9A',
-						textAlign: 'left',
-						top: 67 + 31,
-						left: 88 + 82,
-						bolder: false
-					},
-					{
-						//标题
-						type: 'text',
-						content: this.articleCard.articleTitle,
-						fontSize: 22,
-						lineHeight: 25,
-						color: '#353535',
-						textAlign: 'left',
-						top: 67 + 80,
-						left: 88 + 29,
-						width: 266,
-						MaxLineNumber: 1,
-						breakWord: true,
-						bolder: true
-					},
-					{
-						//内容
-						type: 'text',
-						content: this.articleCard.articleContent,
-						fontSize: 15,
-						lineHeight: 22,
-						color: '#888888',
-						textAlign: 'left',
-						top: 67 + 128,
-						left: 88 + 29,
-						width: 266,
-						MaxLineNumber: 5,
-						breakWord: true,
-						bolder: false
-					},
-					{
-						//分割线
-						type: 'text',
-						content: '- - - - - - - - - - - - - - - - - - - -',
-						fontSize: 15,
-						lineHeight: 21,
-						color: '#B1B1B1',
-						textAlign: 'left',
-						top: 67 + 250,
-						left: 88 + 27,
-						width: 270,
-						MaxLineNumber: 1,
-						breakWord: true,
-						bolder: false
-					},
-					{
-						//二维码
-						type: 'image',
-						width: 70,
-						height: 70,
-						top: 67 + 269,
-						left: 88 + 27,
-						url: this.QrCode
-					},
-					{
-						type: 'text',
-						content: '我在Nottinghome的分享扫码查看完整内容',
-						fontSize: 15,
-						lineHeight: 25,
-						color: '#888888',
-						textAlign: 'right',
-						top: 67 + 282,
-						left: 500 - 88 - 28,
-						width: 150,
-						MaxLineNumber: 2,
-						breakWord: true,
-						bolder: false
-					}
-				]
-			};
+						clear: true,
+						views: [
+							{
+								type: 'image',
+								width: 500,
+								height: 500,
+								top: 0,
+								left: 0,
+								url: '/static/BG/1-blue.png'
+							},
+							{
+								type: 'rect',
+								width: 324,
+								height: 366,
+								top: 67,
+								left: 88,
+								background: '#FFFFFF',
+								radius: 20
+							},
+							{
+								//头像
+								type: 'image',
+								width: 37,
+								height: 37,
+								top: 67 + 23,
+								left: 88 + 31,
+								radius: 18,
+								url: this.pathFilter(this.articleCard.faceImg)
+							},
+							{
+								//昵称
+								type: 'text',
+								content: this.articleCard.nickname,
+								fontSize: 17,
+								color: '#9A9A9A',
+								textAlign: 'left',
+								top: 67 + 31,
+								left: 88 + 82,
+								bolder: false
+							},
+							{
+								//标题
+								type: 'text',
+								content: this.articleCard.articleTitle,
+								fontSize: 22,
+								lineHeight: 25,
+								color: '#353535',
+								textAlign: 'left',
+								top: 67 + 80,
+								left: 88 + 29,
+								width: 266,
+								MaxLineNumber: 1,
+								breakWord: true,
+								bolder: true
+							},
+							{
+								//内容
+								type: 'text',
+								content: this.articleCard.articleContent,
+								fontSize: 15,
+								lineHeight: 22,
+								color: '#888888',
+								textAlign: 'left',
+								top: 67 + 128,
+								left: 88 + 29,
+								width: 266,
+								MaxLineNumber: 5,
+								breakWord: true,
+								bolder: false
+							},
+							{
+								//分割线
+								type: 'line',
+								color: '#B1B1B1',
+								top: 67 + 250,
+								left: 88 + 27,
+								width: 270,
+								dashWidth: 5
+							},
+							{
+								//二维码
+								type: 'image',
+								width: 70,
+								height: 70,
+								top: 67 + 269,
+								left: 88 + 27,
+								url: this.QrCode
+							},
+							{
+								type: 'text',
+								content: '我在Nottinghome的分享扫码查看完整内容',
+								fontSize: 15,
+								lineHeight: 25,
+								color: '#888888',
+								textAlign: 'right',
+								top: 67 + 282,
+								left: 500 - 88 - 28,
+								width: 150,
+								MaxLineNumber: 2,
+								breakWord: true,
+								bolder: false
+							}
+						]
+					};
+				}
+			});
 		},
 		eventSave() {
 			uni.saveImageToPhotosAlbum({
@@ -321,12 +318,12 @@ export default {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: res => {
-						console.log(res);
+						// console.log(res);
 						var QrCode = 'data:image/png;base64,' + res.data.data;
 						that.QrCode = QrCode;
 						base64ToPath(QrCode)
 							.then(path => {
-								console.log(path);
+								// console.log(path);
 								that.QrCode = path;
 								console.log('获得二维码');
 								console.log(that.QrCode);

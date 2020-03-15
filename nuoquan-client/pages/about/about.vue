@@ -16,7 +16,7 @@
 			<!--Nottinghome-->
 			<view class="company-name">Nottinghome</view>
 			<!--版本-->
-			<view class="version">v1.1.1</view>
+			<view class="version">{{versionNum}}</view>
 		</view>
 		
 		<!--表单部分-->
@@ -34,8 +34,8 @@
 					<view class="body">
 						“Share beyond Moments”
 						Nottinghome 期待与校内各组织社团、学生团队、alumni 创业企业合作。
-						合作形式包括但不限于联名活动、官方账号入驻 Nottinghome、资源共享等等。
-						我们欢迎一切能让 UNNC 变的更好的 idea~
+						合作形式包括但不限于联名活动、官方账号入驻 Nottinghome、资源共享等。
+						欢迎更多朋友与我们一起为 UNNC 创造无限可能！
 						举报和反馈请联系：
 						wx: honggh-
 						
@@ -57,7 +57,7 @@
 					<image @click="control2" v-if="!contentShow2" src="../../static/icon/angle-up.png"></image>
 				</view>
 				<view class="form2-expand" v-if="!contentShow2">
-					<view class="subtitle">v1.1.1</view>
+					<view class="subtitle">{{versionNum}}</view>
 					<view class="body">
 						Nottinghome v1.1.0 系列现已全面升级！
 						1. 全新UI，更加流畅的交互体验
@@ -65,9 +65,9 @@
 						3. 优化私信功能，轻松结识圈中大佬
 						4. 中英切换，信息编辑... 更多全新功能现已加入
 						
-						20.3.10 更新：
+						20.3.13 更新：
 						1. 修复部分已知 Bug
-						2. 优化分享功能
+						2. 优化卡片生成功能
 						3. 修复私信功能外观显示问题
 					</view>
 				</view>
@@ -112,6 +112,7 @@ export default {
 	},
 	data() {
 		return {
+			versionNum: this.version,
 			contentShow1: true,
 			contentShow2: true,
 			contentShow3: true,

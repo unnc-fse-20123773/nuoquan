@@ -1,13 +1,13 @@
 <template>
-	<view class="articlecard" ref="articleCard">
-		<view @click="goToDetail()">
+	<view class="articlecard" ref="articleCard" @click="goToDetail()">
+		<view>
 			<view class="title">{{ thisArticle.articleTitle }}</view>
 			<!-- <view class="briefarticleCard">{{ thisArticle.articleContent }}</view> -->
 		</view>
 		<!-- 用户信息行 -->
 		<view class="userLine hor_center">
-			<image :src="pathFilter(thisArticle.faceImg)" class="touxiang" @tap="goToPersonPublic(thisArticle.userId)"></image>
-			<view class="name">{{ thisArticle.nickname }}</view>
+			<image :src="pathFilter(thisArticle.faceImg)" class="touxiang" @tap.stop="goToPersonPublic(thisArticle.userId)"></image>
+			<view class="name" @tap.stop="goToPersonPublic(thisArticle.userId)">{{ thisArticle.nickname }}</view>
 			<view class="time" :style="timeLeft">{{ timeDeal(thisArticle.createDate) }}</view>
 		</view>
 		<!-- 标签行 -->
@@ -15,7 +15,7 @@
 			<view class="tag" :style="{ background: tagColorList[index] }" v-for="(i, index) in thisArticle.tagList" v-bind:key="index">{{ i }}</view>
 		</view>
 		<!-- 内容 -->
-		<view class="briefarticleCard" @click="goToDetail()">{{ thisArticle.articleContent }}</view>
+		<view class="briefarticleCard">{{ thisArticle.articleContent }}</view>
 		<view :class="[thisArticle.imgList.length == 1 ? 'picturearea-one' : 'picturearea-mul']">
 			<!-- *******这里是文章配图的位置*******-->
 
@@ -41,7 +41,7 @@
 						:style="{ height: singleImgHeight + 'rpx', width: singleImgWidth + 'rpx' }"
 						:src="serverUrl + thisArticle.imgList[0].imagePath"
 						@load="singleImgeFit"
-						@tap="previewImage(0)"
+						@tap.stop="previewImage(0)"
 					></image>
 				</view>
 
@@ -53,14 +53,14 @@
 						:style="{ height: singleImgHeight + 'rpx', width: singleImgWidth + 'rpx' }"
 						:src="serverUrl + thisArticle.imgList[0].imagePath"
 						@load="singleImgeFit"
-						@tap="previewImage(0)"
+						@tap.stop="previewImage(0)"
 					></image>
 				</view>
 			</view>
 			<!-- 多图显示 -->
 
 			<view style="width:30%;height: 200upx;margin-left: 2.5%;display: flex;background-color: #D1D1D1;" v-else v-for="(item, index) in imgList" :key="index">
-				<image mode="aspectFill" style="height: 200upx" :src="serverUrl + item.imagePath" @tap="previewImage(index)"></image>
+				<image mode="aspectFill" style="height: 200upx" :src="serverUrl + item.imagePath" @tap.stop="previewImage(index)"></image>
 			</view>
 		</view>
 		<!-- 操作行 -->
@@ -70,8 +70,8 @@
 				<!-- <image class="menubar_share" src="../static/icon/share-alt-353535.png" mode="aspectFit"></image> -->
 				<!-- 评论和点赞 -->
 				<view class="operationBar column_center">
-					<nqCmt @click.native="goToDetail()" :number="thisArticle.commentNum"></nqCmt>
-					<nqLike style="margin-left: 11px;" @click.native="swLikeArticle" :status="thisArticle.isLike" :number="thisArticle.likeNum"></nqLike>
+					<nqCmt @click.native.stop="goToDetail()" :number="thisArticle.commentNum"></nqCmt>
+					<nqLike style="margin-left: 11px;" @click.native.stop="swLikeArticle" :status="thisArticle.isLike" :number="thisArticle.likeNum"></nqLike>
 				</view>
 			</view> 
 		</view>
@@ -301,7 +301,7 @@ image {
 	width: 93.12%;
 	font-size: 14px;
 	font-family: Source Han Sans CN;
-	line-height: 16px;
+	line-height: 20px;
 	opacity: 1;
 	font-weight: 400;
 	margin: 8px 3.44% 8px 3.44%;
@@ -373,7 +373,7 @@ image {
 	position: absolute;
 	left: 12.61%;
 	/* max-width: 24%; */
-	font-size: 14px;
+	font-size: 12px;
 	font-family: Source Han Sans CN;
 	font-weight: 400;
 	line-height: 23px;
@@ -387,7 +387,7 @@ image {
 .time {
 	position: absolute;
 	right: 3.44%;
-	font-size: 14px;
+	font-size: 12px;
 	font-family: Source Han Sans CN;
 	font-weight: 400;
 	line-height: 23px;

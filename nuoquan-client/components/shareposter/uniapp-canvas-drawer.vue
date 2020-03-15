@@ -119,6 +119,8 @@
 						}
 					} else if (views[i].type === 'rect') {
 						this.drawRect(views[i])
+					} else if (views[i].type === 'line') {
+						this.drawDividingLine(views[i])
 					}
 				}
 				this.ctx.draw(false, () => {
@@ -278,6 +280,24 @@
 						height: 1
 					})
 				}
+			},
+			drawDividingLine (params){
+				console.log("drawing line")
+				this.ctx.save()
+				const {
+					color = 'black',
+					top = 0,
+					left = 0,
+					width,
+					dashWidth = 5
+				} = params
+				this.ctx.setFillStyle(color);
+				this.ctx.setLineDash([dashWidth]);
+				this.ctx.moveTo(left, top);
+				this.ctx.lineTo(left + width, top);
+				this.ctx.stroke()
+				
+				this.ctx.restore()
 			},
 			drawRect (params) {
 				// this.ctx.save()

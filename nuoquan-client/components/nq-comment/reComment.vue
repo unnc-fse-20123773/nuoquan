@@ -39,8 +39,8 @@
 			margin-top: 8px;
 			margin-bottom: 8px;
 			height: 20px;
-			line-height: 20px;">	
-			<view class="showMoreSubComment" @tap="goToCommentDetail()" v-if="subComment.subCommentNum > 2">{{lang.showMoreComments}}</view>
+			line-height: 20px;" v-if="subComment.subCommentNum >= 3">	
+			<view class="showMoreSubComment" @tap="goToCommentDetail()">{{lang.showMoreComments}}</view>
 		</view>
 	</view>
 </template>

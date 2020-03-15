@@ -124,12 +124,25 @@
 		//模式配置，仅开发期间生效
 		"current": 0, //当前激活的模式(list 的索引项)
 		"list": [{
+			"name": "wechatLogin", //模式名称
+			"path": "pages/wechatLogin/wechatLogin", //启动页面，必选
+			"query": "" //启动参数，在页面的onLoad函数里面得到
+		
+		},{
 			"name": "index", //模式名称
 			"path": "pages/tabPages/index", //启动页面，必选
 			"query": "" //启动参数，在页面的onLoad函数里面得到
 		}, {
 			"name": "votePage",
 			"path": "pages/tabPages/votePage",
+			"query": "" //启动参数，在页面的onLoad函数里面得到
+		}, {
+			"name": "messagelist", //模式名称
+			"path": "pages/tabPages/messagelist", //启动页面，必选
+			"query": "" //启动参数，在页面的onLoad函数里面得到
+		}, {
+			"name": "mine",
+			"path": "pages/tabPages/mine",
 			"query": "" //启动参数，在页面的onLoad函数里面得到
 		}, {
 			"name": "组件测试", //模式名称
@@ -156,10 +169,6 @@
 			"path": "pages/followlist/followlist", //启动页面，必选
 			"query": "" //启动参数，在页面的onLoad函数里面得到
 		}, {
-			"name": "messagelist", //模式名称
-			"path": "pages/tabPages/messagelist", //启动页面，必选
-			"query": "" //启动参数，在页面的onLoad函数里面得到
-		}, {
 			"name": "profile", //模式名称
 			"path": "pages/profile/profile", //启动页面，必选
 			"query": "" //启动参数，在页面的onLoad函数里面得到
@@ -167,12 +176,7 @@
 			"name": "personpublic", //模式名称
 			"path": "pages/personpublic/personpublic", //启动页面，必选
 			"query": "userId=test-id123" //启动参数，在页面的onLoad函数里面得到
-		}, {
-			"name": "wechatLogin", //模式名称
-			"path": "pages/wechatLogin/wechatLogin", //启动页面，必选
-			"query": "" //启动参数，在页面的onLoad函数里面得到
-
-		}, {
+		},  {
 			"name": "detail", //模式名称
 			"path": "pages/detail/detail", //启动页面，必选
 			"query": "" //启动参数，在页面的onLoad函数里面得到
@@ -202,12 +206,12 @@
 			"path": "pages/about/about",
 			"query": "" //启动参数，在页面的onLoad函数里面得到
 		}, {
-			"name": "mine",
-			"path": "pages/tabPages/mine",
-			"query": "" //启动参数，在页面的onLoad函数里面得到
-		}, {
 			"name": "新建投票",
 			"path": "pages/submitVote/submitVote",
+			"query": "" //启动参数，在页面的onLoad函数里面得到
+		},{
+			"name": "用户协议",
+			"path": "pages/userDeal/userDeal",
 			"query": "" //启动参数，在页面的onLoad函数里面得到
 		}]
 	}

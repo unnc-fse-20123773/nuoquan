@@ -287,7 +287,7 @@ export default {
 	position: absolute;
 	top: 0;
 	left: 32px;
-	width: 96px;
+	min-width: 96px;
 }
 
 .time {
@@ -328,6 +328,7 @@ export default {
 	word-wrap: break-word;
 	white-space: pre-line;
 	font-size: 14px;
+	line-height: 20px;
 	font-family: Source Han Sans CN;
 	font-weight: 400;
 	line-height: 18px;

@@ -369,7 +369,8 @@ page {
 	margin-right: auto;
 	width: 88.54%;
 	height: 0px;
-	border: 1px solid rgba(236, 236, 236, 1);
+	/* 高度 1 像素 */
+	border: 0.5px solid rgba(236, 236, 236, 1); 
 	opacity: 1;
 }
 

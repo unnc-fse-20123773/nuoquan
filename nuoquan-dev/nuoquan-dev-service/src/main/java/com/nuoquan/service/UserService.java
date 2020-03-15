@@ -147,4 +147,10 @@ public interface UserService {
 	 * @return
 	 */
 	public boolean updateReputation(String userId, Integer value, int op);
+
+	/**
+	 * 更新用户最近登录的时间
+	 * @param userId
+	 */
+	public void updateLatestLoginTime(String userId);
 }

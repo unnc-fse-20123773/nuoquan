@@ -211,7 +211,7 @@ export default {
 					uni.showToast({
 						title: '网络未知错误',
 						icon: 'none',
-						duration: 1000
+						duration: 2000
 					});
 				}
 			}, 5000); // 延时5s timeout
@@ -260,7 +260,7 @@ export default {
 					uni.showToast({
 						title: 'login fail',
 						icon: 'none',
-						duration: 1000
+						duration: 2000
 					});
 				}
 			});
@@ -280,7 +280,8 @@ export default {
 				if (email == 'test@test.com') {
 					uni.showToast({
 						title: 'OK',
-						icon: 'none'
+						icon: 'none',
+						duration: 2000,
 					});
 					this.changeAuth();
 					this.nextStep(false);
@@ -290,7 +291,8 @@ export default {
 				if (this.$util.regEmail(email) || this.$util.regUNNCEmail(email)) {
 					uni.showToast({
 						title: '非 UNNC 邮箱地址！',
-						icon: 'none'
+						icon: 'none',
+						duration: 2000,
 					});
 				} else {
 					if (this.$refs.captcha.canSend()) {
@@ -316,7 +318,8 @@ export default {
 			} else {
 				uni.showToast({
 					title: 'Email不能为空',
-					icon: 'none'
+					icon: 'none',
+					duration: 2000,
 				});
 			}
 		},
@@ -347,7 +350,8 @@ export default {
 
 							uni.showToast({
 								title: 'OK',
-								icon: 'none'
+								icon: 'none',
+								duration: 2000,
 							});
 							this.changeAuth();
 							this.nextStep(false);
@@ -355,7 +359,8 @@ export default {
 							console.log('验证失败 ' + res.data.msg);
 							uni.showToast({
 								title: '验证失败',
-								icon: 'none'
+								icon: 'none',
+								duration: 2000,
 							});
 						}
 					},
@@ -366,7 +371,8 @@ export default {
 			} else {
 				uni.showToast({
 					title: '验证码为空',
-					icon: 'none'
+					icon: 'none',
+					duration: 2000,
 				});
 			}
 		},

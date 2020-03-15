@@ -35,9 +35,9 @@
 					<view class="guanzhuLine super_center">
 						<view style="height: 100%;display: flex;">
 							<!-- 关注&已关注 -->
-							<button class="guanzhuButton super_center" @tap="addFollow(thisUserInfo.id)" v-if="thisUserInfo.follow == false">
+							<view class="guanzhuButton super_center" @tap="addFollow(thisUserInfo.id)" v-if="thisUserInfo.follow == false">
 								<text class="guanzhuButton-text">{{lang.follow}}</text>
-							</button>
+							</view>
 							<button
 								plain="true"
 								class="guanzhuButton-after super_center"
@@ -499,7 +499,6 @@ page {
 }
 
 .introBox-text {
-	max-width: 61%;
 	font-size: 12px;
 	font-weight: 400;
 	line-height: 13px;

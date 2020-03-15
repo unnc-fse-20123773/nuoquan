@@ -175,8 +175,10 @@ public class VoteController extends BasicController{
 			if (StringUtils.isNotBlank(newFileName)) {
 				finalVideoPath = fileSpace + uploadPathDB;
 				uploadFile(file, finalVideoPath);
+				Integer imageOrder = Integer.valueOf(order);
 				voteImage.setImagePath(uploadPathDB);
 				voteImage.setVoteId(voteId);
+				voteImage.setImageOrder(imageOrder);
 			}
 			voteService.saveVoteImages(voteImage);
 		}
