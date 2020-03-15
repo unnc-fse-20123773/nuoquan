@@ -92,12 +92,16 @@
 					this.startPainting()
 				})
 			},
+			/**
+			 * 开始画图
+			 */
 		    startPainting () {
 				
 				const tempFileList = this.tempFileList
 				const views = this.painting.views
 				
 				// const { tempFileList, painting: { views } } = this.$data
+				// 判断类型按顺序画图
 				for (let i = 0, imageIndex = 0; i < views.length; i++) {
 					if (views[i].type === 'image') {
 						this.drawImage({
@@ -212,15 +216,16 @@
 					width,
 					bolder = false,
 					textDecoration = 'none'
-				} = params
-		      
+				} = params // 赋默认值
+				
+				//设置绘画起始点，颜色字体等
 				this.ctx.beginPath()
 				this.ctx.setTextBaseline('top')
 				this.ctx.setTextAlign(textAlign)
 				this.ctx.setFillStyle(color)
 				this.ctx.setFontSize(fontSize)
-		
-				if (!breakWord) {
+				//是否分行, 错行Bug关键点。每写一行他会重新计算下行的高度
+				if (!breakWord) { 
 					this.ctx.fillText(content, left, top)
 					this.drawTextLine(left, top, textDecoration, color, fontSize, content)
 				} else {
@@ -229,7 +234,10 @@
 					let lineNum = 1
 					for (let i = 0; i < content.length; i++) {
 						fillText += [content[i]]
-						if (this.ctx.measureText(fillText).width > width) {
+						// 苹果机型会自动换行，
+						// 安卓机型会自动转换为空格。
+						// 处理方式：遇到换行符，跳到下一行。
+						if (this.ctx.measureText(fillText).width > width || content[i] == '\n') {
 							if (lineNum === MaxLineNumber) {
 								if (i !== content.length) {
 									fillText = fillText.substring(0, fillText.length - 1) + '...'
