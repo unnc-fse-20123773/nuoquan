@@ -4,7 +4,7 @@ module.exports = {
 	
 	tabbarName : ["轮滑","投票","","动态","我的"],
 	tabList : ["发文章","发投票"],
-	vertion : "v1.1.1",
+	version : "v1.1.1",
 	back : "返回",
 	send : "发送",
 	submit : "提交",

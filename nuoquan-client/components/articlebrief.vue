@@ -68,7 +68,7 @@
 		<view class="menubar">
 			<view class="menubar_rel">
 				<!-- 搞笑大赛 -->
-				<image v-if="isfunCom" class="menubar_left" style="width: 75px;height: 36px;" src="../static/BG/funCom.png" mode="aspectFit"></image>
+				<!-- <image v-if="isfunCom" class="menubar_left" style="width: 75px;height: 36px;" src="../static/BG/funCom.png" mode="aspectFit"></image> -->
 				<!-- 分享 -->
 				<!-- <image class="menubar_left" style="width:18px;height:18px;" src="../static/icon/share-alt-353535.png" mode="aspectFit"></image> -->
 				<!-- 评论和点赞 -->
@@ -106,7 +106,7 @@ export default {
 			thisArticle: this.articleCard, // 转为局部变量
 			tagColorList: [], // 储存每个tag的颜色
 			timeLeft: '',
-			isfunCom: false,
+			isfunCom: false,//显示搞笑大赛图标
 		};
 	},
 
@@ -171,16 +171,17 @@ export default {
 			// console.log(e.detail);
 		},
 		
-		catchSpecialTag(){
-			if (this.thisArticle.tagList != null) {
-				for (var tag of this.thisArticle.tagList) {
-					//搞笑大赛
-					if (tag == 'UNNC搞笑大赛'){
-						this.isfunCom = true;
-					}
-				}
-			}
-		},
+		// 搞笑大赛
+		// catchSpecialTag(){
+		// 	if (this.thisArticle.tagList != null) {
+		// 		for (var tag of this.thisArticle.tagList) {
+		// 			//搞笑大赛
+		// 			if (tag == 'UNNC搞笑大赛'){
+		// 				this.isfunCom = true;
+		// 			}
+		// 		}
+		// 	}
+		// },
 
 		swLikeArticle() {
 			if (this.thisArticle.isLike) {

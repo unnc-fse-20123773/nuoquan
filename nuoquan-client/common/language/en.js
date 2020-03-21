@@ -4,7 +4,7 @@ module.exports = {
 	
 	tabbarName : ["Home","Vote","","Message","Mine"],
 	tabList : ["Post Article","Create Vote"],
-	vertion : "v1.1.1",
+	version : "v1.1.1",
 	back : "Back",
 	send : "Send",
 	submit : "Submit",
