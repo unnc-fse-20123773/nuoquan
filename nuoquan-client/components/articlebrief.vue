@@ -131,7 +131,7 @@ export default {
 		}
 		
 		// 捕获特殊标签做特殊处理
-		this.catchSpecialTag();
+		// this.catchSpecialTag();
 
 		uni.$on('updateArticle', article => {
 			// from detail

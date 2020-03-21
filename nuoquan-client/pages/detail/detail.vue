@@ -148,6 +148,7 @@ export default {
 	onUnload() {
 		// 更新本文章信息给上级页面（主页）
 		uni.$emit('updateArticle', this.articleCard);
+		console.log(this.articleCard)
 		console.log('返回');
 	},
 
