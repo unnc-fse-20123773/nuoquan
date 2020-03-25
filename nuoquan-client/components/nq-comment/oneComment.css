@@ -50,6 +50,16 @@
 	font-weight: 400;
 	line-height: 18px;
 	color: rgba(53, 53, 53, 1);
+	/* 保证文章正常显示 */
+	word-wrap: break-word;
+	word-break: break-all;
+	text-overflow: ellipsis;
+	white-space: pre-wrap;
+	/**文字隐藏后添加省略号*/
+	/* display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden; */
 }
 
 .comment-menu {
