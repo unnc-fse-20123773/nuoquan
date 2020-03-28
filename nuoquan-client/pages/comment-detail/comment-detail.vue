@@ -48,7 +48,7 @@
 				<view class="submit" @tap="saveComment()">{{ lang.send }}</view>
 				<view class="commentSth">
 					<textarea class="comment-text" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
-					 adjust-position="false" v-model="commentContent" :show-confirm-bar="false" @focus="popTextArea" @blur="unpopTextArea"
+					 adjust-position="false" v-model="commentContent" :show-confirm-bar="false" 
 					 cursor-spacing="20" />
 					<!-- <view class="comment-pic-area"><image src="../../static/BG/indexBG.png"></image><image src="../../static/icon/about.png"></image><image src="../../static/icon/1575235531(1).png"></image></view> -->
 					<view class="word-count-left">{{ wordNotice }}</view>
@@ -101,7 +101,7 @@ export default {
 			subCommentList: '', //返回值，获取评论列表信息,循环展示的东西，sonComment
 			showInput: false, //控制输入框，true时显示输入框
 			writingComment: false, //控制输入框，true时自动获取焦点，拉起输入法
-			submitData: {},//当前页面saveComment需要6元素，4 于 activeInout()， 2 内容和 article/vote ID在请求前加入
+			submitData: {},//当前页面saveComment需要6元素，4 于 activeInput()， 2 内容和 article/vote ID在请求前加入
 			placeholderText: '',
 			textAreaAdjust: 0,
 
@@ -145,49 +145,19 @@ export default {
 	},
 	methods: {
 		getSubComments(page){
-			var type = this.type;
+			var url = "";
 			//判断是文章评论还是投票评论
-			if(type == 'article'){
+			if(this.type == 'article'){
 				console.log("这是文章评论");
-				this.getArticleSubComments(page);
-			}else if(type == 'vote'){
+				url = '/article/getSubComments';
+			}else if(this.type == 'vote'){
 				console.log("这是投票评论");
-				this.getVoteSubComments(page);
+				url = '/vote/getSubComments'
 			}
-		},
-		
-		getArticleSubComments(page) {
-			uni.request({
-				method: 'POST',
-				url: this.$serverUrl + '/article/getSubComments',
-				data: {
-					underCommentId: this.mainComment.id,
-					userId: this.userInfo.id,
-					page: page,
-					type: 0
-				},
-				header: {
-					'content-type': 'application/x-www-form-urlencoded'
-				},
-				success: res => {
-					if (res.data.status == 200) {
-						if (page == 1) {
-							this.subCommentList = [];
-						}
-						var newCommentList = res.data.data.rows;
-						var oldCommentList = this.subCommentList;
-						this.subCommentList = oldCommentList.concat(newCommentList);
-						this.currentPage = page;
-						this.totalPage = res.data.data.total;
-					}
-				}
-			});
-		},
-
-		getVoteSubComments(page) {
+			
 			uni.request({
 				method: "POST",
-				url: this.$serverUrl + '/vote/getSubComments',
+				url: this.$serverUrl + url,
 				data: {
 					underCommentId: this.mainComment.id,
 					userId: this.userInfo.id,
@@ -211,6 +181,8 @@ export default {
 					}
 				}
 			});
+			
+			
 		},
 
 		loadMore: function() {
@@ -228,18 +200,19 @@ export default {
 			}
 		},
 		
-
 		activeInput(toBeCommented) {
+			//替换输入框提示语
 			this.placeholderText = this.lang.replyComent.replace('NICKNAME', toBeCommented.nickname);
+			//submitData 4/6 填充
 			this.submitData={
 				fromUserId:this.userInfo.id,
 				toUserId:toBeCommented.fromUserId,
 				fatherCommentId:toBeCommented.id,
 				underCommentId:this.mainComment.id,
 			}
-				this.showInput = true;
-				this.writingComment = true;
-				console.log(this.submitData);
+			this.showInput = true;
+			this.writingComment = true;
+			console.log(this.submitData);
 		},
 		resetInput(){
 			console.log("resetInput");
@@ -248,19 +221,6 @@ export default {
 			this.showInput = false;
 			this.writingComment = false;
 			this.commentContent = "";
-		},
-		popTextArea(e) {
-			console.log('展开');
-			console.log(e);
-			console.log(e.detail.height);
-			// this.textAreaAdjust = e.detail.height / 3 + 'px';
-			// this.textAreaAdjust = '0' ;
-		},
-		unpopTextArea(e) {
-			console.log('收起');
-			console.log(e);
-
-			// this.textAreaAdjust = '';
 		},
 
 		/**
