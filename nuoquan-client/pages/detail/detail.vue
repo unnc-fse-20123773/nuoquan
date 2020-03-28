@@ -135,7 +135,7 @@ export default {
 			control_scroll_button_flag: 0,
 
 			isNavHome: getApp().globalData.isNavHome, //判断导航栏左侧是否显示home按钮
-			navbarHeight: 0 //一次性储存 navbarheight
+			navbarHeight: 0 ,//一次性储存 navbarheight
 		};
 	},
 	computed: {
@@ -148,6 +148,7 @@ export default {
 	onUnload() {
 		// 更新本文章信息给上级页面（主页）
 		uni.$emit('updateArticle', this.articleCard);
+		console.log(this.articleCard)
 		console.log('返回');
 	},
 

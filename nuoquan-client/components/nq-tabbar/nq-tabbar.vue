@@ -64,7 +64,22 @@ export default {
 		return {
 			degree: 0, //旋转角度
 			rotateStatus: false, //旋转状态,判断静止or顺时针or逆时针
-			tabBarList: [
+			tabBarList: ''
+		};
+	},
+	computed: {
+		...mapState(['myMsgCount','lang'])
+	},
+	
+	watch: {
+		myMsgCount(newVal, oldVal) {
+			// console.log(newVal)
+			this.tabBarList[3].count = newVal;
+		}
+	},
+	
+	created() {
+		this.tabBarList = [
 				{
 					type: 0,
 					icon: '/static/icon/home_d4d4d4.png',
@@ -92,7 +107,7 @@ export default {
 					selectIcon: '/static/icon/comment_dots_ffffff.png',
 					name: '动态',
 					url: '/pages/tabPages/messagelist',
-					count: uni.getStorageSync('myMsgCount'),
+					count: this.myMsgCount,
 				},
 				{
 					type: 0,
@@ -102,17 +117,6 @@ export default {
 					url: '/pages/tabPages/mine'
 				}
 			]
-		};
-	},
-	computed: {
-		...mapState(['myMsgCount','lang'])
-	},
-	
-	watch: {
-		myMsgCount(newVal, oldVal) {
-			console.log(newVal)
-			this.tabBarList[3].count = newVal;
-		}
 	},
 	
 	methods: {

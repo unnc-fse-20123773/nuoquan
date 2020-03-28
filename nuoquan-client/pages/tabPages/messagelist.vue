@@ -17,8 +17,8 @@
 					<image src="../../static/icon/thumbs_up_white.png" class="msglist-like-icon" mode=""></image>
 				</view>
 				<text class="msglist-top-text font-family">{{lang.like}}</text>
-				<view class="msglist-top-num super_center" v-if="uLikeMsgCount>0">
-					{{uLikeMsgCount}}
+				<view class="msglist-top-num super_center" v-if="likeMsgCount>0">
+					{{likeMsgCount}}
 				</view>
 				<!-- :class="[currentTab==index ? 'menu-one-act' : 'menu-one']" -->
 			</view>
@@ -31,8 +31,8 @@
 					<image src="../../static/icon/comment_dots_ffffff.png" class="msglist-comment-icon" mode=""></image>
 				</view>
 				<text class="msglist-top-text font-family">{{lang.comment}}</text>
-				<view class="msglist-top-num super_center " v-if="uCommentMsgCount>0">
-					{{uCommentMsgCount}}
+				<view class="msglist-top-num super_center " v-if="commentMsgCount>0">
+					{{commentMsgCount}}
 				</view>
 			</view>
 			<!-- 消息内容滑块区 -->
@@ -81,9 +81,6 @@ export default {
 
 			READ: this.chat.READ,
 			UNREAD: this.chat.UNREAD,
-
-			uLikeMsgCount: uni.getStorageSync('likeMsgCount'),
-			uCommentMsgCount: uni.getStorageSync('commentMsgCount')
 		};
 	},
 
@@ -98,14 +95,6 @@ export default {
 			// console.log("newVal:");
 			// console.log(newVal);
 		},
-
-		likeMsgCount(newVal, oldVal) {
-			this.uLikeMsgCount = newVal;
-		},
-
-		commentMsgCount(newVal, oldVal) {
-			this.uCommentMsgCount = newVal;
-		}
 	},
 
 	onLoad: function() {

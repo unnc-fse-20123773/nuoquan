@@ -1,21 +1,25 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import userUtil from '../common/userUtil.js'
 
 Vue.use(Vuex)
 
-var isNull = function(str) { // 数字0会被判定为true
+/**
+ * 如果为空返回0，否则返回本身
+ * @param {Object} str
+ */
+var isNullThenZero = function(str) {
 	if (str == null || str == "" || str == undefined) {
-		return true;
+		return 0;
 	}
-	return false;
+	return str;
 }
-
+var userInfo = userUtil.getGlobalUserInfo();
 // 消息提示相关变量
-var sMyMsg = uni.getStorageSync('myMsgCount'); // 其实返回 null 会被当成 0
-var sTotalChatMsg = uni.getStorageSync('totalChatMsgCount');
-var sLikeMsg = uni.getStorageSync('likeMsgCount');
-var sCommentMsg = uni.getStorageSync('commentMsgCount');
-
+var myMsgCountKey = userInfo.id + ":myMsgCount";
+var totalChatMsgCountKey = userInfo.id + ":totalChatMsgCount"
+var likeMsgCountKey = userInfo.id + ":likeMsgCount"
+var commentMsgCountKey = userInfo.id + ":commentMsgCount" 
 // 国际化相关代码
 try {
 	var langList = ['简体中文', 'English'];
@@ -43,10 +47,10 @@ const store = new Vuex.Store({
 	state: {
 		chatMessageCard: '', // 暂存一条socket接收的聊天消息 & 刷新消息列表的条件
 		// flashChatPage: "doFlash", // 作为触发 chatPage 刷新的条件
-		myMsgCount: isNull(sMyMsg) ? 0 : sMyMsg, // 所有消息计数
-		totalChatMsgCount: isNull(sTotalChatMsg) ? 0 : sTotalChatMsg, //聊天消息总计数
-		likeMsgCount: isNull(sLikeMsg) ? 0 : sLikeMsg, // 点赞未读消息计数
-		commentMsgCount: isNull(sCommentMsg) ? 0 : sCommentMsg, // 评论未读消息计数
+		myMsgCount: isNullThenZero(uni.getStorageSync(myMsgCountKey)), // 所有消息计数
+		totalChatMsgCount: isNullThenZero(uni.getStorageSync(totalChatMsgCountKey)), //聊天消息总计数
+		likeMsgCount: isNullThenZero(uni.getStorageSync(likeMsgCountKey)), // 点赞未读消息计数
+		commentMsgCount: isNullThenZero(uni.getStorageSync(commentMsgCountKey)), // 评论未读消息计数
 
 		lang: lang //语言
 	},
@@ -60,10 +64,10 @@ const store = new Vuex.Store({
 			} else {
 				state.totalChatMsgCount++
 			}
-			uni.setStorageSync('totalChatMsgCount', state.totalChatMsgCount);
+			uni.setStorageSync(totalChatMsgCountKey, state.totalChatMsgCount);
 			//计算总数
 			state.myMsgCount = state.totalChatMsgCount + state.likeMsgCount + state.commentMsgCount;
-			uni.setStorageSync('myMsgCount', state.myMsgCount);
+			uni.setStorageSync(myMsgCountKey, state.myMsgCount);
 		},
 
 		setLikeMsgCount(state, value) {
@@ -72,10 +76,10 @@ const store = new Vuex.Store({
 			} else {
 				state.likeMsgCount = value;
 			}
-			uni.setStorageSync('likeMsgCount', state.likeMsgCount);
+			uni.setStorageSync(likeMsgCountKey, state.likeMsgCount);
 			//计算总数
 			state.myMsgCount = state.totalChatMsgCount + state.likeMsgCount + state.commentMsgCount;
-			uni.setStorageSync('myMsgCount', state.myMsgCount);
+			uni.setStorageSync(myMsgCountKey, state.myMsgCount);
 		},
 
 		setCommentMsgCount(state, value) {
@@ -84,21 +88,21 @@ const store = new Vuex.Store({
 			} else {
 				state.commentMsgCount = value;
 			}
-			uni.setStorageSync('commentMsgCount', state.commentMsgCount);
+			uni.setStorageSync(commentMsgCountKey, state.commentMsgCount);
 			//计算总数
 			state.myMsgCount = state.totalChatMsgCount + state.likeMsgCount + state.commentMsgCount;
-			uni.setStorageSync('myMsgCount', state.myMsgCount);
+			uni.setStorageSync(myMsgCountKey, state.myMsgCount);
 		},
 
 		// 该方法弃用@jerrio
 		// setMyMsgCount(state, value) {
 		// 	if (value == undefined) {
 		// 		state.myMsgCount++;
-		// 		uni.setStorageSync('myMsgCount', state.myMsgCount);
+		// 		uni.setStorageSync(myMsgCountKey, state.myMsgCount);
 		// 		// console.log("value未传值，当前myMsgCount=" + state.myMsgCount);
 		// 	} else {
 		// 		state.myMsgCount = value;
-		// 		uni.setStorageSync('myMsgCount', state.myMsgCount);
+		// 		uni.setStorageSync(myMsgCountKey, state.myMsgCount);
 		// 		// console.log("获取到value值，当前myMsgCount=" + state.myMsgCount);
 		// 	}
 		// },

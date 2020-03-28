@@ -10,7 +10,7 @@
 			:title="lang.tabList[1]"
 			:height="navbarHeight"
 		></uni-nav-bar>
-
+	
 		<view :style="{ height: navbarHeight + 'px' }"></view>
 		<!-- 当失去焦点时，将输入内容存入voteTitle -->
 		<view style="position: relative;margin-top: 20px;">
@@ -57,6 +57,8 @@
 		</view>
 		<view class="addOptionButton" @tap="addOptionFunc()">{{ lang.addOption }}</view>
 		<view class="submitVoteButton" @tap="upload()">{{ lang.submit }}</view>
+		
+		<view style="width: 100%;height: 20px;"></view>
 	</view>
 </template>
 
@@ -148,7 +150,7 @@ export default {
 				this.voteOptions.push('');
 			} else {
 				uni.showToast({
-					duration: 1000,
+					duration: 2000,
 					title: '不能再多啦~嘻嘻~'
 				});
 			}
@@ -167,7 +169,7 @@ export default {
 					uni.showToast({
 						icon: 'none',
 						title: '选项不能为空',
-						duration: 1000
+						duration: 2000
 					});
 					that.optionString = '';
 					return false;
@@ -233,15 +235,15 @@ export default {
 				uni.showToast({
 					icon: 'none',
 					title: '投票标题不能为空!',
-					duration: 1000
+					duration: 2000
 				});
 				return;
 			}
-			if (that.voteOptions.length == 0) {
+			if (that.voteOptions.length <= 2) {
 				uni.showToast({
 					icon: 'none',
-					title: '至少有一个选项吧!',
-					duration: 1000
+					title: '至少有两个选项吧~',
+					duration: 2000
 				});
 				return;
 			}
@@ -266,7 +268,7 @@ export default {
 					uni.showToast({
 						title: '网络未知错误',
 						icon: 'none',
-						duration: 1000
+						duration: 2000
 					});
 					// 终止上传
 					for (let task in uploadTasks) {
@@ -418,9 +420,9 @@ page {
 	display: inline-block;
 	min-width: 100px;
 	margin: 16px 0 14px 0;
-	padding: 6px 32px 6px 10px;
+	padding: 6px 0 6px 0;
 	text-align: center;
-	height: 26px;
+	/* height: 26px; */
 	font-size: 14px;
 	line-height: 14px;
 	color: #ffffff;

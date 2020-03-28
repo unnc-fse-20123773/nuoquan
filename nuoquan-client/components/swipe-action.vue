@@ -8,10 +8,10 @@
 				<view
 					class="uni-swipe-action__container"
 					style="width: 90.6%;
-				margin-left: 4.8%;
-				margin-top: 8px;
-				height: 64px;
-				background-color: white;"
+						margin-left: 4.8%;
+						margin-top: 8px;
+						height: 64px;
+						background-color: white;"
 					@touchstart="touchStart"
 					@touchmove="touchMove"
 					@touchend="touchEnd"
@@ -145,7 +145,7 @@ export default {
 			}
 			if (this.messageIndex !== -1) {
 				// 负号控制块左右移动
-				this.transformX = `translateX(${58}px)`;
+				this.transformX = `translateX(${0}px)`;
 				// this.transformX = `translateX(${58}px)`;
 				this.$emit('opened');
 				this.showdelete = 1;
@@ -171,7 +171,6 @@ export default {
 
 <style lang="scss">
 .delete-button {
-	position: fixed;
 	background-color: #007aff;
 	width: 50px;
 	height: 26px;
@@ -203,6 +202,7 @@ export default {
 .uni-swipe-action {
 	width: 100%;
 	overflow: hidden;
+	display: flex;
 
 	&__container {
 		background-color: #ffffff;

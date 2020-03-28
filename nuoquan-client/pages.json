@@ -76,10 +76,6 @@
 			"path": "components/nq-msgcount/nq-msgcount",
 			"style": {}
 		}
-	    , {
-            "path" : "pages/comment-detail/comment-vote-detail",
-            "style" : {}
-        }
     ],
 
 	//微信小程序自定义导航栏custom-tab-bar

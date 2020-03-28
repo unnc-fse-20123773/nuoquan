@@ -103,6 +103,14 @@ export default {
 
 		this.getTagsList(); //获取标签列表
 		// [测试代码块]
+		uni.getStorageInfo({
+		    success: function (res) {
+				console.log("缓存使用情况：")
+		        console.log(res.keys);
+		        console.log("currentSize=" + res.currentSize);
+		        console.log("limitSize=" + res.limitSize);
+		    }
+		});
 	},
 
 	onUnload() {
@@ -260,8 +268,8 @@ export default {
 					'content-type': 'application/x-www-form-urlencoded'
 				},
 				success: res => {
-					console.log("用户信息");
-					console.log(res);
+					// console.log("用户信息");
+					// console.log(res);
 					if (res.data.status == 200) {
 						var user = res.data.data;
 						var finalUser = this.myUser(user); // 分割邮箱地址, 重构 user

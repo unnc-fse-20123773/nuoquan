@@ -16,7 +16,7 @@
 			<!--Nottinghome-->
 			<view class="company-name">Nottinghome</view>
 			<!--版本-->
-			<view class="version">v1.1.2</view>
+			<view class="version">{{versionNum}}</view>
 		</view>
 		
 		<!--表单部分-->
@@ -57,7 +57,7 @@
 					<image @click="control2" v-if="!contentShow2" src="../../static/icon/angle-up.png"></image>
 				</view>
 				<view class="form2-expand" v-if="!contentShow2">
-					<view class="subtitle">v1.1.1</view>
+					<view class="subtitle">{{versionNum}}</view>
 					<view class="body">
 						Nottinghome v1.1.0 系列现已全面升级！
 						1. 全新UI，更加流畅的交互体验
@@ -112,6 +112,7 @@ export default {
 	},
 	data() {
 		return {
+			versionNum: this.version,
 			contentShow1: true,
 			contentShow2: true,
 			contentShow3: true,

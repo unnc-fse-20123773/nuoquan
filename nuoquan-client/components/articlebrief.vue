@@ -19,16 +19,17 @@
 		<view :class="[thisArticle.imgList.length == 1 ? 'picturearea-one' : 'picturearea-mul']">
 			<!-- *******这里是文章配图的位置*******-->
 
-			<!-- 下面两个 view 分别为蒙版背景层和数字层，都是由 margin-left = 67.5% 精准推至第三张图位置上的 -->
-			<view v-if="thisArticle.imgList.length > 3" style="margin-left: 67.5%;position: absolute;width: 30%;height: 200upx;" class="super_center" @click="goToDetail()">
-				<view style="color: white;font-weight: 600;font-size: 24px;z-index: 20;">+{{ thisArticle.imgList.length - 3 }}</view>
+			<view @click.stop="goToDetail()">
+				<!-- 下面两个 view 分别为蒙版背景层和数字层，都是由 margin-left = 67.5% 精准推至第三张图位置上的 -->
+				<view v-if="thisArticle.imgList.length > 3" style="margin-left: 67.5%;position: absolute;width: 30%;height: 200upx;" class="super_center">
+					<view style="color: white;font-weight: 600;font-size: 24px;z-index: 20;">+{{ thisArticle.imgList.length - 3 }}</view>
+				</view>
+				<view
+					v-if="thisArticle.imgList.length > 3"
+					style="position: absolute;width: 30%;height: 200upx;
+				background-color: #000000;opacity: 0.5;margin-left: 67.5%;z-index: 10;"
+				></view>
 			</view>
-			<view
-				v-if="thisArticle.imgList.length > 3"
-				style="position: absolute;width: 30%;height: 200upx;
-			background-color: #000000;opacity: 0.5;margin-left: 67.5%;z-index: 10;"
-				@click="goToDetail()"
-			></view>
 
 			<!-- 宽高和 image 保持一致 -->
 			<!-- 单图显示 -->
@@ -66,8 +67,10 @@
 		<!-- 操作行 -->
 		<view class="menubar">
 			<view class="menubar_rel">
+				<!-- 搞笑大赛 -->
+				<!-- <image v-if="isfunCom" class="menubar_left" style="width: 75px;height: 36px;" src="../static/BG/funCom.png" mode="aspectFit"></image> -->
 				<!-- 分享 -->
-				<!-- <image class="menubar_share" src="../static/icon/share-alt-353535.png" mode="aspectFit"></image> -->
+				<!-- <image class="menubar_left" style="width:18px;height:18px;" src="../static/icon/share-alt-353535.png" mode="aspectFit"></image> -->
 				<!-- 评论和点赞 -->
 				<view class="operationBar column_center">
 					<nqCmt @click.native.stop="goToDetail()" :number="thisArticle.commentNum"></nqCmt>
@@ -102,7 +105,8 @@ export default {
 			imgList: [],
 			thisArticle: this.articleCard, // 转为局部变量
 			tagColorList: [], // 储存每个tag的颜色
-			timeLeft: ''
+			timeLeft: '',
+			isfunCom: false,//显示搞笑大赛图标
 		};
 	},
 
@@ -125,6 +129,9 @@ export default {
 				this.tagColorList.push(tagColors[random]);
 			}
 		}
+		
+		// 捕获特殊标签做特殊处理
+		// this.catchSpecialTag();
 
 		uni.$on('updateArticle', article => {
 			// from detail
@@ -163,6 +170,18 @@ export default {
 			}
 			// console.log(e.detail);
 		},
+		
+		// 搞笑大赛
+		// catchSpecialTag(){
+		// 	if (this.thisArticle.tagList != null) {
+		// 		for (var tag of this.thisArticle.tagList) {
+		// 			//搞笑大赛
+		// 			if (tag == 'UNNC搞笑大赛'){
+		// 				this.isfunCom = true;
+		// 			}
+		// 		}
+		// 	}
+		// },
 
 		swLikeArticle() {
 			if (this.thisArticle.isLike) {
@@ -216,6 +235,7 @@ export default {
 		},
 		goToDetail() {
 			// var encodeData = encodeURIComponent(JSON.stringify(this.thisArticle)); // 对数据字符串化并转码，防止特殊字符影响传参
+			//传入跳转文章id和是否为搞笑大赛文章
 			uni.navigateTo({
 				url: '/pages/detail/detail?data=' + this.thisArticle.id
 			});
@@ -407,12 +427,10 @@ image {
 	height: 100%;
 }
 
-.menubar_share{
+.menubar_left{
 	position: absolute;
-	left: 2.12%;
-	width:18px;
-	height:18px;
-	opacity:1;
+	left: 0;
+	bottom: 12px;
 }
 
 .operationBar{

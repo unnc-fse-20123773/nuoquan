@@ -159,7 +159,7 @@ export default {
 	font-size: 12px;
 	color: #000000;
 	line-height: 17px;
-	max-height: 32px;
+	max-height: 28px;
 	padding: 8px 0 8px 0;
 	
 	/* 保证文章正常显示 */

@@ -51,7 +51,7 @@
 
 			</button>
 			<button class="pageLine" @click="goToAboutPage">
-				<image src="../static/icon/about.png"></image>
+				<!-- <image src="../static/icon/about.png"></image> -->
 				<view>关于</view>
 
 			</button>
