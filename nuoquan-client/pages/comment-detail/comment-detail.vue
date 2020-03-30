@@ -48,8 +48,7 @@
 				<view class="submit" @tap="saveComment()">{{ lang.send }}</view>
 				<view class="commentSth">
 					<textarea class="comment-text" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
-					 adjust-position="false" v-model="commentContent" :show-confirm-bar="false" 
-					 cursor-spacing="20" />
+					 adjust-position="false" v-model="commentContent" :show-confirm-bar="false" cursor-spacing="20" />
 					<!-- <view class="comment-pic-area"><image src="../../static/BG/indexBG.png"></image><image src="../../static/icon/about.png"></image><image src="../../static/icon/1575235531(1).png"></image></view> -->
 					<view class="word-count-left">{{ wordNotice }}</view>
 				</view>
@@ -309,7 +308,56 @@ export default {
 			comment.isLike = !comment.isLike;
 		},
 
+		likeComment(comment) {
+			console.log('点赞评论');
+			var url = "";
+			if(this.type == 'article'){
+				url = "/article/userLikeComment"
+			}else if(this.type == 'vote'){
+				url = "/vote/userLikeVoteComment"
+			}
+			uni.request({
+				method: 'POST',
+				url: this.$serverUrl + url,
+				data: {
+					userId: this.userInfo.id,
+					commentId: comment.id,
+					createrId: comment.fromUserId
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					console.log(res);
+				}
+			});
+		},
 		
+		unLikeComment(comment) {
+			console.log('取消点赞评论');
+			var url = "";
+			if(this.type == 'article'){
+				url = "/article/userUnLikeComment"
+			}else if(this.type == 'vote'){
+				url = "/vote/userUnLikeVoteComment"
+			}
+			uni.request({
+				method: 'POST',
+				url: this.$serverUrl + url,
+				data: {
+					userId: this.userInfo.id,
+					commentId: comment.id,
+					createrId: comment.fromUserId
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					console.log(res);
+				}
+			});
+		},
+
 		goToPersonPublic(userId) {
 			uni.navigateTo({
 				url: '/pages/personpublic/personpublic?userId=' + userId
