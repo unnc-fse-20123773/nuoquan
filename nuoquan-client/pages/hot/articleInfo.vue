@@ -1,7 +1,7 @@
 <template>
 	<view  style="width:100%;">
 		<view class="pics">
-			<image src="../../static/icon/1.png"></image>
+<!-- 			<image src="../../static/icon/1.png"></image>
 			<image src="../../static/icon/2.png"></image>
 			<image src="../../static/icon/3.png"></image>
 			<image src="../../static/icon/4.png"></image>
@@ -10,7 +10,7 @@
 			<image src="../../static/icon/7.png"></image>
 			<image src="../../static/icon/8.png"></image>
 			<image src="../../static/icon/9.png"></image>
-			<image src="../../static/icon/10.png"></image>
+			<image src="../../static/icon/10.png"></image> -->
 		</view>	
 		<block v-for="(thisArticle,index) in myArticleList" :key="thisArticle.id">
 			<view class="oneArticle" @click="goToDetail(thisArticle)">

@@ -1,6 +1,6 @@
 <template>
 	<view style="width:100%;">
-		<block v-for="thisArticle in myArticleList" :key="thisArticle.id" >
+	
 			<view class="oneArticle" v-if="thisArticle.status != 0">
 				<view
 					class="swipe-contain"
@@ -55,27 +55,28 @@
 					</view>
 				</view>
 			</view>
-		</block>
+			
 	</view>
 </template>
 
 <script>
 export default {
-	name: 'aticlebrief',
-	props: {
-		myArticleList: {},
+	props:{
+		messageIndex:{
+			default:'-1',
+		},
+		thisArticle:{},
 		lang: '',
 	},
 	data() {
 		return {
 			serverUrl: this.$serverUrl,
 			transformX: 'translateX(0px)',
-			messageIndex: -1,
-			direction: ''
+			direction: '',
 		};
 	},
 	onPageScroll() {
-		this.messageIndex = -1;
+			this.$emit('modifySwipedId',-1);
 	},
 	methods: {
 		//以下方程为控制左滑删除的部分 ref： swipe-acton in messageLish
@@ -99,12 +100,14 @@ export default {
 				//纵向滑动//参数100与50可调节侧滑灵敏度
 				this.direction = 'Y';
 				console.log('direction is Y ');
+				this.$emit('modifySwipedId',-1);
 				return;
 			}
 			// 移动距离
 			this.direction = moveX > 0 ? 'right' : 'left';
 			// 输出方向
-			this.messageIndex = moveX < 0 ? event.currentTarget.dataset.index : -1;
+			 var emitSwipedId = moveX < 0 ? event.currentTarget.dataset.index : -1;
+			this.$emit('modifySwipedId',emitSwipedId);
 		},
 		
 		touchEnd(event) {
@@ -113,7 +116,7 @@ export default {
 				return;
 			}
 			if (this.direction == 'right') {
-				this.messageIndex = -1;
+				this.$emit('modifySwipedId',-1);
 			}
 			this.endMove(event);
 		},
@@ -121,7 +124,7 @@ export default {
 		endMove(event) {
 			if (this.direction === 'Y') {
 				this.direction = '';
-				this.messageIndex = -1;
+				this.$emit('modifySwipedId',-1);
 				return;
 			}
 			if (this.messageIndex !== -1) {
@@ -141,7 +144,7 @@ export default {
 			
 			//收起
 			closeSwipe(){
-				this.messageIndex = -1;
+				this.$emit('modifySwipedId',-1);
 			},
 		
 		fDeleteArticle(articleId){
