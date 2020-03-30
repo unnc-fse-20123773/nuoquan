@@ -36,6 +36,11 @@ public class UserVO {
      */
     private String cid;
     private Integer reputation;
+    
+    /**
+     * 用户最近登录时间
+     */
+    private Date latestLogin;
 
     private boolean isFollow; // 是否关注该用户
     
@@ -292,5 +297,13 @@ public class UserVO {
 
 	public void setReputation(Integer reputation) {
 		this.reputation = reputation;
+	}
+
+	public Date getLatestLogin() {
+		return latestLogin;
+	}
+
+	public void setLatestLogin(Date latestLogin) {
+		this.latestLogin = latestLogin;
 	}
 }

@@ -45,7 +45,7 @@ public interface VoteMapperCustom extends MyMapper<Vote> {
 	 * @param voteId
 	 * @return
 	 */
-	public List<VoteVO> getSpecifiedVote(String voteId);
+	public VoteVO getSpecifiedVote(String voteId);
 
 	/**
 	 * 查看我发布的所有投票

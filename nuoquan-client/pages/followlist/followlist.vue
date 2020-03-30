@@ -1,16 +1,22 @@
 <template>
 	<view id="public-container">
 		<!-- 导航栏 -->
-		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" left-icon="back" left-text="返回"
-		:title="pageTitle" 
-		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
+		<uni-nav-bar class="navigationBar"
+		:style="{height: this.getnavbarHeight() + 'px'}" 
+		:showLeftIcon="true" 
+		:isNavHome="isNavHome" 
+		:left-text="lang.back"
+		:title="lang.fanAndFollow" 
+		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>				
+		
+		<view :style="{height: this.getnavbarHeight().bottom + 5 + 'px'}"></view>
 		
 		<view id="public-message-futherbox">
 			<scroll-view class="top-menu-view" scroll-x="true" scroll-left="scrollLeft">
-				<block v-for="(menuTabs,index) in menuTabs" :key="index">
+				<block v-for="(menuTab,index) in [{name: lang.follow}, {name: lang.fans}]" :key="index">
 					<view class="menu-one-view" v-bind:id="'tabNum'+index" @click="swichMenu(index)">
 						<view :class="[currentTab==index ? 'menu-one-act' : 'menu-one']">
-							<view class="menu-one-txt" @tap="goTop">{{menuTabs.name}}</view>
+							<view class="menu-one-txt" @tap="goTop">{{menuTab.name}}</view>
 							<view class="menu-one-bottom">
 								<view class="menu-one-bottom-color"></view>
 							</view>
@@ -59,10 +65,14 @@
 <script>
 	var me; // 表示本人用户，区别于查询的用户
 	import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
+	import { mapState, mapMutations } from 'vuex';
 	
 	export default {
 		components:{
 			uniNavBar
+		},
+		computed: {
+			...mapState(['lang'])
 		},
 		data() {
 			return {
@@ -70,11 +80,11 @@
 				scrollLeft: 0,
 				isClickChange: false,
 				currentTab: '', // 切换 list 0/1
-				menuTabs: [{
-					name: '他关注的'
-				}, {
-					name: '关注他的'
-				}],
+				// menuTabs: [{
+				// 	name: '他关注的'
+				// }, {
+				// 	name: '关注他的'
+				// }],
 
 				// 关注粉丝列表属性
 				swiperDataList: [
@@ -90,8 +100,8 @@
 				scrollTop: 0,
 				old: {
 					scrollTop: 0
-				}
-
+				},
+				isNavHome: getApp().globalData.isNavHome,//判断导航栏左侧是否显示home按钮
 			}
 		},
 

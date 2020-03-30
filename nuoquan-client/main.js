@@ -1,28 +1,35 @@
 import Vue from 'vue'
 import App from './App'
 import store from './store' // 引入 vuex 的 store 对象
-import router from 'common/router.js'
+import util from 'common/util.js' // 引入共用工具
+import userUtil from 'common/userUtil.js' // 用户信息维护相关方法
+import ProgressBar from '@/components/Progress-Bar/Progress-Bar';//引入进度条全局组件
+Vue.component('ProgressBar', ProgressBar);
 
 const app = new Vue({
+	...App,
 	store,
-	...App
 })
 app.$mount()
 App.mpType = 'app'
 
 Vue.config.productionTip = false
 
-Vue.prototype.version = "v1.1.1 - 公测版"
+Vue.prototype.version = "v1.1.5 - 发布版"
 Vue.prototype.tagColors = ['#FE5F55', '#40A792', '#FDD041', '#5CA0D3', '#621E81', '#738598', '#F3AE4B']
 
 Vue.prototype.$store = store // 挂载 vueX
+Vue.prototype.$util = util
 
-// Vue.prototype.$serverUrl = "http://127.0.0.1:8080"
-// Vue.prototype.$wsServerUrl = "wss://127.0.0.1:8088/ws"
+Vue.prototype.$serverUrl = "http://127.0.0.1:8080"
+Vue.prototype.$wsServerUrl = "wss://127.0.0.1:8088/ws"
+
+// Vue.prototype.$serverUrl = "http://192.168.124.8:8080"
+// Vue.prototype.$wsServerUrl = "wss://192.168.124.8:8088/ws"
 
 // 服务器地址
-//Vue.prototype.$serverUrl = "http://129.28.130.27:8080/nottinghome"
-//Vue.prototype.$wsServerUrl = "ws://129.28.130.27:8088/ws"
+// Vue.prototype.$serverUrl = "http://129.28.130.27:8080/nottinghome"
+// Vue.prototype.$wsServerUrl = "ws://129.28.130.27:8088/ws"
 
 // 安全服务器地址
 Vue.prototype.$serverUrl = "https://www.checkchack.cn:8443/nottinghome"
@@ -33,22 +40,25 @@ Vue.prototype.$wsServerUrl = "wss://www.checkchack.cn:8088/ws"
  * @param {Object} user
  */
 Vue.prototype.setGlobalUserInfo = function(user) {
-	uni.setStorageSync('userInfo', user);
+	// uni.setStorageSync('userInfo', user);
+	userUtil.setGlobalUserInfo(user);
 }
 
 /**
  * 设置当前用户信息
  */
 Vue.prototype.getGlobalUserInfo = function() {
-	var value = uni.getStorageSync('userInfo');
-	return value;
+	// var value = uni.getStorageSync('userInfo');
+	// return value;
+	return userUtil.getGlobalUserInfo();
 }
 
 /**
  * 清空当前用户信息
  */
 Vue.prototype.removeGlobalUserInfo = function() {
-	uni.removeStorageSync('userInfo');
+	// uni.removeStorageSync('userInfo');
+	userUtil.removeGlobalUserInfo();
 }
 
 /**
@@ -300,7 +310,7 @@ Vue.prototype.mySocket = {
 				action == app.netty.COMMENTARTICLE ||
 				action == app.netty.COMMENTCOMMENT) {
 
-				app.$store.commit('setMyMsgCount'); // 累加 msgCount in index.js
+				// app.$store.commit('setMyMsgCount'); // 累加 msgCount in index.js
 
 				switch (action) {
 					case app.netty.CHAT: // 如果消息类型为 CHAT
@@ -330,20 +340,16 @@ Vue.prototype.mySocket = {
 							if (pageFriendId == friendId) {
 								// 与该用户在聊天，标记为已读
 								console.log("与该用户在聊天，标记为已读");
-								app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.READ, createDate);
-
-								// 修改 store，发送信号，把消息卡片渲染到对话窗口 和 消息列表
-								var newMessage = new app.chat.ChatHistory(myId, friendId, msg, app.chat.FRIEND, createDate);
-								app.$store.commit('setChatMessageCard', newMessage);
+								app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.FRIEND, createDate, app.chat.READ);
 							} else {
 								//不是与该用户聊天，标记为未读
 								console.log("不是与该用户聊天，标记为未读");
-								app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.UNREAD, createDate);
+								app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.FRIEND, createDate, app.chat.UNREAD);
 							}
 						} else {
 							// 聊天页面未打开，标记为未读
 							console.log("聊天页面未打开，标记为未读");
-							app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.UNREAD, createDate);
+							app.chat.saveUserChatSnapshot(myId, friendId, msg, app.chat.FRIEND, createDate, app.chat.UNREAD);
 						}
 						break;
 					case app.netty.LIKEARTICLE:
@@ -450,10 +456,11 @@ Vue.prototype.mySocket = {
 			app.chat.saveUserChatSnapshot(chatMessage.senderId,
 				chatMessage.receiverId,
 				chatMessage.msg,
-				app.chat.READ,
-				chatMessage.createDate);
+				app.chat.ME,
+				chatMessage.createDate,
+				app.chat.READ);
 			// 刷到对话窗口
-			app.$store.commit('doFlashChatPage');
+			// app.$store.commit('doFlashChatPage');
 		}
 	},
 
@@ -514,7 +521,7 @@ Vue.prototype.chat = {
 	 * @param {Object} myId
 	 * @param {Object} friendId
 	 * @param {Object} msg
-	 * @param {Object} flag 是我的消息还是朋友的消息
+	 * @param {Object} flag 是我的消息还是朋友的消息 ME or FRIEND
 	 * @param {Object} createDate
 	 */
 	ChatHistory: function(myId, friendId, msg, flag, createDate) {
@@ -526,19 +533,21 @@ Vue.prototype.chat = {
 	},
 
 	/**
-	 * 快照对象
+	 * 快照对象 比历史记录对象多一条unreadCount属性
 	 * @param {Object} myId
 	 * @param {Object} friendId
 	 * @param {Object} msg
-	 * @param {Object} isRead 用于判断消息是已读还是未读
+	 * @param {Object} flag 是我的消息还是朋友的消息 ME or FRIEND
 	 * @param {Object} createDate
+	 * @param {Object} unreadCount 未读消息数量，0为已读
 	 */
-	ChatSnapshot: function(myId, friendId, msg, isRead, createDate) {
+	ChatSnapshot: function(myId, friendId, msg, flag, createDate, unreadCount) {
 		this.myId = myId;
 		this.friendId = friendId;
 		this.msg = msg;
-		this.isRead = isRead;
+		this.flag = flag;
 		this.createDate = createDate;
+		this.unreadCount = unreadCount;
 	},
 	/**
 	 * 保存用户的聊天记录
@@ -607,20 +616,22 @@ Vue.prototype.chat = {
 	},
 
 	/**
-	 * 聊天记录快照，仅保存每次和朋友聊天的最后一条消息
+	 * 聊天记录快照，仅保存每次和朋友聊天的最后一条消息并更新到第一行
 	 * @param {Object} myId
 	 * @param {Object} friendId
 	 * @param {Object} msg
-	 * @param {Object} isRead
+	 * @param {Object} flag
 	 * @param {Object} createDate
+	 * @param {Object} isRead
 	 */
-	saveUserChatSnapshot: function(myId, friendId, msg, isRead, createDate) {
+	saveUserChatSnapshot: function(myId, friendId, msg, flag, createDate, isRead) {
 
 		var chatKey = "chat-snapshot" + myId;
 
 		// 从本地缓存获取聊天快照的 list
 		var chatSnapshotListStr = uni.getStorageSync(chatKey);
 		var chatSnapshotList;
+		var oldChatSnapshot;
 		if (app.isNull(chatSnapshotListStr)) {
 			// 为空，赋一个空的list；
 			chatSnapshotList = [];
@@ -630,17 +641,32 @@ Vue.prototype.chat = {
 			// 循环快照list，删除含 friendId 的项
 			for (var i = 0; i < chatSnapshotList.length; i++) {
 				if (chatSnapshotList[i].friendId == friendId) {
+					oldChatSnapshot = chatSnapshotList[i];
 					chatSnapshotList.splice(i, 1); // 从i项往后删，只删一个
 					break;
 				}
 			}
 		}
+		if(oldChatSnapshot==null){
+			oldChatSnapshot = new this.ChatSnapshot(myId, friendId, msg, flag, createDate, 0);
+		}
 		// 构建聊天快照对象
-		var singleMsg = new this.ChatSnapshot(myId, friendId, msg, isRead, createDate);
+		if (isRead == this.READ) {
+			var unreadCount = 0;
+		} else {
+			console.log(oldChatSnapshot);
+			var unreadCount = oldChatSnapshot.unreadCount + 1;
+		}
+		var newChatSnapshot = new this.ChatSnapshot(myId, friendId, msg, flag, createDate, unreadCount);
 		// 添加到 list 第一项
-		chatSnapshotList.unshift(singleMsg);
-
+		chatSnapshotList.unshift(newChatSnapshot);
+		// 存回缓存
 		uni.setStorageSync(chatKey, JSON.stringify(chatSnapshotList));
+		// 修改 store，发送信号，把消息卡片渲染到对话窗口 和 消息列表
+		app.$store.commit('setChatMessageCard', {
+			'newValue': newChatSnapshot,
+			'oldValue': oldChatSnapshot
+		});
 	},
 
 	/**
@@ -702,6 +728,8 @@ Vue.prototype.chat = {
 		// 从本地缓存获取聊天快照的 list
 		var chatSnapshotListStr = uni.getStorageSync(chatKey);
 		var chatSnapshotList;
+		var oldChatSnapshot;
+		var newChatSnapshot;
 		if (app.isNull(chatSnapshotListStr)) {
 			// 为空，赋一个空的list；
 			return;
@@ -712,7 +740,9 @@ Vue.prototype.chat = {
 			for (var i = 0; i < chatSnapshotList.length; i++) {
 				var item = chatSnapshotList[i];
 				if (item.friendId == friendId) {
-					item.isRead = this.READ;
+					oldChatSnapshot = {...item};
+					item.unreadCount = 0;
+					newChatSnapshot = item;
 					chatSnapshotList.splice(i, 1, item); // 替换
 					break;
 				}
@@ -720,6 +750,12 @@ Vue.prototype.chat = {
 
 			uni.setStorageSync(chatKey, JSON.stringify(chatSnapshotList));
 		}
+		
+		console.log(oldChatSnapshot)
+		app.$store.commit('setChatMessageCard', {
+			'newValue': newChatSnapshot,
+			'oldValue': oldChatSnapshot
+		});
 	},
 
 	fetchUnsignedChatMsg: function() {
@@ -741,7 +777,7 @@ Vue.prototype.chat = {
 					var unsignedMsgList = res.data.data;
 					console.log(unsignedMsgList);
 					if (!app.isNull(unsignedMsgList)) {
-						app.$store.commit('setMyMsgCount', unsignedMsgList.length); // 增加 msgCount in index.js
+						// app.$store.commit('setMyMsgCount', unsignedMsgList.length); // 增加 msgCount in index.js
 						for (var i = 0; i < unsignedMsgList.length; i++) {
 							var msgObj = unsignedMsgList[i];
 							// 1.逐条存入聊天记录
@@ -754,8 +790,9 @@ Vue.prototype.chat = {
 							this.saveUserChatSnapshot(msgObj.acceptUserId,
 								msgObj.sendUserId,
 								msgObj.msg,
-								this.UNREAD,
-								msgObj.createDate);
+								this.FRIEND,
+								msgObj.createDate,
+								this.UNREAD);
 							// 3.拼接批量签收id的字符串
 							msgIds += msgObj.id + ",";
 						}
@@ -780,7 +817,7 @@ Vue.prototype.notification = {
 	 * @param {Object} dataContent
 	 */
 	saveLikeMsg(dataContent) {
-		app.appendIntoList(dataContent, this.LIKEMSG_KEY);
+		app.addIntoList(dataContent, this.LIKEMSG_KEY);
 	},
 
 	getLikeMsg(page) {
@@ -805,7 +842,7 @@ Vue.prototype.notification = {
 	 * @param {Object} dataContent
 	 */
 	saveCommentMsg(dataContent) {
-		app.appendIntoList(dataContent, this.COMMENTMSG_KEY);
+		app.addIntoList(dataContent, this.COMMENTMSG_KEY);
 	},
 
 	getCommentMsg(page) {
@@ -851,7 +888,7 @@ Vue.prototype.notification = {
 						for (var i = 0; i < unsignedMsgList.length; i++) {
 							var dataContent = unsignedMsgList[i];
 							//累加信息
-							app.$store.commit('setMyMsgCount'); // 累加通用信息
+							// app.$store.commit('setMyMsgCount'); // 累加通用信息
 							app.$store.commit('setLikeMsgCount'); //累加点赞信息
 							// 逐条存入缓存
 							app.notification.saveLikeMsg(dataContent);
@@ -902,7 +939,7 @@ Vue.prototype.notification = {
 						for (var i = 0; i < unsignedMsgList.length; i++) {
 							var dataContent = unsignedMsgList[i];
 							//累加信息
-							app.$store.commit('setMyMsgCount'); // 累加通用信息
+							// app.$store.commit('setMyMsgCount'); // 累加通用信息
 							app.$store.commit('setCommentMsgCount'); //累加评论信息
 							// 逐条存入缓存
 							app.notification.saveCommentMsg(dataContent);
@@ -965,12 +1002,21 @@ Vue.prototype.netty = {
 }
 
 /**
+ * 时间显示格式化 eg. 13:01
+ */
+Vue.prototype.TwoDigit = function(digit){
+	if(0 < digit && digit <= 9){
+		digit = "0" + digit
+	}
+	return digit;
+}
+/**
  * Timestamp 渲染
  * @param {Object} timediff
  */
 Vue.prototype.timeDeal = function(timediff) {
 	timediff = new Date(timediff);
-	var parts = [timediff.getFullYear(), timediff.getMonth() + 1, timediff.getDate(), timediff.getHours(), timediff.getMinutes(),
+	var parts = [timediff.getFullYear(), timediff.getMonth() + 1, timediff.getDate(), app.TwoDigit(timediff.getHours()), app.TwoDigit(timediff.getMinutes()),
 		timediff.getSeconds()
 	];
 	var oldTime = timediff.getTime();
@@ -980,13 +1026,13 @@ Vue.prototype.timeDeal = function(timediff) {
 	var timeSpanStr;
 	milliseconds = newTime - oldTime;
 	if (milliseconds <= 1000 * 60 * 1) {
-		timeSpanStr = '刚刚';
+		timeSpanStr = app.$store.state.lang.justNow;
 	} else if (1000 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60) {
-		timeSpanStr = Math.round((milliseconds / (1000 * 60))) + '分钟前';
+		timeSpanStr = Math.round((milliseconds / (1000 * 60))) + app.$store.state.lang.minsAgo;
 	} else if (1000 * 60 * 60 * 1 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24) {
-		timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + '小时前';
+		timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60)) + app.$store.state.lang.hoursAgo;
 	} else if (1000 * 60 * 60 * 24 < milliseconds && milliseconds <= 1000 * 60 * 60 * 24 * 15) {
-		timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + '天前';
+		timeSpanStr = Math.round(milliseconds / (1000 * 60 * 60 * 24)) + app.$store.state.lang.daysAgo;
 
 	} else if (milliseconds > 1000 * 60 * 60 * 24 * 15 && parts[0] == now.getFullYear()) {
 		timeSpanStr = parts[1] + '-' + parts[2] + ' ' + parts[3] + ':' + parts[4];
@@ -1030,7 +1076,8 @@ Vue.prototype.reTimeDeal = function(timediff) {
  * @param {Object} path
  */
 Vue.prototype.pathFilter = function(path) {
-	if (path.startsWith("/")) {
+	//先判空防止null出错
+	if (!app.isNull(path) && path.startsWith("/")) {
 		path = app.$serverUrl + path;
 	}
 	return path;
@@ -1049,19 +1096,7 @@ Vue.prototype.reserveTwoDecimal = function(number) {
 //获取导航栏各种信息
 Vue.prototype.getnavbarHeight = function() {
 	var navbarInfo = uni.getMenuButtonBoundingClientRect();
+	// console.log(navbarInfo);
+	// console.log('nav info');
 	return navbarInfo;
-}
-
-//判断屏幕尺寸并分类,实现兼容不同设备
-Vue.prototype.getScreenSize = function() {
-	uni.getSystemInfo({
-		success: function(res) {
-			console.log(res.model);
-			console.log(res.pixelRatio);
-			console.log(res.windowWidth);
-			console.log(res.windowHeight);
-			console.log(res.language);
-			console.log(res.platform);
-		}
-	})
 }

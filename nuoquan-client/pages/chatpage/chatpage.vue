@@ -2,25 +2,30 @@
 <template>
 	<view style="height:100%;width:100%;">
 		<!-- 导航栏 -->
-		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" left-icon="back" left-text="返回"
+		<uni-nav-bar class="navigationBar"
+		:style="{height: this.getnavbarHeight() + 'px'}" 
+		:showLeftIcon="true" 
+		:isNavHome="isNavHome" 
+		:left-text="lang.back"
 		:title="pageTitle" 
-		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
+		:height="navbarHeight"></uni-nav-bar>
 		
-		<scroll-view class="messageArea" :style="{ height: textareaHeight }" scroll-y="true" @scrolltoupper="loadMore"
-		 @scroll="scroll" :scroll-into-view="scrollToView">
-			<view style="height:20px;width:100%;"></view>
+		<scroll-view id="scrollview" class="messageArea" :style="{ height: textareaHeight }" scroll-y="true" @scrolltoupper="loadMore"
+		  :scroll-top="scrollTop" :scroll-into-view="scrollToView">
+		  <!-- 占位，防止 navbar 盖住内容 -->
+			<view :style="{height: navbarHeight + 10 + 'px'}"></view>
 			<onemessage v-for="(item, index) in chatContent" :key="index" :thisMessage="item" :userInfo="userInfo" :friendInfo="friendInfo"
 			 :id="item.id"></onemessage>
 			<view class="marginHelper"></view>
 		</scroll-view>
 		<view class="bottomBar" id="chatarea">
-			<textarea fixed="true" cursor-spacing="20" auto-height="true" v-model="textMsg" :show-confirm-bar="false" />
-			<view class="icons">
-				<button @click="showToast()"><image src="../../static/icon/viewLocalPic.png"></image></button>
+			<textarea :style="{ width:  textareaWidth + 'px'}" fixed="true" cursor-spacing="20" auto-height="true" v-model="textMsg" :show-confirm-bar="false" />
+			<view id="icons" class="icons">
+				<button class="viewPic" @click="showToast()"><image src="../../static/icon/viewLocalPic.png"></image></button>
 				<!-- 				<button><image src="../../static/icon/emoji.png"></image></button>
  -->
-				<button @click="showToast()"><image src="../../static/icon/emoji.png"></image></button>
-				<button @click="sendText(textMsg)" class="sendText">发送</image></button>
+				<button class="viewEmoji" @click="showToast()"><image src="../../static/icon/emoji.png"></image></button>
+				<button @click="sendText(textMsg)" class="sendText">{{lang.send}}</image></button>
 
 			</view>
 		</view>
@@ -58,53 +63,62 @@ export default {
 			socketMsgQueue: [], // 未发送的消息队列
 			textMsg: '', // 输入框中的text
 			windowHeight: '',
+			windowWidth: '',
 			scrollToView: '',
-
+			scrollTop: 0,
+			
 			userInfo: '',
 			friendInfo: '',
 			textareaHeight: '' ,//聊天内容高度
+			textareaWidth: 0, //聊天框宽度
+			mitemHeight: 0,
 			
 			keyboardHeight:'',
 			showEmojiFlag:false,
+			
+			isNavHome: getApp().globalData.isNavHome,//判断导航栏左侧是否显示home按钮
+			
+			navbarHeight: 0 //一次性储存 navbarheight
 		};
 	},
 
 	computed: {
-		...mapState(['chatMessageCard', 'flashChatPage'])
+		...mapState(['chatMessageCard', 'flashChatPage', 'lang'])
 	},
 
 	watch: {
 		// 监听收到的消息
 		chatMessageCard(newVal, oldVal) {
 			// console.log("newVal:");
-			// console.log(newVal);
+			console.log(newVal);
 			// 渲染到窗口
+			newVal.id = this.generateId(0);
 			this.chatContent.push(newVal);
 			this.scrollToBottom();
 		},
 
 		// 监听发送的消息
-		flashChatPage(newVal, oldVal) {
-			// 载入最后一条消息
-			var list = this.getListByKey(chatKey);
-			var msg = list[list.length - 1];
-			msg.id = this.generateId(0);
-			this.chatContent.push(msg);
-			this.scrollToBottom();
-		}
+		// flashChatPage(newVal, oldVal) {
+		// 	// 载入最后一条消息
+		// 	var list = this.getListByKey(chatKey);
+		// 	var msg = list[list.length - 1];
+		// 	msg.id = this.generateId(0);
+		// 	// this.chatContent.push(msg);
+		// 	this.scrollToBottom();
+		// }
 	},
 
 	onLoad(opt) {
-		console.log(opt);
+		// 一次性储存 navbar 高度
+		this.navbarHeight = this.getnavbarHeight().bottom + 5;
+		// console.log(opt);
 		page = 1; //初始化page,
 		// 获取界面传参
-		console.log(opt.friendInfo)
+		// console.log(opt.friendInfo)
 		this.friendInfo = JSON.parse(decodeURIComponent(opt.friendInfo)); //解码
-
-		uni.setNavigationBarTitle({
-			title: this.friendInfo.nickname
-		});
-
+		
+		// 设置页面tittle
+		this.pageTitle= this.friendInfo.nickname
 		// 获取我的信息
 		var userInfo = this.getGlobalUserInfo();
 		if (this.isNull(userInfo)) {
@@ -118,6 +132,7 @@ export default {
 		uni.getSystemInfo({
 			success: function(res) {
 				that.windowHeight = res.windowHeight;
+				that.windowWidth = res.windowWidth;
 			}
 		});
 
@@ -135,7 +150,14 @@ export default {
 			that.textareaHeight = that.windowHeight - res[0].height - 5 + 'px';
 			console.log(that.textareaHeight);
 		});
-
+		
+		//根据屏幕宽度，自适应输入框宽度
+		var query2 = uni.createSelectorQuery().in(this);
+		query2.select('#icons').boundingClientRect(data => {
+		    console.log(data);
+			that.textareaWidth = that.windowWidth - data.width - 56;
+		}).exec();
+		
 		// 获取与该用户的聊天历史记录
 		chatKey = 'chat-' + this.userInfo.id + '-' + this.friendInfo.id;
 		chatHistory = this.getListByKey(chatKey);
@@ -250,10 +272,36 @@ export default {
 
 		scrollToBottom() {
 			// 将页面滚动到底部，
-			console.log(this.chatContent);
+			console.log("scrollToBottom")
 			if (this.chatContent.length > 0) {
 				this.scrollToView = this.chatContent[this.chatContent.length - 1].id;
 			}
+			console.log(this.scrollToView);
+			
+			// var that = this;
+			// var query = uni.createSelectorQuery();
+			// query.selectAll('send').boundingClientRect();
+			// query.select('#scrollview').boundingClientRect();
+			// console.info(query);
+			// query.exec(function (res) {
+			// 	console.info(res);
+			// 	that.mitemHeight = 0;
+			// 	// res.forEach((i)=>{
+			// 	// 	if(i)
+			// 	// })
+			// 	res[0].forEach(function (rect) {
+			// 		console.info(rect.height);
+			// 		that.mitemHeight = that.mitemHeight + rect.height + 20;
+			// 	});
+			
+			// 	if (that.mitemHeight > that.textareaHeight) {
+			// 		that.scrollTop = that.mitemHeight - that.textareaHeight;
+			// 	}
+			// 	console.log(that.mitemHeight)
+			// 	console.log(that.textareaHeight)
+			// 	console.log(that.scrollTop)
+			// });
+			// this.scrollTop = 99999;
 		}
 	}
 };
@@ -267,16 +315,12 @@ page {
 </style>
 
 <style scoped>
-/**
-	 * TODO： 滚动区域高度需固定
-	 * 					by Jerrio
-	 */
 .messageArea {
 	display: flex;
 	/* margin-top: 30upx; */
 	margin-bottom: 90upx;
 	width: 100%;
-	/* height: 94%; */
+	height: 94%;
 }
 
 .bottomBar {
@@ -294,58 +338,65 @@ page {
 
 .bottomBar textarea {
 	display: inline-block;
-	height: 16px;
 	line-height: 16px;
-	width: 438upx;
+	/* width: 62.67%; */
 	max-height: 75px;
-	border-radius: 24upx;
-	border: solid 1px #c6c6c6;
-	padding: 5px 16upx;
-	margin: 11px 0 11px 28upx;
+	padding: 5px 8px;
+	margin: 11px 0 11px 14px;
 	font-size: 13px;
+	height:34px;
+	border:1px solid rgba(252,192,65,1);
+	opacity:1;
+	border-radius:8px;
 }
 
 .icons {
-	display: inline-flex;
-	width: 200upx;
-	margin-left: 18upx;
-	margin-right: 24upx;
-	justify-content: space-between;
 	position: absolute;
 	bottom: 13px;
-	right:0;
+	right:10px;
+	height: 24px;
+	display: inline-flex;
 }
 
 .icons image {
 	display: block;
-	width: 48upx;
+	width: 24px;
 	height: 24px;
 	vertical-align: bottom;
 }
-.icons button.button-hover {
-	position: relative;
-	top: 3rpx;
-	box-shadow: 0px 0px 8px #999 inset;
-}
-button {
+
+/* button {
 	display: inline-block;
 	margin: 0;
 	padding: 0;
-	width: 48upx;
-	height: 48upx;
+	width: 24px;
+	height: 24px;
 	vertical-align: bottom;
 	background: #ffffff;
-}
+} */
 button::after {
 	border: none;
 }
+.viewPic, .viewEmoji{
+	display: inline-block;
+	margin: 0 4px;
+	padding: 0;
+	width: 24px;
+	height: 24px;
+	vertical-align: bottom;
+	background: #ffffff;
+}
+
 .sendText{
-	line-height: 46upx;
-	width:68upx;
-	height:46upx;
+	padding: 0 0;
+	line-height: 23px;
+	min-width:34px;
+	height:23px;
 	font-size:17px;
 	font-weight:500;
 	color:rgba(252,192,65,1);
+	background: #ffffff;
+	margin: 0 0 0 6px;
 }
 .marginHelper {
 	height: 40upx;

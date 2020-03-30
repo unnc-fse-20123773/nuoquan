@@ -722,6 +722,275 @@ UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
--- v20.2.21 @author: jerio
+-- v20.2.21 @author: jerrio
 -- 添加标签表
+-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+
+ALTER TABLE `nuoquan`.`vote_user` 
+ADD UNIQUE INDEX `user_option_rel` (`user_id` ASC, `option_id` ASC);
+
+-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+-- v20.3.7 @author: jerrio
+-- 添加user_option_rel关系
+-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+
+ALTER TABLE `nuoquan`.`vote` 
+CHANGE COLUMN `vote_content` `vote_content` TEXT CHARACTER SET 'utf8mb4' NOT NULL ;
+
+ALTER TABLE `nuoquan`.`vote_option` 
+CHANGE COLUMN `option_content` `option_content` TEXT CHARACTER SET 'utf8mb4' NOT NULL ;
+
+ALTER TABLE `nuoquan`.`article_image` 
+ADD COLUMN `image_order` INT NOT NULL AFTER `image_path`;
+
+
+-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+-- v20.3.12 @author: deyan
+-- 将vote中的vote_content和vote_option中的option_content改为utf8mb4
+-- 为article_image表添加image_order属性
+-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+
+
+ALTER TABLE `nuoquan`.`user` 
+ADD COLUMN `latest_login` DATETIME NULL DEFAULT NULL AFTER `reputation`;
+
+ALTER TABLE `nuoquan`.`vote_image` 
+ADD COLUMN `image_order` INT NOT NULL AFTER `image_path`;
+
+
+-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+-- v20.3.12 @author: deyan
+-- 为user表添加last_login属性, 用来储存用户 最近的 登录时间
+-- 为vote_image表添加image_order属性
+-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+
+ALTER TABLE `nuoquan`.`vote_option` 
+ADD INDEX `vote_option_idx` (`vote_id` ASC);
+;
+ALTER TABLE `nuoquan`.`vote_option` 
+ADD CONSTRAINT `vote_option`
+  FOREIGN KEY (`vote_id`)
+  REFERENCES `nuoquan`.`vote` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+
+ALTER TABLE `nuoquan`.`vote_user` 
+ADD INDEX `user_option_idx` (`option_id` ASC);
+;
+ALTER TABLE `nuoquan`.`vote_user` 
+ADD CONSTRAINT `user_option`
+  FOREIGN KEY (`option_id`)
+  REFERENCES `nuoquan`.`vote_option` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+
+ALTER TABLE `nuoquan`.`vote_image` 
+ADD INDEX `vote_image_idx` (`vote_id` ASC);
+;
+ALTER TABLE `nuoquan`.`vote_image` 
+ADD CONSTRAINT `vote_image`
+  FOREIGN KEY (`vote_id`)
+  REFERENCES `nuoquan`.`vote` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+
+ALTER TABLE `nuoquan`.`user_vote_comment` 
+ADD INDEX `user_vote_comment_idx` (`vote_id` ASC);
+;
+ALTER TABLE `nuoquan`.`user_vote_comment` 
+ADD CONSTRAINT `user_vote_comment`
+  FOREIGN KEY (`vote_id`)
+  REFERENCES `nuoquan`.`vote` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+
+ALTER TABLE `nuoquan`.`user_like_comment_vote` 
+ADD INDEX `user_like_comment_vote_idx` (`comment_id` ASC);
+;
+ALTER TABLE `nuoquan`.`user_like_comment_vote` 
+ADD CONSTRAINT `user_like_comment_vote`
+  FOREIGN KEY (`comment_id`)
+  REFERENCES `nuoquan`.`user_vote_comment` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+
+ALTER TABLE `nuoquan`.`user_article_comment` 
+CHARACTER SET = utf8mb4 ;
+
+ALTER TABLE `nuoquan`.`user_like_comment` 
+CHANGE COLUMN `comment_id` `comment_id` VARCHAR(45) CHARACTER SET 'utf8' NOT NULL ;
+
+ALTER TABLE `nuoquan`.`user_like_comment` 
+ADD INDEX `user_like_comment_idx` (`comment_id` ASC);
+;
+ALTER TABLE `nuoquan`.`user_like_comment` 
+ADD CONSTRAINT `user_like_comment`
+  FOREIGN KEY (`comment_id`)
+  REFERENCES `nuoquan`.`user_article_comment` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+ALTER TABLE `nuoquan`.`user_article_comment` 
+ADD INDEX `user_article_comment_idx` (`article_id` ASC);
+;
+ALTER TABLE `nuoquan`.`user_article_comment` 
+ADD CONSTRAINT `user_article_comment`
+  FOREIGN KEY (`article_id`)
+  REFERENCES `nuoquan`.`article` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+ALTER TABLE `nuoquan`.`user_like_article` 
+CHARACTER SET = utf8mb4 ;
+
+ALTER TABLE `nuoquan`.`user_like_article` 
+CHANGE COLUMN `article_id` `article_id` VARCHAR(45) CHARACTER SET 'utf8' NOT NULL ;
+
+ALTER TABLE `nuoquan`.`user_like_article` 
+ADD INDEX `user_like_article_idx` (`article_id` ASC);
+;
+ALTER TABLE `nuoquan`.`user_like_article` 
+ADD CONSTRAINT `user_like_article`
+  FOREIGN KEY (`article_id`)
+  REFERENCES `nuoquan`.`article` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+ALTER TABLE `nuoquan`.`user_fans` 
+ADD INDEX `fans_id_idx` (`fans_id` ASC);
+;
+ALTER TABLE `nuoquan`.`user_fans` 
+ADD CONSTRAINT `user_id`
+  FOREIGN KEY (`user_id`)
+  REFERENCES `nuoquan`.`user` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE CASCADE,
+ADD CONSTRAINT `fans_id`
+  FOREIGN KEY (`fans_id`)
+  REFERENCES `nuoquan`.`user` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE CASCADE;
+
+ALTER TABLE `nuoquan`.`chat_msg` 
+CHANGE COLUMN `send_user_id` `send_user_id` VARCHAR(45) CHARACTER SET 'utf8' NOT NULL ,
+CHANGE COLUMN `accept_user_id` `accept_user_id` VARCHAR(45) CHARACTER SET 'utf8' NOT NULL ;
+
+ALTER TABLE `nuoquan`.`chat_msg` 
+ADD INDEX `send_id_idx` (`send_user_id` ASC),
+ADD INDEX `accept_user_id_idx` (`accept_user_id` ASC);
+;
+ALTER TABLE `nuoquan`.`chat_msg` 
+ADD CONSTRAINT `send_user_id`
+  FOREIGN KEY (`send_user_id`)
+  REFERENCES `nuoquan`.`user` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE CASCADE,
+ADD CONSTRAINT `accept_user_id`
+  FOREIGN KEY (`accept_user_id`)
+  REFERENCES `nuoquan`.`user` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE CASCADE;
+
+ALTER TABLE `nuoquan`.`article_image` 
+CHANGE COLUMN `id` `id` VARCHAR(45) CHARACTER SET 'utf8' NOT NULL ;
+ALTER TABLE `nuoquan`.`article_image` 
+CHANGE COLUMN `article_id` `article_id` VARCHAR(45) CHARACTER SET 'utf8' NOT NULL ;
+
+ALTER TABLE `nuoquan`.`article_image` 
+ADD INDEX `article_image_idx` (`article_id` ASC);
+;
+ALTER TABLE `nuoquan`.`article_image` 
+ADD CONSTRAINT `article_image`
+  FOREIGN KEY (`article_id`)
+  REFERENCES `nuoquan`.`article` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+ALTER TABLE `nuoquan`.`article` 
+ADD CONSTRAINT `user_article`
+  FOREIGN KEY (`user_id`)
+  REFERENCES `nuoquan`.`user` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE CASCADE;
+
+ALTER TABLE `nuoquan`.`admin_user_role` 
+CHARACTER SET = utf8 ;
+ALTER TABLE `nuoquan`.`admin_role` 
+CHANGE COLUMN `id` `id` VARCHAR(45) CHARACTER SET 'utf8' NOT NULL ;
+ALTER TABLE `nuoquan`.`admin_user_role` 
+CHANGE COLUMN `admin_user_id` `admin_user_id` VARCHAR(45) CHARACTER SET 'utf8' NULL DEFAULT NULL ,
+CHANGE COLUMN `role_id` `role_id` VARCHAR(45) CHARACTER SET 'utf8' NULL DEFAULT NULL ;
+ALTER TABLE `nuoquan`.`admin_role` 
+CHARACTER SET = utf8 ;
+
+ALTER TABLE `nuoquan`.`admin_user_role` 
+ADD INDEX `user_id_idx` (`admin_user_id` ASC),
+ADD INDEX `role_id_idx` (`role_id` ASC);
+;
+ALTER TABLE `nuoquan`.`admin_user_role` 
+ADD CONSTRAINT `admin_user`
+  FOREIGN KEY (`admin_user_id`)
+  REFERENCES `nuoquan`.`admin_user` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+ALTER TABLE `nuoquan`.`admin_user_role` 
+ADD CONSTRAINT `role_id`
+  FOREIGN KEY (`admin_user_id`)
+  REFERENCES `nuoquan`.`admin_role` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+ALTER TABLE `nuoquan`.`admin_role_permission` 
+ADD INDEX `role_id_idx` (`role_id` ASC);
+;
+ALTER TABLE `nuoquan`.`admin_role_permission` 
+ADD CONSTRAINT `role`
+  FOREIGN KEY (`role_id`)
+  REFERENCES `nuoquan`.`admin_role` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+
+ALTER TABLE `nuoquan`.`admin_role_permission` 
+ADD INDEX `permission_id_idx` (`permission_id` ASC);
+;
+ALTER TABLE `nuoquan`.`admin_role_permission` 
+ADD CONSTRAINT `permission_id`
+  FOREIGN KEY (`permission_id`)
+  REFERENCES `nuoquan`.`admin_permission` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+ALTER TABLE `nuoquan`.`vote` 
+ADD INDEX `user_vote_idx` (`user_id` ASC);
+;
+ALTER TABLE `nuoquan`.`vote` 
+ADD CONSTRAINT `user_vote`
+  FOREIGN KEY (`user_id`)
+  REFERENCES `nuoquan`.`user` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE CASCADE;
+
+ALTER TABLE `nuoquan`.`user_like_article` 
+ADD CONSTRAINT `user_id_foreign`
+  FOREIGN KEY (`user_id`)
+  REFERENCES `nuoquan`.`user` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+ALTER TABLE `nuoquan`.`vote_user` 
+ADD CONSTRAINT `vote_user`
+  FOREIGN KEY (`user_id`)
+  REFERENCES `nuoquan`.`user` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE CASCADE;
+
+-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+-- v20.3.23 @author: Jerrio
+-- 添加部分外键
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑

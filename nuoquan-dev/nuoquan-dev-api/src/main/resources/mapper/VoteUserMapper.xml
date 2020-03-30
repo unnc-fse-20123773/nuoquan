@@ -11,4 +11,13 @@
     <result column="option_id" property="optionId" jdbcType="VARCHAR" />
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
   </resultMap>
+  
+  <select id="getSelectedOptionId" resultMap="BaseResultMap" parameterType="String">
+  	select vu.option_id from nuoquan.vote_user vu
+  	where
+  		1 = 1
+  		and vote_id = #{id}
+  		and user_id = #{userId}
+  </select>
+  
 </mapper>

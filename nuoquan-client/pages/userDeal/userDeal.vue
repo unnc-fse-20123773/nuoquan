@@ -1,11 +1,21 @@
 <template>
-	<view class="container">
-		<view style="position: absolute;top: 1%;height: 12%;width: 100%;" class="super_center">
-			<view class="icon-logoBox super_center">
+	<view class="container_ud">
+		<!-- 导航栏 -->
+		<uni-nav-bar class="navigationBar" 
+		:style="{height: this.getnavbarHeight() + 'px'}" 
+		:showLeftIcon="true" 
+		:isNavHome="isNavHome" 
+		:left-text="lang.back"
+		:title="lang.userProtocol" 
+		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
+		<view :style="{height: this.getnavbarHeight().bottom + 5 + 'px'}"></view>
+		
+		<view style="margin-top: 10px;height: 12%;width: 100%;" class="super_center">
+			<view class="icon-logoBox  super_center">
 				<image src="../../static/icon/logo_app.png" mode="aspectFill" class="icon-logo"></image>
 			</view>
 		</view>
-		<view style="position: absolute;top: 12%;height: 8%;width: 100%;font-size: 42upx;font-weight: 550;color: #C0C0C0;" class="super_center">
+		<view style="margin-top: 10px;height: 8%;width: 100%;font-size: 42upx;font-weight: 550;color: #C0C0C0;text-align: center;">
 			《Nottinghome 用户协议》
 		</view>
 		<scroll-view scroll-y="true" class="introduction-content">
@@ -138,10 +148,17 @@
 </template>
 
 <script>
-	export default {
+	import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue";	
+	import { mapState, mapMutations } from 'vuex';	export default {
+		components:{
+			uniNavBar
+		},
+		computed: {
+			...mapState(['lang'])
+		},
 		data() {
 			return {
-
+			isNavHome: getApp().globalData.isNavHome,//判断导航栏左侧是否显示home按钮
 			}
 		},
 		methods: {
@@ -152,22 +169,21 @@
 
 <style>
 	page {
-		height: 100%;
 		width: 100%;
 	}
 
-	.container {
-		height: 100%;
+	.container_ud {
 		width: 100%;
-		position: relative;
+		/* position: relative; */
 	}
 
 	.introduction-content {
-		position: absolute;
+		/* position: absolute; */
 		width: 90%;
 		height: 80%;
-		top: 20%;
-		left: 5%;
+		
+		margin-top: 10px;
+		margin-left: 5%;
 	}
 
 	.icon-logoBox {

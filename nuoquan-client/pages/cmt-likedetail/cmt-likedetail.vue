@@ -1,16 +1,21 @@
 <template>
 	<view id="public-container">
 		<!-- 导航栏 -->
-		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" left-icon="back" left-text="返回"
-		:title="pageTitle" 
+		<uni-nav-bar class="navigationBar"
+		:style="{height: this.getnavbarHeight() + 'px'}" 
+		:showLeftIcon="true" 
+		:isNavHome="isNavHome" 
+		:left-text="lang.back"
+		:title="lang.myMessage" 
 		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
+		<view :style="{height: this.getnavbarHeight().bottom + 5 + 'px'}"></view>
 		
 		<view id="public-message-futherbox">
 			<scroll-view class="top-menu-view" scroll-x="true" scroll-left="scrollLeft">
-				<block v-for="(menuTabs,index) in menuTabs" :key="index">
+				<block v-for="(menuTab,index) in [{name: lang.like}, {name: lang.comment}]" :key="index">
 					<view class="menu-one-view" v-bind:id="'tabNum'+index" @click="swichMenu(index)">
 						<view :class="[currentTab==index ? 'menu-one-act' : 'menu-one']">
-							<view class="menu-one-txt" @tap="goTop">{{menuTabs.name}}</view>
+							<view class="menu-one-txt" @tap="goTop">{{menuTab.name}}</view>
 							<view class="menu-one-bottom">
 								<view class="menu-one-bottom-color1" v-if="index == 0"></view>
 								<view class="menu-one-bottom-color2" v-else></view>
@@ -82,7 +87,7 @@
 									<!-- 相对绝对定位 -->
 									<view class="id-line-rel">
 										<view class="clTouxiang-box">
-											<image class="clTouxiang" :src="item.data.source.faceImg" mode="scaleToFill" @tap="goToPersonPublic(likeList[index2].data.source.userId)"></image>
+											<image class="clTouxiang" :src="pathFilter(item.data.source.faceImg)" mode="scaleToFill" @tap="goToPersonPublic(likeList[index2].data.source.userId)"></image>
 										</view>
 										<view class="clID-box">
 											<text class="clID-text">{{item.data.source.nickname}}</text>
@@ -114,7 +119,7 @@
 									<!-- 相对绝对定位 -->
 									<view class="id-line-rel">
 										<view class="clTouxiang-box">
-											<image class="clTouxiang" :src="item.data.source.faceImg" mode="scaleToFill" @tap="goToPersonPublic(commentList[index2].data.source.fromUserId)"></image>
+											<image class="clTouxiang" :src="pathFilter(item.data.source.faceImg)" mode="scaleToFill" @tap="goToPersonPublic(commentList[index2].data.source.fromUserId)"></image>
 										</view>
 										<view class="clID-box">
 											<text class="clID-text">{{item.data.source.nickname}}</text>
@@ -170,7 +175,7 @@
 									<!-- 相对绝对定位 -->
 									<view class="id-line-rel">
 										<view class="clTouxiang-box">
-											<image class="clTouxiang" :src="item.data.source.faceImg" mode="scaleToFill" @tap="goToPersonPublic(commentList[index2].data.source.fromUserId)"></image>
+											<image class="clTouxiang" :src="pathFilter(item.data.source.faceImg)" mode="scaleToFill" @tap="goToPersonPublic(commentList[index2].data.source.fromUserId)"></image>
 										</view>
 										<view class="clID-box">
 											<text class="clID-text">{{item.data.source.nickname}}</text>
@@ -199,7 +204,6 @@
 								<!-- 卡片高度未定义，上下边距会失效，用 marginHelper 填充空白 -->
 								<view class="marginHelper2"></view>
 							</view>
-							
 						</view>
 						<!-- 用于添加底部空白 by Guetta 9.10 -->
 						<view class="marginHelper3"></view>
@@ -213,21 +217,25 @@
 <script>
 	// TODO 查询列表分页操作
 	import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
+	import { mapState, mapMutations } from 'vuex';
+	
 	export default {
 		components:{
 			uniNavBar
 		},
+		computed: {
+			...mapState(['lang'])
+		},
 		data() {
 			return {
-				pageTitle: '评论详情',
 				scrollLeft: 0,
 				isClickChange: false,
 				currentTab: '', // 切换 list 0/1
-				menuTabs: [{
-					name: '点赞'
-				}, {
-					name: '评论'
-				}],
+				// menuTabs: [{
+				// 	name: '点赞'
+				// }, {
+				// 	name: '评论'
+				// }],
 
 				// 点赞评论 swiper
 				swiperDataList: [
@@ -253,6 +261,8 @@
 				userInfo: '',
 				likePage: 1,
 				commentPage: 1,
+				
+				isNavHome: getApp().globalData.isNavHome,//判断导航栏左侧是否显示home按钮
 			}
 		},
 		
@@ -413,51 +423,39 @@
 			},
 			
 			goToArticle(articleId){
-				// console.log(article)
-				var that = this;
-				uni.request({
-					url: that.$serverUrl + '/article/getArticleById',
-					method: "POST",
-					data:{
-						articleId: articleId,
-						userId: that.userInfo.id,
-					},
-					header: {
-						'content-type': 'application/x-www-form-urlencoded'
-					},
-					success: (res) => {
-						if (res.data.status == 200) {
-							var article = res.data.data;
-							console.log(article)
-							uni.navigateTo({
-								url:'../detail/detail?data=' + JSON.stringify(article),
-							})
-						}
-					},
-				});
+				uni.navigateTo({
+					url:'../detail/detail?data=' + articleId,
+				})
 			},
 			
+			/**
+			 * TODO：应跳到对应comment
+			 * @param {Object} articleId
+			 */
 			goToComment(articleId){
-				var that = this;
-				uni.request({
-					url: that.$serverUrl + '/article/getArticleById',
-					method: "POST",
-					data:{
-						articleId: articleId,
-						userId: that.userInfo.id,
-					},
-					header: {
-						'content-type': 'application/x-www-form-urlencoded'
-					},
-					success: (res) => {
-						if (res.data.status == 200) {
-							var article = res.data.data;
-							uni.navigateTo({
-								url:'../detail/detail?data=' + JSON.stringify(article),
-							})
-						}
-					},
-				});
+				uni.navigateTo({
+					url:'../detail/detail?data=' + articleId,
+				})
+				// var that = this;
+				// uni.request({
+				// 	url: that.$serverUrl + '/article/getArticleById',
+				// 	method: "POST",
+				// 	data:{
+				// 		articleId: articleId,
+				// 		userId: that.userInfo.id,
+				// 	},
+				// 	header: {
+				// 		'content-type': 'application/x-www-form-urlencoded'
+				// 	},
+				// 	success: (res) => {
+				// 		if (res.data.status == 200) {
+				// 			var article = res.data.data;
+				// 			uni.navigateTo({
+				// 				url:'../detail/detail?data=' + JSON.stringify(article),
+				// 			})
+				// 		}
+				// 	},
+				// });
 			}
 		}
 	}
@@ -613,7 +611,7 @@
 		border-radius: 25upx;
 		min-height: 150upx;
 		background-color: white;
-		box-shadow: 0upx 0upx 10upx 1upx #A6A6A6;
+		box-shadow: 0px 0px 6px rgba(0,0,0,0.16);
 		margin-top: 15px;
 	}
 	
@@ -633,7 +631,7 @@
 	}
 	
 	.marginHelper3{
-		height: 15upx;
+		height: 80px;
 		margin-top: 15upx;
 		width: 100%;
 		background-color: #f3f3f3;
@@ -858,6 +856,17 @@
 		color: #919191;
 		height: 100%;
 		width: 98%;
+		
+		/* 保证文章正常显示 */
+		word-wrap: break-word;
+		word-break: normal;
+		white-space: normal;
+		text-overflow: ellipsis;
+		/**文字隐藏后添加省略号*/
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+		overflow: hidden;
 	}
 	
 	.origin-briefTextbox{

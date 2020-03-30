@@ -23,6 +23,7 @@ import com.github.pagehelper.PageInfo;
 import com.nuoquan.enums.MsgActionEnum;
 import com.nuoquan.enums.MsgSignFlagEnum;
 import com.nuoquan.enums.StatusEnum;
+import com.nuoquan.enums.VoteStatusEnum;
 import com.nuoquan.mapper.VoteMapper;
 import com.nuoquan.netty.MsgHandler;
 import com.nuoquan.pojo.Article;
@@ -128,10 +129,10 @@ public class VoteController extends BasicController{
 				&& weChatService.msgSecCheck(optionContent)) {
 			// 合法
 			isLegal = true;
-			vote.setStatus(StatusEnum.READABLE.type);
+			vote.setStatus(VoteStatusEnum.CHECKING.type);
 		} else {
 			// 非法, 存入数据库, 状态为不可见
-			vote.setStatus(StatusEnum.UNREADABLE.type);
+			vote.setStatus(VoteStatusEnum.UNQUALIFIED.type);
 		}
 		
 		// save to database
@@ -174,8 +175,10 @@ public class VoteController extends BasicController{
 			if (StringUtils.isNotBlank(newFileName)) {
 				finalVideoPath = fileSpace + uploadPathDB;
 				uploadFile(file, finalVideoPath);
+				Integer imageOrder = Integer.valueOf(order);
 				voteImage.setImagePath(uploadPathDB);
 				voteImage.setVoteId(voteId);
+				voteImage.setImageOrder(imageOrder);
 			}
 			voteService.saveVoteImages(voteImage);
 		}
@@ -194,7 +197,6 @@ public class VoteController extends BasicController{
 	 */
 	@PostMapping("/saveVoteComment")
 	public JSONResult saveVoteComment(@RequestBody UserVoteComment comment) throws Exception{
-		
 		// 内容安全监测
 		if (weChatService.msgSecCheck(comment.getComment())) {
 			
@@ -208,22 +210,22 @@ public class VoteController extends BasicController{
 				String commentId = voteService.saveComment(comment);
 				
 				// 给作者发推送
-				DataContent dataContent = new DataContent();
-				
-				UserVoteCommentVO commentVO = voteService.getCommentById(commentId, null);
-				if (StringUtils.isBlank(comment.getFatherCommentId())) {
-					// 给文章评论
-					VoteVO targetVote = voteService.getVoteById(comment.getVoteId(), null);
-					dataContent.setData(new NoticeCard(commentVO, targetVote));
-					dataContent.setAction(MsgActionEnum.COMMENTARTICLE.type);
-				} else {
-					// 给评论评论
-					UserVoteCommentVO targetComment = voteService.getCommentById(comment.getFatherCommentId(), null);
-					dataContent.setData(new NoticeCard(commentVO, targetComment));
-					dataContent.setAction(MsgActionEnum.COMMENTCOMMENT.type);
-				}
-				
-				MsgHandler.sendMsgTo(comment.getToUserId(), dataContent);
+//				DataContent dataContent = new DataContent();
+//				
+//				UserVoteCommentVO commentVO = voteService.getCommentById(commentId, null);
+//				if (StringUtils.isBlank(comment.getFatherCommentId())) {
+//					// 给文章评论
+//					VoteVO targetVote = voteService.getVoteById(comment.getVoteId(), null);
+//					dataContent.setData(new NoticeCard(commentVO, targetVote));
+//					dataContent.setAction(MsgActionEnum.COMMENTARTICLE.type);
+//				} else {
+//					// 给评论评论
+//					UserVoteCommentVO targetComment = voteService.getCommentById(comment.getFatherCommentId(), null);
+//					dataContent.setData(new NoticeCard(commentVO, targetComment));
+//					dataContent.setAction(MsgActionEnum.COMMENTCOMMENT.type);
+//				}
+//				
+//				MsgHandler.sendMsgTo(comment.getToUserId(), dataContent);
 			}
 			return JSONResult.ok();
 		} else {
@@ -237,12 +239,12 @@ public class VoteController extends BasicController{
 			@ApiImplicitParam(name = "voteId", required = true, dataType = "String", paramType = "form"),
 			@ApiImplicitParam(name = "userId", required = false, dataType = "String", paramType = "form")})
 	@PostMapping("/getMainVoteComments")
-	public JSONResult getFatherVoteComments(Integer page, Integer pageSize, String voteId, String userId) throws Exception{
+	public JSONResult getMainVoteComments(Integer page, Integer pageSize, String voteId, String userId) throws Exception{
 		
-		if (StringUtils.isBlank(voteId)) {
+		if (StringUtils.isBlank(voteId) || StringUtils.isEmpty(voteId)) {
 			return JSONResult.errorMsg("voteId can't be null");
 		}
-		
+		System.out.println(voteId);
 		if (page == null) {
 			page = 1;
 		}
@@ -303,11 +305,11 @@ public class VoteController extends BasicController{
 			likeVO.setFaceImgThumb(user.getFaceImgThumb());
 			
 			// 给作者发推送
-			DataContent dataContent = new DataContent();
-			dataContent.setAction(MsgActionEnum.LIKECOMMENT.type);
-			dataContent.setData(new NoticeCard(likeVO, voteService.getCommentById(commentId, userId)));
-			
-			MsgHandler.sendMsgTo(createrId, dataContent);
+//			DataContent dataContent = new DataContent();
+//			dataContent.setAction(MsgActionEnum.LIKECOMMENT.type);
+//			dataContent.setData(new NoticeCard(likeVO, voteService.getCommentById(commentId, userId)));
+//			
+//			MsgHandler.sendMsgTo(createrId, dataContent);
 		}
 		
 		return JSONResult.ok();
@@ -391,7 +393,7 @@ public class VoteController extends BasicController{
 		}
 		voteService.selectOption(voteUser);
 		
-		return JSONResult.ok(voteService.getSingleVote(1, 10, voteUser.getUserId(), voteUser.getVoteId()));
+		return JSONResult.ok(voteService.getSingleVote(voteUser.getUserId(), voteUser.getVoteId()));
 	}
 	
 	@ApiOperation(value = "查询单个投票", notes = "在确认选择后刷新单个投票")
@@ -402,16 +404,9 @@ public class VoteController extends BasicController{
 		@ApiImplicitParam(name = "pageSize", value = "每页大小", required = true, dataType = "String", paramType = "form") 
 		})
 	@PostMapping("/querySingleVote")
-	public JSONResult querySingleVote(Integer page, Integer pageSize, String userId, String voteId) throws Exception {
+	public JSONResult querySingleVote(String userId, String voteId) throws Exception {
 		
-		if (page == null) {
-			page = 1;
-		}
-		if (pageSize == null) {
-			pageSize = PAGE_SIZE;
-		}
-		
-		PagedResult result = voteService.getSingleVote(page, pageSize, userId, voteId);
+		VoteVO result = voteService.getSingleVote(userId, voteId);
 		
 		return JSONResult.ok(result);
 	}

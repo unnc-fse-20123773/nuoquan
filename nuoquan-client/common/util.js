@@ -95,6 +95,13 @@ const regCheckNum = function (str) {
 const regEmail = function regEmail(str){
 	return !RegExp(/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/).test(str);
 }
+/**
+ * 匹配中英校区和Alumni的邮箱
+ * true: 不匹配, false: 匹配
+ */
+const regUNNCEmail = function regUNNCEmail(str){
+	return !RegExp(/^\w+([-+.]\w+)*@(\w+\.)*nottingham\.[edu\.cn,ac\.uk]+$/).test(str);
+}
 
 module.exports = {
 	formatTime: formatTime,
@@ -104,6 +111,7 @@ module.exports = {
 	regPhone : regPhone,
 	regName:regName,
 	regIDC:regIDC,
+	regCheckNum:regCheckNum,
 	regEmail:regEmail,
-	regCheckNum:regCheckNum
+	regUNNCEmail:regUNNCEmail
 }

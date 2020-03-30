@@ -22,16 +22,15 @@
 				</view>
 				<!-- 个人简介 -->
 				<view class="introBox super_center"><text class="introBox-text">个人简介：这个人很懒，什么都没写哦...</text></view>
-
 				<!-- 操作行 -->
 				<view class="operationLine">
-					<!-- 粉丝 -->
-					<view class="operationCard" @tap="goToFansFollow(1)">
+					<!-- 关注 -->
+					<view class="operationCard" @tap="goToFansFollow(0)">
 						<view class="operationNum super_center">
-							<text class="operationNum-text" style="color:color:rgba(53,53,53,1);">{{ thisUserInfo.fansNum }}</text>
+							<text class="operationNum-text" style="color:color:rgba(53,53,53,1);">{{ thisUserInfo.followNum }}</text>
 						</view>
 						<view class="operationTitle super_center">
-							<text class="operationTitle-text">{{ lang.fans }}</text>
+							<text class="operationTitle-text">{{ lang.follow }}</text>
 						</view>
 					</view>
 					<!-- 影响力 -->
@@ -43,13 +42,13 @@
 							<text class="operationTitle-text">{{ lang.reputation }}</text>
 						</view>
 					</view>
-					<!-- 关注 -->
-					<view class="operationCard" @tap="goToFansFollow(0)">
+					<!-- 粉丝 -->
+					<view class="operationCard" @tap="goToFansFollow(1)">
 						<view class="operationNum super_center">
-							<text class="operationNum-text" style="color:color:rgba(53,53,53,1);">{{ thisUserInfo.followNum }}</text>
+							<text class="operationNum-text" style="color:color:rgba(53,53,53,1);">{{ thisUserInfo.fansNum }}</text>
 						</view>
 						<view class="operationTitle super_center">
-							<text class="operationTitle-text">{{ lang.follow }}</text>
+							<text class="operationTitle-text">{{ lang.fans }}</text>
 						</view>
 					</view>
 				</view>
@@ -58,12 +57,12 @@
 		<view class="pagejump_box">
 			<!-- TODO:这里应该有更灵活优雅的写法 @jerrio -->
 			<view class="item1 column_center" @click="jumpToProfile()">{{ lang.profile }}</view>
-			<view class="line1"></view>
+			<view class="line"></view>
 			<view class="item2 column_center" @click="jumpToMyPublish()">{{ lang.myPublish }}</view>
-			<view class="line2"></view>
+			<view class="line"></view>
 			<view class="item3 column_center" @click="jumpToAbout()">{{ lang.about }}</view>
-			<!-- 临时添加的设置语言按钮 @jerrio -->
-			<!-- <button class="language" @tap="changeLang">{{lang.changeLang}}</button>-->
+			<view class="line"></view>
+			<view class="language column_center" @tap="changeLang">{{lang.changeLang}}</view>
 		</view>
 		
 		<tab-bar :current="4"></tab-bar>
@@ -353,7 +352,7 @@ page {
 	border-radius: 8px;
 }
 
-.item1,.item2,.item3 {
+.item1,.item2,.item3,.language {
 	width: calc(100% - 28px)%;
 	height: 50px;
 	padding-left: 28px;
@@ -365,20 +364,14 @@ page {
 	opacity: 1;
 }
 
-.line1,.line2 {
+.line {
 	margin-left: auto;
 	margin-right: auto;
 	width: 88.54%;
 	height: 0px;
-	border: 1px solid rgba(236, 236, 236, 1);
+	/* 高度 1 像素 */
+	border: 0.5px solid rgba(236, 236, 236, 1); 
 	opacity: 1;
 }
 
-.language {
-	margin-top: 60rpx;
-	font-size: 14px;
-	font-family: Source Han Sans CN;
-	font-weight: 400;
-	color: rgba(53, 53, 53, 1);
-}
 </style>

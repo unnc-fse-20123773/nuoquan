@@ -1,14 +1,26 @@
 <script>
 export default {
-	onLaunch: function() {
-		
+	globalData: {
+		isNavHome: false //导航栏左侧是否为 home
+	},
+	onLaunch: function(options) {
+		console.log('App Launch');
+		console.log('scene=' + options.scene);
+		var sceneList = [1007, 1008, 1011, 1012, 1013, 1014, 1047, 1048, 1049]
+		for (let scene of sceneList){
+			if(options.scene == scene){
+				console.log('set isNavHome true');
+				this.globalData.isNavHome = true;
+				break;
+			}
+		}
 	},
 	onShow: function() {
 		console.log('App Show');
 	},
 	onHide: function() {
 		console.log('App Hide');
-	},
+	}
 };
 </script>
 
@@ -32,7 +44,7 @@ export default {
 .navigationBar {
 	width: 100%;
 	position: fixed;
-	z-index: 9999;
+	z-index: 50;
 	left: 0;
 	top: 0;
 }

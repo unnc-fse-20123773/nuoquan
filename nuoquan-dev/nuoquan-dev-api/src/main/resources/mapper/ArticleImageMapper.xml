@@ -8,6 +8,7 @@
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="article_id" property="articleId" jdbcType="VARCHAR" />
     <result column="image_path" property="imagePath" jdbcType="VARCHAR" />
+    <result column="image_order" property="imageOrder" jdbcType="INTEGER" />
   </resultMap>
   
   <select id="getArticleImgs" resultMap="BaseResultMap">
@@ -15,5 +16,6 @@
   	where
   		1 = 1
   		and article_id = #{articleId}
+  	order by nuoquan.article_image.image_order asc
   </select>
 </mapper>

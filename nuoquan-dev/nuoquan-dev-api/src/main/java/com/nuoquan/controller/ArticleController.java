@@ -1,5 +1,7 @@
 package com.nuoquan.controller;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -57,6 +59,7 @@ public class ArticleController extends BasicController {
 	 * @param queryType 0 -- 按"所有"请求, 1 -- 按"关注"请求
 	 * @param orderType 0 -- 按时间倒序排列, 1 -- 按热度正序排列
 	 * @param userId 操作者id
+	 * @param selectedTag 选中的标签, 如果为空则正常显示所有文章, 不为空, 则根据传进来的值查询对应文章(拥有该标签的文章)
 	 * @return
 	 * @throws Exception
 	 */
@@ -68,10 +71,11 @@ public class ArticleController extends BasicController {
 		@ApiImplicitParam(name = "page", value = "页数", required = true, dataType = "String", paramType = "form"),
 		@ApiImplicitParam(name = "pageSize", value = "每页大小", required = true, dataType = "String", paramType = "form"),
 		@ApiImplicitParam(name = "queryType", value = "排列方式", required = true, dataType = "Integer", paramType = "form"),
-		@ApiImplicitParam(name = "orderType", value = "排列方式", required = true, dataType = "Integer", paramType = "form")
+		@ApiImplicitParam(name = "orderType", value = "排列方式", required = true, dataType = "Integer", paramType = "form"),
+		@ApiImplicitParam(name = "selectedTag", value = "选择的标签", required = false, dataType = "String", paramType = "form")
 		})
 	@PostMapping("/queryArticles")
-	public JSONResult queryArticles(Integer page, Integer pageSize, Integer queryType, Integer orderType, String userId) throws Exception {
+	public JSONResult queryArticles(Integer page, Integer pageSize, Integer queryType, Integer orderType, String userId, String selectedTag) throws Exception {
 
 		PagedResult result = new PagedResult();
 		
@@ -82,27 +86,49 @@ public class ArticleController extends BasicController {
 			pageSize = PAGE_SIZE;
 		}
 		
-		if (queryType == 0) {
-			if (orderType == 0) {
-				result = articleService.getAllArticles(page, pageSize, userId);
+		// 如果标签为空 -- 正常查询文章
+		if (StringUtils.isBlank(selectedTag) || StringUtils.isEmpty(selectedTag)) {
+			if (queryType == 0) {
+				if (orderType == 0) {
+					result = articleService.getAllArticles(page, pageSize, userId);
+				}
+				
+				if (orderType == 1) {
+					result = articleService.getArticleByPopurity(page, pageSize, userId);
+				}
 			}
 			
-			if (orderType == 1) {
-				result = articleService.getArticleByPopurity(page, pageSize, userId);
+			if (queryType == 1) {
+				if (orderType == 0) {
+					result = articleService.getAllSubscribedAuthorArticles(page, pageSize, userId);
+				}
+				
+				if (orderType == 1) {
+					result = articleService.getAllSubscribedAuthorArticlesByPopularity(page, pageSize, userId);
+				}
 			}
-		}
-		
-		if (queryType == 1) {
-			if (orderType == 0) {
-				result = articleService.getAllSubscribedAuthorArticles(page, pageSize, userId);
+		} else {
+			// 如果标签不为空, 根据标签查找
+			if (queryType == 0) {
+				if (orderType == 0) {
+					result = articleService.searchArticleByTag(page, pageSize, selectedTag, userId);
+				}
+				if (orderType == 1) {
+					result = articleService.searchArticleByTagPupolarityOrder(page, pageSize, selectedTag, userId);
+				}
 			}
 			
-			if (orderType == 1) {
-				result = articleService.getAllSubscribedAuthorArticlesByPopularity(page, pageSize, userId);
+			if (queryType == 1) {
+				if (orderType == 0) {
+					result = articleService.searchArticleByTagWithSubscribed(page, pageSize, selectedTag, userId);
+				}
+				if (orderType == 1) {
+					result = articleService.searchArticleByTagPupolarityOrderWithSubscribed(page, pageSize, selectedTag, userId);
+				}
 			}
+			
+			
 		}
-		
-		
 		return JSONResult.ok(result);
 	}
 	
@@ -301,7 +327,7 @@ public class ArticleController extends BasicController {
 	 * @return
 	 * @throws Exception
 	 */
-	@ApiOperation(value = "按文章内容搜索")
+	@ApiOperation(value = "综合搜索")
 	@PostMapping(value = "/searchArticleYANG")
 	public JSONResult searchArticleYang(String searchText, Integer isSaveRecord, Integer page, String userId)
 			throws Exception {
@@ -311,6 +337,19 @@ public class ArticleController extends BasicController {
 		}
 		
 		PagedResult result = articleService.searchArticleYang(isSaveRecord, page, PAGE_SIZE, searchText, userId);
+		return JSONResult.ok(result);
+	}
+	
+	@Deprecated
+	@ApiOperation(value = "按标签搜索文章")
+	@PostMapping(value = "/queryArticleByTag")
+	public JSONResult queryArticleByTag(String searchText, Integer page, String userId)
+		throws Exception {
+		if (page == null ) {
+			page = 1;
+		}
+		
+		PagedResult result = articleService.searchArticleByTag(page, PAGE_SIZE, searchText, userId);
 		return JSONResult.ok(result);
 	}
 
@@ -393,10 +432,13 @@ public class ArticleController extends BasicController {
 				String finalVideoPath = fileSpace + uploadPathDB;
 				// 保存图片
 				uploadFile(file, finalVideoPath);	// 调用 BasicController 里的方法
+				
+				Integer imageOrder = Integer.valueOf(order);
 
 				ArticleImage articleImage = new ArticleImage();
 				articleImage.setImagePath(uploadPathDB);
 				articleImage.setArticleId(articleId);
+				articleImage.setImageOrder(imageOrder);
 				articleService.saveArticleImages(articleImage);
 				
 				return JSONResult.ok();

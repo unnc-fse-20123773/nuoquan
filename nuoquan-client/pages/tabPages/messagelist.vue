@@ -1,22 +1,24 @@
 <template>
-	<view id="container">、
+	<view id="container">
 		<!-- 导航栏 -->
 		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}"
-		:title="pageTitle" 
+		:title="lang.myMessage" :showLeftIcon="false"
 		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
+		<view :style="{ height: this.getnavbarHeight().bottom + 5 + 'px' }" style="width: 100%;"></view>
+		
 		<!-- 黄色背景 -->
 		<view id="msglist-yellowshadowbg">
 			<image src="../../static/BG/msgList_BG.png" mode="scaleToFill"></image>
 		</view>
 		<!-- 点赞和评论数量 -->
-		<view id="msglist-likecommentnum" :style="{ top: this.getnavbarHeight().bottom + 12 + 'px'}">
+		<view id="msglist-likecommentnum">
 			<view class="msglist-like column_center" @tap="goToCmtLikeDetail(0)">
 				<view class="msglist-like-bg super_center" style="background:rgba(255,93,93,1);">
 					<image src="../../static/icon/thumbs_up_white.png" class="msglist-like-icon" mode=""></image>
 				</view>
 				<text class="msglist-top-text font-family">{{lang.like}}</text>
-				<view class="msglist-top-num super_center" v-if="uLikeMsgCount>0">
-					{{uLikeMsgCount}}
+				<view class="msglist-top-num super_center" v-if="likeMsgCount>0">
+					{{likeMsgCount}}
 				</view>
 				<!-- :class="[currentTab==index ? 'menu-one-act' : 'menu-one']" -->
 			</view>
@@ -29,65 +31,25 @@
 					<image src="../../static/icon/comment_dots_ffffff.png" class="msglist-comment-icon" mode=""></image>
 				</view>
 				<text class="msglist-top-text font-family">{{lang.comment}}</text>
-				<view class="msglist-top-num super_center " v-if="uCommentMsgCount>0">
-					{{uCommentMsgCount}}
+				<view class="msglist-top-num super_center " v-if="commentMsgCount>0">
+					{{commentMsgCount}}
 				</view>
 			</view>
 			<!-- 消息内容滑块区 -->
-			<scroll-view scroll-y="true" class="messagesBox" :style="{ top: this.getnavbarHeight().bottom + 143 + 'px'}">
+			<!-- <scroll-view scroll-y="true" class="messagesBox" :style="{ top: this.getnavbarHeight().bottom + 143 + 'px'}"> -->
 				<!-- 新消息卡片 -->
-				<view>
-					<view class="message-list">
-						<swipe-action :options="options" :messagesList="chatSnapShotList" @tapCard="goToChatpage()" @tapDelete="deleteChat()"></swipe-action>
+				<!-- <view>
+					<view class="message-list" :style="{ top: this.getnavbarHeight().bottom + 143 + 'px'}">
+						<swipe-action :lang="lang" :options="options" :messagesList="chatSnapShotList" @tapCard="goToChatpage()" @tapDelete="deleteChat()"></swipe-action>
 					</view>
 				</view>
-
-				<!-- <view v-for="(item, index) in chatSnapShotList" :key="index">
-					<view class="msglist-card column_center" v-if="item.isRead == UNREAD" @tap="goToChatpage(item)">
-						<image class="msglist-Touxiang" mode="aspectFill" :src="pathFilter(item.friendInfo.faceImg)"></image>
-						<view class="msglist-content">
-							<view class="msglist-id font-family">
-								{{item.friendInfo.nickname}}
-							</view>
-							<view class="msglist-brief font-family">
-								{{item.msg}}
-							</view>
-						</view>
-						<view class="time-numicon">
-							<view class="msglist-time">
-								{{item.createDate}}
-							</view>
-							<view class="msglist-icon super_center"> -->
-				<!-- 12 -->
-				<!-- </view>
-						</view>
-					</view>
-
-					<view class="msglist-card-read column_center" v-if="item.isRead == READ" @tap="goToChatpage(item)">
-						<image class="msglist-Touxiang" mode="aspectFill" :src="item.friendInfo.faceImg"></image>
-						<view class="msglist-content">
-							<view class="msglist-id-read font-family">
-								{{item.friendInfo.nickname}}
-							</view>
-							<view class="msglist-brief-read font-family">
-								{{item.msg}}
-							</view>
-						</view>
-						<view class="time-numicon">
-							<view class="msglist-time">
-								{{item.createDate}}
-							</view> -->
-				<!-- 预留的icon位置 
-											by Guetta -->
-				<!-- <view class="msglist-icon-read super_center">
-								{{msgicon}}
-							</view> -->
-				<!-- </view>
-					</view>
-				</view> -->
-			</scroll-view>
+			</scroll-view> -->
 		</view>
-
+		
+		<view class="message-list messagesBox" :style="{ top: this.getnavbarHeight().bottom + 143 + 'px'}">
+			<swipe-action :lang="lang" :options="options" :messagesList="chatSnapShotList" @tapCard="goToChatpage()" @tapDelete="deleteChat()"></swipe-action>
+			<view style="width: 100%;height: 100px;"></view>
+		</view>
 		<tab-bar :current="3"></tab-bar>
 	</view>
 </template>
@@ -111,7 +73,6 @@ export default {
 	},
 	data() {
 		return {
-			pageTitle:'我的消息',
 			focus: false,
 			isShowView: true,
 
@@ -120,9 +81,6 @@ export default {
 
 			READ: this.chat.READ,
 			UNREAD: this.chat.UNREAD,
-
-			uLikeMsgCount: uni.getStorageSync('likeMsgCount'),
-			uCommentMsgCount: uni.getStorageSync('commentMsgCount')
 		};
 	},
 
@@ -137,14 +95,6 @@ export default {
 			// console.log("newVal:");
 			// console.log(newVal);
 		},
-
-		likeMsgCount(newVal, oldVal) {
-			this.uLikeMsgCount = newVal;
-		},
-
-		commentMsgCount(newVal, oldVal) {
-			this.uCommentMsgCount = newVal;
-		}
 	},
 
 	onLoad: function() {
@@ -312,12 +262,12 @@ export default {
 		display: flex;
 		flex-direction: column;
 		justify-content: space-around;
-		position: fixed;
+		position: relative;
 		width: 90.4%;
 		left: 4.8%;
 		height: 129px;
 		background-color: white;
-		
+		margin-top: 8px;
 		height:129px;
 		box-shadow:0px 0px 6px rgba(0,0,0,0.16);
 		opacity:1;
@@ -389,10 +339,9 @@ export default {
 	}
 
 	.messagesBox{
-		position: fixed;
+		/* position: fixed; */
 		left: 0;
 		width: 100%;
-		height: 1132upx;
 	}
 	
 	.msglist-card {

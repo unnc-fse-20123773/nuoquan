@@ -4,6 +4,9 @@
 </template>
 
 <script>
+
+import tagSelected from './tagSelected';
+	
 export default {
 	props: {
 		tag: ''
@@ -41,7 +44,6 @@ export default {
 
 	position: relative;
 	margin-right: 9px;
-	margin-top: 8px;
 	padding-right: 27px;
 	padding-left: 12px;
 	pointer-events: none;

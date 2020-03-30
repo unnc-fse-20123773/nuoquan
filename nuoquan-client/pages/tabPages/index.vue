@@ -4,6 +4,8 @@
 		<mainpagetop
 			@transQueryType="changeQueryType"
 			@transOrderType="changeOrderType"
+			@selectedTag="getSelectedTag"
+			@deleteTag="deleteTag"
 			:userInfo="userInfo"
 			:topArticles="topArticles"
 			:tagList="tagList"
@@ -30,7 +32,7 @@
 			</scroll-view>
 		</view>
 		
-		<tab-bar @click="clickMid"></tab-bar>
+		<tab-bar @clickTab="onClickTab"></tab-bar>
 	</view>
 </template>
 
@@ -59,11 +61,13 @@ export default {
 			userInfo: '',
 			totalPage: 1,
 			currentPage: 1,
-			scrollTop: 0,
+			scrollTop: -1,
 			old: {
 				scrollTop: 0
 			},
 			capsuleButton: '',
+			
+			selectedTag: '',
 		};
 	},
 	components: {
@@ -74,20 +78,20 @@ export default {
 	},
 
 	onLoad() {
+		console.log('this.getnavbarHeight()=' + this.getnavbarHeight());
 		var userInfo = this.getGlobalUserInfo();
 		if (this.isNull(userInfo)) {
-			// uni.redirectTo({
-			// 	url: '../signin/signin'
-			// });
+			uni.redirectTo({
+				url: '../signin/signin'
+			});
 			return;
 		} else {
 			this.userInfo = userInfo; // 刷去默认值(若有)
 		}
-
+		this.updateLatestLoginTime();//更新登陆时间
+		
 		this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
 
-		this.getScreenSize(); //获取手机型号
-		
 		this.capsuleButton = this.getnavbarHeight(); //获取胶囊按钮信息
 		
 		this.showArticles(this.currentPage); // 显示文章流
@@ -99,6 +103,14 @@ export default {
 
 		this.getTagsList(); //获取标签列表
 		// [测试代码块]
+		uni.getStorageInfo({
+		    success: function (res) {
+				console.log("缓存使用情况：")
+		        console.log(res.keys);
+		        console.log("currentSize=" + res.currentSize);
+		        console.log("limitSize=" + res.limitSize);
+		    }
+		});
 	},
 
 	onUnload() {
@@ -122,8 +134,15 @@ export default {
 	// },
 
 	methods: {
-		clickMid(e){
-			console.log(e);
+		onClickTab(e){
+			setTimeout(() => {
+				this.goTop()
+			}, 200)
+			
+			//刷新
+			if(e.url == "/"+this.getCurrentPage().route){
+				this.showArticles(1);
+			}
 		},
 		
 		showArticles: function(page) {
@@ -156,28 +175,28 @@ export default {
 					// pageSize: '',
 					userId: that.userInfo.id,
 					queryType: that.queryType,
-					orderType: that.orderType
+					orderType: that.orderType,
+					selectedTag: that.selectedTag
 				},
 				header: {
 					'content-type': 'application/x-www-form-urlencoded'
 				},
 				success: res => {
-					setTimeout(() => {
-						// 延时加载
-						uni.hideLoading();
-						loadArticleFlag = false;
+					uni.hideLoading();
+					loadArticleFlag = false;
 
-						console.log(res);
-						// 判断当前页是不是第一页，如果是第一页，那么设置showList为空
-						if (page == 1) {
-							that.showlist = [];
-						}
+					console.log(res);
+					// 判断当前页是不是第一页，如果是第一页，那么设置showList为空
+					if (page == 1) {
+						that.showlist = [];
+					}
+					this.$nextTick(()=>{
 						var newArticleList = res.data.data.rows;
 						var oldArticleList = that.showlist;
 						that.showlist = oldArticleList.concat(newArticleList);
 						that.currentPage = page;
 						that.totalPage = res.data.data.total;
-					}, 300);
+					})
 				},
 				fail: res => {
 					uni.hideLoading();
@@ -249,7 +268,8 @@ export default {
 					'content-type': 'application/x-www-form-urlencoded'
 				},
 				success: res => {
-					console.log(res);
+					// console.log("用户信息");
+					// console.log(res);
 					if (res.data.status == 200) {
 						var user = res.data.data;
 						var finalUser = this.myUser(user); // 分割邮箱地址, 重构 user
@@ -260,7 +280,24 @@ export default {
 				}
 			});
 		},
-
+		
+		updateLatestLoginTime(){
+			uni.request({
+				url: this.$serverUrl + '/user/updateLatestLoginTime',
+				method: 'POST',
+				data:{
+					userId: this.userInfo.id 
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					console.log("更新用户最近登录时间");
+					console.log(res);
+				}
+			})
+		},
+		
 		/**
 		 * 获取标签列表
 		 */
@@ -301,24 +338,31 @@ export default {
 			this.$nextTick(function() {
 				this.scrollTop = 0;
 			});
-			uni.showToast({
-				icon: 'none',
-				title: '纵向滚动 scrollTop 值已被修改为 0'
-			});
+			setTimeout(() => {
+				this.scrollTop = -1;
+			}, 200)
 		},
 
 		// 接收mainpageTop传过来的queryType并赋值, 一旦调用此方法, 重新刷新页面并获取文章.
 		changeQueryType: function(queryType) {
 			this.queryType = queryType;
 			console.log('queryType:' + this.queryType);
-			(this.totalPage = 1), (this.currentPage = 1), this.showArticles(this.currentPage);
+			this.showArticles(1);
 		},
 		// 接收mainpageTop传过来的orderType并赋值, 一旦调用此方法, 重新刷新页面并获取文章.
 		changeOrderType: function(orderType) {
 			this.orderType = orderType;
 			console.log('orderType:' + this.orderType);
-			(this.totalPage = 1), (this.currentPage = 1);
-			this.showArticles(this.currentPage);
+			this.showArticles(1);
+		},
+		getSelectedTag(tag){
+			this.selectedTag = tag.tag;
+			console.log(tag)
+			this.showArticles(1);
+		},
+		deleteTag(){
+			this.selectedTag = '';
+			this.showArticles(1);
 		}
 	}
 };
@@ -326,6 +370,7 @@ export default {
 <style>
 page {
 	height: 100%;
+	width: 100%;
 }
 </style>
 
@@ -333,6 +378,7 @@ page {
 .index {
 	/* 页面高度由内容扩充，最低值为100%（page 定义的）- by Guetta */
 	height: 100%;
+	width: 100%;
 	background-color: #fdfdfd;
 }
 

@@ -1,19 +1,18 @@
 <template>
 	<view style="width:100%;height:100%;margin:auto;">
-		<uni-nav-bar
-			class="navigationBar"
-			:style="{ height: this.getnavbarHeight() + 'px' }"
-			left-icon="back"
-			left-text="返回"
-			:title="pageTitle"
-			:height="this.getnavbarHeight().bottom + 5"
-			@click="backToMainPage"
-		></uni-nav-bar>
+		<uni-nav-bar class="navigationBar"
+		:style="{height: this.getnavbarHeight() + 'px'}" 
+		:showLeftIcon="true" 
+		:isNavHome="isNavHome" 
+		:left-text="lang.back"
+		:title="lang.hotTitle" 
+		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>				
+		
 		<view :style="{ height: this.getnavbarHeight().bottom + 5 + 'px' }"></view>
 		<view class="top">
-			<text class="topleft">下次更新 {{ minute }}分{{ second }}秒</text>
+			<text class="topleft">{{lang.nextRefresh}} {{minute+lang.min+second+lang.second}}</text>
 			<button class="topright" @click="reload()">
-				<text class="refresh">刷新</text>
+				<text class="refresh">{{lang.refresh}}</text>
 				<image class="icon" src="../../static/icon/refresh-ffffff.png"></image>
 			</button>
 		</view>
@@ -24,21 +23,26 @@
 <script>
 import articleInfo from './articleInfo.vue';
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
+import { mapState, mapMutations } from 'vuex';
+
 export default {
 	components: {
 		articleInfo,
 		uniNavBar
 	},
+	computed: {
+		...mapState(['lang'])
+	},
 	data() {
 		return {
-			pageTitle: 'hot',
 			minute: '',
 			second: '',
 			totalPage: 1,
 			currentPage: 1,
 			loadArticleFlag: false,
 			userInfo: '',
-			myArticleList: ''
+			myArticleList: '',
+			isNavHome: getApp().globalData.isNavHome,//判断导航栏左侧是否显示home按钮
 		};
 	},
 
@@ -196,8 +200,7 @@ export default {
 	margin: auto;
 }
 .topright {
-
-		width: 82px;
+		min-width: 82px;
 		height: 26px;
 		line-height:20px;
 		background-color: #FFCF3C;
@@ -208,7 +211,6 @@ export default {
 		align-items: center;
 		margin-left: 10%;
 		margin-right: 10px;
-	
 	}
 
 	.refresh{

@@ -8,12 +8,14 @@
 				<view class="replyTo" v-if="commentDetail.toNickname != null && commentDetail.toNickname != undefined">
 					{{commentDetail.toNickname}}
 				</view>
-				<view class="time_text">{{ commentDetail.timeAgo }}</view>
+				<view class="time_text">{{ timeDeal(commentDetail.createDate) }}</view>
 			</view>
 			<view class="comment-content" @tap="controlInputInSonCommentBox()">{{ commentDetail.comment }}</view>
 			<view class="comment-menu">
-				<view class="son-comment-num" @tap="controlInputInSonCommentBox()">{{commentDetail.commentNum}}</view>
-				<view class="like-num" :class="{liked:commentDetail.isLike}" @tap="swLikeCommentDetail(commentDetail)">{{ commentDetail.likeNum }}</view>
+				<view class="operationBar column_center">
+						<!-- <nqCmt @click.native="controlInputInSonCommentBox()" :number="commentDetail.commentNum"></nqCmt> -->
+						<nqLike style="position: absolute;right: 0;" @click.native="swLikeCommentDetail(commentDetail)" :status="commentDetail.isLike" :number="commentDetail.likeNum"></nqLike>
+				</view>
 			</view>
 		</view>
 <!--结束 		 此BLOCK,detail的评论,comment-detail,son-Comment卡片统一样式,所以统一引入,后期更改请同步------妖      -->
@@ -23,11 +25,15 @@
 </template>
 
 <script>
+import nqLike from '@/components/nq-button/nq-likeButton.vue';import nqCmt from '@/components/nq-button/nq-cmtButton.vue';	
 	export default{
 		props:{
 		  reCommentDetail: '', //沿用之前组件名字了，可改，记得本组件内全替换
 		},
-		
+		components: {
+				nqLike,
+				nqCmt,
+		},
 		data(){
 			return{
 				commentDetail: this.reCommentDetail,
@@ -36,10 +42,6 @@
 		
 		created() {
 			console.log(this.reCommentDetail);
-		},
-		
-		onLoad() {
-			console.log("哈哈哈哈哈哈");
 		},
 		
 		methods:{
@@ -51,6 +53,7 @@
 					nickname:this.reCommentDetail.nickname,
 				}
 				this.$emit('controlInputSignal',dataOfRecomment);
+				console.log("sonCB请求C-D");
 			},
 			
 			swLikeCommentDetail(){
@@ -69,9 +72,7 @@
 </script>
 
 <style scoped>
-
-	
-@import url("../detail/oneComment.css");
+@import url("../../components/nq-comment/oneComment.css");
 /* 此文件,detail的评论,comment-detail,son-Comment卡片统一样式,所以统一引入,后期更改请同步------妖
  */	
 .replyTo{

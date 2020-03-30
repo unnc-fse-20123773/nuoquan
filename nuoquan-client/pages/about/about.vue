@@ -1,8 +1,12 @@
 <template>
 	<view id="about-container">
 		<!-- 导航栏 -->
-		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" left-icon="back" left-text="返回"
-		:title="pageTitle" 
+		<uni-nav-bar class="navigationBar" 
+		:style="{height: this.getnavbarHeight() + 'px'}" 
+		:showLeftIcon="true" 
+		:isNavHome="isNavHome" 
+		:left-text="lang.back"
+		:title="lang.about" 
 		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
 		<view :style="{height: this.getnavbarHeight().bottom + 5 + 'px'}"></view>
 		<!--顶部名称部分-->
@@ -12,7 +16,7 @@
 			<!--Nottinghome-->
 			<view class="company-name">Nottinghome</view>
 			<!--版本-->
-			<view class="version">1.0.3</view>
+			<view class="version">{{versionNum}}</view>
 		</view>
 		
 		<!--表单部分-->
@@ -21,24 +25,25 @@
 			<!--表单1-->
 			<view class="form1">
 				<view class="form1-fold">
-					<view class="contact-us">联系我们</view>
+					<view class="contact-us">{{lang.contact}}</view>
 					<image @click="control1" v-if="contentShow1" src="../../static/icon/angle-down.png"></image>
 					<image @click="control1" v-if="!contentShow1" src="../../static/icon/angle-up.png"></image>
 				</view>
 				<view class="form1-expand" v-if="!contentShow1">
 					<!-- <view class="subtitle">商务合作</view> -->
 					<view class="body">
-						我们的初衷一直是为 UNNCer 打造一个专属的校际圈，让大家自由表达、拓宽交友圈、更有效的利用校内的信息和资源。
-						因此，我们欢迎校内各组织社团、学生团队、alumni 创业企业等与我们合作。合作形式包括但不限于联名活动、官方账号入驻 Nottinghome 小程序、资源共享等等。
-						我们欢迎一切能让 UNNCer 变的更好的 idea。
+						“Share beyond Moments”
+						Nottinghome 期待与校内各组织社团、学生团队、alumni 创业企业合作。
+						合作形式包括但不限于联名活动、官方账号入驻 Nottinghome、资源共享等。
+						欢迎更多朋友与我们一起为 UNNC 创造无限可能！
 						举报和反馈请联系：
 						wx: honggh-
 						
 						商务合作请联系：
 						wx: qian4223x
-						email: jumbox_nb@outlook.com
+						email: guetta.xia@outlook.com
 						
-						官方微信公众号：
+						更多资讯，请关注官方微信公众号：
 						Jumboxtech
 					</view>
 				</view>
@@ -47,19 +52,23 @@
 			<!--表单2-->
 			<view class="form2">
 				<view class="form2-fold">
-					<view class="update-notice">更新公告</view>
+					<view class="update-notice">{{lang.updateLog}}</view>
 					<image @click="control2" v-if="contentShow2" src="../../static/icon/angle-down.png"></image>
 					<image @click="control2" v-if="!contentShow2" src="../../static/icon/angle-up.png"></image>
 				</view>
 				<view class="form2-expand" v-if="!contentShow2">
-					<view class="subtitle">V1.0.3</view>
+					<view class="subtitle">{{versionNum}}</view>
 					<view class="body">
-						19.11.8 更新：
-						1. 升级“个人主页”的外观，实现全部功能；
-						2. 新增“关于”页面
-						3. 新增“我的发布”页面，现用户可以通过该页面删除已发布的帖子
-						4. 修复若干 bug
-						5. 解决了部分页面部分机型不适配问题
+						Nottinghome v1.1.0 系列现已全面升级！
+						1. 全新UI，更加流畅的交互体验
+						2. 新增投票板块，更多有趣的话题等你发现
+						3. 优化私信功能，轻松结识圈中大佬
+						4. 中英切换，信息编辑... 更多全新功能现已加入
+						
+						20.3.13 更新：
+						1. 修复部分已知 Bug
+						2. 优化卡片生成功能
+						3. 修复私信功能外观显示问题
 					</view>
 				</view>
 			</view>
@@ -92,18 +101,22 @@
 
 <script>
 import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue";	
+import { mapState, mapMutations } from 'vuex';
 	
 export default {
 	components:{
 		uniNavBar
 	},
-	
+	computed: {
+		...mapState(['lang'])
+	},
 	data() {
 		return {
-			pageTitle: '关于',
+			versionNum: this.version,
 			contentShow1: true,
 			contentShow2: true,
-			contentShow3: true
+			contentShow3: true,
+			isNavHome: getApp().globalData.isNavHome,//判断导航栏左侧是否显示home按钮
 		};
 	},
 	methods: {

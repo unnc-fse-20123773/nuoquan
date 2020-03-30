@@ -21,6 +21,7 @@
     <result column="receive_like_counts" property="receiveLikeCounts" jdbcType="INTEGER" />
     <result column="cid" property="cid" jdbcType="VARCHAR" />
     <result column="reputation" property="reputation" jdbcType="INTEGER" />
+    <result column="latest_login" property="latestLogin" jdbcType="TIMESTAMP" />
   </resultMap>
   
   <update id="addReceiveLikeCount" parameterType="String">

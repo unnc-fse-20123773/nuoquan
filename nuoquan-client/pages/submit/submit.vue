@@ -1,10 +1,22 @@
 <!-- TODO: 取消添加图片, 标签输入不能含有特殊字符，颜色变化 -->
 <template>
 	<view class="submitMain">
+		<!-- 导航栏 -->
+		<uni-nav-bar
+			class="navigationBar"
+			:style="{ height: this.getnavbarHeight() + 'px' }"
+			:showLeftIcon="true"
+			:isNavHome="isNavHome"
+			:left-text="lang.back"
+			:title="lang.tabList[0]"
+			:height="navbarHeight"
+		></uni-nav-bar>
+
+		<view :style="{ height: navbarHeight + 'px' }"></view>
 		<!-- 当失去焦点时，将输入内容存入articleTitle -->
 		<view style="position: relative;margin-top: 20px;">
-			<input class="title" v-model="articleTitle" placeholder="标题" maxlength="20" placeholder-class="title-placeholder" />
-			<view class="titleTextLeft">{{ 20 - articleTitle.length }}</view>
+			<input class="title" v-model="articleTitle" :placeholder="lang.addTitle" :maxlength="maxTitleLength" placeholder-class="title-placeholder" />
+			<view class="titleTextLeft">{{ maxTitleLength - articleTitle.length }}</view>
 		</view>
 
 		<!--已选标签部分，会周围彩色光圈的那个-->
@@ -18,23 +30,18 @@
 			>
 				{{ item.tag }}
 			</view> -->
-			<tagSelected 
-				v-for="(item, index) in selectedTags"
-				:key="index"
-				:tag="item" 
-				@click="deleteTag(index)"
-			></tagSelected>
-			<button class="editTagsButton" @tap="editTag(true)" v-if="!editingTag">添加标签 +</button>
-			<view class="finish-button" @tap="editTag(false)" v-if="editingTag">完成</view>
+			<tagSelected v-for="(item, index) in selectedTags" :key="index" :tag="item" @click="deleteTag(index)"></tagSelected>
+			<view class="editTagsButton" @tap="editTag(true)" v-if="!editingTag">{{ lang.addTags + ' +' }}</view>
+			<view class="finish-button" @tap="editTag(false)" v-if="editingTag">{{ lang.ok }}</view>
 		</view>
 
 		<!-- 标签选择块 -->
-		<tagSelectBox style="margin-top: 13px;" :tagList="tagList" @selected="getselectedTag" v-if="editingTag"></tagSelectBox>
+		<tagSelectBox :lang="lang" style="margin-top: 13px;" :tagList="tagList" @selected="getselectedTag" v-if="editingTag"></tagSelectBox>
 
 		<view style="position: relative;">
-			<textarea class="content" v-model="articleContent" maxlength="140" :auto-height="true" :show-confirm-bar="false"></textarea>
-			<view style="position: absolute;bottom: 8px;right:8px;font-size: 11px;color:#888888;">{{ 140 - articleContent.length }}</view>
-			<image src="../../static/icon/emoji.png" style="position: absolute;left:12px;top:8px;width:20px;height:20px;"></image>
+			<textarea class="content" v-model="articleContent" :maxlength="maxContentLength" :auto-height="true" :show-confirm-bar="false"></textarea>
+			<view style="position: absolute;bottom: 8px;right:8px;font-size: 11px;color:#888888;">{{ maxContentLength - articleContent.length }}</view>
+			<image src="../../static/icon/emoji.png" style="position: absolute;left:12px;top:8px;width:20px;height:20px;" @click="showToast()"></image>
 		</view>
 
 		<view class="picturearea">
@@ -53,13 +60,16 @@
 			<view v-show="isAddImage(this.imageList.length)" id="clickToChooseImage" class="addPic" @click="chooseImg">+</view>
 			<view v-if="imageList.length == 1 || imageList.length == 4 || imageList.length == 7" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
 		</view>
-		<button class="submit-button" @tap="upload()">发表</button>
+		<button class="submit-button" @tap="upload()">{{ lang.submit }}</button>
 	</view>
 </template>
 
 <script>
 import tagSelectBox from '@/components/nq-tag/tagSelectBox.vue';
-import tagSelected from '@/components/nq-tag/tagSelected.vue'
+import tagSelected from '@/components/nq-tag/tagSelected.vue';
+import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
+import { mapState, mapMutations } from 'vuex';
+
 // #ifdef APP-PLUS
 import permision from '@/common/permission.js';
 // #endif
@@ -72,13 +82,19 @@ var uploadTasks = [];
 export default {
 	components: {
 		tagSelectBox,
-		tagSelected
+		tagSelected,
+		uniNavBar
+	},
+	computed: {
+		...mapState(['lang'])
 	},
 	data() {
 		return {
 			userInfo: '',
 			articleTitle: '',
 			articleContent: '',
+			maxTitleLength: 20,
+			maxContentLength: 999,
 			articleTag: '',
 			imgPath: '',
 			showInputTagArea: 0,
@@ -101,7 +117,9 @@ export default {
 			sizeType: ['压缩', '原图', '压缩或原图'],
 			countIndex: 8,
 			count: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-			windowHeight: 0
+			windowHeight: 0,
+			isNavHome: getApp().globalData.isNavHome, //判断导航栏左侧是否显示home按钮
+			navbarHeight: 0 //一次性储存 navbarheight
 		};
 	},
 	onUnload() {
@@ -113,6 +131,9 @@ export default {
 			(this.countIndex = 8);
 	},
 	onLoad() {
+		// 一次性储存 navbar 高度
+		this.navbarHeight = this.getnavbarHeight().bottom + 5;
+
 		this.userInfo = this.getGlobalUserInfo();
 		// 获取屏幕高度
 		var that = this;
@@ -121,7 +142,7 @@ export default {
 				that.windowHeight = res.windowHeight;
 			}
 		});
-		
+
 		this.getTagsList();
 
 		// 随机生成颜色
@@ -174,7 +195,7 @@ export default {
 		},
 
 		combineTagToString: function() {
-			var finalTag = "";
+			var finalTag = '';
 			for (var i = 0; i < this.selectedTags.length; i++) {
 				finalTag = finalTag + '#' + this.selectedTags[i].tag;
 			}
@@ -249,23 +270,24 @@ export default {
 				title: '正在上传...'
 			});
 
-			setTimeout(() => {
-				if (uploadFlag) {
-					uploadFlag = false; // 解锁
-					uni.hideLoading();
-					uni.showToast({
-						title: '网络未知错误',
-						icon: 'none',
-						duration: 1000
-					});
-					// TODO: 终止上传
-					for (let task in uploadTasks) {
-						console.log(task);
-						task.abort();
-					}
-					requestTask.abort();
-				}
-			}, 5000); // 延时5s timeout
+			// 取消延时5s timeout，多图需要长时间传输
+			// setTimeout(() => {
+			// 	if (uploadFlag) {
+			// 		uploadFlag = false; // 解锁
+			// 		uni.hideLoading();
+			// 		uni.showToast({
+			// 			title: '网络未知错误',
+			// 			icon: 'none',
+			// 			duration: 1000
+			// 		});
+			// 		// TODO: 终止上传
+			// 		for (let task in uploadTasks) {
+			// 			console.log(task);
+			// 			task.abort();
+			// 		}
+			// 		requestTask.abort();
+			// 	}
+			// }, 5000);
 
 			setTimeout(() => {
 				var finalTag = this.combineTagToString();
@@ -335,11 +357,11 @@ export default {
 				duration: 2000,
 				icon: 'success'
 			}),
-				setTimeout(() => {
-					uni.switchTab({
-						url: '/pages/tabPages/index'
-					});
-				}, 1800);
+			setTimeout(() => {
+				uni.switchTab({
+					url: '/pages/tabPages/index'
+				});
+			}, 1800);
 		},
 
 		uploadFail() {
@@ -368,7 +390,15 @@ export default {
 		getselectedTag(tag) {
 			var a = this.selectedTags.indexOf(tag);
 			if (a == -1) {
-				this.selectedTags.push(tag);
+				if (this.selectedTags.length < 3) {
+					this.selectedTags.push(tag);
+				} else {
+					uni.showToast({
+						duration: 300,
+						title: '最多添加三个标签~',
+						icon: 'none'
+					});
+				}
 			} else {
 				uni.showToast({
 					icon: 'none',
@@ -391,6 +421,15 @@ export default {
 
 		editTag(a) {
 			this.editingTag = a;
+		},
+
+		showToast() {
+			uni.showToast({
+				// title: '⠀⠀⠀⠀⠀under⠀⠀⠀⠀⠀development',//不是空格，是特殊符号，莫删
+				title: '开发小哥正在玩命实现中...',
+				duration: 2000,
+				icon: 'none'
+			});
 		}
 	}
 };
@@ -421,7 +460,6 @@ page {
 	font-weight: 400;
 	line-height: 16px;
 	color: rgba(199, 199, 199, 1);
-	letter-spacing: 17px;
 }
 
 .titleTextLeft {
@@ -440,6 +478,7 @@ page {
 .selectedTagsArea {
 	margin-top: 13px;
 	position: relative;
+	margin-bottom: 8px;
 }
 
 .finish-button {
@@ -463,7 +502,7 @@ page {
 	background: linear-gradient(318deg, rgba(251, 118, 118, 1) 0%, rgba(254, 192, 77, 1) 100%);
 	box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
 	border-radius: 8px;
-
+	text-align: center;
 	font-size: 14px;
 	line-height: 23px;
 	color: rgba(255, 255, 255, 1);

@@ -60,10 +60,10 @@ public interface ArticleMapperCustom extends MyMapper<Article> {
 	public void upadtePopByFunction();
 	
 	/**
-	 * 获取热度值前三的文章
+	 * 根据热度获取文章
 	 * @return
 	 */
-	public List<ArticleVO> getTop3ByPopularity();
+	public List<ArticleVO> getArticleByPopularity();
 	
 	/**
 	 * 按 articleId 获取文章

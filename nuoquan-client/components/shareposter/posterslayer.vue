@@ -113,6 +113,7 @@ export default {
             if (index < imageList.length) {
                 // console.log(imageList[index])
                 this.getImageInfo(imageList[index]).then(imgInfo => {
+					// console.log(imgInfo)
                     tempFileList.push(imgInfo)
                     this.tempFileList = tempFileList;
                     this.downLoadImages(index + 1);
@@ -162,13 +163,17 @@ export default {
                     let _img = tempFileList[imageIndex];
                     let _views = views[i];
                     let drawData = {};
+					console.log(_img);
+					console.log(_views);
                     if (_views.tailor) {
                         _views = this.tailorImageDraw(_views, _img);
                     }
+					// console.log(_views)
                     drawData = {
                         ..._views,
                         url: _img.localPath
                     };
+					// console.log(drawData)
                     this.drawImage(drawData);
                     // if (_views.radius) {
                     //     this.drawRoundRect(drawData);
@@ -314,6 +319,8 @@ export default {
                 this.ctx.drawImage(url, sx, sy, ex, ey, left, top, width, height);
             }
             else {
+				// console.log("draw:")
+				// console.log(url)
                 this.ctx.drawImage(url, left, top, width, height);
             }
             // this.drawImage(params);
@@ -478,7 +485,7 @@ export default {
                             originHeight: 0,
                             localPath: url
                         };
-                        resolve(url);
+                        resolve(this.cache[url]);
                     }
                 }
             })
