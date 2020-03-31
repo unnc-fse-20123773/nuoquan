@@ -841,7 +841,7 @@ export default {
 				type: 'vote'
 			};
 			uni.navigateTo({
-				url: '/pages/comment-detail/comment-detail?data=' + JSON.stringify(data)
+				url: '/pages/comment-detail/comment-detail?data=' + encodeURIComponent(JSON.stringify(data))
 			});
 		},
 
