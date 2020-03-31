@@ -46,13 +46,7 @@ import nqLike from '@/components/nq-button/nq-likeButton.vue';import nqCmt from
 		
 		methods:{
 			controlInputInSonCommentBox(){
-				var dataOfRecomment={
-					toUserId:this.reCommentDetail.fromUserId,
-					fatherCommentId:this.reCommentDetail.id,
-					underCommentId:this.reCommentDetail.underCommentId,//这条检查一下是否有传进来这个组件
-					nickname:this.reCommentDetail.nickname,
-				}
-				this.$emit('controlInputSignal',dataOfRecomment);
+				this.$emit('controlInputSignal',this.reCommentDetail);
 				console.log("sonCB请求C-D");
 			},
 			

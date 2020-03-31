@@ -13,10 +13,10 @@
 				<view class="name_text">{{ mainComment.nickname }}</view>
 				<view class="time_text">{{ timeDeal(mainComment.createDate) }}</view>
 			</view>
-			<view class="comment-content" @tap="controlInput(mainComment)">{{ mainComment.comment }}</view>
+			<view class="comment-content" @tap="activeInput(mainComment)">{{ mainComment.comment }}</view>
 			<view class="comment-menu">
 				<view class="operationBar column_center">
-					<nqCmt @click.native="controlInput(1)" :number="mainComment.commentNum"></nqCmt>
+					<nqCmt @click.native="activeInput(mainComment)" :number="mainComment.commentNum"></nqCmt>
 					<nqLike style="margin-left: 11px;" @click.native="swLikeComment(mainComment)" :status="mainComment.isLike" :number="mainComment.likeNum"></nqLike>
 				</view>
 			</view>
@@ -25,7 +25,7 @@
 		<!-- 子评论区域 -->
 		<view style="width: 100%;">
 			<!--移到了sonCommentBox组件，考虑评论之间的点赞方程容易混淆，做了组件，就互不影响了-->
-			<sonCommentBox v-for="i in subCommentList" :key="i.id" :reCommentDetail="i" @controlInputSignal="controlInput"
+			<sonCommentBox v-for="i in subCommentList" :key="i.id" :reCommentDetail="i" @controlInputSignal="activeInput"
 			 @swLikeComment="swLikeComment" @goToPersonPublic="goToPersonPublic"></sonCommentBox>
 			<!-- 占位块 -->
 			<view style="width: 100%; height: 40px;"></view>
@@ -42,14 +42,13 @@
 		</view> -->
 		<!--触底提示和功能  END-->
 
-		<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)">
+		<view class="bottoLayerOfInput" v-show="showInput" @tap="resetInput()" @touchmove="resetInput()">
 			<view class="commentPart" :style="{ bottom: textAreaAdjust }">
 				<!--<view class="emoji"></view><view class="add-pic"></view>-->
 				<view class="submit" @tap="saveComment()">{{ lang.send }}</view>
 				<view class="commentSth">
 					<textarea class="comment-text" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
-					 adjust-position="false" v-model="commentContent" :show-confirm-bar="false" @focus="popTextArea" @blur="unpopTextArea"
-					 cursor-spacing="20" />
+					 adjust-position="false" v-model="commentContent" :show-confirm-bar="false" cursor-spacing="20" />
 					<!-- <view class="comment-pic-area"><image src="../../static/BG/indexBG.png"></image><image src="../../static/icon/about.png"></image><image src="../../static/icon/1575235531(1).png"></image></view> -->
 					<view class="word-count-left">{{ wordNotice }}</view>
 				</view>
@@ -57,7 +56,7 @@
 		</view>
 
 		<!--常驻input-->
-		<view class="permanent_input_BG" v-if="!showInput" @click="controlInput(1)">
+		<view class="permanent_input_BG" v-if="!showInput" @click="activeInput(mainComment)">
 			<input class="permanent_input" :placeholder="placeholderText" v-model="commentContent" disabled="true" min-height="10px" />
 		</view>
 	</view>
@@ -101,7 +100,7 @@ export default {
 			subCommentList: '', //返回值，获取评论列表信息,循环展示的东西，sonComment
 			showInput: false, //控制输入框，true时显示输入框
 			writingComment: false, //控制输入框，true时自动获取焦点，拉起输入法
-			submitData: {},
+			submitData: {},//当前页面saveComment需要6元素，4 于 activeInput()， 2 内容和 article/vote ID在请求前加入
 			placeholderText: '',
 			textAreaAdjust: 0,
 
@@ -145,49 +144,19 @@ export default {
 	},
 	methods: {
 		getSubComments(page){
-			var type = this.type;
+			var url = "";
 			//判断是文章评论还是投票评论
-			if(type == 'article'){
+			if(this.type == 'article'){
 				console.log("这是文章评论");
-				this.getArticleSubComments(page);
-			}else if(type == 'vote'){
+				url = '/article/getSubComments';
+			}else if(this.type == 'vote'){
 				console.log("这是投票评论");
-				this.getVoteSubComments(page);
+				url = '/vote/getSubComments'
 			}
-		},
-		
-		getArticleSubComments(page) {
-			uni.request({
-				method: 'POST',
-				url: this.$serverUrl + '/article/getSubComments',
-				data: {
-					underCommentId: this.mainComment.id,
-					userId: this.userInfo.id,
-					page: page,
-					type: 0
-				},
-				header: {
-					'content-type': 'application/x-www-form-urlencoded'
-				},
-				success: res => {
-					if (res.data.status == 200) {
-						if (page == 1) {
-							this.subCommentList = [];
-						}
-						var newCommentList = res.data.data.rows;
-						var oldCommentList = this.subCommentList;
-						this.subCommentList = oldCommentList.concat(newCommentList);
-						this.currentPage = page;
-						this.totalPage = res.data.data.total;
-					}
-				}
-			});
-		},
-
-		getVoteSubComments(page) {
+			
 			uni.request({
 				method: "POST",
-				url: this.$serverUrl + '/vote/getSubComments',
+				url: this.$serverUrl + url,
 				data: {
 					underCommentId: this.mainComment.id,
 					userId: this.userInfo.id,
@@ -211,6 +180,8 @@ export default {
 					}
 				}
 			});
+			
+			
 		},
 
 		loadMore: function() {
@@ -227,47 +198,28 @@ export default {
 				this.getSubComments(page);
 			}
 		},
-
-		controlInput(a) {
-			if (a != 0 && a != 1) {
-				//a!=0, !=1， 从子组件传来，包含被回复对象：被回复人ID，被回复评论ID，被回复人昵称
-				this.placeholderText = this.lang.replyComent.replace('NICKNAME', a.nickname);
-				// delete a.nickname;
-				this.submitData = a;
-				this.showInput = true;
-				this.writingComment = true;
-				console.log(this.writingComment);
-			} else if (a == 1) {
-				//a==1 当前页面调用，回复主评论
-				this.submitData.toUserId = this.mainComment.fromUserId;
-				this.submitData.fatherCommentId = this.mainComment.id;
-				this.submitData.underCommentId = this.mainComment.id;
-
-				this.showInput = true;
-				this.writingComment = true;
-				console.log('this is control input in detail. a ==' + a);
-				console.log(this.submitData);
-			} else {
-				//a==0, 关闭输入框，一切恢复默认状态
-				console.log('this is control input in detail. a ==0, EXIT');
-				this.submitData = {};
-				this.placeholderText = this.lang.engageComment;
-				this.showInput = false;
-				this.writingComment = false;
+		
+		activeInput(toBeCommented) {
+			//替换输入框提示语
+			this.placeholderText = this.lang.replyComent.replace('NICKNAME', toBeCommented.nickname);
+			//submitData 4/6 填充
+			this.submitData={
+				fromUserId:this.userInfo.id,
+				toUserId:toBeCommented.fromUserId,
+				fatherCommentId:toBeCommented.id,
+				underCommentId:this.mainComment.id,
 			}
+			this.showInput = true;
+			this.writingComment = true;
+			console.log(this.submitData);
 		},
-		popTextArea(e) {
-			console.log('展开');
-			console.log(e);
-			console.log(e.detail.height);
-			// this.textAreaAdjust = e.detail.height / 3 + 'px';
-			// this.textAreaAdjust = '0' ;
-		},
-		unpopTextArea(e) {
-			console.log('收起');
-			console.log(e);
-
-			// this.textAreaAdjust = '';
+		resetInput(){
+			console.log("resetInput");
+			this.submitData = {};
+			this.placeholderText = this.lang.engageComment;
+			this.showInput = false;
+			this.writingComment = false;
+			this.commentContent = "";
 		},
 
 		/**
@@ -300,16 +252,13 @@ export default {
 				console.log('tragger savecomment');
 				
 				var url = "";
-				// var submitData;
 				if(this.type == 'article'){
 					url = "/article/saveComment"
 					this.submitData.comment = this.commentContent;
-					this.submitData.fromUserId = this.userInfo.id;
 					this.submitData.articleId = this.mainComment.articleId;
 				}else if(this.type == 'vote'){
 					url = "/vote/saveVoteComment"
 					this.submitData.comment = this.commentContent;
-					this.submitData.fromUserId = this.userInfo.id;
 					this.submitData.voteId = this.mainComment.voteId;
 				}
 				uni.request({
@@ -321,9 +270,7 @@ export default {
 						this.saveCommentFlag = false;
 						
 						if (res.data.status == 200) {
-							this.writingComment = false;
-							this.commentContent = '';
-							this.showInput = false;
+							this.resetInput();
 							// 强制子组件重新刷新
 							this.subCommentList = '';
 							this.$nextTick(function() {
@@ -385,7 +332,7 @@ export default {
 				}
 			});
 		},
-
+		
 		unLikeComment(comment) {
 			console.log('取消点赞评论');
 			var url = "";

@@ -22,7 +22,9 @@
 				<view style="width:100%;min-height:100%;margin:auto;background: #FFFFFF;">
 					<view class="mainbody">
 						<view style="height:20px;width:100%;"></view>
-						<myArticles :lang="lang" v-bind:myArticleList="myArticleList"></myArticles>
+						
+								<modify-article v-for="article in myArticleList" :key="article.id" :thisArticle="article" :lang="lang" @modifySwipedId="receiveSwiped" :messageIndex="messageIndex"></modify-article>
+					
 					</view>
 				</view>
 			</swiper-item>
@@ -34,16 +36,16 @@
 </template>
 
 <script>
-import myArticles from './myArticles.vue';
-import myVote from './myVote.vue';
+import modifyArticle from '../../components/nq-card/modify-article';
+import modifyVote from '../../components/nq-card/modify-vote.vue';
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 import { mapState, mapMutations } from 'vuex';
 
 var loadArticleFlag = false;
 export default {
 	components: {
-		myArticles,
-		myVote,
+		modifyArticle,
+		modifyVote,
 		uniNavBar
 	},
 	computed: {
@@ -62,7 +64,8 @@ export default {
 
 			myVoteList: [],
 			swiperViewing: 'article',
-			isNavHome: getApp().globalData.isNavHome //判断导航栏左侧是否显示home按钮
+			isNavHome: getApp().globalData.isNavHome ,//判断导航栏左侧是否显示home按钮
+			messageIndex:"",
 		};
 	},
 
@@ -195,6 +198,10 @@ export default {
 					console.log(res);
 				}
 			});
+		},
+		receiveSwiped(newId){
+			this.messageIndex = newId;
+			console.log("refresh swiped ID = " + newId);
 		}
 	}
 };
