@@ -88,9 +88,13 @@ module.exports = {
 	myMessage : "Message",
 	
 	//我的
+	chinese: "中",
+	english: "EN",
 	profile : "Profile",
 	myPublish : "My Post",
 	about : "About Us",
+	myFavorite: "My Favorite",
+	userDeal: "User Deal",
 	changeLang : "Language",
 	follow : "Follow",
 	fans : "Follower",
