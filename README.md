@@ -1,6 +1,6 @@
 README
 ======
-Current Dev Verion: `v1.0.3`
+Current Dev Verion: `v1.0.3` [![Build Status](https://travis-ci.com/Jerriodaddy/nuoquan.svg?branch=master)](https://travis-ci.com/Jerriodaddy/nuoquan) [![codecov](https://codecov.io/gh/Jerriodaddy/nuoquan/branch/master/graph/badge.svg)](https://codecov.io/gh/Jerriodaddy/nuoquan)
 
 ### 开发环境
 - JDK8.0
