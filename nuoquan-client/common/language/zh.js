@@ -87,9 +87,13 @@ module.exports = {
 	myMessage : "动态",
 	
 	//我的
+	chinese: "中",
+	english: "EN",
 	profile : "个人信息",
 	myPublish : "我的发布",
 	about : "关于我们",
+	myFavorite: "我的收藏",
+	userDeal: "用户协议",
 	changeLang : "切换语言",
 	follow : "关注",
 	fans : "粉丝",

@@ -205,10 +205,14 @@
 
 			if (!this.isNull(degree)) {
 				this.degree = this.degrees[degree];
-				this.degreeDB = degree; // 修改对数据库的默认值
+			this.degreeDB = degree; // 修改对数据库的默认值
 			}
 
 			this.email = this.userInfo.email; // 改绑邮箱默认值
+		},
+
+		onShow() {
+			this.setTabBarIndex(3) //index为当前tab的索引
 		},
 
 		methods: {
@@ -265,11 +269,13 @@
 					id: this.userInfo.id,
 					nickname: form.nickname,
 					gender: this.gender,
+					email: form.email,
 					graduationYear: this.year,
 					major: this.major,
 					degree: this.degreeDB
 				};
 				console.log(data);
+				var that = this;
 				uni.request({
 					url: this.$serverUrl + '/user/updateUser',
 					method: 'POST',
@@ -283,13 +289,12 @@
 							var finalUser = this.myUser(user); // 分割邮箱地址, 重构 user
 							this.setGlobalUserInfo(finalUser); // 把用户信息写入缓存
 							this.userInfo = finalUser; // 更新页面用户数据
-							// console.log(this.userInfo);
+							console.log(this.userInfo);
 						}
 					}
 				});
 
 				// 完成修改，更改 isEdit 为 false
-				this.toggleIsEdit();
 			},
 
 			/**
