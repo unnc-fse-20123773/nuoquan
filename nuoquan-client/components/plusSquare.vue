@@ -3,18 +3,7 @@
 </template>
 
 <script>
-	import nqLike from '../components/nq-button/nq-likeButton.vue';
-	import nqCmt from '../components/nq-button/nq-cmtButton.vue';
-
 	export default {
-		name: 'aticlebrief',
-		props: {
-			articleCard: {}
-		},
-		components: {
-			nqLike,
-			nqCmt
-		},
 		data() {
 			return {
 
