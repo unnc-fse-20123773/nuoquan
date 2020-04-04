@@ -391,7 +391,7 @@ public class ArticleController extends BasicController {
 			}else {
 				article.setStatus(StatusEnum.CHECKING.type);
 			}
-		}else {
+		} else {
 			// 非法，尽管非法也保存到数据库
 			article.setStatus(StatusEnum.UNREADABLE.type);
 		}

@@ -15,14 +15,14 @@ App.mpType = 'app'
 
 Vue.config.productionTip = false
 
-Vue.prototype.version = "v1.1.5 - 发布版"
+Vue.prototype.version = "v1.1.7 - 发布版"
 Vue.prototype.tagColors = ['#FE5F55', '#40A792', '#FDD041', '#5CA0D3', '#621E81', '#738598', '#F3AE4B']
 
 Vue.prototype.$store = store // 挂载 vueX
 Vue.prototype.$util = util
 
-Vue.prototype.$serverUrl = "http://127.0.0.1:8080"
-Vue.prototype.$wsServerUrl = "wss://127.0.0.1:8088/ws"
+// Vue.prototype.$serverUrl = "http://127.0.0.1:8080"
+// Vue.prototype.$wsServerUrl = "wss://127.0.0.1:8088/ws"
 
 // Vue.prototype.$serverUrl = "http://192.168.124.8:8080"
 // Vue.prototype.$wsServerUrl = "wss://192.168.124.8:8088/ws"
