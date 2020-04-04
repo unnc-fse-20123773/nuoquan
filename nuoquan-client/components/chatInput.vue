@@ -115,7 +115,6 @@
 		width: 24px;
 		height: 24px;
 		vertical-align: bottom;
-		background: #ffffff;
 	}
 	
 	.sendText{
@@ -126,7 +125,6 @@
 		font-size:17px;
 		font-weight:500;
 		color:rgba(252,192,65,1);
-		background: #ffffff;
 		margin: 0 0 0 6px;
 	}
 </style>
