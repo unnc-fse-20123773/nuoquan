@@ -35,18 +35,24 @@
 					<view class="guanzhuLine super_center">
 						<view style="height: 100%;display: flex;">
 							<!-- 关注&已关注 -->
-							<view class="guanzhuButton super_center" @tap="addFollow(thisUserInfo.id)" v-if="thisUserInfo.follow == false">
-								<text class="guanzhuButton-text">{{lang.follow}}</text>
+							<view 
+								class="guanzhuButton" 
+								@tap="addFollow(thisUserInfo.id)" 
+								v-if="thisUserInfo.follow == false">
+								<view style="height: 100%;width: 100%;border-radius: 4px;" class="super_center" hover-class="hoverColorYellow">
+									<text class="guanzhuButton-text">{{lang.follow}}</text>
+								</view>
 							</view>
-							<button
-								plain="true"
+							<view
 								class="guanzhuButton-after super_center"
 								style="border:1px solid rgba(255,201,90,1);"
 								@tap="cancelFollow(thisUserInfo.id)"
 								v-if="thisUserInfo.follow == true"
 							>
-								<text class="guanzhuButton-text-after">{{lang.followed}}</text>
-							</button>
+								<view style="height: 100%;width: 100%;border-radius: 4px" class="super_center" hover-class="hoverColor">
+									<text class="guanzhuButton-text-after">{{lang.followed}}</text>
+								</view>
+							</view>
 							<!-- 私信 -->
 							<view class="messageButton super_center" @tap="goToChatPage">
 								<image
@@ -63,7 +69,7 @@
 				<!-- 操作行 -->
 				<view class="operationLine">
 					<!-- 粉丝 -->
-					<view class="operationCard" @tap="goToFansFollow(1)">
+					<view class="operationCard" hover-class="hoverColor" @tap="goToFansFollow(1)">
 						<view class="operationNum super_center">
 							<text class="operationNum-text" style="color:color:rgba(53,53,53,1);">{{ thisUserInfo.fansNum }}</text>
 						</view>
@@ -75,7 +81,7 @@
 						<view class="operationTitle super_center"><text class="operationTitle-text">{{lang.reputation}}</text></view>
 					</view>
 					<!-- 关注 -->
-					<view class="operationCard" @tap="goToFansFollow(0)">
+					<view class="operationCard" hover-class="hoverColor" @tap="goToFansFollow(0)">
 						<view class="operationNum super_center">
 							<text class="operationNum-text" style="color:color:rgba(53,53,53,1);">{{ thisUserInfo.followNum }}</text>
 						</view>
@@ -106,36 +112,38 @@
 		<!-- 发布内容块 -->
 		<view :style="{ width: cardWidth }" v-bind:myArticleList="myArticleList">
 			<view id="public-articleCard" :style="{ width: cardWidth }" v-for="thisArticle in myArticleList" :key="thisArticle.id" @click="jumpToDetail(thisArticle)">
-				<view class="articleTitle">{{ thisArticle.articleTitle }}</view>
-				<!-- 发布内容行 -->
-				<view class="articleContentLine">
-					<!-- 文字部分卡片 -->
-					<!-- 有图跟无图只有 teamareaCard 这一个 class 的区别，判断只需要更改这一个 class -->
-					<view :class="[thisArticle.imgList.length > 0?'textareaCard-img':'textareaCard']">
-						<view class="textContent">
-							{{thisArticle.articleContent}}
-						</view>
-						<!-- 底部栏 -->
-						<view class="bottomBar">
-							<view style="position: relative;width: 100%;height: 100%;">
-								<view class="bottom-time column_center"><text>{{timeDeal(thisArticle.createDate)}}</text></view>
-								<view class="view column_center">
-									<image src="../../static/icon/eye-888888.png" mode="aspectFill"></image>
-									<text>{{thisArticle.viewNum}}</text>
-								</view>
-								<view class="comment column_center">
-									<image src="../../static/icon/comment-alt.png" mode="aspectFill"></image>
-									<text>{{thisArticle.commentNum}}</text>
-								</view>
-								<view class="like column_center">
-									<image src="../../static/icon/like.png" mode="aspectFill"></image>
-									<text>{{thisArticle.likeNum}}</text>
+				<view style="height: 100%;width: 100%;border-radius: 8px;padding: 12px 0px;" hover-class="hoverColor">
+					<view class="articleTitle">{{ thisArticle.articleTitle }}</view>
+					<!-- 发布内容行 -->
+					<view class="articleContentLine">
+						<!-- 文字部分卡片 -->
+						<!-- 有图跟无图只有 teamareaCard 这一个 class 的区别，判断只需要更改这一个 class -->
+						<view :class="[thisArticle.imgList.length > 0?'textareaCard-img':'textareaCard']">
+							<view class="textContent">
+								{{thisArticle.articleContent}}
+							</view>
+							<!-- 底部栏 -->
+							<view class="bottomBar">
+								<view style="position: relative;width: 100%;height: 100%;">
+									<view class="bottom-time column_center"><text>{{timeDeal(thisArticle.createDate)}}</text></view>
+									<view class="view column_center">
+										<image src="../../static/icon/eye-888888.png" mode="aspectFill"></image>
+										<text>{{thisArticle.viewNum}}</text>
+									</view>
+									<view class="comment column_center">
+										<image src="../../static/icon/comment-alt.png" mode="aspectFill"></image>
+										<text>{{thisArticle.commentNum}}</text>
+									</view>
+									<view class="like column_center">
+										<image src="../../static/icon/like.png" mode="aspectFill"></image>
+										<text>{{thisArticle.likeNum}}</text>
+									</view>
 								</view>
 							</view>
 						</view>
+						<!-- 图片部分盒子 -->
+						<view class="imgBox" v-if="thisArticle.imgList.length > 0"><image mode="aspectFill" :src="serverUrl + thisArticle.imgList[0].imagePath"></image></view>
 					</view>
-					<!-- 图片部分盒子 -->
-					<view class="imgBox" v-if="thisArticle.imgList.length > 0"><image mode="aspectFill" :src="serverUrl + thisArticle.imgList[0].imagePath"></image></view>
 				</view>
 			</view>
 		</view>
@@ -563,16 +571,17 @@ page {
 }
 
 .operationLine {
-	margin: 17px 3.2%;
-	width: 93.6%;
+	margin: 17px 6%;
+	width: 88%;
 	height: 43px;
 	display: flex;
 	justify-content: space-between;
 }
 
 .operationCard {
-	width: 33.3%;
+	width: 30%;
 	height: 43px;
+	border-radius: 6px;
 }
 
 .operationNum {
@@ -662,7 +671,6 @@ page {
 	margin-bottom: 8px;
 	max-height: 114px;
 	margin-left: 13px;
-	padding: 12px 0px;
 	border-radius: 8px;
 	background-color: rgba(255, 255, 255, 1);
 	box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);

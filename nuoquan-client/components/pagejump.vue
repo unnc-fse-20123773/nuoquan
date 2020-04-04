@@ -79,7 +79,7 @@ import nqSwitch from '@/components/nq-switch.vue';
 .left_icon image{
 	margin:auto;
 	margin-top:6px;
-	width:13px;
+	width:16px;
 	height:16px;
 }
 .page{
