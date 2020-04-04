@@ -1,7 +1,7 @@
 <template>
 	<view style="width:100%;">
 	
-			<view class="oneArticle" v-if="thisArticle.status != 0">
+			<view class="oneArticle" v-if="thisArticle.status != 0"   >
 				<view
 					class="swipe-contain"
 					:style="{ transform: messageIndex == thisArticle.id ? transformX : 'translateX(0px)' }"
@@ -11,6 +11,7 @@
 					@touchend="touchEnd"
 					@touchcancel="touchEnd"
 					@click="goToDetail(thisArticle)"
+					hover-class="hoverColor"
 				>
 					<view class="title">{{ thisArticle.articleTitle }}</view>
 					<view class="cardBody">
@@ -185,7 +186,6 @@ export default {
 	border-radius: 8px;
 	margin-bottom: 20px;
 	z-index: 10;
-	background-color: #FFFFFF;
 }
 
 .title {

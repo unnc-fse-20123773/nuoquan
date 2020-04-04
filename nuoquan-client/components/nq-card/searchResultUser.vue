@@ -1,20 +1,15 @@
 <template>
-	<view class="articlecard" id="'+articleCard.id+'" @click="goToDetail()">
-		<view class="title" v-html="articleCard.articleTitle"></view>
-		<view class="briefarticleCard" v-html="articleCard.articleContent"></view>
-		<view class="picturearea">
-			<!-- 这里是文章配图的位置 -->
-			
+	<view class="searchResultUserCard" hover-class="hoverColor">
+		<image class="touxiang" src="../../static/BG/1-blue.png"></image>
+		<view class="right-body">
+			<view class="userName">
+
+			</view>
+			<view class="personalMessage">
+
+			</view>
 		</view>
-<!-- 		<view class="tags">
-			<view class="tag" :style="{background: tagColorList[index]}" v-for="(i, index) in articleCard.tagList" v-bind:key="index">{{ i}}</view>
-		</view> -->
-		<view class="menubar">
-			<image :src="pathFilter(articleCard.faceImg)" class="touxiang"></image>
-			<view class="name">{{ articleCard.nickname }}</view>
-			<view class="time">{{ timeDeal(articleCard.createDate) }}</view>
-		</view>
-		<view style="margin:0 25px;border-top:1px solid #DCDCDC;"></view>
+
 	</view>
 </template>
 
@@ -22,127 +17,54 @@
 	export default {
 		name: 'aticlebrief',
 		props: {
-			articleCard: {}
+			resultUser: "",
 		},
 		data() {
 			return {
-				tagColorList: [],
+				serverUrl: this.$serverUrl,
 			};
 		},
-		created() {
-			// 随机生成颜色
-			if (!this.isNull(this.articleCard.tagList)){
-				var tagColors = this.tagColors;
-				for (var i = 0; i < this.articleCard.tagList.length; i++) {
-					var random = Math.floor(Math.random() * tagColors.length);
-					this.tagColorList.push(tagColors[random]);
-				}
-			}
-		},
-		
+
 		methods: {
-			goToDetail() {
+			goToPersonPublic(userId) {
 				uni.navigateTo({
-					url: '/pages/detail/detail?data=' + this.articleCard.id
+					url: '/pages/personpublic/personpublic?userId=' + userId
 				});
-			}
+			},
 		},
 	};
 </script>
 
 <style>
-	image {
-		border: none;
-		outline: none;
+	.searchResultUserCard {
+		margin: 0 23px;
 	}
-</style>
-<style scoped>
-	.articlecard {
-		width: 750upx;
-		border-radius: 8px;
-		margin: 0 auto ;
-		background-color: #FDFDFD;
-	}
-	.title {
-		margin: 0px 25px 0 25px;
-		font-size:17px;
-		max-height: 38px;
-		font: MicrosoftYaHei;
-		font-weight: bold;
-		line-height: 19px;
-		padding-top: 10px;
-		word-break: break-all;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
-	.briefarticleCard {
-		max-height: 51px;
-		margin: 10px 25px 15px;
-		font-size: 14px;
-		line-height: 17px;
-		margin-bottom: 15px;
-		/**文字隐藏后添加省略号*/
-		display: -webkit-box;
-		-webkit-box-orient: vertical;
-		-webkit-line-clamp: 3;
-		overflow: hidden;
 
-	}
-	.tags {
-		margin-left: 21px;
-	}
-	.tag {
-		display: inline-block;
-		border-radius: 4px;
-		padding-left: 5px;
-		padding-right: 5px;
-		margin-left: 5px;
-		height: 15px;
-		color: #ffffff;
-		font-size: 10px;
-		background: #621E81;
-	}
-	.menubar {
-		position: relative;
-		vertical-align: middle;
-		margin:0 25px;
-	}
 	.touxiang {
-		border-radius: 30px;
-		width: 20px;
-		height: 20px;
-		margin-right: 5px;
-		vertical-align: middle;
-	}
-	.name {
+		width: 44px;
+		height: 44px;
 		display: inline-block;
-		font-size: 10px;
-		margin-left: 7px;
-		color: #888888;
-		padding-bottom: 5px;
-		max-width: 85px;
-		text-overflow: ellipsis;
+		vertical-align: top;
+		border-radius: 22px;
 	}
-	.time {
-		position: absolute;
-		right: 0;
-		bottom: 5px;
-		display: inline-block;
-		font-size: 10px;
-		margin-left: 25px;
-		color: #888888;
-		max-width: 84px;
-		text-overflow: ellipsis;
+
+	.right-body {
+	width: calc(100% - 60px);
 	}
-	
-	.picturearea {
-		margin: auto;
-		display: flex;
-		justify-content: center;
+
+	.userName {
+		width: 86px;
+		height: 17px;
+		font-size: 17px;
+		font-weight: 600;
+		line-height: 17px;
 	}
-	image {
-		width: 30%;
-		height: 200upx;
-		margin: auto;
+
+	.personalMessage {
+		margin-top: 12px;
+		height: 14px;
+		font-size: 14px;
+		line-height: 14px;
+		color: rgba(155, 155, 155, 1);
 	}
 </style>
