@@ -1,69 +1,56 @@
 <template>
 	<view id="public-container">
-		<!-- 黄色头部 -->
-		<!-- <view id="yellowTopBox"> -->
-			<!-- <view class="yellowTop" :style="{ bottom: yellowBottom }"></view> -->
-			<!-- <view class="yellowTop" style="bottom: -240rpx"></view> -->
-		<!-- </view> -->
-		<!-- 黄色背景 -->
-		<view id="msglist-yellowshadowbg">
-			<image src="../../static/BG/msgList_BG.png" mode="scaleToFill"></image>
-		</view>
-		<!-- 简介块 -->
-		<view id="public-infoBox" class="column_center">
-			<!-- 基本信息内容 -->
-			<view id="idCard" class="idCard" :style="{ width: cardWidth }">
-				<view style="width: 100%;height: 74px;margin-top: -46px;" class="super_center">
-					<image class="publicTouxiang" mode="aspectFill" :src="pathFilter(thisUserInfo.faceImg)"></image>
+		<!-- 导航栏 -->
+		<uni-nav-bar class="navigationBar" 
+		:style="{height: this.getnavbarHeight() + 'px'}" 
+		:showLeftIcon="true" 
+		:isNavHome="isNavHome" 
+		:left-text="lang.back"
+		:title="lang.about" 
+		:height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
+		<view :style="{height: this.getnavbarHeight().bottom + 5 + 'px'}"></view>
+		<view class="topbox">
+			<view class="header">
+				<!-- 头像 -->
+				<view class="touxiang">
+					<image :src="pathFilter(thisUserInfo.faceImg)" mode="aspectFill"></image>
 				</view>
-				<!-- ID -->
-				<view class="nameBox super_center">
-					<text class="name-text">{{ thisUserInfo.nickname }}</text>
-				</view>
-				<!-- 个人简介 -->
-				<view class="introBox super_center"><text class="introBox-text">个人简介：这个人很懒，什么都没写哦...</text></view>
-				<!-- 操作行 -->
-				<view class="operationLine">
-					<!-- 关注 -->
-					<view class="operationCard" @tap="goToFansFollow(0)">
-						<view class="operationNum super_center">
-							<text class="operationNum-text" style="color:color:rgba(53,53,53,1);">{{ thisUserInfo.followNum }}</text>
-						</view>
-						<view class="operationTitle super_center">
-							<text class="operationTitle-text">{{ lang.follow }}</text>
-						</view>
+				<!-- 右侧信息快 -->
+				<view class="person_info">
+					<!-- 名字 -->
+					<view class="nameBox">
+						<view class="name-text">{{ thisUserInfo.nickname }}</view>
 					</view>
-					<!-- 影响力 -->
-					<view class="operationCard">
-						<view class="operationNum super_center">
-							<text class="operationNum-text" style="color:rgba(254,95,85,1);">{{ thisUserInfo.reputation }}</text>
-						</view>
-						<view class="operationTitle super_center">
-							<text class="operationTitle-text">{{ lang.reputation }}</text>
-						</view>
+					<!-- 粉丝 关注 影响力 -->
+					<view class="operationTitle">
+						<view class="operationTitle-text">{{ lang.fans }}</view>
+						<view class="operationTitle-text">{{ lang.follow }}</view>
+						<view class="operationTitle-text">{{ lang.reputation }}</view>
 					</view>
-					<!-- 粉丝 -->
-					<view class="operationCard" @tap="goToFansFollow(1)">
-						<view class="operationNum super_center">
-							<text class="operationNum-text" style="color:color:rgba(53,53,53,1);">{{ thisUserInfo.fansNum }}</text>
-						</view>
-						<view class="operationTitle super_center">
-							<text class="operationTitle-text">{{ lang.fans }}</text>
-						</view>
-					</view>
+					<!-- 数量 -->
+					<view class="operationNum">
+						<view class="operationNum-text" style="color:rgba(53,53,53,1);" @tap="goToFansFollow(1)">{{ thisUserInfo.fansNum }}</view>
+						<view class="operationNum-text" style="color:rgba(53,53,53,1);"  @tap="goToFansFollow(0)">{{ thisUserInfo.followNum }}</view>
+						<view class="operationNum-text" style="color:rgba(254,95,85,1);">{{ thisUserInfo.reputation }}</view>		
+					</view>	
 				</view>
 			</view>
+			<!-- 文字介绍 -->
+			<view class="introBox">
+				<text class="introBox-text">小程序的字体依然遵循微信原生视觉规范微信内字体的使用与所运行的系统字体保持一致常用</text>
+			</view>
 		</view>
+	            
+			<swiper class="guanggao" @click="control" v-if="contentShow"  :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration">
+			    <swiper-item>
+			        <view class="swiper-item uni-bg-red"></view>
+		        </swiper-item>
+		    </swiper>                   
+		
+		
 		<view class="pagejump_box">
-			<!-- TODO:这里应该有更灵活优雅的写法 @jerrio -->
-			<view class="item1 column_center" @click="jumpToProfile()">{{ lang.profile }}</view>
-			<view class="line"></view>
-			<view class="item2 column_center" @click="jumpToMyPublish()">{{ lang.myPublish }}</view>
-			<view class="line"></view>
-			<view class="item3 column_center" @click="jumpToAbout()">{{ lang.about }}</view>
-			<view class="line"></view>
-			<view class="language column_center" @tap="changeLang">{{lang.changeLang}}</view>
-		</view>
+			<pagejump :lang = "lang" :objList=data v-for="(data,index) in dataList" :key=index @trigger="responseClick()"></pagejump>
+	    </view>
 		
 		<tab-bar :current="4"></tab-bar>
 	</view>
@@ -72,147 +59,200 @@
 <script>
 import { mapState, mapMutations } from 'vuex';
 import tabBar from '@/components/nq-tabbar/nq-tabbar.vue';
+import pagejump from '@/components/pagejump.vue';
 
 export default {
 	data() {
 		return {
+	  background: ['color1', 'color2', 'color3'],
+	            indicatorDots: false,
+	            autoplay: true,
+	            interval: 2000,
+	            duration: 500,
 			screenWidth: 350,
-
 			thisUserInfo: '',
 			windowHeight: 0,
 			windowWidth: 0,
 			yellowBottom: '',
-			cardWidth: ''
+			cardWidth: '',
+			contentShow:true,
+			dataList:[
+				{
+					src1:'file-alt-5E49E9',
+					pagename:'个人信息',
+					src2:'angle-right-888888',
+					style: 'rgba(227,223,248,1)',
+					name:'profile',
+					type:0,
+					id:1,
+				},
+				{
+					src1:'notes-25d223',
+					pagename:'我的发布',
+					src2:'angle-right-888888',
+					style: 'rgba(216,248,215,1)',
+					name: 'myPublish',
+					type:0,
+					id:2,
+				},
+				{
+					src1:'star-full-fcc041',
+					pagename:'我的收藏',
+					src2:'angle-right-888888',
+					style:'rgba(255,245,219,1)',
+					name: 'myFavorite',
+					type:0,
+					id:3,
+				},
+				{
+					src1:'language-5d88EB',
+					pagename:'切换语言',
+					src2:'angle-right-888888',
+					style:'rgba(226,235,255,1)',
+					name: 'changeLang',
+					type:1,
+					id:4,
+				},
+				{
+					src1:'exclamation-circle-888888',
+					pagename:'用户协议',
+					src2:'angle-right-888888',
+					style:'rgba(240,240,240,1)',
+					name:'userDeal',
+					type:0,
+					id:5,
+				}
+			],
 		};
 	},
 	components: {
-		tabBar
+		tabBar,
+		pagejump
 	},
-
 	computed: {
-		...mapState(['lang'])
-	},
-
-	onLoad() {
-		this.thisUserInfo = this.getGlobalUserInfo();
-
-		var screenWidth = uni.getSystemInfoSync().screenWidth;
-		this.screenWidth = screenWidth;
-
-		// 获取当前分页
-		var page = this.page;
-
-		//获取屏幕宽高
-		var that = this;
-		uni.getSystemInfo({
-			success: function(res) {
-				that.windowHeight = res.windowHeight;
-				that.windowWidth = res.windowWidth;
-			}
-		});
-		//获取黄色头部位置
-		if (that.windowHeight <= 1000) {
-			if (that.windowHeight < 667) {
-				that.yellowBottom = -that.windowHeight * 0.25 + 'px';
-				// console.log("超小屏幕，黄色头部上移了" + that.yellowBottom);
-			} else {
-				that.yellowBottom = -that.windowHeight * 0.22 + 'px';
-				// console.log("手机屏幕，黄色头部上移了" + that.yellowBottom);
-			}
-		} else {
-			that.yellowBottom = -that.windowHeight * 0.2 + 'px';
-			// console.log("平板屏幕，黄色头部上移了" + that.yellowBottom);
-		}
-
-		// 获取卡片宽度
-		that.cardWidth = that.windowWidth - 26 + 'px';
-	},
-
-	onShow() {
-		//更新用户数据
-		console.log('更新用户数据');
-		this.queryUserInfo(this.thisUserInfo.id);
-	},
-
-	onPullDownRefresh() {
-		console.log('refresh');
-		setTimeout(function() {
-			uni.stopPullDownRefresh();
-		}, 1000);
-	},
-
-	methods: {
-		...mapMutations(['changeLang']),
+			...mapState(['lang'])
+		},
 		
-		/**
-		 * 查询用户信息，并分割邮箱更新到缓存
-		 */
-		queryUserInfo(userId) {
-			var that = this;
-			uni.request({
-				url: that.$serverUrl + '/user/queryUser',
-				method: 'POST',
-				data: {
-					userId: userId
-				},
-				header: {
-					'content-type': 'application/x-www-form-urlencoded'
-				},
-				success: res => {
-					console.log(res);
-					if (res.data.status == 200) {
-						var user = res.data.data;
-						var finalUser = this.myUser(user); // 分割邮箱地址, 重构 user
-						this.setGlobalUserInfo(finalUser); // 把用户信息写入缓存
-						this.thisUserInfo = finalUser; // 更新页面用户数据
-						// console.log(this.thisUserInfo);
+			onLoad() {
+				this.thisUserInfo = this.getGlobalUserInfo();
+		
+				var screenWidth = uni.getSystemInfoSync().screenWidth;
+				this.screenWidth = screenWidth;
+		
+				// 获取当前分页
+				var page = this.page;
+		
+				//获取屏幕宽高
+				var that = this;
+				uni.getSystemInfo({
+					success: function(res) {
+						that.windowHeight = res.windowHeight;
+						that.windowWidth = res.windowWidth;
 					}
+				});
+				//获取黄色头部位置
+				if (that.windowHeight <= 1000) {
+					if (that.windowHeight < 667) {
+						that.yellowBottom = -that.windowHeight * 0.25 + 'px';
+						// console.log("超小屏幕，黄色头部上移了" + that.yellowBottom);
+					} else {
+						that.yellowBottom = -that.windowHeight * 0.22 + 'px';
+						// console.log("手机屏幕，黄色头部上移了" + that.yellowBottom);
+					}
+				} else {
+					that.yellowBottom = -that.windowHeight * 0.2 + 'px';
+					// console.log("平板屏幕，黄色头部上移了" + that.yellowBottom);
 				}
-			});
-		},
+		
+				// 获取卡片宽度
+				that.cardWidth = that.windowWidth - 26 + 'px';
+			},
+		
+			onShow() {
+				//更新用户数据
+				console.log('更新用户数据');
+				this.queryUserInfo(this.thisUserInfo.id);
+			},
+		
+			onPullDownRefresh() {
+				console.log('refresh');
+				setTimeout(function() {
+					uni.stopPullDownRefresh();
+				}, 1000);
+			},
+		
+			methods: {
+				...mapMutations(['changeLang']),
+				 
+				/**
+				 * 查询用户信息，并分割邮箱更新到缓存
+				 */
+				queryUserInfo(userId) {
+					var that = this;
+					uni.request({
+						url: that.$serverUrl + '/user/queryUser',
+						method: 'POST',
+						data: {
+							userId: userId
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded'
+						},
+						success: res => {
+							console.log(res);
+							if (res.data.status == 200) {
+								var user = res.data.data;
+								var finalUser = this.myUser(user); // 分割邮箱地址, 重构 user
+								this.setGlobalUserInfo(finalUser); // 把用户信息写入缓存
+								this.thisUserInfo = finalUser; // 更新页面用户数据
+								// console.log(this.thisUserInfo);
+							}
+						}
+					});
+				},
+				responseClick(b){
+					if(b.type =='switchLang'){
+						console.log(1);
+							this.changeLang(b.a.status);
+					}else if(b.type =='click'){
+						uni.navigateTo({
+							url: "../"+ b.a.name + "/" + b.a.name,
+						});
+						console.log(2);
+					}
+				},
+		
+				//粉丝数是否改变
+				isFansNumChange() {
+					//TODO: 多了就加小红点获其他动效
+				},
+		
+				goToChatPage: function() {
+					var encodeData = encodeURIComponent(JSON.stringify(this.thisUserInfo)); // 对数据字符串化并转码，防止特殊字符影响传参
+					uni.navigateTo({
+						url: '../chatpage/chatpage?friendInfo=' + encodeData
+					});
+				},
+		
+				/**
+				 * @param {Object} currentTab 0: 关注 1: 粉丝
+				 */
+				goToFansFollow: function(currentTab) {
+					console.log('goToFansFollow...');
+					var data = {
+						currentTab: currentTab,
+						thisUserInfo: this.thisUserInfo
+					};
+					var encodeData = encodeURIComponent(JSON.stringify(data)); // 对数据字符串化并转码，防止特殊字符影响传参
+					uni.navigateTo({
+						url: '../followlist/followlist?data=' + encodeData
+					});
+				},
+				control:function(){
+					this.contentShow = false;
+				}
+			}
 
-		//粉丝数是否改变
-		isFansNumChange() {
-			//TODO: 多了就加小红点获其他动效
-		},
-
-		jumpToAbout: function() {
-			uni.navigateTo({
-				url: '../about/about'
-			});
-		},
-		jumpToMyPublish: function() {
-			uni.navigateTo({
-				url: '../myPublish/myPublish'
-			});
-		},
-		jumpToProfile: function() {
-			uni.navigateTo({
-				url: '../profile/profile'
-			});
-		},
-		goToChatPage: function() {
-			var encodeData = encodeURIComponent(JSON.stringify(this.thisUserInfo)); // 对数据字符串化并转码，防止特殊字符影响传参
-			uni.navigateTo({
-				url: '../chatpage/chatpage?friendInfo=' + encodeData
-			});
-		},
-
-		/**
-		 * @param {Object} currentTab 0: 关注 1: 粉丝
-		 */
-		goToFansFollow: function(currentTab) {
-			console.log('goToFansFollow...');
-			var data = {
-				currentTab: currentTab,
-				thisUserInfo: this.thisUserInfo
-			};
-			var encodeData = encodeURIComponent(JSON.stringify(data)); // 对数据字符串化并转码，防止特殊字符影响传参
-			uni.navigateTo({
-				url: '../followlist/followlist?data=' + encodeData
-			});
-		}
-	}
 };
 </script>
 
@@ -224,154 +264,100 @@ page {
 
 #public-container {
 	height: 100%;
-	width: 100%;
-	margin-top: 30px;
+	width: calc(100% - 50px);
+	margin:auto;
 	overflow: hidden;
 }
-
-/* 黄色头部 */
-#yellowTopBox {
-	width: 100%;
-	position: relative;
-	z-index: -30;
+.topbox{
+	width:100%;
 }
-
-#msglist-yellowshadowbg {
-		position: fixed;
-		top: 0;
-		width: 100%;
-		height: 200px;
-		z-index: -10;
-	}
-
-.yellowTop {
-	position: absolute; /* 此处采用 absolote 定位，以保证页面流可以正常显示。层级设为 -10，以保证其显示在页面最底部。 */
-	left: -430upx;
-	height: 1600upx;
-	width: 1600upx;
-	z-index: -10;
-	border-radius: 3000upx;
-	background-color: #ffc95a;
+.header{
+	display:flex;
+	align-items: center;
+	align-content: center;
 }
-
-/* 简介块 */
-#public-infoBox {
-	width: 100%;
+.touxiang {
+	display:inline-block;
+	width:80px;
+	height:80px;
+	
 }
-
-.publicTouxiang {
-	width: 74px;
-	height: 74px;
-	border-radius: 120px;
-	border: 4px solid white;
-	display: inline-block;
-	vertical-align: middle;
+.touxiang image{
+	width:72px;
+	height:72px;
+	background:rgba(255,255,255,1);
+	border-radius:50%;
 }
-
-.idCard {
-	margin-top: 64px;
-	margin-left: 13px;
-	border-radius: 8px;
-	min-height: 140px;
-	background-color: rgba(255, 255, 255, 1);
-	box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+.person_info{
+	margin-left:24px;
+	display:inline-block;
+	width:calc(100% - 80px - 25px);
+	height:80px;
 }
-
-.nameBox {
-	margin-top: 8px;
-	width: 100%;
+.nameBox{
+	margin-top:10px;
+	height:17px;
+	line-height:17px;
 }
-
 .nameBox .name-text {
 	font-size: 17px;
 	font-weight: 600;
+	height:17px;
+	line-height:17px;
 }
-
-.introBox {
-	margin-top: 12px;
-	width: 100%;
+.operationTitle{
+	margin-top:10px;
+	height:12px;
+	line-height:12px;
 }
-
-.introBox-text {
-	max-width: 61%;
-	font-size: 12px;
-	font-weight: 400;
-	line-height: 13px;
-	color: rgba(136, 136, 136, 1);
-	opacity: 1;
-	word-wrap: break-word;
+.operationNum{
+	margin-top:8px;
+	height:14px;
+	line-height:14px;
 }
-
-.operationLine {
-	margin: 17px 3.2%;
-	width: 93.6%;
-	height: 43px;
-	display: flex;
-	justify-content: space-between;
+.operationTitle-text{
+	vertical-align:top;
+	display: inline-block;
+	width:30%;
+	height:12px;
+	font-size:12px;
+	font-family:Source Han Sans CN;
+	font-weight:500;
+	line-height:12px;
+	color:rgba(178,178,178,1);
 }
-
-.operationCard {
-	width: 33.3%;
-	height: 43px;
-}
-
-.operationNum {
-	width: 100%;
-	height: 17px;
-	overflow: visible;
-}
-
 .operationNum-text {
-	font-size: 17px;
+	display:inline-block;
+	vertical-align:top;
+	width:30%;
+	font-size: 14px;
 	font-family: Source Han Sans CN;
 	font-weight: 800;
 	opacity: 1;
 }
-
-.operationTitle {
-	margin-top: 11px;
-	width: 100%;
-	height: 11px;
-	overflow: visible;
+.introBox {
+	margin-top: 15px;
+	margin-bottom:15px;
+}
+.introBox-text {
+	max-width: 61%;
+	font-size: 12px;
+	line-height: 13px;
+	opacity: 1;
+	word-wrap: break-word;
 }
 
-.operationTitle-text {
-	font-size: 10px;
-	font-family: Source Han Sans CN;
-	font-weight: 500;
-	color: rgba(178, 178, 178, 1);
-	opacity: 1;
+.guanggao{
+	width:100%;
+	height: 120px;
 }
-.pagejump_box {
-	margin-top:13px;
-	margin-left: 13px;
-	width: calc(100% - 26px);
-	background: rgba(255, 255, 255, 1);
-	box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.16);
-	opacity: 1;
-	border-radius: 8px;
-}
-
-.item1,.item2,.item3,.language {
-	width: calc(100% - 28px)%;
-	height: 50px;
-	padding-left: 28px;
-	font-size: 14px;
-	font-family: Source Han Sans CN;
-	font-weight: 400;
-	line-height: 16px;
-	color: rgba(53, 53, 53, 1);
-	opacity: 1;
-}
-
-.line {
-	margin-left: auto;
-	margin-right: auto;
-	width: 88.54%;
-	height: 0px;
-	/* 高度 1 像素 */
-	border: 0.5px solid rgba(236, 236, 236, 1); 
-	opacity: 1;
+.uni-bg-red{
+	background:rgba(136,136,136,1);
+	width:100%;
+	height:75px;
+	border-radius:4px;
+	margin-top:20px;
+	margin-bottom:20px;
 }
 
 </style>

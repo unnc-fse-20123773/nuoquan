@@ -23,7 +23,9 @@
 		></detail_article>
 		
 		<!-- 分享海报 -->
-		<view v-if="share"><mySharePoster :articleCard="articleCard" @unShow="toggleShare"></mySharePoster></view>
+		<view v-if="share">
+			<mySharePoster :articleCard="articleCard" @unShow="toggleShare"></mySharePoster>
+		</view>
 		<view v-if="share"
 			@click="unShow"
 			style="position: fixed;
@@ -36,7 +38,13 @@
 				z-index: 35;"
 		></view>
 		
-		<view style="border-bottom: 4px solid #ECECEC;height:0;width:750upx;font-size: 0;position: relative;left: -16px;" @controlInputSignal="controlInput">这是分割线</view>
+		<view style="border-bottom: 4px solid #ECECEC;
+			height:0;
+			width:750upx;
+			font-size: 0;
+			position: relative;
+			left: -16px;" 
+		@controlInputSignal="controlInput">这是分割线</view>
 		<!--第一个大块二，评论区域-->
 
 		<commentarea

@@ -111,8 +111,10 @@ const store = new Vuex.Store({
 		 * 更改语言包
 		 * @param {Object} state
 		 */
-		changeLang: function(state) {
-			uni.showActionSheet({
+		changeLang: function(state,b) {
+			console.log("hhhhh" + state);
+			console.log(b);
+			/*uni.showActionSheet({
 				itemList: langList,
 				success: function(e) {
 					if (e.tapIndex == 0) {
@@ -123,7 +125,14 @@ const store = new Vuex.Store({
 					state.lang = lang;
 					uni.setStorageSync('userLang', langCode[e.tapIndex]);
 				}
-			})
+			})*/
+			if (b == 0) {
+				lang = require('../common/language/zh.js');
+			} else {
+				lang = require('../common/language/en.js');
+			}
+			uni.setStorageSync('userLang', langCode[b]);
+			state.lang = lang;
 		}
 	},
 

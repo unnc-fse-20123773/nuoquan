@@ -79,4 +79,13 @@ export default {
 .font-family {
 	font-family: weiruanyahei;
 }
+
+	
+.hoverColor {
+	background-color: rgba(236,236,236,1);
+}
+
+.hoverColorYellow {
+	background-color: rgba(226,177,72,1);
+}
 </style>

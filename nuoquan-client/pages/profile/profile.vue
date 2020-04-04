@@ -265,11 +265,13 @@
 					id: this.userInfo.id,
 					nickname: form.nickname,
 					gender: this.gender,
+					email: form.email,
 					graduationYear: this.year,
 					major: this.major,
 					degree: this.degreeDB
 				};
 				console.log(data);
+				var that = this;
 				uni.request({
 					url: this.$serverUrl + '/user/updateUser',
 					method: 'POST',
@@ -283,7 +285,7 @@
 							var finalUser = this.myUser(user); // 分割邮箱地址, 重构 user
 							this.setGlobalUserInfo(finalUser); // 把用户信息写入缓存
 							this.userInfo = finalUser; // 更新页面用户数据
-							// console.log(this.userInfo);
+							console.log(this.userInfo);
 						}
 					}
 				});
