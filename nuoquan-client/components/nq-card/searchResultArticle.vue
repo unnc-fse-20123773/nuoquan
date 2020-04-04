@@ -1,0 +1,148 @@
+<template>
+	<view class="articlecard hoverColor" id="'+articleCard.id+'" @click="goToDetail()">
+		<view class="title" v-html="articleCard.articleTitle"></view>
+		<view class="briefarticleCard" v-html="articleCard.articleContent"></view>
+		<view class="picturearea">
+			<!-- 这里是文章配图的位置 -->
+			
+		</view>
+<!-- 		<view class="tags">
+			<view class="tag" :style="{background: tagColorList[index]}" v-for="(i, index) in articleCard.tagList" v-bind:key="index">{{ i}}</view>
+		</view> -->
+		<view class="menubar">
+			<image :src="pathFilter(articleCard.faceImg)" class="touxiang"></image>
+			<view class="name">{{ articleCard.nickname }}</view>
+			<view class="time">{{ timeDeal(articleCard.createDate) }}</view>
+		</view>
+		<view style="margin:0 25px;border-top:1px solid #DCDCDC;"></view>
+	</view>
+</template>
+
+<script>
+	export default {
+		name: 'aticlebrief',
+		props: {
+			articleCard: {}
+		},
+		data() {
+			return {
+				tagColorList: [],
+			};
+		},
+		created() {
+			// 随机生成颜色
+			if (!this.isNull(this.articleCard.tagList)){
+				var tagColors = this.tagColors;
+				for (var i = 0; i < this.articleCard.tagList.length; i++) {
+					var random = Math.floor(Math.random() * tagColors.length);
+					this.tagColorList.push(tagColors[random]);
+				}
+			}
+		},
+		
+		methods: {
+			goToDetail() {
+				uni.navigateTo({
+					url: '/pages/detail/detail?data=' + this.articleCard.id
+				});
+			}
+		},
+	};
+</script>
+
+<style>
+	image {
+		border: none;
+		outline: none;
+	}
+</style>
+<style scoped>
+	.articlecard {
+		width: 750upx;
+		border-radius: 8px;
+		margin: 0 auto ;
+		background-color: #FDFDFD;
+	}
+	.title {
+		margin: 0px 25px 0 25px;
+		font-size:17px;
+		max-height: 38px;
+		font: MicrosoftYaHei;
+		font-weight: bold;
+		line-height: 19px;
+		padding-top: 10px;
+		word-break: break-all;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	.briefarticleCard {
+		max-height: 51px;
+		margin: 10px 25px 15px;
+		font-size: 14px;
+		line-height: 17px;
+		margin-bottom: 15px;
+		/**文字隐藏后添加省略号*/
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+		overflow: hidden;
+
+	}
+	.tags {
+		margin-left: 21px;
+	}
+	.tag {
+		display: inline-block;
+		border-radius: 4px;
+		padding-left: 5px;
+		padding-right: 5px;
+		margin-left: 5px;
+		height: 15px;
+		color: #ffffff;
+		font-size: 10px;
+		background: #621E81;
+	}
+	.menubar {
+		position: relative;
+		vertical-align: middle;
+		margin:0 25px;
+	}
+	.touxiang {
+		border-radius: 30px;
+		width: 20px;
+		height: 20px;
+		margin-right: 5px;
+		vertical-align: middle;
+	}
+	.name {
+		display: inline-block;
+		font-size: 10px;
+		margin-left: 7px;
+		color: #888888;
+		padding-bottom: 5px;
+		max-width: 85px;
+		text-overflow: ellipsis;
+	}
+	.time {
+		position: absolute;
+		right: 0;
+		bottom: 5px;
+		display: inline-block;
+		font-size: 10px;
+		margin-left: 25px;
+		color: #888888;
+		max-width: 84px;
+		text-overflow: ellipsis;
+	}
+	
+	.picturearea {
+		margin: auto;
+		display: flex;
+		justify-content: center;
+	}
+	image {
+		width: 30%;
+		height: 200upx;
+		margin: auto;
+	}
+</style>
