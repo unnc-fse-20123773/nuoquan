@@ -266,7 +266,6 @@ page {
 	height: 100%;
 	width: calc(100% - 50px);
 	margin:auto;
-	overflow: hidden;
 }
 .topbox{
 	width:100%;

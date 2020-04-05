@@ -18,15 +18,13 @@
 			<!-- <view :class="[swiperViewing == 'vote' ? 'swiperChoosen' : 'swiperNormal']" @tap="switchSwiper('vote')">{{lang.vote}} {{ myVoteList.length }}</view> -->
 		</view>
 		<swiper style="width:100%;height:100%;" :current-item-id="swiperViewing">
-			<swiper-item item-id="article" @touchmove.stop>
-				<view style="width:100%;min-height:100%;margin:auto;background: #FFFFFF;">
+			<swiper-item style="width: 100%;" item-id="article" @touchmove.prevent.stop>
+				<scroll-view scroll-y="true" class="scrollPage">
 					<view class="mainbody">
 						<view style="height:20px;width:100%;"></view>
-						
-								<modify-article v-for="article in myArticleList" :key="article.id" :thisArticle="article" :lang="lang" @modifySwipedId="receiveSwiped" :messageIndex="messageIndex"></modify-article>
-					
+							<modify-article v-for="article in myArticleList" :key="article.id" :thisArticle="article" :lang="lang" @modifySwipedId="receiveSwiped" :messageIndex="messageIndex"></modify-article>
 					</view>
-				</view>
+				</scroll-view>
 			</swiper-item>
 			<!-- <swiper-item item-id="vote" @touchmove.stop>
 				<myVote :lang="lang" v-for="vote in myVoteList" :key="vote.id" :vote="vote"></myVote>
@@ -256,6 +254,12 @@ page {
 	padding: 5px 12px;
 	margin: 0 4px;
 	border-radius: 25px;
+}
+
+.scrollPage{
+	width:100%;
+	height: calc(100% - 28px);
+	background: #FFFFFF;
 }
 
 /* .bin{
