@@ -205,14 +205,10 @@
 
 			if (!this.isNull(degree)) {
 				this.degree = this.degrees[degree];
-			this.degreeDB = degree; // 修改对数据库的默认值
+				this.degreeDB = degree; // 修改对数据库的默认值
 			}
 
 			this.email = this.userInfo.email; // 改绑邮箱默认值
-		},
-
-		onShow() {
-			this.setTabBarIndex(3) //index为当前tab的索引
 		},
 
 		methods: {
@@ -295,6 +291,7 @@
 				});
 
 				// 完成修改，更改 isEdit 为 false
+				this.toggleIsEdit();
 			},
 
 			/**

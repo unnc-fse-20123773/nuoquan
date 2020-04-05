@@ -841,7 +841,7 @@ export default {
 				type: 'vote'
 			};
 			uni.navigateTo({
-				url: '/pages/comment-detail/comment-detail?data=' + JSON.stringify(data)
+				url: '/pages/comment-detail/comment-detail?data=' + encodeURIComponent(JSON.stringify(data))
 			});
 		},
 
@@ -1247,7 +1247,7 @@ page {
 	position: absolute;
 	left: 12px;
 	bottom: 0;
-	width: 50%;
+	width: 66%;
 	min-height: 14px;
 	font-size: 12px;
 	font-family: Source Han Sans CN;
@@ -1307,7 +1307,7 @@ page {
 	position: absolute;
 	left: 12px;
 	bottom: 0;
-	width: 50%;
+	width: 66%;
 	min-height: 14px;
 	font-size: 12px;
 	font-family: Source Han Sans CN;
