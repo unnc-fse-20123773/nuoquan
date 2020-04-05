@@ -22,7 +22,7 @@
 			</nqSwitch>
 		</view>
 		</view>
-		<view class="line"v-if="obj.id!=5"></view>
+		<view class="line" v-if="obj.id!=5"></view>
 	</view>
 	
 </template>
