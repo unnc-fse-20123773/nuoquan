@@ -49,7 +49,7 @@
 		
 		
 		<view class="pagejump_box">
-			<pagejump :lang = "lang" :objList=data v-for="(data,index) in dataList" :key=index @trigger="responseClick()"></pagejump>
+			<pagejump hover-class="hoverColor" :lang = "lang" :objList=data v-for="(data,index) in dataList" :key=index @trigger="responseClick()"></pagejump>
 	    </view>
 		
 		<tab-bar :current="4"></tab-bar>

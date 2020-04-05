@@ -1,9 +1,9 @@
 <template>
-	<view class="form">
+	<view class="form" hover-class="hoverColor">
 		<view class="form-fold">
 			<view class="title">{{obj.name}}</view>
-			<image @click="control" v-if="contentShow" src="../static/icon/angle-down.png"></image>
-			<image @click="control" v-if="!contentShow" src="../static/icon/angle-up.png"></image>
+			<image hover-class="hoverColor" @click="control" v-if="contentShow" src="../static/icon/angle-down.png"></image>
+			<image hover-class="hoverColor" @click="control" v-if="!contentShow" src="../static/icon/angle-up.png"></image>
 		</view>
 		<view class="form-expand" v-if="!contentShow">
 			<view class="subtitle">{{obj.subtitle}}</view>

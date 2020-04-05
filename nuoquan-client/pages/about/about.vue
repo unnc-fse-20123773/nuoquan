@@ -47,7 +47,7 @@ export default {
 			isNavHome: getApp().globalData.isNavHome,//判断导航栏左侧是否显示home按钮
 			dataList:[
 				{
-					name:'联系我们',
+					name:'联系我们', 
 					subtitle:'商务合作',
 					body:'\“Share beyond Moments\” \n\
 						Nottinghome 期待与校内各组织社团、学生团队、alumni 创业企业合作。\n \
