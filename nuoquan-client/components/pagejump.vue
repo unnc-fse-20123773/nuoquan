@@ -1,5 +1,5 @@
 <template>
-	<view @click="receiveClick(obj)">
+	<view @click="receiveClick(obj)" hover-class="hoverColor">
 		<view class="generic_item">
 		<view class="left_icon" :style="{background: obj.style, display: 'inline-block', width:'28px', height:'28px', borderRadius:'50%'}">
 			<image :src="'../static/icon/' + obj.src1 + '.png'" mode="scaleToFill"></image>
@@ -22,7 +22,7 @@
 			</nqSwitch>
 		</view>
 		</view>
-		<view class="line"v-if="obj.id!=5"></view>
+		<view class="line" v-if="obj.id!=5"></view>
 	</view>
 	
 </template>

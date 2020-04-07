@@ -18,11 +18,16 @@
 			<!-- <view :class="[swiperViewing == 'vote' ? 'swiperChoosen' : 'swiperNormal']" @tap="switchSwiper('vote')">{{lang.vote}} {{ myVoteList.length }}</view> -->
 		</view>
 		<swiper style="width:100%;height:100%;" :current-item-id="swiperViewing">
-			<swiper-item style="width: 100%;" item-id="article" @touchmove.prevent.stop>
+			<swiper-item style="width: 100%;" item-id="article">
 				<scroll-view scroll-y="true" class="scrollPage">
 					<view class="mainbody">
 						<view style="height:20px;width:100%;"></view>
-							<modify-article v-for="article in myArticleList" :key="article.id" :thisArticle="article" :lang="lang" @modifySwipedId="receiveSwiped" :messageIndex="messageIndex"></modify-article>
+							<modify-article v-for="article in myArticleList" 
+								:key="article.id" 
+								:thisArticle="article" 
+								:lang="lang" @modifySwipedId="receiveSwiped" 
+								:messageIndex="messageIndex">
+							</modify-article>
 					</view>
 				</scroll-view>
 			</swiper-item>
