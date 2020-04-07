@@ -29,6 +29,7 @@ module.exports = {
 	ok : "OK",
 	pullUp : "Pull up",
 	reply: "reply",
+	cancel: "cancel",
 	
 	//登陆
 	isReadProtocol : "I have read and agree :",

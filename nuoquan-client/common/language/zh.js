@@ -7,7 +7,7 @@ module.exports = {
 	version : "v1.1.1",
 	back : "返回",
 	send : "发送",
-	submit : "提交",
+	submit : "发表",
 	delete : "删除",
 	time : "时间",
 	hot : "热度",
@@ -29,6 +29,7 @@ module.exports = {
 	ok : "完成",
 	pullUp : "收起",
 	reply: "回复",
+	cancle: "取消",
 	
 	//登陆
 	isReadProtocol : "我已阅读并同意遵守",
