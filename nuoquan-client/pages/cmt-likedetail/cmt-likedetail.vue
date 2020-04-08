@@ -156,7 +156,7 @@
 									</view>
 									<view @tap="goToComment(commentList[index2].data.source.articleId)">
 										<!-- 点赞 or 评论预览块 -->
-										<view class="brief-bar-nocolor">
+										<view class="brief-bar-nocolor" @click.native.stop="showCommitArea">
 											<view class="brief-bar-rel">{{ item.data.source.comment }}</view>
 										</view>
 										<!-- 原文章预览块 -->
@@ -232,7 +232,12 @@
 				</swiper-item>
 			</swiper>
 		</view>
-		<commitArea openOrigin="cmt-likedetail" v-if="isReplying"></commitArea>
+		
+		<commitArea v-if="isReplying" 
+			openOrigin="cmt-likedetail" 
+			:isShow="isReplying" 
+			@killCommitArea="killCommitArea">
+		</commitArea>
 	</view>
 </template>
 
@@ -462,9 +467,14 @@ export default {
 				url: '../detail/detail?data=' + articleId
 			});
 		},
+		
 		showCommitArea(){
 			this.isReplying = !this.isReplying;
-			console.log(this.isReplying);
+		},
+		
+		killCommitArea(e){
+			console.log(e);
+			this.isReplying = e;
 		}
 	}
 };

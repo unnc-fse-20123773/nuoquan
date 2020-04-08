@@ -1,36 +1,49 @@
 <template>
-	<view class="nq-commitArea">
-			<textarea class="inputArea" 
-				placeholder-style="font-size:14px;font-weight:400;color:rgba(177,177,177,1);" 
-				placeholder="回复+昵称" 
-				cursor-spacing="100" auto-focus/>
-			<!-- 添加图片，等功能开发完成打开注释 -->
-			<!-- <image src="../../static/icon/viewLocalPic.png" mode="aspectFit" class="addPic"></image> -->
-			<view class="bottomRight">
-				<view class="cancelText" hover-class="hoverColor">
-					{{lang.cancle}}
+	<view :v-if="isShow">
+		<view style="width: 100%;height: 100%;position: fixed;" 
+		@click.native.stop="killCommitArea" 
+		@touchmove="killCommitArea"></view>
+		<view class="nq-commitArea" :style="{top: textAreaTop + 'px'}">
+				<textarea class="inputArea" 
+					placeholder-style="font-size:14px;font-weight:400;color:rgba(177,177,177,1);" 
+					placeholder="回复+昵称" 
+					:show-confirm-bar="false"
+					:adjust-position="false"
+					auto-focus
+					@focus="getKeyBoardHeight"/>
+				<!-- 添加图片，等功能开发完成打开注释 -->
+				<!-- <image src="../../static/icon/viewLocalPic.png" mode="aspectFit" class="addPic"></image> -->
+				<view class="bottomRight">
+					<view class="cancelText" @click.native.stop="killCommitArea" hover-class="hoverColor">
+						{{lang.cancle}}
+					</view>
+					<view class="replyText" hover-class="hoverColor">
+						{{replyText}}
+					</view>
 				</view>
-				<view class="replyText" hover-class="hoverColor">
-					{{replyText}}
-				</view>
-			</view>
+		</view>
 	</view>
 </template>
 
 <script>
 import { mapState, mapMutations } from 'vuex';
-
 export default {
 	name: 'commitArea',
 	data() {
 		return {
 			replyText: '',
+			textAreaTop: 1000,
+			getIsShow: '',
 		} 
 	},
 	props:{
 		openOrigin:{
 			type: String,
 			default: ''
+		},
+		isShow:{
+			type:Boolean,
+			default: true
 		}
 	},
 	computed: {
@@ -50,7 +63,27 @@ export default {
 		
 	},
 	methods: {
+		getKeyBoardHeight(e){
+			// debugger
+			var textAreaTop_ = e.detail.height;
+			var phoneHeight;
+			console.log("键盘高度" + e.detail.height);
+			uni.getSystemInfo({
+				success(res) {
+					phoneHeight = res.windowHeight;
+					console.log(phoneHeight);
+				}
+			});
+			
+			this.textAreaTop = phoneHeight - textAreaTop_ - 12 - 160;
+			console.log(this.textAreaTop);
+		},
 		
+		killCommitArea(){
+			this.getIsShow = this.isShow;
+			this.getIsShow = !this.getIsShow;
+			this.$emit("killCommitArea", this.getIsShow)
+		}
 	}
 };
 </script>
@@ -59,7 +92,6 @@ export default {
 	.nq-commitArea{
 		position: fixed;
 		z-index: 999;
-		bottom: 16px;
 		width:calc(100% - 26px);
 		height:160px;
 		background:rgba(252,252,252,1);
