@@ -49,6 +49,7 @@ module.exports = {
 	
 	//详情页
 	sharetoMoments: "Share to moments",
+	menu_more:"More",
 	
 	//投票
 	vote : "Vote",

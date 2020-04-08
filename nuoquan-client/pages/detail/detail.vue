@@ -1,61 +1,38 @@
 <template>
 	<view class="detail-page">
 		<!-- 导航栏 -->
-		<uni-nav-bar
-			class="navigationBar"
-			:left-text="lang.back"
-			:title="lang.detail"
-			:showLeftIcon="true"
-			:isNavHome="isNavHome"
-			:height="navbarHeight"
-		></uni-nav-bar>
+		<uni-nav-bar class="navigationBar" :left-text="lang.back" :title="lang.detail" :showLeftIcon="true" :isNavHome="isNavHome"
+		 :height="navbarHeight"></uni-nav-bar>
 		<view :style="{ height: navbarHeight + 'px' }" style="width: 100%;"></view>
 
 		<!-- 第一个大块二，文章本体 -->
-		<detail_article
-			class="article-area"
-			:articleCard="articleCard"
-			@controlInputSignal="controlInput"
-			:userInfo="userInfo"
-			@swLikeArticleSignal="changeLikeStatus"
-			@backToLastPage="backToLastPage()"
-			@share="toggleShare"
-		></detail_article>
-		
+		<detail_article class="article-area" :articleCard="articleCard" @controlInputSignal="controlInput" :userInfo="userInfo"
+		 @swLikeArticleSignal="changeLikeStatus" @backToLastPage="backToLastPage()" @share="toggleShare"></detail_article>
+
 		<!-- 分享海报 -->
 		<view v-if="share">
 			<mySharePoster :articleCard="articleCard" @unShow="toggleShare"></mySharePoster>
 		</view>
-		<view v-if="share"
-			@click="unShow"
-			style="position: fixed;
+		<view v-if="share" @click="unShow" style="position: fixed;
 				left: 0;
 				top: 0;
 				width: 100%;
 				height: 100%;
 				background-color: #000000;
 				opacity: 0.3;
-				z-index: 35;"
-		></view>
-		
+				z-index: 35;"></view>
+
 		<view style="border-bottom: 4px solid #ECECEC;
 			height:0;
 			width:750upx;
 			font-size: 0;
 			position: relative;
-			left: -16px;" 
-		@controlInputSignal="controlInput">这是分割线</view>
+			left: -16px;"
+		 @controlInputSignal="controlInput">这是分割线</view>
 		<!--第一个大块二，评论区域-->
 
-		<commentarea
-			class="comment-area"
-			:commentList="commentList"
-			:commentNum="articleCard.commentNum"
-			@controlInputSignal="controlInput"
-			@onChange="changeType"
-			@like="swLikeComment"
-			@goToCommentDetail="goToCommentDetail"
-		></commentarea>
+		<commentarea class="comment-area" :commentList="commentList" :commentNum="articleCard.commentNum" @controlInputSignal="controlInput"
+		 @onChange="changeType" @like="swLikeComment" @goToCommentDetail="goToCommentDetail"></commentarea>
 
 		<!--触底提示和功能  start-->
 		<view class="comment-bottom" v-if="control_scroll_button_flag">
@@ -73,29 +50,35 @@
 				<!--<view class="emoji"></view><view class="add-pic"></view>-->
 				<view class="submit" @tap="saveComment()">{{lang.send}}</view>
 				<view class="commentSth">
-					<textarea
-						class="comment-text"
-						:placeholder="placeholderText"
-						:focus="writingComment"
-						auto-height="true"
-						adjust-position="false"
-						v-model="commentContent"
-						:show-confirm-bar="false"
-						@focus="popTextArea"
-						@blur="unpopTextArea"
-						cursor-spacing="20"
-					/>
+					<textarea class="comment-text" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
+					 adjust-position="false" v-model="commentContent" :show-confirm-bar="false" @focus="popTextArea" @blur="unpopTextArea"
+					 cursor-spacing="20" />
 					<!-- <view class="comment-pic-area"><image src="../../static/BG/indexBG.png"></image><image src="../../static/icon/about.png"></image><image src="../../static/icon/1575235531(1).png"></image></view> -->
 					<view class="word-count-left">{{ 140 - commentContent.length }}</view>
 				</view>
 			</view>
 		</view>
+		
+		
+		<view class="menu-bar">
+			<view class="like" :class="{'liked': articleCard.isLike}" @tap="swLikeArticle()" style="border-radius:8px 0 0 8px;">
+				<image v-if="!articleCard.isLike" src="../../static/icon/heart_353535.png" mode="aspectFit"></image>
+				<image v-if="articleCard.isLike" src="../../static/icon/heart_ffffff.png" mode="aspectFit"></image>
+				{{ articleCard.likeNum }}
+			</view>
+			<view class="comment" @tap="controlInputInDetailArticle">
+				<image v-if="!menu_status.comment" src="../../static/icon/comment.png" mode="aspectFit"></image>
+				<image v-if="menu_status.comment" src="../../static/icon/comment-alt-888888.png" mode="aspectFit"></image>
+				{{ articleCard.commentNum }}
+			</view>
+			<view class="menu-more" :class="{'clicked_more': menu_status.more}" @tap="showMore" style="border-radius:0 8px 8px 0;">{{lang.menu_more}}</view>
+		</view>
 
 		<!--常驻input-->
-		<view class="permanent_input_BG" v-if="!showInput" @click="controlInput(1)">
+		<!-- <view class="permanent_input_BG" v-if="!showInput" @click="controlInput(1)">
 			<input class="permanent_input" :placeholder="lang.engageComment" v-model="commentContent" disabled="true" min-height="10px" />
 		</view>
-		<view style="height:80px;width:100%"></view>
+		<view style="height:80px;width:100%"></view> -->
 		<!-- 占位块 -->
 	</view>
 </template>
@@ -122,6 +105,7 @@ export default {
 			commentContent: '', //用户准备提交的评论内容
 			commentList: [], //返回值，获取评论列表信息
 
+			menu_status:{comment:false,more:false,},//控制menu-bar的变量，存进一个变量里边吧
 			share: false, // 是否显示分享海报
 			showInput: false, //控制输入框，true时显示输入框
 			writingComment: false, //控制输入框，true时自动获取焦点，拉起输入法
@@ -609,7 +593,67 @@ export default {
 				console.log(content_height);
 				this.control_scroll_button_flag = 1;
 			}
-		} //获取评论数据后，生成卡片后，判断总页面高度，控制是否显示回到顶部按钮
+		}, //获取评论数据后，生成卡片后，判断总页面高度，控制是否显示回到顶部按钮
+		
+		showMore(){
+			console.log(this.menu_status);
+		this.menu_status.more = !this.menu_status.more;	
+		},
+		
+		swLikeArticle() { //点赞主文章功能三个函数
+			if (this.articleCard.isLike) {
+				this.unLikeArticle();
+			} else {
+				this.likeArticle();
+			}
+			// 	this.thisArticle.isLike = !this.thisArticle.isLike;
+			//
+		},
+		
+		likeArticle() {
+			console.log('点赞文章');
+			var that = this;
+			uni.request({
+				method: 'POST',
+				url: that.$serverUrl + '/article/userLikeArticle',
+				data: {
+					userId: that.userInfo.id,
+					articleId: that.articleCard.id,
+					articleCreaterId: that.articleCard.userId
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					console.log(res);
+					that.articleCard.isLike = !that.articleCard.isLike;
+		
+					// this.$emit('swLikeArticleSignal', true);
+				}
+			});
+		},
+		
+		unLikeArticle() {
+			console.log('取消点赞文章');
+			var that = this;
+			uni.request({
+				method: 'POST',
+				url: that.$serverUrl + '/article/userUnLikeArticle',
+				data: {
+					userId: that.userInfo.id,
+					articleId: that.articleCard.id,
+					articleCreaterId: that.articleCard.userId
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					console.log(res);
+					that.articleCard.isLike = !that.articleCard.isLike;
+					//this.$emit('swLikeArticleSignal', false);
+				}
+			});
+		}, //点赞主文章函数结束
 	} //method
 };
 </script>
@@ -787,7 +831,7 @@ page {
 	right: 11px;
 	bottom: 8px;
 	line-height: 11px;
-}
+}/* 
 .permanent_input_BG {
 	position: fixed;
 	bottom: 0px;
@@ -805,14 +849,61 @@ page {
 	vertical-align: top;
 	color: #888888;
 	overflow: hidden;
-	/* text-overflow: ellipsis; */
 	width: calc(100% - 48px);
-
 	padding: 3px 12px 4px;
 	margin: 12px auto 24px;
 	border-radius: 8px;
 	border: 2px solid rgba(252, 192, 65, 1);
 	font-size: 12px;
 	line-height: 30px;
+} */
+.menu-bar{
+	position: fixed;
+	width:calc(750upx - 32px);
+	bottom: 24px;
+	height:40px;
+	background:rgba(252,252,252,1);
+	box-shadow:0px 0px 4px rgba(121,121,121,0.42);
+	border-radius:8px;
+}
+.menu-bar image{
+	width: 16px;
+	height:16px;
+	vertical-align: bottom;
+}
+.like,.comment,.menu-more{
+	width: 50px;
+	text-align: right;
+	padding: 12px calc((100% - 150px)/6);
+	heigh: 16px;
+	line-height: 16px;
+	color:rgba(136,136,136,1);
+	display: inline-flex;
+	align-items: center;
+	justify-content: space-around;
+	font-size: 14px;
+	vertical-align: bottom;
+	position: relative;
+}
+.like::after,.comment::after{
+	content: "";
+	width: 1px;
+	height: 15px;
+	position: absolute;
+	right: -1px;
+	bottom:11px;
+	background-color: #ECECEC;
+}
+.liked{
+	background: #FF7070;
+	color: #FFFFFF;
+}
+.commented{
+	background: #FCC041;
+	color: #FFFFFF;
+}
+.clicked_more{
+	background:rgba(59,161,239,1);
+	color: #FFFFFF;
 }
 </style>

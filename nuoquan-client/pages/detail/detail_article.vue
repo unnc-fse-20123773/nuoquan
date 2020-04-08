@@ -1,6 +1,12 @@
 <template>
 	<view>
-		<view style="display: flex;">
+		<view style="margin-top: 14px;">
+			<!--作者信息，头像名字时间-->
+			<view class="author-info-bar">
+				<image :src="pathFilter(articleCard.faceImg)" class="touxiang" @click="goToPersonPublic()"></image>
+				<view class="name" @tap="goToPersonPublic()">{{ articleCard.nickname }}</view>
+				<view class="time">{{ timeDeal(articleCard.createDate) }}</view>
+			</view>
 			<!--标题-->
 			<view class="detail-title" :style="{width : '100%'}">{{ articleCard.articleTitle }}</view>
 			<!-- <view class="detail-title" :style="{width : isfunCom ? 'calc(100%-75px)' : '100%'}">{{ articleCard.articleTitle }}</view> -->
@@ -9,15 +15,10 @@
 				style="width: 75px;height: 36px;margin-top: 10px;">
 			</image> -->
 		</view>
-		<!--作者信息，头像名字时间-->
-		<view class="author-info-bar">
-			<image :src="pathFilter(articleCard.faceImg)" class="touxiang" @click="goToPersonPublic()"></image>
-			<view class="name" @tap="goToPersonPublic()">{{ articleCard.nickname }}</view>
-			<view class="time">{{ timeDeal(articleCard.createDate) }}</view>
-		</view>
+
 		<!--标签-->
 		<view class="detail-tags">
-			<view class="tag" :style="{ background: tagColorList[index] }" v-for="(i, index) in articleCard.tagList" v-bind:key="index">{{ i }}</view>
+			<view class="tag" v-if="articleCard.tagList.length != 0 && articleCard.tagList != null" :style="{ background: tagColorList[index] }" v-for="(i, index) in articleCard.tagList" v-bind:key="index">{{ i }}</view>
 		</view>
 		<!--内容-->
 		<view class="detailcontent">{{ articleCard.articleContent }}</view>
@@ -63,13 +64,19 @@
 				<view v-if="articleCard.imgList.length == 2 || imageList.length == 5 || imageList.length == 8" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
 			</view>
 		</view>
+<!-- 		<view class="menu-bar">
+			<view :class="[articleCard.isLike ? 'liked' : 'like']"  @tap="swLikeArticle()">{{ articleCard.likeNum }}</view>
+			<view class="comment" @tap="controlInputInDetailArticle">{{ articleCard.commentNum }}</view>
+			<view class="menu-more"></view>
+		</view> -->
+		
 		<!--4个ICON, 点赞评论分享返回-->
-		<view class="menu-bar">
+<!-- 		<view class="menu-bar">
 			<view :class="[articleCard.isLike ? 'liked' : 'like']"  @tap="swLikeArticle()">{{ articleCard.likeNum }}</view>
 			<view class="comment" @tap="controlInputInDetailArticle">{{ articleCard.commentNum }}</view>
 			<view class="share" @tap="toggleShare()"></view>
 			<view class="back" @tap="menu_back()"></view>
-		</view>
+		</view> -->
 
 		<!-- <view v-if="share"><mySharePoster :articleCard="articleCard" @unShow="toggleShare"></mySharePoster></view> -->
 	</view>
@@ -146,58 +153,7 @@ export default {
 				url: '/pages/personpublic/personpublic?userId=' + this.articleCard.userId
 			});
 		},
-		swLikeArticle() {
-			if (this.articleCard.isLike) {
-				this.unLikeArticle();
-			} else {
-				this.likeArticle();
-			}
-			// 	this.thisArticle.isLike = !this.thisArticle.isLike;
-			//
-		},
-
-		likeArticle() {
-			console.log('点赞文章');
-			var that = this;
-			uni.request({
-				method: 'POST',
-				url: that.$serverUrl + '/article/userLikeArticle',
-				data: {
-					userId: that.userInfo.id,
-					articleId: that.articleCard.id,
-					articleCreaterId: that.articleCard.userId
-				},
-				header: {
-					'content-type': 'application/x-www-form-urlencoded'
-				},
-				success: res => {
-					console.log(res);
-
-					this.$emit('swLikeArticleSignal', true);
-				}
-			});
-		},
-
-		unLikeArticle() {
-			console.log('取消点赞文章');
-			var that = this;
-			uni.request({
-				method: 'POST',
-				url: that.$serverUrl + '/article/userUnLikeArticle',
-				data: {
-					userId: that.userInfo.id,
-					articleId: that.articleCard.id,
-					articleCreaterId: that.articleCard.userId
-				},
-				header: {
-					'content-type': 'application/x-www-form-urlencoded'
-				},
-				success: res => {
-					console.log(res);
-					this.$emit('swLikeArticleSignal', false);
-				}
-			});
-		},
+		
 
 		previewImg: function(index) {
 			var imgIndex = index;
@@ -288,61 +244,55 @@ export default {
 	font-weight: 500;
 	word-break: break-all;
 	word-wrap: break-word;
-	padding-top: 10px;
+	padding-top: 16px;
 	padding-bottom: 8px;
 	max-height: 42px;
 	text-align: justify;
 }
 
 .author-info-bar {
-	height: 24px;
+	height: 32px;
 	width: 100%;
 	position: relative;
 }
 
 .touxiang {
-	width: 24px;
-	height: 24px;
+	width: 32px;
+	height: 32px;
 	border-radius: 12px;
 }
 
 .name {
-	font-size: 12px;
-	font-family: Source Han Sans CN;
-	font-weight: 400;
-	line-height: 24px;
-	height: 24px;
-	color: #9b9b9b;
-	display: inline-block;
+	font-size: 14px;
+	line-height: 16px;
+	height: 16px;
+	color: #353535;
 	position: absolute;
-	top: 0;
-	left: 32px;
+	top: 2px;
+	left: 40px;
 	min-width: 96px;
 }
 
 .time {
 	position: absolute;
-	right: 0;
-	top: 0;
-	text-align: right;
+	left:40px;
+	bottom:0px;
+	text-align: left;
 	font-size: 12px;
 	color: #9b9b9b;
-	line-height: 24px;
+	line-height: 14px;
 	width: 102px;
 }
 
 .detail-tags {
-	max-height: 20px;
+	max-height: 35px;
 	line-height: 15px;
 	width: 100%;
-	margin-top: 8px;
-	margin-bottom: 12px;
 }
 
 .tag {
 	display: inline-block;
 	border-radius: 20px;
-	color: #40a792;
 	font-size: 11px;
 	height: 11px;
 	line-height: 11px;
@@ -351,6 +301,7 @@ export default {
 	vertical-align: middle;
 	margin-right: 9px;
 	color: #ffffff;
+	margin-bottom: 8px;
 }
 
 .detailcontent {
@@ -384,7 +335,7 @@ export default {
 	height: 216upx;
 	margin: 6px 0;
 }
-
+/* 
 .menu-bar {
 	height: 68px;
 	width: calc(176px + 144upx);
@@ -480,5 +431,7 @@ export default {
 	position: absolute;
 	left: 16px;
 	top: 16px;
-}
+} */
+
+
 </style>
