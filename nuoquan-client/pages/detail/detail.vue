@@ -39,13 +39,13 @@
 			<view class="comment-bottom-notice">划到底部啦</view>
 			<view class="comment-bottom-buttons">
 				<image class="back" @tap="backToLastPage" src="../../static/icon/arrow-left-fcc041.png" mode="aspectFit"></image>
-				<image class="to-top" @tap="scrollToTop" src="../../static/icon/arrow-left-fcc041.png"></image>
+				<image class="to-top" @tap="scrollToTop()" src="../../static/icon/arrow-left-fcc041.png"></image>
 				<!-- <view class="active-input-button" @click="controlInput(1)">发表评论</view> -->
 			</view>
 		</view>
 		<!--触底提示和功能  END-->
 
-		<view class="bottoLayerOfInput" v-show="showInput" @tap="toggleInput" @touchmove="toggleInput">
+		<view class="bottoLayerOfInput" v-show="showInput" @tap="toggleMenu('input')" @touchmove="toggleMenu('input')">
 			<view class="commentPart" :style="{ bottom: textAreaAdjust }">
 				<!--<view class="emoji"></view><view class="add-pic"></view>-->
 				<view class="submit" @tap="saveComment()">{{lang.send}}</view>
@@ -67,27 +67,27 @@
 				<image v-if="articleCard.isLike" src="../../static/icon/heart_ffffff.png" mode="aspectFit"></image>
 				{{ articleCard.likeNum }}
 			</view>
-			<view class="comment" :class="{'commented': showInput}" @tap="toggleInput">
+			<view class="comment" :class="{'commented': showInput}" @tap="toggleMenu('input')">
 				<image v-if="!showInput" src="../../static/icon/comment-alt-888888.png" mode="aspectFit"></image>
 				<image v-if="showInput" src="../../static/icon/comment-alt-dots-ffffff.png" mode="aspectFit"></image>
 				{{ articleCard.commentNum }}
 			</view>
-			<view class="menu-more" :class="{'clicked_more': menu_status.more}" @tap="showMore" style="border-radius:0 8px 8px 0;">
+			<view class="menu-more" :class="{'clicked_more': menu_status.more}" @tap="toggleMenu('more')" style="border-radius:0 8px 8px 0;">
 				<image v-if="!menu_status.more" src="../../static/icon/ellipsis-h-888888.png" mode="aspectFit"></image>
 				<image v-if="menu_status.more" src="../../static/icon/check-pending.png" mode="aspectFit"></image>
 			{{lang.menu_more}}
 			</view>
 			<view class="menu_more_items" v-if="menu_status.more">
-				<view class="menu_more_item" @tap="toggleShare()">
+				<view class="menu_more_item" @tap="toggleShare(),toggleMenu('reset')">
 					<image src="../../static/icon/share-alt-888888.png"></image>
 					{{lang.share}}
 				</view>
-				<view class="menu_more_item" @tap="toggleCollect()">
-					<image src="../../static/icon/star-888888.png"></image>
-<!-- 				<image src="../../static/icon/star-full-fcc041.png"></image>
- -->				{{lang.collect}}
+				<view class="menu_more_item" @tap="toggleCollect(),toggleMenu('reset')">
+					<image v-if="!articleCard.isLike" src="../../static/icon/star-888888.png"></image>
+					<image v-if="articleCard.isLike" src="../../static/icon/star-full-fcc041.png"></image>
+					{{lang.collect}}
 				</view>
-				<view class="menu_more_item" @tap="scrollToTop()">
+				<view class="menu_more_item" @tap="scrollToTop(),toggleMenu('reset')">
 					<image src="../../static/icon/top-arrow-to-top-888888.png"></image>
 					{{lang.backToTop}}
 				</view>
@@ -221,19 +221,33 @@ export default {
 	},
 
 	methods: {
-		toggleShare() {
+		toggleShare() { //控制是否显示分享海报
 			this.share = !this.share;
 		},
-		toggleInput(){
-			this.showInput = !this.showInput;
-			this.writingComment = this.showInput;
-		},
-		resetInput(){
+		resetInput(){  //恢复输入框默认值，清除内容
 			this.commentContent = "";
 			this.placeholderText = this.lang.engageComment;
 			this.showInput = false;
 			this.writingComment = false;
 		},
+		toggleMenu(mode){
+			if(mode == 'input'){
+				this.showInput = !this.showInput;
+				this.writingComment = this.showInput;
+				this.menu_status.more = false;
+			}else if(mode == 'more'){
+				this.menu_status.more = !this.menu_status.more;
+				this.showInput = false;
+			}else if(mode == 'reset'){
+				this.showInput = false;
+				this.writingComment = false;
+				this.menu_status.more = false;
+			}
+		},
+		toggleCollect(){
+		this.swLikeArticle();//收藏功能，暂时用isLike测试页面，接口做好替换这里内容和  第85行的 v-if	
+		},
+
 		getArticleById(articleId, userId) {
 			return new Promise((resolve, reject)=>{
 				uni.request({
@@ -607,11 +621,6 @@ export default {
 				this.control_scroll_button_flag = 1;
 			}
 		}, //获取评论数据后，生成卡片后，判断总页面高度，控制是否显示回到顶部按钮
-		
-		showMore(){
-			console.log(this.menu_status);
-		this.menu_status.more = !this.menu_status.more;	
-		},
 		
 		swLikeArticle() { //点赞主文章功能三个函数
 			if (this.articleCard.isLike) {
