@@ -50,6 +50,11 @@ module.exports = {
 	//详情页
 	sharetoMoments: "Share to moments",
 	menu_more:"More",
+	cancle:"Cancle",
+	share:"Share",
+	collect:"Collect",
+	backToTop:"Top",
+	backToLastPage:"Back",
 	
 	//投票
 	vote : "Vote",

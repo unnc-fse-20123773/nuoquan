@@ -175,11 +175,6 @@ export default {
 			});
 		},
 
-		toggleShare() {
-			this.share = !this.share;
-			this.$emit("share");
-		},
-
 		aboutImg: function(index) {
 			var that = this;
 			console.log(this.articleCard.imgList[index].imagePath);
@@ -219,12 +214,7 @@ export default {
 				}
 			});
 		},
-		controlInputInDetailArticle() {
-			this.$emit('controlInputSignal', 1);
-		},
-		menu_back() {
-			this.$emit('backToLastPage');
-		}
+
 	} //method
 };
 </script>

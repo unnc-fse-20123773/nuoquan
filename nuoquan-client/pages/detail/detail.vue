@@ -6,8 +6,8 @@
 		<view :style="{ height: navbarHeight + 'px' }" style="width: 100%;"></view>
 
 		<!-- 第一个大块二，文章本体 -->
-		<detail_article class="article-area" :articleCard="articleCard" @controlInputSignal="controlInput" :userInfo="userInfo"
-		 @swLikeArticleSignal="changeLikeStatus" @backToLastPage="backToLastPage()" @share="toggleShare"></detail_article>
+		<detail_article class="article-area" :articleCard="articleCard" :userInfo="userInfo"
+		></detail_article>
 
 		<!-- 分享海报 -->
 		<view v-if="share">
@@ -31,7 +31,7 @@
 		 @controlInputSignal="controlInput">这是分割线</view>
 		<!--第一个大块二，评论区域-->
 
-		<commentarea class="comment-area" :commentList="commentList" :commentNum="articleCard.commentNum" @controlInputSignal="controlInput"
+		<commentarea class="comment-area" :commentList="commentList" :commentNum="articleCard.commentNum"
 		 @onChange="changeType" @like="swLikeComment" @goToCommentDetail="goToCommentDetail"></commentarea>
 
 		<!--触底提示和功能  start-->
@@ -45,10 +45,11 @@
 		</view>
 		<!--触底提示和功能  END-->
 
-		<view class="bottoLayerOfInput" v-show="showInput" @tap="controlInput(0)" @touchmove="controlInput(0)">
+		<view class="bottoLayerOfInput" v-show="showInput" @tap="toggleInput" @touchmove="toggleInput">
 			<view class="commentPart" :style="{ bottom: textAreaAdjust }">
 				<!--<view class="emoji"></view><view class="add-pic"></view>-->
 				<view class="submit" @tap="saveComment()">{{lang.send}}</view>
+				<view class="submit"  style="color:#C3C3C3;right:83px;">{{lang.cancle}}</view>
 				<view class="commentSth">
 					<textarea class="comment-text" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
 					 adjust-position="false" v-model="commentContent" :show-confirm-bar="false" @focus="popTextArea" @blur="unpopTextArea"
@@ -66,12 +67,35 @@
 				<image v-if="articleCard.isLike" src="../../static/icon/heart_ffffff.png" mode="aspectFit"></image>
 				{{ articleCard.likeNum }}
 			</view>
-			<view class="comment" @tap="controlInputInDetailArticle">
-				<image v-if="!menu_status.comment" src="../../static/icon/comment.png" mode="aspectFit"></image>
-				<image v-if="menu_status.comment" src="../../static/icon/comment-alt-888888.png" mode="aspectFit"></image>
+			<view class="comment" :class="{'commented': showInput}" @tap="toggleInput">
+				<image v-if="!showInput" src="../../static/icon/comment-alt-888888.png" mode="aspectFit"></image>
+				<image v-if="showInput" src="../../static/icon/comment-alt-dots-ffffff.png" mode="aspectFit"></image>
 				{{ articleCard.commentNum }}
 			</view>
-			<view class="menu-more" :class="{'clicked_more': menu_status.more}" @tap="showMore" style="border-radius:0 8px 8px 0;">{{lang.menu_more}}</view>
+			<view class="menu-more" :class="{'clicked_more': menu_status.more}" @tap="showMore" style="border-radius:0 8px 8px 0;">
+				<image v-if="!menu_status.more" src="../../static/icon/ellipsis-h-888888.png" mode="aspectFit"></image>
+				<image v-if="menu_status.more" src="../../static/icon/check-pending.png" mode="aspectFit"></image>
+			{{lang.menu_more}}
+			</view>
+			<view class="menu_more_items" v-if="menu_status.more">
+				<view class="menu_more_item" @tap="toggleShare()">
+					<image src="../../static/icon/share-alt-888888.png"></image>
+					{{lang.share}}
+				</view>
+				<view class="menu_more_item" @tap="toggleCollect()">
+					<image src="../../static/icon/star-888888.png"></image>
+<!-- 				<image src="../../static/icon/star-full-fcc041.png"></image>
+ -->				{{lang.collect}}
+				</view>
+				<view class="menu_more_item" @tap="scrollToTop()">
+					<image src="../../static/icon/top-arrow-to-top-888888.png"></image>
+					{{lang.backToTop}}
+				</view>
+				<view class="menu_more_item" @tap="backToLastPage">
+					<image src="../../static/icon/angle-left-888888.png"></image>
+					{{lang.backToLastPage}}
+				</view>
+			</view>
 		</view>
 
 		<!--常驻input-->
@@ -96,7 +120,7 @@ export default {
 		detail_article,
 		commentarea,
 		uniNavBar,
-		mySharePoster
+		mySharePoster,
 	},
 	data() {
 		return {
@@ -109,16 +133,14 @@ export default {
 			share: false, // 是否显示分享海报
 			showInput: false, //控制输入框，true时显示输入框
 			writingComment: false, //控制输入框，true时自动获取焦点，拉起输入法
+			//这俩 showInput 和 writingComment 是不是可以合并为一个？ 即，会不会出现显示输入框而允许其他操作的情况？----yao
 			placeholderText: '',
 			inputData: {}, //localData,用于拼接不同情况下的savecomment请求的数据
 
-			submitData: {
-				//这个是从子组件传来的数据，回复评论的评论之类
-			},
 			imgIndex: '',
 			serverUrl: this.$serverUrl,
 
-			textAreaAdjust: 0,
+			textAreaAdjust: 76,
 			ifPop: false,//判断键盘是否弹起
 			
 			totalPage: 1, //评论分页属性
@@ -201,6 +223,16 @@ export default {
 	methods: {
 		toggleShare() {
 			this.share = !this.share;
+		},
+		toggleInput(){
+			this.showInput = !this.showInput;
+			this.writingComment = this.showInput;
+		},
+		resetInput(){
+			this.commentContent = "";
+			this.placeholderText = this.lang.engageComment;
+			this.showInput = false;
+			this.writingComment = false;
 		},
 		getArticleById(articleId, userId) {
 			return new Promise((resolve, reject)=>{
@@ -288,9 +320,12 @@ export default {
 				title: '正在上传...'
 			});
 
-			this.submitData.comment = this.commentContent;
-			this.submitData.fromUserId = this.userInfo.id;
-			this.submitData.articleId = this.articleCard.id;
+			var submitData={
+				comment : this.commentContent,
+				fromUserId : this.userInfo.id,
+				articleId : this.articleCard.id,
+				toUserId : this.articleCard.userId,
+			}
 			console.log(this.submitData);
 			var that = this;
 			if (this.commentContent == '') {
@@ -303,7 +338,7 @@ export default {
 				uni.request({
 					url: that.$serverUrl + '/article/saveComment',
 					method: 'POST',
-					data: this.submitData,
+					data: submitData,
 					success: res => {
 						if (res.data.status == 200) {
 							uni.hideLoading();
@@ -516,28 +551,6 @@ export default {
 			}
 		},
 
-		controlInput(a) {
-			if (a != 0 && a != 1) {
-				this.placeholderText = this.lang.replyComent.replace('NICKNAME', a.nickname);
-				delete a.nickname;
-				this.submitData = a;
-				this.writingComment = true;
-				this.showInput = true;
-			} else if (a == 1) {
-				//a==1 当前页面调用，直接评论文章
-				this.submitData.toUserId = this.articleCard.userId;
-				this.showInput = true;
-				this.writingComment = true;
-			} else {
-				//a==0, 关闭输入框，一切恢复默认状态
-				console.log('this is control input in detail. a ==0, EXIT');
-				this.submitData = {};
-				this.placeholderText = this.lang.engageComment;
-				this.showInput = false;
-				this.writingComment = false;
-			}
-		},
-
 		goToPersonPublic() {
 			uni.navigateTo({
 				url: '/pages/personpublic/personpublic?userId=' + this.articleCard.userId
@@ -745,15 +758,16 @@ page {
 }
 
 .commentPart {
-	box-shadow: 0px 1px 5px 0px rgba(139, 139, 139, 0.32);
+	box-shadow:0px 0px 4px rgba(121,121,121,0.42);
 	position: absolute;
-	bottom: 0;
+	bottom: 76px;
+	left:16px;
 	z-index: 999;
-	left: 0;
-	width: 702upx;
+	width: 640upx;
 	padding: 10px 24upx 4px;
 	min-height: 50px;
 	background: white;
+	border-radius: 8px;
 }
 
 .emoji {
@@ -782,11 +796,10 @@ page {
 	display: inline-block;
 	width: 42px;
 	position: absolute;
-	top: 15px;
+	bottom: 11px;
 	height: 21px;
 	right: 15px;
-	/* 	background: url(../../static/icon/arrow-right.png);
- */
+	
 	background-size: 14px 14px;
 	background-repeat: no-repeat;
 	background-position: center;
@@ -796,12 +809,13 @@ page {
 	z-index: 50;
 }
 .commentSth {
+	height:110px;
 	border: solid 2px #fcc041;
 	border-radius: 8px;
 	line-height: 20px;
 	padding: 12px 12px 0px;
 	position: relative;
-	margin: 0 auto 24px;
+	margin: 0 auto 37px;
 }
 .comment-text {
 	width: calc(670upx - 60px);
@@ -861,10 +875,12 @@ page {
 	position: fixed;
 	width:calc(750upx - 32px);
 	bottom: 24px;
+	left:16px;
 	height:40px;
 	background:rgba(252,252,252,1);
 	box-shadow:0px 0px 4px rgba(121,121,121,0.42);
 	border-radius:8px;
+	z-index: 50;
 }
 .menu-bar image{
 	width: 16px;
@@ -905,5 +921,30 @@ page {
 .clicked_more{
 	background:rgba(59,161,239,1);
 	color: #FFFFFF;
+}
+.menu_more_items{
+	position: absolute;
+	right: 0;
+	bottom: 52px;
+	background:rgba(252,252,252,1);
+	box-shadow:0px 0px 4px rgba(121,121,121,0.42);
+	border-radius:8px;
+	}
+.menu_more_item{
+		width:74px;
+		height:14px;
+		font-size:14px;
+		line-height:14px;
+		color:rgba(136,136,136,1);
+		padding:12px 0;
+		padding-left: 40px;
+		position: relative;
+}
+.menu_more_item image{
+		width: 14px;
+		height:14px;
+		position: absolute;
+		left:16px;
+		bottom:11px;
 }
 </style>
