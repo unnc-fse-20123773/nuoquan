@@ -156,7 +156,7 @@
 									</view>
 									<view @tap="goToComment(commentList[index2].data.source.articleId)">
 										<!-- 点赞 or 评论预览块 -->
-										<view class="brief-bar-nocolor">
+										<view class="brief-bar-nocolor" @click.native.stop="showCommitArea">
 											<view class="brief-bar-rel">{{ item.data.source.comment }}</view>
 										</view>
 										<!-- 原文章预览块 -->
@@ -213,7 +213,7 @@
 									</view>
 									<view @tap="goToComment(commentList[index2].data.source.articleId)">
 										<!-- 点赞 or 评论预览块 -->
-										<view class="brief-bar-nocolor">
+										<view class="brief-bar-nocolor" @click.native.stop="showCommitArea" hover-class="hoverColor" hover-stop-propagation="false">
 											<view class="brief-bar-rel">{{ item.data.source.comment }}</view>
 										</view>
 										<!-- 原评论预览块 -->
@@ -232,6 +232,12 @@
 				</swiper-item>
 			</swiper>
 		</view>
+		
+		<commitArea v-if="isReplying" 
+			openOrigin="cmt-likedetail" 
+			:isShow="isReplying" 
+			@killCommitArea="killCommitArea">
+		</commitArea>
 	</view>
 </template>
 
@@ -239,10 +245,12 @@
 // TODO 查询列表分页操作
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 import { mapState, mapMutations } from 'vuex';
+import commitArea from '../../components/nq-commitArea/nq-commitArea.vue';
 
 export default {
 	components: {
-		uniNavBar
+		uniNavBar,
+		commitArea
 	},
 	computed: {
 		...mapState(['lang'])
@@ -252,13 +260,6 @@ export default {
 			scrollLeft: 0,
 			isClickChange: false,
 			currentTab: '', // 切换 list 0/1
-			// menuTabs: [{
-			// 	name: '点赞'
-			// }, {
-			// 	name: '评论'
-			// }],
-
-			// 点赞评论 swiper
 			swiperDataList: [
 				[], // 点赞 把数据写进里面首次进入页面加载不出，所以写到外面
 				[] // 评论
@@ -283,7 +284,8 @@ export default {
 			likePage: 1,
 			commentPage: 1,
 
-			isNavHome: getApp().globalData.isNavHome //判断导航栏左侧是否显示home按钮
+			isNavHome: getApp().globalData.isNavHome, //判断导航栏左侧是否显示home按钮
+			isReplying: false, //是否展示回复输入框
 		};
 	},
 
@@ -464,26 +466,15 @@ export default {
 			uni.navigateTo({
 				url: '../detail/detail?data=' + articleId
 			});
-			// var that = this;
-			// uni.request({
-			// 	url: that.$serverUrl + '/article/getArticleById',
-			// 	method: "POST",
-			// 	data:{
-			// 		articleId: articleId,
-			// 		userId: that.userInfo.id,
-			// 	},
-			// 	header: {
-			// 		'content-type': 'application/x-www-form-urlencoded'
-			// 	},
-			// 	success: (res) => {
-			// 		if (res.data.status == 200) {
-			// 			var article = res.data.data;
-			// 			uni.navigateTo({
-			// 				url:'../detail/detail?data=' + JSON.stringify(article),
-			// 			})
-			// 		}
-			// 	},
-			// });
+		},
+		
+		showCommitArea(){
+			this.isReplying = !this.isReplying;
+		},
+		
+		killCommitArea(e){
+			console.log(e);
+			this.isReplying = e;
 		}
 	}
 };
@@ -632,8 +623,8 @@ page {
 
 /* 卡片父组件 */
 .cmtlikeDetail-card {
-	margin-left: 5%;
-	width: 90%;
+	margin-left: 13px;
+	width: calc(100% - 26px);
 	border-radius: 8px;
 	min-height: 150upx;
 	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.16);

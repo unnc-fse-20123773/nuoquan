@@ -1,28 +1,28 @@
 <template>
-	<view @click="receiveClick(obj)">
+	<view @click="receiveClick(obj)" hover-class="hoverColor">
 		<view class="generic_item">
 		<view class="left_icon" :style="{background: obj.style, display: 'inline-block', width:'28px', height:'28px', borderRadius:'50%'}">
-			<image :src="'../static/icon/' + obj.src1 + '.png'" mode="scaleToFill"></image>
+			<image :src="'../static/icon/' + obj.lefticon_src + '.png'" mode="scaleToFill"></image>
 		</view>
 		<view class="page" v-if="obj.name=='profile'">{{lang.profile}}</view>
 		<view class="page" v-if="obj.name=='myPublish'">{{lang.myPublish}}</view>
 		<view class="page" v-if="obj.name=='myFavorite'">{{lang.myFavorite}}</view>
 		<view class="page" v-if="obj.name=='changeLang'">{{lang.changeLang}}</view>
-		<view class="page" v-if="obj.name=='userDeal'">{{lang.userDeal}}</view>
+		<view class="page" v-if="obj.name=='about'">{{lang.about}}</view>
 		<view class="right_icon0" v-if="obj.type==0">
-			<image :src="'../static/icon/' + obj.src2 + '.png'" mode="scaleToFill"></image>
+			<image :src="'../static/icon/' + obj.righticon_src + '.png'" mode="scaleToFill"></image>
 		</view>
 		<view class="right_icon1" v-else>
 			<nqSwitch
 				:bgSwitchLeft = "'-13px'"
 				:bgSwitchRight = "'41px'"
 				:options='[lang.chinese, lang.english]' 
-				:initStatus='iniStatus1' 
+				:initStatus="lang.type == 'zh' ? 0: 1"
 				@onChange="receiveSwitch()">
 			</nqSwitch>
 		</view>
 		</view>
-		<view class="line"v-if="obj.id!=5"></view>
+		<view class="line" v-if="obj.id!=5 && obj.id!=2"></view>
 	</view>
 	
 </template>
@@ -48,20 +48,20 @@ import nqSwitch from '@/components/nq-switch.vue';
 
 	methods:{
 		
-		receiveSwitch(a){
-			var b={
+		receiveSwitch(event){
+			var eventStruct={
 				type:'switchLang',
-				a,
+				event,
 			}
-			this.$emit('trigger', b);
+			this.$emit('trigger', eventStruct);
 		},
 		
-		receiveClick(a){
-			var b={
+		receiveClick(event){
+			var eventStruct={
 				type:'click',
-				a,
+				event,
 			}
-			this.$emit('trigger', b);
+			this.$emit('trigger', eventStruct);
 		}
 	}
 }
