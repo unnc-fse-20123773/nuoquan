@@ -51,7 +51,6 @@ module.exports = {
 	//详情页
 	sharetoMoments: "Share to moments",
 	menu_more:"More",
-	cancle:"Cancle",
 	share:"Share",
 	collect:"Collect",
 	backToTop:"Top",
@@ -113,6 +112,12 @@ module.exports = {
 	passCheck: 'Published successfully',
 	underCheck: 'Under Review',
 	failCheck: 'Publishing failed',
+	
+	//我的收藏
+	myCollection:"My Collection",
+	collectionNumSuffix:" Article",
+	uncollectNotice:"Swipe left to uncollect",
+	uncollectText:"Undo",
 	
 	//关注粉丝列表
 	fanAndFollow : "Follow List",

@@ -1,5 +1,5 @@
 <template>
-	<view :v-if="isShow">
+	<view v-if="isShow">
 		<view style="width: 100%;height: 100%;position: fixed;" 
 		@click.native.stop="killCommitArea" 
 		@touchmove="killCommitArea"></view>
@@ -10,14 +10,17 @@
 					:show-confirm-bar="false"
 					:adjust-position="false"
 					auto-focus
-					@focus="getKeyBoardHeight"/>
+					@focus="getKeyBoardHeight"
+					v-model="inputContent"
+					/>
 				<!-- 添加图片，等功能开发完成打开注释 -->
 				<!-- <image src="../../static/icon/viewLocalPic.png" mode="aspectFit" class="addPic"></image> -->
 				<view class="bottomRight">
+					<view style="width: 20px;height: 20px;background-color: #000000;" @tap="con()"></view>
 					<view class="cancelText" @click.native.stop="killCommitArea" hover-class="hoverColor">
 						{{lang.cancle}}
 					</view>
-					<view class="replyText" hover-class="hoverColor">
+					<view class="replyText" @click.native="submit" hover-class="hoverColor">
 						{{replyText}}
 					</view>
 				</view>
@@ -34,6 +37,7 @@ export default {
 			replyText: '',
 			textAreaTop: 1000,
 			getIsShow: '',
+			inputContent:'',
 		} 
 	},
 	props:{
@@ -78,11 +82,20 @@ export default {
 			this.textAreaTop = phoneHeight - textAreaTop_ - 12 - 160;
 			console.log(this.textAreaTop);
 		},
-		
+		con(){
+		console.log(this.isShow);
+			debugger;
+		},
 		killCommitArea(){
+			console.log('kill');
 			this.getIsShow = this.isShow;
 			this.getIsShow = !this.getIsShow;
-			this.$emit("killCommitArea", this.getIsShow)
+			this.$emit("killCommitArea", this.getIsShow);
+		},
+		submit(){
+			console.log('submit from input');
+			this.$emit('submit',this.inputContent);
+
 		}
 	}
 };

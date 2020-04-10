@@ -27,8 +27,7 @@
 			width:750upx;
 			font-size: 0;
 			position: relative;
-			left: -16px;"
-		 @controlInputSignal="controlInput">这是分割线</view>
+			left: -16px;">这是分割线</view>
 		<!--第一个大块二，评论区域-->
 
 		<commentarea class="comment-area" :commentList="commentList" :commentNum="articleCard.commentNum"
@@ -45,22 +44,21 @@
 		</view>
 		<!--触底提示和功能  END-->
 
-		<view class="bottoLayerOfInput" v-show="showInput" @tap="toggleMenu('input')" @touchmove="toggleMenu('input')">
+		<!-- <view class="bottoLayerOfInput" v-show="showInput" @tap="toggleMenu('input')" @touchmove="toggleMenu('input')">
 			<view class="commentPart" :style="{ bottom: textAreaAdjust }">
-				<!--<view class="emoji"></view><view class="add-pic"></view>-->
+			
 				<view class="submit" @tap="saveComment()">{{lang.send}}</view>
 				<view class="submit"  style="color:#C3C3C3;right:83px;">{{lang.cancle}}</view>
 				<view class="commentSth">
 					<textarea class="comment-text" :placeholder="placeholderText" :focus="writingComment" auto-height="true"
 					 adjust-position="false" v-model="commentContent" :show-confirm-bar="false" @focus="popTextArea" @blur="unpopTextArea"
 					 cursor-spacing="20" />
-					<!-- <view class="comment-pic-area"><image src="../../static/BG/indexBG.png"></image><image src="../../static/icon/about.png"></image><image src="../../static/icon/1575235531(1).png"></image></view> -->
 					<view class="word-count-left">{{ 140 - commentContent.length }}</view>
 				</view>
 			</view>
-		</view>
+		</view> -->
 		
-		
+		<nq-commit-area :isShow="showInput" @submit="saveComment" @killCommitArea="resetInput" :openOrigin="'detail'"></nq-commit-area>
 		<view class="menu-bar">
 			<view class="like" :class="{'liked': articleCard.isLike}" @tap="swLikeArticle()" style="border-radius:8px 0 0 8px;">
 				<image v-if="!articleCard.isLike" src="../../static/icon/heart_353535.png" mode="aspectFit"></image>
@@ -113,6 +111,7 @@ import commentarea from '@/components/nq-comment/commentarea.vue';
 import mySharePoster from 'components/shareposter/myshareposter.vue';
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 import { mapState, mapMutations } from 'vuex';
+import nqCommitArea from '@/components/nq-commitArea/nq-commitArea.vue'
 
 var uploadFlag = false;
 export default {
@@ -121,6 +120,7 @@ export default {
 		commentarea,
 		uniNavBar,
 		mySharePoster,
+		nqCommitArea,
 	},
 	data() {
 		return {
@@ -225,6 +225,7 @@ export default {
 			this.share = !this.share;
 		},
 		resetInput(){  //恢复输入框默认值，清除内容
+		console.log('resetInput');
 			this.commentContent = "";
 			this.placeholderText = this.lang.engageComment;
 			this.showInput = false;
@@ -323,7 +324,7 @@ export default {
 		 * PS: 父级（一级，给文章评论）评论 无 fatherCommentId, underCommentId;
 		 *     子级评论有 fatherCommentId, underCommentId;
 		 */
-		saveComment: function() {
+		saveComment: function(content) {
 			console.log('tragger savecomment');
 			if (uploadFlag) {
 				console.log('正在上传...');
@@ -335,7 +336,7 @@ export default {
 			});
 
 			var submitData={
-				comment : this.commentContent,
+				comment : content,
 				fromUserId : this.userInfo.id,
 				articleId : this.articleCard.id,
 				toUserId : this.articleCard.userId,
@@ -358,9 +359,7 @@ export default {
 							uni.hideLoading();
 							uploadFlag = false;
 
-							that.writingComment = false;
-							that.commentContent = '';
-							that.showInput = false;
+							that.resetInput();
 							// 强制子组件重新刷新
 							// that.commentList = '';
 							// that.$nextTick(function() {
