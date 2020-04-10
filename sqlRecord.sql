@@ -709,3 +709,8 @@ CREATE TABLE `user_collect_article` (
 
 ALTER TABLE `nuoquan`.`article` 
 ADD COLUMN `collect_num` INT NOT NULL DEFAULT 0 AFTER `comment_num`;
+
+-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+-- v20.4.11 @author: Jerrio
+-- 添加文章收藏功能
+-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑

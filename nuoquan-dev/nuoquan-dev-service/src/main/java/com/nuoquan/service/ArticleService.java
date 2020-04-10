@@ -90,6 +90,16 @@ public interface ArticleService {
 	public boolean isUserCollectArticle(String userId, String articleId);
 	
 	/**
+	 * 查询目标用户收藏的文章
+	 * @param page
+	 * @param pageSize
+	 * @param userId
+	 * @param targetId
+	 * @return
+	 */
+	public PagedResult queryCollectArticle(Integer page, Integer pageSize, String userId, String targetId);
+
+	/**
 	 *  按关键词搜索阳面文章，支持多关键词以空格分割
 	 *  TODO: 可以增加多种排序模式 @author jerrio
 	 */

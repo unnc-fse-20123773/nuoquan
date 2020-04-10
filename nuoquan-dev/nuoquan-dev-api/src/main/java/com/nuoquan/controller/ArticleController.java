@@ -202,7 +202,6 @@ public class ArticleController extends BasicController {
 			finalResult = result;
 		}
 		
-		
 		return JSONResult.ok(finalResult);
 		
 	}
@@ -767,19 +766,23 @@ public class ArticleController extends BasicController {
 	@PostMapping(value = "/userCollectArticle")
 	public JSONResult userCollectArticle(String userId, String articleId, String articleCreaterId) throws Exception {
 	
+		UserCollectArticle uca;
+
 		if (userId.equals(articleCreaterId)) {
-			// 点赞自己，标记已签收存入数据
-			articleService.userCollectArticle(userId, articleId, MsgSignFlagEnum.SIGNED.type);
+			// 收藏自己的文章，标记已签收存入数据
+			uca = articleService.userCollectArticle(userId, articleId, MsgSignFlagEnum.SIGNED.type);
 		}else {
 			// 标记未签收，储存到数据库 返回数据库对象
-			articleService.userCollectArticle(userId, articleId, MsgSignFlagEnum.UNSIGN.type);
+			uca = articleService.userCollectArticle(userId, articleId, MsgSignFlagEnum.UNSIGN.type);
 			// 加上收藏人的信息
 			
 			// 给目标作者发推送
 
 			//作者影响力++
 		}
-		
+		if (uca == null) {
+			return JSONResult.errorMsg("无法收藏该状态下的文章");
+		}
 		return JSONResult.ok();
 	}
 	
@@ -796,4 +799,29 @@ public class ArticleController extends BasicController {
 		
 		return JSONResult.ok();
 	}
+	
+	@ApiOperation(value = "查询我的发布的文章和他人发布的文章", notes = "查看他人时只能查看status为1的, 查询自己时,可显示所有status")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "page", value = "页数", required = true, dataType = "Integer", paramType = "form"),
+		@ApiImplicitParam(name = "pageSize", value = "每页大小", required = true, dataType = "Integer", paramType = "form"),
+		@ApiImplicitParam(name = "userId", value = "操作者id", required = true, dataType = "String", paramType = "form"),
+		@ApiImplicitParam(name = "targetId", value = "目标查询者id", required = true, dataType = "String", paramType = "form")
+	})
+	@PostMapping("/queryCollectArticle")
+	public JSONResult queryCollectArticle(Integer page, Integer pageSize, String userId, String targetId) {
+		
+		if(page == null) {
+			page = 1;
+		}
+		if(pageSize == null) {
+			pageSize = PAGE_SIZE;
+		}
+		
+		// 查询targetId收藏状态为1的文章
+		PagedResult result = articleService.queryCollectArticle(page, pageSize, userId, targetId);
+		
+		return JSONResult.ok(result);
+		
+	}
+	
 }

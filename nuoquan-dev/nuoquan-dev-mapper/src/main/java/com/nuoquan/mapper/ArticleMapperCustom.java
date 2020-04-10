@@ -99,9 +99,17 @@ public interface ArticleMapperCustom extends MyMapper<Article> {
 	public List<ArticleVO> queryOthersLegalHisArticle(String targetId);
 	
 	/**
+	 * 查询目标用户收藏，我或者他人
+	 * @param targetId
+	 * @return
+	 */
+	public List<ArticleVO> queryCollectArticle(String targetId);
+	
+	/**
 	 * 浏览量+1
 	 * @param articleId
 	 */
 	public void addViewCount(String articleId);
+	
 	
 }
