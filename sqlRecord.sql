@@ -693,3 +693,19 @@ ADD CONSTRAINT `vote_user`
 -- v20.3.23 @author: Jerrio
 -- 添加部分外键
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+
+CREATE TABLE `user_collect_article` (
+  `id` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `user_id` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `article_id` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `sign_flag` int(11) DEFAULT '0' COMMENT '消息是否被签收\\\\n 0: 未签收 1：签收',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_article_rel` (`user_id`,`article_id`) USING BTREE,
+  KEY `user_collect_article_idx` (`article_id`),
+  CONSTRAINT `uca_user_foreign` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `uca_article_foreign` FOREIGN KEY (`article_id`) REFERENCES `article` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+ALTER TABLE `nuoquan`.`article` 
+ADD COLUMN `collect_num` INT NOT NULL DEFAULT 0 AFTER `comment_num`;

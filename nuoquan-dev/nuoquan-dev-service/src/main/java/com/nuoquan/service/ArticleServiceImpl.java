@@ -1,13 +1,12 @@
 package com.nuoquan.service;
 
-import static org.hamcrest.CoreMatchers.nullValue;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.junit.Test;
 import org.n3r.idworker.Sid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,24 +22,22 @@ import com.nuoquan.mapper.ArticleMapperCustom;
 import com.nuoquan.mapper.SearchRecordMapper;
 import com.nuoquan.mapper.UserArticleCommentMapper;
 import com.nuoquan.mapper.UserArticleCommentMapperCustom;
+import com.nuoquan.mapper.UserCollectArticleMapper;
 import com.nuoquan.mapper.UserFansMapper;
 import com.nuoquan.mapper.UserLikeArticleMapper;
 import com.nuoquan.mapper.UserLikeCommentMapper;
-import com.nuoquan.mapper.UserLikeMapperCustom;
 import com.nuoquan.mapper.UserMapper;
 import com.nuoquan.pojo.Article;
 import com.nuoquan.pojo.ArticleImage;
 import com.nuoquan.pojo.SearchRecord;
 import com.nuoquan.pojo.User;
 import com.nuoquan.pojo.UserArticleComment;
+import com.nuoquan.pojo.UserCollectArticle;
 import com.nuoquan.pojo.UserFans;
 import com.nuoquan.pojo.UserLikeArticle;
 import com.nuoquan.pojo.UserLikeComment;
-import com.nuoquan.pojo.UserVoteComment;
 import com.nuoquan.pojo.vo.ArticleVO;
 import com.nuoquan.pojo.vo.UserArticleCommentVO;
-import com.nuoquan.pojo.vo.UserLikeVO;
-import com.nuoquan.pojo.vo.VoteVO;
 import com.nuoquan.support.Convert;
 import com.nuoquan.utils.PageUtils;
 import com.nuoquan.utils.PagedResult;
@@ -62,7 +59,10 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Autowired
 	private UserLikeArticleMapper userLikeArticleMapper;
-
+	
+	@Autowired
+	private UserCollectArticleMapper userCollectArticleMapper;
+	
 	@Autowired
 	private UserLikeCommentMapper userLikeCommentMapper;
 
@@ -80,9 +80,6 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Autowired
 	private ArticleImageMapper articleImageMapper;
-
-	@Autowired
-	private UserLikeMapperCustom userLikeMapperCustom;
 
 	@Autowired
 	private UserService userService;
@@ -265,6 +262,61 @@ public class ArticleServiceImpl implements ArticleService {
 			// 3.用户受喜欢数量的累减
 			userMapper.reduceReceiveLikeCount(articleCreaterId);
 		}
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Override
+	public UserCollectArticle userCollectArticle(String userId, String articleId, Integer signFlag) {
+		/// 保存用户和文章的收藏关联关系表
+		String likeId = sid.nextShort();
+
+		UserCollectArticle ula = new UserCollectArticle();
+		ula.setId(likeId);
+		ula.setUserId(userId);
+		ula.setArticleId(articleId);
+		ula.setSignFlag(signFlag);
+		ula.setCreateDate(new Date());
+
+		userCollectArticleMapper.insertSelective(ula);
+		// 文章收藏数量累加
+		articleMapperCustom.addArticleCollectCount(articleId);
+
+		return ula;
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Override
+	public void userUncollectArticle(String userId, String articleId) {
+		boolean isLike = isUserCollectArticle(userId, articleId);
+		if (isLike) {
+			// 1.删除用户和文章的点赞关联关系表
+			Example example = new Example(UserCollectArticle.class);
+			// 创造条件
+			Criteria criteria = example.createCriteria();
+			// 条件的判断 里面的变量无需和数据库一致，与pojo类中的变量一致。在pojo类中变量与column有映射
+			criteria.andEqualTo("userId", userId);
+			criteria.andEqualTo("articleId", articleId);
+
+			userCollectArticleMapper.deleteByExample(example);
+
+			// 2.文章收藏数量累减
+			articleMapperCustom.reduceArticleCollectCount(articleId);
+		}		
+	}
+	
+	@Transactional(propagation = Propagation.SUPPORTS)
+	@Override
+	public boolean isUserCollectArticle(String userId, String articleId) {
+		Example example = new Example(UserCollectArticle.class);
+		Criteria criteria = example.createCriteria();
+		criteria.andEqualTo("userId", userId);
+		criteria.andEqualTo("articleId", articleId);
+
+		List<UserCollectArticle> list = userCollectArticleMapper.selectByExample(example);
+		if (list != null && !list.isEmpty()) {
+			return true;
+		}
+		return false;
 	}
 
 	@Transactional(propagation = Propagation.SUPPORTS)

@@ -25,6 +25,7 @@ import com.nuoquan.pojo.Article;
 import com.nuoquan.pojo.ArticleImage;
 import com.nuoquan.pojo.User;
 import com.nuoquan.pojo.UserArticleComment;
+import com.nuoquan.pojo.UserCollectArticle;
 import com.nuoquan.pojo.UserLikeArticle;
 import com.nuoquan.pojo.UserLikeComment;
 import com.nuoquan.pojo.netty.NoticeCard;
@@ -245,11 +246,12 @@ public class ArticleController extends BasicController {
 			dataContent.setData(new NoticeCard(likeVO, articleService.getArticleById(articleId, userId)));
 			
 			MsgHandler.sendMsgTo(articleCreaterId, dataContent);
+			
+			//作者影响力++
+			userService.updateReputation(articleCreaterId, ReputeWeight.LIKE.weight, 1);
+			
 		}
-		
-		//作者影响力++
-		userService.updateReputation(articleCreaterId, ReputeWeight.LIKE.weight, 1);
-		
+
 		return JSONResult.ok();
 	}
 
@@ -281,10 +283,10 @@ public class ArticleController extends BasicController {
 			dataContent.setData(new NoticeCard(likeVO, articleService.getCommentById(commentId, userId)));
 			
 			MsgHandler.sendMsgTo(createrId, dataContent);
+			
+			//作者影响力++
+			userService.updateReputation(createrId, ReputeWeight.LIKE.weight, 1);
 		}
-		
-		//作者影响力++
-		userService.updateReputation(createrId, ReputeWeight.LIKE.weight, 1);
 		
 		return JSONResult.ok();
 	}
@@ -754,5 +756,44 @@ public class ArticleController extends BasicController {
 	@PostMapping("/getTagsList")
 	public JSONResult getTagsList() {
 		return JSONResult.ok(tagsService.getTagsList());
+	}
+	
+	@ApiOperation(value = "收藏文章")
+	@ApiImplicitParams({
+			// uniapp使用formData时，paramType要改成form
+			@ApiImplicitParam(name = "userId", value = "操作者id", required = true, dataType = "String", paramType = "form"),
+			@ApiImplicitParam(name = "articleId", value = "文章id", required = true, dataType = "String", paramType = "form"),
+			@ApiImplicitParam(name = "articleCreaterId", value = "文章作者id", required = true, dataType = "String", paramType = "form") })
+	@PostMapping(value = "/userCollectArticle")
+	public JSONResult userCollectArticle(String userId, String articleId, String articleCreaterId) throws Exception {
+	
+		if (userId.equals(articleCreaterId)) {
+			// 点赞自己，标记已签收存入数据
+			articleService.userCollectArticle(userId, articleId, MsgSignFlagEnum.SIGNED.type);
+		}else {
+			// 标记未签收，储存到数据库 返回数据库对象
+			articleService.userCollectArticle(userId, articleId, MsgSignFlagEnum.UNSIGN.type);
+			// 加上收藏人的信息
+			
+			// 给目标作者发推送
+
+			//作者影响力++
+		}
+		
+		return JSONResult.ok();
+	}
+	
+	@ApiOperation(value = "取消收藏文章")
+	@ApiImplicitParams({
+			// uniapp使用formData时，paramType要改成form
+			@ApiImplicitParam(name = "userId", value = "操作者id", required = true, dataType = "String", paramType = "form"),
+			@ApiImplicitParam(name = "articleId", value = "文章id", required = true, dataType = "String", paramType = "form"),
+			@ApiImplicitParam(name = "articleCreaterId", value = "文章作者id", required = true, dataType = "String", paramType = "form") })
+	@PostMapping(value = "/userUncollectArticle")
+	public JSONResult userUncollectArticle(String userId, String articleId, String articleCreaterId) throws Exception {
+		articleService.userUncollectArticle(userId, articleId);
+		//作者影响力--
+		
+		return JSONResult.ok();
 	}
 }

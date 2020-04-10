@@ -13,6 +13,7 @@
     <result column="like_num" jdbcType="INTEGER" property="likeNum" />
     <result column="dislike_num" jdbcType="INTEGER" property="dislikeNum" />
     <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
+    <result column="collect_num" jdbcType="INTEGER" property="commentNum" />
     <result column="popularity" jdbcType="INTEGER" property="popularity" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
@@ -56,6 +57,14 @@
   
   <update id="reduceArticleLikeCount" parameterType="String">
   	update nuoquan.article set like_num=like_num-1 where id=#{articleId}
+  </update>
+  
+  <update id="addArticleCollectCount" parameterType="String">
+  	update nuoquan.article set collect_num=collect_num+1 where id=#{articleId}
+  </update>
+  
+  <update id="reduceArticleCollectCount" parameterType="String">
+  	update nuoquan.article set collect_num=collect_num-1 where id=#{articleId}
   </update>
   
   <update id="addArticleCommentCount" parameterType="String">
