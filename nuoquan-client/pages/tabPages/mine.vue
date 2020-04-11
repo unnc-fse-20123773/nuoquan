@@ -1,8 +1,6 @@
 <template>
 	<view id="public-container">
-		<!-- 导航栏 -->
-		<uni-nav-bar class="navigationBar" :style="{height: this.getnavbarHeight() + 'px'}" :showLeftIcon="true" :isNavHome="isNavHome"
-		 :left-text="lang.back" :title="lang.about" :height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
+		<!-- 占位块 -->
 		<view :style="{height: this.getnavbarHeight().bottom + 5 + 'px'}"></view>
 		<view class="topbox">
 			<view class="header">
