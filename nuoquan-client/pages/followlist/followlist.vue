@@ -30,9 +30,9 @@
 					 @scroll="scroll" enable-back-to-top="true">
 					 <!-- 相对、绝对定位不能改 by Guetta -->
 						<view class="user-operation-line" v-for="(item,index2) in (index1==0?followList:fansList)" :key="index2">
-							<view class="user-one-line column_center">
+							<view class="user-one-line column_center" hover-class="hoverColor"  @click.native.stop='goToPersonPublic(index1, index2)'>
 								<!-- 这里方法直接传 item 获取不到，应该是官方的一个Bug -->
-								<view class="touxiangBox" @tap='goToPersonPublic(index1, index2)'>
+								<view class="touxiangBox">
 									<image class="publicTouxiang" mode="scaleToFill" :src="pathFilter(item.faceImg)"></image>
 								</view>
 								<view class="userid">
@@ -40,13 +40,22 @@
 								</view>
 								<!-- 暂时先拿掉，TODO: 获取列表同时查询我是否已关注该用户 
 																				by Jerrio-->
-								<view style="height: 52upx;position: absolute;right: 0;width: 30%;">
-									<view v-if="item.id != myId" style="position: relative;width: 100%;height: 52upx;">
-										<view class="attentionButton super_center" v-if="item.follow==true" @tap="cancelFollow(index1, index2)">
-											<text class="attentionButton-text">已关注</text>
+								<view style="height: 30px;position: absolute;right: 0;width: 30%;z-index: 10;">
+									<view v-if="item.id != myId" style="position: relative;width: 100%;height: 30px;">
+										<view class="attentionButton" 
+											v-if="item.follow==false" 
+											@click.native.stop="addFollow(index1, index2)" 
+											hover-stop-propagation="false">
+											<view style="height: 100%;padding: 0px 18px;border-radius: 4px;" class="super_center" hover-class="hoverColorYellow">
+												<text class="attentionButton-text">关注</text>
+											</view>
 										</view>
-										<view class="attentionButton super_center" v-if="item.follow==false" @tap="addFollow(index1, index2)">
-											<text class="attentionButton-text">关注</text>
+										<view class="attentionButton_followed super_center" 
+											hover-class="hoverColor" 
+											v-if="item.follow==true" 
+											@click.native.stop="cancelFollow(index1, index2)"
+											hover-stop-propagation="false">
+											<text class="attentionButton-text">已关注</text>
 										</view>
 									</view>
 								</view>
@@ -358,8 +367,8 @@
 		display: flex;
 		justify-content: space-around;
 		width: 100%;
-		background-color: #f3f3f3;
-		height: 6%;
+		background-color: rgba(255,201,90,1);
+		height: 47px;
 		/* 在这里设置导航条高度 */
 	}
 
@@ -382,11 +391,11 @@
 	}
 
 	.top-menu-view .menu-one-view .menu-one .menu-one-txt {
-		height: 40upx;
-		font-size: 32upx;
-		font-weight: 550;
-		color: #888888;
-		line-height: 40upx;
+		height:21px;
+		font-size:17px;
+		font-weight:500;
+		line-height:21px;
+		color:rgba(255,255,255,1);
 	}
 
 	.top-menu-view .menu-one-view .menu-one .menu-one-bottom {
@@ -396,8 +405,8 @@
 	}
 
 	.top-menu-view .menu-one-view .menu-one .menu-one-bottom .menu-one-bottom-color {
-		width: 60%;
-		height: 4upx;
+		width: 108px;
+		height: 4px;
 	}
 
 	.top-menu-view .menu-one-view .menu-one-act {
@@ -412,11 +421,12 @@
 	}
 
 	.top-menu-view .menu-one-view .menu-one-act .menu-one-txt {
-		height: 40upx;
-		font-size: 36upx;
-		font-weight: 550;
-		color: #353535;
-		line-height: 40upx;
+		height:21px;
+		font-size:17px;
+		font-weight:500;
+		line-height:21px;
+		color:rgba(255,255,255,1);
+		margin-bottom: 8px;
 	}
 
 	.top-menu-view .menu-one-view .menu-one-act .menu-one-bottom {
@@ -431,9 +441,10 @@
 
 	.top-menu-view .menu-one-view .menu-one-act .menu-one-bottom .menu-one-bottom-color {
 		/* 在这里设置底部横条高度和颜色 */
-		width: 60%;
-		height: 6upx;
-		background: #FFCF3C;
+		width: 108px;
+		height: 4px;
+		background-color: rgba(246,168,6,1);
+		margin-bottom: 8px;
 	}
 
 	.swiper-box-list {
@@ -458,14 +469,14 @@
 	.user-one-line {
 		position: relative;
 		width: 100%;
-		height: 80upx;
+		height:64px;
 	}
 
 	.touxiangBox{
 		position: absolute;
-		left: 40upx;
-		width: 34px;
-		height: 34px;
+		left: 16px;
+		width: 44px;
+		height: 44px;
 	}
 
 	.publicTouxiang {
@@ -485,27 +496,52 @@
 
 	.userid {
 		position: absolute;
-		left: 120upx;
-		font-size: x-small;
-		color: #353535;
+		left: 76px;
+		height:21px;
+		font-size:17px;
+		font-weight:400;
+		line-height:21px;
+		color:rgba(53,53,53,1);
+		opacity:1;
 	}
 
 	.attentionButton {
 		position: absolute;
-		right: 50upx;
-		display: flex;
-		min-width: 100upx;
-		height: 52upx;
-		border-radius: 10upx;
-		border: 1upx solid #FFCF3C;
+		z-index: 10;
+		right: 16px;
+		height:30px;
+		background:rgba(252,192,65,1);
+		opacity:1;
+		border-radius:4px;
 	}
 
-	.attentionButton-text {
-		color: #FFCF3C;
-		font-size: small;
-		letter-spacing: 10upx;
-		margin-left: 10upx;
+	.attentionButton .attentionButton-text {
+		height:23px;
+		font-size:14px;
+		font-weight:500;
+		line-height:23px;
+		color:rgba(255,255,255,1);
 	}
+	
+	.attentionButton_followed {
+		position: absolute;
+		z-index: 10;
+		right: 16px;
+		padding: 0px 18px;
+		height:30px;
+		opacity:1;
+		border:1px solid rgba(252,192,65,1);
+		border-radius:4px;
+	}
+	
+	.attentionButton_followed .attentionButton-text {
+		height:23px;
+		font-size:14px;
+		font-weight:500;
+		line-height:23px;
+		color:rgba(252,192,65,1);
+	}
+	
 
 	.scroll-test {
 		height: 100%

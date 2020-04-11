@@ -12,7 +12,7 @@
 		</view>
 		<!-- 点赞和评论数量 -->
 		<view id="msglist-likecommentnum">
-			<view class="msglist-like column_center" @tap="goToCmtLikeDetail(0)">
+			<view class="msglist-like column_center" hover-class="hoverColor" @tap="goToCmtLikeDetail(0)">
 				<view class="msglist-like-bg super_center" style="background:rgba(255,93,93,1);">
 					<image src="../../static/icon/thumbs_up_white.png" class="msglist-like-icon" mode=""></image>
 				</view>
@@ -25,10 +25,10 @@
 			<!-- 分割线 -->
 			<view class="msglist-likecommentnum-border">
 			</view>
-			<view class="msglist-comment column_center" @tap="goToCmtLikeDetail(1)">
+			<view class="msglist-comment column_center" hover-class="hoverColor" @tap="goToCmtLikeDetail(1)">
 				<!-- Comment background -->
 				<view class="msglist-comment-bg super_center" style="background:rgba(0,132,233,1);">
-					<image src="../../static/icon/comment_dots_ffffff.png" class="msglist-comment-icon" mode=""></image>
+					<image src="../../static/icon/comment-alt-ffffff.png" class="msglist-comment-icon" mode=""></image>
 				</view>
 				<text class="msglist-top-text font-family">{{lang.comment}}</text>
 				<view class="msglist-top-num super_center " v-if="commentMsgCount>0">
@@ -278,7 +278,7 @@ export default {
 		position: relative;
 		width: 100%;
 		height: 49%;
-		border-radius: 25upx;
+		border-radius: 8px;
 	}
 
 	.msglist-like-bg,.msglist-comment-bg {
@@ -291,8 +291,8 @@ export default {
 	}
 
 	.msglist-like-icon,.msglist-comment-icon {
-		width:16px;
-		height:16px;
+		width:18px;
+		height:18px;
 		opacity:1;
 	}
 
@@ -306,7 +306,7 @@ export default {
 	.msglist-comment {
 		width: 100%;
 		height: 49%;
-		border-radius: 25upx;
+		border-radius: 8px;
 	}
 
 	.msglist-top-text {

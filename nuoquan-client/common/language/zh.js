@@ -7,7 +7,7 @@ module.exports = {
 	version : "v1.1.1",
 	back : "返回",
 	send : "发送",
-	submit : "提交",
+	submit : "发表",
 	delete : "删除",
 	time : "时间",
 	hot : "热度",
@@ -29,6 +29,7 @@ module.exports = {
 	ok : "完成",
 	pullUp : "收起",
 	reply: "回复",
+	cancle: "取消",
 	
 	//登陆
 	isReadProtocol : "我已阅读并同意遵守",
@@ -49,6 +50,11 @@ module.exports = {
 	
 	//详情页
 	sharetoMoments: "分享到朋友圈",
+	menu_more:"更多",
+	share:"分享",
+	collect:"收藏",
+	backToTop:"返回顶部",
+	backToLastPage:"回到上页",
 	
 	//投票
 	vote : "投票",
@@ -87,9 +93,13 @@ module.exports = {
 	myMessage : "动态",
 	
 	//我的
+	chinese: "中",
+	english: "EN",
 	profile : "个人信息",
 	myPublish : "我的发布",
 	about : "关于我们",
+	myFavorite: "我的收藏",
+	userDeal: "用户协议",
 	changeLang : "切换语言",
 	follow : "关注",
 	fans : "粉丝",
@@ -101,6 +111,12 @@ module.exports = {
 	passCheck: '审核通过',
 	underCheck: '审核中',
 	failCheck: '审核失败',
+	
+	//我的收藏
+	myCollection:"我的收藏",
+	collectionNumSuffix:"篇文章",
+	cancleCollectNotice:"左滑卡片可取消收藏",
+	uncollectText:"取消收藏",
 	
 	//关注粉丝列表
 	fanAndFollow : "关注粉丝列表",

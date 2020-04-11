@@ -5,7 +5,10 @@
  -->
 <template name="yq-avatar">
 	<view>
-		<image :src="imgSrc.imgSrc" @click="fSelect" :style="[ imgStyle ]" class="my-avatar"></image>
+		<image :src="imgSrc.imgSrc" :style="[ imgStyle ]" class="my-avatar"></image>
+		<view @click="fSelect" class="editTouXiang">
+			<image src="../../static/icon/write.png"></image>
+		</view>
 		<canvas canvas-id="avatar-canvas" id="avatar-canvas" class="my-canvas" :style="{top: styleTop, height: cvsStyleHeight}" disable-scroll="false"></canvas>
 		<canvas canvas-id="oper-canvas" id="oper-canvas" class="oper-canvas" :style="{top: styleTop, height: cvsStyleHeight}" disable-scroll="false" @touchstart="fStart" @touchmove="fMove" @touchend="fEnd"></canvas>
 		<canvas canvas-id="prv-canvas" id="prv-canvas" class="prv-canvas" disable-scroll="false" @touchstart="fHideImg"	:style="{ height: cvsStyleHeight, top: prvTop }"></canvas>
@@ -998,10 +1001,28 @@
 		width: 100%;
 	}
 	.my-avatar {
-		width: 150upx;
-		height: 150upx;
+		width: 72px;
+		height: 72px;
 		border-radius: 100%;
+		position: relative;
 	}
+ 	.editTouXiang {
+		width: 24px;
+		height: 24px;
+		background: rgba(255, 255, 255, 1);
+		box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
+		border-radius: 50%;
+	 	position: absolute;
+		right: 4px;
+		bottom: 4px; 
+	}
+
+	.editTouXiang image {
+		width: 12px;
+		height: 12px;
+		margin: auto;
+		margin-top: 6px;
+	} 
 	.oper-canvas {
 		display: flex;
 		position: fixed !important;

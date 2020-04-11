@@ -104,6 +104,7 @@
 							:key="index2"
 							:class="[option.id != selectedOptionId ? 'oneVoteCard' : 'oneVoteCard_chosen']"
 							@click="switchChoose(option.id)"
+							hover-class="hoverColor"
 						>
 							<text :class="[option.id != selectedOptionId ? 'oneVote_text' : 'oneVote_text_chosen']">{{ option.optionContent }}</text>
 						</view>
@@ -193,9 +194,10 @@
 							></textarea>
 							<!-- <view style="position: absolute;bottom: 8px;right:8px;font-size: 11px;color:#888888;">{{140 - commentContent.length}}</view>-->
 							<view
-								style="width:28px;height:14px;line-height:14px;font-size:14px;
-								color:rgba(252,192,65,1);position: absolute;top:11px;right:12px;"
+								style="width:30px;height:14px;line-height:14px;font-size:14px;
+								color:rgba(252,192,65,1);position: absolute;top:11px;right:12px;text-align: center;"
 								@tap="saveComment"
+								hover-class="hoverColor"
 							>
 								{{ lang.send }}
 							</view>
@@ -1184,7 +1186,6 @@ page {
 .oneVoteCard {
 	margin: 6px 0 0 0;
 	padding: 12px 20px;
-	background: rgba(255, 255, 255, 1);
 	border: 1px solid rgba(238, 238, 238, 1);
 	opacity: 1;
 	border-radius: 8px;

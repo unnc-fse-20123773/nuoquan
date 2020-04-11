@@ -44,7 +44,7 @@
 </template>
 
 <script>
-	import searchResultArticle from '../../components/searchResultArticle.vue';
+	import searchResultArticle from '../../components/nq-card/searchResultArticle.vue';
 	import { mapState, mapMutations } from 'vuex';
 	
 	var isSearching = false; //搜索锁

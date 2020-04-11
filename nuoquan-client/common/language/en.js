@@ -29,6 +29,7 @@ module.exports = {
 	ok : "OK",
 	pullUp : "Pull up",
 	reply: "reply",
+	cancel: "cancel",
 	
 	//登陆
 	isReadProtocol : "I have read and agree :",
@@ -49,6 +50,11 @@ module.exports = {
 	
 	//详情页
 	sharetoMoments: "Share to moments",
+	menu_more:"More",
+	share:"Share",
+	collect:"Collect",
+	backToTop:"Top",
+	backToLastPage:"Back",
 	
 	//投票
 	vote : "Vote",
@@ -88,9 +94,13 @@ module.exports = {
 	myMessage : "Message",
 	
 	//我的
+	chinese: "中",
+	english: "EN",
 	profile : "Profile",
 	myPublish : "My Post",
 	about : "About Us",
+	myFavorite: "My Favorite",
+	userDeal: "User Deal",
 	changeLang : "Language",
 	follow : "Follow",
 	fans : "Follower",
@@ -102,6 +112,12 @@ module.exports = {
 	passCheck: 'Published successfully',
 	underCheck: 'Under Review',
 	failCheck: 'Publishing failed',
+	
+	//我的收藏
+	myCollection:"My Collection",
+	collectionNumSuffix:" Article",
+	uncollectNotice:"Swipe left to uncollect",
+	uncollectText:"Undo",
 	
 	//关注粉丝列表
 	fanAndFollow : "Follow List",
