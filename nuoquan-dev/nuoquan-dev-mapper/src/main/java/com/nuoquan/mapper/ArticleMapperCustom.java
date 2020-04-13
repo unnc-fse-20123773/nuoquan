@@ -40,6 +40,19 @@ public interface ArticleMapperCustom extends MyMapper<Article> {
 	public void reduceArticleLikeCount(String articleId);
 	
 	/**
+	 * @Description: 对文章收藏的数量进行累加
+	 * @param articleId
+	 */
+	public void addArticleCollectCount(String articleId);
+	
+	
+	/**
+	 * @Description: 对文章收藏的数量进行累减
+	 * @param articleId
+	 */
+	public void reduceArticleCollectCount(String articleId);
+	
+	/**
 	 * @Description: 文章评论数量累加
 	 * @param articleId
 	 */
@@ -86,9 +99,17 @@ public interface ArticleMapperCustom extends MyMapper<Article> {
 	public List<ArticleVO> queryOthersLegalHisArticle(String targetId);
 	
 	/**
+	 * 查询目标用户收藏，我或者他人
+	 * @param targetId
+	 * @return
+	 */
+	public List<ArticleVO> queryCollectArticle(String targetId);
+	
+	/**
 	 * 浏览量+1
 	 * @param articleId
 	 */
 	public void addViewCount(String articleId);
+	
 	
 }

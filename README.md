@@ -77,17 +77,14 @@ Current Dev Verion: `v1.0.3` [![Build Status](https://travis-ci.com/Jerriodaddy/
 - 微信授权登陆->若有记录，无需认证，显示欢迎回来。
 
 ## [Recent Update](./updateLog.md): ##
+**v20.4.11 更新**
+1. 新增 文章收藏接口
+2. 新增 单元测试
+3. 修复 已知bug
+4. 优化 ArticleService 代码
+
 **v20.3.5 更新**
 1. 新增 中英文切换
 2. 优化 部分页面性能
 3. 修复 部分页面bug
 
-**v20.2.25 更新**
-1. 整合 各分支
-2. 新增 封装nq-switch，以后按照诺圈标准开发的组件统一命名为nq-xxx
-3. 优化 各分支所负责的页面
-
-**v20.2.23 更新**
-1. 新增 语言切换功能，目前仅在“我的”页面实现
-2. 新增 头像上传功能
-3. 新增 main.js 中 pathFilter 方法用于区分相对路径/绝对路径

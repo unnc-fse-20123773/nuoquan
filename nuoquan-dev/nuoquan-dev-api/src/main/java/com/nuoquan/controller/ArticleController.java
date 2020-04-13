@@ -25,6 +25,7 @@ import com.nuoquan.pojo.Article;
 import com.nuoquan.pojo.ArticleImage;
 import com.nuoquan.pojo.User;
 import com.nuoquan.pojo.UserArticleComment;
+import com.nuoquan.pojo.UserCollectArticle;
 import com.nuoquan.pojo.UserLikeArticle;
 import com.nuoquan.pojo.UserLikeComment;
 import com.nuoquan.pojo.netty.NoticeCard;
@@ -201,7 +202,6 @@ public class ArticleController extends BasicController {
 			finalResult = result;
 		}
 		
-		
 		return JSONResult.ok(finalResult);
 		
 	}
@@ -245,11 +245,12 @@ public class ArticleController extends BasicController {
 			dataContent.setData(new NoticeCard(likeVO, articleService.getArticleById(articleId, userId)));
 			
 			MsgHandler.sendMsgTo(articleCreaterId, dataContent);
+			
+			//作者影响力++
+			userService.updateReputation(articleCreaterId, ReputeWeight.LIKE.weight, 1);
+			
 		}
-		
-		//作者影响力++
-		userService.updateReputation(articleCreaterId, ReputeWeight.LIKE.weight, 1);
-		
+
 		return JSONResult.ok();
 	}
 
@@ -281,10 +282,10 @@ public class ArticleController extends BasicController {
 			dataContent.setData(new NoticeCard(likeVO, articleService.getCommentById(commentId, userId)));
 			
 			MsgHandler.sendMsgTo(createrId, dataContent);
+			
+			//作者影响力++
+			userService.updateReputation(createrId, ReputeWeight.LIKE.weight, 1);
 		}
-		
-		//作者影响力++
-		userService.updateReputation(createrId, ReputeWeight.LIKE.weight, 1);
 		
 		return JSONResult.ok();
 	}
@@ -755,4 +756,72 @@ public class ArticleController extends BasicController {
 	public JSONResult getTagsList() {
 		return JSONResult.ok(tagsService.getTagsList());
 	}
+	
+	@ApiOperation(value = "收藏文章")
+	@ApiImplicitParams({
+			// uniapp使用formData时，paramType要改成form
+			@ApiImplicitParam(name = "userId", value = "操作者id", required = true, dataType = "String", paramType = "form"),
+			@ApiImplicitParam(name = "articleId", value = "文章id", required = true, dataType = "String", paramType = "form"),
+			@ApiImplicitParam(name = "articleCreaterId", value = "文章作者id", required = true, dataType = "String", paramType = "form") })
+	@PostMapping(value = "/userCollectArticle")
+	public JSONResult userCollectArticle(String userId, String articleId, String articleCreaterId) throws Exception {
+	
+		UserCollectArticle uca;
+
+		if (userId.equals(articleCreaterId)) {
+			// 收藏自己的文章，标记已签收存入数据
+			uca = articleService.userCollectArticle(userId, articleId, MsgSignFlagEnum.SIGNED.type);
+		}else {
+			// 标记未签收，储存到数据库 返回数据库对象
+			uca = articleService.userCollectArticle(userId, articleId, MsgSignFlagEnum.UNSIGN.type);
+			// 加上收藏人的信息
+			
+			// 给目标作者发推送
+
+			//作者影响力++
+		}
+		if (uca == null) {
+			return JSONResult.errorMsg("无法收藏该状态下的文章");
+		}
+		return JSONResult.ok();
+	}
+	
+	@ApiOperation(value = "取消收藏文章")
+	@ApiImplicitParams({
+			// uniapp使用formData时，paramType要改成form
+			@ApiImplicitParam(name = "userId", value = "操作者id", required = true, dataType = "String", paramType = "form"),
+			@ApiImplicitParam(name = "articleId", value = "文章id", required = true, dataType = "String", paramType = "form"),
+			@ApiImplicitParam(name = "articleCreaterId", value = "文章作者id", required = true, dataType = "String", paramType = "form") })
+	@PostMapping(value = "/userUncollectArticle")
+	public JSONResult userUncollectArticle(String userId, String articleId, String articleCreaterId) throws Exception {
+		articleService.userUncollectArticle(userId, articleId);
+		//作者影响力--
+		
+		return JSONResult.ok();
+	}
+	
+	@ApiOperation(value = "查询我的发布的文章和他人发布的文章", notes = "查看他人时只能查看status为1的, 查询自己时,可显示所有status")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "page", value = "页数", required = true, dataType = "Integer", paramType = "form"),
+		@ApiImplicitParam(name = "pageSize", value = "每页大小", required = true, dataType = "Integer", paramType = "form"),
+		@ApiImplicitParam(name = "userId", value = "操作者id", required = true, dataType = "String", paramType = "form"),
+		@ApiImplicitParam(name = "targetId", value = "目标查询者id", required = true, dataType = "String", paramType = "form")
+	})
+	@PostMapping("/queryCollectArticle")
+	public JSONResult queryCollectArticle(Integer page, Integer pageSize, String userId, String targetId) {
+		
+		if(page == null) {
+			page = 1;
+		}
+		if(pageSize == null) {
+			pageSize = PAGE_SIZE;
+		}
+		
+		// 查询targetId收藏状态为1的文章
+		PagedResult result = articleService.queryCollectArticle(page, pageSize, userId, targetId);
+		
+		return JSONResult.ok(result);
+		
+	}
+	
 }
