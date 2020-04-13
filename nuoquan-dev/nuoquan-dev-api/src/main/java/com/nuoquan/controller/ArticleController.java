@@ -800,7 +800,7 @@ public class ArticleController extends BasicController {
 		return JSONResult.ok();
 	}
 	
-	@ApiOperation(value = "查询我的发布的文章和他人发布的文章", notes = "查看他人时只能查看status为1的, 查询自己时,可显示所有status")
+	@ApiOperation(value = "查询某人收藏的文章", notes = "查看他人时只能查看status为1的, 查询自己时,可显示所有status")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "page", value = "页数", required = true, dataType = "Integer", paramType = "form"),
 		@ApiImplicitParam(name = "pageSize", value = "每页大小", required = true, dataType = "Integer", paramType = "form"),
