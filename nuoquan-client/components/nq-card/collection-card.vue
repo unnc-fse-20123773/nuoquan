@@ -43,7 +43,7 @@
 				</view>
 
 				<view class="menu-area" v-if="swipedArticleId == thisArticle.id">
-					<view style="background: #FE5F55;" @click="fDeleteArticle(thisArticle.id)">
+					<view style="background: #FE5F55;" @click="unCollctArticle(thisArticle.id)">
 						<image src="../../static/icon/bin.png"></image>
 						<text>{{lang.uncollectText}}</text>
 					</view>
@@ -140,26 +140,25 @@ export default {
 			closeSwipe(){
 				this.$emit('modifySwipedId',-1);
 			},
-		
-		fDeleteArticle(articleId){
-			uni.request({
-				url: this.$serverUrl + '/article/fDeleteArticle',
-				method: 'POST',
-				data: {
-					articleId: articleId
-				},
-				header: {
-					'content-type': 'application/x-www-form-urlencoded'
-				},
-				success: res => {
-					console.log(res);
-				},
-				fail: res => {
-					
-				}
-			});
-			uni.$emit("refresh");
-		}
+			unCollectArticle(){
+				console.log('取消收藏文章');
+				var that = this;
+				uni.request({
+					method: 'POST',
+					url: that.$serverUrl + '/article/userUncollectArticle',
+					data: {
+						userId: that.userInfo.id,
+						articleId: that.thisArticle.id,
+						articleCreaterId: that.thisArticle.userId,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: res => {
+						uni.$emit("refresh");
+					}
+				});
+			},
 	}
 };
 </script>

@@ -85,9 +85,9 @@ export default {
 			if (loadArticleFlag) {
 				loadArticleFlag = false;
 			}
-
+		
 			loadArticleFlag = true;
-
+		
 			uni.showLoading({
 				title: '加载中...'
 			});
@@ -102,15 +102,16 @@ export default {
 					});
 				}
 			}, 5000); //延时五秒timeout
-
+		
 			var that = this;
 			uni.request({
-				url: that.$serverUrl + '/article/queryPublishHistory',
+				url: that.$serverUrl + '/article/queryCollectArticle',
 				method: 'POST',
 				data: {
 					page: page,
+					pageSize:5,
 					userId: that.userInfo.id,
-					targetId: that.userInfo.id //应该为targetId,但缺少publicProfile的数据传输,暂时用userId测试
+					targetId: that.userInfo.id, //应该为targetId,但缺少publicProfile的数据传输,暂时用userId测试
 				},
 				header: {
 					'content-type': 'application/x-www-form-urlencoded'
@@ -120,7 +121,7 @@ export default {
 						//延时加载
 						uni.hideLoading();
 						loadArticleFlag = false;
-
+		
 						console.log(res);
 						if (page == 1) {
 							that.myArticleList = [];
@@ -141,23 +142,23 @@ export default {
 				}
 			});
 		},
-		// loadMore: function() {
-		// 	var that = this;
-		// 	var currentPage = that.currentPage;
-		// 	var totalPage = that.totalPage;
-		// 	// 判断当前页数和总页数是否相等
-		// 	if (currentPage == totalPage) {
-		// 		// that.showArticles(1);
-		// 		uni.showToast({
-		// 			title: '没有更多文章了',
-		// 			icon: 'none',
-		// 			duration: 1000
-		// 		});
-		// 	} else {
-		// 		var page = currentPage + 1;
-		// 		that.showArticles(page);
-		// 	}
-		// },
+		loadMore: function() {
+			var that = this;
+			var currentPage = that.currentPage;
+			var totalPage = that.totalPage;
+			// 判断当前页数和总页数是否相等
+			if (currentPage == totalPage) {
+				// that.showArticles(1);
+				uni.showToast({
+					title: '没有更多文章了',
+					icon: 'none',
+					duration: 1000
+				});
+			} else {
+				var page = currentPage + 1;
+				that.showArticles(page);
+			}
+		},
 
 		receiveSwiped(newId){
 			this.swipedArticleId = newId;
