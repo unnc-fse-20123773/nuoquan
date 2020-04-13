@@ -116,12 +116,14 @@ module.exports = {
 	gender : "Gender",
 	male : "Mr",
 	female : "Ms",
+	other:"Other",
+	unknown:"Unknown",
 	graduationYear : "Graduation Year",
 	major : "Major",
 	degree : "Degree",
 	schoolEmail : "School Email",
 	changeEmail : "Change Email",
-	genderList : ["Ms", "Mr", "Others"], //顺序请和数据库保持一致
+	genderList : ["Ms", "Mr", "Others","Unknown"], //顺序请和数据库保持一致
 	degreeList : ["High school", "Undergraduate", "Graduate"], //顺序请和数据库保持一致
 	
 	//他人页

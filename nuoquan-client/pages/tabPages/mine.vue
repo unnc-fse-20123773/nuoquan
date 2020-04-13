@@ -8,7 +8,7 @@
 			<view class="header">
 				<!-- 头像 -->
 				<view class="touxiang">
-					<avatar class="image" :avatarSrc="pathFilter(thisUserInfo.faceImg)" @upload="uploadFace"></avatar>
+					<avatar class="image" :avatarSrc="pathFilter(thisUserInfo.faceImg)" selWidth="200px" selHeight="400upx" @upload="uploadFace"  avatarStyle="width: 160upx; height: 160upx; border-radius: 100%;"></avatar>
 				</view>
 				<!-- 右侧信息快 -->
 				<view class="person_info">
