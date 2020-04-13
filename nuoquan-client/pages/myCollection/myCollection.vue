@@ -23,7 +23,8 @@
 								:key="article.id" 
 								:thisArticle="article" 
 								:lang="lang" @modifySwipedId="receiveSwiped" 
-								:swipedArticleId="swipedArticleId">
+								:swipedArticleId="swipedArticleId"
+								:userInfo="userInfo">
 							</collection-card>
 					</view>
 				</scroll-view>
@@ -109,7 +110,6 @@ export default {
 				method: 'POST',
 				data: {
 					page: page,
-					pageSize:5,
 					userId: that.userInfo.id,
 					targetId: that.userInfo.id, //应该为targetId,但缺少publicProfile的数据传输,暂时用userId测试
 				},

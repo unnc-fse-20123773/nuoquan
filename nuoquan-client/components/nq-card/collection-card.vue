@@ -42,8 +42,8 @@
 					
 				</view>
 
-				<view class="menu-area" v-if="swipedArticleId == thisArticle.id">
-					<view style="background: #FE5F55;" @click="unCollctArticle(thisArticle.id)">
+				<view class="menu-area" v-if="swipedArticleId == thisArticle.id" @click="unCollectArticle()">
+					<view style="background: #FE5F55;" >
 						<image src="../../static/icon/bin.png"></image>
 						<text>{{lang.uncollectText}}</text>
 					</view>
@@ -61,6 +61,7 @@ export default {
 		},
 		thisArticle:{},
 		lang: '',
+		userInfo:"",
 	},
 	data() {
 		return {
@@ -143,6 +144,7 @@ export default {
 			unCollectArticle(){
 				console.log('取消收藏文章');
 				var that = this;
+				debugger;
 				uni.request({
 					method: 'POST',
 					url: that.$serverUrl + '/article/userUncollectArticle',
@@ -304,6 +306,7 @@ export default {
 	top: 0;
 	background:rgba(177,177,177,1);
 	box-shadow:0px 0px 4px rgba(0,0,0,0.16);
+	border-radius: 8px;
 }
 .menu-area image{
 	position: absolute;
