@@ -61,7 +61,7 @@
 					@tap="previewImg(index)"
 					@longpress="aboutImg(index)"
 				></image>
-				<view v-if="articleCard.imgList.length == 2 || imageList.length == 5 || imageList.length == 8" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
+				<view v-if="articleCard.imgList.length == 2 || articleCard.imgList.length == 5 || articleCard.imgList.length == 8" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
 			</view>
 		</view>
 <!-- 		<view class="menu-bar">
