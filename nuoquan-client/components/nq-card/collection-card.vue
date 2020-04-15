@@ -15,7 +15,11 @@
 				>
 					<view class="title">{{ thisArticle.articleTitle }}</view>
 					<view class="cardBody">
-						<view class="left-body" :class="{ leftBodyWithPic: thisArticle.imgList.length != 0 }">
+						<view class="picArea" v-if="thisArticle.imgList.length">
+							<image :src="serverUrl + thisArticle.imgList[0].imagePath"></image>
+							<!-- 						<view class="picNum"></view>第二版不显示图片总数了，此处注释掉 -->
+						</view>
+						<view class="left-body" :class="{ leftBodyWithPic: thisArticle.imgList.length != 0 && thisArticle.imgList != null}">
 							<view class="content">{{ thisArticle.articleContent }}</view>
 							<view class="bottomBar">
 								<view class="time">{{timeDeal(thisArticle.createDate)}}</view>
@@ -34,10 +38,7 @@
 								</view>
 							</view>
 						</view>
-						<view class="picArea" v-if="thisArticle.imgList.length">
-							<image :src="serverUrl + thisArticle.imgList[0].imagePath"></image>
-							<!-- 						<view class="picNum"></view>第二版不显示图片总数了，此处注释掉 -->
-						</view>
+						
 					</view>
 					
 				</view>
@@ -196,7 +197,7 @@ export default {
 	width: 100%;
 	/* height:83px; */
 	padding-top: 12px;
-	height: 0;
+	height: 70px;
 }
 
 .picArea {
@@ -204,8 +205,9 @@ export default {
 	width: 61px;
 	height: 61px;
 	position: absolute;
-	top: 12px;
-	right: 4px;
+	top:12px;
+	left:0;
+	vertical-align: top;
 }
 
 .picArea image {
@@ -223,6 +225,9 @@ export default {
 
 .leftBodyWithPic {
 	width: calc(100% - 73px);
+	position: absolute;
+	left:73px;
+	bottom:0;
 }
 
 .content {
