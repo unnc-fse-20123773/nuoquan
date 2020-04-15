@@ -96,10 +96,8 @@ public class ArticleServiceImpl implements ArticleService {
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public ArticleVO composeArticleVO(ArticleVO a, String userId) {
 		List<ArticleImage> images = articleImageMapper.getArticleImgs(a.getId());
-		if (images != null && !images.isEmpty()) {
-			// 添加图片列表
-			a.setImgList(images);
-		}
+		// 添加图片列表
+		a.setImgList(images);
 		// 添加和关于用户的点赞关系
 		a.setIsLike(isUserLikeArticle(userId, a.getId()));
 		// 添加和关于用户的收藏关系
