@@ -4,7 +4,7 @@
 			<view class="oneArticle" v-if="thisArticle.status != 0"   >
 				<view
 					class="swipe-contain"
-					:style="{ transform: messageIndex == thisArticle.id ? transformX : 'translateX(0px)' }"
+					:style="{ transform: swipedArticleId == thisArticle.id ? transformX : 'translateX(0px)' }"
 					:data-index="thisArticle.id"
 					@touchstart="touchStart"
 					@touchmove="touchMove"
@@ -38,22 +38,15 @@
 								</view>
 							</view>
 						</view>
-
+						
 					</view>
-					<!-- 审核状态 -->
-					<view class="status pass" style="min-width:49px;background: #09BB07;" v-if="thisArticle.status == 1">{{lang.passCheck}}</view>
-					<view class="status pending" style="min-width:36px;background: #3370FF;" v-if="thisArticle.status == 2">{{lang.underCheck}}</view>
-					<view class="status fail" style="min-width:49px;background: #888888;" v-if="thisArticle.status == 3">{{lang.failCheck}}</view>
+					
 				</view>
 
-				<view class="menu-area" v-if="messageIndex == thisArticle.id">
-					<view style="background: #FE5F55;" @click="fDeleteArticle(thisArticle.id)">
+				<view class="menu-area" v-if="swipedArticleId == thisArticle.id" @click="unCollectArticle()">
+					<view style="background: #FE5F55;" >
 						<image src="../../static/icon/bin.png"></image>
-						<text>{{lang.delete}}</text>
-					</view>
-					<view style="background: #FCC041;" @click="closeSwipe">
-						<image src="../../static/icon/arrow-right-FFFFFF.png"></image>
-						<text>{{lang.pullUp}}</text>
+						<text>{{lang.uncollectText}}</text>
 					</view>
 				</view>
 			</view>
@@ -64,11 +57,12 @@
 <script>
 export default {
 	props:{
-		messageIndex:{
+		swipedArticleId:{
 			default:'-1',
 		},
 		thisArticle:{},
 		lang: '',
+		userInfo:"",
 	},
 	data() {
 		return {
@@ -129,7 +123,7 @@ export default {
 				this.$emit('modifySwipedId',-1);
 				return;
 			}
-			if (this.messageIndex !== -1) {
+			if (this.swipedArticleId !== -1) {
 				this.transformX = `translateX(${-58}px)`;
 			} else {
 				this.transformX = 'translateX(0px)';
@@ -148,26 +142,26 @@ export default {
 			closeSwipe(){
 				this.$emit('modifySwipedId',-1);
 			},
-		
-		fDeleteArticle(articleId){
-			uni.request({
-				url: this.$serverUrl + '/article/fDeleteArticle',
-				method: 'POST',
-				data: {
-					articleId: articleId
-				},
-				header: {
-					'content-type': 'application/x-www-form-urlencoded'
-				},
-				success: res => {
-					console.log(res);
-				},
-				fail: res => {
-					
-				}
-			});
-			uni.$emit("refresh");
-		}
+			unCollectArticle(){
+				console.log('取消收藏文章');
+				var that = this;
+				debugger;
+				uni.request({
+					method: 'POST',
+					url: that.$serverUrl + '/article/userUncollectArticle',
+					data: {
+						userId: that.userInfo.id,
+						articleId: that.thisArticle.id,
+						articleCreaterId: that.thisArticle.userId,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: res => {
+						uni.$emit("refresh");
+					}
+				});
+			},
 	}
 };
 </script>
@@ -203,7 +197,6 @@ export default {
 	width: 100%;
 	/* height:83px; */
 	padding-top: 12px;
-	vertical-align: top;
 	height: 70px;
 }
 
@@ -219,7 +212,7 @@ export default {
 
 .picArea image {
 	position: absolute;
-	left: 0;
+	right: 0;
 	top: 0;
 	width: 61px;
 	height: 61px;
@@ -311,80 +304,30 @@ export default {
 }
 
 .menu-area {
-	width: 60px;
+	width: 48px;
 	height: 100%;
 	position: absolute;
 	right: 0;
 	top: 0;
-}
-.menu-area view {
-	height: 55px;
-	width: 48px;
-	background: #e80080;
+	background:rgba(177,177,177,1);
+	box-shadow:0px 0px 4px rgba(0,0,0,0.16);
 	border-radius: 8px;
-	font-size: 10px;
-	text-align: center;
-	margin-bottom: 11px;
-	margin-left: 12px;
 }
-.menu-area view image {
-	width: 18px;
-	height: 18px;
-	display: block;
-	margin: auto;
-	padding-top: 10px;
-	padding-bottom: 4px;
-}
-.menu-area view text {
-	min-width: 24px;
-	height: 12px;
-	font-size: 12px;
-	line-height: 20px;
-	color: rgba(255, 255, 255, 1);
-}
-.status {
-	padding: 4px 14px 4px 35px;
-	font-size: 12px;
-	height: 12px;
-	line-height: 12px;
+.menu-area image{
 	position: absolute;
-	top: -10px;
 	left: 16px;
-	color: #ffffff;
-	border-radius: 25px;
-	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+	top:31px;
+	width:16px;
+	height: 16px;
 }
-.pass::after {
-	content: '';
+.menu-area text{
 	position: absolute;
-	width: 14px;
-	height: 12px;
-	background: url(../../static/icon/check-pass.png);
-	background-size: contain;
-	background-repeat: no-repeat;
-	top: 4px;
-	left: 14px;
-}
-.pending::after {
-	content: '';
-	position: absolute;
-	width: 16px;
-	height: 4px;
-	background: url(../../static/icon/check-pending.png);
-	background-repeat: no-repeat;
-	background-size: contain;
-	top: 8px;
-	left: 14px;
-}
-.fail::after {
-	content: '';
-	position: absolute;
-	width: 12px;
-	height: 12px;
-	background: url(../../static/icon/check-fail.png);
-	background-size: contain;
-	background-repeat: no-repeat;
-	top: 4px;
-	left: 14px;
+	left:4px;
+	width: 40px;
+	word-wrap: break-word;
+	font-size: 14px;
+	color:#FFFFFF;
+	top:67px;
+	text-align: center;
 }
 </style>

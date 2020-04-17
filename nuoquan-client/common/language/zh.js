@@ -50,6 +50,11 @@ module.exports = {
 	
 	//详情页
 	sharetoMoments: "分享到朋友圈",
+	menu_more:"更多",
+	share:"分享",
+	collect:"收藏",
+	backToTop:"返回顶部",
+	backToLastPage:"回到上页",
 	
 	//投票
 	vote : "投票",
@@ -106,6 +111,12 @@ module.exports = {
 	passCheck: '审核通过',
 	underCheck: '审核中',
 	failCheck: '审核失败',
+	
+	//我的收藏
+	myCollection:"我的收藏",
+	collectionNumSuffix:"篇文章",
+	cancleCollectNotice:"左滑卡片可取消收藏",
+	uncollectText:"取消收藏",
 	
 	//关注粉丝列表
 	fanAndFollow : "关注粉丝列表",

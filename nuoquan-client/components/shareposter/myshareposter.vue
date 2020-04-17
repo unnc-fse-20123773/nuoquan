@@ -11,6 +11,14 @@
 			:style="{width: width + 'px', height: height + 'px'}"
 		>
 		</canvas> -->
+		<view  @click="unShow()" style="position: fixed;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				background-color: #000000;
+				opacity: 0.3;
+				z-index: 35;"></view>
 
 		<view>
 			<image :src="shareImage" class="shareimage" mode="aspectFit"></image>
@@ -104,13 +112,14 @@ export default {
 
 	methods: {
 		unShow() {
+			uni.hideLoading()
 			this.$emit('unShow');
 		},
 
 		eventDraw() {
 			uni.showLoading({
 				title: '绘制分享图片中',
-				mask: true
+				mask: false,
 			});
 			
 			// 先请求二维码
@@ -241,6 +250,7 @@ export default {
 			});
 		},
 		eventGetImage(event) {
+			
 			uni.hideLoading();
 			console.log(event);
 			const { tempFilePath, errMsg } = event;

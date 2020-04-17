@@ -39,7 +39,7 @@
 					</view>
 				</view>
 			</block>
-			<view v-show="isAddImage(this.imageList.length)" id="clickToChooseImage" class="addPic" @click="chooseImg">+</view>
+			<plusSquare v-if="isAddImage(this.imageList.length)" @plusClicked="chooseImg"></plusSquare>
 			<view v-if="imageList.length == 1 || imageList.length == 4 || imageList.length == 7" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
 		</view>
 
@@ -65,6 +65,7 @@
 <script>
 import mypicker from '../../components/mypicker.vue';
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
+import plusSquare from '@/components/plusSquare.vue'
 import { mapState, mapMutations } from 'vuex';
 
 var uploadFlag = false; // 标志文章正在上传，为 true 时 block 该方法
@@ -106,7 +107,8 @@ export default {
 	},
 	components: {
 		mypicker,
-		uniNavBar
+		uniNavBar,
+		plusSquare,
 	},
 	computed: {
 		...mapState(['lang'])
@@ -465,18 +467,6 @@ page {
 	width: 190upx;
 	height: 190upx;
 	margin: 6px 0;
-}
-
-.addPic {
-	width: 178upx;
-	height: 178upx;
-	line-height: 160upx;
-	text-align: center;
-	vertical-align: middle;
-	color: #888888;
-	font-size: 50px;
-	font-weight: 200;
-	background: #ececec;
 }
 
 .optionArea{

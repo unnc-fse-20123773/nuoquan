@@ -57,7 +57,7 @@
 					</view>
 				</view>
 			</block>
-			<view v-show="isAddImage(this.imageList.length)" id="clickToChooseImage" class="addPic" @click="chooseImg">+</view>
+			<plusSquare v-if="isAddImage()" @plusClicked="chooseImg"></plusSquare>
 			<view v-if="imageList.length == 1 || imageList.length == 4 || imageList.length == 7" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
 		</view>
 		<button class="submit-button" @tap="upload()">{{ lang.submit }}</button>
@@ -69,6 +69,7 @@ import tagSelectBox from '@/components/nq-tag/tagSelectBox.vue';
 import tagSelected from '@/components/nq-tag/tagSelected.vue';
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 import { mapState, mapMutations } from 'vuex';
+import plusSquare from '@/components/plusSquare.vue'
 
 // #ifdef APP-PLUS
 import permision from '@/common/permission.js';
@@ -83,7 +84,8 @@ export default {
 	components: {
 		tagSelectBox,
 		tagSelected,
-		uniNavBar
+		uniNavBar,
+		plusSquare,
 	},
 	computed: {
 		...mapState(['lang'])
@@ -233,6 +235,7 @@ export default {
 			});
 		},
 		isAddImage: function() {
+			console.log('imagelist length = ' + this.imageList.length);
 			if (this.imageList.length >= 9) {
 				return false;
 			} else {

@@ -18,17 +18,8 @@
 			 :id="item.id"></onemessage>
 			<view class="marginHelper"></view>
 		</scroll-view>
-		<view class="bottomBar" id="chatarea">
-			<textarea :style="{ width:  textareaWidth + 'px'}" fixed="true" cursor-spacing="20" auto-height="true" v-model="textMsg" :show-confirm-bar="false" />
-			<view id="icons" class="icons">
-				<button class="viewPic" @click="showToast()"><image src="../../static/icon/viewLocalPic.png"></image></button>
-				<!-- 				<button><image src="../../static/icon/emoji.png"></image></button>
- -->
-				<button class="viewEmoji" @click="showToast()"><image src="../../static/icon/emoji.png"></image></button>
-				<button @click="sendText(textMsg)" class="sendText">{{lang.send}}</image></button>
+		<chat-input id="chatarea" :inputMessageFromPage="textMsg" @send="sendText()" :windowWidth="windowWidth" :lang="lang"></chat-input>
 
-			</view>
-		</view>
 	</view>
 </template>
 
@@ -36,6 +27,7 @@
 import onemessage from './oneMessage';
 import { mapState } from 'vuex';
 import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
+import chatInput from "@/components/chatInput.vue"
 
 var page = 1; // PS: 非显示属性不放在渲染层
 var chatKey;
@@ -43,7 +35,8 @@ var chatHistory;
 export default {
 	components: {
 		onemessage,
-		uniNavBar
+		uniNavBar,
+		chatInput,
 	},
 	data() {
 		return {
@@ -151,12 +144,7 @@ export default {
 			console.log(that.textareaHeight);
 		});
 		
-		//根据屏幕宽度，自适应输入框宽度
-		var query2 = uni.createSelectorQuery().in(this);
-		query2.select('#icons').boundingClientRect(data => {
-		    console.log(data);
-			that.textareaWidth = that.windowWidth - data.width - 56;
-		}).exec();
+
 		
 		// 获取与该用户的聊天历史记录
 		chatKey = 'chat-' + this.userInfo.id + '-' + this.friendInfo.id;
@@ -169,20 +157,14 @@ export default {
 	},
 
 	methods: {
-		showToast() {
-			uni.showToast({
-				// title: '⠀⠀⠀⠀⠀under⠀⠀⠀⠀⠀development',//不是空格，是特殊符号，莫删
-				title: '开发小哥正在玩命实现中...',
-				duration: 2000,
-				icon: 'none'
-			});
-		},
+
 
 		scroll(e) {
 			// console.log(e.detail);
 		},
 
-		sendText() {
+		sendText(msgToSend) {
+			this.textMsg = msgToSend
 			if (!this.textMsg) {
 				return;
 			}
@@ -323,81 +305,6 @@ page {
 	height: 94%;
 }
 
-.bottomBar {
-	position: fixed;
-	display: flex;
-	align-items: center;
-	bottom: 0;
-	min-height: 48px;
-	width: 100%;
-	margin: 0;
-	padding: 0;
-	box-shadow: 0px -2px 2px 0px rgba(130, 130, 130, 0.2);
-	background: #ffffff;
-}
-
-.bottomBar textarea {
-	display: inline-block;
-	line-height: 16px;
-	/* width: 62.67%; */
-	max-height: 75px;
-	padding: 5px 8px;
-	margin: 11px 0 11px 14px;
-	font-size: 13px;
-	height:34px;
-	border:1px solid rgba(252,192,65,1);
-	opacity:1;
-	border-radius:8px;
-}
-
-.icons {
-	position: absolute;
-	bottom: 13px;
-	right:10px;
-	height: 24px;
-	display: inline-flex;
-}
-
-.icons image {
-	display: block;
-	width: 24px;
-	height: 24px;
-	vertical-align: bottom;
-}
-
-/* button {
-	display: inline-block;
-	margin: 0;
-	padding: 0;
-	width: 24px;
-	height: 24px;
-	vertical-align: bottom;
-	background: #ffffff;
-} */
-button::after {
-	border: none;
-}
-.viewPic, .viewEmoji{
-	display: inline-block;
-	margin: 0 4px;
-	padding: 0;
-	width: 24px;
-	height: 24px;
-	vertical-align: bottom;
-	background: #ffffff;
-}
-
-.sendText{
-	padding: 0 0;
-	line-height: 23px;
-	min-width:34px;
-	height:23px;
-	font-size:17px;
-	font-weight:500;
-	color:rgba(252,192,65,1);
-	background: #ffffff;
-	margin: 0 0 0 6px;
-}
 .marginHelper {
 	height: 40upx;
 	width: 100%;
