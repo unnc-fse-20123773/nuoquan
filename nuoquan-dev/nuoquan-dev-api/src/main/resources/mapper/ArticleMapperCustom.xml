@@ -13,6 +13,7 @@
     <result column="like_num" jdbcType="INTEGER" property="likeNum" />
     <result column="dislike_num" jdbcType="INTEGER" property="dislikeNum" />
     <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
+    <result column="collect_num" jdbcType="INTEGER" property="commentNum" />
     <result column="popularity" jdbcType="INTEGER" property="popularity" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
@@ -56,6 +57,14 @@
   
   <update id="reduceArticleLikeCount" parameterType="String">
   	update nuoquan.article set like_num=like_num-1 where id=#{articleId}
+  </update>
+  
+  <update id="addArticleCollectCount" parameterType="String">
+  	update nuoquan.article set collect_num=collect_num+1 where id=#{articleId}
+  </update>
+  
+  <update id="reduceArticleCollectCount" parameterType="String">
+  	update nuoquan.article set collect_num=collect_num-1 where id=#{articleId}
   </update>
   
   <update id="addArticleCommentCount" parameterType="String">
@@ -144,6 +153,19 @@ select * from (
   		and a.user_id = #{targetId}
   		and a.status = 1
   	order by a.create_date desc
+  </select>
+  
+  <select id="queryCollectArticle" resultMap="BaseResultMap" parameterType="String">
+	select TableA.* from nuoquan.user_collect_article uca left join
+		(select a.*, u.nickname as nickname, u.face_img, u.face_img_thumb from nuoquan.article a
+	  	left join nuoquan.user u on u.id = a.user_id
+	  	where
+	  		 1 = 1
+	  		 and a.status = 1
+	  	order by a.create_date desc) TableA on uca.article_id = TableA.id 
+	where
+		1 = 1
+	    and uca.user_id = #{targetId}
   </select>
   
   <update id="addViewCount" parameterType="String">

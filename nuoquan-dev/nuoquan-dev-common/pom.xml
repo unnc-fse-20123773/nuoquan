@@ -38,6 +38,12 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+		<!-- junit 单元测试 -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+
 		<!-- 热部署 -->
 		<!-- devtools可以实现页面热部署（即页面修改后会立即生效， 这个可以直接在application.properties文件中配置spring.thymeleaf.cache=false来实现） -->
 		<!-- 实现类文件热部署（类文件修改后不会立即生效），实现对属性文件的热部署。 -->
@@ -178,21 +184,10 @@
 			</exclusions>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-		</dependency>
-
 		<!-- 邮箱 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
 		</dependency>
 
 		<!-- webapp -->
@@ -202,11 +197,11 @@
 		</dependency>
 
 		<!-- 百度UEditor依赖的jar包 -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>20180813</version>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
@@ -217,12 +212,6 @@
 			<version>1.8</version>
 			<scope>system</scope>
 			<systemPath>${basedir}/lib/ueditor-1.1.2.jar</systemPath>
-		</dependency>
-
-		<!-- junit 单元测试 -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
 		</dependency>
 
 		<!-- shiro权限 -->
@@ -254,20 +243,4 @@
 
 	</dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>cobertura-maven-plugin</artifactId>
-				<version>2.7</version>
-				<configuration>
-					<formats>
-						<format>html</format>
-						<format>xml</format>
-					</formats>
-					<check />
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 </project>

@@ -5,6 +5,7 @@ import java.util.List;
 import com.nuoquan.pojo.Article;
 import com.nuoquan.pojo.ArticleImage;
 import com.nuoquan.pojo.UserArticleComment;
+import com.nuoquan.pojo.UserCollectArticle;
 import com.nuoquan.pojo.UserLikeArticle;
 import com.nuoquan.pojo.UserLikeComment;
 import com.nuoquan.pojo.vo.ArticleVO;
@@ -64,6 +65,40 @@ public interface ArticleService {
 	 */
 	public boolean isUserLikeArticle(String userId, String articleId);
 	
+	/**
+	 * @des:用户收藏文章
+	 * @param userId
+	 * @param articleId
+	 * @return id in DB
+	 */
+	public UserCollectArticle userCollectArticle(String userId, String articleId, Integer signFlag);
+	
+	/**
+	 * @des: 用户取消收藏文章
+	 * @param userId
+	 * @param articleId
+	 * @param articleCreaterId
+	 */
+	public void userUncollectArticle(String userId, String articleId);
+	
+	/**
+	 * 查看用户是否收藏了文章
+	 * @param userId
+	 * @param articleId
+	 * @return
+	 */
+	public boolean isUserCollectArticle(String userId, String articleId);
+	
+	/**
+	 * 查询目标用户收藏的文章
+	 * @param page
+	 * @param pageSize
+	 * @param userId
+	 * @param targetId
+	 * @return
+	 */
+	public PagedResult queryCollectArticle(Integer page, Integer pageSize, String userId, String targetId);
+
 	/**
 	 *  按关键词搜索阳面文章，支持多关键词以空格分割
 	 *  TODO: 可以增加多种排序模式 @author jerrio

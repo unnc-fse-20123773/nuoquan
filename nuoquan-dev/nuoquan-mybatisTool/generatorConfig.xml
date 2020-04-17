@@ -29,6 +29,6 @@
         type="XMLMAPPER"/>
 
 
-		<table tableName="tags"></table>
+		<table tableName="user_collect_article"></table>
     </context>
 </generatorConfiguration>
