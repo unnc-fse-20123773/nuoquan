@@ -15,14 +15,17 @@
 				<view class="nickname">
 					<view class="text">{{lang.nickname}}</view>
 					<view class="second_line" @click="toggleIsEditNickname" v-if="!isEditNickname">{{ userInfo.nickname }}</view>
-					<input @input="onNickName" style="font-size:17px" @blur="formSubmit" name="nickname" maxlength="8" :value="userInfo.nickname" v-if="isEditNickname" />
+					<input :focus="true" class="second_line" @input="onNickName" style="font-size:17px" @blur="formSubmit" name="nickname" maxlength="8"
+					 :value="userInfo.nickname" v-if="isEditNickname" />
 				</view>
 				<view class="gender">
 					<view class="text">{{lang.gender}}</view>
-					<view class="second_line" @click="toggleIsEditGender" v-if="!isEditGender">{{ genderList[userInfo.gender] }}</view>
-					<view @tap="formSubmit" v-if="isEditGender" style="width:100px;display: flex;justify-content: space-between;position: relative;left:-6px;height:34px;">
+					<view class="second_line" @click="toggleIsEditGender" v-if="!isEditGender">{{ lang.genderList[gender] }}</view>
+					<view @tap="formSubmit" v-if="isEditGender" style="width:120px;display: flex;justify-content: space-between;position: relative;left:-6px;height:34px;">
 						<view :class="[gender == 1 ? 'genderPicker-buttonclick' : 'genderPicker-button']" @click="genderChanger(1)">{{lang.male}}</view>
 						<view :class="[gender == 0 ? 'genderPicker-buttonclick' : 'genderPicker-button']" @click="genderChanger(0)">{{lang.female}}</view>
+						<view style="width: 40px;" :class="[gender == 2 ? 'genderPicker-buttonclick' : 'genderPicker-button']" @click="genderChanger(2)">{{lang.other}}</view>
+
 					</view>
 				</view>
 			</view>
@@ -56,14 +59,16 @@
 			<view class="email">
 				<view class="text">{{lang.schoolEmail}}</view>
 				<view class="second_line">
-					<view @click="editEmail" v-if='!isEditEmail'>{{ userInfo.email}}</view>
-					<input  maxlength="35" style="min-height:unset;height:30px; font-size:17px;" :value="userInfo.email" @input="onEmailInput" v-if="isEditEmail&& !showCaptcha" />
+					<view @click="editEmail" v-if='!isEditEmail&&this.email!=null'>{{ userInfo.email}}</view>
+					<view @click="editEmail" v-if="!isEditEmail&&this.email==null">点击绑定邮箱</view>
+					<input :focus="true" maxlength="35" style="min-height:unset;height:30px; font-size:17px;" :value="userInfo.email" @input="onEmailInput"
+					 v-if="isEditEmail&& !showCaptcha" />
 					<view v-if="isEditEmail&&showCaptcha" class="text">{{email}}</view>
 				</view>
 			</view>
 			<view class="row">
-				<input style="color:rgba(53,53,53,1);min-height: unset;width: 60px;height:20px;font-size: 17px;" @blur="confirmCode" v-if="isEditEmail&& showCaptcha"
-				 maxlength="6" :placeholder="lang.captcha" @input="onCaptcha" />
+				<input style="color:rgba(53,53,53,1);min-height: unset;width: 60px;height:20px;font-size: 17px;" @blur="confirmCode"
+				 v-if="isEditEmail&& showCaptcha" maxlength="6" :placeholder="lang.captcha" @input="onCaptcha" />
 				<whCaptcha style="display: inline-block;" class="waiting" ref="captcha" :secord="60" :title="lang.getCaptcha"
 				 :waitTitle="lang.waitCaptcha" normalClass="editEmail" disabledClass="waiting60s" @click="getCaptcha" v-if="isEditEmail"></whCaptcha>
 			</view>
@@ -97,7 +102,6 @@
 			const degrees = ['高中', '本科', '研究生'];
 
 			return {
-				genderList: ['女', '男'], // 顺序和数据库保持一致
 				years, // 传入毕业年份 picker
 				yearPickerVal: [], // 毕业年份 picker 的起始值, 必须为list
 				majors,
@@ -105,8 +109,8 @@
 				degrees: ['高中', '本科', '研究生'], //顺序和数据库保持一致
 				degreePickerVal: [],
 
-				nickname:"",
-				gender: 2,
+				nickname: "",
+				gender: "",
 				year: years[0], // 默认值
 				major: majors[0],
 				degree: degrees[1],
@@ -152,7 +156,10 @@
 			if (!this.isNull(gender)) {
 				// 判空，防止默认值被刷掉
 				this.gender = gender;
+			} else {
+				this.gender = 3;
 			}
+
 
 			if (!this.isNull(year)) {
 				this.year = year;
@@ -183,12 +190,7 @@
 				this.formSubmit();
 			},
 			genderChanger(gender) {
-				if (this.gender == gender) {
-					this.gender = -1;
-					console.log(gender);
-				} else {
-					this.gender = gender;
-				}
+				this.gender = gender;
 			},
 
 			toggleIsEditNickname() {
@@ -205,6 +207,13 @@
 			},
 			formSubmit() {
 				// 提交表单操作
+				if (this.nickname == "") {
+					uni.showToast({
+					    title: '用户名不能为空',
+					    duration: 2000
+					});
+					this.nickname = this.userInfo.nickname;
+				}
 				var data = {
 					id: this.userInfo.id,
 					nickname: this.nickname,
@@ -226,6 +235,7 @@
 					success: res => {
 						if (res.data.status == 200) {
 							var user = res.data.data;
+							console.log(user);
 							var finalUser = this.myUser(user); // 分割邮箱地址, 重构 user
 							this.setGlobalUserInfo(finalUser); // 把用户信息写入缓存
 							this.userInfo = finalUser; // 更新页面用户数据
@@ -258,7 +268,7 @@
 			 * 监听验证码输入
 			 * @param {Object} event
 			 */
-			onNickName(event){
+			onNickName(event) {
 				this.nickname = event.target.value;
 			},
 			onCaptcha(event) {
@@ -498,6 +508,7 @@
 	.major .second_line,
 	.signature .second_line,
 	.email .second_line {
+		height: 22.4px;
 		font-size: 17px;
 		font-family: Source Han Sans CN;
 		font-weight: 400;
@@ -506,7 +517,7 @@
 	}
 
 	.genderPicker-button {
-		width: 41px;
+		width: 35px;
 		height: 23px;
 		border: 1px solid rgba(255, 93, 93, 1);
 		opacity: 1;
@@ -521,7 +532,7 @@
 	}
 
 	.genderPicker-buttonclick {
-		width: 41px;
+		width: 35px;
 		height: 23px;
 		border: 1px solid #3370ff;
 		border-radius: 4px;
@@ -535,6 +546,8 @@
 		font-size: 16px;
 		font-weight: 550;
 	}
+
+
 
 	.year-pick-style {
 		position: absolute;
@@ -563,7 +576,7 @@
 		vertical-align: middle;
 		padding-bottom: 15px;
 		margin-left: 10%;
-		
+
 	}
 
 	.editEmail {
@@ -583,7 +596,7 @@
 	}
 
 	.waiting60s {
-		
+
 		text-align: center;
 		width: 120px;
 		height: 26px;
