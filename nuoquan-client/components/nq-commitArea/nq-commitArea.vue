@@ -16,7 +16,7 @@
 				<!-- 添加图片，等功能开发完成打开注释 -->
 				<!-- <image src="../../static/icon/viewLocalPic.png" mode="aspectFit" class="addPic"></image> -->
 				<view class="bottomRight">
-					<view style="width: 20px;height: 20px;background-color: #000000;" @tap="con()"></view>
+					<!-- <view style="width: 20px;height: 20px;background-color: #000000;" @tap="con()"></view> -->
 					<view class="cancelText" @click.native.stop="killCommitArea" hover-class="hoverColor">
 						{{lang.cancle}}
 					</view>
