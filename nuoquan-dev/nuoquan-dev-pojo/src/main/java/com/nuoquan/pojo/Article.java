@@ -26,6 +26,9 @@ public class Article {
 
     @Column(name = "comment_num")
     private Integer commentNum;
+    
+    @Column(name = "collect_num")
+    private Integer collectNum;
 
     private Integer popularity;
 
@@ -160,7 +163,21 @@ public class Article {
     public void setCommentNum(Integer commentNum) {
         this.commentNum = commentNum;
     }
-
+    
+    /**
+     * @return collect_num
+     */
+    public Integer getCollectNum() {
+		return collectNum;
+	}
+    
+    /**
+     * @param collectNum
+     */
+	public void setCollectNum(Integer collectNum) {
+		this.collectNum = collectNum;
+	}
+	
     /**
      * @return popularity
      */
