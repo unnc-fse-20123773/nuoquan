@@ -57,7 +57,7 @@
 					</view>
 				</view>
 			</block>
-			<plusSquare v-if="isAddImage(this.imageList.length)" @plusClicked="chooseImg"></plusSquare>
+			<plusSquare v-if="isAddImage()" @plusClicked="chooseImg"></plusSquare>
 			<view v-if="imageList.length == 1 || imageList.length == 4 || imageList.length == 7" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
 		</view>
 		<button class="submit-button" @tap="upload()">{{ lang.submit }}</button>
@@ -84,7 +84,8 @@ export default {
 	components: {
 		tagSelectBox,
 		tagSelected,
-		uniNavBar
+		uniNavBar,
+		plusSquare,
 	},
 	computed: {
 		...mapState(['lang'])
@@ -234,6 +235,7 @@ export default {
 			});
 		},
 		isAddImage: function() {
+			console.log('imagelist length = ' + this.imageList.length);
 			if (this.imageList.length >= 9) {
 				return false;
 			} else {
