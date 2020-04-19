@@ -123,6 +123,8 @@
 						}
 					} else if (views[i].type === 'rect') {
 						this.drawRect(views[i])
+					} else if (views[i].type === 'rectBorder') {
+						this.drawRectBorder(views[i])
 					} else if (views[i].type === 'line') {
 						this.drawDividingLine(views[i])
 					}
@@ -290,7 +292,6 @@
 				}
 			},
 			drawDividingLine (params){
-				console.log("drawing line")
 				this.ctx.save()
 				const {
 					color = 'black',
@@ -299,8 +300,10 @@
 					width,
 					dashWidth = 5
 				} = params
+				
 				this.ctx.setFillStyle(color);
 				this.ctx.setLineDash([dashWidth]);
+				this.ctx.beginPath();
 				this.ctx.moveTo(left, top);
 				this.ctx.lineTo(left + width, top);
 				this.ctx.stroke()
@@ -358,6 +361,36 @@
 			    // this.ctx.arcTo(x + w, y + h, x, y + h, r);
 			    // this.ctx.arcTo(x, y + h, x, y, r);
 			    // this.ctx.arcTo(x, y, x + w, y, r);
+			},
+			drawRectBorder (params) {
+				const {
+				    top = 0,
+				    left = 0,
+				    width = 0,
+				    height = 0,
+				    radius = 0,
+					color = "black"
+				 } = params;
+				let x = left;
+				let y = top;
+				let w = width;
+				let h = height;
+				let r = radius;
+				this.ctx.save();
+				this.ctx.beginPath();
+				this.ctx.setStrokeStyle(color);
+				this.ctx.moveTo(x + r, y);    // 移动到左上角的点
+				this.ctx.lineTo(x + w - r, y);
+				this.ctx.arc(x + w - r, y + r, r, 2 * Math.PI * (3 / 4), 2 * Math.PI * (4 / 4));
+				this.ctx.lineTo(x + w, y + h - r);
+				this.ctx.arc(x + w - r, y + h - r, r, 0, 2 * Math.PI * (1 / 4));
+				this.ctx.lineTo(x + r, y + h);
+				this.ctx.arc(x + r, y + h - r, r, 2 * Math.PI * (1 / 4), 2 * Math.PI * (2 / 4));
+				this.ctx.lineTo((x), (y + r));
+				this.ctx.arc(x + r, y + r, r, 2 * Math.PI * (2 / 4), 2 * Math.PI * (3 / 4));
+				this.ctx.stroke();
+
+				this.ctx.restore();
 			},
 			getImageInfo (url) {
 				return new Promise((resolve, reject) => {
