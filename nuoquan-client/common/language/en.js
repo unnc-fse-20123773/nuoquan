@@ -118,14 +118,18 @@ module.exports = {
 	female : "Ms",
 	other:"Other",
 	unknown:"Unknown",
+	signature: "Signature",
 	graduationYear : "Graduation Year",
 	major : "Major",
 	degree : "Degree",
 	schoolEmail : "School Email",
 	changeEmail : "Change Email",
-	genderList : ["Ms", "Mr", "Others","Unknown"], //顺序请和数据库保持一致
+	genderList : ["Ms", "Mr", "Unknown"], //顺序请和数据库保持一致
 	degreeList : ["High school", "Undergraduate", "Graduate"], //顺序请和数据库保持一致
-	
+	relevantInfo: "Correlation",
+	editInfo: "Click text to modify information",
+	editEmail: "Click text to modify email",
+	bindEmail: "Click to bind email",
 	//他人页
 	whosHome : "'s Home",
 	
