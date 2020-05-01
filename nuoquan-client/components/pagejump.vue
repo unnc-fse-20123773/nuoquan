@@ -17,7 +17,7 @@
 				:bgSwitchLeft = "'-13px'"
 				:bgSwitchRight = "'41px'"
 				:options='[lang.chinese, lang.english]' 
-				:initStatus="lang.type == 'zh' ? 0: 1"
+				:initStatus="lang.langType == 'zh-CN' ? 0: 1"
 				@onChange="receiveSwitch()">
 			</nqSwitch>
 		</view>

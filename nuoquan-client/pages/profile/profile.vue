@@ -7,7 +7,7 @@
 
 		<view class="personal_info_title">
 			<view class="left_title">{{lang.profile}}</view>
-			<view class="right_title">点击对应文字修改信息</view>
+			<view class="right_title">{{lang.editInfo}}</view>
 		</view>
 
 		<view class="personal_info_box">
@@ -15,14 +15,17 @@
 				<view class="nickname">
 					<view class="text">{{lang.nickname}}</view>
 					<view class="second_line" @click="toggleIsEditNickname" v-if="!isEditNickname">{{ userInfo.nickname }}</view>
-					<input @input="onNickName" style="font-size:17px" @blur="formSubmit" name="nickname" maxlength="8" :value="userInfo.nickname" v-if="isEditNickname" />
+					<input :focus="true" class="second_line" @input="onNickName" style="font-size:17px;min-height: unset;" @blur="formSubmit"
+					 name="nickname" maxlength="8" :value="userInfo.nickname" v-if="isEditNickname" />
+					 <view class="line" v-if="isEditNickname"></view>
 				</view>
 				<view class="gender">
 					<view class="text">{{lang.gender}}</view>
-					<view class="second_line" @click="toggleIsEditGender" v-if="!isEditGender">{{ genderList[userInfo.gender] }}</view>
+					<view class="second_line" @click="toggleIsEditGender" v-if="!isEditGender">{{ lang.genderList[gender] }}</view>
 					<view @tap="formSubmit" v-if="isEditGender" style="width:100px;display: flex;justify-content: space-between;position: relative;left:-6px;height:34px;">
 						<view :class="[gender == 1 ? 'genderPicker-buttonclick' : 'genderPicker-button']" @click="genderChanger(1)">{{lang.male}}</view>
 						<view :class="[gender == 0 ? 'genderPicker-buttonclick' : 'genderPicker-button']" @click="genderChanger(0)">{{lang.female}}</view>
+
 					</view>
 				</view>
 			</view>
@@ -40,7 +43,7 @@
 			</view>
 			<view class="bottom">
 				<view class="signature">
-					<view class="text">个性签名</view>
+					<view class="text">{{lang.signature}}</view>
 					<view class="second_line" v-if="!isEdit">个性签名个性签名一行二十中文字符上下距离</view>
 					<input @blur="formSubmit" maxlength="20" :value="userInfo.nickname" v-if="isEditSignature" />
 				</view>
@@ -49,21 +52,24 @@
 
 
 		<view class="correlation_info_title">
-			<view class="left_title">关联信息</view>
-			<view class="right_title_email">点击对应文字修改绑定邮箱</view>
+			<view class="left_title">{{lang.relevantInfo}}</view>
+			<view class="right_title_email">{{lang.editEmail}}</view>
 		</view>
 		<view class="correlation_info_box">
 			<view class="email">
 				<view class="text">{{lang.schoolEmail}}</view>
 				<view class="second_line">
-					<view @click="editEmail" v-if='!isEditEmail'>{{ userInfo.email}}</view>
-					<input  maxlength="35" style="min-height:unset;height:30px; font-size:17px;" :value="userInfo.email" @input="onEmailInput" v-if="isEditEmail&& !showCaptcha" />
+					<view @click="editEmail" v-if='!isEditEmail&&userInfo.email!=null'>{{ userInfo.email}}</view>
+					<view @click="editEmail" v-if="!isEditEmail&&userInfo.email==null">{{ lang.bindEmail}}</view>
+					<input :focus="true" maxlength="35" style="min-height:unset;height:30px; font-size:17px;" :value="userInfo.email"
+					 @input="onEmailInput" v-if="isEditEmail&& !showCaptcha" />
+					  <view class="line" style="width: 250px;" v-if="isEditEmail&&!showCaptcha"></view>
 					<view v-if="isEditEmail&&showCaptcha" class="text">{{email}}</view>
 				</view>
 			</view>
-			<view class="row">
-				<input style="color:rgba(53,53,53,1);min-height: unset;width: 60px;height:20px;font-size: 17px;" @blur="confirmCode" v-if="isEditEmail&& showCaptcha"
-				 maxlength="6" :placeholder="lang.captcha" @input="onCaptcha" />
+			<view class="row"  v-if="isEditEmail">
+				<input style="color:rgba(53,53,53,1);min-height: unset;width: 80px;height:20px;font-size: 17px;" @blur="confirmCode"
+				 v-if="isEditEmail&& showCaptcha" maxlength="6" :placeholder="lang.captcha" @input="onCaptcha" />
 				<whCaptcha style="display: inline-block;" class="waiting" ref="captcha" :secord="60" :title="lang.getCaptcha"
 				 :waitTitle="lang.waitCaptcha" normalClass="editEmail" disabledClass="waiting60s" @click="getCaptcha" v-if="isEditEmail"></whCaptcha>
 			</view>
@@ -97,7 +103,6 @@
 			const degrees = ['高中', '本科', '研究生'];
 
 			return {
-				genderList: ['女', '男'], // 顺序和数据库保持一致
 				years, // 传入毕业年份 picker
 				yearPickerVal: [], // 毕业年份 picker 的起始值, 必须为list
 				majors,
@@ -105,8 +110,8 @@
 				degrees: ['高中', '本科', '研究生'], //顺序和数据库保持一致
 				degreePickerVal: [],
 
-				nickname:"",
-				gender: 2,
+				nickname: "",
+				gender: "",
 				year: years[0], // 默认值
 				major: majors[0],
 				degree: degrees[1],
@@ -152,7 +157,10 @@
 			if (!this.isNull(gender)) {
 				// 判空，防止默认值被刷掉
 				this.gender = gender;
+			} else {
+				this.gender = 2;
 			}
+
 
 			if (!this.isNull(year)) {
 				this.year = year;
@@ -183,28 +191,43 @@
 				this.formSubmit();
 			},
 			genderChanger(gender) {
-				if (this.gender == gender) {
-					this.gender = -1;
-					console.log(gender);
-				} else {
-					this.gender = gender;
-				}
+				this.gender = gender;
+
 			},
 
 			toggleIsEditNickname() {
 				this.isEditNickname = !this.isEditNickname;
+				this.isEditGender = false;
+				this.isEditGraduationYear = false;
+				this.isEditMajor = false;
 			},
 			toggleIsEditGender() {
 				this.isEditGender = !this.isEditGender;
+				this.isEditNickname = false;
+				this.isEditGraduationYear = false;
+				this.isEditMajor = false;
 			},
 			toggleIsEditGraduationYear() {
 				this.isEditGraduationYear = !this.isEditGraduationYear;
+				this.isEditNickname = false;
+				this.isEditGender = false;
+				this.isEditMajor = false;
 			},
 			toggleIsEditMajor() {
 				this.isEditMajor = !this.isEditMajor;
+				this.isEditNickname = false;
+				this.isEditGender = false;
+				this.isEditGraduationYear = false;
 			},
 			formSubmit() {
 				// 提交表单操作
+				if (this.nickname == "") {
+					uni.showToast({
+						title: '用户名不能为空',
+						duration: 2000
+					});
+					this.nickname = this.userInfo.nickname;
+				}
 				var data = {
 					id: this.userInfo.id,
 					nickname: this.nickname,
@@ -226,6 +249,7 @@
 					success: res => {
 						if (res.data.status == 200) {
 							var user = res.data.data;
+							console.log(user);
 							var finalUser = this.myUser(user); // 分割邮箱地址, 重构 user
 							this.setGlobalUserInfo(finalUser); // 把用户信息写入缓存
 							this.userInfo = finalUser; // 更新页面用户数据
@@ -258,7 +282,7 @@
 			 * 监听验证码输入
 			 * @param {Object} event
 			 */
-			onNickName(event){
+			onNickName(event) {
 				this.nickname = event.target.value;
 			},
 			onCaptcha(event) {
@@ -384,15 +408,16 @@
 	}
 
 	.right_title {
-		width: 121px;
+		width: 190px;
 		font-size: 12px;
 		margin-right: 8px;
-		margin-left: calc(100% - 12px - 56px - 121px - 8px);
+		margin-left: calc(100% - 12px - 56px - 190px - 8px);
 		font-family: Source Han Sans CN;
 		font-weight: 400;
 		line-height: 18px;
 		color: rgba(177, 177, 177, 1);
 		display: inline-block;
+		text-align: right;
 	}
 
 	.personal_info_box {
@@ -410,15 +435,16 @@
 	}
 
 	.right_title_email {
-		width: 145px;
+		width: 190px;
 		font-size: 12px;
 		font-family: Source Han Sans CN;
 		font-weight: 400;
 		line-height: 18px;
 		color: rgba(177, 177, 177, 1);
 		margin-right: 8px;
-		margin-left: calc(100% - 12px - 56px - 145px - 8px);
+		margin-left: calc(100% - 12px - 56px - 190px - 8px);
 		display: inline-block;
+		text-align: right;
 	}
 
 	.correlation_info_box {
@@ -477,6 +503,7 @@
 		margin-left: 10%;
 		/* margin-right: calc(50% - 130px - 10%); */
 		padding-top: 20px;
+		padding-bottom: 20px;
 		overflow: visible;
 	}
 
@@ -498,6 +525,7 @@
 	.major .second_line,
 	.signature .second_line,
 	.email .second_line {
+		height: 22.4px;
 		font-size: 17px;
 		font-family: Source Han Sans CN;
 		font-weight: 400;
@@ -537,21 +565,12 @@
 	}
 
 	.year-pick-style {
-		position: absolute;
-		z-index: 999;
-		top: 19px;
+		height: 22.4px;
 	}
 
-	.degree-pick-style {
-		position: absolute;
-		z-index: 888;
-		top: 19px;
-	}
 
 	.major-pick-style {
-		position: absolute;
-		z-index: 888;
-		top: 19px;
+		height: 22.4px;
 	}
 
 	.row {
@@ -563,7 +582,7 @@
 		vertical-align: middle;
 		padding-bottom: 15px;
 		margin-left: 10%;
-		
+
 	}
 
 	.editEmail {
@@ -583,7 +602,6 @@
 	}
 
 	.waiting60s {
-		
 		text-align: center;
 		width: 120px;
 		height: 26px;
@@ -596,5 +614,29 @@
 		background: rgba(236, 236, 236, 1);
 		font-family: Source Han Sans CN;
 		color: rgba(177, 177, 177, 1);
+	}
+	
+	.line{
+		width:90px;
+		height:0px;
+		border:2px solid rgba(255,207,107,1);
+	}
+</style>
+<style>
+	.major-pick-style .item,
+	.year-pick-style .item {
+		height: 22.4px;
+		vertical-align: bottom;
+	}
+
+	.major-pick-style .arrow,
+	.year-pick-style .arrow {
+		height: 22.4px;
+	}
+
+	.major-pick-style .defaultPicker,
+	.year-pick-style .defaultPicker {
+		height: 22.4px;
+		line-height: 30px;
 	}
 </style>

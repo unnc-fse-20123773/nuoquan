@@ -127,13 +127,21 @@ module.exports = {
 	gender : "性别",
 	male : "男",
 	female : "女",
+	other:"其他",
+	unknown:"未知",
 	graduationYear : "毕业年份",
 	major : "专业",
 	degree : "学位",
+	signature: "个性签名",
 	schoolEmail : "学校邮箱",
 	changeEmail : "更改邮箱",
-	genderList : ["女", "男", "其他"], //顺序请和数据库保持一致
+	genderList : ["女", "男","未知"], //顺序请和数据库保持一致
 	degreeList : ["高中", "本科", "研究生"], //顺序请和数据库保持一致
+	relevantInfo: "关联信息",
+	editInfo: "点击对应文字修改信息",
+	editEmail: "点击对应文字修改绑定邮箱",
+	bindEmail: "点击绑定邮箱",
+	
 	
 	//他人页
 	whosHome : "的主页",

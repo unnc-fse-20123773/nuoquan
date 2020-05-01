@@ -22,7 +22,7 @@ pickerIndex:  选项编号，用于控制显示哪一个选项
 					<view class="item" v-for="(item,index) in dataList" :key="index">{{item}}</view>
 				</picker-view-column>
 			</picker-view> -->
-		<picker :value="pickerIndex" @change="bindChange" :range="dataList" mode='selector'>
+		<picker style="height: 22.4px;" :value="pickerIndex" @change="bindChange" :range="dataList" mode='selector'>
 			<view class="item">{{dataList[pickerIndex]}}</view>		<image class="arrow" src="../static/icon/angle-down.png" mode="scaleToFill"></image>
 
 		</picker>
@@ -95,7 +95,6 @@ pickerIndex:  选项编号，用于控制显示哪一个选项
 	.defaultPicker {
 		position: relative;
 		overflow: visible;
-		background-color: white;
 		z-index: 0;
 		border-radius: 15upx;
 	}
@@ -123,9 +122,9 @@ pickerIndex:  选项编号，用于控制显示哪一个选项
 		width: 25px;
 		height: 25px;
 		vertical-align: bottom;
-		position: absolute;
-		bottom: -3px;
-		right:-28px;
+		/* position: absolute; */
+		/* bottom: -3px; */
+		/* right:-28px; */
 	}
 
 /* 	.selectedPicker {
@@ -140,7 +139,7 @@ pickerIndex:  选项编号，用于控制显示哪一个选项
 
 	.item {
 		text-align: left;
-		font-size: 14px;
+		font-size: 17px;
 		font-weight: 800;
 		display: inline-block;
 
