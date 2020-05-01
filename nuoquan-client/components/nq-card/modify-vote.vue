@@ -1,54 +1,141 @@
 <template>
-	<view class="voteCard">
-		<view class="voteProjectName">{{vote.voteContent}}</view>
-		<block class="voteOptions" v-for="option in vote.optionList" :key="option.index">
-			<view class="options">
-				<view class="optionText">{{option.optionContent}}</view>
-				<view class="voteNum">{{option.count}}</view>
-				<view class="voteRate">{{option.percent}}%</view>
-				<view class="progressBar" :style="{width: option.percent * maxPercent +'%'}"></view>
-			</view>
-		</block>
+	<view class="oneVotePlusMenu">
+		<view class="voteCard"
+		:style="{ transform: messageIndex == vote.id ? transformX : 'translateX(0px)' }"
+		:data-index="vote.id"
+		@touchstart="touchStart"
+		@touchmove="touchMove"
+		@touchend="touchEnd"
+		@touchcancel="touchEnd"
+		@click="goToDetail(vote)"
+		hover-class="hoverColor"
+		>
+			<view class="voteProjectName">{{vote.voteContent}}</view>
+			<block class="voteOptions" v-for="option in vote.optionList" :key="option.index">
+				<view class="options">
+					<view class="optionText">{{option.optionContent}}</view>
+					<view class="voteNum">{{option.count}}</view>
+					<view class="voteRate">{{option.percent}}%</view>
+					<view class="progressBar" :style="{width: option.percent * maxPercent +'%'}"></view>
+				</view>
+			</block>
 
 
-		<view class="bottomBar">
-			<view class="time">{{timeDeal(vote.createDate)}}</view>
-			<view class="comment">
-				<image src="../../static/icon/comment-alt.png"></image>
-				<view>{{vote.commentNum}}</view>
+			<view class="bottomBar">
+				<view class="time">{{timeDeal(vote.createDate)}}</view>
+				<view class="comment">
+					<image src="../../static/icon/comment-alt.png"></image>
+					<view>{{vote.commentNum}}</view>
+				</view>
+				<view class="view">
+					<image src="../../static/icon/eye-888888.png"></image>
+					<view>{{vote.viewNum}}</view>
+				</view>
 			</view>
-			<view class="view">
-				<image src="../../static/icon/eye-888888.png"></image>
-				<view>{{vote.viewNum}}</view>
+			<!-- 审核状态 -->
+			<view class="status pass" style="min-width:49px;background: #09BB07;" v-if="vote.status == 1">{{lang.passCheck}}</view>
+			<view class="status pending" style="min-width:36px;background: #3370FF;" v-if="vote.status == 2">{{lang.underCheck}}</view>
+			<view class="status fail" style="min-width:49px;background: #888888;" v-if="vote.status == 3">{{lang.failCheck}}</view>
+
+		</view>
+		<view class="menu-area" v-if="messageIndex == vote.id">
+			<view style="background: #FE5F55;" @click="fDeleteArticle(vote.id)">
+				<image src="../../static/icon/bin.png"></image>
+				<text>{{lang.delete}}</text>
+			</view>
+			<view style="background: #FCC041;" @click="closeSwipe">
+				<image src="../../static/icon/arrow-right-FFFFFF.png"></image>
+				<text>{{lang.pullUp}}</text>
 			</view>
 		</view>
-		<!-- 审核状态 -->
-		<view class="status pass" style="min-width:49px;background: #09BB07;" v-if="vote.status == 1">{{lang.passCheck}}</view>
-		<view class="status pending" style="min-width:36px;background: #3370FF;" v-if="vote.status == 2">{{lang.underCheck}}</view>
-		<view class="status fail" style="min-width:49px;background: #888888;" v-if="vote.status == 3">{{lang.failCheck}}</view>
-
 	</view>
 </template>
 
 <script>
 	export default {
 		props: {
+			messageIndex:{
+				default:'-1',
+			},
 			vote: "",
 			lang: '',
 		},
 		data() {
 			return {
 				maxPercent: '',
-
+				serverUrl: this.$serverUrl,
+				transformX: 'translateX(0px)',
+				direction: '',
 			};
 		},
 		methods: {
+			//以下方程为控制左滑删除的部分 ref： swipe-acton in messageLish
+			touchStart(event) {
+				this.startX = event.touches[0].pageX;
+				this.startY = event.touches[0].pageY;
+			},
+			touchMove(event) {
+				if (this.direction === 'Y' || event.currentTarget.dataset.disabled === true) {
+					this.direction = '';
+					return;
+				}
+				var moveY = event.touches[0].pageY - this.startY,
+					//  moveX用于判断方向
+					moveX = event.touches[0].pageX - this.startX;
+				// console.log("moveX");
+				// console.log(moveX);
+				// console.log("moveY");
+				// console.log(moveY);
+				if (Math.abs(moveY) > Math.abs(moveX) || Math.abs(moveY) > 100 || Math.abs(moveX) < 50) {
+					//纵向滑动//参数100与50可调节侧滑灵敏度
+					this.direction = 'Y';
+					console.log('direction is Y ');
+					this.$emit('modifySwipedId', -1);
+					return;
+				}
+				// 移动距离
+				this.direction = moveX > 0 ? 'right' : 'left';
+				// 输出方向
+				var emitSwipedId = moveX < 0 ? event.currentTarget.dataset.index : -1;
+				this.$emit('modifySwipedId', emitSwipedId);
+			},
+
+			touchEnd(event) {
+				if (this.direction !== 'right' && this.direction !== 'left') {
+					this.direction = '';
+					return;
+				}
+				if (this.direction == 'right') {
+					this.$emit('modifySwipedId', -1);
+				}
+				this.endMove(event);
+			},
+
+			endMove(event) {
+				if (this.direction === 'Y') {
+					this.direction = '';
+					this.$emit('modifySwipedId', -1);
+					return;
+				}
+				if (this.messageIndex !== -1) {
+					this.transformX = `translateX(${-58}px)`;
+				} else {
+					this.transformX = 'translateX(0px)';
+				}
+				this.direction = '';
+			},
+			//收起
+			closeSwipe(){
+				this.$emit('modifySwipedId',-1);
+			},
+			
+			
 
 		},
 		mounted() {
 			for (var i = 0; i < this.vote.optionList.length; i++) {
-				if(this.vote.optionList[i].percent > this.maxPercent){
-					this.maxPercent = 90/this.vote.optionList[i].percent;
+				if (this.vote.optionList[i].percent > this.maxPercent) {
+					this.maxPercent = 90 / this.vote.optionList[i].percent;
 				}
 
 			}
@@ -57,6 +144,10 @@
 </script>
 
 <style>
+	.oneVotePlusMenu{
+	width: 100%;
+	position: relative;
+	}
 	.voteCard {
 		width: calc(100% - 26px);
 		margin: auto;
@@ -229,4 +320,39 @@
 		top: 4px;
 		left: 14px;
 	}
+	
+/* 	滑动的菜单 */
+	.menu-area {
+		width: 60px;
+		height: 100%;
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+	.menu-area view {
+		height: 55px;
+		width: 48px;
+		background: #e80080;
+		border-radius: 8px;
+		font-size: 10px;
+		text-align: center;
+		margin-bottom: 11px;
+		margin-left: 12px;
+	}
+	.menu-area view image {
+		width: 18px;
+		height: 18px;
+		display: block;
+		margin: auto;
+		padding-top: 10px;
+		padding-bottom: 4px;
+	}
+	.menu-area view text {
+		min-width: 24px;
+		height: 12px;
+		font-size: 12px;
+		line-height: 20px;
+		color: rgba(255, 255, 255, 1);
+	}
+	/* 	滑动的菜单 END*/
 </style>
