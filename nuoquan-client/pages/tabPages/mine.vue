@@ -228,6 +228,8 @@
 				});
 			},
 			responseClick(eventStruct) {
+				console.log(eventStruct);
+				debugger;
 				if (eventStruct.type == 'switchLang') {
 					console.log(1);
 					this.changeLang(eventStruct.event.status);

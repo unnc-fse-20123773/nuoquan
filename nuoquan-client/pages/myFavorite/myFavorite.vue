@@ -2,43 +2,27 @@
 	<view style="width: 100%;height: 100%;">
 		<!-- 导航栏 -->
 		<uni-nav-bar class="navigationBar" :style="{ height: this.getnavbarHeight() + 'px' }" :showLeftIcon="true" :isNavHome="isNavHome"
-		 :left-text="lang.back" :title="lang.myPublish" :height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
+		 :left-text="lang.back" :title="lang.myCollection" :height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
 
 		<view :style="{ height: this.getnavbarHeight().bottom + 5 + 'px' }" style="width: 100%;"></view>
 
 		<view class="swiperMenu">
-			<view :class="[swiperViewing == 'article' ? 'swiperChoosen' : 'swiperNormal']" @tap="switchSwiper('article')">{{lang.article}}
+			<view class="swiperNormal" @tap="switchSwiper('article')">{{lang.article}}
 				{{ myArticleList.length }}</view>
-			<view :class="[swiperViewing == 'vote' ? 'swiperChoosen' : 'swiperNormal']" @tap="switchSwiper('vote')">{{lang.vote}}
-				{{ myVoteList.length }}</view>
 		</view>
-		<swiper style="width:100%;height:100%;" :current-item-id="swiperViewing">
-			<swiper-item style="width: 100%;" item-id="article" @touchmove.stop>
-				<scroll-view scroll-y="true" class="scrollPage">
-					<view class="mainbody">
-						<view style="height:20px;width:100%;"></view>
-						<modify-article v-for="article in myArticleList" :key="article.id" :thisArticle="article" :lang="lang"
-						 @modifySwipedId="receiveSwiped" :messageIndex="messageIndex">
-						</modify-article>
-					</view>
-				</scroll-view>
-			</swiper-item>
-			<swiper-item style="width: 100%;" item-id="vote" @touchmove.stop>
-				<scroll-view scroll-y="true" class="scrollPage">
-					<view class="mainbody">
-						<view style="height:20px;width:100%;"></view>
-						<modify-vote :lang="lang" v-for="vote in myVoteList" :key="vote.id" :vote="vote" 
-						 :messageIndex="messageIndex"></modify-vote>
-					</view>
-				</scroll-view>
-			</swiper-item>
-		</swiper>
+
+		<scroll-view scroll-y="true" class="scrollPage">
+			<view class="mainbody">
+				<collection-card v-for="article in myArticleList" :key="article.id" :thisArticle="article" :lang="lang"
+				 @modifySwipedId="receiveSwiped" :swipedArticleId="swipedArticleId" :userInfo="userInfo">
+				</collection-card>
+			</view>
+		</scroll-view>
 	</view>
 </template>
 
 <script>
-	import modifyArticle from '../../components/nq-card/modify-article';
-	import modifyVote from '../../components/nq-card/modify-vote.vue';
+	import collectionCard from '../../components/nq-card/collection-card.vue';
 	import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 	import {
 		mapState,
@@ -48,8 +32,7 @@
 	var loadArticleFlag = false;
 	export default {
 		components: {
-			modifyArticle,
-			modifyVote,
+			collectionCard,
 			uniNavBar
 		},
 		computed: {
@@ -57,19 +40,15 @@
 		},
 		data() {
 			return {
-				pageTitle: '我的发布',
 				userInfo: '',
-				binNum: '12',
 
 				totalPage: 1,
 				currentPage: 1,
 				totalNum: '0',
 				myArticleList: [],
 
-				myVoteList: [],
-				swiperViewing: 'article',
 				isNavHome: getApp().globalData.isNavHome, //判断导航栏左侧是否显示home按钮
-				messageIndex: "",
+				swipedArticleId: "",
 			};
 		},
 
@@ -87,9 +66,8 @@
 
 			this.mySocket.init(); // 初始化 Socket, 离线调试请注释掉
 			var page = this.currentPage;
-			this.showArticles(page);
-			this.showVotes();
 
+			this.showArticles(page);
 			uni.$on('refresh', () => {
 				this.showArticles(1);
 			});
@@ -121,7 +99,7 @@
 
 				var that = this;
 				uni.request({
-					url: that.$serverUrl + '/article/queryPublishHistory',
+					url: that.$serverUrl + '/article/queryCollectArticle',
 					method: 'POST',
 					data: {
 						page: page,
@@ -174,37 +152,9 @@
 					that.showArticles(page);
 				}
 			},
-			switchSwiper(a) {
-				this.swiperViewing = a;
-			},
-			showVotes: function(page) {
-				var that = this;
-				uni.request({
-					url: that.$serverUrl + '/vote/queryAllVotes',
-					method: 'POST',
-					data: {
-						page: 1,
-						userId: that.userInfo.id,
-						pagesize: '10'
-					},
-					header: {
-						'content-type': 'application/x-www-form-urlencoded'
-					},
-					success: res => {
-						console.log(res);
-						that.myVoteList = res.data.data.rows;
-					},
-					fail: res => {
-						uni.hideLoading();
-						loadArticleFlag = false;
 
-						console.log('index unirequest fail');
-						console.log(res);
-					}
-				});
-			},
 			receiveSwiped(newId) {
-				this.messageIndex = newId;
+				this.swipedArticleId = newId;
 				console.log("refresh swiped ID = " + newId);
 			}
 		}
@@ -219,20 +169,21 @@
 		/* background: #f8f8f8; */
 	}
 
-	.top-bar {
-		width: calc(100% - 58px);
-		height: 30px;
-		padding: 24px 0;
-		display: flex;
-		justify-content: space-between;
-		font: Source Han Sans CN;
-		margin: auto;
+	.myCollectionText {
+		font-size: 17px;
+		font-weight: 600;
+		color: rgba(136, 136, 136, 1);
 	}
 
-	.totalNum {
-		color: #888888;
-		font-size: 18px;
-		text-spacing: 80;
+	.scrollPage {
+		width: 100%;
+		height: calc(100% - 28px);
+		background: #FFFFFF;
+	}
+
+	.mainbody {
+		width: calc(100% - 26px);
+		margin: auto;
 	}
 
 	.swiperMenu {
@@ -248,56 +199,5 @@
 		font-weight: 500;
 		color: rgba(136, 136, 136, 1);
 		text-align: center;
-	}
-
-	.swiperChoosen {
-		display: inline-block;
-		height: 14px;
-		width: 55px;
-		text-align: center;
-		font-size: 11px;
-		font-weight: 500;
-		color: #ffffff;
-		background: #ffc95a;
-		padding: 5px 12px;
-		margin: 0 4px;
-		border-radius: 25px;
-	}
-
-	.scrollPage {
-		width: 100%;
-		height: calc(100% - 28px);
-		background: #FFFFFF;
-	}
-
-	/* .bin{
-	position: relative;
-	display: inline-flex;
-	background: #888888;
-	border-radius: 10px;
-	height: 30px;
-	width: 108px;
-	box-shadow: ;
-}
-.bin image {
-	position: absolute;
-	width: 14px;
-	height: 15px;
-	top: 7.5px;
-	left: 9px;
-	align-items: center;
-}
-.bin view {
-	position: absolute;
-	right: 14px;
-	color: #ffffff;
-	font-size: 14px;
-	text-spacing: 45;
-	align-items: center;
-	line-height: 30px;
-} */
-	.mainbody {
-		width: calc(100% - 26px);
-		margin: auto;
 	}
 </style>

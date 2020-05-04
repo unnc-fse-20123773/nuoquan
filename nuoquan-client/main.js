@@ -5,6 +5,9 @@ import util from 'common/util.js' // 引入共用工具
 import userUtil from 'common/userUtil.js' // 用户信息维护相关方法
 import ProgressBar from '@/components/Progress-Bar/Progress-Bar';//引入进度条全局组件
 Vue.component('ProgressBar', ProgressBar);
+import markdownParse from 'components/markdown.js'
+Vue.prototype.$markdownParse = markdownParse;
+
 
 const app = new Vue({
 	...App,

@@ -8,7 +8,7 @@
 				<view class="time">{{ timeDeal(articleCard.createDate) }}</view>
 			</view>
 			<!--标题-->
-			<view class="detail-title" :style="{width : '100%'}">{{ articleCard.articleTitle }}</view>
+			<view class="detail-title" :style="{width : '100%'}" v-html="$markdownParse.parse(articleCard.articleTitle)"></view>
 			<!-- <view class="detail-title" :style="{width : isfunCom ? 'calc(100%-75px)' : '100%'}">{{ articleCard.articleTitle }}</view> -->
 			<!-- 搞笑大赛 -->
 			<!-- <image v-if="isfunCom" src="../../static/BG/funCom.png" mode="aspectFit" 
@@ -21,7 +21,10 @@
 			<view class="tag" v-if="articleCard.tagList.length != 0 && articleCard.tagList != null" :style="{ background: tagColorList[index] }" v-for="(i, index) in articleCard.tagList" v-bind:key="index">{{ i }}</view>
 		</view>
 		<!--内容-->
-		<view class="detailcontent">{{ articleCard.articleContent }}</view>
+		<view class="detailcontent" v-html="$markdownParse.parse(articleCard.articleContent)"></view>
+<!-- 		<view class="detailcontent">{{ articleCard.articleContent }}</view>
+ -->		
+		
 		<!--图片区域-->
 		<view>
 			<!-- 单图显示 -->

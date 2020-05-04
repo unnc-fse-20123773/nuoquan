@@ -1,7 +1,7 @@
 <template>
 	<view class="articlecard" ref="articleCard" @click="goToDetail()">
 		<view>
-			<view class="title">{{ thisArticle.articleTitle }}</view>
+			<view class="title" v-html="$markdownParse.parse(thisArticle.articleTitle)"></view>
 			<!-- <view class="briefarticleCard">{{ thisArticle.articleContent }}</view> -->
 		</view>
 		<!-- 用户信息行 -->
@@ -15,7 +15,9 @@
 			<view class="tag" :style="{ background: tagColorList[index] }" v-for="(i, index) in thisArticle.tagList" v-bind:key="index">{{ i }}</view>
 		</view>
 		<!-- 内容 -->
-		<view class="briefarticleCard">{{ thisArticle.articleContent }}</view>
+<!-- 		<view class="briefarticleCard" >{{ thisArticle.articleContent }}</view> -->
+		<view class="briefarticleCard" v-html="$markdownParse.parse(thisArticle.articleContent)"></view>
+		
 		<view :class="[thisArticle.imgList.length == 1 ? 'picturearea-one' : 'picturearea-mul']">
 			<!-- *******这里是文章配图的位置*******-->
 
@@ -84,6 +86,7 @@
 <script>
 import nqLike from '../components/nq-button/nq-likeButton.vue';
 import nqCmt from '../components/nq-button/nq-cmtButton.vue';
+
 
 export default {
 	name: 'aticlebrief',
