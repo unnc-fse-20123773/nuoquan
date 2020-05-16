@@ -1,12 +1,9 @@
 <template>
 	<view v-if="isShow">
-		<view style="width: 100%;height: 100%;position: fixed;" 
-		@click.native.stop="killCommitArea" 
-		@touchmove="killCommitArea"></view>
 		<view class="nq-commitArea" :style="{top: textAreaTop + 'px'}">
 				<textarea class="inputArea" 
 					placeholder-style="font-size:14px;font-weight:400;color:rgba(177,177,177,1);" 
-					placeholder="回复+昵称" 
+					:placeholder="placeholder" 
 					:show-confirm-bar="false"
 					:adjust-position="false"
 					auto-focus
@@ -18,7 +15,7 @@
 				<view class="bottomRight">
 					<!-- <view style="width: 20px;height: 20px;background-color: #000000;" @tap="con()"></view> -->
 					<view class="cancelText" @click.native.stop="killCommitArea" hover-class="hoverColor">
-						{{lang.cancle}}
+						{{lang.cancel}}
 					</view>
 					<view class="replyText" @click.native="submit" hover-class="hoverColor">
 						{{replyText}}
@@ -38,6 +35,7 @@ export default {
 			textAreaTop: 1000,
 			getIsShow: '',
 			inputContent:'',
+			placeholder: '',
 		} 
 	},
 	props:{
@@ -48,13 +46,15 @@ export default {
 		isShow:{
 			type:Boolean,
 			default: true
-		}
+		},
+		userInfo: '',
 	},
 	computed: {
 		...mapState(['lang'])
 	},
 	created() {
 		console.log(this.openOrigin);
+		// console.log("+++++++" + this.userInfo);
 		if(this.openOrigin == "cmt-likedetail"){
 			this.replyText = this.lang.reply;
 			console.log(this.replyText);
@@ -64,8 +64,17 @@ export default {
 			this.replyText = this.lang.submit;
 			console.log(this.replyText);
 		}
-		
 	},
+	
+	watch: {
+		isShow(newVal, oldVal){
+			console.log("newVal =" + newVal);
+			if (newVal == false){
+				this.killCommitArea()
+			}
+		}
+	},
+	
 	methods: {
 		getKeyBoardHeight(e){
 			// debugger
@@ -82,20 +91,25 @@ export default {
 			this.textAreaTop = phoneHeight - textAreaTop_ - 12 - 160;
 			console.log(this.textAreaTop);
 		},
-		con(){
-		console.log(this.isShow);
-			debugger;
-		},
+		// con(){
+		// console.log(this.isShow);
+		// 	debugger;
+		// },
 		killCommitArea(){
 			console.log('kill');
 			this.getIsShow = this.isShow;
-			this.getIsShow = !this.getIsShow;
-			this.$emit("killCommitArea", this.getIsShow);
+			if(this.getIsShow){
+				this.getIsShow = !this.getIsShow;
+				this.$emit("killCommitArea", this.getIsShow);
+				this.inputContent = '';
+			}else{
+				// this.$emit("killCommitArea", this.getIsShow);
+				this.inputContent = '';
+			}
 		},
 		submit(){
 			console.log('submit from input');
 			this.$emit('submit',this.inputContent);
-
 		}
 	}
 };

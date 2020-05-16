@@ -29,7 +29,7 @@ module.exports = {
 	ok : "完成",
 	pullUp : "收起",
 	reply: "回复",
-	cancle: "取消",
+	cancel: "取消",
 	
 	//登陆
 	isReadProtocol : "我已阅读并同意遵守",
