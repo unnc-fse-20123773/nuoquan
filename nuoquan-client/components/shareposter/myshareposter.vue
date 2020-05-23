@@ -11,24 +11,25 @@
 			:style="{width: width + 'px', height: height + 'px'}"
 		>
 		</canvas> -->
-		<view  @click="unShow()" style="position: fixed;
+		<view
+			@click="unShow()"
+			style="position: fixed;
 				left: 0;
 				top: 0;
 				width: 100%;
 				height: 100%;
 				background-color: #000000;
 				opacity: 0.3;
-				z-index: 35;"></view>
+				z-index: 35;"
+		></view>
 
 		<view>
 			<image :src="shareImage" class="shareimage" mode="aspectFit"></image>
 			<canvasdrawer :painting="painting" class="canvasdrawer" @getImage="eventGetImage" />
-			<button class="backButton super_center" @click="unShow">
-				<image src="../../static/icon/arrow-left-888888.png" mode="aspectFit"></image>
-			</button>
+			<button class="backButton super_center" @click="unShow"><image src="../../static/icon/arrow-left-888888.png" mode="aspectFit"></image></button>
 			<button class="shareButton column_center" @click="eventSave">
 				<image src="../../static/icon/download-alt-ffffff.png" mode="aspectFit"></image>
-				<text>{{lang.sharetoMoments}}</text>
+				<text>{{ lang.sharetoMoments }}</text>
 			</button>
 		</view>
 	</view>
@@ -41,7 +42,8 @@ import { mapState, mapMutations } from 'vuex';
 
 export default {
 	props: {
-		articleCard: '' // 传进文章基本信息
+		articleCard: '', // 传进文章基本信息
+		voteCard: '' // 传进文章基本信息
 	},
 
 	components: {
@@ -49,194 +51,48 @@ export default {
 		canvasdrawer
 	},
 	computed: {
-			...mapState(['lang'])
-		},
+		...mapState(['lang'])
+	},
 	data() {
 		return {
-			postersData: {},
-			posterImg: {},
+			// postersData: {},
+			// posterImg: {},
 
 			// width: 320, // 画布宽度
 			// height: 320, // 画布长度
 			// context: '', // canvas 环境
 
-			QrCode: '', // 二维码
 			painting: {},
 			shareImage: ''
 		};
 	},
 
 	onReady() {
-		if (this.articleCard == null) {
-			this.articleCard = {
-				//测试用例
-				articleContent:
-					'章四季豆暗色调骄傲搜的我去教室大家啊章四季豆暗色调骄傲搜的我去教室大家啊章四季豆暗色调骄傲搜的我去教室大家啊so打卡塑料袋价款的祭扫激动isad竞赛就, 暗示大家as哦就记得再试一次暗示大家as的奇偶暗示大家哦',
-				articleTitle: '再试一次暗示大家as的奇偶暗示',
-				commentNum: 13,
-				createDate: 1581531649000,
-				dislikeNum: 0,
-				faceImg:
-					'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1574853887894&di=8ac522ba1c324bf91c5c9fef7bd21ee4&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201803%2F24%2F20180324081023_8FVre.jpeg',
-				faceImgThumb: null,
-				id: '2002131MXGM2XKP0',
-				imgList: null,
-				isAnonymous: 0,
-				isLike: null,
-				likeNum: 0,
-				nickname: '迪厅少男的梦',
-				popularity: 0,
-				status: 1,
-				tagList: null,
-				tags: '',
-				userId: 'test1',
-				viewNum: 9
-			};
-		}
-		//生成二维码
-		// this.getQrcodeUnlimit('pages/detail/detail', 'data=' + this.articleCard.id, 200, true).then(res => {
-		// 	if (res == 'suc') {
-		// 		this.initPostersConfig();
-		// 	}
-		// });
-
-		// this.context = uni.createCanvasContext('canvasdrawer', this);
-		// this.myPoster();
-		
-		
-		// this.getQrcodeUnlimit('pages/wechatLogin/wechatLogin', null, 200, true)
-		
 		// 开始画图
 		this.eventDraw();
 	},
 
 	methods: {
 		unShow() {
-			uni.hideLoading()
+			uni.hideLoading();
 			this.$emit('unShow');
 		},
 
 		eventDraw() {
 			uni.showLoading({
 				title: '绘制分享图片中',
-				mask: false,
+				mask: false
 			});
-			
-			// 先请求二维码
-			this.getQrcodeUnlimit('pages/detail/detail', this.articleCard.id, 200, true).then(res => {
-				if (res == 'suc') {
-					// 成功获取到二维码了，开始对画布内容赋值。
-					// 把该列表传给组件，组件通过类型及位置信息画图。
-					this.painting = {
-						width: 500,
-						height: 500,
-						clear: true,
-						views: [
-							{
-								type: 'image',
-								width: 500,
-								height: 500,
-								top: 0,
-								left: 0,
-								url: '/static/BG/1-blue.png'
-							},
-							{
-								type: 'rect',
-								width: 324,
-								height: 366,
-								top: 67,
-								left: 88,
-								background: '#FFFFFF',
-								radius: 20
-							},
-							{
-								//头像
-								type: 'image',
-								width: 37,
-								height: 37,
-								top: 67 + 23,
-								left: 88 + 31,
-								radius: 18,
-								url: this.pathFilter(this.articleCard.faceImg)
-							},
-							{
-								//昵称
-								type: 'text',
-								content: this.articleCard.nickname,
-								fontSize: 17,
-								color: '#9A9A9A',
-								textAlign: 'left',
-								top: 67 + 31,
-								left: 88 + 82,
-								bolder: false
-							},
-							{
-								//标题
-								type: 'text',
-								content: this.articleCard.articleTitle,
-								fontSize: 22,
-								lineHeight: 25,
-								color: '#353535',
-								textAlign: 'left',
-								top: 67 + 80,
-								left: 88 + 29,
-								width: 266,
-								MaxLineNumber: 1,
-								breakWord: true,
-								bolder: true
-							},
-							{
-								//内容
-								type: 'text',
-								content: this.articleCard.articleContent,
-								fontSize: 15,
-								lineHeight: 22,
-								color: '#888888',
-								textAlign: 'left',
-								top: 67 + 128,
-								left: 88 + 29,
-								width: 266,
-								MaxLineNumber: 5,
-								breakWord: true,
-								bolder: false,
-							},
-							{
-								//分割线
-								type: 'line',
-								color: '#B1B1B1',
-								top: 67 + 250,
-								left: 88 + 27,
-								width: 270,
-								dashWidth: 5
-							},
-							{
-								//二维码
-								type: 'image',
-								width: 70,
-								height: 70,
-								top: 67 + 269,
-								left: 88 + 27,
-								url: this.QrCode
-							},
-							{
-								type: 'text',
-								content: '我在Nottinghome的分享扫码查看完整内容',
-								fontSize: 15,
-								lineHeight: 25,
-								color: '#888888',
-								textAlign: 'right',
-								top: 67 + 282,
-								left: 500 - 88 - 28,
-								width: 150,
-								MaxLineNumber: 2,
-								breakWord: true,
-								bolder: false
-							}
-						]
-					};
-				}
-			});
+
+			if (this.articleCard != null) {
+				this.drawArticle();
+			} else if (this.voteCard != null) {
+				this.drawVote();
+			} else {
+				throw new Error('Illegal object to draw');
+			}
 		},
+
 		eventSave() {
 			uni.saveImageToPhotosAlbum({
 				filePath: this.shareImage,
@@ -249,8 +105,8 @@ export default {
 				}
 			});
 		},
+
 		eventGetImage(event) {
-			
 			uni.hideLoading();
 			console.log(event);
 			const { tempFilePath, errMsg } = event;
@@ -262,51 +118,6 @@ export default {
 				this.painting = {};
 			}
 		},
-
-		// async myPoster() {
-		// 	if (this.isNull(this.articleCard)) {
-		// 		console.log('没有文章数据，无法生成画布');
-		// 		return;
-		// 	}
-		// 	var prompt = '我推荐了 Nottinghome 的一篇文章，扫码查看完整内容';
-		// 	var bgUrl = '';
-		// 	// 加载背景
-		// 	this.context.drawImage('/static/BG/1-blue.png', 0, 0, 500, 500);
-
-		// 	this.context.setFontSize(14);
-		// 	this.context.setFillStyle('#FEEDBB');
-		// 	this.context.fillText(this.articleCard.nickname, 60, 50); //作者昵称
-		// 	this.context.fillText(this.articleCard.articleTitle, 100, 100); //文章标题
-		// 	this.context.setFontSize(18);
-		// 	this.context.setFillStyle('#FEEDBB');
-		// 	this.context.fillText(this.articleCard.articleContent, 80, 130); //文章内容
-		// 	this.context.fillText(prompt, 100, 200); //分享提示语
-		// 	// 作者获取头像
-		// 	var that = this;
-		// 	await new Promise((resolve, reject) => {
-		// 		uni.getImageInfo({
-		// 			//获取图片信息
-		// 			src: that.articleCard.faceImg,
-		// 			success(res) {
-		// 				// console.log(res.path);
-		// 				that.context.drawImage(res.path, 10, 50, 40, 40); // 设置头像位置
-		// 				resolve('suc');
-		// 			},
-		// 			fail(error) {
-		// 				console.log(error);
-		// 				reject('err');
-		// 			}
-		// 		});
-		// 	});
-
-		// 	console.log('开始画二维码');
-		// 	// 对数据字符串化并转码，防止特殊字符影响传参
-		// 	// console.log(encodeData)
-		// 	await this.getQrcodeUnlimit('pages/detail/detail', 'data=' + this.articleCard.id, 200, true);
-		// 	this.context.drawImage(this.QrCode, 25, 200, 75, 75);
-		// 	console.log('结束画二维码');
-		// 	this.context.draw(); //生成图像
-		// },
 
 		/**
 		 * 对应微信小程序生成二维码的场景B
@@ -334,26 +145,311 @@ export default {
 					success: res => {
 						// console.log(res);
 						var QrCode = 'data:image/png;base64,' + res.data.data;
-						that.QrCode = QrCode;
 						base64ToPath(QrCode)
 							.then(path => {
 								// console.log(path);
-								that.QrCode = path;
-								console.log('获得二维码');
-								console.log(that.QrCode);
-								resolve('suc');
+								console.log('获得二维码成功');
+								resolve(path);
 							})
 							.catch(error => {
 								console.error(error);
-								reject('err');
+								reject(new Error('getImageInfo fail'));
 							});
 					},
 					fail: res => {
 						console.log('获得二维码失败');
-						reject('err');
+						reject(new Error('getImageInfo fail'));
 					}
 				});
 			});
+		},
+
+		drawArticle() {
+			// 先请求二维码
+			this.getQrcodeUnlimit('pages/detail/detail', this.articleCard.id, 200, true).then(qrCodePath => {
+				// 成功获取到二维码了，开始对画布内容赋值。
+				// 把该列表传给组件，组件通过类型及位置信息画图。
+				this.painting = {
+					width: 500,
+					height: 500,
+					clear: true,
+					views: [
+						{
+							type: 'image',
+							width: 500,
+							height: 500,
+							top: 0,
+							left: 0,
+							url: '/static/BG/1-blue.png'
+						},
+						{
+							type: 'rect',
+							width: 324,
+							height: 366,
+							top: 67,
+							left: 88,
+							background: '#FFFFFF',
+							radius: 20
+						},
+						{
+							//头像
+							type: 'image',
+							width: 37,
+							height: 37,
+							top: 67 + 23,
+							left: 88 + 31,
+							radius: 18,
+							url: this.pathFilter(this.articleCard.faceImg)
+						},
+						{
+							//昵称
+							type: 'text',
+							content: this.articleCard.nickname,
+							fontSize: 17,
+							color: '#9A9A9A',
+							textAlign: 'left',
+							top: 67 + 31,
+							left: 88 + 82,
+							bolder: false
+						},
+						{
+							//标题
+							type: 'text',
+							content: this.articleCard.articleTitle,
+							fontSize: 22,
+							lineHeight: 25,
+							color: '#353535',
+							textAlign: 'left',
+							top: 67 + 80,
+							left: 88 + 29,
+							width: 266,
+							MaxLineNumber: 1,
+							breakWord: true,
+							bolder: true
+						},
+						{
+							//内容
+							type: 'text',
+							content: this.articleCard.articleContent,
+							fontSize: 15,
+							lineHeight: 22,
+							color: '#888888',
+							textAlign: 'left',
+							top: 67 + 128,
+							left: 88 + 29,
+							width: 266,
+							MaxLineNumber: 5,
+							breakWord: true,
+							bolder: false
+						},
+						{
+							//分割线
+							type: 'line',
+							color: '#B1B1B1',
+							top: 67 + 250,
+							left: 88 + 27,
+							width: 270,
+							dashWidth: 5
+						},
+						{
+							//二维码
+							type: 'image',
+							width: 70,
+							height: 70,
+							top: 67 + 269,
+							left: 88 + 27,
+							url: qrCodePath
+						},
+						{
+							type: 'text',
+							content: '我在Nottinghome的分享扫码查看完整内容',
+							fontSize: 15,
+							lineHeight: 25,
+							color: '#888888',
+							textAlign: 'right',
+							top: 67 + 282,
+							left: 500 - 88 - 28,
+							width: 150,
+							MaxLineNumber: 2,
+							breakWord: true,
+							bolder: false
+						}
+					]
+				};
+			});
+		},
+
+		drawVote() {
+			console.log(this.voteCard);
+			this.getQrcodeUnlimit('pages/tabPages/votePage', this.voteCard.id, 200, true).then(qrCodePath => {
+				// 成功获取到二维码了，开始对画布内容赋值。
+				// 把该列表传给组件，组件通过类型及位置信息画图。
+				const width = 325; // poster width
+				var height = 150; // poster basic height
+				const leftMargin = 29
+				const objectWeight = 266; //常用对象宽度
+				var objectTop = 28; //计算当前对象长度
+				var paintObjects = []; //要画的对象
+
+				// 加入标题
+				var titleLineHeight = 25;
+				var titleLines = this.getLines(this.voteCard.voteTitle, 22, objectWeight);
+				var title = {
+					//标题
+					type: 'text',
+					content: this.voteCard.voteTitle,
+					fontSize: 22,
+					lineHeight: titleLineHeight,
+					color: '#353535',
+					textAlign: 'left',
+					top: objectTop,
+					left: leftMargin,
+					width: objectWeight,
+					MaxLineNumber: 1,
+					breakWord: true,
+					bolder: true
+				};
+				
+				objectTop += titleLineHeight * titleLines + 16;
+				// 加入内容
+				var contentLineHeight = 15;
+				var contentLines = this.getLines(this.voteCard.voteContent, contentLineHeight, objectWeight);
+				var content = {
+					//内容
+					type: 'text',
+					content: this.voteCard.voteContent,
+					fontSize: contentLineHeight,
+					lineHeight: 22,
+					color: '#353535',
+					textAlign: 'left',
+					top: objectTop,
+					left: leftMargin,
+					width: objectWeight,
+					MaxLineNumber: 5,
+					breakWord: true,
+					bolder: false
+				};
+
+				// 加入选项
+				objectTop += contentLineHeight * contentLines + 28;
+				var optionGap = 44; //两个选项顶部的距离
+				var options = [];
+				for (let option of this.voteCard.optionList) {
+					var object = [
+						{
+							//选项框框
+							type: 'rectBorder',
+							width: objectWeight,
+							height: 38,
+							top: objectTop,
+							left: leftMargin,
+							color: '#EEEEEE',
+							radius: 8
+						},{
+							//选项内容
+							type: 'text',
+							content: option.optionContent,
+							fontSize: 15,
+							lineHeight: 22,
+							color: '#353535',
+							textAlign: 'left',
+							top: objectTop+12,
+							left: leftMargin+20,
+							width: 200,
+							MaxLineNumber: 1,
+							breakWord: true,
+							bolder: false
+						}
+					];
+					options = options.concat(object);
+					objectTop += optionGap;
+				}
+
+				// 加上模板
+				height += objectTop;
+				var template = [
+					{
+						//背景
+						type: 'rect',
+						width: width,
+						height: height,
+						top: 0,
+						left: 0,
+						background: '#FFFFFF',
+						radius: 20
+					},
+					{
+						//分割线
+						type: 'line',
+						color: '#B1B1B1',
+						top: height - 107,
+						left: leftMargin,
+						width: 270,
+						dashWidth: 5
+					},
+					{
+						//二维码
+						type: 'image',
+						width: 70,
+						height: 70,
+						top: height - 94,
+						left: leftMargin,
+						url: qrCodePath
+					},
+					{
+						type: 'text',
+						content: '扫码前往Nottinghome参与讨论',
+						fontSize: 15,
+						lineHeight: 25,
+						color: '#888888',
+						textAlign: 'right',
+						top: height - 72,
+						left: width - 37,
+						width: 145,
+						MaxLineNumber: 2,
+						breakWord: true,
+						bolder: false
+					}
+				];
+
+				paintObjects = paintObjects.concat(template);
+				paintObjects = paintObjects.concat(options);
+				paintObjects.push(title);
+				paintObjects.push(content);
+
+				this.painting = {
+					//画的数据
+					width: width,
+					height: height,
+					clear: true,
+					views: paintObjects
+				};
+			});
+		},
+
+		/**
+		 * 返回字符串的行数
+		 * @param {Object} str 待测字符串
+		 * @param {Object} fontSize 字体大小
+		 * @param {Object} width 行宽
+		 * @return {type} 行数
+		 */
+		getLines(str, fontSize, width) {
+			const ctx = uni.createCanvasContext('myCanvas');
+			ctx.setFontSize(fontSize);
+			let fillText = '';
+			let lineNum = 1;
+			for (let i = 0; i < str.length; i++) {
+				fillText += [str[i]];
+				// 苹果机型会自动换行，
+				// 安卓机型会自动转换为空格。
+				// 处理方式：遇到换行符，跳到下一行。
+				if (ctx.measureText(fillText).width > width || str[i] == '\n') {
+					fillText = '';
+					lineNum++;
+				}
+			}
+			return lineNum;
 		}
 	}
 };

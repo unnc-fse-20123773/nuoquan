@@ -14,6 +14,7 @@ public class ArticleVO {
     private Integer likeNum;
     private Integer dislikeNum;
     private Integer commentNum;
+    private Integer collectNum;
     private Integer popularity;
     private Integer status;
     private Date createDate;
@@ -267,5 +268,13 @@ public class ArticleVO {
 
 	public void setIsCollect(Boolean isCollect) {
 		this.isCollect = isCollect;
+	}
+
+	public Integer getCollectNum() {
+		return collectNum;
+	}
+
+	public void setCollectNum(Integer collectNum) {
+		this.collectNum = collectNum;
 	}
 }
