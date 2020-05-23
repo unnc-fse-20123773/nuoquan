@@ -98,7 +98,7 @@ module.exports = {
 	profile : "个人信息",
 	myPublish : "我的发布",
 	about : "关于我们",
-	myFavorite: "我的收藏",
+	myCollection: "我的收藏",
 	userDeal: "用户协议",
 	changeLang : "切换语言",
 	follow : "关注",
@@ -113,7 +113,6 @@ module.exports = {
 	failCheck: '审核失败',
 	
 	//我的收藏
-	myCollection:"我的收藏",
 	collectionNumSuffix:"篇文章",
 	cancleCollectNotice:"左滑卡片可取消收藏",
 	uncollectText:"取消收藏",

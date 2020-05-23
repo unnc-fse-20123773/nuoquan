@@ -35,18 +35,20 @@
 		</view>
 		<view class="shadow1"></view>
 		<view class="shadow2"></view>
+		
+		<!-- 02 号内嵌广告位 -->
 		<swiper class="guanggao" @click="control" v-if="contentShow" :indicator-dots="indicatorDots" :autoplay="autoplay"
 		 :interval="interval" :duration="duration">
 			<swiper-item>
-				<view class="swiper-item uni-bg-red"></view>
+				<!-- 广告位背景，之后的广告图需与此保持同样尺寸 -->
+				<view class="swiper-item swiperBg"></view>
 			</swiper-item>
 		</swiper>
-
 
 		<view class="pagejump_box">
 			<pagejump hover-class="hoverColor" :lang="lang" :objList=data v-for="(data,index) in dataList" :key=index @trigger="responseClick()"></pagejump>
 		</view>
-
+	
 		<tab-bar :current="4"></tab-bar>
 	</view>
 </template>
@@ -95,7 +97,7 @@
 						lefticon_src: 'star-full-fcc041',
 						righticon_src: 'angle-right-888888',
 						style: 'rgba(255,245,219,1)',
-						name: 'myFavorite',
+						name: 'myCollection',
 						type: 0,
 						id: 3,
 					},
@@ -266,7 +268,7 @@
 				});
 			},
 			control: function() {
-				this.contentShow = false;
+				//this.contentShow = false;
 			}
 		}
 
@@ -399,13 +401,13 @@
 
 	.guanggao {
 		width: 100%;
-		height: 120px;
+		height: 150px;
 	}
 
-	.uni-bg-red {
+	.swiperBg {
 		background: rgba(136, 136, 136, 1);
 		width: 100%;
-		height: 75px;
+		height: calc(100% - 40px);
 		border-radius: 4px;
 		margin-top: 20px;
 		margin-bottom: 20px;

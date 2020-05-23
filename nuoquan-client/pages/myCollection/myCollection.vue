@@ -17,15 +17,14 @@
 			<view class="myCollectionText"> {{ myArticleList.length }} {{lang.collectionNumSuffix}}</view>
 		</view>		
 				<scroll-view scroll-y="true" class="scrollPage">
-					<view class="mainbody">
-						<view style="height:20px;width:100%;"></view>
-							<collection-card v-for="article in myArticleList" 
-								:key="article.id" 
-								:thisArticle="article" 
-								:lang="lang" @modifySwipedId="receiveSwiped" 
-								:swipedArticleId="swipedArticleId"
-								:userInfo="userInfo">
-							</collection-card>
+					<view class="mainbody_scroll">
+						<collection-card v-for="article in myArticleList" 
+							:key="article.id" 
+							:thisArticle="article" 
+							:lang="lang" @modifySwipedId="receiveSwiped" 
+							:swipedArticleId="swipedArticleId"
+							:userInfo="userInfo">
+						</collection-card>
 					</view>
 				</scroll-view>
 	</view>
@@ -189,6 +188,13 @@ page {
 }
 
 .mainbody {
+	width: calc(100% - 26px);
+	margin-top: 16px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.mainbody_scroll{
 	width: calc(100% - 26px);
 	margin: auto;
 }

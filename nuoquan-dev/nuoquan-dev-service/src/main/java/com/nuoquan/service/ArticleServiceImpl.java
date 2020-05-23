@@ -185,15 +185,16 @@ public class ArticleServiceImpl implements ArticleService {
 
 		return pagedResult;
 	}
-
+	
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
+	
 	public ArticleVO getArticleById(String articleId, String userId) {
 		ArticleVO articleVO = articleMapperCustom.getArticleById(articleId);
 		articleVO = composeArticleVO(articleVO, userId);
 		return articleVO;
 	}
-
+	
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public UserLikeArticle userLikeArticle(String userId, String articleId, String articleCreaterId, Integer signFlag) {

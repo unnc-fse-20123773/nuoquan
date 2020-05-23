@@ -99,7 +99,7 @@ module.exports = {
 	profile : "Profile",
 	myPublish : "My Post",
 	about : "About Us",
-	myFavorite: "My Favorite",
+	myCollection: "My Favorite",
 	userDeal: "User Deal",
 	changeLang : "Language",
 	follow : "Follow",
@@ -114,7 +114,6 @@ module.exports = {
 	failCheck: 'Publishing failed',
 	
 	//我的收藏
-	myCollection:"My Collection",
 	collectionNumSuffix:" Article",
 	uncollectNotice:"Swipe left to uncollect",
 	uncollectText:"Undo",
