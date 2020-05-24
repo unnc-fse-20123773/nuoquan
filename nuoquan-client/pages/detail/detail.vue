@@ -106,7 +106,7 @@
 <script>
 	import detail_article from './detail_article.vue';
 	import commentarea from '@/components/nq-comment/commentarea.vue';
-	import mySharePoster from '@/components/shareposter/myshareposter.vue';
+	import mySharePoster from 'components/shareposter/myshareposter.vue';
 	import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 	import {
 		mapState,
