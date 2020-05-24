@@ -108,6 +108,11 @@
 			"iconPath": "static/icon/star.png",
 			"selectedIconPath": "static/icon/star.png",
 			"text": "动态"
+		},{
+			"pagePath": "pages/tabPages/messagelist",
+			"iconPath": "static/icon/star.png",
+			"selectedIconPath": "static/icon/star.png",
+			"text": "动态"
 		}, {
 			"pagePath": "pages/tabPages/mine",
 			"iconPath": "static/icon/star.png",

@@ -34,7 +34,6 @@
 				<view class="marginHelper"></view>
 			</scroll-view>
 		</view>
-		j
 		<tab-bar @clickTab="onClickTab"></tab-bar>
 	</view>
 </template>
