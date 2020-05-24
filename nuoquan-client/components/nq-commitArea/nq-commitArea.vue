@@ -9,6 +9,7 @@
 					auto-focus
 					@focus="getKeyBoardHeight"
 					v-model="inputContent"
+					@blur="killCommitArea"
 					/>
 				<!-- 添加图片，等功能开发完成打开注释 -->
 				<!-- <image src="../../static/icon/viewLocalPic.png" mode="aspectFit" class="addPic"></image> -->

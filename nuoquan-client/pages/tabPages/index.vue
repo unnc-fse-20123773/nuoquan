@@ -1,5 +1,8 @@
 <template>
 	<view class="index">
+		<nqBanner>
+		</nqBanner>
+		
 		<!-- Main page top bar -->
 		<mainpagetop
 			@transQueryType="changeQueryType"
@@ -42,6 +45,7 @@ import mainpagetop from '../../components/mainpagetop.vue';
 import mainpageleft from '@/components/mainpageleft.vue';
 import { mapState } from 'vuex';
 import tabBar from '@/components/nq-tabbar/nq-tabbar.vue';
+import nqBanner from '@/components/nq-banner/nq-banner.vue';
 
 var loadArticleFlag = false; // 为加载文章加锁
 var timer = null; // 为头部做定时器收起
@@ -75,6 +79,7 @@ export default {
 		mainpagetop,
 		mainpageleft,
 		tabBar,
+		nqBanner
 	},
 
 	onLoad() {

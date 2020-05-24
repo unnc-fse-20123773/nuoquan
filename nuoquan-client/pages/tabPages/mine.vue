@@ -41,7 +41,8 @@
 		 :interval="interval" :duration="duration">
 			<swiper-item>
 				<!-- 广告位背景，之后的广告图需与此保持同样尺寸 -->
-				<view class="swiper-item swiperBg"></view>
+				<!-- <view class="swiper-item swiperBg"></view> -->
+				<image class="swiperBg" src="../../static/AD/20200524AD1.jpg" mode="aspectFill" @click="jumpToWeb"></image>
 			</swiper-item>
 		</swiper>
 
@@ -269,7 +270,14 @@
 			},
 			control: function() {
 				//this.contentShow = false;
-			}
+			},
+			
+			jumpToWeb(){
+				//author: Guetta
+				uni.navigateTo({
+					url: "../adWebPage/adWebPage?url=https://mp.weixin.qq.com/s/wy90_N0UPRTyMmaMARXCKw"
+				})
+			},
 		}
 
 	};
@@ -405,7 +413,7 @@
 	}
 
 	.swiperBg {
-		background: rgba(136, 136, 136, 1);
+		/* background: rgba(136, 136, 136, 1); */
 		width: 100%;
 		height: calc(100% - 40px);
 		border-radius: 4px;
