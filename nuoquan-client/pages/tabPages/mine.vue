@@ -176,13 +176,13 @@ export default {
 				filePath: path,
 				name: 'file',
 				formData: {
-					userId: this.userInfo.id
+					userId: this.thisUserInfo.id
 				},
 				success: res => {
 					// uploadFile 返回的 res.data 是 String
 					var data = JSON.parse(res.data);
 					if (data.status == 200) {
-						this.userInfo.faceImg = data.data;
+						this.thisUserInfo.faceImg = data.data;
 					}
 				}
 			});
