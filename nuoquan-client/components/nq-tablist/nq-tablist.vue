@@ -2,7 +2,7 @@
 	<view>
 		<view class="tabList_box">
 			<view class="tabList">
-				<view class="super_center" style="width: 100%;height: 50px;" @click="gosubmit">
+				<view class="super_center" hover-class="hoverColor" style="width: 100%;height: 50px;" @click="gosubmit">
 					<text>{{lang.tabList[0]}}</text>
 				</view>
 				<view
@@ -11,7 +11,7 @@
 					height: 1px;
 					background-color:rgba(236,236,236,1) ;"
 				></view>
-				<view class="super_center" style="width: 100%;height: 50px;" @click="gosubmitVote">
+				<view class="super_center" hover-class="hoverColor" style="width: 100%;height: 50px;" @click="gosubmitVote">
 					<text>{{lang.tabList[1]}}</text>
 				</view>
 			</view>
