@@ -44,7 +44,7 @@
 			<view class="bottom">
 				<view class="signature">
 					<view class="text">{{lang.signature}}</view>
-					<view class="second_line" v-if="!isEdit">个性签名个性签名一行二十中文字符上下距离</view>
+					<view class="second_line" @click="showSignToast" v-if="!isEdit">个性签名个性签名一行二十中文字符上下距离</view>
 					<input @blur="formSubmit" maxlength="20" :value="userInfo.nickname" v-if="isEditSignature" />
 				</view>
 			</view>
@@ -372,6 +372,13 @@
 						icon: 'none'
 					});
 				}
+			},
+			
+			showSignToast(){
+				uni.showToast({
+					title: 'Function under development.',
+					icon: 'none'
+				})
 			}
 		}
 	};
@@ -619,7 +626,7 @@
 	.line{
 		width:90px;
 		height:0px;
-		border:2px solid rgba(255,207,107,1);
+		border:1px solid rgba(255,207,107,1);
 	}
 </style>
 <style>

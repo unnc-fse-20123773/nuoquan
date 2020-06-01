@@ -9,8 +9,9 @@
 		<view class="swiperMenu">
 			<view :class="[swiperViewing == 'article' ? 'swiperChoosen' : 'swiperNormal']" @tap="switchSwiper('article')">{{lang.article}}
 				{{ myArticleList.length }}</view>
-			<view :class="[swiperViewing == 'vote' ? 'swiperChoosen' : 'swiperNormal']" @tap="switchSwiper('vote')">{{lang.vote}}
-				{{ myVoteList.length }}</view>
+			<!-- <view :class="[swiperViewing == 'vote' ? 'swiperChoosen' : 'swiperNormal']" @tap="switchSwiper('vote')">{{lang.vote}}
+				{{ myVoteList.length }}
+			</view> -->
 		</view>
 		<swiper style="width:100%;height:100%;" :current-item-id="swiperViewing">
 			<swiper-item style="width: 100%;" item-id="article" @touchmove.stop>
@@ -23,7 +24,7 @@
 					</view>
 				</scroll-view>
 			</swiper-item>
-			<swiper-item style="width: 100%;" item-id="vote" @touchmove.stop>
+			<!-- <swiper-item style="width: 100%;" item-id="vote" @touchmove.stop>
 				<scroll-view scroll-y="true" class="scrollPage">
 					<view class="mainbody">
 						<view style="height:20px;width:100%;"></view>
@@ -31,7 +32,7 @@
 						 :messageIndex="messageIndex"></modify-vote>
 					</view>
 				</scroll-view>
-			</swiper-item>
+			</swiper-item> -->
 		</swiper>
 	</view>
 </template>

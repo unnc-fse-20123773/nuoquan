@@ -6,9 +6,9 @@
 					<image class="touxiang-send" :src="pathFilter(userInfo.faceImg)"></image>
 				</view>
 				<view class="content">
-					<view class="contentText-send">
+					<text selectable="true" class="contentText-send">
 						{{thisMessage.msg}}
-					</view>
+					</text>
 <!-- 					<image src="../../static/icon/logo_name.png" mode="widthFix" class="picMessage"></image>
  -->					<view class="bottomBar">
 						<!-- 					

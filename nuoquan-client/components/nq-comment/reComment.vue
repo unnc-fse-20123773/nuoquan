@@ -13,9 +13,9 @@
 			<!-- 仅显示前两条 -->
 			<view class="reComment" v-if="index<2"> 
 				<view :style="{ 'border-top': index == 0 ? '' : '1px solid #DCDCDC' }" class="reCommentContent" @tap="goToCommentDetail()">
-					<view class="contentarea">{{ subComment.nickname }}</view>
-					<view style="color:#000000;font-size: 12px;display: inline-block;margin: 0 5px 0 0;">{{lang.reply}}</view>
-					<view class="contentarea">@{{ subComment.toNickname }}</view>
+					<text selectable="true" class="contentarea">{{ subComment.nickname }}</text>
+					<text selectable="true" style="color:#000000;font-size: 12px;display: inline-block;margin: 0 5px 0 0;">{{lang.reply}}</text>
+					<text selectable="true" class="contentarea">@{{ subComment.toNickname }}</text>
 					{{ subComment.comment }}
 				</view>
 
