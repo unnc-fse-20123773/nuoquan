@@ -24,8 +24,8 @@
 
 		<commentarea class="comment-area" :commentList="commentList" :commentNum="articleCard.commentNum" @onChange="changeType"
 		 @like="swLikeComment" @goToCommentDetail="goToCommentDetail"></commentarea>
-		 <view style="width:100%;height:88px;"></view><!--占位块，上下对称-->
-
+		<view style="width:100%;height:88px;"></view><!--占位块，上下对称-->
+		<view v-if="showInput" style="width: 100%;height: 160px;"></view><!-- 占位，评论框弹起出现 -->
 		<!--触底提示和功能  start-->
 <!-- 		<view class="comment-bottom" v-if="control_scroll_button_flag">
 			<view class="comment-bottom-notice">划到底部啦</view>
@@ -49,8 +49,14 @@
 				</view>
 			</view>
 		</view> -->
-
-		<nq-commit-area :isShow="showInput" @submit="saveComment" @killCommitArea="resetInput" :openOrigin="'detail'"></nq-commit-area>
+		
+		<!-- 评论框 -->
+		<nq-commit-area :isShow="showInput" 
+		:userInfo="articleCard.userId" 
+		@submit="saveComment" 
+		@killCommitArea="resetInput" 
+		:openOrigin="'detail'"></nq-commit-area>
+		
 		<view class="menu-bar">
 			<view class="like" :class="{'liked': articleCard.isLike}" @tap="swLikeArticle()" style="border-radius:8px 0 0 8px;">
 				<image v-if="!articleCard.isLike" src="../../static/icon/heart_353535.png" mode="aspectFit"></image>
@@ -100,7 +106,7 @@
 <script>
 	import detail_article from './detail_article.vue';
 	import commentarea from '@/components/nq-comment/commentarea.vue';
-	import mySharePoster from 'components/shareposter/myshareposter.vue';
+	import mySharePoster from '@/components/shareposter/myshareposter.vue';
 	import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 	import {
 		mapState,
@@ -187,7 +193,7 @@
 				// 添加浏览量
 				this.addViewCount();
 			})
-
+			
 			// uni.$on("flashSubComment", mainCommentId => {
 			// 	console.log("修改对应主评下的次评论")
 			// 	this.getSubComments(mainCommentId, 1).then(subComment =>{
@@ -222,13 +228,14 @@
 			toggleShare() { //控制是否显示分享海报
 				this.share = !this.share;
 			},
-			resetInput() { //恢复输入框默认值，清除内容
-				console.log('resetInput');
+			resetInput(e) { //传入组件内的 "isShow"
+				console.log('resetInput' + e);
 				this.commentContent = "";
 				this.placeholderText = this.lang.engageComment;
-				this.showInput = false;
+				this.showInput = e;
 				this.writingComment = false;
 			},
+			
 			toggleMenu(mode) {
 				if (mode == 'input') {
 					this.showInput = !this.showInput;
@@ -327,7 +334,10 @@
 			 *     子级评论有 fatherCommentId, underCommentId;
 			 */
 			saveComment: function(content) {
+				console.log('conteng =' + content);
 				console.log('tragger savecomment');
+				// 赋值评论内容
+				this.commentContent = content;
 				if (uploadFlag) {
 					console.log('正在上传...');
 					return;
@@ -361,14 +371,10 @@
 								uni.hideLoading();
 								uploadFlag = false;
 
-								that.resetInput();
+								that.resetInput(false);
 								// 强制子组件重新刷新
-								// that.commentList = '';
-								// that.$nextTick(function() {
-								// 	that.getComments(1);
-								// });
+								
 								that.getComments(1);
-
 								that.articleCard.commentNum++; // 文章评论数累加
 							} else if (res.data.status == 500) {
 								that.contentIllegal();

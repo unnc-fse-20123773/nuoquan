@@ -25,11 +25,11 @@
 			<swiper-item v-for="(voteCard, index) in showList" :key="index" class="card-box" id="card_{index}">
 				<scroll-view @scroll="showScrollTop" :scroll-top="scrollTop" class="card" scroll-y="true" show-scrollbar="false" :style="{ height: voteCardHeight + 'px' }">
 					<!-- 标题行 -->
-					<view class="title">{{ voteCard.vote.voteTitle }}</view>
+					<text selectable="true" class="title">{{ voteCard.vote.voteTitle }}</text>
 					<!-- 用户信息行 -->
 					<view class="userLine hor_center">
 						<image :src="pathFilter(voteCard.vote.faceImg)" class="touxiang"></image>
-						<view class="name">{{ voteCard.vote.nickname }}</view>
+						<text selectable="true" class="name">{{ voteCard.vote.nickname }}</text>
 						<view class="time">{{ timeDeal(voteCard.vote.createDate) }}</view>
 					</view>
 					<!-- 内容 -->
@@ -214,7 +214,7 @@
 							@goToCommentDetail="goToCommentDetail"
 						></commentarea>
 						<view class="comment-bottom">
-							<view class="comment-bottom-notice">{{lang.onBottom}}</view>
+							<view class="comment-bottom-notice" @click="toggleShare">{{lang.onBottom}}</view>
 							<view class="comment-bottom-buttons super_center">
 								<!-- <image class="back" @tap="backToLastPage" src="../../static/icon/arrow-left-fcc041.png" mode="aspectFit"></image> -->
 								<image class="to-top" @tap="scrollToTop" src="../../static/icon/arrow-left-fcc041.png"></image>
@@ -225,20 +225,15 @@
 							</view>
 						</view>
 					</view>
-
-					<!-- <votecomment
-						ref="voteComment"
-						@changeCommentNum="changeCommentNum"
-						@finishLoad="showCommentWhenLoad(index)"
-						:ifLoad="finishVote[index]"
-						:voteId="item.id"
-						:index="index"
-						:userId="item.userId"
-					></votecomment> -->
 				</scroll-view>
 			</swiper-item>
 		</swiper>
-
+		
+		<!-- 分享海报 投票分享测试中-Jerrio-->
+		<view v-if="share">
+			<mySharePoster :voteCard="showList[0].vote" @unShow="toggleShare"></mySharePoster>
+		</view>
+		
 		<tab-bar :current="1" @clickTab="onClickTab"></tab-bar>
 	</view>
 </template>
@@ -249,6 +244,7 @@ import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 import commentarea from '@/components/nq-comment/commentarea.vue';
 import nqallvote from '@/components/nq-allvote/nq-allvote.vue';
 import { mapState, mapMutations } from 'vuex';
+import mySharePoster from '@/components/shareposter/myshareposter.vue';
 
 const DEFAULT_PAGE = 0;
 var uploadFlag = false;
@@ -260,7 +256,8 @@ export default {
 		uniNavBar,
 		tabBar,
 		commentarea,
-		nqallvote
+		nqallvote,
+		mySharePoster
 	},
 	computed: {
 		...mapState(['lang'])
@@ -277,6 +274,7 @@ export default {
 			menuButtonInfo: '',
 			navigationBarHeight: 0, //导航栏高度
 			ifallVote: false, //控制左上角列表显示
+			share: false, // 是否显示分享海报
 			isNavHome: getApp().globalData.isNavHome, //判断导航栏左侧是否显示home按钮
 			// singleImgState: ,
 			singleImgHeight: 0,
@@ -411,41 +409,6 @@ export default {
 
 		switchChoose(selectedOptionId) {
 			this.selectedOptionId = selectedOptionId;
-			// console.log("传进来的选项id= "+ selectedOptionId);
-			// var that = this;
-
-			// // 如果记录的index和传进来的voteIndex相同, 则继续操作
-			// // 如果记录的index和传进来的voteIndex不同, 则将所有inchosen变为false再进行操作
-			// if (that.ischosenFlag == voteIndex) {
-			// 	if (selectedOptionId == that.selectedOptionId) {
-			// 		that.selectedOptionId = '';
-			// 		that.ischosen[voteIndex] = false;
-			// 	} else {
-			// 		this.ischosen[voteIndex] = true;
-			// 		that.selectedOptionId = selectedOptionId;
-			// 		that.currentVoteIndex = voteIndex;
-			// 	}
-			// } else {
-			// 	// 不相等时
-			// 	for (var i = 0; i < that.ischosen.length; i++) {
-			// 		that.ischosen[i] = false;
-			// 	}
-			// 	// console.log("改变页面后"+that.ischosen);
-			// 	if (selectedOptionId == that.selectedOptionId) {
-			// 		that.selectedOptionId = '';
-			// 		that.ischosen[voteIndex] = false;
-			// 	} else {
-			// 		this.ischosen[voteIndex] = true;
-			// 		that.selectedOptionId = selectedOptionId;
-			// 		that.currentVoteIndex = voteIndex;
-			// 	}
-			// }
-			// // 记录是在第几个vote进行操作
-			// that.ischosenFlag = voteIndex;
-
-			// console.log("赋值后的选项id= "+ that.selectedOptionId);
-			// console.log(that.currentVoteIndex);
-			// console.log(that.ischosen);
 		},
 
 		/**
@@ -491,7 +454,6 @@ export default {
 				}
 			});
 		},
-		
 		
 		calculateHeight() {
 			var that = this;
@@ -938,6 +900,10 @@ export default {
 				duration: 2000,
 				icon: 'none'
 			});
+		},
+		
+		toggleShare() { //控制是否显示分享海报
+			this.share = !this.share;
 		},
 	}
 };

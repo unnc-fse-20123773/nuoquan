@@ -30,10 +30,10 @@
 				<view class="comment">
 					<view class="comment-info">
 						<image :src="pathFilter(comment.mainComment.faceImg)" @tap="goToPersonPublic(comment.mainComment.fromUserId)"></image>
-						<view class="name_text">{{ comment.mainComment.nickname }}</view>
+						<text selectable="true" class="name_text">{{ comment.mainComment.nickname }}</text>
 						<view class="time_text">{{ timeDeal(comment.mainComment.createDate) }}</view>
 					</view>
-					<view class="comment-content" @longpress="onLongpress" @tap="goToCommentDetail(comment.mainComment)">{{ comment.mainComment.comment }}</view>
+					<text selectable="true" class="comment-content" @longpress="onLongpress" @tap="goToCommentDetail(comment.mainComment)">{{ comment.mainComment.comment }}</text>
 					<reComment :subComment="comment.subComment" @goToCommentDetail="goToCommentDetail(comment.mainComment)" style="width: 100%;height:100%;"></reComment>
 					<view class="comment-menu">
 						<view class="operationBar column_center">

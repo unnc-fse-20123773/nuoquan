@@ -6,7 +6,7 @@
 		</view>
 		<view class="page" v-if="obj.name=='profile'">{{lang.profile}}</view>
 		<view class="page" v-if="obj.name=='myPublish'">{{lang.myPublish}}</view>
-		<view class="page" v-if="obj.name=='myFavorite'">{{lang.myFavorite}}</view>
+		<view class="page" v-if="obj.name=='myCollection'">{{lang.myCollection}}</view>
 		<view class="page" v-if="obj.name=='changeLang'">{{lang.changeLang}}</view>
 		<view class="page" v-if="obj.name=='about'">{{lang.about}}</view>
 		<view class="right_icon0" v-if="obj.type==0">
@@ -17,7 +17,7 @@
 				:bgSwitchLeft = "'-13px'"
 				:bgSwitchRight = "'41px'"
 				:options='[lang.chinese, lang.english]' 
-				:initStatus="lang.type == 'zh' ? 0: 1"
+				:initStatus="lang.langType == 'zh-CN' ? 0: 1"
 				@onChange="receiveSwitch()">
 			</nqSwitch>
 		</view>

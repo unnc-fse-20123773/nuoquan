@@ -145,7 +145,7 @@ export default {
 			unCollectArticle(){
 				console.log('取消收藏文章');
 				var that = this;
-				debugger;
+				// debugger;
 				uni.request({
 					method: 'POST',
 					url: that.$serverUrl + '/article/userUncollectArticle',

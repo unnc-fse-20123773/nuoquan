@@ -1,5 +1,10 @@
 /* 一条卡片的CSS开始， HTML见末尾
  */
+.comment{
+	display: flex;
+	flex-direction: column;
+}
+
 .comment-info {
 	height: 24px;
 	width: 100%;
@@ -43,8 +48,8 @@
 }
 
 .comment-content {
-	padding-top: 12px;
-	padding-bottom: 8px;
+	width: 100%;
+	margin: 12px 0;
 	font-size: 14px;
 	font-family: Source Han Sans CN;
 	font-weight: 400;
@@ -63,6 +68,7 @@
 }
 
 .comment-menu {
+	width: 100%;
 	margin-top: 8px;
 	height: 20px;
 	position: relative;

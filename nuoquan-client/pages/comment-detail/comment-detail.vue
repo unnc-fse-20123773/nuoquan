@@ -10,10 +10,10 @@
 		<view class="comment-Box">
 			<view class="comment-info">
 				<image :src="pathFilter(mainComment.faceImg)" @tap="goToPersonPublic(mainComment.fromUserId)"></image>
-				<view class="name_text">{{ mainComment.nickname }}</view>
+				<text selectable="true" class="name_text">{{ mainComment.nickname }}</text>
 				<view class="time_text">{{ timeDeal(mainComment.createDate) }}</view>
 			</view>
-			<view class="comment-content" @tap="activeInput(mainComment)">{{ mainComment.comment }}</view>
+			<text selectable="true" class="comment-content" @tap="activeInput(mainComment)">{{ mainComment.comment }}</text>
 			<view class="comment-menu">
 				<view class="operationBar column_center">
 					<nqCmt @click.native="activeInput(mainComment)" :number="mainComment.commentNum"></nqCmt>

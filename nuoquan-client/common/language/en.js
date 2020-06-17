@@ -29,7 +29,7 @@ module.exports = {
 	ok : "OK",
 	pullUp : "Pull up",
 	reply: "reply",
-	cancel: "cancel",
+	cancel: "Cancel",
 	
 	//登陆
 	isReadProtocol : "I have read and agree :",
@@ -99,7 +99,7 @@ module.exports = {
 	profile : "Profile",
 	myPublish : "My Post",
 	about : "About Us",
-	myFavorite: "My Favorite",
+	myCollection: "My Favorite",
 	userDeal: "User Deal",
 	changeLang : "Language",
 	follow : "Follow",
@@ -114,7 +114,6 @@ module.exports = {
 	failCheck: 'Publishing failed',
 	
 	//我的收藏
-	myCollection:"My Collection",
 	collectionNumSuffix:" Article",
 	uncollectNotice:"Swipe left to uncollect",
 	uncollectText:"Undo",
@@ -128,14 +127,20 @@ module.exports = {
 	gender : "Gender",
 	male : "Mr",
 	female : "Ms",
+	other:"Other",
+	unknown:"Unknown",
+	signature: "Signature",
 	graduationYear : "Graduation Year",
 	major : "Major",
 	degree : "Degree",
 	schoolEmail : "School Email",
 	changeEmail : "Change Email",
-	genderList : ["Ms", "Mr", "Others"], //顺序请和数据库保持一致
+	genderList : ["Ms", "Mr", "Unknown"], //顺序请和数据库保持一致
 	degreeList : ["High school", "Undergraduate", "Graduate"], //顺序请和数据库保持一致
-	
+	relevantInfo: "Correlation",
+	editInfo: "Click text to modify information",
+	editEmail: "Click text to modify email",
+	bindEmail: "Click to bind email",
 	//他人页
 	whosHome : "'s Home",
 	

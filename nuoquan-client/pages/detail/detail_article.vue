@@ -1,14 +1,14 @@
 <template>
 	<view>
-		<view style="margin-top: 14px;">
+		<view style="margin-top: 14px;display: flex;flex-direction: column;">
 			<!--作者信息，头像名字时间-->
 			<view class="author-info-bar">
 				<image :src="pathFilter(articleCard.faceImg)" class="touxiang" @click="goToPersonPublic()"></image>
-				<view class="name" @tap="goToPersonPublic()">{{ articleCard.nickname }}</view>
+				<text selectable="true" class="name" @tap="goToPersonPublic()">{{ articleCard.nickname }}</text>
 				<view class="time">{{ timeDeal(articleCard.createDate) }}</view>
 			</view>
 			<!--标题-->
-			<view class="detail-title" :style="{width : '100%'}" v-html="$markdownParse.parse(articleCard.articleTitle)"></view>
+			<text selectable="true" class="detail-title" :style="{width : '100%'}">{{ articleCard.articleTitle }}</text>
 			<!-- <view class="detail-title" :style="{width : isfunCom ? 'calc(100%-75px)' : '100%'}">{{ articleCard.articleTitle }}</view> -->
 			<!-- 搞笑大赛 -->
 			<!-- <image v-if="isfunCom" src="../../static/BG/funCom.png" mode="aspectFit" 
@@ -21,10 +21,7 @@
 			<view class="tag" v-if="articleCard.tagList.length != 0 && articleCard.tagList != null" :style="{ background: tagColorList[index] }" v-for="(i, index) in articleCard.tagList" v-bind:key="index">{{ i }}</view>
 		</view>
 		<!--内容-->
-		<view class="detailcontent" v-html="$markdownParse.parse(articleCard.articleContent)"></view>
-<!-- 		<view class="detailcontent">{{ articleCard.articleContent }}</view>
- -->		
-		
+		<text selectable="true" class="detailcontent">{{ articleCard.articleContent }}</text>
 		<!--图片区域-->
 		<view>
 			<!-- 单图显示 -->
@@ -234,11 +231,11 @@ export default {
 	font-size: 17px;
 	line-height: 21px;
 	/* margin: auto; */
-	font-weight: 500;
+	font-weight: 550;
 	word-break: break-all;
 	word-wrap: break-word;
-	padding-top: 16px;
-	padding-bottom: 8px;
+	margin-top: 16px;
+	margin-bottom: 12px;
 	max-height: 42px;
 	text-align: justify;
 }
@@ -257,13 +254,15 @@ export default {
 
 .name {
 	font-size: 14px;
-	line-height: 16px;
-	height: 16px;
-	color: #353535;
+	/* height: 16px; */
 	position: absolute;
 	top: 2px;
 	left: 40px;
 	min-width: 96px;
+	font-weight:500;
+	height: 16px;
+	line-height:16px;
+	color:rgba(53,53,53,1);
 }
 
 .time {
@@ -294,7 +293,7 @@ export default {
 	vertical-align: middle;
 	margin-right: 9px;
 	color: #ffffff;
-	margin-bottom: 8px;
+	margin-bottom: 10px;
 }
 
 .detailcontent {
@@ -307,7 +306,7 @@ export default {
 	font-weight: 400;
 	line-height: 18px;
 	color: rgba(53, 53, 53, 1);
-	padding-bottom: 8px;
+	margin-bottom: 10px;
 }
 
 .detailpics {

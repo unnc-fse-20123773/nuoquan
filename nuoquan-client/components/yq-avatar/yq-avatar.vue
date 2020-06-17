@@ -103,12 +103,14 @@
 				this.moreHeight = 0;
 				this.fWindowResize();
 			} else {
-				uni.showTabBar({
-					complete:(res) => {
-						this.moreHeight = (res.errMsg === 'showTabBar:ok') ? 50 : 0;
-						this.fWindowResize();
-					}
-				});
+				this.moreHeight = 0;
+				this.fWindowResize();
+				// uni.showTabBar({
+				// 	complete:(res) => {
+				// 		this.moreHeight = (res.errMsg === 'showTabBar:ok') ? 50 : 0;
+				// 		this.fWindowResize();
+				// 	}
+				// });
 			}
 		},
 		methods: {
@@ -314,7 +316,7 @@
 					},
 					complete: () => {
 						uni.hideLoading();
-						this.noBar || uni.showTabBar();
+						// this.noBar || uni.showTabBar();
 					}
 				}, this);
 			},
@@ -408,7 +410,7 @@
 					},
 					complete: () => {
 						uni.hideLoading();
-						this.noBar || uni.showTabBar();
+						// this.noBar || uni.showTabBar();
 					}
 				}, this);
 			},
@@ -555,7 +557,7 @@
 				this.styleTop = '-10000px';
 				this.hasSel = false;
 				this.fHideImg();
-				this.noBar || uni.showTabBar();
+				// this.noBar || uni.showTabBar();
 			},
 			fPreview() {
 				if(this.fPreviewing) return;

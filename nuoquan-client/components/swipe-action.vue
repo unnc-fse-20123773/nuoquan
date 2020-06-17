@@ -24,8 +24,8 @@
 					:data-index="i"
 					:data-disabled="it.disabled"
 				>
-					<view class="uni-swipe-action__content " @click="toMessageDetail(i, it.type)">
-						<view class="item" hover-class="hoverColor" :class="it.stick ? 'stick' : ''" @tap="tapCard(it)">
+					<view class="uni-swipe-action__content " hover-class="hoverColor" @click="toMessageDetail(i, it.type)">
+						<view class="item" :class="it.stick ? 'stick' : ''" @tap="tapCard(it)">
 							<block>
 								<view class="item-left">
 									<!-- <avator-group :type="it.type" :avator="it.url"></avator-group> -->
