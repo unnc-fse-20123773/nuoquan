@@ -9,13 +9,13 @@
 		<view class="swiperMenu">
 			<view :class="[swiperViewing == 'article' ? 'swiperChoosen' : 'swiperNormal']" @tap="switchSwiper('article')">{{lang.article}}
 				{{ myArticleList.length }}</view>
-			<!-- <view :class="[swiperViewing == 'vote' ? 'swiperChoosen' : 'swiperNormal']" @tap="switchSwiper('vote')">{{lang.vote}}
+			<view :class="[swiperViewing == 'vote' ? 'swiperChoosen' : 'swiperNormal']" @tap="switchSwiper('vote')">{{lang.vote}}
 				{{ myVoteList.length }}
-			</view> -->
+			</view>
 		</view>
 		<swiper style="width:100%;height:100%;" :current-item-id="swiperViewing">
 			<swiper-item style="width: 100%;" item-id="article" @touchmove.stop>
-				<scroll-view scroll-y="true" class="scrollPage">
+				<scroll-view scroll-y="true" class="scrollPage" @scrolltolower="loadMore()">
 					<view class="mainbody">
 						<view style="height:20px;width:100%;"></view>
 						<modify-article v-for="article in myArticleList" :key="article.id" :thisArticle="article" :lang="lang"
@@ -24,15 +24,15 @@
 					</view>
 				</scroll-view>
 			</swiper-item>
-			<!-- <swiper-item style="width: 100%;" item-id="vote" @touchmove.stop>
-				<scroll-view scroll-y="true" class="scrollPage">
+			<swiper-item style="width: 100%;" item-id="vote" @touchmove.stop >
+				<scroll-view scroll-y="true" class="scrollPage" @scrolltolower="loadMoreVote()">
 					<view class="mainbody">
 						<view style="height:20px;width:100%;"></view>
 						<modify-vote :lang="lang" v-for="vote in myVoteList" :key="vote.id" :vote="vote" 
 						 :messageIndex="messageIndex"></modify-vote>
 					</view>
 				</scroll-view>
-			</swiper-item> -->
+			</swiper-item>
 		</swiper>
 	</view>
 </template>
@@ -66,8 +66,12 @@
 				currentPage: 1,
 				totalNum: '0',
 				myArticleList: [],
-
+				
+				totalPageVote: 1,
+				currentPageVote: 1,
+				totalNumVote: '0',
 				myVoteList: [],
+				
 				swiperViewing: 'article',
 				isNavHome: getApp().globalData.isNavHome, //判断导航栏左侧是否显示home按钮
 				messageIndex: "",
@@ -127,7 +131,7 @@
 					data: {
 						page: page,
 						userId: that.userInfo.id,
-						targetId: that.userInfo.id, //应该为targetId,但缺少publicProfile的数据传输,暂时用userId测试
+						targetId: that.userInfo.id, 
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
@@ -181,19 +185,33 @@
 			showVotes: function(page) {
 				var that = this;
 				uni.request({
-					url: that.$serverUrl + '/vote/queryAllVotes',
+					url: that.$serverUrl + '/vote/queryPublishedVoteHistory',
 					method: 'POST',
 					data: {
 						page: 1,
 						userId: that.userInfo.id,
-						pagesize: '10'
+						targetId: that.userInfo.id,
+						
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: res => {
-						console.log(res);
-						that.myVoteList = res.data.data.rows;
+						
+						setTimeout(() => {
+							//延时加载
+							console.log(res);
+							if (page == 1) {
+								that.myVoteList = [];
+							}
+							var newVoteList = res.data.data.rows;
+							var oldVoteList = that.myVoteList;
+							that.myVoteList = oldVoteList.concat(newVoteList);
+							that.currentPageVote = page;
+							that.totalPageVote = res.data.data.total;
+							that.totalNumVote = res.data.data.records;
+							console.log(that.totalNum);
+						}, 300);
 					},
 					fail: res => {
 						uni.hideLoading();
@@ -203,6 +221,23 @@
 						console.log(res);
 					}
 				});
+			},
+			loadMoreVote: function() {
+				var that = this;
+				var currentPage = that.currentPageVote;
+				var totalPage = that.totalPageVote;
+				// 判断当前页数和总页数是否相等
+				if (currentPage == totalPage) {
+					// that.showArticles(1);
+					uni.showToast({
+						title: '没有更多文章了',
+						icon: 'none',
+						duration: 1000
+					});
+				} else {
+					var page = currentPageVote + 1;
+					that.showVotes()(page);
+				}
 			},
 			receiveSwiped(newId) {
 				this.messageIndex = newId;
