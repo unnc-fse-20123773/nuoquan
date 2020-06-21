@@ -4,13 +4,13 @@
 		<view class="comment">
 			<view class="comment-info">
 				<image :src="pathFilter(commentDetail.faceImg)" @tap="goToPersonPublic(commentDetail.fromUserId)"></image>
-				<view class="name_text">{{ commentDetail.nickname }}</view>
+				<text selectable="true" class="name_text">{{ commentDetail.nickname }}</text>
 				<view class="replyTo" v-if="commentDetail.toNickname != null && commentDetail.toNickname != undefined">
 					{{commentDetail.toNickname}}
 				</view>
 				<view class="time_text">{{ timeDeal(commentDetail.createDate) }}</view>
 			</view>
-			<view class="comment-content" @tap="controlInputInSonCommentBox()">{{ commentDetail.comment }}</view>
+			<text selectable="true" class="comment-content" @tap="controlInputInSonCommentBox()">{{ commentDetail.comment }}</text>
 			<view class="comment-menu">
 				<view class="operationBar column_center">
 						<!-- <nqCmt @click.native="controlInputInSonCommentBox()" :number="commentDetail.commentNum"></nqCmt> -->

@@ -2,14 +2,15 @@
 	<view style="position:absolute;right:0;top:0;">
 <!-- 		<textarea class="content" v-model="articleContent" :maxlength="maxContentLength" :auto-height="true"
 		 :show-confirm-bar="false" @input="dealmark()"></textarea> -->
-		 <button class="preViewButton" @tap="showPreview">预览</button>
+		 
+		 <!-- 此处预览为上线暂时注释掉，功能完成后重新更新 Guetta -->
+		 <!-- <button class="preViewButton" @tap="showPreview">预览</button> -->
 
 		<view v-if="showPre" class="preViewArea" v-html="nodes"></view>
 	</view>
 </template>
 
 <script>
-	import micromarkdown from './markdown.js'
 	export default {
 		props:{
 		articleContent:"",	
@@ -22,7 +23,8 @@
 		},
 		watch: {
 			articleContent(newValue, oldValue) {
-				this.nodes = micromarkdown.parse(this.articleContent);
+				this.nodes = this.$markdownParse.parse(this.articleContent);
+				
 			}
 		},
 		methods: {

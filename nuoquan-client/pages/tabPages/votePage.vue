@@ -25,11 +25,11 @@
 			<swiper-item v-for="(voteCard, index) in showList" :key="index" class="card-box" id="card_{index}">
 				<scroll-view @scroll="showScrollTop" :scroll-top="scrollTop" class="card" scroll-y="true" show-scrollbar="false" :style="{ height: voteCardHeight + 'px' }">
 					<!-- 标题行 -->
-					<view class="title">{{ voteCard.vote.voteTitle }}</view>
+					<text selectable="true" class="title">{{ voteCard.vote.voteTitle }}</text>
 					<!-- 用户信息行 -->
 					<view class="userLine hor_center">
 						<image :src="pathFilter(voteCard.vote.faceImg)" class="touxiang"></image>
-						<view class="name">{{ voteCard.vote.nickname }}</view>
+						<text selectable="true" class="name">{{ voteCard.vote.nickname }}</text>
 						<view class="time">{{ timeDeal(voteCard.vote.createDate) }}</view>
 					</view>
 					<!-- 内容 -->

@@ -46,7 +46,8 @@
 				});
 			},
 			send(){
-				this.$emit('send',this.inputMessage)
+				this.$emit('send',this.inputMessage);
+				this.inputMessage = '' // 清空输入框
 			}
 
 		}
