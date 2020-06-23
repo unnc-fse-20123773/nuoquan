@@ -10,7 +10,7 @@
 		@click="goToDetail(vote)"
 		hover-class="hoverColor"
 		>
-			<view class="voteProjectName">{{vote.voteContent}}</view>
+			<view class="voteProjectName">{{vote.voteTitle}}</view>
 			<block class="voteOptions" v-for="option in vote.optionList" :key="option.index">
 				<view class="options">
 					<view class="optionText">{{option.optionContent}}</view>
