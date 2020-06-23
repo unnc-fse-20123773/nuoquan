@@ -51,8 +51,8 @@
 			</swiper-item>
 		</swiper>
 
-		<view class="pagejump_box">
-			<pagejump hover-class="hoverColor" :lang="lang" :objList="data" v-for="(data, index) in dataList" :key="index" @trigger="responseClick()"></pagejump>
+		<view class="navigator_box">
+			<navigator :lang="lang" :objList="dataList" @trigger="navigatorEvent()" @test="test()"></navigator>
 		</view>
 
 		<tab-bar :current="4"></tab-bar>
@@ -62,7 +62,7 @@
 <script>
 import { mapState, mapMutations } from 'vuex';
 import tabBar from '@/components/nq-tabbar/nq-tabbar.vue';
-import pagejump from '@/components/pagejump.vue';
+import navigator from '@/components/navigator.vue';
 import avatar from '@/components/yq-avatar/yq-avatar.vue';
 
 export default {
@@ -79,59 +79,22 @@ export default {
 			windowWidth: 0,
 			cardWidth: '',
 			contentShow: true,
-			dataList: [
-				{
-					lefticon_src: 'file-alt-5E49E9',
-					righticon_src: 'angle-right-888888',
-					style: 'rgba(227,223,248,1)',
-					name: 'profile',
-					type: 0,
-					id: 1
-				},
-				{
-					lefticon_src: 'notes-25d223',
-					righticon_src: 'angle-right-888888',
-					style: 'rgba(216,248,215,1)',
-					name: 'myPublish',
-					type: 0,
-					id: 2
-				},
-				{
-					lefticon_src: 'star-full-fcc041',
-					righticon_src: 'angle-right-888888',
-					style: 'rgba(255,245,219,1)',
-					name: 'myCollection',
-					type: 0,
-					id: 3
-				},
-				{
-					lefticon_src: 'language-5d88EB',
-					righticon_src: 'angle-right-888888',
-					style: 'rgba(226,235,255,1)',
-					name: 'changeLang',
-					type: 1,
-					id: 4
-				},
-				{
-					lefticon_src: 'exclamation-circle-888888',
-					righticon_src: 'angle-right-888888',
-					style: 'rgba(240,240,240,1)',
-					name: 'about',
-					type: 0,
-					id: 5
-				}
-			]
+			dataList: ''
 		};
 	},
 	components: {
 		tabBar,
-		pagejump,
+		navigator,
 		avatar
 	},
 	computed: {
 		...mapState(['lang'])
 	},
-	
+	watch: {
+		lang(newVal, oldVal){
+			console.log("newVal =" + newVal);
+		}
+	},
 	onLoad() {
 		this.thisUserInfo = this.getGlobalUserInfo();
 
@@ -151,7 +114,49 @@ export default {
 		});
 
 		// 获取卡片宽度
-		that.cardWidth = that.windowWidth - 26 + 'px';
+		this.cardWidth = this.windowWidth - 26 + 'px';
+		
+		this.dataList = [
+			{
+				lefticon_src: 'file-alt-5E49E9',
+				righticon_src: 'angle-right-888888',
+				style: 'rgba(227,223,248,1)',
+				name: 'profile',
+				url: '../profile/profile',
+				type: 0,
+			},
+			{
+				lefticon_src: 'notes-25d223',
+				righticon_src: 'angle-right-888888',
+				style: 'rgba(216,248,215,1)',
+				name: 'myPublish',
+				url: '../myPublish/myPublish',
+				type: 0,
+			},
+			{
+				lefticon_src: 'star-full-fcc041',
+				righticon_src: 'angle-right-888888',
+				style: 'rgba(255,245,219,1)',
+				name: 'myCollection',
+				url: '../myCollection/myCollection',
+				type: 0,
+			},
+			{
+				lefticon_src: 'language-5d88EB',
+				righticon_src: 'angle-right-888888',
+				style: 'rgba(226,235,255,1)',
+				name: 'changeLang',
+				type: 1,
+			},
+			{
+				lefticon_src: 'exclamation-circle-888888',
+				righticon_src: 'angle-right-888888',
+				style: 'rgba(240,240,240,1)',
+				name: this.lang.about,
+				url: '../about/about',
+				type: 0,
+			}
+		]
 	},
 
 	onShow() {
@@ -216,16 +221,20 @@ export default {
 				}
 			});
 		},
-		responseClick(eventStruct) {
-			if (eventStruct.type == 'switchLang') {
-				console.log(1);
-				this.changeLang(eventStruct.event.status);
-			} else if (eventStruct.type == 'click') {
-				uni.navigateTo({
-					url: '../' + eventStruct.event.name + '/' + eventStruct.event.name
-				});
-				console.log(2);
-			}
+		navigatorEvent(event) {
+			console.log(event)
+				// if (e.action == 'switchLang') {
+				// 	this.changeLang(e.status);
+				// } else if (e.action == 'click') {
+				// 	uni.navigateTo({
+				// 		url: '../' + e.event.name + '/' + e.event.name
+				// 	});
+				// 	console.log(2);
+				// }
+		},
+		
+		test(a){
+			console.log(a)
 		},
 
 		//粉丝数是否改变
