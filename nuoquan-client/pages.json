@@ -83,7 +83,10 @@
         ,{
             "path" : "pages/adWebPage/adWebPage",
             "style" : {}
-        }
+        },{
+		    "path" : "pages/myCollection/myCollection",
+		    "style" : {}
+		}
     ],
 
 	//微信小程序自定义导航栏custom-tab-bar

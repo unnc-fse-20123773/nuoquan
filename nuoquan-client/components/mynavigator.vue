@@ -1,3 +1,8 @@
+<!-- 
+ 导航列表组件
+ Author: Jerrio & 子可
+ Date: June 23, 2020
+-->
 <template>
 	<view>
 		<view v-for="(obj, index) in objList" :key="index" hover-class="hoverColor" @click="receiveClick(obj, index)">
@@ -6,18 +11,13 @@
 					<image :src="'../static/icon/' + obj.lefticon_src + '.png'" mode="scaleToFill"></image>
 				</view>
 				<view class="page">{{ obj.name }}</view>
-				<!-- <view class="page" v-if="obj.name=='profile'">{{lang.profile}}</view>
-			<view class="page" v-if="obj.name=='myPublish'">{{lang.myPublish}}</view>
-			<view class="page" v-if="obj.name=='myCollection'">{{lang.myCollection}}</view>
-			<view class="page" v-if="obj.name=='changeLang'">{{lang.changeLang}}</view>
-			<view class="page" v-if="obj.name=='about'">{{lang.about}}</view> -->
 				<view class="right_icon0" v-if="obj.type == 0"><image :src="'../static/icon/' + obj.righticon_src + '.png'" mode="scaleToFill"></image></view>
 				<view class="right_icon1" v-else>
 					<nqSwitch
 						:bgSwitchLeft="'-13px'"
 						:bgSwitchRight="'41px'"
-						:options="[lang.chinese, lang.english]"
-						:initStatus="lang.langType == 'zh-CN' ? 0 : 1"
+						:options=obj.options
+						:initStatus=obj.initStatus
 						@onChange="receiveSwitch()"
 					></nqSwitch>
 				</view>
@@ -36,8 +36,7 @@ export default {
 		nqSwitch
 	},
 	props: {
-		objList: {}, // type: 0 跳转，1 不跳转
-		lang: ''
+		objList: {}, // type: 0 跳转，1 switch
 	},
 	data() {
 		return {};
@@ -57,12 +56,12 @@ export default {
 
 		receiveClick(obj, index) {
 			var eventStruct = {
-				action: 'aa',
+				action: 'goto',
 				obj: obj,
 				index: index
 			};
 			console.log(eventStruct);
-			this.$emit('trigger', "hello");
+			this.$emit('trigger', eventStruct);
 		}
 	}
 };
