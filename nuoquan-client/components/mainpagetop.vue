@@ -1,25 +1,30 @@
 <template>
 	<view class="mainPageTopAll" style="height:100%;">
 		<!-- 盛放top功能区，height屏幕高度，宽度0 -->
-		<view class="bottomLayerOfLeft" v-if="showMainPageLeft" @click="controlShowLeft(0)" @touchmove="controlShowLeft(0)">
+		<!-- 待删除清理 <view class="bottomLayerOfLeft" v-if="showMainPageLeft" @click="controlShowLeft(0)" @touchmove="controlShowLeft(0)">
 			<mainpageleft :userInfo="userInfo"></mainpageleft>
-		</view>
+		</view> -->
 
 		<searchpage v-if="showSearch" class="searchPage" @exitSearchSignal="controlShowSearch"></searchpage>
 
 		<view class="mainPageTop" :style="{ height: roleup == false ? height + 'px' : height_roled + 'px' }">
 			<!-- 搜索行 -->
-			<view class="topBar" :style="{'margin-top': this.getnavbarHeight().top - 2 + 'px'}">
-				<!-- 头像，备用 <image class="topBarTouxiang" :src='pathFilter(userInfo.faceImg)' @click="controlShowLeft(1)"></image> -->
-				<view class="topBarSearch" @click="controlShowSearch(1)">
+			<!-- <view class="topBar" :style="{'margin-top': this.getnavbarHeight().top - 2 + 'px'}"> -->
+			<view class="topBar" :style="{ height: this.getnavbarHeight().top + 40 + 'px'}">
+				<view class="topBarSearch" :style="{'margin-top': this.getnavbarHeight().top + 2 + 'px'}" @click="controlShowSearch(1)">
 					<image src="../static/icon/search_B79144.png" mode="aspectFit"></image>
 				</view>
-				<!-- 新建，备用 <view class="topBarPlus" @click="jumpToSubmit()">
-					<view style="font-size: 20px;color:#FDD041;border-radius: 3px;">+</view>
-				</view> -->
 				<view class="topBarwaiting"></view>
 			</view>
-
+			<!-- 标题行 -->
+			<view v-if="!roleup" class="titleLine">
+				<view class="titleLine_left">
+					<text>热门讨论</text>
+				</view>
+				<view @click="jumpTohot" class="titleLine_right">
+					<text>查看全部 ></text>
+				</view>
+			</view>
 			<!-- 热门卡片 -->
 			<view class="hotestBox" :style="{'height':roleup == false ? '62px;' :'33px' ,}">
 				<view :class="[roleup == false ? 'hotestCard' : 'hotestCard_roled']">
@@ -50,60 +55,44 @@
 					</swiper>
 				</view>
 			</view>
-		</view>
-		<!-- 主页操作行 -->
-		<view v-if="roleup == false" class="optionLine_mpt column_center" :style="{top:height + 11 + 'px'}">
-			<!-- 标签选择 -->
-			<view>
-				<view v-if="!selectedTag" @click="toggleShowTag" class="tagchoose column_center">
-					<text>{{lang.find}}</text>
-					<image class="tagicon" src="../static/icon/angle-down.png" mode="aspectFit"></image>
+			<!-- 标签和筛选行 -->
+			<view v-if="roleup == false" class="tagsLine column_center">
+				<!-- 左侧打开标签选择按钮 -->
+				<view v-if="!selectedTag" @click="toggleShowTag" class="tagsButton">
+					<view class="text">标签筛选</view>
+					<view class="icon super_center">
+						<image v-if="!showTagBox" src="../static/icon/tag-white.png" mode="aspectFit"></image>
+						<image v-else src="../static/icon/angle-up-white.png" mode="aspectFit"></image>
+					</view>
 				</view>
-				<tagSelected v-if="selectedTag" :tag='selectedTag' @click="deleteTag"></tagSelected>
+				<!-- 选择和替换为所选标签 -->
+				 <tagSelected v-if="selectedTag" :tag='selectedTag' @click="deleteTag"></tagSelected>
+				<!-- 右侧排列筛选 -->
+				<nqSwitch v-if="lang.langType == 'zh-CN'"
+					:bgSwitchLeft = "'-13px'"
+					:bgSwitchRight = "'41px'"
+					:options='[lang.all, lang.follow]' 
+					:initStatus='iniStatus1' 
+					@onChange="change_article_order1"
+					style="position:absolute;right: 4.5%;">
+				</nqSwitch>
+				<nqSwitch v-else 
+					:bgSwitchLeft = "'-13px'"
+					:bgSwitchRight = "'47px'"
+					:options='[lang.all, lang.follow]' 
+					:initStatus='iniStatus1' 
+					@onChange="change_article_order1"
+					style="position:absolute;right: 4.5%;">
+				</nqSwitch>
 			</view>
-			<tagSelectBox
-				:style="{position: 'fixed', 'z-index': '40' , 'margin-top': 6 + 'px' , left: 3.47 + '%' , width: 93.07 + '%' , top: height + 41 + 'px' }"
-				:lang = "lang"
-				:tagList="tagList" 
-				@selected="getSelectedTag" 
-				v-if="showTagBox">
-			</tagSelectBox>
-			<!-- 排序方式1-->
-			<nqSwitch v-if="lang.langType == 'zh-CN'" 
-				:bgSwitchLeft = "'-13px'"
-				:bgSwitchRight = "'41px'"
-				:options='[lang.all, lang.follow]' 
-				:initStatus='iniStatus1' 
-				@onChange="change_article_order1">
-			</nqSwitch>
-			<nqSwitch v-else 
-				:bgSwitchLeft = "'-13px'"
-				:bgSwitchRight = "'47px'"
-				:options='[lang.all, lang.follow]' 
-				:initStatus='iniStatus1' 
-				@onChange="change_article_order1">
-			</nqSwitch>
-			<!-- 排序方式2 -->
-			<nqSwitch v-if="lang.langType == 'zh-CN'" 
-				:bgSwitchLeft = "'-13px'"
-				:bgSwitchRight = "'41px'"
-				:options='[lang.time, lang.hot]' 
-				:initStatus='iniStatus2' 
-				@onChange="change_article_order2">
-			</nqSwitch>
-			<nqSwitch v-else
-				:bgSwitchLeft = "'-11px'"
-				:bgSwitchRight = "'41px'"
-				:options='[lang.time, lang.hot]' 
-				:initStatus='iniStatus2' 
-				@onChange="change_article_order2">
-			</nqSwitch>
 		</view>
-		<!-- Add background for option bar-->
-		<view v-if="roleup == false" class="optionLinebg_mpt" :style="{top: height + 4 + 'px'}">
-		</view>
-		<!-- 标签选择列表蒙版 -->
-		<!-- <view v-if="showTagBox" style="width: 100%;height: 100%;position: fixed;z-index: 30;top: 0;background-color: #007AFF;"></view> -->
+		<tagSelectBox
+			:style="{position: 'fixed', 'z-index': '40' ,  width: 100 + '%' , top: height - 13 + 'px' }"
+			:lang = "lang"
+			:tagList="tagList" 
+			@selected="getSelectedTag" 
+			v-if="showTagBox">
+		</tagSelectBox>
 	</view>
 </template>
 
@@ -142,7 +131,7 @@ export default {
 			showTagBox: false,
 			iniStatus1: 0, //为switch组件设置初始值
 			iniStatus2: 0, //为switch组件设置初始值
-			selectedTag: '' //已选择的标签
+			selectedTag: '', //已选择的标签
 		};
 	},
 	computed: {
@@ -191,12 +180,6 @@ export default {
 			this.$emit('transQueryType', e.status);
 		},
 		
-		change_article_order2(e){
-			// console.log(e.status);
-			this.iniStatus2=e.status;
-			this.$emit('transOrderType', e.status);
-		},
-		
 		getSelectedTag(tag){
 			this.selectedTag = tag; //传值给渲染层
 			this.showTagBox = false;
@@ -234,16 +217,14 @@ page {
 }
 
 .mainPageTop {
-	padding-top: 4px;
 	/* height: 139px; */
 	position: fixed;
 	left: 0;
 	top: 0;
 	overflow: hidden;
 	width: 100%;
-	background-size: 100% 100%;
-	box-shadow: 0px 0px 10px 1px #c0c0c0;
-	background-image: linear-gradient(#ffc95a, #f89d4d);
+	background-color: white;
+	border-bottom: 4px solid rgba(236,236,236,1);
 }
 
 /* .mainPageTop_roled{
@@ -261,7 +242,8 @@ page {
  */
 .topBar {
 	width: 100%;
-	height: 30px;
+	background-color: rgb(252,192,65);
+	/* height: 30px; */
 	/* margin-top: 23px; */
 	/* 此处需要兼容性处理 47px */
 }
@@ -277,10 +259,11 @@ page {
 	} */
 
 .topBarSearch {
+	height:30px;
+	background:rgba(255,255,255,1);
+	opacity:1;
+	border-radius:75px;
 	width: 68.27%;
-	height: 30px;
-	background: rgba(255, 247, 231, 1);
-	opacity: 1;
 	border-radius: 75px;
 	font-size: 15px;
 	display: inline-block;
@@ -293,6 +276,45 @@ page {
 	height: 20px;
 	opacity: 1;
 	margin: 5px 13px;
+}
+
+/* 热门标题 */
+.titleLine{
+	height: 44px;
+	width: 100%;
+	position: relative;
+}
+
+.titleLine_left{
+	position: absolute;
+	left: 25px;
+	top: 12px;
+	height: 17px;
+}
+
+.titleLine_left text{
+	height:17px;
+	font-size:17px;
+	font-weight:550;
+	line-height:21px;
+	color:rgba(74,74,74,1);
+	opacity:1;
+}
+
+.titleLine_right{
+	position: absolute;
+	right: 22px;
+	top: 13.5px;
+	height: 14px;
+}
+
+.titleLine_right text{
+	height:14px;
+	font-size:14px;
+	font-weight:400;
+	line-height:21px;
+	color:rgba(177,177,177,1);
+	opacity:1;
 }
 
 .topBarPlus {
@@ -315,14 +337,13 @@ page {
 
 .hotestCard {
 	display: flex;
-	height:62px;
-	width: 93.07%;
-	background: rgba(252, 252, 252, 1);
-	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-	opacity: 1;
-	border-radius: 16px;
-	margin-top: 12px;
-	margin-left: 3.47%;
+	width: 91%;
+	height:63px;	
+	border-radius:8px;
+	margin-left: 4.5%;
+	background:rgba(255,255,255,1);
+	box-shadow:0px 0px 6px rgba(0,0,0,0.16);
+	opacity:1;
 }
 
 .hotestCard_roled {
@@ -366,6 +387,50 @@ page {
 	height: 14px;
 	width: 26px;
 	z-index: 20;
+}
+
+.tagsLine{
+	height: 44px;
+	width: 100%;
+	position: relative;
+	margin-top: 12px;
+}
+
+.tagsButton{
+	position: absolute;
+	display: flex;
+	left: 4.5%;
+	width:110px;
+	height:30px;
+	background:rgba(255,238,201,1);
+	opacity:1;
+	border-radius:54px;
+}
+
+.tagsButton .text{
+	width: 80px;
+	height:30px;
+	font-size:14px;
+	font-family:Source Han Sans CN;
+	font-weight:400;
+	line-height:30px;
+	text-align: center;
+	color:rgba(252,192,65,1);
+	opacity:1;
+}
+
+.tagsButton .icon{
+	width: 30px;
+	height: 30px;
+	background:rgba(252,192,65,1);
+	border-radius:50%;
+	opacity:1;
+}
+
+.tagsButton .icon image{
+	width:13px;
+	height:14px;
+	opacity:1;
 }
 
 .grayline {

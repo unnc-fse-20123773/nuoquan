@@ -42,6 +42,10 @@ module.exports = {
 	getCaptcha : "Get captcha",
 	waitCaptcha : "Please wait (SECORD)s",
 	
+	//主页
+	viewAllHot: "Show All >",
+	tagPick: "",
+	
 	//文章
 	article : "Article",
 	detail : "Detail",
