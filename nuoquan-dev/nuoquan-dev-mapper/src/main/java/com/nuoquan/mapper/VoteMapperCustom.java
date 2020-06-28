@@ -52,7 +52,7 @@ public interface VoteMapperCustom extends MyMapper<Vote> {
 	 * @param userId
 	 * @return
 	 */
-	public List<VoteVO> queryAllMyHisArticle(String userId);
+	public List<VoteVO> queryAllMyHisVote(String userId);
 
 	/**
 	 * 查看他人的合法投票

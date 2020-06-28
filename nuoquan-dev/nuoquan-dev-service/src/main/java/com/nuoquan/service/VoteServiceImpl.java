@@ -506,7 +506,7 @@ public class VoteServiceImpl implements VoteService {
 
 		PageHelper.startPage(page, pageSize);
 		
-		List<VoteVO> list = voteMapperCustom.queryAllMyHisArticle(userId);
+		List<VoteVO> list = voteMapperCustom.queryAllMyHisVote(userId);
 		for (VoteVO v : list) {
 			// 为每个投票添加图片列表
 			v.setImgList(voteImageMapper.getVoteImgs(v.getId()));

@@ -77,13 +77,16 @@
 			"style": {}
 		}
         ,{
-            "path" : "pages/myCollection/myCollection",
+            "path" : "pages/myFavorite/myFavorite",
             "style" : {}
         }
         ,{
             "path" : "pages/adWebPage/adWebPage",
             "style" : {}
-        }
+        },{
+		    "path" : "pages/myCollection/myCollection",
+		    "style" : {}
+		}
     ],
 
 	//微信小程序自定义导航栏custom-tab-bar
@@ -220,7 +223,7 @@
 		},
 		{
 			"name": "我的收藏",
-			"path" : "pages/myCollection/myCollection",
+			"path" : "pages/myFavorite/myFavorite",
 			"query": "" //启动参数，在页面的onLoad函数里面得到
 		}
 		]

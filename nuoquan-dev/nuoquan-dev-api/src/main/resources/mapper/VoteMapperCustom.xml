@@ -74,7 +74,7 @@
   	order by v.create_date desc
   </select>
   
-  <select id="queryAllMyHisArticle" resultMap="BaseResultMap" parameterType="String">
+  <select id="queryAllMyHisVote" resultMap="BaseResultMap" parameterType="String">
  	select v.*, u.nickname as nickname, u.face_img, u.face_img_thumb from nuoquan.vote v
    	left join nuoquan.user u on u.id = v.user_id
   	where

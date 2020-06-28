@@ -1,6 +1,6 @@
 <template>
 	<view class="articlecard" id="'+articleCard.id+'" @click="goToDetail()" hover-class="hoverColor">
-		<view class="title" v-html="articleCard.articleTitle"></view>
+		<view class="title" v-html="$markdownParse.parse(articleCard.articleTitle)"></view>
 		
 		<view class="picturearea" v-if="articleCard.imgList.length">
 			<image :src="serverUrl + articleCard.imgList[0].imagePath"></image>
@@ -8,7 +8,7 @@
 		</view>
 		
 		<view class="right-body" :class="{ rightBodyWithPic: articleCard.imgList.length != 0 }">
-			<view class="briefarticleCard" v-html="articleCard.articleContent"></view>
+			<view class="briefarticleCard" v-html="$markdownParse.parse(articleCard.articleContent)"></view>
 			<view class="menubar">
 				<image :src="pathFilter(articleCard.faceImg)" class="touxiang"></image>
 				<view class="name">{{ articleCard.nickname }}</view>

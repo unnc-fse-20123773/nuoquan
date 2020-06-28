@@ -502,10 +502,8 @@
 				var mainComment = comment.mainComment;
 				if (mainComment.isLike) {
 					this.unLikeComment(mainComment);
-					mainComment.likeNum--;
 				} else {
 					this.likeComment(mainComment);
-					mainComment.likeNum++;
 				}
 				mainComment.isLike = !mainComment.isLike;
 			},
@@ -526,6 +524,7 @@
 					},
 					success: res => {
 						console.log(res);
+						comment.likeNum++;
 					}
 				});
 			},
@@ -546,6 +545,7 @@
 					},
 					success: res => {
 						console.log(res);
+						comment.likeNum--;
 					}
 				});
 			},
@@ -656,7 +656,7 @@
 					success: res => {
 						console.log(res);
 						that.articleCard.isLike = !that.articleCard.isLike;
-
+						that.articleCard.likeNum++;
 						// this.$emit('swLikeArticleSignal', true);
 					}
 				});
@@ -679,6 +679,7 @@
 					success: res => {
 						console.log(res);
 						that.articleCard.isLike = !that.articleCard.isLike;
+						that.articleCard.likeNum--;
 						//this.$emit('swLikeArticleSignal', false);
 					}
 				});

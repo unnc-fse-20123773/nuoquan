@@ -430,11 +430,11 @@ public class VoteController extends BasicController{
 			pageSize = PAGE_SIZE;
 		}
 		if(userId.equals(targetId)) {
-			// 查询所有状态的文章
+			// 查询自己的投票历史
 			PagedResult result = voteService.getAllMyHisVote(page, pageSize, userId);
 			finalResult = result;
 		} else if (!userId.equals(targetId)) {
-			// 查询他人文章状态为1的文章
+			// 查询他人的投票历史
 			PagedResult result = voteService.getOtherslegalHisVote(page, pageSize, userId, targetId);
 			finalResult = result;
 		}

@@ -11,7 +11,6 @@
 </template>
 
 <script>
-	import micromarkdown from './markdown.js'
 	export default {
 		props:{
 		articleContent:"",	
@@ -24,7 +23,8 @@
 		},
 		watch: {
 			articleContent(newValue, oldValue) {
-				this.nodes = micromarkdown.parse(this.articleContent);
+				this.nodes = this.$markdownParse.parse(this.articleContent);
+				
 			}
 		},
 		methods: {

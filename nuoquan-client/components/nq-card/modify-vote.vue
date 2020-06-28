@@ -10,13 +10,14 @@
 		@click="goToDetail(vote)"
 		hover-class="hoverColor"
 		>
-			<view class="voteProjectName">{{vote.voteContent}}</view>
+			<view class="voteProjectName">{{vote.voteTitle}}</view>
 			<block class="voteOptions" v-for="option in vote.optionList" :key="option.index">
 				<view class="options">
 					<view class="optionText">{{option.optionContent}}</view>
 					<view class="voteNum">{{option.count}}</view>
-					<view class="voteRate">{{option.percent}}%</view>
-					<view class="progressBar" :style="{width: option.percent * maxPercent +'%'}"></view>
+					<view class="voteRate">{{reserveTwoDecimal(option.percent * 100)}}%</view>
+					<view class="progressBar" :style="{width: option.percent*90/ maxPercent +'%'}"></view>
+					
 				</view>
 			</block>
 
@@ -62,7 +63,7 @@
 		},
 		data() {
 			return {
-				maxPercent: '',
+				maxPercent: 0,
 				serverUrl: this.$serverUrl,
 				transformX: 'translateX(0px)',
 				direction: '',
@@ -134,8 +135,10 @@
 		},
 		mounted() {
 			for (var i = 0; i < this.vote.optionList.length; i++) {
-				if (this.vote.optionList[i].percent > this.maxPercent) {
-					this.maxPercent = 90 / this.vote.optionList[i].percent;
+				if (this.vote.optionList[i].percent> this.maxPercent) {
+					this.maxPercent = this.vote.optionList[i].percent ;
+					console.log(this.maxPercent);
+					console.log(this.vote.optionList[i].percent);
 				}
 
 			}
@@ -180,7 +183,7 @@
 	}
 
 	.voteRate {
-		width: 25px;
+		width: 42px;
 		height: 16px;
 		font-size: 12px;
 		line-height: 16px;
@@ -198,7 +201,7 @@
 		font-size: 12px;
 		color: rgba(136, 136, 136, 1);
 		position: absolute;
-		right: 37px;
+		right: 54px;
 		bottom: 17px;
 		text-align: right;
 	}
