@@ -1,7 +1,6 @@
 <template>
 	<view class="index">
-		<nqBanner>
-		</nqBanner>
+		<!-- <nqBanner></nqBanner> -->
 		
 		<!-- Main page top bar -->
 		<mainpagetop
@@ -13,8 +12,8 @@
 			:topArticles="topArticles"
 			:tagList="tagList"
 			:roleup="roleup" 
-			:height="capsuleButton.bottom + 79"
-			:height_roled="capsuleButton.bottom + 53"
+			:height="capsuleButton.bottom + 176"
+			:height_roled="capsuleButton.bottom + 64"
 			style="position: fixed;z-index: 30;height:100%;">
 		</mainpagetop>
 		<!-- <button type="primary" @click="goTop" style="position: fixed;top: 200px;z-index: 88;">gotop</button> -->
@@ -28,7 +27,9 @@
 				@scrolltoupper="refreshArticle"
 				upper-threshold="5"
 			>
-				<view :style="{height:capsuleButton.bottom + 111 + 'px',width: 100 + '%' }"></view>
+				<!-- <view :style="{height:capsuleButton.bottom + 111 + 'px',width: 100 + '%' }"></view> -->
+				<view :style="{height:capsuleButton.bottom + 176 + 'px',width: 100 + '%' }"></view>
+
 				<articlebrief v-for="i in showlist" :key="i.id" v-bind:articleCard="i"></articlebrief>
 				<!-- 用于添加底部空白 by Guetta 9.10 -->
 				<view class="marginHelper"></view>

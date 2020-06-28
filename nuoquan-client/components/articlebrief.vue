@@ -1,3 +1,9 @@
+/*
+	#主页文章预览卡片
+	#Author: Yaoyao
+	#Update Log: Guetta 2020.6.6 - Update to UI v1.2.2 
+*/
+
 <template>
 	<view class="articlecard" ref="articleCard" @click="goToDetail()">
 		<view>
@@ -287,13 +293,14 @@ image {
 </style>
 <style scoped>
 .articlecard {
-	width: 93.07%;
+	width: 100%;
 	border-radius: 8px;
 	margin: 3.47% auto 0;
 	background-color: rgba(255, 255, 255, 1);
-	box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.16);
+	/* box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.16); */
 	opacity: 1;
 	border-radius: 8px;
+	border-bottom: 1px solid rgba(236,236,236,1);
 }
 
 .title {

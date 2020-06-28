@@ -42,6 +42,10 @@ module.exports = {
 	getCaptcha : "获取验证码",
 	waitCaptcha : "重新发送 (SECORD)",
 	
+	//主页
+	viewAllHot: "查看全部 >",
+	
+	
 	//文章
 	article : "文章",
 	detail : "详情",

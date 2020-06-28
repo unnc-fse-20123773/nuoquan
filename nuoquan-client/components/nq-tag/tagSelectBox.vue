@@ -45,16 +45,14 @@ export default {
 
 <style>
 .tagsArea {
-	padding-bottom: 16px;
+	padding: 0 4.5% 16px 4.5%;
 	vertical-align: bottom;
 	min-height: 130px;
 	max-height: 192px;
-	overflow: hidden;
+	overflow: scroll;
 	position: relative;
-	background: url(../../static/BG/submit_BG.png);
-	background-repeat: no-repeat;
-	background-size: 100% 100%;
-	border-radius: 10px;
+	border-bottom: 4px solid rgba(236,236,236,1);
+	background-color: white;
 }
 
 .tagsArea text {
@@ -72,8 +70,8 @@ export default {
 	vertical-align: bottom;
 	color: #ffffff;
 	font-size: 14px;
-	line-height: 26px;
-	height: 26px;
+	line-height: 30px;
+	height: 30px;
 
 	position: relative;
 	margin-left: 8px;
