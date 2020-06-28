@@ -66,7 +66,7 @@
 					</view>
 				</view>
 				<!-- 选择和替换为所选标签 -->
-				 <tagSelected v-if="selectedTag" :tag='selectedTag' @click="deleteTag"></tagSelected>
+				 <tagSelected v-if="selectedTag" style="margin-left: 4.5%;" :tag='selectedTag' @click="deleteTag"></tagSelected>
 				<!-- 右侧排列筛选 -->
 				<nqSwitch v-if="lang.langType == 'zh-CN'"
 					:bgSwitchLeft = "'-13px'"
@@ -87,7 +87,7 @@
 			</view>
 		</view>
 		<tagSelectBox
-			:style="{position: 'fixed', 'z-index': '40' ,  width: 100 + '%' , top: height - 13 + 'px' }"
+			:style="{position: 'fixed', 'z-index': '40' ,  width: 100 + '%' , top: height - 11 + 'px' }"
 			:lang = "lang"
 			:tagList="tagList" 
 			@selected="getSelectedTag" 
