@@ -92,7 +92,6 @@
 			const date = new Date();
 			const years = [];
 			const thisYear = date.getFullYear();
-
 			for (let i = 2004; i <= thisYear + 4; i++) {
 				years.push(i);
 			}
@@ -153,18 +152,23 @@
 			this.degrees = this.lang.degreeList;
 			this.genderList = this.lang.genderList;
 			// 按已有信息修改默认值
+			var nickname = this.userInfo.nickname;
 			var gender = this.userInfo.gender;
 			var year = this.userInfo.graduationYear;
 			var major = this.userInfo.major;
 			var degree = this.userInfo.degree;
 			var signature = this.userInfo.signature;
+			
+			this.nickname =  nickname;
+			
+			this.signature = signature;
+			
 			if (!this.isNull(gender)) {
 				// 判空，防止默认值被刷掉
 				this.gender = gender;
 			} else {
 				this.gender = 2;
 			}
-
 
 			if (!this.isNull(year)) {
 				this.year = year;
@@ -178,7 +182,7 @@
 				this.degree = this.degrees[degree];
 				this.degreeDB = degree; // 修改对数据库的默认值
 			}
-
+	
 			this.email = this.userInfo.email; // 改绑邮箱默认值
 		},
 
@@ -196,7 +200,6 @@
 			},
 			genderChanger(gender) {
 				this.gender = gender;
-
 			},
 
 			toggleIsEditNickname() {
@@ -239,6 +242,7 @@
 				if (this.nickname == "") {
 					uni.showToast({
 						title: '用户名不能为空',
+						icon: 'none',
 						duration: 2000
 					});
 					this.nickname = this.userInfo.nickname;
@@ -246,6 +250,7 @@
 				if (this.signature == "") {
 					uni.showToast({
 						title: '个性签名不能为空',
+						icon: 'none',
 						duration: 2000
 					});
 					this.signature = this.userInfo.signature;
