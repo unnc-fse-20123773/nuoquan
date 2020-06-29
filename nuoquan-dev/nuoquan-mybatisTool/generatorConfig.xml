@@ -30,5 +30,6 @@
 
 
 		<table tableName="user_collect_article"></table>
+		<table tableName="user"></table>
     </context>
 </generatorConfiguration>
