@@ -80,56 +80,8 @@ public class ArticleController extends BasicController {
 
 		PagedResult result = new PagedResult();
 		
-		if (page == null) {
-			page = 1;
-		}
-		if (pageSize == null) {
-			pageSize = PAGE_SIZE;
-		}
+		result = articleService.queryArticle(page, pageSize, queryType, userId, selectedTag);
 		
-		// 如果标签为空 -- 正常查询文章
-		if (StringUtils.isBlank(selectedTag) || StringUtils.isEmpty(selectedTag)) {
-			if (queryType == 0) {
-				if (orderType == 0) {
-					result = articleService.getAllArticles(page, pageSize, userId);
-				}
-				
-				if (orderType == 1) {
-					result = articleService.getArticleByPopurity(page, pageSize, userId);
-				}
-			}
-			
-			if (queryType == 1) {
-				if (orderType == 0) {
-					result = articleService.getAllSubscribedAuthorArticles(page, pageSize, userId);
-				}
-				
-				if (orderType == 1) {
-					result = articleService.getAllSubscribedAuthorArticlesByPopularity(page, pageSize, userId);
-				}
-			}
-		} else {
-			// 如果标签不为空, 根据标签查找
-			if (queryType == 0) {
-				if (orderType == 0) {
-					result = articleService.searchArticleByTag(page, pageSize, selectedTag, userId);
-				}
-				if (orderType == 1) {
-					result = articleService.searchArticleByTagPupolarityOrder(page, pageSize, selectedTag, userId);
-				}
-			}
-			
-			if (queryType == 1) {
-				if (orderType == 0) {
-					result = articleService.searchArticleByTagWithSubscribed(page, pageSize, selectedTag, userId);
-				}
-				if (orderType == 1) {
-					result = articleService.searchArticleByTagPupolarityOrderWithSubscribed(page, pageSize, selectedTag, userId);
-				}
-			}
-			
-			
-		}
 		return JSONResult.ok(result);
 	}
 	

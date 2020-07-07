@@ -392,6 +392,10 @@ public class ArticleServiceImpl implements ArticleService {
 		// 在Example中的每一个Criteria相当于一个括号，把里面的内容当成一个整体
 		Example articleExample = new Example(Article.class);
 		articleExample.setOrderByClause("create_date desc");
+		
+		
+		
+		
 		Criteria criteria = articleExample.createCriteria();
 		for(String text : texts) {
 			criteria.orLike("tags", "%" + text + "%");
@@ -937,36 +941,7 @@ public class ArticleServiceImpl implements ArticleService {
 		mySubscribedUserArticle.and(criteria3);
 		
 		
-		List<Article> list = articleMapper.selectByExample(mySubscribedUserArticle);
-		PageInfo<Article> pageInfo = new PageInfo<>(list);
-		PageInfo<ArticleVO> pageInfoVO = PageUtils.PageInfo2PageInfoVo(pageInfo);
-		
-		List<ArticleVO> listVO = new ArrayList<>();
-		for (Article a : list) {
-			ArticleVO av = new ArticleVO();
-			BeanUtils.copyProperties(a, av); //转换对象
-			// 添加作者信息
-			User user= userMapper.selectByPrimaryKey(av.getUserId());
-			if (user!=null) {
-				av.setNickname(user.getNickname());
-				av.setFaceImg(user.getFaceImg());
-				av.setFaceImgThumb(user.getFaceImgThumb());
-			}
-			av = composeArticleVO(av, userId);
-			
-			listVO.add(av);
-		}
-		pageInfoVO.setList(listVO);
-//		System.out.println("1");
-		
-		//为最终返回对象 pagedResult 添加属性
-		PagedResult pagedResult = new PagedResult();
-		pagedResult.setPage(pageInfoVO.getPageNum());
-		pagedResult.setTotal(pageInfoVO.getPages());
-		pagedResult.setRows(pageInfoVO.getList());
-		pagedResult.setRecords(pageInfoVO.getTotal());
-
-		return pagedResult;
+		return returnPagedResult(mySubscribedUserArticle, userId);
 	}
 	
 	@Transactional(propagation = Propagation.SUPPORTS)
@@ -996,36 +971,7 @@ public class ArticleServiceImpl implements ArticleService {
 			criteria3.andEqualTo("status", StatusEnum.READABLE.type);
 			mySubscribedUserArticle.and(criteria3);
 
-			List<Article> list = articleMapper.selectByExample(mySubscribedUserArticle);
-			PageInfo<Article> pageInfo = new PageInfo<>(list);
-			PageInfo<ArticleVO> pageInfoVO = PageUtils.PageInfo2PageInfoVo(pageInfo);
-			
-			List<ArticleVO> listVO = new ArrayList<>();
-			for (Article a : list) {
-				ArticleVO av = new ArticleVO();
-				BeanUtils.copyProperties(a, av); //转换对象
-				// 添加作者信息
-				User user= userMapper.selectByPrimaryKey(av.getUserId());
-				if (user!=null) {
-					av.setNickname(user.getNickname());
-					av.setFaceImg(user.getFaceImg());
-					av.setFaceImgThumb(user.getFaceImgThumb());
-				}
-				av = composeArticleVO(av, userId);
-				
-				listVO.add(av);
-			}
-			pageInfoVO.setList(listVO);
-			System.out.println("1");
-			
-			//为最终返回对象 pagedResult 添加属性
-			PagedResult pagedResult = new PagedResult();
-			pagedResult.setPage(pageInfoVO.getPageNum());
-			pagedResult.setTotal(pageInfoVO.getPages());
-			pagedResult.setRows(pageInfoVO.getList());
-			pagedResult.setRecords(pageInfoVO.getTotal());
-
-			return pagedResult;
+			return returnPagedResult(mySubscribedUserArticle, userId);
 	}
 	
 	@Transactional(propagation = Propagation.SUPPORTS)
@@ -1050,35 +996,7 @@ public class ArticleServiceImpl implements ArticleService {
 		articleExample.and(criteria2);
 		
 		PageHelper.startPage(page, pageSize);
-		List<Article> list = articleMapper.selectByExample(articleExample);
-		PageInfo<Article> pageInfo = new PageInfo<>(list);
-		PageInfo<ArticleVO> pageInfoVo = PageUtils.PageInfo2PageInfoVo(pageInfo);
-		
-		List<ArticleVO> listVo = new ArrayList<>();
-		for (Article a : list) {
-			ArticleVO av = new ArticleVO();
-			BeanUtils.copyProperties(a, av); //转换对象
-			// 添加作者信息
-			User user= userMapper.selectByPrimaryKey(av.getUserId());
-			if (user!=null) {
-				av.setNickname(user.getNickname());
-				av.setFaceImg(user.getFaceImg());
-				av.setFaceImgThumb(user.getFaceImgThumb());
-			}
-			av = composeArticleVO(av, userId);
-
-			listVo.add(av);
-		}
-		pageInfoVo.setList(listVo);
-		
-		//为最终返回对象 pagedResult 添加属性
-		PagedResult pagedResult = new PagedResult();
-		pagedResult.setPage(pageInfoVo.getPageNum());
-		pagedResult.setTotal(pageInfoVo.getPages());
-		pagedResult.setRows(pageInfoVo.getList());
-		pagedResult.setRecords(pageInfoVo.getTotal());
-
-		return pagedResult;
+		return returnPagedResult(articleExample, userId);
 		
 	}
 
@@ -1119,36 +1037,7 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 		mySubscribedUserArticle.and(criteria4);
 
-		List<Article> list = articleMapper.selectByExample(mySubscribedUserArticle);
-		PageInfo<Article> pageInfo = new PageInfo<>(list);
-		PageInfo<ArticleVO> pageInfoVO = PageUtils.PageInfo2PageInfoVo(pageInfo);
-		
-		List<ArticleVO> listVO = new ArrayList<>();
-		for (Article a : list) {
-			ArticleVO av = new ArticleVO();
-			BeanUtils.copyProperties(a, av); //转换对象
-			// 添加作者信息
-			User user= userMapper.selectByPrimaryKey(av.getUserId());
-			if (user!=null) {
-				av.setNickname(user.getNickname());
-				av.setFaceImg(user.getFaceImg());
-				av.setFaceImgThumb(user.getFaceImgThumb());
-			}
-			av = composeArticleVO(av, userId);
-			
-			listVO.add(av);
-		}
-		pageInfoVO.setList(listVO);
-		System.out.println("1");
-		
-		//为最终返回对象 pagedResult 添加属性
-		PagedResult pagedResult = new PagedResult();
-		pagedResult.setPage(pageInfoVO.getPageNum());
-		pagedResult.setTotal(pageInfoVO.getPages());
-		pagedResult.setRows(pageInfoVO.getList());
-		pagedResult.setRecords(pageInfoVO.getTotal());
-
-		return pagedResult;
+		return returnPagedResult(mySubscribedUserArticle, userId);
 	}
 
 	@Transactional(propagation = Propagation.SUPPORTS)
@@ -1179,6 +1068,9 @@ public class ArticleServiceImpl implements ArticleService {
 		criteria3.andEqualTo("status", StatusEnum.READABLE.type);
 		mySubscribedUserArticle.and(criteria3);
 		
+		
+		
+		
 		// 在这些文章中找到符合搜索的标签的文章
 		String[] texts = selectedTag.split(" ");
 		
@@ -1188,7 +1080,12 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 		mySubscribedUserArticle.and(criteria4);
 
-		List<Article> list = articleMapper.selectByExample(mySubscribedUserArticle);
+		return returnPagedResult(mySubscribedUserArticle, userId);
+	}
+	
+	public PagedResult returnPagedResult(Example articleExample, String userId) {
+		//通过条件，返回pagedResult
+		List<Article> list = articleMapper.selectByExample(articleExample);
 		PageInfo<Article> pageInfo = new PageInfo<>(list);
 		PageInfo<ArticleVO> pageInfoVO = PageUtils.PageInfo2PageInfoVo(pageInfo);
 		
@@ -1208,7 +1105,6 @@ public class ArticleServiceImpl implements ArticleService {
 			listVO.add(av);
 		}
 		pageInfoVO.setList(listVO);
-		System.out.println("1");
 		
 		//为最终返回对象 pagedResult 添加属性
 		PagedResult pagedResult = new PagedResult();
@@ -1219,9 +1115,76 @@ public class ArticleServiceImpl implements ArticleService {
 
 		return pagedResult;
 	}
+	
+	public PagedResult queryArticle(Integer page, Integer pageSize, Integer queryType, String userId, String selectedTag) {
+		
+		Example articleExample;
+		
+		// 是否关注的, queryType: 0为全部，1为关注
+		// 查询全部我(操作者)关注的用户
+		if(queryType == 1) {
+			
+			Example mySubscribedUserExample = new Example(UserFans.class);
+			Criteria criteria = mySubscribedUserExample.createCriteria();
+			// 此处userId为操作者id
+			criteria.andEqualTo("fansId", userId);
+			List<UserFans> userList = userFansMapper.selectByExample(mySubscribedUserExample);
+			
+			if (userList.size() == 0 || userList == null) {
+				return null;
+			}
+			
+			// 查找 我关注的人的 + 状态为1(可读) 的文章
+			Example mySubscribedUserArticle = new Example(Article.class);
+			mySubscribedUserArticle.setOrderByClause("create_date desc");
+			Criteria criteria2 = mySubscribedUserArticle.createCriteria();
+			for (UserFans userFans : userList) {
+				System.out.println(userFans.getUserId());
+				criteria2.orEqualTo("userId", userFans.getUserId());
+			}
+			
+			// 在这些文章中找到状态为可读的文章
+			Criteria criteria3 = mySubscribedUserArticle.createCriteria();
+			criteria3.andEqualTo("status", StatusEnum.READABLE.type);
+			mySubscribedUserArticle.and(criteria3);
+			
+			articleExample = mySubscribedUserArticle;
+			
+		}else {
+			
+			articleExample = new Example(Article.class);
+			articleExample.setOrderByClause("create_date desc");
+			
+		}
+		
+		//是否有标签
+		if(StringUtils.isBlank(selectedTag) || StringUtils.isEmpty(selectedTag)) {
+			// Nothing to do
+		}else {
+			
+			// 在这些文章中找到符合搜索的标签的文章
+			String[] texts = selectedTag.split(" ");
+			
+			Criteria criteria4 = articleExample.createCriteria();
+			for(String text : texts) {
+				criteria4.orLike("tags", "%" + text + "%");
+			}
+			articleExample.and(criteria4);
+			
+		}
+		
+		return returnPagedResult(articleExample, userId);
+		
+	}
+	
+	
+//	public PagedResult queryArticle(Integer page, Integer pageSize, Integer queryType, Integer orderType, String userId, String selectedTag) {
+//		
+//		
+//	}
 
 }
-
+	
 
 //
 //@Transactional(propagation = Propagation.REQUIRED)

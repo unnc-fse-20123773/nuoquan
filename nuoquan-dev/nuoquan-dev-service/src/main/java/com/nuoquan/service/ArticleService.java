@@ -306,6 +306,28 @@ public interface ArticleService {
 	 */
 	public PagedResult searchArticleByTagPupolarityOrderWithSubscribed(Integer page, Integer pageSize, String selectedTag, String userId);
 
+	/**
+	 * QueryAritcle接口的方法
+	 * @param page
+	 * @param pageSize
+	 * @param queryType
+	 * @param userId
+	 * @param selectedTag
+	 * @return
+	 */
+	public PagedResult queryArticle(Integer page, Integer pageSize, Integer queryType, String userId, String selectedTag);
+
+	/**
+	 * queryArticle接口的方法
+	 * @param page
+	 * @param pageSize
+	 * @param queryType
+	 * @param orderType
+	 * @param userId
+	 * @param selectedTag
+	 * @return
+	 */
+	//public PagedResult queryArticle(Integer page, Integer pageSize, Integer queryType, Integer orderType, String userId, String selectedTag);
 //	/**
 //	 * 通过热度查询评论主
 //	 * @param page
