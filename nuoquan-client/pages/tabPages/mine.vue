@@ -36,7 +36,7 @@
 				</view>
 			</view>
 			<!-- 文字介绍 -->
-			<view class="introBox"><text class="introBox-text">{{ thisUserInfo.introduction }}</text></view>
+			<view class="introBox"><text class="introBox-text">{{ thisUserInfo.signature }}</text></view>
 		</view>
 		
 		<view class="shadow1"></view>
