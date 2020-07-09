@@ -77,7 +77,15 @@ public class ArticleController extends BasicController {
 		})
 	@PostMapping("/queryArticles")
 	public JSONResult queryArticles(Integer page, Integer pageSize, Integer queryType, Integer orderType, String userId, String selectedTag) throws Exception {
-
+		
+		if(page == null) {
+			page = 1;
+		}
+		
+		if(pageSize == null) {
+			pageSize = PAGE_SIZE;
+		}
+		
 		PagedResult result = new PagedResult();
 		
 		result = articleService.queryArticle(page, pageSize, queryType, userId, selectedTag);

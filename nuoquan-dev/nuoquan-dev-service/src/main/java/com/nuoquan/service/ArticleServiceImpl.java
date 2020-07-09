@@ -1173,6 +1173,7 @@ public class ArticleServiceImpl implements ArticleService {
 			
 		}
 		
+		PageHelper.startPage(page, pageSize);
 		return returnPagedResult(articleExample, userId);
 		
 	}
