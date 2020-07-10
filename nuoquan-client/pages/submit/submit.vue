@@ -52,7 +52,7 @@
 					</view>
 				</view>
 			</block>
-			<plusSquare v-if="isAddImage()" @plusClicked="chooseImg"></plusSquare>
+			<plusSquare v-if="imageList.length < 9" @plusClicked="chooseImg"></plusSquare>
 			<view v-if="imageList.length == 1 || imageList.length == 4 || imageList.length == 7" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
 		</view>
 		<button class="submit-button" @tap="upload()">{{ lang.submit }}</button>
@@ -133,12 +133,21 @@
 			};
 		},
 		onUnload() {
-			(this.imageList = []),
-			(this.sourceTypeIndex = 2),
-			(this.sourceType = ['拍照', '相册', '拍照或相册']),
-			(this.sizeTypeIndex = 0),
-			(this.sizeType = ['压缩', '原图', '压缩或原图']),
-			(this.countIndex = 8);
+			var _this = this;
+			if (this.articleTitle != "" || this.articleContent != "") {
+				uni.setStorage({
+					key: _this.userInfo.id + ':draftArticle',
+					data: {
+						articleTitle: _this.articleTitle,
+						articleContent: _this.articleContent,
+						selectedTags: _this.selectedTags,
+						imageList: _this.imageList,
+					},
+					success: function() {
+						console.log('Draft article saving success');
+					}
+				})
+			}
 		},
 		onLoad() {
 			// 一次性储存 navbar 高度
@@ -154,6 +163,17 @@
 			});
 
 			this.getTagsList();
+			uni.getStorage({
+				key: that.userInfo.id + ':draftArticle',
+				success: function(res) {
+					that.articleTitle = res.data.articleTitle,
+						that.articleContent = res.data.articleContent,
+						that.selectedTags = res.data.selectedTags,
+						that.imageList = res.data.imageList,
+						console.log('Draft article accessing success');
+				}
+			})
+
 
 			// 随机生成颜色
 			var tagColors = this.tagColors;
@@ -183,27 +203,6 @@
 				});
 			},
 
-			// 检查tagList的数量
-			checkInput: function(res) {
-				var that = this;
-				var tag = this.articleTag;
-				//console.log(tag)
-				if (this.isNull(tag)) {
-					that.showAddTagButton = 1;
-					that.showInputTagArea = 0;
-				} else {
-					// 显示标签区域 = 1
-					that.showTagArea = 1;
-
-					//console.log(that.tagIndex);
-					that.tagList[that.tagIndex] = tag;
-					that.tagIndex = that.tagIndex + 1;
-					that.showAddTagButton = 1;
-					that.showInputTagArea = 0;
-					that.articleTag = '';
-				}
-			},
-
 			combineTagToString: function() {
 				var finalTag = '';
 				for (var i = 0; i < this.selectedTags.length; i++) {
@@ -212,23 +211,13 @@
 				return finalTag;
 			},
 
-			sourceTypeChange: function(e) {
-				this.sourceTypeIndex = parseInt(e.target.value);
-			},
-			sizeTypeChange: function(e) {
-				this.sizeTypeIndex = e.target.value;
-			},
-			countChange: function(e) {
-				this.countIndex = e.target.value;
-			},
 			chooseImg: async function() {
 				uni.chooseImage({
 					sourceType: sourceType[this.sourceTypeIndex],
 					sizeType: sizeType[this.sizeTypeIndex],
-					count: this.imageList.length + this.count[this.countIndex] > 9 ? 9 - this.imageList.length : this.count[this.countIndex],
+					count: 9 - this.imageList.length,
+					//this.imageList.length + this.count[this.countIndex] > 9 ? 9 - this.imageList.length : this.count[this.countIndex],
 					success: res => {
-						this.imageList = this.imageList.concat(res.tempFilePaths);
-
 						console.log(res);
 					}
 				});
@@ -241,14 +230,6 @@
 					current: current,
 					urls: this.imageList
 				});
-			},
-			isAddImage: function() {
-				console.log('imagelist length = ' + this.imageList.length);
-				if (this.imageList.length >= 9) {
-					return false;
-				} else {
-					return true;
-				}
 			},
 
 			// TODO：图片上传需加上大小限制，后台限制10M
@@ -280,25 +261,6 @@
 				uni.showLoading({
 					title: '正在上传...'
 				});
-
-				// 取消延时5s timeout，多图需要长时间传输
-				// setTimeout(() => {
-				// 	if (uploadFlag) {
-				// 		uploadFlag = false; // 解锁
-				// 		uni.hideLoading();
-				// 		uni.showToast({
-				// 			title: '网络未知错误',
-				// 			icon: 'none',
-				// 			duration: 1000
-				// 		});
-				// 		// TODO: 终止上传
-				// 		for (let task in uploadTasks) {
-				// 			console.log(task);
-				// 			task.abort();
-				// 		}
-				// 		requestTask.abort();
-				// 	}
-				// }, 5000);
 
 				setTimeout(() => {
 					var finalTag = this.combineTagToString();

@@ -16,7 +16,7 @@
 		data() {
 			return {	
 				showAd: false,
-				bannerInterval:100000000,
+				bannerInterval:432000000,  //毫秒，时间戳差值  目前值 12h 
 			};
 		},
 		methods: {
