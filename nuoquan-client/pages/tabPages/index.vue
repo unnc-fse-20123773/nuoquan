@@ -1,6 +1,6 @@
 <template>
 	<view class="index">
-		<!-- <nqBanner></nqBanner> -->
+		<nqBanner></nqBanner>
 		
 		<!-- Main page top bar -->
 		<mainpagetop

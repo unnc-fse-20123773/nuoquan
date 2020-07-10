@@ -15,7 +15,8 @@
 		name: 'nqBanner',
 		data() {
 			return {	
-				showAd: true
+				showAd: false,
+				bannerInterval:100000000,
 			};
 		},
 		methods: {
@@ -28,7 +29,44 @@
 			//组件内伪关闭广告
 			killAd() {
 				this.showAd = !this.showAd;
-			}
+			},
+			showBanner_update(id,currentTime){
+				this.showAd = true;
+				uni.setStorage({
+				    key: id + ':bannerVisitTime',
+				    data: currentTime,
+				    success: function () {
+				        console.log('更新banner成功');
+				    },
+					fail:function(){
+						console.log( '更新banner失败');
+					}
+				
+				});
+			},
+		},
+		
+		mounted() {
+			var userInfo = this.getGlobalUserInfo();
+			var currentTime = (new Date()).getTime();
+			var _this = this;
+			uni.getStorage({
+				key:userInfo.id + ':bannerVisitTime',
+				success:function(res){
+					console.log('成功获取上次banner展示时间，为' + _this.timeDeal(res.data));
+					if (currentTime - res.data > _this.bannerInterval){
+						console.log('超出设定展示间隔，展示banner并更新记录');
+						_this.showBanner_update(userInfo.id,currentTime);
+					}else{
+						console.log('banner不需展示');
+					}
+				},
+				fail() {
+					console.log('无记录，写入记录并初次展示banner');
+					_this.showBanner_update(userInfo.id,currentTime);
+				}
+			})
+			
 		}
 	}
 </script>
