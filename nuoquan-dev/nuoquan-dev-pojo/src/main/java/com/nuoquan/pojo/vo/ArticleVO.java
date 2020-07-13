@@ -22,6 +22,7 @@ public class ArticleVO {
     
     private List<ArticleImage> imgList; // 文章图片列表
     private Boolean isLike; // 用户是否喜欢该文章
+    private Boolean isCollect; // 用户是否收藏该文章
     
     private String nickname;
     private String faceImg;
@@ -258,5 +259,13 @@ public class ArticleVO {
 
 	public void setTagList(List<String> tagList) {
 		this.tagList = tagList;
+	}
+
+	public Boolean getIsCollect() {
+		return isCollect;
+	}
+
+	public void setIsCollect(Boolean isCollect) {
+		this.isCollect = isCollect;
 	}
 }

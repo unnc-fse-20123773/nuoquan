@@ -1,13 +1,12 @@
 package com.nuoquan.service;
 
-import static org.hamcrest.CoreMatchers.nullValue;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.junit.Test;
 import org.n3r.idworker.Sid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,24 +22,22 @@ import com.nuoquan.mapper.ArticleMapperCustom;
 import com.nuoquan.mapper.SearchRecordMapper;
 import com.nuoquan.mapper.UserArticleCommentMapper;
 import com.nuoquan.mapper.UserArticleCommentMapperCustom;
+import com.nuoquan.mapper.UserCollectArticleMapper;
 import com.nuoquan.mapper.UserFansMapper;
 import com.nuoquan.mapper.UserLikeArticleMapper;
 import com.nuoquan.mapper.UserLikeCommentMapper;
-import com.nuoquan.mapper.UserLikeMapperCustom;
 import com.nuoquan.mapper.UserMapper;
 import com.nuoquan.pojo.Article;
 import com.nuoquan.pojo.ArticleImage;
 import com.nuoquan.pojo.SearchRecord;
 import com.nuoquan.pojo.User;
 import com.nuoquan.pojo.UserArticleComment;
+import com.nuoquan.pojo.UserCollectArticle;
 import com.nuoquan.pojo.UserFans;
 import com.nuoquan.pojo.UserLikeArticle;
 import com.nuoquan.pojo.UserLikeComment;
-import com.nuoquan.pojo.UserVoteComment;
 import com.nuoquan.pojo.vo.ArticleVO;
 import com.nuoquan.pojo.vo.UserArticleCommentVO;
-import com.nuoquan.pojo.vo.UserLikeVO;
-import com.nuoquan.pojo.vo.VoteVO;
 import com.nuoquan.support.Convert;
 import com.nuoquan.utils.PageUtils;
 import com.nuoquan.utils.PagedResult;
@@ -62,7 +59,10 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Autowired
 	private UserLikeArticleMapper userLikeArticleMapper;
-
+	
+	@Autowired
+	private UserCollectArticleMapper userCollectArticleMapper;
+	
 	@Autowired
 	private UserLikeCommentMapper userLikeCommentMapper;
 
@@ -82,14 +82,44 @@ public class ArticleServiceImpl implements ArticleService {
 	private ArticleImageMapper articleImageMapper;
 
 	@Autowired
-	private UserLikeMapperCustom userLikeMapperCustom;
-
-	@Autowired
 	private UserService userService;
 	
 	@Autowired
 	private UserFansMapper userFansMapper;
-
+	
+	/**
+	 * 组装文章VO对象
+	 * @param a
+	 * @param userId 操作者（我）
+	 * @return
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public ArticleVO composeArticleVO(ArticleVO a, String userId) {
+		List<ArticleImage> images = articleImageMapper.getArticleImgs(a.getId());
+		if (!images.isEmpty()) {
+			// 添加图片列表
+			a.setImgList(images);
+		}
+		// 添加图片
+		a.setImgList(articleImageMapper.getArticleImgs(a.getId()));
+		// 添加和关于用户的点赞关系
+		a.setIsLike(isUserLikeArticle(userId, a.getId()));
+		// 添加和关于用户的收藏关系
+		a.setIsCollect(isUserCollectArticle(userId, a.getId()));
+		// 添加标签列表
+		if (!StringUtils.isBlank(a.getTags())) {
+			String[] tagList = a.getTags().split("#");
+			List<String> finalTagList = new ArrayList<String>();
+			for (String tag : tagList) {
+				if (!StringUtils.isBlank(tag)) {
+					finalTagList.add(tag);
+				}
+			}
+			a.setTagList(finalTagList);
+		}
+		return a;
+	}
+				
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
 	public PagedResult list(Integer page, Integer pageSize) {
@@ -99,19 +129,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 		List<ArticleVO> list = articleMapperCustom.list();
 		for (ArticleVO a : list) {
-			// 为每个文章添加图片列表
-			a.setImgList(articleImageMapper.getArticleImgs(a.getId()));
-			// 添加标签list
-			if (!StringUtils.isBlank(a.getTags())) {
-				String[] tagList = a.getTags().split("#");
-				List<String> finalTagList = new ArrayList<String>();
-				for (String tag : tagList) {
-					if (!StringUtils.isBlank(tag)) {
-						finalTagList.add(tag);
-					}
-				}
-				a.setTagList(finalTagList);
-			}
+			a = composeArticleVO(a, "");
 		}
 
 		PageInfo<ArticleVO> pageList = new PageInfo<>(list);
@@ -134,19 +152,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 		List<ArticleVO> list = articleMapperCustom.listCheckOnly();
 		for (ArticleVO a : list) {
-			// 为每个文章添加图片列表
-			a.setImgList(articleImageMapper.getArticleImgs(a.getId()));
-			// 添加标签list
-			if (!StringUtils.isBlank(a.getTags())) {
-				String[] tagList = a.getTags().split("#");
-				List<String> finalTagList = new ArrayList<String>();
-				for (String tag : tagList) {
-					if (!StringUtils.isBlank(tag)) {
-						finalTagList.add(tag);
-					}
-				}
-				a.setTagList(finalTagList);
-			}
+			a = composeArticleVO(a, "");
 		}
 
 		PageInfo<ArticleVO> pageList = new PageInfo<>(list);
@@ -168,21 +174,7 @@ public class ArticleServiceImpl implements ArticleService {
 		PageHelper.startPage(page, pageSize);
 		List<ArticleVO> list = articleMapperCustom.queryAllArticles();
 		for (ArticleVO a : list) {
-			// 为每个文章添加图片列表
-			a.setImgList(articleImageMapper.getArticleImgs(a.getId()));
-			// 添加和关于用户的点赞关系
-			a.setIsLike(isUserLikeArticle(userId, a.getId()));
-			// 添加标签list
-			if (!StringUtils.isBlank(a.getTags())) {
-				String[] tagList = a.getTags().split("#");
-				List<String> finalTagList = new ArrayList<String>();
-				for (String tag : tagList) {
-					if (!StringUtils.isBlank(tag)) {
-						finalTagList.add(tag);
-					}
-				}
-				a.setTagList(finalTagList);
-			}
+			a = composeArticleVO(a, userId);
 		}
 
 		PageInfo<ArticleVO> pageList = new PageInfo<>(list);
@@ -200,24 +192,7 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public ArticleVO getArticleById(String articleId, String userId) {
 		ArticleVO articleVO = articleMapperCustom.getArticleById(articleId);
-		// 添加和关于用户的点赞关系
-		articleVO.setIsLike(isUserLikeArticle(userId, articleVO.getId()));
-		// 添加标签列表
-		if (!StringUtils.isBlank(articleVO.getTags())) {
-			String[] tagList = articleVO.getTags().split("#");
-			List<String> finalTagList = new ArrayList<String>();
-			for (String tag : tagList) {
-				if (!StringUtils.isBlank(tag)) {
-					finalTagList.add(tag);
-				}
-			}
-			articleVO.setTagList(finalTagList);
-		}
-		List<ArticleImage> images = articleImageMapper.getArticleImgs(articleId);
-		if (!images.isEmpty()) {
-			// 添加图片列表
-			articleVO.setImgList(images);
-		}
+		articleVO = composeArticleVO(articleVO, userId);
 		return articleVO;
 	}
 
@@ -265,6 +240,85 @@ public class ArticleServiceImpl implements ArticleService {
 			// 3.用户受喜欢数量的累减
 			userMapper.reduceReceiveLikeCount(articleCreaterId);
 		}
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Override
+	public UserCollectArticle userCollectArticle(String userId, String articleId, Integer signFlag) {
+		if(getArticleById(articleId, userId).getStatus() != 1) {
+			return null;
+		}
+		/// 保存用户和文章的收藏关联关系表
+		String likeId = sid.nextShort();
+
+		UserCollectArticle ula = new UserCollectArticle();
+		ula.setId(likeId);
+		ula.setUserId(userId);
+		ula.setArticleId(articleId);
+		ula.setSignFlag(signFlag);
+		ula.setCreateDate(new Date());
+
+		userCollectArticleMapper.insertSelective(ula);
+		// 文章收藏数量累加
+		articleMapperCustom.addArticleCollectCount(articleId);
+
+		return ula;
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Override
+	public void userUncollectArticle(String userId, String articleId) {
+		boolean isLike = isUserCollectArticle(userId, articleId);
+		if (isLike) {
+			// 1.删除用户和文章的点赞关联关系表
+			Example example = new Example(UserCollectArticle.class);
+			// 创造条件
+			Criteria criteria = example.createCriteria();
+			// 条件的判断 里面的变量无需和数据库一致，与pojo类中的变量一致。在pojo类中变量与column有映射
+			criteria.andEqualTo("userId", userId);
+			criteria.andEqualTo("articleId", articleId);
+
+			userCollectArticleMapper.deleteByExample(example);
+
+			// 2.文章收藏数量累减
+			articleMapperCustom.reduceArticleCollectCount(articleId);
+		}		
+	}
+	
+	@Transactional(propagation = Propagation.SUPPORTS)
+	@Override
+	public boolean isUserCollectArticle(String userId, String articleId) {
+		Example example = new Example(UserCollectArticle.class);
+		Criteria criteria = example.createCriteria();
+		criteria.andEqualTo("userId", userId);
+		criteria.andEqualTo("articleId", articleId);
+
+		List<UserCollectArticle> list = userCollectArticleMapper.selectByExample(example);
+		if (list != null && !list.isEmpty()) {
+			return true;
+		}
+		return false;
+	}
+	
+	@Transactional(propagation = Propagation.SUPPORTS)
+	@Override
+	public PagedResult queryCollectArticle(Integer page, Integer pageSize, String userId, String targetId) {
+		PageHelper.startPage(page, pageSize);
+		
+		List<ArticleVO> list = articleMapperCustom.queryCollectArticle(targetId);
+		for (ArticleVO a : list) {
+			a = composeArticleVO(a, userId);
+		}
+
+		PageInfo<ArticleVO> pageList = new PageInfo<>(list);
+
+		PagedResult pagedResult = new PagedResult();
+		pagedResult.setPage(page);
+		pagedResult.setTotal(pageList.getPages());
+		pagedResult.setRows(list);
+		pagedResult.setRecords(pageList.getTotal());
+
+		return pagedResult;
 	}
 
 	@Transactional(propagation = Propagation.SUPPORTS)
@@ -315,21 +369,7 @@ public class ArticleServiceImpl implements ArticleService {
 				av.setFaceImg(user.getFaceImg());
 				av.setFaceImgThumb(user.getFaceImgThumb());
 			}
-			// 为每个文章添加图片列表
-			av.setImgList(articleImageMapper.getArticleImgs(av.getId()));
-			// 添加和关于用户的点赞关系
-			av.setIsLike(isUserLikeArticle(userId, av.getId()));
-			// 添加标签list
-			if(!StringUtils.isBlank(av.getTags())) {
-				String[] tagList = av.getTags().split("#");
-				List<String> finalTagList = new ArrayList<String>();
-				for (String tag : tagList) {
-					if (!StringUtils.isBlank(tag)) {
-						finalTagList.add(tag);
-					}
-				}
-				av.setTagList(finalTagList);
-			}
+			av = composeArticleVO(av, userId);
 			listVo.add(av);
 		}
 		pageInfoVo.setList(listVo);
@@ -350,7 +390,6 @@ public class ArticleServiceImpl implements ArticleService {
 			String userId) {
 
 		String[] texts = searchText.split(" ");
-		
 		
 		// 开启分页查询并转换为vo对象
 		// 在Example中的每一个Criteria相当于一个括号，把里面的内容当成一个整体
@@ -381,21 +420,7 @@ public class ArticleServiceImpl implements ArticleService {
 				av.setFaceImg(user.getFaceImg());
 				av.setFaceImgThumb(user.getFaceImgThumb());
 			}
-			// 为每个文章添加图片列表
-			av.setImgList(articleImageMapper.getArticleImgs(av.getId()));
-			// 添加和关于用户的点赞关系
-			av.setIsLike(isUserLikeArticle(userId, av.getId()));
-			// 添加标签list
-			if(!StringUtils.isBlank(av.getTags())) {
-				String[] tagList = av.getTags().split("#");
-				List<String> finalTagList = new ArrayList<String>();
-				for (String tag : tagList) {
-					if (!StringUtils.isBlank(tag)) {
-						finalTagList.add(tag);
-					}
-				}
-				av.setTagList(finalTagList);
-			}
+			av = composeArticleVO(av, userId);
 			listVo.add(av);
 		}
 		pageInfoVo.setList(listVo);
@@ -754,21 +779,7 @@ public class ArticleServiceImpl implements ArticleService {
 		PageHelper.startPage(page, pageSize);
 		List<ArticleVO> list = articleMapperCustom.getArticleByPopularity();
 		for (ArticleVO a : list) {
-			// 为每个文章添加图片列表
-			a.setImgList(articleImageMapper.getArticleImgs(a.getId()));
-			// 添加和关于用户的点赞关系
-			a.setIsLike(isUserLikeArticle(userId, a.getId()));
-			// 添加标签list
-			if (!StringUtils.isBlank(a.getTags())) {
-				String[] tagList = a.getTags().split("#");
-				List<String> finalTagList = new ArrayList<String>();
-				for (String tag : tagList) {
-					if (!StringUtils.isBlank(tag)) {
-						finalTagList.add(tag);
-					}
-				}
-				a.setTagList(finalTagList);
-			}
+			a = composeArticleVO(a, userId);
 		}
 		PageInfo<ArticleVO> pageList = new PageInfo<>(list);
 		
@@ -845,23 +856,8 @@ public class ArticleServiceImpl implements ArticleService {
 
 		List<ArticleVO> list = articleMapperCustom.queryAllMyHisArticle(userId);
 		for (ArticleVO a : list) {
-			// 为每篇文章添加图片列表
-			a.setImgList(articleImageMapper.getArticleImgs(a.getId()));
-			// 添加和关于用户的点赞关系
-			a.setIsLike(isUserLikeArticle(userId, a.getId()));
-			// 添加标签列表
-			if (!StringUtils.isBlank(a.getTags())) {
-				String[] tagList = a.getTags().split("#");
-				List<String> finalTagList = new ArrayList<String>();
-				for (String tag : tagList) {
-					if (!StringUtils.isBlank(tag)) {
-						finalTagList.add(tag);
-					}
-				}
-				a.setTagList(finalTagList);
-			}
+			a = composeArticleVO(a, userId);
 		}
-		System.out.print(list.size());
 		PageInfo<ArticleVO> pageList = new PageInfo<>(list);
 
 		PagedResult pagedResult = new PagedResult();
@@ -881,21 +877,7 @@ public class ArticleServiceImpl implements ArticleService {
 		PageHelper.startPage(page, pageSize);
 		List<ArticleVO> list = articleMapperCustom.queryOthersLegalHisArticle(targetId);
 		for (ArticleVO a : list) {
-			// 为每篇文章添加图片列表
-			a.setImgList(articleImageMapper.getArticleImgs(a.getId()));
-			// 添加和关于用户的点赞关系
-			a.setIsLike(isUserLikeArticle(targetId, a.getId()));
-			// 添加标签列表
-			if (!StringUtils.isBlank(a.getTags())) {
-				String[] tagList = a.getTags().split("#");
-				List<String> finalTagList = new ArrayList<String>();
-				for (String tag : tagList) {
-					if (!StringUtils.isBlank(tag)) {
-						finalTagList.add(tag);
-					}
-				}
-				a.setTagList(finalTagList);
-			}
+			a = composeArticleVO(a, userId);
 		}
 		PageInfo<ArticleVO> pageList = new PageInfo<>(list);
 
@@ -973,21 +955,7 @@ public class ArticleServiceImpl implements ArticleService {
 				av.setFaceImg(user.getFaceImg());
 				av.setFaceImgThumb(user.getFaceImgThumb());
 			}
-			// 为每个文章添加图片列表
-			av.setImgList(articleImageMapper.getArticleImgs(av.getId()));
-			// 添加和关于用户的点赞关系
-			av.setIsLike(isUserLikeArticle(userId, av.getId()));
-			// 添加标签list
-			if (!StringUtils.isBlank(av.getTags())) {
-				String[] tagList = av.getTags().split("#");
-				List<String> finalTagList = new ArrayList<String>();
-				for (String tag : tagList) {
-					if (!StringUtils.isBlank(tag)) {
-						finalTagList.add(tag);
-					}
-				}
-				av.setTagList(finalTagList);
-			}
+			av = composeArticleVO(av, userId);
 			
 			listVO.add(av);
 		}
@@ -1031,6 +999,7 @@ public class ArticleServiceImpl implements ArticleService {
 			criteria3.andEqualTo("status", StatusEnum.READABLE.type);
 			mySubscribedUserArticle.and(criteria3);
 
+			PageHelper.startPage(page, pageSize);
 			List<Article> list = articleMapper.selectByExample(mySubscribedUserArticle);
 			PageInfo<Article> pageInfo = new PageInfo<>(list);
 			PageInfo<ArticleVO> pageInfoVO = PageUtils.PageInfo2PageInfoVo(pageInfo);
@@ -1046,21 +1015,7 @@ public class ArticleServiceImpl implements ArticleService {
 					av.setFaceImg(user.getFaceImg());
 					av.setFaceImgThumb(user.getFaceImgThumb());
 				}
-				// 为每个文章添加图片列表
-				av.setImgList(articleImageMapper.getArticleImgs(av.getId()));
-				// 添加和关于用户的点赞关系
-				av.setIsLike(isUserLikeArticle(userId, av.getId()));
-				// 添加标签list
-				if (!StringUtils.isBlank(av.getTags())) {
-					String[] tagList = av.getTags().split("#");
-					List<String> finalTagList = new ArrayList<String>();
-					for (String tag : tagList) {
-						if (!StringUtils.isBlank(tag)) {
-							finalTagList.add(tag);
-						}
-					}
-					av.setTagList(finalTagList);
-				}
+				av = composeArticleVO(av, userId);
 				
 				listVO.add(av);
 			}
@@ -1114,21 +1069,8 @@ public class ArticleServiceImpl implements ArticleService {
 				av.setFaceImg(user.getFaceImg());
 				av.setFaceImgThumb(user.getFaceImgThumb());
 			}
-			// 为每个文章添加图片列表
-			av.setImgList(articleImageMapper.getArticleImgs(av.getId()));
-			// 添加和关于用户的点赞关系
-			av.setIsLike(isUserLikeArticle(userId, av.getId()));
-			// 添加标签list
-			if(!StringUtils.isBlank(av.getTags())) {
-				String[] tagList = av.getTags().split("#");
-				List<String> finalTagList = new ArrayList<String>();
-				for (String tag : tagList) {
-					if (!StringUtils.isBlank(tag)) {
-						finalTagList.add(tag);
-					}
-				}
-				av.setTagList(finalTagList);
-			}
+			av = composeArticleVO(av, userId);
+
 			listVo.add(av);
 		}
 		pageInfoVo.setList(listVo);
@@ -1196,21 +1138,7 @@ public class ArticleServiceImpl implements ArticleService {
 				av.setFaceImg(user.getFaceImg());
 				av.setFaceImgThumb(user.getFaceImgThumb());
 			}
-			// 为每个文章添加图片列表
-			av.setImgList(articleImageMapper.getArticleImgs(av.getId()));
-			// 添加和关于用户的点赞关系
-			av.setIsLike(isUserLikeArticle(userId, av.getId()));
-			// 添加标签list
-			if (!StringUtils.isBlank(av.getTags())) {
-				String[] tagList = av.getTags().split("#");
-				List<String> finalTagList = new ArrayList<String>();
-				for (String tag : tagList) {
-					if (!StringUtils.isBlank(tag)) {
-						finalTagList.add(tag);
-					}
-				}
-				av.setTagList(finalTagList);
-			}
+			av = composeArticleVO(av, userId);
 			
 			listVO.add(av);
 		}
@@ -1279,21 +1207,7 @@ public class ArticleServiceImpl implements ArticleService {
 				av.setFaceImg(user.getFaceImg());
 				av.setFaceImgThumb(user.getFaceImgThumb());
 			}
-			// 为每个文章添加图片列表
-			av.setImgList(articleImageMapper.getArticleImgs(av.getId()));
-			// 添加和关于用户的点赞关系
-			av.setIsLike(isUserLikeArticle(userId, av.getId()));
-			// 添加标签list
-			if (!StringUtils.isBlank(av.getTags())) {
-				String[] tagList = av.getTags().split("#");
-				List<String> finalTagList = new ArrayList<String>();
-				for (String tag : tagList) {
-					if (!StringUtils.isBlank(tag)) {
-						finalTagList.add(tag);
-					}
-				}
-				av.setTagList(finalTagList);
-			}
+			av = composeArticleVO(av, userId);
 			
 			listVO.add(av);
 		}
