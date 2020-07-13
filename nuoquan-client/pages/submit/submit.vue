@@ -134,10 +134,11 @@
 		},
 		onUnload() {
 			var _this = this;
-			if (this.articleTitle != "" || this.articleContent != "") {
+			if (this.articleTitle != "" || this.articleContent != "" || this.imageList != "" || this.selectedTags != "") {
 				uni.setStorage({
 					key: _this.userInfo.id + ':draftArticle',
 					data: {
+						status: true,
 						articleTitle: _this.articleTitle,
 						articleContent: _this.articleContent,
 						selectedTags: _this.selectedTags,
@@ -147,6 +148,8 @@
 						console.log('Draft article saving success');
 					}
 				})
+			}else{
+				_this.cleanDraft();
 			}
 		},
 		onLoad() {
@@ -163,16 +166,8 @@
 			});
 
 			this.getTagsList();
-			uni.getStorage({
-				key: that.userInfo.id + ':draftArticle',
-				success: function(res) {
-					that.articleTitle = res.data.articleTitle,
-						that.articleContent = res.data.articleContent,
-						that.selectedTags = res.data.selectedTags,
-						that.imageList = res.data.imageList,
-						console.log('Draft article accessing success');
-				}
-			})
+			this.checkDraft();
+
 
 
 			// 随机生成颜色
@@ -186,6 +181,54 @@
 			}
 		},
 		methods: {
+			checkDraft() {
+				var that = this;
+				uni.getStorage({
+					key: that.userInfo.id + ':draftArticle',
+					success: function(dft) {
+						console.log("读取文章报告成功");
+						//缓存读取成功，
+						if (dft.data.status) {
+							uni.showModal({
+								title: '是否继续上次编辑？',
+								content:"",
+								confirmText:'是',
+								confirmColor:"rgb(252,192,65)",
+								cancelText:'否',
+								cancelColor:'#888888',
+								success: function(res) {
+									if (res.confirm) {
+										// 用户确认使用草稿内容，赋值加载
+										that.articleTitle = dft.data.articleTitle,
+										that.articleContent = dft.data.articleContent,
+										that.selectedTags = dft.data.selectedTags,
+										that.imageList = dft.data.imageList,
+										console.log('Draft article accessing success');
+										console.log('用户点击确定');
+									} else if (res.cancel) {
+										//用户取消使用草稿内容，清空缓存
+										that.cleanDraft();
+										
+									}
+								}
+							})
+						}
+
+					}
+				})
+			},
+			cleanDraft(){
+				var that = this;
+				uni.setStorage({
+					key: that.userInfo.id + ':draftArticle',
+					data: {
+						statue: false,
+					},
+					success: function() {
+						console.log('Draft cleaned');
+					},
+				});
+			},
 			getTagsList() {
 				var that = this;
 				uni.request({
