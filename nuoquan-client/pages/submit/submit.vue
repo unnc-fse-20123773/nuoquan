@@ -56,6 +56,7 @@
 			<view v-if="imageList.length == 1 || imageList.length == 4 || imageList.length == 7" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
 		</view>
 		<button class="submit-button" @tap="upload()">{{ lang.submit }}</button>
+		<pop-modal v-if="draftPopModal" :modalText="modalText" @modalRes="modalRes"></pop-modal>
 	</view>
 </template>
 
@@ -70,6 +71,8 @@
 	import plusSquare from '@/components/plusSquare.vue';
 	import typeSetting from './typeSetting.vue'
 
+	import popModal from '../../components/nq-showModal/popModal.vue'
+	
 	// #ifdef APP-PLUS
 	import permision from '@/common/permission.js';
 	// #endif
@@ -94,6 +97,8 @@
 			uniNavBar,
 			plusSquare,
 			typeSetting,
+
+			popModal, //代码垃圾
 		},
 		computed: {
 			...mapState(['lang'])
@@ -129,7 +134,15 @@
 				count: [1, 2, 3, 4, 5, 6, 7, 8, 9],
 				windowHeight: 0,
 				isNavHome: getApp().globalData.isNavHome, //判断导航栏左侧是否显示home按钮
-				navbarHeight: 0 //一次性储存 navbarheight
+				navbarHeight: 0, //一次性储存 navbarheight
+
+				draftPopModal: false, //代码垃圾，临时方案之后替换删掉
+				modalText: {
+					title: "标题",
+					content: "内容",
+					cancelText: "取消",
+					confirmText: "确定",
+				}
 			};
 		},
 		onUnload() {
@@ -148,7 +161,7 @@
 						console.log('Draft article saving success');
 					}
 				})
-			}else{
+			} else {
 				_this.cleanDraft();
 			}
 		},
@@ -189,35 +202,60 @@
 						console.log("读取文章报告成功");
 						//缓存读取成功，
 						if (dft.data.status) {
-							uni.showModal({
-								title: '是否继续上次编辑？',
-								content:"",
-								confirmText:'是',
-								confirmColor:"rgb(252,192,65)",
-								cancelText:'否',
-								cancelColor:'#888888',
-								success: function(res) {
-									if (res.confirm) {
-										// 用户确认使用草稿内容，赋值加载
-										that.articleTitle = dft.data.articleTitle,
-										that.articleContent = dft.data.articleContent,
-										that.selectedTags = dft.data.selectedTags,
-										that.imageList = dft.data.imageList,
-										console.log('Draft article accessing success');
-										console.log('用户点击确定');
-									} else if (res.cancel) {
-										//用户取消使用草稿内容，清空缓存
-										that.cleanDraft();
-										
-									}
-								}
-							})
+
+							that.modalText = {
+								title: that.lang.postDraftModal,
+								confirmText: that.lang.yes,
+								cancelText: that.lang.no,
+							}
+							that.draftPopModal = true;
+							// uni.showModal({
+							// 	title: '是否继续上次编辑？',
+							// 	content:"",
+							// 	confirmText:'是',
+							// 	confirmColor:"rgb(252,192,65)",
+							// 	cancelText:'否',
+							// 	cancelColor:'#888888',
+							// 	success: function(res) {
+							// 		if (res.confirm) {
+							// 			// 用户确认使用草稿内容，赋值加载
+							// 			that.articleTitle = dft.data.articleTitle,
+							// 			that.articleContent = dft.data.articleContent,
+							// 			that.selectedTags = dft.data.selectedTags,
+							// 			that.imageList = dft.data.imageList,
+							// 			console.log('Draft article accessing success');
+							// 			console.log('用户点击确定');
+							// 		} else if (res.cancel) {
+							// 			//用户取消使用草稿内容，清空缓存
+							// 			that.cleanDraft();
+
+							// 		}
+							// 	}
+							// })
 						}
 
 					}
 				})
 			},
-			cleanDraft(){
+			modalRes(res) {
+				var that = this;
+				if (res == 'cancle') {
+					this.cleanDraft();
+				} else {
+					uni.getStorage({
+						key: that.userInfo.id + ':draftArticle',
+						success: function(dft) {
+							console.log(dft);
+							that.articleTitle = dft.data.articleTitle;
+							that.articleContent = dft.data.articleContent;
+							that.selectedTags = dft.data.selectedTags;
+							that.imageList = dft.data.imageList;
+						},
+					});
+				}
+				this.draftPopModal = false;
+			},
+			cleanDraft() {
 				var that = this;
 				uni.setStorage({
 					key: that.userInfo.id + ':draftArticle',
