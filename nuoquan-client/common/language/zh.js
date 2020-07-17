@@ -30,6 +30,8 @@ module.exports = {
 	pullUp : "收起",
 	reply: "回复",
 	cancel: "取消",
+	yes:"是",
+	no:"否",
 	
 	//登陆
 	isReadProtocol : "我已阅读并同意遵守",
@@ -78,6 +80,9 @@ module.exports = {
 	addTitle: "添加标题",
 	optionContent: "选项内容",
 	addDescription : "添加描述",
+	postDraftModal:"是否继续上次编辑？",
+	voteDraftModal:"是否继续上次编辑？",
+	
 	
 	//搜索
 	searchHistory: "搜索历史",

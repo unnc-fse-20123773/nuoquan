@@ -30,6 +30,8 @@ module.exports = {
 	pullUp : "Pull up",
 	reply: "reply",
 	cancel: "Cancel",
+	yes:"Yes",
+	no:"No",
 	
 	//登陆
 	isReadProtocol : "I have read and agree :",
@@ -79,6 +81,8 @@ module.exports = {
 	addTitle: "Add title",
 	optionContent: "Option content",
 	addDescription : "Add description",
+	postDraftModal:'Continue with draft of your post ?',
+	voteDraftModal:'Continue with draft of your vote ?',
 	
 	//搜索
 	searchHistory: "Search History",

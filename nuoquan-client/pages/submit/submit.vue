@@ -52,10 +52,11 @@
 					</view>
 				</view>
 			</block>
-			<plusSquare v-if="isAddImage()" @plusClicked="chooseImg"></plusSquare>
+			<plusSquare v-if="imageList.length < 9" @plusClicked="chooseImg"></plusSquare>
 			<view v-if="imageList.length == 1 || imageList.length == 4 || imageList.length == 7" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
 		</view>
 		<button class="submit-button" @tap="upload()">{{ lang.submit }}</button>
+		<pop-modal v-if="draftPopModal" :modalText="modalText" @modalRes="modalRes"></pop-modal>
 	</view>
 </template>
 
@@ -70,6 +71,8 @@
 	import plusSquare from '@/components/plusSquare.vue';
 	import typeSetting from './typeSetting.vue'
 
+	import popModal from '../../components/nq-showModal/popModal.vue'
+	
 	// #ifdef APP-PLUS
 	import permision from '@/common/permission.js';
 	// #endif
@@ -94,6 +97,8 @@
 			uniNavBar,
 			plusSquare,
 			typeSetting,
+
+			popModal, //代码垃圾
 		},
 		computed: {
 			...mapState(['lang'])
@@ -129,16 +134,36 @@
 				count: [1, 2, 3, 4, 5, 6, 7, 8, 9],
 				windowHeight: 0,
 				isNavHome: getApp().globalData.isNavHome, //判断导航栏左侧是否显示home按钮
-				navbarHeight: 0 //一次性储存 navbarheight
+				navbarHeight: 0, //一次性储存 navbarheight
+
+				draftPopModal: false, //代码垃圾，临时方案之后替换删掉
+				modalText: {
+					title: "标题",
+					content: "内容",
+					cancelText: "取消",
+					confirmText: "确定",
+				}
 			};
 		},
 		onUnload() {
-			(this.imageList = []),
-			(this.sourceTypeIndex = 2),
-			(this.sourceType = ['拍照', '相册', '拍照或相册']),
-			(this.sizeTypeIndex = 0),
-			(this.sizeType = ['压缩', '原图', '压缩或原图']),
-			(this.countIndex = 8);
+			var _this = this;
+			if (this.articleTitle != "" || this.articleContent != "" || this.imageList != "" || this.selectedTags != "") {
+				uni.setStorage({
+					key: _this.userInfo.id + ':draftArticle',
+					data: {
+						status: true,
+						articleTitle: _this.articleTitle,
+						articleContent: _this.articleContent,
+						selectedTags: _this.selectedTags,
+						imageList: _this.imageList,
+					},
+					success: function() {
+						console.log('Draft article saving success');
+					}
+				})
+			} else {
+				_this.cleanDraft();
+			}
 		},
 		onLoad() {
 			// 一次性储存 navbar 高度
@@ -154,6 +179,9 @@
 			});
 
 			this.getTagsList();
+			this.checkDraft();
+
+
 
 			// 随机生成颜色
 			var tagColors = this.tagColors;
@@ -166,6 +194,79 @@
 			}
 		},
 		methods: {
+			checkDraft() {
+				var that = this;
+				uni.getStorage({
+					key: that.userInfo.id + ':draftArticle',
+					success: function(dft) {
+						console.log("读取文章报告成功");
+						//缓存读取成功，
+						if (dft.data.status) {
+
+							that.modalText = {
+								title: that.lang.postDraftModal,
+								confirmText: that.lang.yes,
+								cancelText: that.lang.no,
+							}
+							that.draftPopModal = true;
+							// uni.showModal({
+							// 	title: '是否继续上次编辑？',
+							// 	content:"",
+							// 	confirmText:'是',
+							// 	confirmColor:"rgb(252,192,65)",
+							// 	cancelText:'否',
+							// 	cancelColor:'#888888',
+							// 	success: function(res) {
+							// 		if (res.confirm) {
+							// 			// 用户确认使用草稿内容，赋值加载
+							// 			that.articleTitle = dft.data.articleTitle,
+							// 			that.articleContent = dft.data.articleContent,
+							// 			that.selectedTags = dft.data.selectedTags,
+							// 			that.imageList = dft.data.imageList,
+							// 			console.log('Draft article accessing success');
+							// 			console.log('用户点击确定');
+							// 		} else if (res.cancel) {
+							// 			//用户取消使用草稿内容，清空缓存
+							// 			that.cleanDraft();
+
+							// 		}
+							// 	}
+							// })
+						}
+
+					}
+				})
+			},
+			modalRes(res) {
+				var that = this;
+				if (res == 'cancle') {
+					this.cleanDraft();
+				} else {
+					uni.getStorage({
+						key: that.userInfo.id + ':draftArticle',
+						success: function(dft) {
+							console.log(dft);
+							that.articleTitle = dft.data.articleTitle;
+							that.articleContent = dft.data.articleContent;
+							that.selectedTags = dft.data.selectedTags;
+							that.imageList = dft.data.imageList;
+						},
+					});
+				}
+				this.draftPopModal = false;
+			},
+			cleanDraft() {
+				var that = this;
+				uni.setStorage({
+					key: that.userInfo.id + ':draftArticle',
+					data: {
+						statue: false,
+					},
+					success: function() {
+						console.log('Draft cleaned');
+					},
+				});
+			},
 			getTagsList() {
 				var that = this;
 				uni.request({
@@ -183,27 +284,6 @@
 				});
 			},
 
-			// 检查tagList的数量
-			checkInput: function(res) {
-				var that = this;
-				var tag = this.articleTag;
-				//console.log(tag)
-				if (this.isNull(tag)) {
-					that.showAddTagButton = 1;
-					that.showInputTagArea = 0;
-				} else {
-					// 显示标签区域 = 1
-					that.showTagArea = 1;
-
-					//console.log(that.tagIndex);
-					that.tagList[that.tagIndex] = tag;
-					that.tagIndex = that.tagIndex + 1;
-					that.showAddTagButton = 1;
-					that.showInputTagArea = 0;
-					that.articleTag = '';
-				}
-			},
-
 			combineTagToString: function() {
 				var finalTag = '';
 				for (var i = 0; i < this.selectedTags.length; i++) {
@@ -212,23 +292,13 @@
 				return finalTag;
 			},
 
-			sourceTypeChange: function(e) {
-				this.sourceTypeIndex = parseInt(e.target.value);
-			},
-			sizeTypeChange: function(e) {
-				this.sizeTypeIndex = e.target.value;
-			},
-			countChange: function(e) {
-				this.countIndex = e.target.value;
-			},
 			chooseImg: async function() {
 				uni.chooseImage({
 					sourceType: sourceType[this.sourceTypeIndex],
 					sizeType: sizeType[this.sizeTypeIndex],
-					count: this.imageList.length + this.count[this.countIndex] > 9 ? 9 - this.imageList.length : this.count[this.countIndex],
+					count: 9 - this.imageList.length,
+					//this.imageList.length + this.count[this.countIndex] > 9 ? 9 - this.imageList.length : this.count[this.countIndex],
 					success: res => {
-						this.imageList = this.imageList.concat(res.tempFilePaths);
-
 						console.log(res);
 					}
 				});
@@ -241,14 +311,6 @@
 					current: current,
 					urls: this.imageList
 				});
-			},
-			isAddImage: function() {
-				console.log('imagelist length = ' + this.imageList.length);
-				if (this.imageList.length >= 9) {
-					return false;
-				} else {
-					return true;
-				}
 			},
 
 			// TODO：图片上传需加上大小限制，后台限制10M
@@ -280,25 +342,6 @@
 				uni.showLoading({
 					title: '正在上传...'
 				});
-
-				// 取消延时5s timeout，多图需要长时间传输
-				// setTimeout(() => {
-				// 	if (uploadFlag) {
-				// 		uploadFlag = false; // 解锁
-				// 		uni.hideLoading();
-				// 		uni.showToast({
-				// 			title: '网络未知错误',
-				// 			icon: 'none',
-				// 			duration: 1000
-				// 		});
-				// 		// TODO: 终止上传
-				// 		for (let task in uploadTasks) {
-				// 			console.log(task);
-				// 			task.abort();
-				// 		}
-				// 		requestTask.abort();
-				// 	}
-				// }, 5000);
 
 				setTimeout(() => {
 					var finalTag = this.combineTagToString();
