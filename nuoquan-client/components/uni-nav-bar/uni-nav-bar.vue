@@ -99,7 +99,7 @@ export default {
 		},
 		backgroundColor: {
 			type: String,
-			default: '#ffc85a'
+			default: 'white'
 		},
 		statusBar: {
 			type: [Boolean, String],
