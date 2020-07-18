@@ -144,8 +144,8 @@
 
 		onUnload() {
 			var _this = this;
-			if (this.voteTitle != "" || this.voteContent != "" || this.imageList != "" || this.pickerValue != '3' || this.voteOptions[
-					0] != "") {
+			if (this.voteTitle != "" || this.voteContent != "" || this.imageList != "" || this.pickerValue != '3' || this.voteOptions[0] != "" || this.voteOptions[1] != "" || (this.voteOptions.length > 2 && this.voteOptions[2] != "") )
+			{
 				uni.setStorage({
 					key: _this.userInfo.id + ':draftVote',
 					data: {
@@ -220,13 +220,16 @@
 					uni.getStorage({
 						key: that.userInfo.id + ':draftVote',
 						success: function(dft) {
-							that.voteTitle = dft.data.voteTitle,
+							that.voteTitle = dft.data.voteTitle;
 							console.log(dft.data.voteTitle);
 							console.log(that.voteTitle);
-							that.voteContent = dft.data.voteContent,
-							that.pickerValue = dft.data.votePeriod,
-							that.voteOptions = dft.data.voteOptions,
-							that.imageList = dft.data.imageList,
+							that.voteContent = dft.data.voteContent;
+							that.pickerValue = dft.data.votePeriod;
+							that.voteOptions = dft.data.voteOptions;
+							that.imageList = dft.data.imageList;
+							if (that.voteContent!="" || that.imageList != ""){  //有内容展开编辑框
+								that.showContengEdit = true ;
+								};
 							console.log('Draft vote accessing success');
 							console.log('用户点击确定');
 							return ;
