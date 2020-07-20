@@ -56,7 +56,8 @@
 			<view v-if="imageList.length == 1 || imageList.length == 4 || imageList.length == 7" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
 		</view>
 		<button class="submit-button" @tap="upload()">{{ lang.submit }}</button>
-		<pop-modal v-if="draftPopModal" :modalText="modalText" @modalRes="modalRes"></pop-modal>
+		<!-- 		<pop-modal v-if="draftPopModal" :modalText="modalText" @modalRes="modalRes"></pop-modal> -->
+		<modal></modal>
 	</view>
 </template>
 
@@ -71,8 +72,6 @@
 	import plusSquare from '@/components/plusSquare.vue';
 	import typeSetting from './typeSetting.vue'
 
-	import popModal from '../../components/nq-showModal/popModal.vue'
-	
 	// #ifdef APP-PLUS
 	import permision from '@/common/permission.js';
 	// #endif
@@ -97,8 +96,6 @@
 			uniNavBar,
 			plusSquare,
 			typeSetting,
-
-			popModal, //代码垃圾
 		},
 		computed: {
 			...mapState(['lang'])
@@ -136,13 +133,6 @@
 				isNavHome: getApp().globalData.isNavHome, //判断导航栏左侧是否显示home按钮
 				navbarHeight: 0, //一次性储存 navbarheight
 
-				draftPopModal: false, //代码垃圾，临时方案之后替换删掉
-				modalText: {
-					title: "标题",
-					content: "内容",
-					cancelText: "取消",
-					confirmText: "确定",
-				}
 			};
 		},
 		onUnload() {
@@ -181,8 +171,6 @@
 			this.getTagsList();
 			this.checkDraft();
 
-
-
 			// 随机生成颜色
 			var tagColors = this.tagColors;
 			for (var i = 0; i < 6; i++) {
@@ -202,46 +190,29 @@
 						console.log("读取文章报告成功");
 						//缓存读取成功，
 						if (dft.data.status) {
-
-							that.modalText = {
+							console.log("开始了");
+							that.$store.commit('showModal', {
 								title: that.lang.postDraftModal,
 								confirmText: that.lang.yes,
 								cancelText: that.lang.no,
-							}
-							that.draftPopModal = true;
-							// uni.showModal({
-							// 	title: '是否继续上次编辑？',
-							// 	content:"",
-							// 	confirmText:'是',
-							// 	confirmColor:"rgb(252,192,65)",
-							// 	cancelText:'否',
-							// 	cancelColor:'#888888',
-							// 	success: function(res) {
-							// 		if (res.confirm) {
-							// 			// 用户确认使用草稿内容，赋值加载
-							// 			that.articleTitle = dft.data.articleTitle,
-							// 			that.articleContent = dft.data.articleContent,
-							// 			that.selectedTags = dft.data.selectedTags,
-							// 			that.imageList = dft.data.imageList,
-							// 			console.log('Draft article accessing success');
-							// 			console.log('用户点击确定');
-							// 		} else if (res.cancel) {
-							// 			//用户取消使用草稿内容，清空缓存
-							// 			that.cleanDraft();
+								success: function(res) {
+									if (res.confirm) {
+										that.loadDraft();
+									} else if (res.cancel) {
+										that.cleanDraft();
+									}
 
-							// 		}
-							// 	}
-							// })
+								}
+
+							})
+
 						}
 
 					}
 				})
 			},
-			modalRes(res) {
+			loadDraft() {
 				var that = this;
-				if (res == 'cancle') {
-					this.cleanDraft();
-				} else {
 					uni.getStorage({
 						key: that.userInfo.id + ':draftArticle',
 						success: function(dft) {
@@ -250,10 +221,9 @@
 							that.articleContent = dft.data.articleContent;
 							that.selectedTags = dft.data.selectedTags;
 							that.imageList = dft.data.imageList;
+							console.log('draft loaded');
 						},
-					});
-				}
-				this.draftPopModal = false;
+				});	
 			},
 			cleanDraft() {
 				var that = this;

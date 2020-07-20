@@ -1,152 +1,126 @@
 <template>
-	<div class="_showModal" v-show="show">
-		<div class="_shade"></div>
-		<div class="_modalBox" @click="closeModal" @touchmove.stop.prevent="">
-			<div class="_modal">
-				<slot name="title">
-					<div class="title" v-show="title">{{title}}</div>
-				</slot>
-				<slot name="content">
-					<div class="content">
-						{{content}}
-					</div>
-				</slot>
-				<slot name="btn">
-					<div class="btnbox">
-						<div class="cancel btn" v-show="showCancel" :style="cancelColor" @click.stop="clickBtn('cancel')">{{cancelText}}</div>
-						<div class="confirm btn" :style="confirmColor" @click.stop="clickBtn('confirm')">{{confirmText}}</div>
-					</div>
-				</slot>
-			</div>
-		</div>
-	</div>
+	<view class="container"  v-show="show">
+			<view class="modalBox" @click="closeModal" @touchmove.stop.prevent="">
+				<!-- 			<image class="pic" v-if="modalPic" :src="modalPic"></image> -->
+				<view class="modal-title" v-show="title">{{title}}</view>
+	<!-- 			<view class="modal-content">{{content}}</view>
+	 -->			<view class="modal-menu">
+					<button class="cancle" v-show="showCancel" :style="cancelColor" @click.stop="clickBtn('cancel')">{{cancelText}}</button>
+					<button class="confirm" :style="confirmColor" @click.stop="clickBtn('confirm')">{{confirmText}}</button>
+				</view>
+			</view>
+		</view>
+	</view>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 
 export default {
-	computed: 
-		mapState({
-			show:'show',
-			title:'title',
-			content:'content',
-			showCancel:'showCancle',
-			cancelText:'cancelText',
-			cancleColor:'cancleColor',
-			confirmText:'confirmText',
-			confirmColor:'confirmColor',
-		}),
+
 		
-		// show(){
-		// 	return this.$modalStore.state.show;
-		// },
-		// title(){
-		// 	return this.$modalStore.state.title;
-		// },
-		// content(){
-		// 	return this.$modalStore.state.content;
-		// },
-		// showCancel(){
-		// 	return this.$modalStore.state.showCancel;
-		// },
-		// cancelText(){
-		// 	return this.$modalStore.state.cancelText;
-		// },
-		// cancelColor(){
-		// 	return "color:"+this.$modalStore.state.cancelColor;
-		// },
-		// confirmText(){
-		// 	return this.$modalStore.state.confirmText;
-		// },
-		// confirmColor(){
-		// 	return "color:"+this.$modalStore.state.confirmColor;
-		// }
-	
+		computed:{
+			show(){
+				console.log('in modal, computed, show function');
+				return this.$store.state.showModal.show;
+			},
+			title(){
+				return this.$store.state.showModal.title;
+			},
+			content(){
+				return this.$store.state.showModal.content;
+			},
+			showCancel(){
+				return this.$store.state.showModal.showCancel;
+			},
+			cancelText(){
+				return this.$store.state.showModal.cancelText;
+			},
+			cancelColor(){
+				return "color:"+this.$store.state.showModal.cancelColor;
+			},
+			confirmText(){
+				return this.$store.state.showModal.confirmText;
+			},
+			confirmColor(){
+				return "color:"+this.$store.state.confirmColor;
+			}
+		},
+		
 	methods:{
 		closeModal(){
-			this.store.commit('hideModal')
+			this.$store.commit('hideModal')
 		},
 		clickBtn(res){
-			this.store.commit('hideModal')
-			this.store.commit('success',res)
+			this.$store.commit('hideModal')
+			this.$store.commit('success',res)
 		}
 	},
 	beforeDestroy(){
-		this.store.commit('hideModal')
+		this.$store.commit('hideModal')
 	}
 };
 </script>
 
-<style lang="scss" scoped>
-	._showModal{
+
+<style>
+	.container {
+		background-color: #ECECECEC;
 		position: fixed;
 		top: 0;
-		left:0;
-		width: 100vw;
-		height: 100vh;
-		z-index:10000;
-		._shade{
-			width: 100%;
-			height: 100%;
-			position: absolute;
-			top: 0;
-			left: 0;
-			background: #000;
-			opacity: .6;
-			z-index:11000;
-		}
-		._modalBox{
-			width: 100%;
-			height: 100%;
-			position: absolute;
-			top: 0;
-			left: 0;
-			z-index:12000;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			._modal{
-				flex: none;
-				width:70%;
-				// min-height:200upx;
-				background: #fff;
-				border-radius: 10upx;
-				.title{
-					height: 40upx;
-					line-height: 40upx;
-					text-align: center;
-					font-size: 26upx;
-					font-weight: bold;
-					padding: 15upx 0 0;
-					// border-bottom: 1upx solid #e1e1e1;
-				}
-				.content{
-					padding:30upx;
-					font-size: 24upx;
-					color: #666;
-					line-height: 35upx;
-					text-align: center;
-				}
-				.btnbox{
-					display: flex;
-					.btn{
-						font-size: 30upx;
-						text-align: center;
-						flex: auto;
-						line-height: 80upx;
-						border-top: 1upx solid #e1e1e1;
-						border-right: 1upx solid #e1e1e1;
-					}
-					.btn:last-child{
-						border-right:none;
-					}
-					.cancel{
-						
-					}
-				}
-			}
-		}
-		
+		left: 0;
+		width: 750upx;
+		height: 100%;
+	}
+
+	.modalBox {
+		border-radius: 12px;
+		background: #FFFFFF;
+		width: 670upx;
+		position: absolute;
+		left: 40upx;
+		top: 400px;
+	}
+
+	.pic {
+		display: block;
+		margin: 36px auto 0;
+		width: 280upx;
+		heihgt: 280upx;
+	}
+
+	.modal-title {
+		font-size: 17px;
+		color: #353535;
+		font-weight: 600;
+		height: 20px;
+		ling-height: 20px;
+		text-align: center;
+		margin: 28px auto 20px;
+	}
+	
+	.modal-menu{
+		display: flex;
+		width:606upx;
+		margin:16px auto;
+		justify-content:space-between''
+	}
+
+	.cancle{
+		color:#888888;
+		width:292upx;
+		height:41px;
+		background:rgba(236,236,236,1);
+		border-radius:8px;
+		line-height: 41px;
+	}
+	
+	.confirm{
+		color:#FFFFFF;
+		width:292upx;
+		height:41px;
+		background:rgba(252,192,65,1);
+		border-radius:8px;
+		line-height: 41px;
 	}
 </style>

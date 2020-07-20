@@ -230,6 +230,7 @@ export default {
 		navigatorEvent(e) {
 			if (e.action == 'switchLang') {
 				this.changeLang(e.status);
+				console.log(e.status);
 			} else if (e.action == 'goto') {
 				uni.navigateTo({
 					url: e.obj.url
