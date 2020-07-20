@@ -218,6 +218,7 @@ public class UserController extends BasicController {
 			user.setGraduationYear(userData.getGraduationYear());
 			user.setGender(userData.getGender());
 			user.setMajor(userData.getMajor());
+			user.setSignature(userData.getSignature());
 			user = userService.updateUserInfo(user);
 		}
 		// user.setPassword(null);

@@ -2,19 +2,21 @@
 	#主页文章预览卡片
 	#Author: Yaoyao
 	#Update Log: Guetta 2020.6.6 - Update to UI v1.2.2 
+	#Update Log: Guetta 2020.6.28 - Update to UI v1.3.0
 */
 
 <template>
 	<view class="articlecard" ref="articleCard" @click="goToDetail()">
-		<view>
-			<text selectable="true" class="title">{{ thisArticle.articleTitle }}</text>
-			<!-- <view class="briefarticleCard">{{ thisArticle.articleContent }}</view> -->
-		</view>
 		<!-- 用户信息行 -->
 		<view class="userLine hor_center">
 			<image :src="pathFilter(thisArticle.faceImg)" class="touxiang" @tap.stop="goToPersonPublic(thisArticle.userId)"></image>
 			<view class="name" @tap.stop="goToPersonPublic(thisArticle.userId)">{{ thisArticle.nickname }}</view>
 			<view class="time" :style="timeLeft">{{ timeDeal(thisArticle.createDate) }}</view>
+		</view>
+		<!-- 标题 -->
+		<view>
+			<text selectable="true" class="title">{{ thisArticle.articleTitle }}</text>
+			<!-- <view class="briefarticleCard">{{ thisArticle.articleContent }}</view> -->
 		</view>
 		<!-- 标签行 -->
 		<view class="tagsLine">
@@ -27,13 +29,12 @@
 
 			<view @click.stop="goToDetail()">
 				<!-- 下面两个 view 分别为蒙版背景层和数字层，都是由 margin-left = 67.5% 精准推至第三张图位置上的 -->
-				<view v-if="thisArticle.imgList.length > 3" style="margin-left: 67.5%;position: absolute;width: 30%;height: 200upx;" class="super_center">
-					<view style="color: white;font-weight: 600;font-size: 24px;z-index: 20;">+{{ thisArticle.imgList.length - 3 }}</view>
+				<view v-if="thisArticle.imgList.length > 3" class="imgCoverText super_center">
+					<view style="color: white;font-weight: 500;font-size: 17px;z-index: 20;">{{ thisArticle.imgList.length }}</view>
 				</view>
 				<view
 					v-if="thisArticle.imgList.length > 3"
-					style="position: absolute;width: 30%;height: 200upx;
-				background-color: #000000;opacity: 0.5;margin-left: 67.5%;z-index: 10;"
+					class="imgCover"
 				></view>
 			</view>
 
@@ -304,15 +305,14 @@ image {
 }
 
 .title {
-	width: 93.12%;
+	width: calc(100% - 34px);
 	font-size: 17px;
 	font-family: Source Han Sans CN;
 	line-height: 21px;
 	color: rgba(74, 74, 74, 1);
 	opacity: 1;
-	font-weight: bold;
-	margin: 16px 3.44% 0 3.44%;
-	padding-top: 16px;
+	font-weight: 550;
+	margin: 8px 17px 12px 17px;
 	/* 保证文章正常显示 */
 	word-wrap: break-word;
 	word-break: break-all;
@@ -326,14 +326,14 @@ image {
 }
 
 .briefarticleCard {
-	width: 93.12%;
+	width: calc(100% - 34px);
 	font-size: 14px;
 	font-family: Source Han Sans CN;
-	line-height: 20px;
 	opacity: 1;
 	font-weight: 400;
-	margin: 8px 3.44% 8px 3.44%;
+	margin: 12px 17px 12px 17px;
 	color: rgba(53, 53, 53, 1);
+	line-height:16px;
 	/* 保证文章正常显示 */
 	word-wrap: break-word;
 	word-break: break-all;
@@ -347,8 +347,8 @@ image {
 }
 
 .tagsLine {
-	width: 93.12%;
-	margin-left: 3.44%;
+	width: calc(100% - 34px);
+	margin-left: 17px;
 	margin-top: 12px;
 }
 
@@ -376,16 +376,17 @@ image {
 .userLine {
 	position: relative;
 	width: 100%;
-	height: 24px;
-	margin-top: 12px;
+	height: 32px;
+	margin-top: 16px;
 }
 
 .touxiang {
 	position: absolute;
-	left: 3.44%;
-	border-radius: 30px;
-	width: 24px;
-	height: 24px;
+	/* left: 4.53%; */
+	left: 17px;
+	border-radius: 32px;
+	width: 32px;
+	height: 32px;
 	vertical-align: middle;
 }
 /* .touxiang::after{
@@ -399,14 +400,15 @@ image {
 
 .name {
 	position: absolute;
-	left: 12.61%;
+	left: 57px;
+	top: 0;
+	font-size:14px;
+	font-family:Source Han Sans CN;
+	font-weight:500;
+	line-height:14px;
+	color:rgba(53,53,53,1);
+	opacity:1;
 	/* max-width: 24%; */
-	font-size: 12px;
-	font-family: Source Han Sans CN;
-	font-weight: 400;
-	line-height: 23px;
-	color: rgba(155, 155, 155, 1);
-	opacity: 1;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -414,13 +416,15 @@ image {
 
 .time {
 	position: absolute;
-	right: 3.44%;
-	font-size: 12px;
-	font-family: Source Han Sans CN;
-	font-weight: 400;
-	line-height: 23px;
-	color: rgba(155, 155, 155, 1);
-	opacity: 1;
+	left: 57px;
+	top: 20px;
+	height:12px;
+	font-size:12px;
+	font-family:Source Han Sans CN;
+	font-weight:400;
+	line-height:12px;
+	color:rgba(155,155,155,1);
+	opacity:1;
 }
 
 .menubar {
@@ -482,4 +486,27 @@ image {
 	width: 95.6%;
 	margin-left: 2.2%;
 }
+
+.imgCoverText{
+	right: 14px;
+	bottom: 4px;
+	margin-top: ;
+	position: absolute;
+	width: 28px;
+	height: 28px;
+	border-radius: 100%;
+}
+
+.imgCover{
+	right: 14px;
+	bottom: 4px;
+	position: absolute;
+	width: 28px;
+	height: 28px;
+	border-radius: 100%;
+	background-color: rgba(74,74,74,1);
+	opacity: 0.5;
+	z-index: 10;
+}
+
 </style>
