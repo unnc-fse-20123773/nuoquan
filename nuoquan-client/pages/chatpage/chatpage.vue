@@ -85,9 +85,11 @@ export default {
 			// console.log("newVal:");
 			console.log(newVal);
 			// 渲染到窗口
-			newVal.id = this.generateId(0);
-			this.chatContent.push(newVal);
-			this.scrollToBottom();
+			if (newVal.friendId == this.friendInfo.id){
+				newVal.id = this.generateId(0);
+				this.chatContent.push(newVal);
+				this.scrollToBottom();
+			}
 		},
 
 		// 监听发送的消息
