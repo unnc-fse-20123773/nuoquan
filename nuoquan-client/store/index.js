@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import userUtil from '../common/userUtil.js'
+import message from '../components/message.js'
+import language from '../components/language.js'
+import showModal from '../components/showModal.js'
 
 Vue.use(Vuex)
 
@@ -43,98 +46,36 @@ try {
 	// error
 }
 
+
 const store = new Vuex.Store({
+
 	state: {
+		lang: lang ,//语言
+		
 		chatMessageCard: '', // 暂存一条socket接收的聊天消息 & 刷新消息列表的条件
 		// flashChatPage: "doFlash", // 作为触发 chatPage 刷新的条件
 		myMsgCount: isNullThenZero(uni.getStorageSync(myMsgCountKey)), // 所有消息计数
 		totalChatMsgCount: isNullThenZero(uni.getStorageSync(totalChatMsgCountKey)), //聊天消息总计数
 		likeMsgCount: isNullThenZero(uni.getStorageSync(likeMsgCountKey)), // 点赞未读消息计数
 		commentMsgCount: isNullThenZero(uni.getStorageSync(commentMsgCountKey)), // 评论未读消息计数
-
-		lang: lang //语言
+		
+		//控制弹窗相关
+		show:false,
+		title:"标题",
+		content:'内容',
+		showCancel:true,
+		cancelText:"取消",
+		cancelColor:"#000000",
+		confirmText:"确定",
+		confirmColor:"#576b95",
+		success:null,
+		
 	},
-	mutations: {
-		// 消息提示相关
-		setChatMessageCard(state, value) {
-			state.chatMessageCard = value.newValue;
-			//修改totalChatMsgCount
-			if (value.newValue.unreadCount == 0) {
-				state.totalChatMsgCount = state.totalChatMsgCount - value.oldValue.unreadCount;
-			} else {
-				state.totalChatMsgCount++
-			}
-			uni.setStorageSync(totalChatMsgCountKey, state.totalChatMsgCount);
-			//计算总数
-			state.myMsgCount = state.totalChatMsgCount + state.likeMsgCount + state.commentMsgCount;
-			uni.setStorageSync(myMsgCountKey, state.myMsgCount);
-		},
-
-		setLikeMsgCount(state, value) {
-			if (value == undefined) {
-				state.likeMsgCount++;
-			} else {
-				state.likeMsgCount = value;
-			}
-			uni.setStorageSync(likeMsgCountKey, state.likeMsgCount);
-			//计算总数
-			state.myMsgCount = state.totalChatMsgCount + state.likeMsgCount + state.commentMsgCount;
-			uni.setStorageSync(myMsgCountKey, state.myMsgCount);
-		},
-
-		setCommentMsgCount(state, value) {
-			if (value == undefined) {
-				state.commentMsgCount++;
-			} else {
-				state.commentMsgCount = value;
-			}
-			uni.setStorageSync(commentMsgCountKey, state.commentMsgCount);
-			//计算总数
-			state.myMsgCount = state.totalChatMsgCount + state.likeMsgCount + state.commentMsgCount;
-			uni.setStorageSync(myMsgCountKey, state.myMsgCount);
-		},
-
-		// 该方法弃用@jerrio
-		// setMyMsgCount(state, value) {
-		// 	if (value == undefined) {
-		// 		state.myMsgCount++;
-		// 		uni.setStorageSync(myMsgCountKey, state.myMsgCount);
-		// 		// console.log("value未传值，当前myMsgCount=" + state.myMsgCount);
-		// 	} else {
-		// 		state.myMsgCount = value;
-		// 		uni.setStorageSync(myMsgCountKey, state.myMsgCount);
-		// 		// console.log("获取到value值，当前myMsgCount=" + state.myMsgCount);
-		// 	}
-		// },
-
-		/**
-		 * 更改语言包
-		 * @param {Object} state
-		 */
-		changeLang: function(state,index) {
-			console.log(index);
-			/*uni.showActionSheet({
-				itemList: langList,
-				success: function(e) {
-					if (e.tapIndex == 0) {
-						lang = require('../common/language/zh.js');
-					} else {
-						lang = require('../common/language/en.js');
-					}
-					state.lang = lang;
-					uni.setStorageSync('userLang', langCode[e.tapIndex]);
-				}
-			})*/
-			if (index == 0) {
-				lang = require('../common/language/zh.js');
-			} else {
-				lang = require('../common/language/en.js');
-			}
-			uni.setStorageSync('userLang', langCode[index]);
-			state.lang = lang;
-		}
+	modules:{
+		message:message,
+		language:language,
+		showModal,showModal,
 	},
-
 })
 
 export default store

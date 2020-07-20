@@ -8,6 +8,9 @@ Vue.component('ProgressBar', ProgressBar);
 import markdownParse from 'components/markdown.js'
 Vue.prototype.$markdownParse = markdownParse;
 
+import modal from '@/components/nq-showModal/modal.vue'
+Vue.component('modal',modal);
+
 
 const app = new Vue({
 	...App,
