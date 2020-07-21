@@ -44,9 +44,10 @@
 			<view class="bottom">
 				<view class="signature">
 					<view class="text">{{lang.signature}}</view>
-					<view class="second_line" @click="showSignToast" v-if="!isEdit">个性签名个性签名一行二十中文字符上下距离</view>
-					<input @blur="formSubmit" maxlength="20" :value="userInfo.nickname" v-if="isEditSignature" />
-				</view>
+					<view class="second_line" @click="toggleIsEditSignature" v-if="!isEditSignature">{{ userInfo.signature }}</view>
+					<input :focus="true" class="second_line" @input="onSignature" style="font-size:17px;min-height: unset;" @blur="formSubmit" 
+					 name="signature" maxlength="20" :value="userInfo.signature" v-if="isEditSignature" />
+					 <view class="line" v-if="isEditSignature"></view></view>
 			</view>
 		</view>
 
@@ -91,7 +92,6 @@
 			const date = new Date();
 			const years = [];
 			const thisYear = date.getFullYear();
-
 			for (let i = 2004; i <= thisYear + 4; i++) {
 				years.push(i);
 			}
@@ -116,12 +116,14 @@
 				major: majors[0],
 				degree: degrees[1],
 				degreeDB: '1', // 数据库 degree 传值
+				signature: "",
 
 				isEditNickname: false, //上半区属性修改
 				isEditGender: false,
 				isEditGraduationYear: false,
 				isEditMajor: false,
 				isEditEmail: false,
+				isEditSignature: false,
 				userInfo: '',
 				yearPicker: false,
 				majorPicker: false,
@@ -150,17 +152,23 @@
 			this.degrees = this.lang.degreeList;
 			this.genderList = this.lang.genderList;
 			// 按已有信息修改默认值
+			var nickname = this.userInfo.nickname;
 			var gender = this.userInfo.gender;
 			var year = this.userInfo.graduationYear;
 			var major = this.userInfo.major;
 			var degree = this.userInfo.degree;
+			var signature = this.userInfo.signature;
+			
+			this.nickname =  nickname;
+			
+			this.signature = signature;
+			
 			if (!this.isNull(gender)) {
 				// 判空，防止默认值被刷掉
 				this.gender = gender;
 			} else {
 				this.gender = 2;
 			}
-
 
 			if (!this.isNull(year)) {
 				this.year = year;
@@ -174,7 +182,7 @@
 				this.degree = this.degrees[degree];
 				this.degreeDB = degree; // 修改对数据库的默认值
 			}
-
+	
 			this.email = this.userInfo.email; // 改绑邮箱默认值
 		},
 
@@ -192,7 +200,6 @@
 			},
 			genderChanger(gender) {
 				this.gender = gender;
-
 			},
 
 			toggleIsEditNickname() {
@@ -200,21 +207,32 @@
 				this.isEditGender = false;
 				this.isEditGraduationYear = false;
 				this.isEditMajor = false;
+				this.isEditSignature = false;
 			},
 			toggleIsEditGender() {
 				this.isEditGender = !this.isEditGender;
 				this.isEditNickname = false;
 				this.isEditGraduationYear = false;
 				this.isEditMajor = false;
+				this.isEditSignature = false;
 			},
 			toggleIsEditGraduationYear() {
 				this.isEditGraduationYear = !this.isEditGraduationYear;
 				this.isEditNickname = false;
 				this.isEditGender = false;
 				this.isEditMajor = false;
+				this.isEditSignature = false;
 			},
 			toggleIsEditMajor() {
 				this.isEditMajor = !this.isEditMajor;
+				this.isEditNickname = false;
+				this.isEditGender = false;
+				this.isEditGraduationYear = false;
+				this.isEditSignature = false;
+			},
+			toggleIsEditSignature(){
+				this.isEditSignature = !this.isEditSignature;
+				this.isEditMajor = false;
 				this.isEditNickname = false;
 				this.isEditGender = false;
 				this.isEditGraduationYear = false;
@@ -224,10 +242,20 @@
 				if (this.nickname == "") {
 					uni.showToast({
 						title: '用户名不能为空',
+						icon: 'none',
 						duration: 2000
 					});
 					this.nickname = this.userInfo.nickname;
 				}
+				if (this.signature == "") {
+					uni.showToast({
+						title: '个性签名不能为空',
+						icon: 'none',
+						duration: 2000
+					});
+					this.signature = this.userInfo.signature;
+				}
+				
 				var data = {
 					id: this.userInfo.id,
 					nickname: this.nickname,
@@ -235,7 +263,8 @@
 					email: this.email,
 					graduationYear: this.year,
 					major: this.major,
-					degree: this.degreeDB
+					degree: this.degreeDB,
+					signature: this.signature
 				};
 				console.log(data);
 				var that = this;
@@ -263,6 +292,7 @@
 				this.isEditGender = false;
 				this.isEditGraduationYear = false;
 				this.isEditMajor = false;
+				this.isEditSignature = false;
 			},
 
 			/**
@@ -287,6 +317,9 @@
 			},
 			onCaptcha(event) {
 				this.captcha = event.target.value;
+			},
+			onSignature(event){
+				this.signature = event.target.value;
 			},
 			getCaptcha() {
 				var email = this.email;

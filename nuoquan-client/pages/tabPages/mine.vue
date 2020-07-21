@@ -37,7 +37,7 @@
 				</view>
 			</view>
 			<!-- 文字介绍 -->
-			<view class="introBox"><text class="introBox-text">小程序的字体依然遵循微信原生视觉规范微信内字体的使用与所运行的系统字体保持一致常用</text></view>
+			<view class="introBox"><text class="introBox-text">{{ thisUserInfo.signature }}</text></view>
 		</view>
 		
 		<view class="shadow1"></view>
@@ -230,6 +230,7 @@ export default {
 		navigatorEvent(e) {
 			if (e.action == 'switchLang') {
 				this.changeLang(e.status);
+				console.log(e.status);
 			} else if (e.action == 'goto') {
 				uni.navigateTo({
 					url: e.obj.url

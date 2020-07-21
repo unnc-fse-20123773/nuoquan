@@ -12,6 +12,8 @@ public class User {
     private String password;
 
     private String nickname;
+    
+    private String signature;
 
     @Column(name = "create_date")
     private Date createDate;
@@ -324,5 +326,13 @@ public class User {
 
 	public void setLatestLogin(Date latestLogin) {
 		this.latestLogin = latestLogin;
+	}
+	
+	public String getSignature() {
+		return signature;
+	}
+
+	public void setSignature(String signature) {
+		this.signature = signature;
 	}
 }

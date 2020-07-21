@@ -12,6 +12,7 @@ public class UserVO {
     @JsonIgnore //不返回密码
     private String password;
     private String nickname;
+    private String signature;
     private Date createDate;
     private String faceImg;
     private String faceImgThumb;
@@ -305,5 +306,13 @@ public class UserVO {
 
 	public void setLatestLogin(Date latestLogin) {
 		this.latestLogin = latestLogin;
+	}
+	
+	public String getSignature() {
+		return signature;
+	}
+
+	public void setSignature(String signature) {
+		this.signature = signature;
 	}
 }

@@ -50,7 +50,7 @@
 		<view class="submitVoteButton" @tap="upload()">{{ lang.submit }}</view>
 
 		<view style="width: 100%;height: 20px;"></view>
-		<pop-modal v-if="draftPopModal" :modalText="modalText" @modalRes="modalRes"></pop-modal>
+		<modal></modal>
 	</view>
 </template>
 
@@ -62,7 +62,6 @@
 		mapState,
 		mapMutations
 	} from 'vuex';
-	import popModal from '../../components/nq-showModal/popModal.vue'
 
 	var uploadFlag = false; // 标志文章正在上传，为 true 时 block 该方法
 	var requestTask;
@@ -108,21 +107,12 @@
 				isNavHome: getApp().globalData.isNavHome, //判断导航栏左侧是否显示home按钮
 				navbarHeight: 0 ,//一次性储存 navbarheight
 				
-				draftPopModal: false, //代码垃圾，临时方案之后替换删掉
-				modalText: {
-					title: "标题",
-					content: "内容",
-					cancelText: "取消",
-					confirmText: "确定",
-				}
 			};
 		},
 		components: {
 			mypicker,
 			uniNavBar,
 			plusSquare,
-			
-			popModal,
 		},
 		computed: {
 			...mapState(['lang'])
@@ -144,8 +134,8 @@
 
 		onUnload() {
 			var _this = this;
-			if (this.voteTitle != "" || this.voteContent != "" || this.imageList != "" || this.pickerValue != '3' || this.voteOptions[
-					0] != "") {
+			if (this.voteTitle != "" || this.voteContent != "" || this.imageList != "" || this.pickerValue != '3' || this.voteOptions[0] != "" || this.voteOptions[1] != "" || (this.voteOptions.length > 2 && this.voteOptions[2] != "") )
+			{
 				uni.setStorage({
 					key: _this.userInfo.id + ':draftVote',
 					data: {
@@ -175,65 +165,44 @@
 						//缓存读取成功，
 						if (dft.data.status) {
 							console.log(dft);
-							that.modalText = {
-								title: that.lang.voteDraftModal,
+							that.$store.commit('showModal', {
+								title: that.lang.postDraftModal,
 								confirmText: that.lang.yes,
 								cancelText: that.lang.no,
-							}
-							that.draftPopModal = true;
-
-
-							// uni.showModal({
-							// 	title: '是否继续上次编辑？',
-							// 	content: "",
-							// 	confirmText: '是',
-							// 	confirmColor: "rgb(252,192,65)",
-							// 	cancelText: '否',
-							// 	cancelColor: '#888888',
-							// 	success: function(res) {
-							// 		if (res.confirm) {
-							// 			// 用户确认使用草稿内容，赋值加载
-							// 			that.voteTitle = dft.data.voteTitle,
-							// 				that.voteContent = dft.data.voteContent,
-							// 				that.pickerValue = dft.data.votePeriod,
-							// 				that.voteOptions = dft.data.voteOptions,
-							// 				that.imageList = dft.data.imageList,
-							// 				console.log('Draft vote accessing success');
-							// 			console.log('用户点击确定');
-							// 		} else if (res.cancel) {
-							// 			//用户取消使用草稿内容，清空缓存
-							// 			that.cleanDraft();
-							// 		}
-							// 	}
-							// })
+								success: function(res) {
+									if (res.confirm) {
+										that.loadDraft();
+									} else if (res.cancel) {
+										that.cleanDraft();
+									}
+								}
+							});
 						}
 
 					}
 				})
 			},
 
-			modalRes(res) {
+			loadDraft(res) {
 				var that = this;
-				if (res == 'cancle') {
-					this.cleanDraft();
-				} else {
 					uni.getStorage({
 						key: that.userInfo.id + ':draftVote',
 						success: function(dft) {
-							that.voteTitle = dft.data.voteTitle,
+							that.voteTitle = dft.data.voteTitle;
 							console.log(dft.data.voteTitle);
 							console.log(that.voteTitle);
-							that.voteContent = dft.data.voteContent,
-							that.pickerValue = dft.data.votePeriod,
-							that.voteOptions = dft.data.voteOptions,
-							that.imageList = dft.data.imageList,
+							that.voteContent = dft.data.voteContent;
+							that.pickerValue = dft.data.votePeriod;
+							that.voteOptions = dft.data.voteOptions;
+							that.imageList = dft.data.imageList;
+							if (that.voteContent!="" || that.imageList != ""){  //有内容展开编辑框
+								that.showContengEdit = true ;
+								};
 							console.log('Draft vote accessing success');
 							console.log('用户点击确定');
 							return ;
 						},
-					});
-				}
-				this.draftPopModal = false;
+					});				
 			},
 			cleanDraft() {
 				var that = this;
