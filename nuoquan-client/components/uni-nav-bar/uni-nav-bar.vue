@@ -11,7 +11,7 @@
 				<!-- 左侧区域 -->
 				<view v-if="showLeftIcon && !isNavHome" @tap="onClickLeft" style="height: 38px;" class="uni-navbar__header-btns uni-navbar__header-btns-left uni-navbar__content_view">
 					<!-- icon -->
-					<view class="uni-navbar__content_view"><image style="height: 24px;width: 24px;" src="../../static/icon/angle-left.png" mode="aspectFit"></image></view>
+					<view class="uni-navbar__content_view"><image style="height: 14px;width: 24px;" src="../../static/icon/angle-left-353535.png" mode="aspectFit"></image></view>
 					<!-- text -->
 					<view :class="{ 'uni-navbar-btn-icon-left': !leftIcon.length }" class="uni-navbar-btn-text uni-navbar__content_view super_center" v-if="leftText.length">
 						<text :style="{ color: color, fontSize: '14px' }">{{ leftText }}</text>
@@ -95,7 +95,7 @@ export default {
 		},
 		color: {
 			type: String,
-			default: 'white'
+			default: 'black'
 		},
 		backgroundColor: {
 			type: String,
@@ -162,6 +162,8 @@ $nav-height: 44px;
 	width: 750rpx;
 	background-color: $uni-bg-color;
 	overflow: hidden;
+	border-bottom:1px solid rgba(236,236,236,1);
+	opacity:1;
 }
 
 .uni-navbar__content_view {

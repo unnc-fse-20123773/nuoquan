@@ -5,7 +5,7 @@
  -->
 <template name="yq-avatar">
 	<view>
-		<image :src="imgSrc.imgSrc" :style="[ imgStyle ]" class="my-avatar"></image>
+		<image @click.stop="goPersonpublic" :src="imgSrc.imgSrc" :style="[ imgStyle ]" class="my-avatar"></image>
 		<view @click="fSelect" class="editTouXiang">
 			<image src="../../static/icon/write.png"></image>
 		</view>
@@ -51,12 +51,8 @@
 				btnDsp: 'flex',
 			};
 		},
-		watch: {
-			avatarSrc() {
-				this.imgSrc.imgSrc = this.avatarSrc;
-			}
-		},
 		props:{
+			pageId: '',
 			avatarSrc: '',
 			avatarStyle: '',
 			selWidth: '',
@@ -75,6 +71,16 @@
 			inner: '',
 			quality: '',
 			index: '',
+		},
+		watch: {
+			avatarSrc() {
+				this.imgSrc.imgSrc = this.avatarSrc;
+			},
+			pageId(newValue,oldValue){
+				console.log("newValue" + newValue);
+				this.pageId = newValue;
+				this.goPersonpublic(this.pageId)
+			}
 		},
 		created() {
 			this.ctxCanvas = uni.createCanvasContext('avatar-canvas', this);
@@ -168,6 +174,19 @@
 					this.fDrawInit(true);
 				}
 				this.fHideImg();
+			},
+			
+			goPersonpublic(){
+				/*
+					#跳转个人主页 
+					#Guetta 2020年7月21日16点50分
+					#mine 页面传来 pagdId，pageId 是 globalUserInfo.id
+					#html 用 click.stop 防止干扰上传头像
+				*/ 
+				// console.log("userId" + this.pageId);
+				uni.navigateTo({
+					url: '/pages/personpublic/personpublic?userId=' + this.pageId
+				})
 			},
 			fSelect() {
 				if(this.fSelecting) return;
