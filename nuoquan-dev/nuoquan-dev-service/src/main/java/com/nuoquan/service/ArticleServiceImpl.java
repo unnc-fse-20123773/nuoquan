@@ -164,6 +164,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
+	@Deprecated
 	public PagedResult getAllArticles(Integer page, Integer pageSize, String userId) {
 
 		// 从controller中获取page和pageSize (经实验，PageHelper 只拦截下一次查询)
@@ -383,6 +384,7 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
+	@Deprecated
 	public PagedResult searchArticleByTag(Integer page, Integer pageSize, String searchText,
 			String userId) {
 
@@ -912,6 +914,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
+	@Deprecated
 	public PagedResult getAllSubscribedAuthorArticles(Integer page, Integer pageSize, String userId) {
 		// 查询全部我(操作者)关注的用户
 		Example mySubscribedUserExample = new Example(UserFans.class);
@@ -943,6 +946,7 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
+	@Deprecated
 	public PagedResult getAllSubscribedAuthorArticlesByPopularity(Integer page, Integer pageSize, String userId) {
 
 			// 查询全部我(操作者)关注的用户
@@ -973,6 +977,7 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
+	@Deprecated
 	public PagedResult searchArticleByTagPupolarityOrder(Integer page, Integer pageSize, String selectedTag,
 			String userId) {
 
@@ -999,6 +1004,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
+	@Deprecated
 	public PagedResult searchArticleByTagWithSubscribed(Integer page, Integer pageSize, String selectedTag, String userId) {
 		
 		// 查询全部我(操作者)关注的用户
@@ -1039,6 +1045,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Transactional(propagation = Propagation.SUPPORTS)
 	@Override
+	@Deprecated
 	public PagedResult searchArticleByTagPupolarityOrderWithSubscribed(Integer page, Integer pageSize, String selectedTag, String userId) {
 
 		// 查询全部我(操作者)关注的用户
