@@ -13,6 +13,7 @@
 						selHeight="200px"
 						@upload="uploadFace"
 						avatarStyle="width: 80px; height: 80px; border-radius: 100%;"
+						:pageId="thisUserInfo.id"
 					></avatar>
 				</view>
 				<!-- 右侧信息快 -->
@@ -97,7 +98,6 @@ export default {
 	},
 	onLoad() {
 		this.thisUserInfo = this.getGlobalUserInfo();
-
 		var screenWidth = uni.getSystemInfoSync().screenWidth;
 		this.screenWidth = screenWidth;
 
@@ -230,6 +230,7 @@ export default {
 		navigatorEvent(e) {
 			if (e.action == 'switchLang') {
 				this.changeLang(e.status);
+				console.log(e.status);
 			} else if (e.action == 'goto') {
 				uni.navigateTo({
 					url: e.obj.url

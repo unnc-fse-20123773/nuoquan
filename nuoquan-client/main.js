@@ -8,6 +8,9 @@ Vue.component('ProgressBar', ProgressBar);
 import markdownParse from 'components/markdown.js'
 Vue.prototype.$markdownParse = markdownParse;
 
+import modal from '@/components/nq-showModal/modal.vue'
+Vue.component('modal',modal);
+
 
 const app = new Vue({
 	...App,
@@ -18,7 +21,7 @@ App.mpType = 'app'
 
 Vue.config.productionTip = false
 
-Vue.prototype.version = "v1.2.0"
+Vue.prototype.version = "v1.3.0"
 Vue.prototype.tagColors = ['#FE5F55', '#40A792', '#FDD041', '#5CA0D3', '#621E81', '#738598', '#F3AE4B']
 
 Vue.prototype.$store = store // 挂载 vueX
