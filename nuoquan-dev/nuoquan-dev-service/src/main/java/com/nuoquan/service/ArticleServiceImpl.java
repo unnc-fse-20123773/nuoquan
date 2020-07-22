@@ -938,7 +938,7 @@ public class ArticleServiceImpl implements ArticleService {
 		mySubscribedUserArticle.and(criteria3);
 		
 		
-		return returnPagedResultByExampleByUserId(mySubscribedUserArticle, userId);
+		return queryArticleByExample(mySubscribedUserArticle, userId);
 	}
 	
 	@Transactional(propagation = Propagation.SUPPORTS)
@@ -968,7 +968,7 @@ public class ArticleServiceImpl implements ArticleService {
 			criteria3.andEqualTo("status", StatusEnum.READABLE.type);
 			mySubscribedUserArticle.and(criteria3);
 
-			return returnPagedResultByExampleByUserId(mySubscribedUserArticle, userId);
+			return queryArticleByExample(mySubscribedUserArticle, userId);
 	}
 	
 	@Transactional(propagation = Propagation.SUPPORTS)
@@ -993,7 +993,7 @@ public class ArticleServiceImpl implements ArticleService {
 		articleExample.and(criteria2);
 		
 		PageHelper.startPage(page, pageSize);
-		return returnPagedResultByExampleByUserId(articleExample, userId);
+		return queryArticleByExample(articleExample, userId);
 		
 	}
 
@@ -1034,7 +1034,7 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 		mySubscribedUserArticle.and(criteria4);
 
-		return returnPagedResultByExampleByUserId(mySubscribedUserArticle, userId);
+		return queryArticleByExample(mySubscribedUserArticle, userId);
 	}
 
 	@Transactional(propagation = Propagation.SUPPORTS)
@@ -1065,9 +1065,6 @@ public class ArticleServiceImpl implements ArticleService {
 		criteria3.andEqualTo("status", StatusEnum.READABLE.type);
 		mySubscribedUserArticle.and(criteria3);
 		
-		
-		
-		
 		// 在这些文章中找到符合搜索的标签的文章
 		String[] texts = selectedTag.split(" ");
 		
@@ -1077,10 +1074,10 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 		mySubscribedUserArticle.and(criteria4);
 
-		return returnPagedResultByExampleByUserId(mySubscribedUserArticle, userId);
+		return queryArticleByExample(mySubscribedUserArticle, userId);
 	}
 	
-	public PagedResult returnPagedResultByExampleByUserId(Example articleExample, String userId) {
+	public PagedResult queryArticleByExample(Example articleExample, String userId) {
 		//通过条件，返回pagedResult
 		List<Article> list = articleMapper.selectByExample(articleExample);
 		PageInfo<Article> pageInfo = new PageInfo<>(list);
@@ -1148,10 +1145,8 @@ public class ArticleServiceImpl implements ArticleService {
 			articleExample = mySubscribedUserArticle;
 			
 		}else {
-			
 			articleExample = new Example(Article.class);
 			articleExample.setOrderByClause("create_date desc");
-			
 		}
 		
 		//是否有标签
@@ -1171,7 +1166,7 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 		
 		PageHelper.startPage(page, pageSize);
-		return returnPagedResultByExampleByUserId(articleExample, userId);
+		return queryArticleByExample(articleExample, userId);
 		
 	}
 	
@@ -1181,16 +1176,3 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 }
-	
-
-//
-//@Transactional(propagation = Propagation.REQUIRED)
-//@Override
-//public void passComment(String commentId) {
-//	Example example = new Example(UserVoteComment.class);
-//	Criteria criteria = example.createCriteria();
-//	criteria.andEqualTo("id", commentId);
-//	
-//	UserVoteComment userVoteCommentHelper = new UserVoteComment();
-//	userVoteCommentHelper.setStatus(StatusEnum.READABLE.type);
-//	userVoteCommentMapper.updateByExampleSelective(userVoteCommentHelper, example);
