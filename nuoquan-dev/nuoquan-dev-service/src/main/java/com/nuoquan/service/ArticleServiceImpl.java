@@ -392,10 +392,7 @@ public class ArticleServiceImpl implements ArticleService {
 		// 在Example中的每一个Criteria相当于一个括号，把里面的内容当成一个整体
 		Example articleExample = new Example(Article.class);
 		articleExample.setOrderByClause("create_date desc");
-		
-		
-		
-		
+	
 		Criteria criteria = articleExample.createCriteria();
 		for(String text : texts) {
 			criteria.orLike("tags", "%" + text + "%");
@@ -941,7 +938,7 @@ public class ArticleServiceImpl implements ArticleService {
 		mySubscribedUserArticle.and(criteria3);
 		
 		
-		return returnPagedResult(mySubscribedUserArticle, userId);
+		return returnPagedResultByExampleByUserId(mySubscribedUserArticle, userId);
 	}
 	
 	@Transactional(propagation = Propagation.SUPPORTS)
@@ -971,7 +968,7 @@ public class ArticleServiceImpl implements ArticleService {
 			criteria3.andEqualTo("status", StatusEnum.READABLE.type);
 			mySubscribedUserArticle.and(criteria3);
 
-			return returnPagedResult(mySubscribedUserArticle, userId);
+			return returnPagedResultByExampleByUserId(mySubscribedUserArticle, userId);
 	}
 	
 	@Transactional(propagation = Propagation.SUPPORTS)
@@ -996,7 +993,7 @@ public class ArticleServiceImpl implements ArticleService {
 		articleExample.and(criteria2);
 		
 		PageHelper.startPage(page, pageSize);
-		return returnPagedResult(articleExample, userId);
+		return returnPagedResultByExampleByUserId(articleExample, userId);
 		
 	}
 
@@ -1037,7 +1034,7 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 		mySubscribedUserArticle.and(criteria4);
 
-		return returnPagedResult(mySubscribedUserArticle, userId);
+		return returnPagedResultByExampleByUserId(mySubscribedUserArticle, userId);
 	}
 
 	@Transactional(propagation = Propagation.SUPPORTS)
@@ -1080,10 +1077,10 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 		mySubscribedUserArticle.and(criteria4);
 
-		return returnPagedResult(mySubscribedUserArticle, userId);
+		return returnPagedResultByExampleByUserId(mySubscribedUserArticle, userId);
 	}
 	
-	public PagedResult returnPagedResult(Example articleExample, String userId) {
+	public PagedResult returnPagedResultByExampleByUserId(Example articleExample, String userId) {
 		//通过条件，返回pagedResult
 		List<Article> list = articleMapper.selectByExample(articleExample);
 		PageInfo<Article> pageInfo = new PageInfo<>(list);
@@ -1174,15 +1171,14 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 		
 		PageHelper.startPage(page, pageSize);
-		return returnPagedResult(articleExample, userId);
+		return returnPagedResultByExampleByUserId(articleExample, userId);
 		
 	}
 	
-	
-//	public PagedResult queryArticle(Integer page, Integer pageSize, Integer queryType, Integer orderType, String userId, String selectedTag) {
-//		
-//		
-//	}
+	@Deprecated
+	public PagedResult queryArticle(Integer page, Integer pageSize, Integer queryType, Integer orderType, String userId, String selectedTag) {
+		return null;
+	}
 
 }
 	

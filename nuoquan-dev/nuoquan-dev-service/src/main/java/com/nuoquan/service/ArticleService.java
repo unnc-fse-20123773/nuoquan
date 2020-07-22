@@ -318,7 +318,7 @@ public interface ArticleService {
 	public PagedResult queryArticle(Integer page, Integer pageSize, Integer queryType, String userId, String selectedTag);
 
 	/**
-	 * queryArticle接口的方法
+	 * queryArticle接口的旧方法，弃用
 	 * @param page
 	 * @param pageSize
 	 * @param queryType
@@ -327,7 +327,8 @@ public interface ArticleService {
 	 * @param selectedTag
 	 * @return
 	 */
-	//public PagedResult queryArticle(Integer page, Integer pageSize, Integer queryType, Integer orderType, String userId, String selectedTag);
+	@Deprecated
+	public PagedResult queryArticle(Integer page, Integer pageSize, Integer queryType, Integer orderType, String userId, String selectedTag);
 //	/**
 //	 * 通过热度查询评论主
 //	 * @param page
