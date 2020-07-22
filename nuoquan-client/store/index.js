@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import userUtil from '../common/userUtil.js'
-import showModal from '../components/showModal.js'
+import showModal from '../components/showModal.js'		//全局弹窗模块
 
 Vue.use(Vuex)
 
@@ -115,7 +115,7 @@ const store = new Vuex.Store({
 		},
 	},
 	modules:{
-		showModal:showModal,
+		showModal:showModal,	//全局弹窗模块
 	},
 })
 

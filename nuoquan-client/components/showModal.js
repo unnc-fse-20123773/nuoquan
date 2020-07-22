@@ -1,28 +1,41 @@
 const showModal = {
 	state:{
+		mode:'modal',  //mode = "toast/modal"
 		show:false,
-		title:"标题",
-		content:'内容',
+		title:"默认标题",
+		content:'',
+		duration:'1500',
 		showCancel:true,
 		cancelText:"取消",
-		cancelColor:"#000000",
+	//	cancelColor:"#000000",
 		confirmText:"确定",
-		confirmColor:"#576b95",
+	//	confirmColor:"#576b95",
+	//	icon/image:null, not finished,
 		success:null,
-		
+		fail:null,
 	},
 
 	mutations: {
 		hideModal(state) {
-			state.show = false
+			console.log('hideModal');
+			state.show = false;
 		},
 		showModal(state, data) {
-			console.log('in mutation -->showModal function');
-			console.log(state);
+			state.mode = 'modal',
+			console.log('showModal function triggered');
 			state = Object.assign(state, data)
-			console.log(state.show);
 			state.show = true;
-			console.log(state.show);
+			console.log(state);
+		},
+		showToast(state,data){
+			state.mode = 'toast',
+			console.log('showToast function triggered');
+			state = Object.assign(state, data);
+			state.show = true;
+			console.log(state);
+		},
+		showLoading(state,data){
+			state.show = true;
 		},
 		success(state, res) {
 			let cb = state.success
@@ -32,8 +45,17 @@ const showModal = {
 			}
 			res == "confirm" ? resObj.confirm = true : resObj.cancel = true
 			cb && cb(resObj)
-		}
-	}
+		},
+		fail(state,res){
+			let cb = state.success
+			let resObj = {
+				cancel: false,
+				confirm: false
+			}
+			res == "confirm" ? resObj.confirm = true : resObj.cancel = true
+			cb && cb(resObj)
+		},
+	},
 };
 
 export default showModal;

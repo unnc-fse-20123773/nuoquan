@@ -105,8 +105,8 @@
 
 				windowHeight: 0,
 				isNavHome: getApp().globalData.isNavHome, //判断导航栏左侧是否显示home按钮
-				navbarHeight: 0 ,//一次性储存 navbarheight
-				
+				navbarHeight: 0, //一次性储存 navbarheight
+
 			};
 		},
 		components: {
@@ -134,8 +134,8 @@
 
 		onUnload() {
 			var _this = this;
-			if (this.voteTitle != "" || this.voteContent != "" || this.imageList != "" || this.pickerValue != '3' || this.voteOptions[0] != "" || this.voteOptions[1] != "" || (this.voteOptions.length > 2 && this.voteOptions[2] != "") )
-			{
+			if (this.voteTitle != "" || this.voteContent != "" || this.imageList != "" || this.pickerValue != '3' || this.voteOptions[
+					0] != "" || this.voteOptions[1] != "" || (this.voteOptions.length > 2 && this.voteOptions[2] != "")) {
 				uni.setStorage({
 					key: _this.userInfo.id + ':draftVote',
 					data: {
@@ -170,12 +170,11 @@
 								confirmText: that.lang.yes,
 								cancelText: that.lang.no,
 								success: function(res) {
-									if (res.confirm) {
-										that.loadDraft();
-									} else if (res.cancel) {
-										that.cleanDraft();
-									}
-								}
+									that.loadDraft();
+								},
+								fail: function(res) {
+									that.cleanDraft();
+								},
 							});
 						}
 
@@ -185,24 +184,24 @@
 
 			loadDraft(res) {
 				var that = this;
-					uni.getStorage({
-						key: that.userInfo.id + ':draftVote',
-						success: function(dft) {
-							that.voteTitle = dft.data.voteTitle;
-							console.log(dft.data.voteTitle);
-							console.log(that.voteTitle);
-							that.voteContent = dft.data.voteContent;
-							that.pickerValue = dft.data.votePeriod;
-							that.voteOptions = dft.data.voteOptions;
-							that.imageList = dft.data.imageList;
-							if (that.voteContent!="" || that.imageList != ""){  //有内容展开编辑框
-								that.showContengEdit = true ;
-								};
-							console.log('Draft vote accessing success');
-							console.log('用户点击确定');
-							return ;
-						},
-					});				
+				uni.getStorage({
+					key: that.userInfo.id + ':draftVote',
+					success: function(dft) {
+						that.voteTitle = dft.data.voteTitle;
+						console.log(dft.data.voteTitle);
+						console.log(that.voteTitle);
+						that.voteContent = dft.data.voteContent;
+						that.pickerValue = dft.data.votePeriod;
+						that.voteOptions = dft.data.voteOptions;
+						that.imageList = dft.data.imageList;
+						if (that.voteContent != "" || that.imageList != "") { //有内容展开编辑框
+							that.showContengEdit = true;
+						};
+						console.log('Draft vote accessing success');
+						console.log('用户点击确定');
+						return;
+					},
+				});
 			},
 			cleanDraft() {
 				var that = this;

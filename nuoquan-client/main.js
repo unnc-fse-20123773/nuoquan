@@ -7,9 +7,8 @@ import ProgressBar from '@/components/Progress-Bar/Progress-Bar';//引入进度�
 Vue.component('ProgressBar', ProgressBar);
 import markdownParse from 'components/markdown.js'
 Vue.prototype.$markdownParse = markdownParse;
-
-import modal from '@/components/nq-showModal/modal.vue'
-Vue.component('modal',modal);
+import modal from '@/components/nq-showModal/modal.vue'	//引入弹窗组件,showToast/showModal/showLoading
+Vue.component('modal',modal);  
 
 
 const app = new Vue({

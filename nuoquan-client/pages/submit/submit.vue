@@ -196,13 +196,11 @@
 								confirmText: that.lang.yes,
 								cancelText: that.lang.no,
 								success: function(res) {
-									if (res.confirm) {
-										that.loadDraft();
-									} else if (res.cancel) {
-										that.cleanDraft();
-									}
-
-								}
+									that.loadDraft();
+								},
+								fail: function(res) {
+									that.cleanDraft();
+								},
 
 							})
 
@@ -213,17 +211,17 @@
 			},
 			loadDraft() {
 				var that = this;
-					uni.getStorage({
-						key: that.userInfo.id + ':draftArticle',
-						success: function(dft) {
-							console.log(dft);
-							that.articleTitle = dft.data.articleTitle;
-							that.articleContent = dft.data.articleContent;
-							that.selectedTags = dft.data.selectedTags;
-							that.imageList = dft.data.imageList;
-							console.log('draft loaded');
-						},
-				});	
+				uni.getStorage({
+					key: that.userInfo.id + ':draftArticle',
+					success: function(dft) {
+						console.log(dft);
+						that.articleTitle = dft.data.articleTitle;
+						that.articleContent = dft.data.articleContent;
+						that.selectedTags = dft.data.selectedTags;
+						that.imageList = dft.data.imageList;
+						console.log('draft loaded');
+					},
+				});
 			},
 			cleanDraft() {
 				var that = this;
