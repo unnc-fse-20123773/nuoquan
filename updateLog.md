@@ -1,5 +1,10 @@
 # Update Log: #
 
+**v20.7.28 更新**
+1. 优化 modal蒙版和button显示
+2. 修复 新建投票提示语
+
+
 **v20.7.22 更新**
 1. 新增 草稿功能(yaoyao)
 2. 新增 全局弹窗提示框，toast/modal/loading,部分功能待完善 (yaoyao)

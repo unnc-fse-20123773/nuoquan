@@ -166,7 +166,7 @@
 						if (dft.data.status) {
 							console.log(dft);
 							that.$store.commit('showModal', {
-								title: that.lang.postDraftModal,
+								title: that.lang.voteDraftModal,
 								confirmText: that.lang.yes,
 								cancelText: that.lang.no,
 								success: function(res) {

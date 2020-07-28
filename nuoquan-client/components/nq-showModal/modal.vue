@@ -1,15 +1,16 @@
 <template>
-	<view class="container" v-show="show">
-		<view class="modalBox" @click="closeModal" @touchmove.stop.prevent="">
-			<!-- 			<image class="pic" v-if="modalPic" :src="modalPic"></image> -->
-			<view class="modal-title" v-show="title">{{title}}</view>
-			<view class="modal-content">{{content}}</view>
-			<view class="modal-menu" v-show="mode == 'modal'">
-				<button class="cancle" v-show="showCancel"  @click.stop="clickBtn('cancel')">{{cancelText}}</button>
-				<button class="confirm"  @click.stop="clickBtn('confirm')">{{confirmText}}</button>
+	<view v-show="show" style="width: 0;height: 0;">
+		<view class="container"  @touchmove.stop.prevent="">
+			<view class="modalBox" @click="closeModal" @touchmove.stop.prevent="">
+				<!-- 			<image class="pic" v-if="modalPic" :src="modalPic"></image> -->
+				<view class="modal-title" v-show="title">{{title}}</view>
+				<view class="modal-content">{{content}}</view>
+				<view class="modal-menu" v-show="mode == 'modal'">
+					<view class="cancle" v-show="showCancel" @click.stop="clickBtn('cancel')">{{cancelText}}</view>
+					<view class="confirm" @click.stop="clickBtn('confirm')">{{confirmText}}</view>
+				</view>
 			</view>
 		</view>
-	</view>
 	</view>
 </template>
 
@@ -24,6 +25,8 @@
 				return this.$store.state.showModal.mode;
 			},
 			show() {
+				console.log('state.show triggered');
+				console.log(this.$store.state.showModal.show);
 				return this.$store.state.showModal.show;
 			},
 			title() {
@@ -68,9 +71,9 @@
 		beforeDestroy() {
 			this.$store.commit('hideModal')
 		},
-		watch:{
-			show(newValue,oldValue){
-				if(newValue){
+		watch: {
+			show(newValue, oldValue) {
+				if (newValue) {
 					var that = this;
 					console.log(this.$store.state.showModal);
 					if (this.$store.state.showModal.mode == 'toast') {
@@ -82,7 +85,7 @@
 						}, that.duration);
 					}
 				}
-				
+
 			}
 		},
 		mounted() {
@@ -100,7 +103,7 @@
 </script>
 
 
-<style>
+<style scoped>
 	.container {
 		background-color: #ECECECEC;
 		position: fixed;
@@ -108,15 +111,17 @@
 		left: 0;
 		width: 750upx;
 		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		z-index: 100;
 	}
 
 	.modalBox {
 		border-radius: 12px;
 		background: #FFFFFF;
 		width: 670upx;
-		position: absolute;
-		left: 40upx;
-		top: 400px;
+
 	}
 
 	.pic {
@@ -129,7 +134,7 @@
 	.modal-title {
 		font-size: 17px;
 		color: #353535;
-		font-weight: 600;
+		font-weight: bold;
 		height: 20px;
 		ling-height: 20px;
 		text-align: center;
@@ -140,7 +145,7 @@
 		display: flex;
 		width: 606upx;
 		margin: 16px auto;
-		justify-content: space-between''
+		justify-content: space-between;
 	}
 
 	.cancle {
@@ -150,6 +155,7 @@
 		background: rgba(236, 236, 236, 1);
 		border-radius: 8px;
 		line-height: 41px;
+		text-align: center;
 	}
 
 	.confirm {
@@ -159,5 +165,6 @@
 		background: rgba(252, 192, 65, 1);
 		border-radius: 8px;
 		line-height: 41px;
+		text-align: center;
 	}
 </style>
