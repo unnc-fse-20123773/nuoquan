@@ -17,7 +17,7 @@
 					<view class="second_line" @click="toggleIsEditNickname" v-if="!isEditNickname">{{ userInfo.nickname }}</view>
 					<input :focus="true" class="second_line" @input="onNickName" style="font-size:17px;min-height: unset;" @blur="formSubmit"
 					 name="nickname" maxlength="8" :value="userInfo.nickname" v-if="isEditNickname" />
-					 <view class="line" v-if="isEditNickname"></view>
+					<view class="line" v-if="isEditNickname"></view>
 				</view>
 				<view class="gender">
 					<view class="text">{{lang.gender}}</view>
@@ -45,9 +45,10 @@
 				<view class="signature">
 					<view class="text">{{lang.signature}}</view>
 					<view class="second_line" @click="toggleIsEditSignature" v-if="!isEditSignature">{{ userInfo.signature }}</view>
-					<input :focus="true" class="second_line" @input="onSignature" style="font-size:17px;min-height: unset;" @blur="formSubmit" 
+					<input :focus="true" class="second_line" @input="onSignature" style="font-size:17px;min-height: unset;" @blur="formSubmit"
 					 name="signature" maxlength="20" :value="userInfo.signature" v-if="isEditSignature" />
-					 <view class="line" v-if="isEditSignature"></view></view>
+					<view class="line" v-if="isEditSignature"></view>
+				</view>
 			</view>
 		</view>
 
@@ -64,11 +65,11 @@
 					<view @click="editEmail" v-if="!isEditEmail&&userInfo.email==null">{{ lang.bindEmail}}</view>
 					<input :focus="true" maxlength="35" style="min-height:unset;height:30px; font-size:17px;" :value="userInfo.email"
 					 @input="onEmailInput" v-if="isEditEmail&& !showCaptcha" />
-					  <view class="line" style="width: 250px;" v-if="isEditEmail&&!showCaptcha"></view>
+					<view class="line" style="width: 250px;" v-if="isEditEmail&&!showCaptcha"></view>
 					<view v-if="isEditEmail&&showCaptcha" class="text">{{email}}</view>
 				</view>
 			</view>
-			<view class="row"  v-if="isEditEmail">
+			<view class="row" v-if="isEditEmail">
 				<input style="color:rgba(53,53,53,1);min-height: unset;width: 80px;height:20px;font-size: 17px;" @blur="confirmCode"
 				 v-if="isEditEmail&& showCaptcha" maxlength="6" :placeholder="lang.captcha" @input="onCaptcha" />
 				<whCaptcha style="display: inline-block;" class="waiting" ref="captcha" :secord="60" :title="lang.getCaptcha"
@@ -124,14 +125,14 @@
 				isEditMajor: false,
 				isEditEmail: false,
 				isEditSignature: false,
+
 				userInfo: '',
-				yearPicker: false,
-				majorPicker: false,
-				degreePicker: false,
+
 				email: '', //输入的邮箱
 				captcha: '', //输入的验证码
 				showCaptcha: false,
-				navbarHeight: 0 //一次性储存 navbarheight
+				navbarHeight: 0 ,//一次性储存 navbarheight
+				needUpdateFlag:false,
 			};
 		},
 
@@ -152,17 +153,13 @@
 			this.degrees = this.lang.degreeList;
 			this.genderList = this.lang.genderList;
 			// 按已有信息修改默认值
-			var nickname = this.userInfo.nickname;
+			this.nickname = this.userInfo.nickname;
 			var gender = this.userInfo.gender;
 			var year = this.userInfo.graduationYear;
 			var major = this.userInfo.major;
 			var degree = this.userInfo.degree;
-			var signature = this.userInfo.signature;
-			
-			this.nickname =  nickname;
-			
-			this.signature = signature;
-			
+			this.signature = this.userInfo.signature;
+
 			if (!this.isNull(gender)) {
 				// 判空，防止默认值被刷掉
 				this.gender = gender;
@@ -182,12 +179,18 @@
 				this.degree = this.degrees[degree];
 				this.degreeDB = degree; // 修改对数据库的默认值
 			}
-	
+
 			this.email = this.userInfo.email; // 改绑邮箱默认值
 		},
+		onUnload() {
+			if (this.needUpdateFlag) {
+				this.formSubmit();
+			}
 
+		},
 		methods: {
 			pickerChange(res) {
+				this.needUpdateFlag = true;
 				if (res.mode == 'major') {
 					this.major = res.newPickerValue;
 				} else if (res.mode == 'degree') {
@@ -199,7 +202,9 @@
 				this.formSubmit();
 			},
 			genderChanger(gender) {
+				this.needUpdateFlag = true;
 				this.gender = gender;
+				this.formSubmit();
 			},
 
 			toggleIsEditNickname() {
@@ -230,7 +235,7 @@
 				this.isEditGraduationYear = false;
 				this.isEditSignature = false;
 			},
-			toggleIsEditSignature(){
+			toggleIsEditSignature() {
 				this.isEditSignature = !this.isEditSignature;
 				this.isEditMajor = false;
 				this.isEditNickname = false;
@@ -255,7 +260,7 @@
 					});
 					this.signature = this.userInfo.signature;
 				}
-				
+
 				var data = {
 					id: this.userInfo.id,
 					nickname: this.nickname,
@@ -280,9 +285,10 @@
 							var user = res.data.data;
 							console.log(user);
 							var finalUser = this.myUser(user); // 分割邮箱地址, 重构 user
-							this.setGlobalUserInfo(finalUser); // 把用户信息写入缓存
-							this.userInfo = finalUser; // 更新页面用户数据
+							that.setGlobalUserInfo(finalUser); // 把用户信息写入缓存
+							that.userInfo = finalUser; // 更新页面用户数据
 							console.log(this.userInfo);
+							that.needUpdateFlag = false;
 						}
 					}
 				});
@@ -318,7 +324,7 @@
 			onCaptcha(event) {
 				this.captcha = event.target.value;
 			},
-			onSignature(event){
+			onSignature(event) {
 				this.signature = event.target.value;
 			},
 			getCaptcha() {
@@ -406,8 +412,8 @@
 					});
 				}
 			},
-			
-			showSignToast(){
+
+			showSignToast() {
 				uni.showToast({
 					title: 'Function under development.',
 					icon: 'none'
@@ -655,11 +661,11 @@
 		font-family: Source Han Sans CN;
 		color: rgba(177, 177, 177, 1);
 	}
-	
-	.line{
-		width:90px;
-		height:0px;
-		border:1px solid rgba(255,207,107,1);
+
+	.line {
+		width: 90px;
+		height: 0px;
+		border: 1px solid rgba(255, 207, 107, 1);
 	}
 </style>
 <style>

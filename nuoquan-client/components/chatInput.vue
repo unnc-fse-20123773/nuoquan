@@ -56,7 +56,7 @@
 
 <style>
 	.bottomBar {
-		position: fixed;
+		
 		display: flex;
 		align-items: center;
 		bottom: 0;

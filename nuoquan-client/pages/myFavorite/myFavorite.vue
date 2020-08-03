@@ -5,13 +5,13 @@
 		 :left-text="lang.back" :title="lang.myCollection" :height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
 
 		<view :style="{ height: this.getnavbarHeight().bottom + 5 + 'px' }" style="width: 100%;"></view>
+		<scroll-view scroll-y="true" class="scrollPage" :style="{ height: scrollHeight}">
 
 		<view class="swiperMenu">
 			<view class="swiperNormal" @tap="switchSwiper('article')">{{lang.article}}
 				{{ myArticleList.length }}</view>
 		</view>
 
-		<scroll-view scroll-y="true" class="scrollPage">
 			<view class="mainbody">
 				<collection-card v-for="article in myArticleList" :key="article.id" :thisArticle="article" :lang="lang"
 				 @modifySwipedId="receiveSwiped" :swipedArticleId="swipedArticleId" :userInfo="userInfo">
@@ -49,10 +49,12 @@
 
 				isNavHome: getApp().globalData.isNavHome, //判断导航栏左侧是否显示home按钮
 				swipedArticleId: "",
+				scrollHeight:"",
 			};
 		},
 
 		onLoad() {
+			var that = this;
 			var userInfo = this.getGlobalUserInfo();
 			console.log(userInfo);
 			if (this.isNull(userInfo)) {
@@ -70,6 +72,14 @@
 			this.showArticles(page);
 			uni.$on('refresh', () => {
 				this.showArticles(1);
+			});
+			
+			uni.getSystemInfo({
+				success: function(res) {
+					console.log(res);
+					that.scrollHeight = res.windowHeight - that.getnavbarHeight().bottom - 5 + 'px';
+					console.log(that.scrollHeight);
+				}
 			});
 		},
 

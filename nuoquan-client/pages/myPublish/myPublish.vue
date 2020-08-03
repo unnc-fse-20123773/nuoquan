@@ -5,35 +5,37 @@
 		 :left-text="lang.back" :title="lang.myPublish" :height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
 
 		<view :style="{ height: this.getnavbarHeight().bottom + 5 + 'px' }" style="width: 100%;"></view>
+		<scroll-view scroll-y="true" class="scrollPage" @scrolltolower="loadMore()" :style="{ height: scrollHeight}" style="pointer-events: auto;">
 
-		<view class="swiperMenu">
-			<view :class="[swiperViewing == 'article' ? 'swiperChoosen' : 'swiperNormal']" @tap="switchSwiper('article')">{{lang.article}}
-				{{ myArticleList.length }}</view>
-			<view :class="[swiperViewing == 'vote' ? 'swiperChoosen' : 'swiperNormal']" @tap="switchSwiper('vote')">{{lang.vote}}
-				{{ myVoteList.length }}
+			<view class="swiperMenu">
+				<view :class="[swiperViewing == 'article' ? 'swiperChoosen' : 'swiperNormal']" @tap="switchSwiper('article')">{{lang.article}}
+					{{ myArticleList.length }}</view>
+				<view :class="[swiperViewing == 'vote' ? 'swiperChoosen' : 'swiperNormal']" @tap="switchSwiper('vote')">{{lang.vote}}
+					{{ myVoteList.length }}
+				</view>
 			</view>
-		</view>
-		<swiper style="width:100%;height:100%;" :current-item-id="swiperViewing">
-			<swiper-item style="width: 100%;" item-id="article" @touchmove.stop>
-				<scroll-view scroll-y="true" class="scrollPage" @scrolltolower="loadMore()">
-					<view class="mainbody">
-						<view style="height:20px;width:100%;"></view>
-						<modify-article v-for="article in myArticleList" :key="article.id" :thisArticle="article" :lang="lang"
-						 @modifySwipedId="receiveSwiped" :messageIndex="messageIndex">
-						</modify-article>
-					</view>
-				</scroll-view>
-			</swiper-item>
-			<swiper-item style="width: 100%;" item-id="vote" @touchmove.stop >
-				<scroll-view scroll-y="true" class="scrollPage" @scrolltolower="loadMoreVote()">
-					<view class="mainbody">
-						<view style="height:20px;width:100%;"></view>
-						<modify-vote :lang="lang" v-for="vote in myVoteList" :key="vote.id" :vote="vote" 
-						 :messageIndex="messageIndex"></modify-vote>
-					</view>
-				</scroll-view>
-			</swiper-item>
-		</swiper>
+			<view>
+				<!-- <swiper style="width:100%;height:100%;" :current-item-id="swiperViewing" disable-touch="true" @touchmove.prevent="stopTouch">
+				<swiper-item style="width: 100%;" item-id="article" @touchmove.prevent="stopTouch"> -->
+				<view class="mainbody articleArea" v-show="swiperViewing == 'article'">
+					<view style="height:20px;width:100%;"></view>
+					<modify-article v-for="article in myArticleList" :key="article.id" :thisArticle="article" :lang="lang"
+					 @modifySwipedId="receiveSwiped" :messageIndex="messageIndex">
+					</modify-article>
+				</view>
+
+				<!-- </swiper-item>
+				<swiper-item style="width: 100%;" item-id="vote" @touchmove.prevent="stopTouch"> -->
+
+				<view class="mainbody voteArea" v-show="swiperViewing=='vote'">
+					<view style="height:20px;width:100%;"></view>
+					<modify-vote :lang="lang" v-for="vote in myVoteList" :key="vote.id" :vote="vote" :messageIndex="messageIndex"></modify-vote>
+				</view>
+
+				<!-- 				</swiper-item>-->
+				<!-- 			</swiper> -->
+			</view>
+		</scroll-view>
 	</view>
 </template>
 
@@ -66,19 +68,21 @@
 				currentPage: 1,
 				totalNum: '0',
 				myArticleList: [],
-				
+
 				totalPageVote: 1,
 				currentPageVote: 1,
 				totalNumVote: '0',
 				myVoteList: [],
-				
+
 				swiperViewing: 'article',
 				isNavHome: getApp().globalData.isNavHome, //判断导航栏左侧是否显示home按钮
 				messageIndex: "",
+				scrollHeight: "",
 			};
 		},
 
 		onLoad() {
+			var that = this;
 			var userInfo = this.getGlobalUserInfo();
 			console.log(userInfo);
 			if (this.isNull(userInfo)) {
@@ -98,9 +102,31 @@
 			uni.$on('refresh', () => {
 				this.showArticles(1);
 			});
+			console.log(this.getnavbarHeight());
+
+
+			//计算滚动部分高度
+			uni.getSystemInfo({
+				success: function(res) {
+					console.log(res);
+					that.scrollHeight = res.windowHeight - that.getnavbarHeight().bottom - 5 + 'px';
+					console.log(that.scrollHeight);
+				}
+			});
 		},
 
 		methods: {
+			stopTouch(e) {
+				console.log(e);
+				return false;
+			},
+			loadMore(mode) {
+				if (this.swiperViewing == 'article') {
+					this.loadMoreArticle();
+				} else if (this.swiperViewing == "vote") {
+					this.loadMoreVote();
+				}
+			},
 			// 锁
 			showArticles: function(page) {
 				if (loadArticleFlag) {
@@ -131,7 +157,7 @@
 					data: {
 						page: page,
 						userId: that.userInfo.id,
-						targetId: that.userInfo.id, 
+						targetId: that.userInfo.id,
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
@@ -162,7 +188,7 @@
 					}
 				});
 			},
-			loadMore: function() {
+			loadMoreArticle: function() {
 				var that = this;
 				var currentPage = that.currentPage;
 				var totalPage = that.totalPage;
@@ -191,13 +217,13 @@
 						page: 1,
 						userId: that.userInfo.id,
 						targetId: that.userInfo.id,
-						
+
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: res => {
-						
+
 						setTimeout(() => {
 							//延时加载
 							console.log(res);
@@ -302,7 +328,8 @@
 
 	.scrollPage {
 		width: 100%;
-		height: calc(100% - 28px);
+		/*height: calc(100% - 28px);*/
+		height: 100%;
 		background: #FFFFFF;
 	}
 
@@ -336,4 +363,5 @@
 		width: calc(100% - 26px);
 		margin: auto;
 	}
+
 </style>
