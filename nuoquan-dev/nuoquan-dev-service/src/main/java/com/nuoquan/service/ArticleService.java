@@ -30,6 +30,7 @@ public interface ArticleService {
 	/**
 	 * 分页查询全部发布的文章
 	 */
+	@Deprecated
 	public PagedResult getAllArticles(Integer page, Integer pageSize, String userId);
 	
 	/**
@@ -248,6 +249,7 @@ public interface ArticleService {
 	 * @param userId
 	 * @return
 	 */
+	@Deprecated
 	public PagedResult getAllSubscribedAuthorArticles(Integer page, Integer pageSize, String userId);
 
 
@@ -258,6 +260,7 @@ public interface ArticleService {
 	 * @param userId
 	 * @return
 	 */
+	@Deprecated
 	public PagedResult getAllSubscribedAuthorArticlesByPopularity(Integer page, Integer pageSize, String userId);
 
 
@@ -270,6 +273,7 @@ public interface ArticleService {
 	 * @param userId
 	 * @return
 	 */
+	@Deprecated
 	public PagedResult searchArticleByTag(Integer page, Integer pageSize, String searchText,
 			String userId);
 
@@ -282,6 +286,7 @@ public interface ArticleService {
 	 * @param userId
 	 * @return
 	 */
+	@Deprecated
 	public PagedResult searchArticleByTagPupolarityOrder(Integer page, Integer pageSize, String selectedTag,
 			String userId);
 
@@ -294,6 +299,7 @@ public interface ArticleService {
 	 * @param userId2 
 	 * @return
 	 */
+	@Deprecated
 	public PagedResult searchArticleByTagWithSubscribed(Integer page, Integer pageSize, String selectedTag, String userId2);
 
 
@@ -304,6 +310,7 @@ public interface ArticleService {
 	 * @param userId
 	 * @return
 	 */
+	@Deprecated
 	public PagedResult searchArticleByTagPupolarityOrderWithSubscribed(Integer page, Integer pageSize, String selectedTag, String userId);
 
 	/**
