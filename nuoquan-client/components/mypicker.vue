@@ -58,6 +58,10 @@ pickerIndex:  选项编号，用于控制显示哪一个选项
 		},
 		mounted() {
 			this.transferValueToIndex();
+			if(this.dataList[pickerIndex]==null || this.pickerIndex == null){
+				this.pickerIndex == 0;
+				console.log("picker value or pickerIndex == null, error");
+			};
 		},
 		methods: {
 			transferValueToIndex() {

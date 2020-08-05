@@ -19,6 +19,23 @@ const showModal = {
 		hideModal(state) {
 			console.log('hideModal');
 			state.show = false;
+			const defaultState = {
+				mode:'modal',  //mode = "toast/modal"
+					show:false,
+					title:"默认标题",
+					content:'',
+					duration:'1500',
+					showCancel:true,
+					cancelText:"取消",
+				//	cancelColor:"#000000",
+					confirmText:"确定",
+				//	confirmColor:"#576b95",
+				//	icon/image:null, not finished,
+					success:null,
+					fail:null,
+			}
+			state = Object.assign(state, defaultState);
+			console.log(state);
 		},
 		showModal(state, data) {
 			state.mode = 'modal',

@@ -180,6 +180,7 @@
 				this.tagColorList.push(tagColors[random_1]);
 				this.selectedTagColorList.push(tagColors[random_2]);
 			}
+
 		},
 		methods: {
 			checkDraft() {
@@ -225,6 +226,10 @@
 			},
 			cleanDraft() {
 				var that = this;
+				that.articleTitle = "";
+				that.articleContent = "";
+				that.selectedTags = "";
+				that.imageList = "";
 				uni.setStorage({
 					key: that.userInfo.id + ':draftArticle',
 					data: {
@@ -370,6 +375,7 @@
 			uploadSuccess() {
 				uploadFlag = false;
 				uni.hideLoading();
+				this.cleanDraft();
 				uni.$emit('flash'); // 给 index 发送刷新信号
 				uni.navigateBack({
 					delta: 1

@@ -187,6 +187,7 @@ export default {
 	border-radius: 8px;
 	margin-bottom: 20px;
 	z-index: 10;
+	pointer-events: auto;
 }
 
 .title {

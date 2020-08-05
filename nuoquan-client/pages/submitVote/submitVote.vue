@@ -136,6 +136,18 @@
 			var _this = this;
 			if (this.voteTitle != "" || this.voteContent != "" || this.imageList != "" || this.pickerValue != '3' || this.voteOptions[
 					0] != "" || this.voteOptions[1] != "" || (this.voteOptions.length > 2 && this.voteOptions[2] != "")) {
+						console.log(
+						
+						this.voteTitle, "@",
+						this.voteContent, "@",
+						this.imageList, "@",
+						this.pickerValue, "@",
+						this.voteOptions[0], "@",
+						this.voteOptions[1],  "@",
+						this.voteOptions.length, "@",
+						this.voteOptions[2],"@",
+						);
+						debugger;
 				uni.setStorage({
 					key: _this.userInfo.id + ':draftVote',
 					data: {
@@ -166,7 +178,7 @@
 						if (dft.data.status) {
 							console.log(dft);
 							that.$store.commit('showModal', {
-								title: that.lang.postDraftModal,
+								title: that.lang.voteDraftModal,
 								confirmText: that.lang.yes,
 								cancelText: that.lang.no,
 								success: function(res) {
@@ -188,8 +200,6 @@
 					key: that.userInfo.id + ':draftVote',
 					success: function(dft) {
 						that.voteTitle = dft.data.voteTitle;
-						console.log(dft.data.voteTitle);
-						console.log(that.voteTitle);
 						that.voteContent = dft.data.voteContent;
 						that.pickerValue = dft.data.votePeriod;
 						that.voteOptions = dft.data.voteOptions;
@@ -205,6 +215,12 @@
 			},
 			cleanDraft() {
 				var that = this;
+				
+				that.voteTitle = "";
+				that.voteContent = "";
+				that.pickerValue = "3";
+				that.voteOptions = ["", ""],
+				that.imageList = "";
 				uni.setStorage({
 					key: that.userInfo.id + ':draftVote',
 					data: {
@@ -421,6 +437,7 @@
 			uploadSuccess() {
 				uploadFlag = false;
 				uni.hideLoading();
+				this.cleanDraft();
 				uni.$emit('flash'); // 给 index 发送刷新信号
 				uni.navigateBack({
 					delta: 1
