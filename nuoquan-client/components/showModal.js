@@ -40,7 +40,7 @@ const showModal = {
 		showModal(state, data) {
 			state.mode = 'modal',
 			console.log('showModal function triggered');
-			state = Object.assign(state, data)
+			state = Object.assign(state, data);
 			state.show = true;
 			console.log(state);
 		},
@@ -52,6 +52,7 @@ const showModal = {
 			console.log(state);
 		},
 		showLoading(state,data){
+			state.mode = 'loading';
 			state.show = true;
 		},
 		success(state, res) {

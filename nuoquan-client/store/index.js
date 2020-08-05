@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import userUtil from '../common/userUtil.js'
 import showModal from '../components/showModal.js'		//全局弹窗模块
+import request from '../components/request-API.js'
 
 Vue.use(Vuex)
 
@@ -116,6 +117,7 @@ const store = new Vuex.Store({
 	},
 	modules:{
 		showModal:showModal,	//全局弹窗模块
+		request:request,
 	},
 })
 

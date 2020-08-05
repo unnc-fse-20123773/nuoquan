@@ -86,6 +86,9 @@
         },{
 		    "path" : "pages/myCollection/myCollection",
 		    "style" : {}
+		},{
+		    "path" : "pages/test/test",
+		    "style" : {}
 		}
     ],
 
