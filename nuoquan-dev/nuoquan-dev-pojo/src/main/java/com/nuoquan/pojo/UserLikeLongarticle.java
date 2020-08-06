@@ -3,9 +3,8 @@ package com.nuoquan.pojo;
 import java.util.Date;
 import javax.persistence.*;
 
-@Table(name = "user_collect_article")
-public class UserCollectArticle {
-    @Id
+@Table(name = "user_like_longarticle")
+public class UserLikeLongarticle {
     private String id;
 
     @Column(name = "user_id")
@@ -18,7 +17,7 @@ public class UserCollectArticle {
     private Date createDate;
 
     /**
-     * 消息是否被签收\\n 0: 未签收 1：签收
+     * 点赞消息是否被签收\\n 0: 未签收 1：签收
      */
     @Column(name = "sign_flag")
     private Integer signFlag;
@@ -80,18 +79,18 @@ public class UserCollectArticle {
     }
 
     /**
-     * 获取消息是否被签收\\n 0: 未签收 1：签收
+     * 获取点赞消息是否被签收\\n 0: 未签收 1：签收
      *
-     * @return sign_flag - 消息是否被签收\\n 0: 未签收 1：签收
+     * @return sign_flag - 点赞消息是否被签收\\n 0: 未签收 1：签收
      */
     public Integer getSignFlag() {
         return signFlag;
     }
 
     /**
-     * 设置消息是否被签收\\n 0: 未签收 1：签收
+     * 设置点赞消息是否被签收\\n 0: 未签收 1：签收
      *
-     * @param signFlag 消息是否被签收\\n 0: 未签收 1：签收
+     * @param signFlag 点赞消息是否被签收\\n 0: 未签收 1：签收
      */
     public void setSignFlag(Integer signFlag) {
         this.signFlag = signFlag;

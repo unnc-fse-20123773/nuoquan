@@ -19,7 +19,7 @@ import com.nuoquan.pojo.AdminRole;
 import com.nuoquan.pojo.AdminUser;
 import com.nuoquan.pojo.AdminUserRole;
 import com.nuoquan.pojo.admin.Tablepar;
-import com.nuoquan.pojo.vo.AdminRoleVo;
+import com.nuoquan.pojo.vo.AdminRoleVO;
 import com.nuoquan.support.Convert;
 import com.nuoquan.utils.PagedResult;
 import com.nuoquan.utils.StringUtils;
@@ -157,8 +157,8 @@ public class AdminUserService {
 	 * @return
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public List<AdminRoleVo> getUserIsRole(String userid) {
-		List<AdminRoleVo> list = new ArrayList<AdminRoleVo>();
+	public List<AdminRoleVO> getUserIsRole(String userid) {
+		List<AdminRoleVO> list = new ArrayList<AdminRoleVO>();
 		// 查询出我的权限
 		List<AdminRole> myRoles = adminRoleMapper.queryAdminUserRoles(userid);
 		Example tsysRoleExample = new Example(AdminRole.class);
@@ -167,7 +167,7 @@ public class AdminUserService {
 		if (StringUtils.isNotEmpty(tsysRoles)) {
 			for (AdminRole tsysRole : tsysRoles) {
 				Boolean isflag = false;
-				AdminRoleVo roleVo = new AdminRoleVo(tsysRole.getId(), tsysRole.getName(), isflag);
+				AdminRoleVO roleVo = new AdminRoleVO(tsysRole.getId(), tsysRole.getName(), isflag);
 				for (AdminRole myRole : myRoles) {
 					if (tsysRole.getId().equals(myRole.getId())) {
 						isflag = true;

@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Test;
 import org.n3r.idworker.Sid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -1175,11 +1174,6 @@ public class ArticleServiceImpl implements ArticleService {
 		PageHelper.startPage(page, pageSize);
 		return queryArticleByExample(articleExample, userId);
 		
-	}
-	
-	@Deprecated
-	public PagedResult queryArticle(Integer page, Integer pageSize, Integer queryType, Integer orderType, String userId, String selectedTag) {
-		return null;
 	}
 
 }

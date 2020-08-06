@@ -10,7 +10,6 @@ import com.nuoquan.pojo.UserLikeArticle;
 import com.nuoquan.pojo.UserLikeComment;
 import com.nuoquan.pojo.vo.ArticleVO;
 import com.nuoquan.pojo.vo.UserArticleCommentVO;
-import com.nuoquan.pojo.vo.UserLikeVO;
 import com.nuoquan.utils.PagedResult;
 
 public interface ArticleService {
@@ -201,14 +200,15 @@ public interface ArticleService {
 	 * Set the status to unreadable
 	 * @param articleId
 	 */
+	@Deprecated
 	public void fDeleteArticle(String articleId);
-	
+	@Deprecated
 	public void banArticle(String articleId);
-	
+	@Deprecated
 	public void passArticle(String articleId);
-	
+	@Deprecated
 	public void banComment(String commentId);
-	
+	@Deprecated
 	public void passComment(String commentId);
 	
 	/**
@@ -238,9 +238,9 @@ public interface ArticleService {
 
 	/**
 	 * 修改文章状态(可批量)
+	 * 0 = unreadable, 1 = readable, 2 = checking
 	 */
 	public int updateArticleStatus(String articleIds, int status);
-
 
 	/**
 	 * 请求所有关注的人的文章
@@ -323,19 +323,7 @@ public interface ArticleService {
 	 * @return
 	 */
 	public PagedResult queryArticle(Integer page, Integer pageSize, Integer queryType, String userId, String selectedTag);
-
-	/**
-	 * queryArticle接口的旧方法，弃用
-	 * @param page
-	 * @param pageSize
-	 * @param queryType
-	 * @param orderType
-	 * @param userId
-	 * @param selectedTag
-	 * @return
-	 */
-	@Deprecated
-	public PagedResult queryArticle(Integer page, Integer pageSize, Integer queryType, Integer orderType, String userId, String selectedTag);
+	
 //	/**
 //	 * 通过热度查询评论主
 //	 * @param page

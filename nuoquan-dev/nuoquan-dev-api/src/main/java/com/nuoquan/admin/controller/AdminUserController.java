@@ -17,7 +17,7 @@ import com.nuoquan.controller.BasicController;
 import com.nuoquan.pojo.AdminRole;
 import com.nuoquan.pojo.AdminUser;
 import com.nuoquan.pojo.admin.Tablepar;
-import com.nuoquan.pojo.vo.AdminRoleVo;
+import com.nuoquan.pojo.vo.AdminRoleVO;
 import com.nuoquan.pojo.vo.TitleVo;
 import com.nuoquan.service.AdminRoleService;
 import com.nuoquan.service.AdminUserService;
@@ -165,7 +165,7 @@ public class AdminUserController extends BasicController {
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") String id, ModelMap mmap) {
 		// 查询所有角色
-		List<AdminRoleVo> roleVos = adminUserService.getUserIsRole(id);
+		List<AdminRoleVO> roleVos = adminUserService.getUserIsRole(id);
 		mmap.put("roleVos", roleVos);
 		mmap.put("TsysUser", adminUserService.selectByPrimaryKey(id));
 
