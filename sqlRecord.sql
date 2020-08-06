@@ -733,3 +733,73 @@ add signature varchar(55) DEFAULT NULL COMMENT '个人简介' after nickname;
 -- v20.6.28 @author: wangyu
 -- 在USER表 添加signature列（个性签名）
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+
+CREATE TABLE `longarticle` (
+  `id` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `title` varchar(45) NOT NULL,
+  `sub_title` varchar(45) NOT NULL,
+  `user_id` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `original` int(11) NOT NULL DEFAULT '0' COMMENT '是否原创，0=原创，1=非原创',
+  `tags` varchar(128) DEFAULT NULL COMMENT '保留字段',
+  `content` text NOT NULL,
+  `like_num` int(11) NOT NULL DEFAULT '0',
+  `dislike_num` int(11) NOT NULL DEFAULT '0',
+  `comment_num` int(11) NOT NULL DEFAULT '0',
+  `collect_num` int(11) NOT NULL DEFAULT '0',
+  `popularity` int(11) NOT NULL DEFAULT '0',
+  `status` int(11) NOT NULL DEFAULT '1' COMMENT '0 = unreadable, 1 = readable, 2 = checking',
+  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `is_anonymous` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0 = not anonymous, 1 = anonymous',
+  `view_num` int(11) NOT NULL DEFAULT '0' COMMENT '浏览量',
+  `source` int(11) NOT NULL DEFAULT '0' COMMENT '内容来源',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE `user_like_longarticle` (
+  `id` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `user_id` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `article_id` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `sign_flag` int(11) DEFAULT '0' COMMENT '点赞消息是否被签收\\\\n 0: 未签收 1：签收',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ulla` (`user_id`,`article_id`) USING BTREE,
+  KEY `ulla_idx` (`article_id`),
+  CONSTRAINT `ulla_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `ulla_article_id` FOREIGN KEY (`article_id`) REFERENCES `longarticle` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `longarticle_comment` (
+  `id` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `from_user_id` varchar(45) CHARACTER SET utf8 NOT NULL COMMENT '评论人',
+  `to_user_id` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `father_comment_id` varchar(45) CHARACTER SET utf8 DEFAULT NULL COMMENT '复式评论，父评论，子评论无 article_id',
+  `article_id` varchar(45) CHARACTER SET utf8 DEFAULT NULL,
+  `comment` varchar(255) NOT NULL,
+  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `like_num` int(11) NOT NULL DEFAULT '0',
+  `dislike_num` int(11) NOT NULL DEFAULT '0',
+  `comment_num` int(11) NOT NULL DEFAULT '0',
+  `under_comment_id` varchar(45) CHARACTER SET utf8 DEFAULT NULL,
+  `sign_flag` int(11) DEFAULT '0' COMMENT '评论消息是否被签收 0: 未签收 1：签收',
+  `status` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `user_article_comment_idx` (`article_id`),
+  CONSTRAINT `longarticle_comment` FOREIGN KEY (`article_id`) REFERENCES `longarticle` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+ALTER TABLE `nuoquan`.`user_like_comment` 
+COMMENT = '用户点赞短文章的评论' ;
+
+CREATE TABLE `user_like_comment_longarticle` (
+  `id` varchar(45) NOT NULL,
+  `user_id` varchar(45) NOT NULL COMMENT '点赞人',
+  `comment_id` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `sign_flag` int(11) NOT NULL DEFAULT '0' COMMENT '点赞消息是否被签收\\n 0: 未签收 1：签收',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_comment_rel` (`user_id`,`comment_id`),
+  KEY `ulcla_idx` (`comment_id`),
+  CONSTRAINT `ulcla` FOREIGN KEY (`comment_id`) REFERENCES `longarticle_comment` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户点赞长文章的评论';
+  
