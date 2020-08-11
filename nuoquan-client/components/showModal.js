@@ -1,26 +1,28 @@
 const showModal = {
 	state:{
-		mode:'modal',  //mode = "toast/modal"
+		mode:'default',  //mode = "toast/modal"
 		show:false,
-		title:"默认标题",
-		content:'',
 		duration:'1500',
-		showCancel:true,
+		
+		image:null, 
+		title:"",
+		content:'',
 		cancelText:"取消",
-	//	cancelColor:"#000000",
 		confirmText:"确定",
+		
+	//	cancelColor:"#000000",
 	//	confirmColor:"#576b95",
-	//	icon/image:null, not finished,
+		
 		success:null,
 		fail:null,
 	},
 
 	mutations: {
-		hideModal(state) {
-			console.log('hideModal');
+		hideLoading(state) {
+			console.log('hideLoading');
 			state.show = false;
 			const defaultState = {
-				mode:'modal',  //mode = "toast/modal"
+				mode:'modal',  //mode = "toast/modal/loading"
 					show:false,
 					title:"默认标题",
 					content:'',
@@ -30,7 +32,7 @@ const showModal = {
 				//	cancelColor:"#000000",
 					confirmText:"确定",
 				//	confirmColor:"#576b95",
-				//	icon/image:null, not finished,
+					image:null, 
 					success:null,
 					fail:null,
 			}
@@ -53,8 +55,10 @@ const showModal = {
 		},
 		showLoading(state,data){
 			state.mode = 'loading';
+			state.image = true;
 			state.show = true;
 		},
+		
 		success(state, res) {
 			let cb = state.success
 			let resObj = {

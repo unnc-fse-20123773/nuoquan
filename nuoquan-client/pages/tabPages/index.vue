@@ -158,16 +158,6 @@
 				}, 5000); // 延时5s timeout
 
 				var that = this;
-				var a = {
-						page: 1,
-						// pageSize: '',
-						userId: "oDwsO5DwqW67LTc-DIP7J-EiSHjg",
-						queryType: 0,
-						orderType: 0,
-						selectedTag: "",
-					};
-					console.log(a);
-					debugger;
 				uni.request({
 					url: that.$serverUrl + '/article/queryArticles',
 					method: 'POST',

@@ -2,11 +2,11 @@
 	<view v-show="show" style="width: 0;height: 0;">
 		<view class="container"  @touchmove.stop.prevent="">
 			<view class="modalBox" @click="closeModal" @touchmove.stop.prevent="">
-				<!-- 			<image class="pic" v-if="modalPic" :src="modalPic"></image> -->
+				<image class="pic" v-if="image" mode="aspectFit" src="../../static/loadingGiff.jpg"></image>
 				<view class="modal-title" v-show="title">{{title}}</view>
 				<view class="modal-content">{{content}}</view>
-				<view class="modal-menu" v-show="mode == 'modal'">
-					<view class="cancle" v-show="showCancel" @click.stop="clickBtn('cancel')">{{cancelText}}</view>
+				<view class="modal-menu" v-if=" mode=='modal' ">
+					<view class="cancle" @click.stop="clickBtn('cancel')">{{cancelText}}</view>
 					<view class="confirm" @click.stop="clickBtn('confirm')">{{confirmText}}</view>
 				</view>
 			</view>
@@ -29,35 +29,32 @@
 				console.log(this.$store.state.showModal.show);
 				return this.$store.state.showModal.show;
 			},
+			duration() {
+				return this.$store.state.showModal.duration;
+			},
+			
+			image(){
+				return this.$store.state.showModal.image;
+			},
 			title() {
 				return this.$store.state.showModal.title;
 			},
 			content() {
 				return this.$store.state.showModal.content;
 			},
-			showCancel() {
-				return this.$store.state.showModal.showCancel;
-			},
 			cancelText() {
 				return this.$store.state.showModal.cancelText;
 			},
-			// cancelColor() {
-			// 	return "color:" + this.$store.state.showModal.cancelColor;
-			// },
 			confirmText() {
 				return this.$store.state.showModal.confirmText;
 			},
-			// confirmColor() {
-			// 	return "color:" + this.$store.state.confirmColor;
-			// },
-			duration() {
-				return this.$store.state.showModal.duration;
-			}
+
+			
 		},
 
 		methods: {
 			closeModal() {
-				this.$store.commit('hideModal')
+				this.$store.commit('hideLoading')
 			},
 			clickBtn(res) {
 				if (res == 'confirm') {
@@ -65,11 +62,11 @@
 				} else if (res == 'cancle') {
 					this.$store.commit('fail', res)
 				}
-				this.$store.commit('hideModal')
+				this.$store.commit('hideLoading')
 			}
 		},
 		beforeDestroy() {
-			this.$store.commit('hideModal')
+			this.$store.commit('hideLoading')
 		},
 		watch: {
 			show(newValue, oldValue) {
@@ -79,9 +76,8 @@
 					if (this.$store.state.showModal.mode == 'toast') {
 						console.log("mode == toast, timing");
 						console.log(that.duration);
-						debugger;
 						setTimeout(function() {
-							that.$store.commit('hideModal')
+							that.$store.commit('hideLoading')
 						}, that.duration);
 					}
 				}
@@ -95,7 +91,7 @@
 				console.log("mode == toast, timing");
 				console.log(that.duration)
 				setTimeout(function() {
-					that.$store.commit('hideModal')
+					that.$store.commit('hideLoading')
 				}, that.duration);
 			}
 		}
@@ -126,9 +122,9 @@
 
 	.pic {
 		display: block;
-		margin: 36px auto 0;
+		margin: 36px auto 36px;
 		width: 280upx;
-		heihgt: 280upx;
+		height: 280upx;
 	}
 
 	.modal-title {

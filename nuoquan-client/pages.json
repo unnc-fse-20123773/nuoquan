@@ -31,9 +31,6 @@
 			"path": "pages/search/search",
 			"style": {}
 		}, {
-			"path": "pages/black-index/black-index",
-			"style": {}
-		}, {
 			"path": "pages/signin/signin",
 			"style": {}
 		}, {

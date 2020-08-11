@@ -6,7 +6,7 @@ const request = {
 			getQrcodeUnlimit:			'/wechat/getQrcodeUnlimit',
 			userLikeArticle:			'/article/userLikeArticle',
 			userUnLikeArticle:			'/article/userUnLikeArticle',
-			queryAllArticles:			'/article/queryAllArticles',
+			queryAllArticles:			'/queryAllArticles',
 			getArticleSubComments:		'/article/getSubComments',
 			getVoteSubComments:			'/vote/getSubComments',
 			saveComment:				'/article/saveComment',
@@ -67,11 +67,11 @@ const request = {
 		request(context, payload) {
 			console.log(context);
 			console.log(payload);
-			context.commit('showLoading');
+			//context.commit('showLoading');
 			console.log('in API action'),
 			console.log(payload),
 			uni.request({
-				url: 'https://www.checkchack.cn:8443/nottinghome' + context.state.API[payload.mode],
+				url: 'https://www.checkchack.cn:8443/nottinghome/article/queryArticles',
 				method: 'POST',
 				data:payload.data,
 				header: {
@@ -82,7 +82,8 @@ const request = {
 						
 						//context.commit('hideModal');
 						payload.success(res.data.data.rows);
-
+						payload.returnaddress = res.data.data.rows;
+						debugger;
 					}else{
 						console.log('request error, code ' + res.data.status);
 					}

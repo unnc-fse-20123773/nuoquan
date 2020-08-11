@@ -44,7 +44,11 @@ try {
 } catch (e) {
 	// error
 }
-
+function initialRequest(){
+	// updateLoginTime
+	// getUserInfo
+	
+}
 
 const store = new Vuex.Store({
 
@@ -121,4 +125,5 @@ const store = new Vuex.Store({
 	},
 })
 
-export default store
+export default store;
+

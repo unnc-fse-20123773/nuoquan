@@ -1,40 +1,10 @@
 <!-- TODO: 取消添加图片, 标签输入不能含有特殊字符，颜色变化 -->
 <template>
-	<view class="submitMain">
-		<!-- 导航栏 -->
-		<view :style="{ height: navbarHeight + 'px' }"></view>
-		<!-- 当失去焦点时，将输入内容存入articleTitle -->
-		<view style="position: relative;margin-top: 20px;">
-			<input class="title" v-model="articleTitle" :placeholder="lang.addTitle" :maxlength="maxTitleLength"
-			 placeholder-class="title-placeholder" />
-			<view class="titleTextLeft">{{ maxTitleLength - articleTitle.length }}</view>
-		</view>
-
-
-		<view style="position: relative;">
-			<textarea class="content" v-model="articleContent" :maxlength="maxContentLength" :auto-height="true"
-			 :show-confirm-bar="false"></textarea>
-
-			<view style="position: absolute;bottom: 8px;right:8px;font-size: 11px;color:#888888;">{{ maxContentLength - articleContent.length }}</view>
-			<image src="../../static/icon/emoji.png" style="position: absolute;left:12px;top:8px;width:20px;height:20px;" @click="showToast()"></image>
-		</view>
-
-		<view class="picturearea">
-			<block v-for="(image, index) in imageList" :key="index">
-				<view style="position: relative;">
-					<!-- todo 预览图片缩放 -->
-					<image :src="image" :data-src="image" @tap="previewImage" mode="aspectFill"></image>
-					<view style="width:15px;height: 15px;font-size: 10px;line-height: 15px;border-bottom-left-radius: 3px;background: rgba(166, 169, 168,0.3);color:#FFFFFF;position: absolute;top:6px;right:0;text-align: center;"
-					 @click="deleteImg(index)">
-						✕
-					</view>
-				</view>
-			</block>
-			<plusSquare v-if="imageList.length < 9" @plusClicked="chooseImg"></plusSquare>
-			<view v-if="imageList.length == 1 || imageList.length == 4 || imageList.length == 7" style="width: 190upx;height: 190upx;margin: 6px 0;"></view>
-		</view>
-		<button class="submit-button" @tap="upload()">{{ lang.submit }}</button>
-		<!-- 		<pop-modal v-if="draftPopModal" :modalText="modalText" @modalRes="modalRes"></pop-modal> -->
+	<view>
+		<view>{{dataList.length}}</view>
+		<view style="width:50px;height:50px;background: #007AFF;" @click="load(2)">+1</view>
+		<view>{{testdata}}</view>
+		<view v-for="(i, index) in dataList" :key="index">{{i.title}}</view>
 		<modal></modal>
 	</view>
 </template>
@@ -78,103 +48,34 @@
 		},
 		data() {
 			return {
-				userInfo: '',
-				articleTitle: '',
-				articleContent: '',
-				maxTitleLength: 20,
-				maxContentLength: 999,
-				articleTag: '',
-				imgPath: '',
-				showInputTagArea: 0,
-				showAddTagButton: 1,
-				showTagArea: 0,
-				editingTag: false,
+				testdata: "默认",
+				dataList: [],
 
-				tagList: [],
-				tagColorList: [], // 储存每个备选tag的颜色
-				selectedTags: [],
-				selectedTagColorList: [], // 储存每个已选tag的颜色
-
-				finalTag: '',
-				tagIndex: 0,
-
-				imageList: [],
-				sourceTypeIndex: 2,
-				sourceType: ['拍照', '相册', '拍照或相册'],
-				sizeTypeIndex: 0,
-				sizeType: ['压缩', '原图', '压缩或原图'],
-				countIndex: 8,
-				count: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-				windowHeight: 0,
-				isNavHome: getApp().globalData.isNavHome, //判断导航栏左侧是否显示home按钮
-				navbarHeight: 0, //一次性储存 navbarheight
 
 			};
 		},
 		onLoad() {
-			
-			this.$store.dispatch('request',{
-				data: {
-					page: 1,
-					userId: "oDwsO5DwqW67LTc-DIP7J-EiSHjg",
-					queryType: 0,
-					orderType: 0,
-					selectedTag: "",
-				},
-				success: function(res) {
-					console.log('in test success, 成功了111111111');
-					console.log(res);
-				},
-			});
-			this.$store.dispatch('request',{
-				data: {
-					page: 2,
-					userId: "oDwsO5DwqW67LTc-DIP7J-EiSHjg",
-					queryType: 0,
-					orderType: 0,
-					selectedTag: "",
-				},
-				success: function(res) {
-					console.log('in test success, 成功了2222222222');
-					console.log(res);
-				},
-			});
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			// 一次性储存 navbar 高度
-			this.navbarHeight = this.getnavbarHeight().bottom + 5;
-
-			this.userInfo = this.getGlobalUserInfo();
-			// 获取屏幕高度
 			var that = this;
-			uni.getSystemInfo({
-				success: function(res) {
-					that.windowHeight = res.windowHeight;
-				}
-			});
-
-			this.getTagsList();
-			this.checkDraft();
-
-			// 随机生成颜色
-			var tagColors = this.tagColors;
-			for (var i = 0; i < 6; i++) {
-				var random_1 = Math.floor(Math.random() * tagColors.length);
-				var random_2 = Math.floor(Math.random() * tagColors.length);
-				// 0~tagColors.length-1
-				this.tagColorList.push(tagColors[random_1]);
-				this.selectedTagColorList.push(tagColors[random_2]);
-			}
-
+			this.load(1);
 		},
 		methods: {
+			load(page) {
+				var that = this;
+				this.$store.dispatch('request', {
+					mode:'queryArticles',
+					data: {
+						page: page,
+						userId: "oDwsO5DwqW67LTc-DIP7J-EiSHjg",
+						queryType: 0,
+						orderType: 0,
+						selectedTag: "",
+					},
+					success: function(res) {
+						console.log('in test success, 成功了111111111');
+						console.log(res);
+					},
+				});
+			},
 			checkDraft() {
 				var that = this;
 				uni.getStorage({
