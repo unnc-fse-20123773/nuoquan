@@ -21,7 +21,7 @@
 				</view>
 				<view class="gender">
 					<view class="text">{{lang.gender}}</view>
-					<view class="second_line" @click="toggleIsEditGender" v-if="!isEditGender">{{ lang.genderList[gender] }}</view>
+					<view class="second_line" @click="toggleIsEditGender" v-if="!isEditGender">{{ genderList[gender] }}</view>
 					<view @tap="formSubmit" v-if="isEditGender" style="width:100px;display: flex;justify-content: space-between;position: relative;left:-6px;height:34px;">
 						<view :class="[gender == 1 ? 'genderPicker-buttonclick' : 'genderPicker-button']" @click="genderChanger(1)">{{lang.male}}</view>
 						<view :class="[gender == 0 ? 'genderPicker-buttonclick' : 'genderPicker-button']" @click="genderChanger(0)">{{lang.female}}</view>
@@ -112,7 +112,8 @@
 				degreePickerVal: [],
 
 				nickname: "",
-				gender: "",
+				gender: "2",
+				genderList:[],
 				year: years[0], // 默认值
 				major: majors[0],
 				degree: degrees[1],
@@ -160,27 +161,27 @@
 			var degree = this.userInfo.degree;
 			this.signature = this.userInfo.signature;
 
-			if (!this.isNull(gender)) {
+			if (gender != null ) {
 				// 判空，防止默认值被刷掉
 				this.gender = gender;
 			} else {
 				this.gender = 2;
 			}
-
-			if (!this.isNull(year)) {
+			if (year != null) {
 				this.year = year;
 			}
 
-			if (!this.isNull(major)) {
+			if (major != null) {
 				this.major = major;
 			}
 
-			if (!this.isNull(degree)) {
+			if (degree != null) {
 				this.degree = this.degrees[degree];
 				this.degreeDB = degree; // 修改对数据库的默认值
 			}
 
 			this.email = this.userInfo.email; // 改绑邮箱默认值
+			
 		},
 		onUnload() {
 			if (this.needUpdateFlag) {

@@ -6,7 +6,7 @@ const request = {
 			getQrcodeUnlimit:			'/wechat/getQrcodeUnlimit',
 			userLikeArticle:			'/article/userLikeArticle',
 			userUnLikeArticle:			'/article/userUnLikeArticle',
-			queryAllArticles:			'/article/queryAllArticles',
+			queryArticles:				'/article/queryArticles',
 			getArticleSubComments:		'/article/getSubComments',
 			getVoteSubComments:			'/vote/getSubComments',
 			saveComment:				'/article/saveComment',
@@ -25,6 +25,7 @@ const request = {
 			follow:						'/user/follow',
 			dontFollow:					'/user/dontFollow',
 			queryFansAndFollow:			'/user/queryFansAndFollow',
+			queryUserWithFollow:		'/user/queryUserWithFollow',
 			//hot
 			getHotTop10:				'/article/getHotTop10',
 			// myCollection
@@ -34,9 +35,6 @@ const request = {
 			//myPublish
 			queryPublishHistory:		'/article/queryPublishHistory',
 			queryPublishedVoteHistory:	'/vote/queryPublishedVoteHistory',
-			// personPublic
-			follow:						'/user/follow',
-			queryUserWithFollow:		'/user/queryUserWithFollow',
 			// profile
 			updateUser:					'/user/updateUser',
 			getCode:					'/user/getCode',
@@ -55,8 +53,6 @@ const request = {
 			 // mine
 			queryUser:					'/user/queryUser',
 			 // index
-			queryArticles:				'/article/queryArticles',
-			queryUser:					'/user/queryUser',
 			updateLatestLoginTime:		'/user/updateLatestLoginTime',
 			getTagsList:				'/article/getTagsList',
 			 // votePage 相关没有加入
@@ -80,8 +76,9 @@ const request = {
 				success: res => {
 					if(res.data.status == 200){
 						
-						//context.commit('hideModal');
+						
 						payload.success(res.data.data.rows);
+						context.commit('hideLoading');
 
 					}else{
 						console.log('request error, code ' + res.data.status);
