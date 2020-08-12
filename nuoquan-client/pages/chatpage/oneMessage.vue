@@ -114,7 +114,7 @@
 	.send .content {
 		display: inline-flex;
 		flex-direction: column;
-		width: 428upx;
+		max-width: 428upx;
 		background: #FCCB2E;
 		border-radius: 8pt 8pt 0pt 8pt;
 		margin-right: 80upx;
@@ -144,7 +144,7 @@
 	}
 
 	.contentText-send {
-		width: 100%;
+		
 		font-size: 12px;
 		color: white;
 		word-break: break-all;
@@ -163,7 +163,7 @@
 	.recieve .content {
 		display: inline-flex;
 		flex-direction: column;
-		width: 428upx;
+		max-width: 428upx;
 		background: #FFF4DE;
 		border-radius: 0pt 8pt 8pt 8pt;
 		margin-top: 30upx;
@@ -185,7 +185,7 @@
 	}
 
 	.contentText-recieve {
-		width: 400upx;
+		max-width: 400upx;
 		font-size: 12px;
 		word-break: break-all;
 		white-space: pre-line;
