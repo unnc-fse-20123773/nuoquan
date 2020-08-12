@@ -115,7 +115,7 @@
 		display: inline-flex;
 		flex-direction: column;
 		max-width: 428upx;
-		background: #FCCB2E;
+		background: rgba(254,240,231,1);
 		border-radius: 8pt 8pt 0pt 8pt;
 		margin-right: 80upx;
 		margin-bottom: 30upx;
@@ -129,8 +129,8 @@
 		height: 18px;
 		line-height: 18px;
 		max-width: 100px;
-		color: white;
 		margin-right: 6px;
+		color: #939393;
 	}
 
 	.status-send {
@@ -146,7 +146,6 @@
 	.contentText-send {
 		
 		font-size: 12px;
-		color: white;
 		word-break: break-all;
 		white-space: pre-line;
 	}

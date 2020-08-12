@@ -4,7 +4,7 @@
 
 -- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 -- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
--- 为了方便大家按顺序复制执行代码，v20.2.1之后的更新将 append 在本文
+-- 为了方便大家按顺序复制执行代码，20.2.1之后的更新将 append 在本文
 -- 档尾部。文档记录风格：
 -- 
 -- <SQL的更新语句>
@@ -200,7 +200,7 @@ UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
--- v20.2.2 @author: deyan
+-- 20.2.2 @author: deyan
 -- 投票相关数据表及数据添加
 -- PS：本次数据库更新代码较长，请仔细复制避免漏行
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
@@ -397,7 +397,7 @@ INSERT INTO `admin_user_role` VALUES ('0','0','0'),('200207GF0RC8GYNC','1','1'),
 UNLOCK TABLES;
 
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
--- v20.2.13 @author: jerio
+-- 20.2.13 @author: jerio
 -- 后台管理相关数据表更新
 -- PS: 本次数据库更新代码较长，请仔细复制不用漏行
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
@@ -406,7 +406,7 @@ ALTER TABLE `nuoquan`.`user`
 ADD COLUMN `reputation` INT NULL DEFAULT 0 AFTER `cid`;
 
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
--- v20.2.19 @author: jerio
+-- 20.2.19 @author: jerio
 -- 为用户添加影响力
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
@@ -432,7 +432,7 @@ UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
--- v20.2.21 @author: jerrio
+-- 20.2.21 @author: jerrio
 -- 添加标签表
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
@@ -440,7 +440,7 @@ ALTER TABLE `nuoquan`.`vote_user`
 ADD UNIQUE INDEX `user_option_rel` (`user_id` ASC, `option_id` ASC);
 
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
--- v20.3.7 @author: jerrio
+-- 20.3.7 @author: jerrio
 -- 添加user_option_rel关系
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
@@ -455,7 +455,7 @@ ADD COLUMN `image_order` INT NOT NULL AFTER `image_path`;
 
 
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
--- v20.3.12 @author: deyan
+-- 20.3.12 @author: deyan
 -- 将vote中的vote_content和vote_option中的option_content改为utf8mb4
 -- 为article_image表添加image_order属性
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
@@ -469,7 +469,7 @@ ADD COLUMN `image_order` INT NOT NULL AFTER `image_path`;
 
 
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
--- v20.3.12 @author: deyan
+-- 20.3.12 @author: deyan
 -- 为user表添加last_login属性, 用来储存用户 最近的 登录时间
 -- 为vote_image表添加image_order属性
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
@@ -701,7 +701,7 @@ ADD CONSTRAINT `vote_user`
   ON UPDATE CASCADE;
 
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
--- v20.3.23 @author: Jerrio
+-- 20.3.23 @author: Jerrio
 -- 添加部分外键
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
@@ -722,7 +722,7 @@ ALTER TABLE `nuoquan`.`article`
 ADD COLUMN `collect_num` INT NOT NULL DEFAULT 0 AFTER `comment_num`;
 
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
--- v20.4.11 @author: Jerrio
+-- 20.4.11 @author: Jerrio
 -- 添加文章收藏功能
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
@@ -730,6 +730,76 @@ alter table user
 add signature varchar(55) DEFAULT NULL COMMENT '个人简介' after nickname;
 
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
--- v20.6.28 @author: wangyu
+-- 20.6.28 @author: wangyu
 -- 在USER表 添加signature列（个性签名）
 -- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+
+CREATE TABLE `longarticle` (
+  `id` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `title` varchar(45) NOT NULL,
+  `sub_title` varchar(45) NOT NULL,
+  `user_id` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `original` int(11) NOT NULL DEFAULT '0' COMMENT '是否原创，0=原创，1=非原创',
+  `tags` varchar(128) DEFAULT NULL COMMENT '保留字段',
+  `content` text NOT NULL,
+  `like_num` int(11) NOT NULL DEFAULT '0',
+  `dislike_num` int(11) NOT NULL DEFAULT '0',
+  `comment_num` int(11) NOT NULL DEFAULT '0',
+  `collect_num` int(11) NOT NULL DEFAULT '0',
+  `popularity` int(11) NOT NULL DEFAULT '0',
+  `status` int(11) NOT NULL DEFAULT '1' COMMENT '0 = unreadable, 1 = readable, 2 = checking',
+  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `is_anonymous` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0 = not anonymous, 1 = anonymous',
+  `view_num` int(11) NOT NULL DEFAULT '0' COMMENT '浏览量',
+  `source` int(11) NOT NULL DEFAULT '0' COMMENT '内容来源',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE `user_like_longarticle` (
+  `id` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `user_id` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `article_id` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `sign_flag` int(11) DEFAULT '0' COMMENT '点赞消息是否被签收\\\\n 0: 未签收 1：签收',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ulla` (`user_id`,`article_id`) USING BTREE,
+  KEY `ulla_idx` (`article_id`),
+  CONSTRAINT `ulla_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `ulla_article_id` FOREIGN KEY (`article_id`) REFERENCES `longarticle` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `longarticle_comment` (
+  `id` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `from_user_id` varchar(45) CHARACTER SET utf8 NOT NULL COMMENT '评论人',
+  `to_user_id` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `father_comment_id` varchar(45) CHARACTER SET utf8 DEFAULT NULL COMMENT '复式评论，父评论，子评论无 article_id',
+  `article_id` varchar(45) CHARACTER SET utf8 DEFAULT NULL,
+  `comment` varchar(255) NOT NULL,
+  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `like_num` int(11) NOT NULL DEFAULT '0',
+  `dislike_num` int(11) NOT NULL DEFAULT '0',
+  `comment_num` int(11) NOT NULL DEFAULT '0',
+  `under_comment_id` varchar(45) CHARACTER SET utf8 DEFAULT NULL,
+  `sign_flag` int(11) DEFAULT '0' COMMENT '评论消息是否被签收 0: 未签收 1：签收',
+  `status` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `user_article_comment_idx` (`article_id`),
+  CONSTRAINT `longarticle_comment` FOREIGN KEY (`article_id`) REFERENCES `longarticle` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+ALTER TABLE `nuoquan`.`user_like_comment` 
+COMMENT = '用户点赞短文章的评论' ;
+
+CREATE TABLE `user_like_comment_longarticle` (
+  `id` varchar(45) NOT NULL,
+  `user_id` varchar(45) NOT NULL COMMENT '点赞人',
+  `comment_id` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `sign_flag` int(11) NOT NULL DEFAULT '0' COMMENT '点赞消息是否被签收\\n 0: 未签收 1：签收',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_comment_rel` (`user_id`,`comment_id`),
+  KEY `ulcla_idx` (`comment_id`),
+  CONSTRAINT `ulcla` FOREIGN KEY (`comment_id`) REFERENCES `longarticle_comment` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户点赞长文章的评论';
+

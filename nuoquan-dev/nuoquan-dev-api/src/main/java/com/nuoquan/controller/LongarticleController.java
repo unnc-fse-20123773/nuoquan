@@ -1,3 +1,9 @@
+/**
+ * Description: 长文章相关接口
+ * Author: Jerrio
+ * Date: 8/6/2020
+ */
+
 package com.nuoquan.controller;
 
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -47,12 +53,8 @@ import io.swagger.annotations.ApiParam;
 
 @RestController
 @Api(value = "文章相关接口", tags = { "Article-Controller" })
-@RequestMapping("/article")
-public class ArticleController extends BasicController {
-
-	@Value("${upload.maxFaceImageSize}")
-	private long MAX_FACE_IMAGE_SIZE;
-
+@RequestMapping("/longarticle")
+public class LongarticleController extends BasicController {
 	/**
 	 * 
 	 * @param page
@@ -90,47 +92,6 @@ public class ArticleController extends BasicController {
 		
 		result = articleService.queryArticle(page, pageSize, queryType, userId, selectedTag);
 		
-		return JSONResult.ok(result);
-	}
-	
-	/**
-	 * 
-	 * @param page
-	 * @param pageSize
-	 * @param type 0 -- 按时间倒序排列, 1 -- 按热度正序排列
-	 * @param userId
-	 * @return
-	 * @throws Exception
-	 */
-	@Deprecated
-	@ApiOperation(value = "查询我关注的人的全部文章", notes = "查询我关注的人的全部文章的接口")
-	@ApiImplicitParams({
-		// userId 查询用户和文章的点赞关系
-		// dataType 为 String, 应该改为 Integer
-		@ApiImplicitParam(name = "userId", value = "操作者id", required = true, dataType = "String", paramType = "form"),
-		@ApiImplicitParam(name = "page", value = "页数", required = true, dataType = "String", paramType = "form"),
-		@ApiImplicitParam(name = "type", value = "文章的排列方式", required = true, dataType = "Integer", paramType = "form"),
-		@ApiImplicitParam(name = "pageSize", value = "每页大小", required = true, dataType = "String", paramType = "form") })
-	@PostMapping("/queryAllSubscribedAuthorArticles")
-	public JSONResult queryAllSubscribedAuthorArticles(Integer page, Integer pageSize, Integer type, String userId) throws Exception {
-		
-		PagedResult result = new PagedResult();
-		
-		if (page == null) {
-			page = 1;
-		}
-		if (pageSize == null) {
-			pageSize = PAGE_SIZE;
-		}
-		
-		if (type == 0) {
-			result = articleService.getAllSubscribedAuthorArticles(page, pageSize, userId);
-		}
-		
-		if (type == 1) {
-			result = articleService.getAllSubscribedAuthorArticlesByPopularity(page, pageSize, userId);
-		}
-
 		return JSONResult.ok(result);
 	}
 	
@@ -279,46 +240,6 @@ public class ArticleController extends BasicController {
 		return JSONResult.ok();
 	}
 
-	/**
-	 * 分页和搜索文章 isSaveRecord：1 = 需要保存 0/null = 不需要保存
-	 * 
-	 * @param article
-	 * @param isSaveRecord
-	 * @param page
-	 * @return
-	 * @throws Exception
-	 */
-	@ApiOperation(value = "综合搜索")
-	@PostMapping(value = "/searchArticleYANG")
-	public JSONResult searchArticleYang(String searchText, Integer isSaveRecord, Integer page, String userId)
-			throws Exception {
-
-		if (page == null) {
-			page = 1;
-		}
-		
-		PagedResult result = articleService.searchArticleYang(isSaveRecord, page, PAGE_SIZE, searchText, userId);
-		return JSONResult.ok(result);
-	}
-	
-	@Deprecated
-	@ApiOperation(value = "按标签搜索文章")
-	@PostMapping(value = "/queryArticleByTag")
-	public JSONResult queryArticleByTag(String searchText, Integer page, String userId)
-		throws Exception {
-		if (page == null ) {
-			page = 1;
-		}
-		
-		PagedResult result = articleService.searchArticleByTag(page, PAGE_SIZE, searchText, userId);
-		return JSONResult.ok(result);
-	}
-
-	@PostMapping(value = "/hot")
-	public JSONResult hot() throws Exception {
-		return JSONResult.ok(articleService.getHotWords());
-	}
-
 	@ApiOperation(value = "上传文章", notes = "上传文章的接口")
 	@ApiImplicitParams({
 		// uniapp使用formData时，paramType要改成form
@@ -411,67 +332,6 @@ public class ArticleController extends BasicController {
 		}
 	}
 
-	@ApiOperation(value = "删除文章")
-	@ApiImplicitParams({
-			// uniapp使用formData时，paramType要改成form
-			@ApiImplicitParam(name = "articleId", value = "文章id", required = true, dataType = "String", paramType = "form"),
-			@ApiImplicitParam(name = "userId", value = "操作者id", required = true, dataType = "String", paramType = "form")
-	})
-	@PostMapping(value="/deleteArticle")
-	public JSONResult deleteArticle(String articleId, String userId) throws Exception {
-		articleService.deleteArticle(articleId, userId);
-		return JSONResult.ok();
-	}
-	
-	@ApiOperation(value = "更改文章状态为unreadble")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "articleId", value = "文章id", required = true, dataType = "String", paramType = "form")
-	})
-	@PostMapping(value="/fDeleteArticle")
-	public JSONResult fDeleteArticle(String articleId) throws Exception {
-		articleService.fDeleteArticle(articleId);
-		return JSONResult.ok();
-	}
-	
-	@ApiOperation(value = "更改文章状态为ban")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "articleId", value = "文章id", required = true, dataType = "String", paramType = "form")
-	})
-	@PostMapping(value="/banArticle")
-	public JSONResult banArticle(String articleId) throws Exception {
-		articleService.banArticle(articleId);
-		return JSONResult.ok();
-	}
-	
-	@ApiOperation(value = "更改文章状态为pass")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "articleId", value = "文章id", required = true, dataType = "String", paramType = "form")
-	})
-	@PostMapping(value="/passArticle")
-	public JSONResult passArticle(String articleId) throws Exception {
-		articleService.passArticle(articleId);
-		return JSONResult.ok();
-	}
-	
-	@ApiOperation(value = "更改评论状态为ban")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "commentId", value = "评论id", required = true, dataType = "String", paramType = "form")
-	})
-	@PostMapping(value="/banComment")
-	public JSONResult banComment(String commentId) throws Exception {
-		articleService.banComment(commentId);
-		return JSONResult.ok();
-	}
-	
-	@ApiOperation(value = "更改评论状态为pass")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "commentId", value = "评论id", required = true, dataType = "String", paramType = "form")
-	})
-	@PostMapping(value="/passComment")
-	public JSONResult passComment(String commentId) throws Exception {
-		articleService.passComment(commentId);
-		return JSONResult.ok();
-	}
 	
 	/**
 	 * fromUserId 必填
@@ -598,95 +458,6 @@ public class ArticleController extends BasicController {
 		PagedResult reCommentList = articleService.getSonComments(page, pageSize, type, underCommentId, userId);
 		
 		return JSONResult.ok(reCommentList);
-	}
-	
-	/**
-	 * 根据热度查询文章
-	 * @param page
-	 * @param pageSize
-	 * @param userId
-	 * @return
-	 * @throws Exception
-	 */
-	@ApiOperation(value = "Get the top 10 hot article")
-	@PostMapping("/getHotTop10")
-	public JSONResult getHotTop10(Integer page, Integer pageSize, String userId) throws Exception {
-
-		if(page == null) {
-			page = 1;
-		}
-		if(pageSize == null) {
-			pageSize = PAGE_SIZE;
-		}
-		
-		PagedResult result = articleService.getArticleByPopurity(page, pageSize, userId);
-//		List<ArticleVO> list = articleService.getTop3ByPopularity(userId);
-		return JSONResult.ok(result);
-	}
-	
-	@Deprecated //该接口移动到UserController
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "userId", required = true, dataType = "String", paramType = "form") })
-	@PostMapping("/getUnsignedLikeMsg")
-	public JSONResult getUnsignedLikeMsg(String userId) {
-		List<UserLikeVO> likeVOs = userService.getUnsignedLikeMsg(userId);
-		List<DataContent> dataList = new LinkedList<>();
-		for (UserLikeVO like : likeVOs) {
-			DataContent dataContent = new DataContent();
-			if (!StringUtils.isBlank(like.getArticleId())) {
-				//System.out.println("点赞文章");
-				ArticleVO articleVO = articleService.getArticleById(like.getArticleId(), userId);
-				
-				dataContent.setAction(MsgActionEnum.LIKEARTICLE.type);
-				dataContent.setData(new NoticeCard(like, articleVO));
-				
-				dataList.add(dataContent);
-			} else {
-				//System.out.println("点赞评论");
-				UserArticleCommentVO commentVO = articleService.getCommentById(like.getCommentId(), userId);
-				
-				dataContent.setAction(MsgActionEnum.LIKECOMMENT.type);
-				dataContent.setData(new NoticeCard(like, commentVO));
-				
-				dataList.add(dataContent);
-			}
-		}
-		return JSONResult.ok(dataList);
-	}
-	
-	/**
-	 * TODO: 该接口最多返回100个对象...并造成卡顿 解决方法：分页并自动累加页数
-	 * @param userId
-	 * @return
-	 */
-	@Deprecated //该接口移动到UserController
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "userId", required = true, dataType = "String", paramType = "form") })
-	@PostMapping("/getUnsignedCommentMsg")
-	public JSONResult getUnsignedCommentMsg(String userId) {
-		List<UserArticleCommentVO> commentVOs = userService.getUnsignedCommentMsg(userId);
-		List<DataContent> dataList = new LinkedList<>();
-		for (UserArticleCommentVO comment : commentVOs) {
-			DataContent dataContent = new DataContent();
-			if (StringUtils.isBlank(comment.getFatherCommentId())) {
-				//System.out.println("评论文章");
-				ArticleVO targetArticle = articleService.getArticleById(comment.getArticleId(), userId);
-				
-				dataContent.setData(new NoticeCard(comment, targetArticle));
-				dataContent.setAction(MsgActionEnum.COMMENTARTICLE.type);
-				
-				dataList.add(dataContent);
-			} else {
-				//System.out.println("评论评论");
-				UserArticleCommentVO targetComment = articleService.getCommentById(comment.getFatherCommentId(), userId);
-				
-				dataContent.setData(new NoticeCard(comment, targetComment));
-				dataContent.setAction(MsgActionEnum.COMMENTCOMMENT.type);
-				
-				dataList.add(dataContent);
-			}
-		}
-		return JSONResult.ok(dataList);
 	}
 	
 	/**

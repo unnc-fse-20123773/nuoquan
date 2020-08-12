@@ -7,7 +7,7 @@ import com.nuoquan.pojo.AdminRole;
  * @author fuce 
  * @date: 2018年9月8日 上午12:18:59
  */
-public class AdminRoleVo extends AdminRole{
+public class AdminRoleVO extends AdminRole{
 	private boolean ischeck;//判断是否又这个权限
 	
 	public boolean isIscheck() {
@@ -17,10 +17,10 @@ public class AdminRoleVo extends AdminRole{
 		this.ischeck = ischeck;
 	}
 	
-	public AdminRoleVo() {
+	public AdminRoleVO() {
 		super();
 	}
-	public AdminRoleVo(String id, String name,Boolean ischeck) {
+	public AdminRoleVO(String id, String name,Boolean ischeck) {
 		super.setId(id);
 		super.setName(name);
 		this.ischeck=ischeck;

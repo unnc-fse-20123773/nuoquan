@@ -10,7 +10,6 @@ import com.nuoquan.pojo.UserLikeArticle;
 import com.nuoquan.pojo.UserLikeComment;
 import com.nuoquan.pojo.vo.ArticleVO;
 import com.nuoquan.pojo.vo.UserArticleCommentVO;
-import com.nuoquan.pojo.vo.UserLikeVO;
 import com.nuoquan.utils.PagedResult;
 
 public interface ArticleService {
@@ -30,6 +29,7 @@ public interface ArticleService {
 	/**
 	 * 分页查询全部发布的文章
 	 */
+	@Deprecated
 	public PagedResult getAllArticles(Integer page, Integer pageSize, String userId);
 	
 	/**
@@ -200,14 +200,15 @@ public interface ArticleService {
 	 * Set the status to unreadable
 	 * @param articleId
 	 */
+	@Deprecated
 	public void fDeleteArticle(String articleId);
-	
+	@Deprecated
 	public void banArticle(String articleId);
-	
+	@Deprecated
 	public void passArticle(String articleId);
-	
+	@Deprecated
 	public void banComment(String commentId);
-	
+	@Deprecated
 	public void passComment(String commentId);
 	
 	/**
@@ -237,9 +238,9 @@ public interface ArticleService {
 
 	/**
 	 * 修改文章状态(可批量)
+	 * 0 = unreadable, 1 = readable, 2 = checking
 	 */
 	public int updateArticleStatus(String articleIds, int status);
-
 
 	/**
 	 * 请求所有关注的人的文章
@@ -248,6 +249,7 @@ public interface ArticleService {
 	 * @param userId
 	 * @return
 	 */
+	@Deprecated
 	public PagedResult getAllSubscribedAuthorArticles(Integer page, Integer pageSize, String userId);
 
 
@@ -258,6 +260,7 @@ public interface ArticleService {
 	 * @param userId
 	 * @return
 	 */
+	@Deprecated
 	public PagedResult getAllSubscribedAuthorArticlesByPopularity(Integer page, Integer pageSize, String userId);
 
 
@@ -270,6 +273,7 @@ public interface ArticleService {
 	 * @param userId
 	 * @return
 	 */
+	@Deprecated
 	public PagedResult searchArticleByTag(Integer page, Integer pageSize, String searchText,
 			String userId);
 
@@ -282,6 +286,7 @@ public interface ArticleService {
 	 * @param userId
 	 * @return
 	 */
+	@Deprecated
 	public PagedResult searchArticleByTagPupolarityOrder(Integer page, Integer pageSize, String selectedTag,
 			String userId);
 
@@ -294,6 +299,7 @@ public interface ArticleService {
 	 * @param userId2 
 	 * @return
 	 */
+	@Deprecated
 	public PagedResult searchArticleByTagWithSubscribed(Integer page, Integer pageSize, String selectedTag, String userId2);
 
 
@@ -304,8 +310,20 @@ public interface ArticleService {
 	 * @param userId
 	 * @return
 	 */
+	@Deprecated
 	public PagedResult searchArticleByTagPupolarityOrderWithSubscribed(Integer page, Integer pageSize, String selectedTag, String userId);
 
+	/**
+	 * QueryAritcle接口的方法
+	 * @param page
+	 * @param pageSize
+	 * @param queryType
+	 * @param userId
+	 * @param selectedTag
+	 * @return
+	 */
+	public PagedResult queryArticle(Integer page, Integer pageSize, Integer queryType, String userId, String selectedTag);
+	
 //	/**
 //	 * 通过热度查询评论主
 //	 * @param page
