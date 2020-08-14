@@ -157,5 +157,10 @@ module.exports = {
 	//关于
 	contact : "联系我们",
 	updateLog : "更新公告",
+	
+	//探索
+	explore:'探索',
+	academic:'学术',
+	hotDoor:'热门', //模有办法，临时代替一下先
 
 }

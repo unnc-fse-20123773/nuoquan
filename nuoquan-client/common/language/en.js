@@ -156,4 +156,9 @@ module.exports = {
 	contact : "Contact Us",
 	updateLog : "Update Log",
 	
+	//探索
+	explore:'Explore',
+	academic:'Academic',
+	hotDoor:'Hot',
+	
 }
