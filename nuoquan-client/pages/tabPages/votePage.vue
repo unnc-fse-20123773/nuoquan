@@ -1,9 +1,19 @@
 <template>
 	<view id="public-container">
+		<searchpage v-if="showSearch" class="searchPage" @exitSearchSignal="controlShowSearch"></searchpage>
+		
 		<!-- 导航栏 -->
-		<uni-nav-bar class="navigationBar" :style="{ height: this.getnavbarHeight() + 'px' }" :showLeftIcon="true" :isNavHome="isNavHome"
+<!-- 		<uni-nav-bar class="navigationBar" :style="{ height: this.getnavbarHeight() + 'px' }" :showLeftIcon="true" :isNavHome="isNavHome"
 		 :left-text="lang.back" :title="lang.explore" :height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
-		<view :style="{ height: this.getnavbarHeight().bottom + 5 + 'px' }"></view>
+		<view :style="{ height: this.getnavbarHeight().bottom + 5 + 'px' }"></view> -->
+		
+			<view class="topBar" :style="{ height: this.getnavbarHeight().top + 40 + 'px'}">
+				<view class="topBarSearch" :style="{'margin-top': this.getnavbarHeight().top + 2 + 'px'}" @click="controlShowSearch(1)">
+					<image src="../../static/icon/search_B79144.png" mode="aspectFit"></image>
+				</view>
+				<creatarticle :topHeight='this.getnavbarHeight().top'></creatarticle>
+			</view>
+
 
 		<view id="public-message-futherbox">
 			<scroll-view class="top-menu-view" scroll-x="true" scroll-left="scrollLeft">
@@ -19,6 +29,7 @@
 					</view>
 				</block>
 			</scroll-view>
+			<view style="height: 13px;width:100%;background: #FAFAFA;"></view> <!-- 占位留白 -->
 			<swiper :current="currentTab" class="swiper-box-list" duration="300" @change="swiperChange">
 				<swiper-item class="swiper-box">
 					<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-test" enable-back-to-top="true">
@@ -44,6 +55,8 @@
 		mapMutations
 	} from 'vuex';
 	import academicarea from '../../components/nq-explore/academic_area.vue'
+	import creatarticle from '../../components/newArticle+.vue'
+	import searchpage from '../search/search.vue'
 
 
 
@@ -52,12 +65,15 @@
 			uniNavBar,
 			tabBar,
 			academicarea,
+			creatarticle,
+			searchpage,
 		},
 		computed: {
 			...mapState(['lang'])
 		},
 		data() {
 			return {
+				showSearch:0,
 				currentTab: 0,
 				scrollTop: 0,
 				old: {
@@ -70,6 +86,9 @@
 
 		},
 		methods: {
+			controlShowSearch(a){
+				this.showSearch = a;
+			},
 			goTop: function(e) {
 				this.scrollTop = this.old.scrollTop;
 				this.$nextTick(function() {
@@ -149,7 +168,41 @@
 		width: 100%;
 		height: 100%;
 	}
+	
+	/** 头部导航栏，搜索 加号**/
+	.topBar {
+		width: 100%;
+		background-color: rgb(252,192,65);
+		position: relative;
+		/* height: 30px; */
+		/* margin-top: 23px; */
+		/* 此处需要兼容性处理 47px */
+	}
+	
+	.topBarSearch {
+		height:30px;
+		background:rgba(255,255,255,1);
+		opacity:1;
+		border-radius:75px;
+		width: calc(100% - 3.47% - 101px - 32px - 7px);
+		border-radius: 75px;
+		font-size: 15px;
+		display: inline-block;
+		vertical-align: middle;
+		margin-left: 3.47%;
+	}
+	
+	.topBarSearch image {
+		width: 20px;
+		height: 20px;
+		opacity: 1;
+		margin: 5px 13px;
+	}
+	
 
+
+
+/** 菜单切换 热门/学术**/
 	.top-menu-view {
 		border-bottom: 1px solid rgba(236, 236, 236, 1);
 		display: flex;
@@ -238,6 +291,7 @@
 		width: 5px;
 		height: 5px;
 		background: #FCC041;
+		border-radius: 2px;
 	}
 
 	.swiper-box-list {
