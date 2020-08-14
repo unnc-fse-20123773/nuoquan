@@ -1,15 +1,8 @@
 <template>
 	<view id="public-container">
 		<!-- 导航栏 -->
-		<uni-nav-bar
-			class="navigationBar"
-			:style="{ height: this.getnavbarHeight() + 'px' }"
-			:showLeftIcon="true"
-			:isNavHome="isNavHome"
-			:left-text="lang.back"
-			:title="lang.explore"
-			:height="this.getnavbarHeight().bottom + 5"
-		></uni-nav-bar>
+		<uni-nav-bar class="navigationBar" :style="{ height: this.getnavbarHeight() + 'px' }" :showLeftIcon="true" :isNavHome="isNavHome"
+		 :left-text="lang.back" :title="lang.explore" :height="this.getnavbarHeight().bottom + 5"></uni-nav-bar>
 		<view :style="{ height: this.getnavbarHeight().bottom + 5 + 'px' }"></view>
 
 		<view id="public-message-futherbox">
@@ -28,13 +21,13 @@
 			</scroll-view>
 			<swiper :current="currentTab" class="swiper-box-list" duration="300" @change="swiperChange">
 				<swiper-item class="swiper-box">
-					<scroll-view
-						:scroll-top="scrollTop"
-						scroll-y="true"
-						class="scroll-test"
-						enable-back-to-top="true"
-					>
+					<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-test" enable-back-to-top="true">
 
+					</scroll-view>
+				</swiper-item>
+				<swiper-item class="swiper-box">
+					<scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-test" enable-back-to-top="true">
+						<academicarea></academicarea>
 					</scroll-view>
 				</swiper-item>
 			</swiper>
@@ -50,6 +43,7 @@
 		mapState,
 		mapMutations
 	} from 'vuex';
+	import academicarea from '../../components/nq-explore/academic_area.vue'
 
 
 
@@ -57,13 +51,14 @@
 		components: {
 			uniNavBar,
 			tabBar,
+			academicarea,
 		},
 		computed: {
 			...mapState(['lang'])
 		},
 		data() {
 			return {
-				currentTab:0,
+				currentTab: 0,
 				scrollTop: 0,
 				old: {
 					scrollTop: 0
@@ -74,7 +69,7 @@
 		onLoad() {
 
 		},
-		methods:{
+		methods: {
 			goTop: function(e) {
 				this.scrollTop = this.old.scrollTop;
 				this.$nextTick(function() {
@@ -97,7 +92,7 @@
 						this.commentList = this.notification.getCommentMsg(this.commentPage);
 						this.$store.commit('setCommentMsgCount', 0);
 					}
-			
+
 					this.currentTab = current;
 					this.setScrollLeft(current);
 				}
@@ -121,8 +116,7 @@
 				return new Promise((res, rej) => {
 					uni.createSelectorQuery()
 						.select('#' + id)
-						.fields(
-							{
+						.fields({
 								size: true,
 								scrollOffset: true
 							},
@@ -145,25 +139,26 @@
 		width: 100%;
 		background-color: #FFFFFF;
 	}
-	
+
 	#public-message-futherbox
-	
-		/* 这里是帖子块最高级父组件*/
-			 {
+
+	/* 这里是帖子块最高级父组件*/
+		{
 		/* border: 1upx solid red; 如果想快速了解该组件样式,则取消这个注释*/
 		position: fixed;
 		width: 100%;
 		height: 100%;
 	}
+
 	.top-menu-view {
-		border-bottom: 1px solid rgba(236,236,236,1);
+		border-bottom: 1px solid rgba(236, 236, 236, 1);
 		display: flex;
 		justify-content: space-around;
 		width: 100%;
 		height: 46px;
 		/* 在这里设置导航条高度 */
 	}
-	
+
 	.menu-one-view {
 		display: inline-block;
 		white-space: nowrap;
@@ -171,7 +166,7 @@
 		margin-left: 8px;
 		margin-right: 8px;
 	}
-	
+
 	.top-menu-view .menu-one-view .menu-one {
 		/* 在这里写 单个按钮样式 */
 		margin-left: 8%;
@@ -182,25 +177,25 @@
 		justify-content: center;
 		width: 100%;
 	}
-	
+
 	.top-menu-view .menu-one-view .menu-one .menu-one-txt {
 		height: 40upx;
 		font-size: 32upx;
 		color: #888888;
 		line-height: 40upx;
 	}
-	
+
 	.top-menu-view .menu-one-view .menu-one .menu-one-bottom {
 		position: absolute;
 		bottom: 0;
 		width: 100%;
 	}
-	
+
 	.top-menu-view .menu-one-view .menu-one .menu-one-bottom .menu-one-bottom-color {
 		width: 60%;
 		height: 4upx;
 	}
-	
+
 	.top-menu-view .menu-one-view .menu-one-act {
 		/* 在这里写 单个按钮样式 */
 		position: relative;
@@ -210,7 +205,7 @@
 		justify-content: center;
 		width: 100%;
 	}
-	
+
 	.top-menu-view .menu-one-view .menu-one-act .menu-one-txt {
 		height: 40upx;
 		font-size: 36upx;
@@ -218,7 +213,7 @@
 		color: #353535;
 		line-height: 40upx;
 	}
-	
+
 	.top-menu-view .menu-one-view .menu-one-act .menu-one-bottom {
 		/* 在这里设置底部横条宽度 */
 		position: absolute;
@@ -229,7 +224,7 @@
 		justify-content: center;
 		border-radius: 2px;
 	}
-	
+
 	.top-menu-view .menu-one-view .menu-one-act .menu-one-bottom .menu-one-bottom-color1 {
 		/* 在这里设置底部横条高度和颜色 */
 		width: 5px;
@@ -237,34 +232,33 @@
 		background: #FCC041;
 		border-radius: 2px;
 	}
-	
+
 	.top-menu-view .menu-one-view .menu-one-act .menu-one-bottom .menu-one-bottom-color2 {
 		/* 在这里设置底部横条高度和颜色 */
 		width: 5px;
 		height: 5px;
 		background: #FCC041;
 	}
-	
+
 	.swiper-box-list {
 		flex: 1;
 		height: calc(100% - 46px);
 		width: 100%;
 		background: #FAFAFA;
 	}
-	
+
 	/* swiper */
-	
+
 	.swiper {
 		height: 360upx;
 	}
-	
+
 	.scroll-test {
 		height: 100%;
 	}
-	
+
 	.swiper-box {
 		width: 100%;
 		height: 100%;
 	}
-
 </style>
